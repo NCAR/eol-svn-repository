@@ -1,0 +1,13 @@
+SHELL = /bin/sh
+#    Makefile for QCF rec s/w.
+#
+
+CC=acc
+##CFLAGS = -g
+
+check_QCF_comp_LLSORT: check_QCF_comp_LLSORT.o process_qcfrec.o
+	$(LINK.c) -o check_QCF_comp_LLSORT check_QCF_comp_LLSORT.o process_qcfrec.o
+	chmod 0755 check_QCF_comp_LLSORT
+
+clean:
+	rm *.o

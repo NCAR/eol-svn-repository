@@ -1,0 +1,117 @@
+#!/bin/perl -w
+
+# --------------------------------------------------------------
+# edit_link: displays the form to edit/add a link to the database.
+#
+# Expected params:
+#   "type" - the type of link this is: "project", "category"  
+#   "linkto" - the id number corresponding to the "type"
+#   "link" - (optional) the link id number to edit, if undef
+#     adding a new link
+#   "mode" - (optional) "add", "update" mode, default is add
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI;
+use lib "lib";
+use Project;
+use Utils;
+use Dataset;
+use Link;
+
+# Had to use the OO style because CGI has a Link() sub.
+my $cgi = CGI->new();  
+
+my $id = $cgi->param( "link" );
+my $mode = $cgi->param( "mode" );
+my $type = $cgi->param( "type" );
+my $linkto = $cgi->param( "linkto" );
+
+$mode = "add" if( !defined( $mode ) );
+
+my $title = "Edit Link";
+$title = "Add Link" if( $mode eq "add" );
+
+my $link = Link->new();
+
+if( defined( $id ) )
+{
+	$link->setFromDB( $id );	
+}
+else
+{
+	$id = -1;
+}
+
+println( $cgi->header( -expires=>'-1d' ) );
+
+println( "<html><head><title>Link Edit</title></head>" );
+println( $css );
+println( $jscript );
+println( "<body bgcolor=#e9e9e9 link=white alink=white vlink=white text=black>" );
+println( "<center>" );
+println( "<form method=post action=proc_link_update name=\"main_form\">" );
+
+println( "<table border=0 cellpadding=3 cellspacing=8 width=95% bgcolor=#dcdcdc>" );
+	println( "<tr bgcolor=#336699><td colspan=2><font color=white size=+1>$title</td></tr>" );
+	println( "<tr>" );
+		println( "<td nowrap><b>Link Name: </b></td>" );
+		println( "<td><input type=text name=\"name\" value=\"$link->{name}\" size=50 maxlength=200></td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td nowrap><b>Link URL: </b></td>" );
+		println( "<td><input type=text name=\"url\" value=\"$link->{url}\" size=50 maxlength=255></td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td><b>TARGET: </b></td>" );
+		println( "<td>" ); 
+			println( "<select name=target>" );
+				println( "<option value=\"Select\">---Select---</option>" );
+
+				my $selected = "";
+				$selected = "selected" if( $link->{target} eq "body" );
+				println( "<option value=\"body\" $selected>Main Frame (right)</option>" );
+				$selected = "";
+				$selected = "selected" if( $link->{target} eq "left" );
+				println( "<option value=\"left\" $selected>Navigation Frame (left)</option>" );
+
+				foreach my $tar ("_self", "_parent", "_top", "_blank") 
+				{
+					my $selected = "";
+					$selected = "selected" if( $link->{target} eq $tar );
+					println( "<option value=\"$tar\" $selected>$tar</option>" );
+				}
+			println( "</select>" );
+		println( "</td>" );
+	println( "</tr>" );
+
+	println( "<tr>" );
+		println( "<td colspan=2 align=right>" );
+		println( "<input type=hidden value=$id name=id>" );
+		println( "<input type=hidden value=$linkto name=linkto>" );
+		println( "<input type=hidden value=$type name=type>" );
+
+		if( $mode eq "add" )
+		{
+			println( "<input type=submit name=\"editButton\" value=\"Add Link\">" );
+			println( "<input type=submit name=\"editButton\" value=\"Cancel\">" );
+		}
+		else
+		{
+			println( "<input type=submit name=\"editButton\" value=\"Update Link\">" );
+			println( "<input type=submit name=\"editButton\" value=\"Delete\">" );
+			println( "<input type=submit name=\"editButton\" value=\"Cancel\">" );
+		}
+	println( "</tr>" );
+
+	println( "<tr>" );
+		println( "<td colspan=2 align=center bgcolor=#336699><font color=white>&nbsp;</td>" );
+	println( "</tr>" );
+	
+println( "</form></table>" );
+
+println( "</body></html>" );
+

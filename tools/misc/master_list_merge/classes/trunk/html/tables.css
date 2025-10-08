@@ -1,0 +1,129 @@
+.left-menu {
+	background: #a2bfd6;
+	color: #fefefe;
+	float: left;
+	margin: 50px 0px 10px 0px;
+	margin-left: -10%;
+	width: 10.15%;
+	padding: 0px;
+}
+.left-menu-item {
+	text-align: center;
+	vertical-align: middle;
+	font-size: 13pt;
+	padding: 10px 0px;
+}
+.left-menu-item:hover {
+	background: #f7f7f7;
+	color: #369;
+	cursor: pointer;
+}
+
+.right-span { float: right; }
+.right-span, .left-span { color: #555 !important; padding-right: 10px; }
+.right-span img, .left-span img { height: 20px; border: 0px; vertical-align: middle; }
+.right-span:hover { cursor: pointer; }
+
+.selected-item {
+	border: 1px solid #5b7e9f !important;
+	background: #c8daed !important;
+	border-radius: 4px;
+}
+.full_box { min-height: 120px; }
+
+#json-link { clear: both; }
+
+li.category, li.event, li.site { padding: 3px; font-weight: bold; }
+li.category { color: #924a48; }
+/*li.category:hover, li.event:hover, li.site:hover { font-style: italic; }*/
+li.event { color: #4a6a90; }
+li.site { color: #788e4b; }
+li.platform { color: #7a4893; }
+
+li.parent {
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	background: #e2e2e2;
+}
+
+#classes ul {
+	list-style-type: none;
+}
+#classes ul li {
+	margin: 3px 0px;
+}
+
+.jsonCode {
+	white-space: pre-wrap;
+	font-size: 10pt;
+}
+
+.zfloat {
+	position: fixed;
+	z-index: 10000000;
+	top: 80px;
+	right: 180px;
+	
+	min-height: 100px;
+	min-width: 100px;
+	max-height: 800px;
+	overflow-y: scroll;
+	padding: 5px;
+	
+	border: 5px solid #a2bfd6;
+	border-radius: 4px;
+	background: #f7f7f7;
+	
+	display: none;
+}
+.zfloat h1 { text-align: left; color: #369; font-size: 18px; font-weight: bold; }
+
+table#dataset-list tr {
+	background: #e2e2e2;
+}
+table#dataset-list td {
+	padding: 2px 10px;
+}
+
+
+
+
+
+.full_box table { border: 1px solid #000; }
+.full_box table th {
+	background-color: #b6c3d3;
+	color: #000;
+	border: 1px solid #000;
+	padding: 2px;
+	text-align: center;
+}
+.full_box table td {
+	border: 1px solid #000;
+	padding: 2px;
+	text-align: center;
+}
+.full_box .footp {
+	font-size: 10pt;
+	font-style: italic;
+	text-align: right;
+}
+div#wrapper { margin: 0 auto; }	
+#tbl-head { background-color: #fff; }	
+#big-tbl { border-top-width: 0px; }	
+.stuck { position: fixed; top: 0; }
+
+
+.left, .right {
+	vertical-align: top;
+    text-align: left !important;
+}
+
+/* LEFT COLUMN */
+.left { 
+    width: 39.5%;
+}
+
+/* RIGHT COLUMN */
+.right { 
+	width: 59.5%;
+}

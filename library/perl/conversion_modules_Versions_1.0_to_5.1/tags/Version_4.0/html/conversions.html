@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Conversion Modules</title>
+    <link rel="stylesheet" type="text/css" href="conv.css">
+  </head>
+  
+  <body>
+      <h1>Conversion Modules</h1>
+      <p>The conversion modules are a collection of Perl modules that can be used for converting data into one of our standard formats.  There is currently three types of formats that the modules can handle.<ul>
+	<li>CLASS Sounding Format</li>
+	<li>QCF Surface Format</li>
+	<li>Station List Station Format</li>
+      </ul></p>
+      <p>There are also several <i>helper</i> modules that assist in the conversions.  They contain functions that are not specific to any conversion.  They handle calculations, conversions of units, formatters, date/time modifiers, along with a set of constants that are used by them.  A page of the equations and other information about the conversions, constants, etc. can be found on the <a href="equations_calc.html">Equations Page</a>.</p>
+	<p>There are also a number of test scripts that are not listed with the Version 3 Modules list.  These test the modules they are associated with to make sure they do what is expected in most cases.  The test scripts are located in the same directory as the module it is testing.</p>
+
+      <div id="tablelist">
+	<table border=1>
+	  <tr>
+	    <th>Version 3 Modules</th><th>Version 3 Web Scripts</th>
+	  </tr>
+	  <tr>
+	    <td>
+	      <table>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/DpgCalculations.pm">DpgCalculations</a></td>
+		  <td>A collection of functions that can be included in a conversion for performing calculations of values.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/DpgConstants.pm">DpgConstants</a></td>
+		  <td>A set of constant values that are used be the calculations and conversions.  They are well defined constants such as the acceleration due to gravity and the gas constant for dry air.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/DpgConversions.pm">DpgConversions</a></td>
+		  <td>A collection of functions that can convert values from one unit or measurement to another.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/DpgDate.pm">DpgDate</a></td>
+		  <td>A collection of functions that relate to dates and times.  This includes formatters and converters.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Record.pm">Record</a></td>
+		  <td>A basic definition of a record for data.  It contains functionality on how to handle dates, time, and station information.  It does not do anything with data.  It is meant to be a super class for more specific records.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/RecordMap.pm">RecordMap</a></td>
+		  <td>A data structure that is used to hold Record instances.</td>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/TestModule.pm">TestModule</a></td>
+		  <td>A collection of functions used for testing the modules.  It is similar to the JUnit TestCase and Assert classes that are used in java.  They are the super class for the conversion testing scripts (not listed.)</td>
+		</tr>
+		
+		<tr class="separator">
+		  <td colspan=2>&nbsp;</td>
+		</tr>
+		
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Sounding/ClassConstants.pm">Sounding::ClassConstants</a></td>
+		  <td>A set of constant values that are specific to the CLASS sounding format.  This includes flags and missing values.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Sounding/ClassHeader.pm">Sounding::ClassHeader</a></td>
+		  <td>The definition of the header portion of a CLASS format data file.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Sounding/ClassRecord.pm">Sounding::ClassRecord</a></td>
+		  <td>The definition of a single reading in a CLASS format data file.</td>
+		</tr>
+		
+		<tr class="separator">
+		  <td colspan=2>&nbsp;</td>
+		</tr>
+		
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Station/ElevatedStationMap.pm">Station::ElevatedStationMap</a></td>
+		  <td>A StationMap that is designed to hold stations that use the station id, network id, latitude, longitude, and elevation to define uniqueness.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Station/PositionedStationMap.pm">Station::PositionedStationMap</a></td>
+		  <td>A StationMap that is designed to hold stations that use the station id, network id, latitude, and longitude to define uniqueness.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Station/SimpleStationMap.pm">Station::SimpleStationMap</a></td>
+		  <td>A StationMap that is designed to hold stations that use the station id and network id to define uniqueness.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Station/Station.pm">Station::Station</a></td>
+		  <td>A data struction that defines a station for the station list format.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Station/StationMap.pm">Station::StationMap</a></td>
+		  <td>A general data structure used for holding a collection of stations.</td>
+		</tr>
+		
+		<tr class="separator">
+		  <td colspan=2>&nbsp;</td>
+		</tr>
+		
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Surface/QCFConstants.pm">Surface::QCFConstants</a></td>
+		  <td>A set of constant values that are specific to the QCF format.  This inclues flags and missing values.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Surface/QCFSurfaceRecord.pm">Surface::QCFSurfaceRecord</a></td>
+		  <td>The definition of a single reading in a QCF format data file.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Surface/SurfaceConstants.pm">Surface::SurfaceConstants</a></td>
+		  <td>A set of constant values that are used for SurfaceRecords.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/software/conversion_modules/Version3/Surface/SurfaceRecord.pm">Surface::SurfaceRecord</a></td>
+		  <td>A data structure that contains general functionality for surface record data.</td>
+		</tr>
+	      </table>
+	    </td>
+	    <td>
+	      <table>
+		<tr>
+		  <td>&nbsp;</td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/WebInterface.pm">WebInterface</a></td>
+		  <td>The super class for the web scripts.  It defines the output format and all the common links and documentation for the scripts.</td>
+		</tr>
+		
+		<tr class="separator">
+		  <td colspan=3>&nbsp;</td>
+		</tr>
+
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/airdensity">Air Density</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/airdensity">(doc)</a></td>
+		  <td>Calculate the air density from the pressure and temperature.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/altitude">Altitude</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/altitude">(doc)</a></td>
+		  <td>Calculate the altitude from the previous pressure, temperature, dew point, and altitude and the current pressure, temperautre and dew point.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/dewpoint">Dew Point</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/dewpoint">(doc)</a></td>
+		  <td>Calculate the dew point from the temperature and relative humidity.</a></td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/mixingratio">Mixing Ratio</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/mixingratio">(doc)</a></td>
+		  <td>Calculate the mixing ratio from the pressure and vapor pressure.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/relativehumidity">Relative Humidity</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/relativehumidity">(doc)</a></td>
+		  <td>Calculate the relative humidity from the temperature and dew point.</a></td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/sealevelpressure">Sea Level Pressure</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/sealevelpressure">(doc)</a></td>
+		  <td>Calculate the sea level pressure from the pressure, elevation, temperature, and dew point.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/specifichumidity">Specific Humidity</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/specifichumidity">(doc)</a></td>
+		  <td>Calculate the specific humidity from the pressure and dew point.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/stationpressure">Station Pressure</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/stationpressure">(doc)</a></td>
+		  <td>Calculate the station pressure from the altimeter and elevation.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/uvwinds">UV Winds</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/uvwinds">(doc)</a></td>
+		  <td>Calculate the u and v wind components from the wind speed and direction.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/vaporpressure">Vapor Pressure</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/vaporpressure">(doc)</a></td>
+		  <td>Calculate the [saturated] vapor pressure from the [temperature] dew point.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/virtualtemperature">Virtual Temperature</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/virtualtemperature">(doc)</a></td>
+		  <td>Calculate the virtual temperature from the temperature and the mixing ratio.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/calculations/windvalues">Wind Speed/Direction</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/calculations/windvalues">(doc)</a></td>
+		  <td>Calculate the wind speed and direction from the u and v wind components.</td>
+		</tr>
+
+		<tr class="separator">
+		  <td colspan=3>&nbsp;</td>
+		</tr>
+
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/conversions/angles">Angles</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/conversions/angles">(doc)</a></td>
+		  <td>Convert an angle value to a different unit</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/conversions/area">Area</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/conversions/area">(doc)</a></td>
+		  <td>Convert an area value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/conversions/flow">Flow</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/conversions/flow">(doc)</a></td>
+		  <td>Convert a flow value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/conversions/length">Length</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/conversions/length">(doc)</a></td>
+		  <td>Convert a length value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/conversions/pressure">Pressure</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/conversions/pressure">(doc)</a></td>
+		  <td>Convert a pressure value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/conversions/radiations">Radiation</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/conversions/radiation">(doc)</a></td>
+		  <td>Convert a radiation value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/conversions/temperature">Temperature</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/conversions/temperature">(doc)</a></td>
+		  <td>Convert a temperature value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/conversions/time">Time</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/conversions/time">(doc)</a></td>
+		  <td>Convert a time value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/conversions/velocity">Velocity</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/conversions/velocity">(doc)</a></td>
+		  <td>Convert a velocity value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/conversions/volume">Volume</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/conversions/volume">(doc)</a></td>
+		  <td>Convert a velocity value to a different unit.</td>
+		</tr>
+
+		<tr class="separator">
+		  <td colspan=3>&nbsp;</td>
+		</tr>
+
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/other/julian">[Julian] Date</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/other/julian">(doc)</a></td>
+		  <td>Convert a date value to a different format.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/other/latlong">Latitude/Longitude</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/other/latlong">(doc)</a></td>
+		  <td>Convert a latitude/longitude value to a different format.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/dpg/conversions/other/statecode">State Code</a></td>
+		  <td><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/web/cgi-bin/dpg/conversions/other/statecode">(doc)</a></td>
+		  <td>Convert a state code to its abbreviation or vice versa.</td>
+		</tr>		
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+
+      
+      <hr>
+<!-- Created: Mon Feb 28 08:06:59 MST 2005 -->
+<!-- hhmts start -->
+Last modified: Wed Mar 23 08:20:42 MST 
+<!-- hhmts end -->
+  </body>
+</html>

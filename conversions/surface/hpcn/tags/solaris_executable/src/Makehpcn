@@ -1,0 +1,14 @@
+# $Id$
+# $Log$
+#
+SHELL = /bin/sh
+#    Makefile for process High Plains Climate Network (hpcn) s/w.
+#
+
+CC=acc
+
+hpcn:   process_hpcn.o
+	$(LINK.c) -o process_hpcn process_hpcn.o 
+	chmod 0755 process_hpcn
+clean:
+	rm *.o

@@ -1,0 +1,283 @@
+#!/bin/perl -w
+
+# McD
+# --------------------------------------------------------------
+# category_table: 
+#  Displays datasets by category.  Displays all datasets for 
+#  a project or for a single category.
+#
+# Expected params:
+#  "project" - the project id number to display
+#  "category" - (optional) the category to display, if no category
+#    is given all datasets for the given project are displayed
+#  "sleep" - (optional) if defined the script sleeps for one 
+#    second, this is used to stall so the proc_update script can
+#    update the databse before this page shows the updates in
+#    yellow. 
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use Time::HiRes qw(sleep);
+use Utils;
+use State;
+
+use lib "../mcd_lib";
+use Project;
+use ProjectDBA;
+use Category;
+use CategoryDBA;
+use MLDataset;
+use MLDatasetDBA;
+
+my $sleep = param( "sleep" );
+
+sleep( 1.00 ) if( $sleep );
+#LTime::restart();
+
+my $proj_dba = ProjectDBA->new();
+my $ds_dba = MLDatasetDBA->new();
+my $cat_dba = CategoryDBA->new();
+
+my $project = param( "project" );
+my $category = param( "category" );
+
+my $hlight = param( "hlight" );
+$hlight = -1 if( !defined( $hlight ) );
+
+my @tree;
+
+my $proj = $proj_dba->getFromDB( $project );
+my $title = $proj->{title};
+
+my @ptree = $cat_dba->getTree( $project );
+
+if( defined( $category ) )
+{
+	@tree = $cat_dba->getSubTree( $category ); 
+}
+else
+{
+	@tree = @ptree;
+	$category = -1;
+}
+
+my $state = State->new( State::CATEGORY_TABLE, $project, $category );
+my $sort = param( "sort" );
+$sort = "dataset.title" if( !defined( $sort ) );
+$state->setSort( $sort );
+
+my $ds = $ds_dba->getDatasetList( \@tree, undef(), $state->getSort() );
+
+$ds_dba->getDocUrls_list( $ds );
+
+my $count = 0;
+
+println( header( -expires=>'-1d' ) );
+
+println( "<html><head><title>JOSS ML Editor</title></head>" );
+println( $css );
+println( $jscript );
+println( "<body bgcolor=#e9e9e9 link=#000066 alink=#000066 vlink=#000066 text=black>" );
+println( "<br><br>" );
+println( "<center><table border=0 cellpadding=3 cellspacing=1 width=97%>" );
+
+println( "<tr><td colspan=6 bgcolor=#336699 id=\"path_item\">" );
+	println( "<font color=white size=+1><b>Master List: ", &nbsp( 2 ) );
+	if( $category != -1 )
+	{
+		println( "<a href=category_table?project=$project>$proj->{name}</a>&nbsp;&gt;&nbsp;" );
+		showPath( \@ptree, $category );
+	}
+	else
+	{
+		println( $proj->{name} );
+	}
+println( "</td></tr>" );
+
+showTableHeading();
+showTable( $ds );
+
+println( "<tr><td colspan=6 bgcolor=#336699><font color=white><b>$count Datasets</td></tr>" );
+println( "</table>" );
+println( "</body></html>" );
+
+#LTime::log( "$0 project=$project category=$category" );
+
+sub showTable
+{
+	my $list = shift;
+	my $readme = "http://www.joss.ucar.edu/master_list/readme.gif";
+
+	if( $list )
+	{
+		my @list = @$list;
+		foreach my $node (@list)
+		{
+			if( $category != $node->{category}->{id} )
+			{
+				println( "<tr>" );
+					println( "<td bgcolor=#e9e9e9>&nbsp;</td>" );
+					println( "<td colspan=3 bgcolor=#dcdcdc><b>$node->{category}->{name}</td>" );
+				println( "</tr>" );
+			}
+			
+			foreach my $ds ( @{$node->{datasets}} )
+			{
+				$count++;
+				my $bgcolor = ( $ds->{hide} == 1 )? "#B0B0B0" : "white";
+				$bgcolor = ( $ds->{id} == $hlight )? "#FFFFCC" : $bgcolor;
+
+				my $edit_url = "edit_fields?mode=update&dataset=$ds->{id}";
+				$edit_url = $edit_url . $state->getUrlParams();
+
+				my $url = $ds->{remote_url};
+				if( (!$url || $url eq "") && $ds->{storm_id} )
+				{
+					$url = "http://www.joss.ucar.edu/cgi-bin/codiac/dss?$ds->{storm_id}"; 
+				}	
+
+				my $status = getStatus( $ds );
+				
+				println( "<tr bgcolor=$bgcolor onmouseover=\"javascript: style.backgroundColor=\'#ebebf5\'\" onmouseout=\"javascript: style.backgroundColor=\'$bgcolor\'\">" );
+
+					println( "<td nowrap bgcolor=#e9e9e9>$status</td>" );
+
+					println( "<td width=75% id=\"listing_link\">" );
+						if( defined( $url ) && $url ne "" )
+						{
+							println( "<a href=$url target=_blank>$ds->{title}</a>" );
+						}
+						else
+						{
+							println( "$ds->{title}" );
+						}
+					println( "</td>" );
+
+
+					println( "<td nowrap align=center width=10%>" );
+						if( $ds->{status}->{in_progress} )
+						{ println( "<font color=red size=-1 face=Verdana>In Progress</font>" ); }
+						elsif( $ds->{status}->{updated} )
+						{ 
+							#println( "<font color=red>Updated</font>" ); 
+							println( "<img src=$img_src/updated.gif>" );
+							println( "<br>", $ds->{date} ) if( $ds->{date} ne "0000-00-00" );
+						}
+						elsif( $ds->{status}->{new} )
+						{ 
+							#println( "<font color=red>New</font>" ); 
+							println( "<img src=$img_src/new.gif>" );
+							println( "<br>", $ds->{date} ) if( $ds->{date} ne "0000-00-00" );
+						}
+						elsif( $ds->{date} ne "0000-00-00" )
+						{ println( "$ds->{date}" ); }
+						else
+						{ println( "&nbsp;" ); }
+					println( "</td>" );
+
+					println( "<td nowrap align=center id=\"listing_link\" width=10%>" );
+						if( defined( $ds->{doc_url} ) && $ds->{doc_url} ne "" )
+						{
+							println( "<a href=$ds->{doc_url} target=_blank><font size=-1>documentation</a>" );
+						}
+						else
+						{
+							println( "&nbsp;" );
+						}
+					println( "</td>" );
+
+					println( "<td align=center bgcolor=#e9e9e9 id=\"listing_link\" nowrap>" );
+						if( defined( $ds->{storm_id} ) )
+						{
+							println( "<a href=http://www.joss.ucar.edu/cgi-bin/codiac/dss?$ds->{storm_id} target=_blank>$ds->{storm_id}</a>" );
+						}
+						else
+						{
+							println( "&nbsp;" );
+						}
+					println ( "</td>" );
+
+					println( "<td bgcolor=#e9e9e9 width=5% id=\"edit_link\" align=center>", 
+									 "<a href=\"javascript: editWindow( \'$edit_url\' )\">",
+							 			"<img src=$img_src/edit.gif border=0 alt=\"Edit Dataset\" width=21 height=15>" );
+
+				println( "</tr>" );
+			}
+
+			showTable( $node->{childern} ); 
+		}
+	}
+}
+
+sub getStatus
+{
+	my $ds = shift;
+
+	my $stat = "<table border=0 cellpadding=0 cellspacing=0 width=100%>";
+	$stat = $stat . "<tr>";
+
+	if( $ds->{remote_url} && $ds->{remote_url} ne "" )
+	{
+		$stat = $stat . "<td><img src=$img_src/rl.gif alt=\"Remote Link\" width=20 height=15></td>";
+	}
+	else
+	{
+		$stat = $stat . "<td><img src=$img_src/blank.gif width=20 height=15></td>";
+	}
+
+	#if( $ds->{hide} )
+	#{
+	#	$stat = $stat . "<td><img src=$img_src/hide.gif alt=\"Dataset Hidden\" width=20 height=16></td>";
+	#}
+	#else
+	#{
+	#	$stat = $stat . "<td><img src=$img_src/blank.gif width=20 height=15></td>";
+	#}
+
+	$stat = $stat . "</tr></table>";
+
+	return $stat;
+}
+
+sub showPath
+{
+	my @tree = @{ $_[0] };
+	my $cat = $_[1];
+
+	foreach my $node ( @tree )
+	{
+		if( $node->{category}->{id} == $category )
+		{
+			println( $node->{category}->{name} );
+			return;
+		}
+		elsif( $node->inTree( $category ) )
+		{
+			println( "<a href=category_table?project=$project&category=$node->{category}->{id}>$node->{category}->{name}</a>&nbsp;&gt;&nbsp;" );
+			showPath( $node->{childern}, $category );
+			last;
+		}
+	}
+}
+
+sub showTableHeading
+{
+	my $turl = $state->getUrl( "dataset.title" );
+	my $durl = $state->getUrl( "mlview.date" );
+	my $surl = $state->getUrl( "dataset.storm_id" );
+	println(
+		"<tr class=tableHeading>",
+			"<td>&nbsp;</td>",
+			"<td align=center><a href=$turl>Dataset Title</a>",
+			"<td align=center><a href=$durl>Date</a>",
+			"<td>Documentation</td>",
+			"<td align=center nowrap><a href=$surl>Storm Id</a>",
+			"<td>&nbsp;</td>",
+		"</tr>" );
+}
+

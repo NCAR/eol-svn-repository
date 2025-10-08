@@ -1,0 +1,887 @@
+The system is: Linux - 3.10.0-1062.1.2.el7.x86_64 - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /bin/cc 
+Build flags: 
+Id flags:  
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is GNU, found in "/opt/local/bufr/build/CMakeFiles/3.15.7/CompilerIdC/a.out"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_bed4b/fast && /bin/gmake -f CMakeFiles/cmTC_bed4b.dir/build.make CMakeFiles/cmTC_bed4b.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_bed4b.dir/testCCompiler.c.o
+/bin/cc    -o CMakeFiles/cmTC_bed4b.dir/testCCompiler.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_bed4b
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bed4b.dir/link.txt --verbose=1
+/bin/cc      CMakeFiles/cmTC_bed4b.dir/testCCompiler.c.o  -o cmTC_bed4b 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_7c455/fast && /bin/gmake -f CMakeFiles/cmTC_7c455.dir/build.make CMakeFiles/cmTC_7c455.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o
+/bin/cc   -v -o CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o   -c /opt/local/cmake-3.15.7-Linux-x86_64/share/cmake-3.15/Modules/CMakeCCompilerABI.c
+Using built-in specs.
+COLLECT_GCC=/bin/cc
+Target: x86_64-redhat-linux
+Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto --enable-plugin --enable-initfini-array --disable-libgcj --with-isl=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/isl-install --with-cloog=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/cloog-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
+Thread model: posix
+gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/cc1 -quiet -v /opt/local/cmake-3.15.7-Linux-x86_64/share/cmake-3.15/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o -version -o /tmp/ccu5lR7m.s
+GNU C (GCC) version 4.8.5 20150623 (Red Hat 4.8.5-39) (x86_64-redhat-linux)
+	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 6.0.0, MPFR version 3.1.1, MPC version 1.0.1
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include-fixed"
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../x86_64-redhat-linux/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/lib/gcc/x86_64-redhat-linux/4.8.5/include
+ /usr/local/include
+ /usr/include
+End of search list.
+GNU C (GCC) version 4.8.5 20150623 (Red Hat 4.8.5-39) (x86_64-redhat-linux)
+	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 6.0.0, MPFR version 3.1.1, MPC version 1.0.1
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+Compiler executable checksum: edd9a53947039836c859e437e8c9af72
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+ as -v --64 -o CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o /tmp/ccu5lR7m.s
+GNU assembler version 2.27 (x86_64-redhat-linux) using BFD version version 2.27-41.base.el7
+COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64'
+Linking C executable cmTC_7c455
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7c455.dir/link.txt --verbose=1
+/bin/cc     -v CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o  -o cmTC_7c455 
+Using built-in specs.
+COLLECT_GCC=/bin/cc
+COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper
+Target: x86_64-redhat-linux
+Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto --enable-plugin --enable-initfini-array --disable-libgcj --with-isl=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/isl-install --with-cloog=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/cloog-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
+Thread model: posix
+gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) 
+COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7c455' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_7c455 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Parsed C implicit include dir info from above output: rv=done
+  found start of include info
+  found start of implicit include info
+    add: [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include]
+    add: [/usr/local/include]
+    add: [/usr/include]
+  end of search list found
+  collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include]
+  collapse include dir [/usr/local/include] ==> [/usr/local/include]
+  collapse include dir [/usr/include] ==> [/usr/include]
+  implicit include dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include;/usr/local/include;/usr/include]
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command(s):/bin/gmake cmTC_7c455/fast && /bin/gmake -f CMakeFiles/cmTC_7c455.dir/build.make CMakeFiles/cmTC_7c455.dir/build]
+  ignore line: [gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/bin/cc   -v -o CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o   -c /opt/local/cmake-3.15.7-Linux-x86_64/share/cmake-3.15/Modules/CMakeCCompilerABI.c]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/bin/cc]
+  ignore line: [Target: x86_64-redhat-linux]
+  ignore line: [Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto --enable-plugin --enable-initfini-array --disable-libgcj --with-isl=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/isl-install --with-cloog=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/cloog-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/cc1 -quiet -v /opt/local/cmake-3.15.7-Linux-x86_64/share/cmake-3.15/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o -version -o /tmp/ccu5lR7m.s]
+  ignore line: [GNU C (GCC) version 4.8.5 20150623 (Red Hat 4.8.5-39) (x86_64-redhat-linux)]
+  ignore line: [	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 6.0.0, MPFR version 3.1.1, MPC version 1.0.1]
+  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+  ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include-fixed"]
+  ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../x86_64-redhat-linux/include"]
+  ignore line: [#include "..." search starts here:]
+  ignore line: [#include <...> search starts here:]
+  ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/4.8.5/include]
+  ignore line: [ /usr/local/include]
+  ignore line: [ /usr/include]
+  ignore line: [End of search list.]
+  ignore line: [GNU C (GCC) version 4.8.5 20150623 (Red Hat 4.8.5-39) (x86_64-redhat-linux)]
+  ignore line: [	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 6.0.0, MPFR version 3.1.1, MPC version 1.0.1]
+  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+  ignore line: [Compiler executable checksum: edd9a53947039836c859e437e8c9af72]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o /tmp/ccu5lR7m.s]
+  ignore line: [GNU assembler version 2.27 (x86_64-redhat-linux) using BFD version version 2.27-41.base.el7]
+  ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64']
+  ignore line: [Linking C executable cmTC_7c455]
+  ignore line: [/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7c455.dir/link.txt --verbose=1]
+  ignore line: [/bin/cc     -v CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o  -o cmTC_7c455 ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/bin/cc]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper]
+  ignore line: [Target: x86_64-redhat-linux]
+  ignore line: [Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto --enable-plugin --enable-initfini-array --disable-libgcj --with-isl=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/isl-install --with-cloog=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/cloog-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_7c455' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_7c455 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o]
+    arg [/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2] ==> ignore
+    arg [--build-id] ==> ignore
+    arg [--no-add-needed] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [--hash-style=gnu] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_7c455] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64]
+    arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+    arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..]
+    arg [CMakeFiles/cmTC_7c455.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [-lc] ==> lib [c]
+    arg [-lgcc] ==> lib [gcc]
+    arg [--as-needed] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [--no-as-needed] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o] ==> ignore
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.8.5]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64] ==> [/usr/lib64]
+  collapse library dir [/lib/../lib64] ==> [/lib64]
+  collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..] ==> [/usr/lib]
+  implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.8.5;/usr/lib64;/lib64;/usr/lib]
+  implicit fwks: []
+
+
+Performing C SOURCE FILE Test C_FLAG_TEST_1 succeeded with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_6a86d/fast && /bin/gmake -f CMakeFiles/cmTC_6a86d.dir/build.make CMakeFiles/cmTC_6a86d.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6a86d.dir/src.c.o
+/bin/cc   -DC_FLAG_TEST_1   -pipe -o CMakeFiles/cmTC_6a86d.dir/src.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_6a86d
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6a86d.dir/link.txt --verbose=1
+/bin/cc  -DC_FLAG_TEST_1    CMakeFiles/cmTC_6a86d.dir/src.c.o  -o cmTC_6a86d 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int main(void) { return 0; }
+Determining if the include file sys/types.h exists passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_2b2ab/fast && /bin/gmake -f CMakeFiles/cmTC_2b2ab.dir/build.make CMakeFiles/cmTC_2b2ab.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_2b2ab.dir/CheckIncludeFile.c.o
+/bin/cc   -pipe    -o CMakeFiles/cmTC_2b2ab.dir/CheckIncludeFile.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_2b2ab
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2b2ab.dir/link.txt --verbose=1
+/bin/cc  -pipe     CMakeFiles/cmTC_2b2ab.dir/CheckIncludeFile.c.o  -o cmTC_2b2ab 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the include file stdint.h exists passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_43ace/fast && /bin/gmake -f CMakeFiles/cmTC_43ace.dir/build.make CMakeFiles/cmTC_43ace.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_43ace.dir/CheckIncludeFile.c.o
+/bin/cc   -pipe    -o CMakeFiles/cmTC_43ace.dir/CheckIncludeFile.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_43ace
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_43ace.dir/link.txt --verbose=1
+/bin/cc  -pipe     CMakeFiles/cmTC_43ace.dir/CheckIncludeFile.c.o  -o cmTC_43ace 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the include file stddef.h exists passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_6c173/fast && /bin/gmake -f CMakeFiles/cmTC_6c173.dir/build.make CMakeFiles/cmTC_6c173.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6c173.dir/CheckIncludeFile.c.o
+/bin/cc   -pipe    -o CMakeFiles/cmTC_6c173.dir/CheckIncludeFile.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_6c173
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6c173.dir/link.txt --verbose=1
+/bin/cc  -pipe     CMakeFiles/cmTC_6c173.dir/CheckIncludeFile.c.o  -o cmTC_6c173 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining size of void* passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_b4c82/fast && /bin/gmake -f CMakeFiles/cmTC_b4c82.dir/build.make CMakeFiles/cmTC_b4c82.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_b4c82.dir/CMAKE_SIZEOF_VOID_P.c.o
+/bin/cc   -pipe    -o CMakeFiles/cmTC_b4c82.dir/CMAKE_SIZEOF_VOID_P.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckTypeSize/CMAKE_SIZEOF_VOID_P.c
+Linking C executable cmTC_b4c82
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b4c82.dir/link.txt --verbose=1
+/bin/cc  -pipe     CMakeFiles/cmTC_b4c82.dir/CMAKE_SIZEOF_VOID_P.c.o  -o cmTC_b4c82 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining size of unsigned short passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_e474b/fast && /bin/gmake -f CMakeFiles/cmTC_e474b.dir/build.make CMakeFiles/cmTC_e474b.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e474b.dir/CMAKE_SIZEOF_UNSIGNED_SHORT.c.o
+/bin/cc   -pipe    -o CMakeFiles/cmTC_e474b.dir/CMAKE_SIZEOF_UNSIGNED_SHORT.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckTypeSize/CMAKE_SIZEOF_UNSIGNED_SHORT.c
+Linking C executable cmTC_e474b
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e474b.dir/link.txt --verbose=1
+/bin/cc  -pipe     CMakeFiles/cmTC_e474b.dir/CMAKE_SIZEOF_UNSIGNED_SHORT.c.o  -o cmTC_e474b 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the system is big endian passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_14684/fast && /bin/gmake -f CMakeFiles/cmTC_14684.dir/build.make CMakeFiles/cmTC_14684.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_14684.dir/TestEndianess.c.o
+/bin/cc   -pipe    -o CMakeFiles/cmTC_14684.dir/TestEndianess.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/TestEndianess.c
+Linking C executable cmTC_14684
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_14684.dir/link.txt --verbose=1
+/bin/cc  -pipe     CMakeFiles/cmTC_14684.dir/TestEndianess.c.o  -o cmTC_14684 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+TestEndianess.c:
+/* A 16 bit integer is required. */
+typedef unsigned short cmakeint16;
+
+/* On a little endian machine, these 16bit ints will give "THIS IS LITTLE ENDIAN."
+   On a big endian machine the characters will be exchanged pairwise. */
+const cmakeint16 info_little[] =  {0x4854, 0x5349, 0x4920, 0x2053, 0x494c, 0x5454, 0x454c, 0x4520, 0x444e, 0x4149, 0x2e4e, 0x0000};
+
+/* on a big endian machine, these 16bit ints will give "THIS IS BIG ENDIAN."
+   On a little endian machine the characters will be exchanged pairwise. */
+const cmakeint16 info_big[] =     {0x5448, 0x4953, 0x2049, 0x5320, 0x4249, 0x4720, 0x454e, 0x4449, 0x414e, 0x2e2e, 0x0000};
+
+#ifdef __CLASSIC_C__
+int main(argc, argv) int argc; char *argv[];
+#else
+int main(int argc, char *argv[])
+#endif
+{
+  int require = 0;
+  require += info_little[argc];
+  require += info_big[argc];
+  (void)argv;
+  return require;
+}
+
+
+Determining size of off_t passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_2d429/fast && /bin/gmake -f CMakeFiles/cmTC_2d429.dir/build.make CMakeFiles/cmTC_2d429.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_2d429.dir/EC_SIZEOF_OFF_T.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_2d429.dir/EC_SIZEOF_OFF_T.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckTypeSize/EC_SIZEOF_OFF_T.c
+Linking C executable cmTC_2d429
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2d429.dir/link.txt --verbose=1
+/bin/cc  -pipe     CMakeFiles/cmTC_2d429.dir/EC_SIZEOF_OFF_T.c.o  -o cmTC_2d429 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining size of int passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_ab22e/fast && /bin/gmake -f CMakeFiles/cmTC_ab22e.dir/build.make CMakeFiles/cmTC_ab22e.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ab22e.dir/ECCODES_SIZEOF_INT.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_ab22e.dir/ECCODES_SIZEOF_INT.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckTypeSize/ECCODES_SIZEOF_INT.c
+Linking C executable cmTC_ab22e
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ab22e.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_ab22e.dir/ECCODES_SIZEOF_INT.c.o  -o cmTC_ab22e 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining size of long passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_527af/fast && /bin/gmake -f CMakeFiles/cmTC_527af.dir/build.make CMakeFiles/cmTC_527af.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_527af.dir/ECCODES_SIZEOF_LONG.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_527af.dir/ECCODES_SIZEOF_LONG.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckTypeSize/ECCODES_SIZEOF_LONG.c
+Linking C executable cmTC_527af
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_527af.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_527af.dir/ECCODES_SIZEOF_LONG.c.o  -o cmTC_527af 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining size of size_t passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_ca55f/fast && /bin/gmake -f CMakeFiles/cmTC_ca55f.dir/build.make CMakeFiles/cmTC_ca55f.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ca55f.dir/ECCODES_SIZEOF_SIZE_T.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_ca55f.dir/ECCODES_SIZEOF_SIZE_T.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckTypeSize/ECCODES_SIZEOF_SIZE_T.c
+Linking C executable cmTC_ca55f
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ca55f.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_ca55f.dir/ECCODES_SIZEOF_SIZE_T.c.o  -o cmTC_ca55f 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if files assert.h exist passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_3928b/fast && /bin/gmake -f CMakeFiles/cmTC_3928b.dir/build.make CMakeFiles/cmTC_3928b.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_3928b.dir/ECCODES_HAVE_ASSERT_H.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_3928b.dir/ECCODES_HAVE_ASSERT_H.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckIncludeFiles/ECCODES_HAVE_ASSERT_H.c
+Linking C executable cmTC_3928b
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3928b.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_3928b.dir/ECCODES_HAVE_ASSERT_H.c.o  -o cmTC_3928b 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if files string.h exist passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_9d6e2/fast && /bin/gmake -f CMakeFiles/cmTC_9d6e2.dir/build.make CMakeFiles/cmTC_9d6e2.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9d6e2.dir/ECCODES_HAVE_STRING_H.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_9d6e2.dir/ECCODES_HAVE_STRING_H.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckIncludeFiles/ECCODES_HAVE_STRING_H.c
+Linking C executable cmTC_9d6e2
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9d6e2.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_9d6e2.dir/ECCODES_HAVE_STRING_H.c.o  -o cmTC_9d6e2 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if files sys/types.h exist passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_e6501/fast && /bin/gmake -f CMakeFiles/cmTC_e6501.dir/build.make CMakeFiles/cmTC_e6501.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e6501.dir/ECCODES_HAVE_SYS_TYPES_H.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_e6501.dir/ECCODES_HAVE_SYS_TYPES_H.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckIncludeFiles/ECCODES_HAVE_SYS_TYPES_H.c
+Linking C executable cmTC_e6501
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e6501.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_e6501.dir/ECCODES_HAVE_SYS_TYPES_H.c.o  -o cmTC_e6501 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if files sys/stat.h exist passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_4965a/fast && /bin/gmake -f CMakeFiles/cmTC_4965a.dir/build.make CMakeFiles/cmTC_4965a.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_4965a.dir/ECCODES_HAVE_SYS_STAT_H.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_4965a.dir/ECCODES_HAVE_SYS_STAT_H.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckIncludeFiles/ECCODES_HAVE_SYS_STAT_H.c
+Linking C executable cmTC_4965a
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4965a.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_4965a.dir/ECCODES_HAVE_SYS_STAT_H.c.o  -o cmTC_4965a 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if files fcntl.h exist passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_6f4ed/fast && /bin/gmake -f CMakeFiles/cmTC_6f4ed.dir/build.make CMakeFiles/cmTC_6f4ed.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6f4ed.dir/ECCODES_HAVE_FCNTL_H.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_6f4ed.dir/ECCODES_HAVE_FCNTL_H.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckIncludeFiles/ECCODES_HAVE_FCNTL_H.c
+Linking C executable cmTC_6f4ed
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6f4ed.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_6f4ed.dir/ECCODES_HAVE_FCNTL_H.c.o  -o cmTC_6f4ed 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if files unistd.h exist passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_9e902/fast && /bin/gmake -f CMakeFiles/cmTC_9e902.dir/build.make CMakeFiles/cmTC_9e902.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9e902.dir/ECCODES_HAVE_UNISTD_H.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_9e902.dir/ECCODES_HAVE_UNISTD_H.c.o   -c /opt/local/bufr/build/CMakeFiles/CheckIncludeFiles/ECCODES_HAVE_UNISTD_H.c
+Linking C executable cmTC_9e902
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9e902.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_9e902.dir/ECCODES_HAVE_UNISTD_H.c.o  -o cmTC_9e902 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the fseeko exist passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_e6925/fast && /bin/gmake -f CMakeFiles/cmTC_e6925.dir/build.make CMakeFiles/cmTC_e6925.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e6925.dir/CheckSymbolExists.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_e6925.dir/CheckSymbolExists.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_e6925
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e6925.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_e6925.dir/CheckSymbolExists.c.o  -o cmTC_e6925 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+File /opt/local/bufr/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef fseeko
+  return ((int*)(&fseeko))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the posix_memalign exist passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_4bffe/fast && /bin/gmake -f CMakeFiles/cmTC_4bffe.dir/build.make CMakeFiles/cmTC_4bffe.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_4bffe.dir/CheckSymbolExists.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_4bffe.dir/CheckSymbolExists.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_4bffe
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4bffe.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_4bffe.dir/CheckSymbolExists.c.o  -o cmTC_4bffe 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+File /opt/local/bufr/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef posix_memalign
+  return ((int*)(&posix_memalign))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the fmemopen exist passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_5f0df/fast && /bin/gmake -f CMakeFiles/cmTC_5f0df.dir/build.make CMakeFiles/cmTC_5f0df.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5f0df.dir/CheckSymbolExists.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_5f0df.dir/CheckSymbolExists.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_5f0df
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5f0df.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_5f0df.dir/CheckSymbolExists.c.o  -o cmTC_5f0df 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+File /opt/local/bufr/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef fmemopen
+  return ((int*)(&fmemopen))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Performing C SOURCE FILE Test ECCODES_HAVE_C_INLINE succeeded with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_ea4c3/fast && /bin/gmake -f CMakeFiles/cmTC_ea4c3.dir/build.make CMakeFiles/cmTC_ea4c3.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ea4c3.dir/src.c.o
+/bin/cc   -pipe -DECCODES_HAVE_C_INLINE -fPIE   -o CMakeFiles/cmTC_ea4c3.dir/src.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_ea4c3
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ea4c3.dir/link.txt --verbose=1
+/bin/cc  -pipe -DECCODES_HAVE_C_INLINE      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_ea4c3.dir/src.c.o  -o cmTC_ea4c3 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+ typedef int foo_t;
+      static inline foo_t static_foo(){return 0;}
+      foo_t foo(){return 0;}
+      int main(int argc, char *argv[]){return 0;}
+      
+Performing C SOURCE FILE Test IEEE_LE succeeded with the following compile output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_d83a1/fast && /bin/gmake -f CMakeFiles/cmTC_d83a1.dir/build.make CMakeFiles/cmTC_d83a1.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d83a1.dir/src.c.o
+/bin/cc   -pipe -DIEEE_LE -fPIE   -o CMakeFiles/cmTC_d83a1.dir/src.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_d83a1
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d83a1.dir/link.txt --verbose=1
+/bin/cc  -pipe -DIEEE_LE      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_d83a1.dir/src.c.o  -o cmTC_d83a1 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+...and run output:
+
+Return value: 1
+Source file was:
+int compare(unsigned char* a,unsigned char* b) {
+         while(*a != 0) if (*(b++)!=*(a++)) return 1;
+         return 0;
+       }
+       int main(int argc,char** argv) {
+         unsigned char dc[]={0xD9,0xCC,0x67,0x93,0x80,0xDE,0x61,0x30,0};
+         double da=1.23456789e-75;
+         unsigned char* ca;
+
+         unsigned char fc[]={0x22,0x48,0x83,0x05,0};
+         float fa=1.23456789e-35;
+
+         if (sizeof(double)!=8) return 1;
+
+         ca=(unsigned char*)&da;
+         if (compare(dc,ca)) return 1;
+
+         if (sizeof(float)!=4) return 1;
+
+         ca=(unsigned char*)&fa;
+         if (compare(fc,ca)) return 1;
+
+         return 0;
+       }
+Compiling the Fortran compiler identification source file "CMakeFortranCompilerId.F" succeeded.
+Compiler: /bin/gfortran 
+Build flags: 
+Id flags: -v 
+
+The output was:
+0
+Driving: /bin/gfortran -v CMakeFortranCompilerId.F -l gfortran -l m -shared-libgcc
+Using built-in specs.
+COLLECT_GCC=/bin/gfortran
+COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper
+Target: x86_64-redhat-linux
+Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto --enable-plugin --enable-initfini-array --disable-libgcj --with-isl=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/isl-install --with-cloog=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/cloog-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
+Thread model: posix
+gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) 
+COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/f951 CMakeFortranCompilerId.F -ffixed-form -cpp=/tmp/ccA0VvV0.f90 -quiet -v CMakeFortranCompilerId.F -quiet -dumpbase CMakeFortranCompilerId.F -mtune=generic -march=x86-64 -auxbase CMakeFortranCompilerId -version -fintrinsic-modules-path /usr/lib/gcc/x86_64-redhat-linux/4.8.5/finclude -o /tmp/cch59103.s
+GNU Fortran (GCC) version 4.8.5 20150623 (Red Hat 4.8.5-39) (x86_64-redhat-linux)
+	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 6.0.0, MPFR version 3.1.1, MPC version 1.0.1
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include-fixed"
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../x86_64-redhat-linux/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/lib/gcc/x86_64-redhat-linux/4.8.5/finclude
+ /usr/lib/gcc/x86_64-redhat-linux/4.8.5/include
+ /usr/local/include
+ /usr/include
+End of search list.
+GNU Fortran (GCC) version 4.8.5 20150623 (Red Hat 4.8.5-39) (x86_64-redhat-linux)
+	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 6.0.0, MPFR version 3.1.1, MPC version 1.0.1
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ as -v --64 -o /tmp/ccC1lWu7.o /tmp/cch59103.s
+GNU assembler version 2.27 (x86_64-redhat-linux) using BFD version version 2.27-41.base.el7
+Reading specs from /usr/lib/gcc/x86_64-redhat-linux/4.8.5/libgfortran.spec
+rename spec lib to liborig
+COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. /tmp/ccC1lWu7.o -lgfortran -lm -lgcc_s -lgcc -lquadmath -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o
+
+
+Compilation of the Fortran compiler identification source "CMakeFortranCompilerId.F" produced "a.out"
+
+The Fortran compiler identification is GNU, found in "/opt/local/bufr/build/CMakeFiles/3.15.7/CompilerIdFortran/a.out"
+
+Determining if the Fortran compiler works passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_ab914/fast && /bin/gmake -f CMakeFiles/cmTC_ab914.dir/build.make CMakeFiles/cmTC_ab914.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building Fortran object CMakeFiles/cmTC_ab914.dir/testFortranCompiler.f.o
+/bin/gfortran   -fPIE   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/testFortranCompiler.f -o CMakeFiles/cmTC_ab914.dir/testFortranCompiler.f.o
+Linking Fortran executable cmTC_ab914
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ab914.dir/link.txt --verbose=1
+/bin/gfortran      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined    CMakeFiles/cmTC_ab914.dir/testFortranCompiler.f.o  -o cmTC_ab914 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Detecting Fortran compiler ABI info compiled with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_72dad/fast && /bin/gmake -f CMakeFiles/cmTC_72dad.dir/build.make CMakeFiles/cmTC_72dad.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building Fortran object CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o
+/bin/gfortran   -fPIE   -v -c /opt/local/cmake-3.15.7-Linux-x86_64/share/cmake-3.15/Modules/CMakeFortranCompilerABI.F -o CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o
+Using built-in specs.
+COLLECT_GCC=/bin/gfortran
+Target: x86_64-redhat-linux
+Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto --enable-plugin --enable-initfini-array --disable-libgcj --with-isl=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/isl-install --with-cloog=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/cloog-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
+Thread model: posix
+gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) 
+COLLECT_GCC_OPTIONS='-fPIE' '-v' '-c' '-o' 'CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/f951 /opt/local/cmake-3.15.7-Linux-x86_64/share/cmake-3.15/Modules/CMakeFortranCompilerABI.F -ffixed-form -cpp=/tmp/cchcVaOD.f90 -quiet -v /opt/local/cmake-3.15.7-Linux-x86_64/share/cmake-3.15/Modules/CMakeFortranCompilerABI.F -quiet -dumpbase CMakeFortranCompilerABI.F -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o -version -fPIE -fintrinsic-modules-path /usr/lib/gcc/x86_64-redhat-linux/4.8.5/finclude -o /tmp/cceuiixI.s
+GNU Fortran (GCC) version 4.8.5 20150623 (Red Hat 4.8.5-39) (x86_64-redhat-linux)
+	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 6.0.0, MPFR version 3.1.1, MPC version 1.0.1
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include-fixed"
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../x86_64-redhat-linux/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/lib/gcc/x86_64-redhat-linux/4.8.5/finclude
+ /usr/lib/gcc/x86_64-redhat-linux/4.8.5/include
+ /usr/local/include
+ /usr/include
+End of search list.
+GNU Fortran (GCC) version 4.8.5 20150623 (Red Hat 4.8.5-39) (x86_64-redhat-linux)
+	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 6.0.0, MPFR version 3.1.1, MPC version 1.0.1
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+COLLECT_GCC_OPTIONS='-fPIE' '-v' '-c' '-o' 'CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o' '-mtune=generic' '-march=x86-64'
+ as -v --64 -o CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o /tmp/cceuiixI.s
+GNU assembler version 2.27 (x86_64-redhat-linux) using BFD version version 2.27-41.base.el7
+COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-fPIE' '-v' '-c' '-o' 'CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o' '-mtune=generic' '-march=x86-64'
+Linking Fortran executable cmTC_72dad
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_72dad.dir/link.txt --verbose=1
+/bin/gfortran      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined -v   CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o  -o cmTC_72dad 
+Driving: /bin/gfortran -Wl,--disable-new-dtags -Wl,--allow-shlib-undefined -v CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o -o cmTC_72dad -l gfortran -l m -shared-libgcc
+Using built-in specs.
+COLLECT_GCC=/bin/gfortran
+COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper
+Target: x86_64-redhat-linux
+Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto --enable-plugin --enable-initfini-array --disable-libgcj --with-isl=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/isl-install --with-cloog=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/cloog-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux
+Thread model: posix
+gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) 
+Reading specs from /usr/lib/gcc/x86_64-redhat-linux/4.8.5/libgfortran.spec
+rename spec lib to liborig
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_72dad' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_72dad' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_72dad /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. --disable-new-dtags --allow-shlib-undefined CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o -lgfortran -lm -lgcc_s -lgcc -lquadmath -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Parsed Fortran implicit include dir info from above output: rv=done
+  found start of include info
+  found start of implicit include info
+    add: [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/finclude]
+    add: [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include]
+    add: [/usr/local/include]
+    add: [/usr/include]
+  end of search list found
+  collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/finclude] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/finclude]
+  collapse include dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include]
+  collapse include dir [/usr/local/include] ==> [/usr/local/include]
+  collapse include dir [/usr/include] ==> [/usr/include]
+  implicit include dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/finclude;/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include;/usr/local/include;/usr/include]
+
+
+Parsed Fortran implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command(s):/bin/gmake cmTC_72dad/fast && /bin/gmake -f CMakeFiles/cmTC_72dad.dir/build.make CMakeFiles/cmTC_72dad.dir/build]
+  ignore line: [gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building Fortran object CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o]
+  ignore line: [/bin/gfortran   -fPIE   -v -c /opt/local/cmake-3.15.7-Linux-x86_64/share/cmake-3.15/Modules/CMakeFortranCompilerABI.F -o CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/bin/gfortran]
+  ignore line: [Target: x86_64-redhat-linux]
+  ignore line: [Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto --enable-plugin --enable-initfini-array --disable-libgcj --with-isl=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/isl-install --with-cloog=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/cloog-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) ]
+  ignore line: [COLLECT_GCC_OPTIONS='-fPIE' '-v' '-c' '-o' 'CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o' '-mtune=generic' '-march=x86-64']
+  ignore line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/f951 /opt/local/cmake-3.15.7-Linux-x86_64/share/cmake-3.15/Modules/CMakeFortranCompilerABI.F -ffixed-form -cpp=/tmp/cchcVaOD.f90 -quiet -v /opt/local/cmake-3.15.7-Linux-x86_64/share/cmake-3.15/Modules/CMakeFortranCompilerABI.F -quiet -dumpbase CMakeFortranCompilerABI.F -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o -version -fPIE -fintrinsic-modules-path /usr/lib/gcc/x86_64-redhat-linux/4.8.5/finclude -o /tmp/cceuiixI.s]
+  ignore line: [GNU Fortran (GCC) version 4.8.5 20150623 (Red Hat 4.8.5-39) (x86_64-redhat-linux)]
+  ignore line: [	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 6.0.0, MPFR version 3.1.1, MPC version 1.0.1]
+  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+  ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/4.8.5/include-fixed"]
+  ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../x86_64-redhat-linux/include"]
+  ignore line: [#include "..." search starts here:]
+  ignore line: [#include <...> search starts here:]
+  ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/4.8.5/finclude]
+  ignore line: [ /usr/lib/gcc/x86_64-redhat-linux/4.8.5/include]
+  ignore line: [ /usr/local/include]
+  ignore line: [ /usr/include]
+  ignore line: [End of search list.]
+  ignore line: [GNU Fortran (GCC) version 4.8.5 20150623 (Red Hat 4.8.5-39) (x86_64-redhat-linux)]
+  ignore line: [	compiled by GNU C version 4.8.5 20150623 (Red Hat 4.8.5-39), GMP version 6.0.0, MPFR version 3.1.1, MPC version 1.0.1]
+  ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+  ignore line: [COLLECT_GCC_OPTIONS='-fPIE' '-v' '-c' '-o' 'CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o' '-mtune=generic' '-march=x86-64']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o /tmp/cceuiixI.s]
+  ignore line: [GNU assembler version 2.27 (x86_64-redhat-linux) using BFD version version 2.27-41.base.el7]
+  ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-fPIE' '-v' '-c' '-o' 'CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o' '-mtune=generic' '-march=x86-64']
+  ignore line: [Linking Fortran executable cmTC_72dad]
+  ignore line: [/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_72dad.dir/link.txt --verbose=1]
+  ignore line: [/bin/gfortran      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined -v   CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o  -o cmTC_72dad ]
+  ignore line: [Driving: /bin/gfortran -Wl,--disable-new-dtags -Wl,--allow-shlib-undefined -v CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o -o cmTC_72dad -l gfortran -l m -shared-libgcc]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/bin/gfortran]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/lto-wrapper]
+  ignore line: [Target: x86_64-redhat-linux]
+  ignore line: [Configured with: ../configure --prefix=/usr --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=http://bugzilla.redhat.com/bugzilla --enable-bootstrap --enable-shared --enable-threads=posix --enable-checking=release --with-system-zlib --enable-__cxa_atexit --disable-libunwind-exceptions --enable-gnu-unique-object --enable-linker-build-id --with-linker-hash-style=gnu --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto --enable-plugin --enable-initfini-array --disable-libgcj --with-isl=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/isl-install --with-cloog=/builddir/build/BUILD/gcc-4.8.5-20150702/obj-x86_64-redhat-linux/cloog-install --enable-gnu-indirect-function --with-tune=generic --with-arch_32=x86-64 --build=x86_64-redhat-linux]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) ]
+  ignore line: [Reading specs from /usr/lib/gcc/x86_64-redhat-linux/4.8.5/libgfortran.spec]
+  ignore line: [rename spec lib to liborig]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_72dad' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_72dad' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2 --build-id --no-add-needed --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_72dad /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../.. --disable-new-dtags --allow-shlib-undefined CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o -lgfortran -lm -lgcc_s -lgcc -lquadmath -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o /usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o]
+    arg [/usr/libexec/gcc/x86_64-redhat-linux/4.8.5/collect2] ==> ignore
+    arg [--build-id] ==> ignore
+    arg [--no-add-needed] ==> ignore
+    arg [--eh-frame-hdr] ==> ignore
+    arg [--hash-style=gnu] ==> ignore
+    arg [-m] ==> ignore
+    arg [elf_x86_64] ==> ignore
+    arg [-dynamic-linker] ==> ignore
+    arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTC_72dad] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crt1.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crti.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtbegin.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64]
+    arg [-L/lib/../lib64] ==> dir [/lib/../lib64]
+    arg [-L/usr/lib/../lib64] ==> dir [/usr/lib/../lib64]
+    arg [-L/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..] ==> dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..]
+    arg [--disable-new-dtags] ==> ignore
+    arg [--allow-shlib-undefined] ==> ignore
+    arg [CMakeFiles/cmTC_72dad.dir/CMakeFortranCompilerABI.F.o] ==> ignore
+    arg [-lgfortran] ==> lib [gfortran]
+    arg [-lm] ==> lib [m]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lquadmath] ==> lib [quadmath]
+    arg [-lm] ==> lib [m]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lc] ==> lib [c]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/crtend.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/crtn.o] ==> ignore
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5] ==> [/usr/lib/gcc/x86_64-redhat-linux/4.8.5]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64] ==> [/usr/lib64]
+  collapse library dir [/lib/../lib64] ==> [/lib64]
+  collapse library dir [/usr/lib/../lib64] ==> [/usr/lib64]
+  collapse library dir [/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../..] ==> [/usr/lib]
+  implicit libs: [gfortran;m;gcc_s;gcc;quadmath;m;gcc_s;gcc;c;gcc_s;gcc]
+  implicit dirs: [/usr/lib/gcc/x86_64-redhat-linux/4.8.5;/usr/lib64;/lib64;/usr/lib]
+  implicit fwks: []
+
+
+Determining if the Fortran compiler supports Fortran 90 passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_23b6e/fast && /bin/gmake -f CMakeFiles/cmTC_23b6e.dir/build.make CMakeFiles/cmTC_23b6e.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building Fortran object CMakeFiles/cmTC_23b6e.dir/testFortranCompilerF90.f90.o
+/bin/gfortran   -fPIE   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/testFortranCompilerF90.f90 -o CMakeFiles/cmTC_23b6e.dir/testFortranCompilerF90.f90.o
+Linking Fortran executable cmTC_23b6e
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_23b6e.dir/link.txt --verbose=1
+/bin/gfortran      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined    CMakeFiles/cmTC_23b6e.dir/testFortranCompilerF90.f90.o  -o cmTC_23b6e 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the include file pthread.h exists passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_74138/fast && /bin/gmake -f CMakeFiles/cmTC_74138.dir/build.make CMakeFiles/cmTC_74138.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_74138.dir/CheckIncludeFile.c.o
+/bin/cc   -pipe  -fPIE   -o CMakeFiles/cmTC_74138.dir/CheckIncludeFile.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_74138
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_74138.dir/link.txt --verbose=1
+/bin/cc  -pipe       -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_74138.dir/CheckIncludeFile.c.o  -o cmTC_74138 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the function pthread_create exists in the pthread passed with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_91637/fast && /bin/gmake -f CMakeFiles/cmTC_91637.dir/build.make CMakeFiles/cmTC_91637.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_91637.dir/CheckFunctionExists.c.o
+/bin/cc   -pipe -DCHECK_FUNCTION_EXISTS=pthread_create -fPIE   -o CMakeFiles/cmTC_91637.dir/CheckFunctionExists.c.o   -c /opt/local/cmake-3.15.7-Linux-x86_64/share/cmake-3.15/Modules/CheckFunctionExists.c
+Linking C executable cmTC_91637
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_91637.dir/link.txt --verbose=1
+/bin/cc  -pipe -DCHECK_FUNCTION_EXISTS=pthread_create      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_91637.dir/CheckFunctionExists.c.o  -o cmTC_91637 -lpthread 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+
+Performing C SOURCE FILE Test C_FLAG_TEST_2 succeeded with the following output:
+Change Dir: /opt/local/bufr/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/bin/gmake cmTC_00051/fast && /bin/gmake -f CMakeFiles/cmTC_00051.dir/build.make CMakeFiles/cmTC_00051.dir/build
+gmake[1]: Entering directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_00051.dir/src.c.o
+/bin/cc   -pipe -DC_FLAG_TEST_2 -fPIE   -pedantic -o CMakeFiles/cmTC_00051.dir/src.c.o   -c /opt/local/bufr/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_00051
+/opt/local/cmake-3.15.7-Linux-x86_64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_00051.dir/link.txt --verbose=1
+/bin/cc  -pipe -DC_FLAG_TEST_2      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined  CMakeFiles/cmTC_00051.dir/src.c.o  -o cmTC_00051 
+gmake[1]: Leaving directory `/net/opt_lnx/local_el7_64/bufr/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int main(void) { return 0; }

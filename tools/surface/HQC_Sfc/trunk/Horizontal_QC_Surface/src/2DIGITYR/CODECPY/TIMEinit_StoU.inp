@@ -1,0 +1,10 @@
+V95/STORMWAVE              Project Name.             (25 characters only.)
+0                          Conversion type. 1 = UTC to SOLAR; 0 = SOLAR to UTC.
+5                          Data frequency (minutes). (Set to highest freq in input) (input_data_freq)
+1                          Mixed Frequency flag. 0 = 1 freq in data; 1 = multiple freq in data.
+1995                       Century/Year data was collected. (Integer YYYY) (current_year)
+950331                     Begin date of data to process YYMMDD (begin_date) 0331
+950630                     End   date of data to process YYMMDD (end_date)   0615
+/raid1/VORTEX95/QCF/SOLAR_NEW/       Path name (and general name prefix) of input qcf files to process.
+/rraid4/cully/             Path name of output qcf files and *.txt files.
+-80.00                     Reference Longitude (Use same ref lon for shifting in both directions!)

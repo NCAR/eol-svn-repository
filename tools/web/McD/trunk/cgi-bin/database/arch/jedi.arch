@@ -1,0 +1,141 @@
+Application: John Allison's JEDI
+
+Host: wind       Database: jedi
+
++--------------------+
+| Tables_in_jedi     |
++--------------------+
+| contact            |
+| data_format        |
+| dataset            |
+| dataset_project    |
+| files              |
+| format_conversions |
+| oldfiles           |
+| project            |
++--------------------+
+
+contact:
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | varchar(32)  |      | PRI |         |       |
+| last_name   | varchar(255) | YES  |     | NULL    |       |
+| first_name  | varchar(255) | YES  |     | NULL    |       |
+| middle_name | varchar(255) | YES  |     | NULL    |       |
+| title       | varchar(255) | YES  |     | NULL    |       |
+| affiliation | varchar(255) | YES  |     | NULL    |       |
+| address     | text         | YES  |     | NULL    |       |
+| city        | varchar(255) | YES  |     | NULL    |       |
+| state       | char(2)      | YES  |     | NULL    |       |
+| country     | varchar(255) | YES  |     | NULL    |       |
+| zip         | varchar(32)  | YES  |     | NULL    |       |
+| phone       | varchar(255) | YES  |     | NULL    |       |
+| email       | varchar(255) | YES  |     | NULL    |       |
+| fax         | varchar(255) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+
+data_format:
++--------------------+---------------+------+-----+---------+-------+
+| Field              | Type          | Null | Key | Default | Extra |
++--------------------+---------------+------+-----+---------+-------+
+| id                 | int(11)       |      | PRI | 0       |       |
+| name               | varchar(255)  |      |     |         |       |
+| record_revise_date | timestamp(14) | YES  |     | NULL    |       |
++--------------------+---------------+------+-----+---------+-------+
+
+dataset:
++--------------------+---------------+------+-----+---------------------+-------+
+| Field              | Type          | Null | Key | Default             | Extra |
++--------------------+---------------+------+-----+---------------------+-------+
+| id                 | varchar(16)   |      | PRI |                     |       |
+| name               | varchar(255)  |      | MUL |                     |       |
+| keywords           | text          | YES  |     | NULL                |       |
+| description        | text          | YES  |     | NULL                |       |
+| begin_date         | datetime      |      |     | 0000-00-00 00:00:00 |       |
+| end_date           | datetime      |      |     | 0000-00-00 00:00:00 |       |
+| minlat             | decimal(10,4) |      |     | -99.9000            |       |
+| minlon             | decimal(11,5) |      |     | -181.00000          |       |
+| maxlat             | decimal(10,4) |      |     | 99.9000             |       |
+| maxlon             | decimal(11,5) |      |     | 181.00000           |       |
+| source_agency      | varchar(16)   |      |     |                     |       |
+| displayed_contact  | varchar(16)   |      |     |                     |       |
+| source_contact     | varchar(16)   | YES  |     | NULL                |       |
+| internal_contact   | varchar(16)   |      |     |                     |       |
+| record_creator     | varchar(16)   |      |     |                     |       |
+| readme             | varchar(255)  | YES  |     | NULL                |       |
+| map                | varchar(255)  | YES  |     | NULL                |       |
+| remote_url         | varchar(255)  | YES  |     | NULL                |       |
+| user               | varchar(16)   | YES  |     | NULL                |       |
+| password           | varchar(16)   | YES  |     | NULL                |       |
+| onlineorder        | tinyint(1)    |      |     | 0                   |       |
+| offlineorder       | tinyint(1)    |      |     | 0                   |       |
+| browseable         | tinyint(1)    |      |     | 0                   |       |
+| hide               | tinyint(1)    |      |     | 0                   |       |
+| status             | varchar(16)   |      |     | unknown             |       |
+| order_module       | varchar(255)  | YES  |     | NULL                |       |
+| browse_module      | varchar(255)  | YES  |     | NULL                |       |
+| data_revise_date   | datetime      | YES  |     | NULL                |       |
+| record_revise_date | timestamp(14) | YES  |     | NULL                |       |
++--------------------+---------------+------+-----+---------------------+-------+
+
+dataset_project:
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| dataset_id | varchar(16) |      | PRI |         |       |
+| project_id | varchar(16) |      | PRI |         |       |
++------------+-------------+------+-----+---------+-------+
+
+files:
++--------------------+----------------------+------+-----+---------+----------------+
+| Field              | Type                 | Null | Key | Default | Extra          |
++--------------------+----------------------+------+-----+---------+----------------+
+| id                 | varchar(16)          |      | PRI |         |                |
+| directory          | blob                 |      | PRI |         |                |
+| filename           | blob                 |      | PRI |         |                |
+| begin              | datetime             | YES  |     | NULL    |                |
+| end                | datetime             | YES  |     | NULL    |                |
+| data_format        | int(11)              |      |     | 0       |                |
+| data_amount_kb     | int(11)              |      |     | 0       |                |
+| location           | varchar(255)         |      |     |         |                |
+| hide               | tinyint(4)           |      |     | 0       |                |
+| filekey            | bigint(20) unsigned  |      | UNI | NULL    | auto_increment |
+| data_archive_date  | timestamp(14)        | YES  |     | NULL    |                |
+| record_revise_date | timestamp(14)        | YES  |     | NULL    |                |
++--------------------+----------------------+------+-----+---------+----------------+
+
+format_conversions:
++--------------------+------------------------+------+-----+---------+-------+
+| Field              | Type                   | Null | Key | Default | Extra |
++--------------------+------------------------+------+-----+---------+-------+
+| id                 | varchar(16)            |      | MUL |         |       |
+| source_format      | int(11)                |      |     | 0       |       |
+| target_format      | int(11)                |      |     | 0       |       |
+| expansion_factor   | decimal(4,1)           |      |     | 1.0     |       |
+| command            | varchar(255)           |      |     |         |       |
+| ftp_mode           | enum('binary','ascii') |      |     | binary  |       |
+| record_revise_date | timestamp(14)          | YES  |     | NULL    |       |
++--------------------+------------------------+------+-----+---------+-------+
+
+project:
++--------------------+---------------+------+-----+---------------------+-------+
+| Field              | Type          | Null | Key | Default             | Extra |
++--------------------+---------------+------+-----+---------------------+-------+
+| id                 | varchar(16)   |      | PRI |                     |       |
+| name               | varchar(255)  |      |     |                     |       |
+| description        | text          | YES  |     | NULL                |       |
+| begin_date         | datetime      |      |     | 0000-00-00 00:00:00 |       |
+| end_date           | datetime      |      |     | 0000-00-00 00:00:00 |       |
+| minlat             | decimal(10,4) |      |     | -99.9000            |       |
+| minlon             | decimal(11,5) |      |     | -181.00000          |       |
+| maxlat             | decimal(10,4) |      |     | 99.9000             |       |
+| maxlon             | decimal(11,5) |      |     | 181.00000           |       |
+| map                | varchar(255)  | YES  |     | NULL                |       |
+| url                | varchar(255)  | YES  |     | NULL                |       |
+| internal_contact   | varchar(16)   |      |     |                     |       |
+| parent             | varchar(16)   | YES  |     | NULL                |       |
+| hide               | tinyint(1)    |      |     | 0                   |       |
+| record_revise_date | timestamp(14) | YES  |     | NULL                |       |
++--------------------+---------------+------+-----+---------------------+-------+
+

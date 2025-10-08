@@ -1,0 +1,149 @@
+#!/bin/perl -w
+
+# McD
+# --------------------------------------------------------------
+# edit_category: displays the form to edit/add a category.
+#
+# Expected params:
+#   "project" - the projec the category belongs to 
+#   "category" - (optional) the category to edit, if not defined
+#     adding a new category
+#   "mode" - (optional) "add" or "update", "add" is the default
+#  
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use Utils;
+
+use lib "../mcd_lib";
+use ProjectDBA;
+use CategoryDBA;
+
+my $cat_dba = CategoryDBA->new();
+my $proj_dba = ProjectDBA->new();
+
+my $id = param( "category" );
+my $project = param( "project" );
+my $mode = param( "mode" );
+
+$mode = "add" if( !defined( $mode ) );
+
+my $title = "Edit Category";
+$title = "Add Category" if( $mode eq "add" );
+
+my $cat = Category->new();
+
+if( defined( $id ) )
+{
+	$cat = $cat_dba->getFromDB( $id );	
+	$project = $cat->{project};
+}
+else
+{
+	$id = -1;
+}
+
+my $proj = $proj_dba->getFromDB( $project );
+
+my @ctree = $cat_dba->getTree( $project );
+
+println( header( -expires=>'-1d' ) );
+
+println( "<html><head><title>Category Edit</title></head>" );
+println( $css );
+println( $jscript );
+println( "<body bgcolor=#e9e9e9 link=white alink=white vlink=white text=black>" );
+println( "<center>" );
+println( "<form method=post action=proc_cat_update name=\"main_form\">" );
+
+println( "<table border=0 cellpadding=3 cellspacing=8 width=95% bgcolor=#dcdcdc>" );
+	println( "<tr bgcolor=#336699><td colspan=2><font color=white size=+1>$title</td></tr>" );
+	println( "<tr>" );
+		println( "<td allign=right><b>Project: </b></td>" );
+		println( "<td><b>$proj->{name}</b></td>" );
+			println( "<input type=hidden value=$proj->{id} name=project>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td allign=right><b>Category Name: </b></td>" );
+		println( "<td><input type=text name=name value=\"$cat->{name}\" size=50 maxlength=50></td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td allign=right><b>Sub-Category of: </b></td>" );
+		println( "<td><select name=parent>" );
+			println( "<option selected value=-1>root</option>" );
+			showCatDropDowns( \@ctree, 0 );
+		println( "</select></td>" );
+	println( "</tr>" );
+
+	println( "<tr>" );
+		println( "<td colspan=2 align=right>" );
+
+			my $url = "view_cats?project=$project&hlight=$id";
+
+			if( $mode eq "add" )
+			{
+				println( "<input type=submit name=\"editButton\" value=\"Next >>\">" );
+			}
+			else
+			{
+				#my $onClick = "\"return doSubmit( this.value, this.form, top.opener.parent, \'$url\' )\"";
+				#println( "<input type=submit name=\"editButton\" value=\"Update\" onClick=$onClick>" );
+				println( "<input type=submit name=\"editButton\" value=\"Update\">" );
+
+				#$onClick = "\"return doSubmit( \'\', this.form, top.opener.parent, \'$url\' )\"";
+				println( "<input type=submit name=\"editButton\" value=\"Delete\">" );
+
+				#$onClick = "\"return doCancel( this.form, top.opener.parent )\"";
+				#println( "<input type=submit name=\"editButton\" value=\"Cancel\">" );
+			}
+
+		println( "</td>" );
+	println( "</tr>" );
+
+	println( "<tr>" );
+		println( "<td colspan=2 align=right>" );
+			println( "<input type=hidden name=id value=$cat->{id}>" );
+			println( "<input type=hidden name=mode value=$mode>" );
+			if( $mode eq "add" )
+			{
+				#my $onClick = "\"return doCancel( this.form, top.opener.parent )\"";
+				#println( "<input type=submit name=\"editButton\" value=\"Cancel\" onClick=$onClick>" );
+				println( "<input type=submit name=\"editButton\" value=\"Cancel\">" );
+			}
+			else
+			{
+				println( "<input type=submit name=\"editButton\" value=\"Edit Links...\">" );
+			}
+		println( "</td>" );
+	println( "</tr>" );
+
+	println( "<tr>" );
+		println( "<td colspan=2 align=center bgcolor=#336699><font color=white>&nbsp;</td>" );
+	println( "</tr>" );
+	
+		
+println( "</form></table>" );
+
+println( "</body></html>" );
+
+sub showCatDropDowns
+{
+	my @tree = @{ $_[0] };
+	my $depth = $_[1];
+
+	foreach my $node (@tree)
+	{
+		if( $node->{category}->{id} != $id )
+		{
+			my $selected = "";
+			$selected = "selected" if( $cat->{parent} && $node->{category}->{id} == $cat->{parent} );
+			println( "<option $selected value=$node->{category}->{id}>",
+								&nbsp( $depth*3 ), "$node->{category}->{name}</option>" );
+		}
+		showCatDropDowns( $node->{childern}, $depth+1 ) if( $node->{childern} );
+	}	
+}

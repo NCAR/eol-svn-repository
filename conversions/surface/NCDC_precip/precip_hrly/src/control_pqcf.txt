@@ -1,0 +1,28 @@
+# $Id$
+# $Log$
+#
+#Must remove first 4 lines before using this info.
+STATIC
+     0 ! EBUFR version number
+     2 ! BUFR edition number
+     0 ! BUFR master table number
+     0 ! Originating centre
+     0 ! Sequence number
+FILE
+   0 ! Message type
+   0 ! Message subtype
+  42 ! Length of identifying text.
+STORM-FEST precipitation data (Version 1).
+     ( 1)
+END FILE
+
+OBSERVATION   1
+ 0  1 254 3 A10                  10 3
+ 0  1 253 3 A10                  10 3
+ 1  4   0 0                      -1 0
+ 0 31   1 1                      -1 1
+ 0  8  22 1                      -1 1
+ 0 13  11 2                      -1 2
+ 0  8 255 1                      -1 1
+ 0 33 255 1                      -1 1
+END OBSERVATION

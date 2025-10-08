@@ -1,0 +1,171 @@
+<HTML>
+<body bgcolor=white>
+
+<TITLE>Dataset Processing Inventory </TITLE>
+
+<center><H1><u>Dataset Processing Inventory</u></H1></center>
+<br>
+<center><H2>Updated: 29 July 2002 </H2></center>
+<br>
+<H3><b>Cooperative Atmospheric Surface Exchange Study October 1999 (CASES 1999)</b></H3>
+
+<b>TOI: 25 September 1999 - 5 November 1999 </b>
+<br>
+<br>
+<b>AOI: </b>Smaller area around Wichita, KS. (2 degrees x 2 degrees).
+        CASES-99 Main Site centered on (37.6501N, 96.7438W) <b>
+<ul>
+   <li>  LAT: 36.6501 to 38.6501 (N)
+   <li>  LON: 95.7438 to 97.7438 (W)
+</ul>
+</b>
+
+<b>CODIAC ID Prefix: XX.xxx </b>
+<br>
+<br>
+<b>CASES99 Charge #: </b>None for data processing?
+   Expects to Piggy-back off GCIP. 
+<br>
+<p>
+<b>Products:  </b>
+<p>
+     May be limited since expected to use GCIP work,
+     but GCIP does <i>not</i> have a project in this SW area
+     during the CASES 1999 time period.  <font color=red>Since
+     there was no GCIP project in the CASES99 AOI/TOI, the JOSS
+     CASES PI(s) decided to only do the minimum. This means no
+     composites will be formed/QC'd, etc. Most datasets will be
+     put out "as is". </font>
+</p>
+<p>
+     <b>Want Hourly Sfc Composite containing the following datasets
+     at a minimum:  <i>(This composite will NOT be formed.) </i></b></p>
+   <ul>
+      <li>NCDC DATSAV3 Hrly plus Specials - DONE as standalone datasets </li>
+      <li>ASOS - DONE as standalone dataset.</li>
+      <li>High Plains Climate Network - DONE </li>
+      <li>ARMCART - None in the CASES99 AOI. </li>
+   </ul>
+<p><b> Processing Options for Surface Datasets: </b></p>
+  <ol>
+     <li> <b>Drop requirement for sfc datasets. </b>
+
+     <li> <b>Put raw data out as is. </b>
+
+     <li> <b>Convert data/Limited checking/Load seperate datasets: </b>
+          <ul>
+          <li>Convert [some or all of] raw datasets to QCF. 
+          <li>Do limited gross limit checking on QCF. 
+          <li>Load onto CODIAC non-HQC'd. 
+          </ul>
+
+     <li> <b>Convert data/Limited checking/Load composited datasets: </b>
+          <ul>
+          <li>Convert raw datasets to QCF. 
+          <li>Do limited gross limit checking on QCF.
+          <li>Form composite. 
+          <li>Load onto CODIAC with limited checking.
+          </ul>
+
+     <li> <b>Convert data/Composite data/Perform HQC/Load composited datasets: </b>
+          <ul> 
+          <li>Convert raw datasets to QCF.
+          <li>Do limited gross limit checking on QCF.
+          <li>Form composite.
+          <li>Perform Horizontal Quality Control on composite.
+          <li>Load onto CODIAC with limited checking.
+          </ul>
+  </ol>
+<br>
+<p>
+<b>Promised Completion Date:</b> None. Although would like to
+                             have done by Nov 2000.
+</p>
+<p>
+<h3><u>Datasets:</u></h3>
+<p>(<b>*</b> =  Promised in CASES99 Data Management Plan.) </p>
+   
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=250> Dataset</th>
+       <th width=100>Status</th>
+       <th width=300> Notes  </th></tr>
+ 
+   <tr><td> <b>*</b>NCDC Hourly DATSAV3 Nominals (45.102) and Specials (45.103)</td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> Originally expected 19 regular hourly METAR
+            stations. Late December 2000 received some
+            DATSAV3 data from NCDC.  Long term problems with NCDC DATSAV3
+            order resolved July 2001. This dataset completed July 17, 2001.
+            <a href="http://www.joss.ucar.edu/~janine/datsav3"
+               target="_top"> (See DATSAV3 status page by JAG.)</a>
+        </td> </tr>
+
+   <tr><td> <b>*</b>Hourly ASOS (45.104) and Specials (45.105)</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>  Expect 11 sites in AOI. See /ingest/modem area.
+             May or May not have any data auto collected
+             for CASES AOI. JAG will go ahead and extract ASOS from 
+             other projects and put out on CODIAC.  Note that there is NO AWOS
+             available for CASES99. </td> </tr>
+ 
+   <tr><td> <b>*</b>Hourly HPLAINS (45.945)</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Expect 3 sites. See /ingest/hpcn. Believe data
+            have been collected for the CASES TOI, but would
+            have to check further to see if any stns in AOI. 
+       </td> </tr>
+
+   <tr><td> <b>*</b>ARMSFC (1 minute Frequency) </td>
+       <td> <font color=green> None in AOI</font>     </td>
+       <td> Expect 9 sites.  SL has some data on jukebox 
+            /archive/jb0/gcip/ARM/SMOS/CASES99. See data
+            for ARM sites: E1,E11,E13,E15,E20,E21,E24,
+            E25,E3,E4,E5,E6,E7,E8,and E9. See only October 1999 data.
+            <font color=red> SL will put out available data on CODIAC as an
+            "As Is" dataset. </font>
+       </td>
+   </tr>
+
+   <tr><td> NPN Hourly SFC </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> See /ingest/ncdc_npn_profiler/1999/s60. </td> </tr>
+
+   <tr><td>NOAA/ATDD Little Washita (Tilden Meyers) Sfc </td>
+       <td> <font color=blue> N/A</font>     </td>
+       <td> Not in area of interest. Not available.
+       </td>
+   </tr>
+
+   <tr><td>ARS  </td>
+       <td> <font color=red> TBD </font>     </td>
+       <td> Ask SFW/SL, but may never come in.
+            No ARS data as of 3 Jan 2001.
+       </td>
+   </tr>
+
+   <tr><td>Station List  </td>
+       <td> <font color=red> TBD </font>     </td>
+       <td> Refer to larger GCIP lists (if possible) OR 
+            create CASES99 version.
+       </td>
+   </tr>
+
+   <tr><td>NPN 6 minute RASS </td>
+       <td> <font color=blue> DONE. </font>     </td>
+       <td> LEC downloaded 6min RASS on 18 April 00 and 
+            turned over to G. Stossmeister. Loaded by RB.
+            See also /ingest/ncdc_npn_profiler/1999/r60 for Hourly RASS.
+       </td>
+   </tr>
+
+   <tr><td>NPN 6 minute WINDS </td>
+       <td> <font color=blue> DONE.</font>     </td>
+       <td> LEC downloaded 6min winds on 18 April 00 and 
+            turned over to G. Stossmeister. Loaded by RB.
+            See also /ingest/ncdc_npn_profiler/1999/w60 for Hourly WINDS.
+       </td>
+   </tr>
+</table>
+<b>-------------------End CASES99-----------------------</b>
+</HTML>

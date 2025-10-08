@@ -1,0 +1,51 @@
+	How to Check QCF Surface Data for Duplicate Records
+	---------------------------------------------------
+
+(Written by Janine Goldstein Feb 25,1999)
+
+This checker should be applied to all QCF surface data in addition
+to check_QCF_file and check_QCF_comp.  These checks should be applied
+at the earliest possible level to help catch problems in the earliest
+stages of data conversion. The application of check_QCF_dups.pl is
+described below.
+
+The checker is located at 
+/rraid1/DPG_HTML/BEST_SW/GENERAL_TOOLS/checkdups/check_QCF_dups.pl
+
+1. check_QCF_dups.pl - This perl software checks the QCF data files 
+   for the following types of non-unique records:
+
+	- Duplicate records where the nominal date & time, network, and 
+	station id are the same.
+	- Colocated records where the nominal date & time, network, 
+	latitude, and longitude are the same.
+	- Colocated records where the nominal date & time, latitude and
+	longitude are the same, but the network is different.
+
+   The check_QCF_dups.pl program will issue a warning in each of these cases
+   and print the two records involved.
+
+The check_QCF_dups.pl program can take more than one QCF file at a time
+as input.  To execute the check_QCF_dups.pl program, issue the following 
+command:
+
+> check_QCF_dups.pl <input_file_names>
+
+
+Any records discovered by this checker will need to be looked into.  In the
+past, colocated records that could not be resolved were left in the data and
+assigned occurences during the QC process. Duplicate records found in
+the DATSAV2 and GLERL data were stripped because the HQC makes the assumption 
+that each network/station_id combination is unique.  Duplicate stations cause 
+the HQC to overwrite the first record with the second and put out the second 
+record and a blank record in the final data.
+
+Each dataset should be considered individually and the best course of action 
+determined.
+
+Postscript:  New feature was added to suppress the colocation stns messages.
+To do this execute the following:
+
+check_QCF_dups.pl -c QCF_Files
+
+--end of file---

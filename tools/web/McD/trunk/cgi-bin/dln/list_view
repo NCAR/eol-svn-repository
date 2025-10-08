@@ -1,0 +1,428 @@
+#!/bin/perl -w
+
+use lib "lib";
+use State;
+use DLNUtils;
+
+use lib "../mcd_lib";
+use DLNDatasetDBA;
+use ProjectDBA;
+use UserDBA;
+
+
+my @pfields = ("loader", "checker");
+my @lfields = ("project", "checker" );
+my @cfields = ("project", "loader" );
+my @sfields = ("project", "loader" );
+
+
+my %pfield_headings = ( "loader" => "Loader",
+												"checker" => "Checker" );
+my %lfield_headings = ( "project" => "Project",
+												"checker" => "Checker" );
+my %cfield_headings = ( "project" => "Project",
+												"loader" => "Loader" );
+my %sfield_headings = ( "project" => "Project",
+												"loader" => "Loader" );
+
+my %all_fields = ( $State::PROJECT=>\@pfields, $State::LOADER=>\@lfields, $State::CHECKER=>\@cfields, $State::SEARCH=>\@sfields );
+my %all_field_headings = ( $State::PROJECT=>\%pfield_headings, $State::LOADER=>\%lfield_headings, $State::CHECKER=>\%cfield_headings, $State::SEARCH=>\%sfield_headings);
+
+my $col_count = 6;
+
+sub list_view
+{
+	my $state = shift;
+	my $cgi = shift;
+	my $dba = DLNDatasetDBA->new();
+
+	my @fields = @{ $all_fields{$state->{list_view_type}} };
+	my %field_headings = %{ $all_field_headings{$state->{list_view_type}} };
+
+	my $list = getList( $state, $dba );
+	my $hlight = $cgi->param( "hlight" );
+	$hlight = -1 if( !$hlight );
+
+	my $num_dss = scalar(@$list);
+	my $max_page = int( $num_dss / $State::DSS_PER_PAGE ) + 1;
+	$max_page-- if( $max_page * $State::DSS_PER_PAGE == $num_dss );
+
+	$state->{page} = $max_page if( $state->{page} > $max_page );
+
+	my $start = ($state->{page} - 1) * $State::DSS_PER_PAGE;
+	my $end = $start + $State::DSS_PER_PAGE;
+	$end = $num_dss if( $end > $num_dss);
+
+	$col_count += scalar( @fields );
+	my $title = getTitle( $state );
+	my $titleBar = getTitleBar( $title, $start+1, $end, $num_dss );
+	my $hideBar = getHideBar( $state, scalar(@$list) );
+	my $hiddenBars = getHiddenBars( $state );
+
+	my %users = getUserHash(); 
+
+	print( cr(
+		$cgi->header(),
+		"<html>",
+			"<head>",
+				"<title>DLN: List View</title>",
+				$body_css,
+				$jscript,
+			"</head>",
+		"<body>",
+		"<br>",
+		"<center>",
+		"<table border=0 cellpadding=2 cellspacing=1 width=99% class=listTable>",
+		 	"<tr><td colspan=$col_count>",
+				$titleBar,
+			"</td></tr>",
+
+		 	"<tr class=blankBar><td colspan=$col_count>", &nbsp(4),
+				"<a href=$help_src#dln_v_list target=_blank><img border=0 src=$img_src/help.gif alt=\"ML/DLN Help\"></a>",
+				&nbsp(3),
+				"<a href=controller?" . $state->getUrlString() . "><img border=0 src=$img_src/refresh.gif alt=\"Refresh\"></a>",
+			"</td></tr>",
+
+		 	"<tr><td colspan=$col_count>",
+				$hideBar,
+			"</td></tr>",
+
+			"<tr class=tableHeading>",
+				"<td width=9% colspan=2>&nbsp;</td>", 
+				"<td width=8%><a href=" . getSortUrl( $state, "dlnview.date" ) . ">Date</a></td>", 
+				"<td width=60%><a href=" . getSortUrl( $state, "dataset.title" ) . ">Title</a></td>", 
+				"<td nowrap width=8%><a href=" . getSortUrl( $state, "dataset.storm_id" ) . ">Storm Id</a></td>" ) );
+				foreach my $f (@fields)
+				{
+					print( cr( "<td><a href=" . getSortUrl( $state, $f ) . ">", $field_headings{$f}, "</a></td>" ) );
+				}
+
+	print( cr( "<td>&nbsp;</td>", "</tr>" ) );
+
+			my $count = $start;
+
+			#foreach my $ds (@$list)
+			for( my $x = $start; $x < $end; $x++ )
+			{
+				my $ds = $list->[$x];
+				$ds->{loader} = $users{$ds->{loader}};
+				$ds->{checker} = $users{$ds->{checker}};
+				$ds->{int_contact} = $users{$ds->{int_contact}};
+			
+				my $status = getStatus( $ds, $count );
+				my $url = "controller?" . $state->getUrlString( 'view'=>$State::DATASET, 'dataset_num'=>$count ); 
+				my $checkbox = "<input type=checkbox value=$count onClick=\"selectRow(this)\">";
+
+				my $class = "listRow";
+				$class = "hlightRow" if( $ds->{id} == $hlight );
+				print( cr(
+					"<tr class=$class onmouseover=\"cursorOver( this )\" onmouseout=\"cursorOut( this )\" id=row_$count>",
+						"<td>$checkbox</td>",
+						"<td nowrap>$status</td>",
+					) );
+				if( $ds->{date} eq "0000-00-00" )
+				{ println( "<td nowrap>&nbsp;</td>"); }
+				else
+				{ println( "<td nowrap>$ds->{date}</td>"); }
+				print( cr(
+						"<td><a href=$url>$ds->{title}</a></td>",
+						"<td nowrap>" ,
+								"<a href=http://www.joss.ucar.edu/cgi-bin/codiac/dss?$ds->{storm_id} target=_blank>$ds->{storm_id}</a>" ,
+						"</td>") );
+
+						foreach my $f (@fields)
+						{
+							print( cr( "<td nowrap>", $ds->{$f}, "</td>" ) );
+						}
+				my $edit_url = "controller?mode=update&ds_id=$ds->{id}&" . $state->getUrlString( 'edit'=>1 );
+				print( cr(
+						#"<td class=editCell><a href=\"javascript: editWindow( \'$edit_url\' )\">&nbsp;EDIT&nbsp;</a></td>",
+						"<td class=editCell><a href=\"javascript: editWindow( \'$edit_url\' )\">&nbsp;<img src=$img_src/edit.gif border=0 alt=\"Edit Dataset\" width=21 height=15>&nbsp;</a></td>",
+					"</tr>"
+					) );
+
+				$count++;
+			}
+
+	print( cr(
+		 	"<tr><td colspan=$col_count>",
+				$hideBar,
+			"</td></tr>",
+
+		 	"<tr class=blankBar><td colspan=$col_count>&nbsp;</td></tr>",
+
+		 	"<tr><td colspan=$col_count>",
+				$titleBar,
+			"</td></tr>",
+
+			$hiddenBars,
+
+		"</table>",
+	"</body></html>" ) );		
+}
+
+sub getTitleBar
+{
+	my $title = shift;
+	my $start = shift;
+	my $end = shift;
+	my $ndss = shift;
+
+	my $bar = cr( 
+			"<table border=0 cellpadding=2 cellspacing=0 width=100%>",
+				"<tr class=titleBar>",
+					"<td width=50%>$title</td>",
+					"<td width=50% align=right>$start - $end of $ndss Datasets &nbsp;&nbsp;</td>",
+				"</tr>",
+			"</table>");
+			
+	return $bar; 
+}
+
+sub getHideBar
+{
+	my $state = shift;
+	my $ndss = shift;
+
+	my %hide_fields;
+	my $hide_urls = "[ 'dummy'";
+	my $show_urls = "[ 'dummy'";
+
+	my $hide_opts = cr(
+			"<option value=none>----Hide----</option>" );
+
+	my $show_opts = cr(
+			"<option value=none>----Show----</option>" );
+
+	foreach	my $h (@{$state->{hide}})
+	{
+		$hide_fields{$h} = 1;
+	}
+	
+	foreach my $field ("documented", "checked", "loaded", "remote_url")
+	{
+		if( $hide_fields{$field} )
+		{
+			$show_urls = $show_urls . ",\'" . getShowUrl( $field, $state ) . "\'"; 
+			$show_opts = $show_opts . "<option value=$field>$field</option>";
+		}	
+		else
+		{
+			$hide_urls = $hide_urls . ",\'" . getHideUrl( $field, $state ) . "\'"; 
+			$hide_opts = $hide_opts . "<option value=$field>$field</option>";
+		}	
+	}
+
+	$show_urls = $show_urls . ",\'" . getShowAllUrl($state) . "\']";
+	$hide_urls = $hide_urls . "]";
+
+	$show_opts = $show_opts . "<option value=all>All</option></select>";
+	$hide_opts = $hide_opts;
+
+	my $hide = cr(
+			"<select name=hide onChange=\"setHide( this, window, $hide_urls )\">",
+				$hide_opts,
+			"</select>" );  
+	
+	my $show = cr(
+			"<select name=show onChange=\"setHide( this, window, $show_urls )\">",
+				$show_opts,
+			"</select>" );
+
+	my $hide_show = &nbsp(1) . $hide . &nbsp(1) . "|" . &nbsp(1) . $show . &nbsp(1);
+
+	if( $state->{list_view_type} == $State::SEARCH )
+	{ $hide_show = &nbsp(1); }
+	
+	my $max_page = int( $ndss / $State::DSS_PER_PAGE ) + 1;
+	$max_page-- if( $max_page * $State::DSS_PER_PAGE == $ndss );
+
+	my $page = "";
+
+	if( $state->{page} == 1 )
+	{
+		$page = $page . "<img src=$img_src/first-grey.gif>" . &nbsp(1);
+		$page = $page . "<img src=$img_src/prev-grey.gif>";
+	}	
+	else
+	{
+		my $params = $state->getUrlString( "page" => 1 );
+		$page = $page . "<a href=controller?$params><img src=$img_src/first.gif border=0></a>" . &nbsp(1);
+		$params = $state->getUrlString( "page" => $state->{page} - 1 );
+		$page = $page . "<a href=controller?$params><img src=$img_src/prev.gif border=0></a>";
+	}
+	$page = $page . &nbsp(2) . "<b>$state->{page} of $max_page</b>" . &nbsp(2);	
+	if( $state->{page} == $max_page )
+	{
+		$page = $page . "<img src=$img_src/next-grey.gif>" . &nbsp(1);
+		$page = $page . "<img src=$img_src/last-grey.gif>";
+	}	
+	else
+	{
+		my $params = $state->getUrlString( "page" => $state->{page} + 1 );
+		$page = $page . "<a href=controller?$params><img src=$img_src/next.gif border=0></a>" . &nbsp(1);
+
+		$params = $state->getUrlString( "page" => $max_page );
+		$page = $page . "<a href=controller?$params><img src=$img_src/last.gif border=0></a>";
+	}
+
+	my $bar = cr(
+		"<table border=0 cellpading=0 cellspacing=0 width=100%>",
+			"<tr class=hideBar>",
+				"<td width=33%>&nbsp;</td>",
+				"<td width=33% align=center> $page </td>",
+				"<td width=33% align=right>",
+					$hide_show,
+				"</td>",
+			"</tr>",
+		"</table>" ); 
+
+	return $bar;
+}
+
+
+sub getStatus
+{
+	my $ds = shift;
+	my $num = shift;
+
+	my $stat = "<table border=0 cellpadding=0 cellspacing=1 width=100%><tr>";
+
+	if( $ds->{remote_url} && $ds->{remote_url} ne "" )
+	{
+		#$stat = $stat . "<td width=25%><font size=-2 color=#C00000 face=Verdana><b>rmt&nbsp;</td>";
+		$stat = $stat . "<td width=25%><img src=$img_src/rl.gif alt=\"Remote Link\" width=20 height=15></td>";
+	}
+	else
+	{
+		$stat = $stat . "<td width=25%><img src=$img_src/blank.gif width=20 height=15></td>";
+	}
+
+	if( $ds->{status}->{documented} )
+	{
+		#$stat = $stat . "<td width=25%><font size=-2 color=blue face=Verdana><b>doc&nbsp;</td>";
+		$stat = $stat . "<td width=25%><img alt=\"Dataset Documented\" src=$img_src/doc.gif width=20 height=15></td>";
+	}
+	else
+	{
+		$stat = $stat . "<td width=25%><img src=$img_src/blank.gif width=20 height=15></td>";
+	}
+
+	if( $ds->{status}->{loaded} )
+	{
+		$stat = $stat . "<td width=25%><img alt=\"Dataset Loaded\" src=$img_src/loaded.gif width=20 height=15></td>";	
+	} 
+	else
+	{
+		$stat = $stat . "<td width=25%><img src=$img_src/blank.gif width=20 height=15></td>";
+	}
+
+	if( $ds->{status}->{checked} )
+	{
+		$stat = $stat . "<td width=25%><img alt=\"Datset Checked\" src=$img_src/checked.gif width=20 height=15></td>";	
+	} 
+	else
+	{
+		$stat = $stat . "<td width=25%><img src=$img_src/blank.gif width=20 height=15></td>";
+	}
+
+	$stat = $stat . "</tr></table>";
+
+	return $stat;
+	
+}
+
+sub getSortUrl
+{
+	my $state = shift;
+	my $sort = shift;
+
+	return "controller?" . $state->getUrlString( 'sort'=>$sort, 'page'=>1 );
+}
+
+sub getShowUrl
+{
+	my $field = shift;
+	my $state = shift;
+
+	# $field is hidden, remove it from @hide in state
+	my @hide = @{$state->{hide}};
+	my @new;
+	foreach my $h (@hide)
+	{
+		$new[scalar(@new)] = $h if( $h ne $field );
+	}
+	
+	return "controller?" . $state->getUrlString( 'hide'=>\@new, 'page'=>1 );
+}
+
+sub getShowAllUrl
+{
+	my $state = shift;
+	return "controller?" . $state->getUrlString( 'hide'=>[], 'page'=>1 );
+}
+
+sub getHideUrl
+{
+	my $field = shift;
+	my $state = shift;
+
+	# $field is not hidden, add it to @hide in state
+	my @hide = @{$state->{hide}};
+	$hide[scalar(@hide)] = $field;
+
+	return "controller?" . $state->getUrlString( 'hide'=>\@hide, 'page'=>1 );
+}
+
+sub getUserHash
+{
+	my $dba = UserDBA->new();
+	my @users = $dba->getAllUsers();
+	my %hash;
+
+	foreach my $user (@users)
+	{
+		$hash{$user->{id}} = $user->{display_name};
+	}
+
+	return %hash;
+}
+
+sub getHiddenBars
+{
+	my $state = shift;
+	my $bars = "";
+
+	foreach my $h (@{$state->{hide}})
+	{
+		if( $h eq "loaded" )
+		{
+			$bars = cr( $bars, 
+				"<tr>",
+					"<td align=center colspan=$col_count>",
+						"<img src=$img_src/loaded.gif>" . &nbsp(2) . "<i>Loaded Datasets are not displayed.</i>",
+					"</td>",
+				"</tr>" );
+		}
+		elsif( $h eq "checked" )
+		{
+			$bars = cr( $bars, 
+				"<tr>",
+					"<td align=center colspan=$col_count>",
+						"<img src=$img_src/checked.gif>" . &nbsp(2) . "<i>Checked Datasets are not displayed.</i>",
+					"</td>",
+				"</tr>" );
+		}
+		elsif( $h eq "documented" )
+		{
+			$bars = cr( $bars, 
+				"<tr>",
+					"<td align=center colspan=$col_count>",
+						"<font size=-2 color=blue face=Verdana><b>doc</b></font>" . &nbsp(2) . "<i>Documented Datasets are not displayed.</i>",
+					"</td>",
+				"</tr>" );
+		}
+	}
+
+	return $bars;
+}

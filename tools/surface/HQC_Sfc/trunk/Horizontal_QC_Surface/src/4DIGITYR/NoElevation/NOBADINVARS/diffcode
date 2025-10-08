@@ -1,0 +1,213 @@
+193,195d192
+<  * 14 Sep 2004 lec
+<  *   Update s/w to not use values previously flagged Bad
+<  *   'B' in variance calculations for any parameter.
+212,214c209,210
+< #define   DEBUG  1
+< #define   DEBUG2 1 
+< #define   DEBUGBADVAL 1
+---
+> #define   DEBUG  0
+> #define   DEBUG2 0
+741,745d736
+<                    *
+<                    * As of Sept 2004, do not include previously
+<                    * flagged Bad (B) values in the sigmasq calcs.
+<                    * S/w resets writeover_position to missing, so
+<                    * leave as missing if encounter Bad parameter.
+753,755d743
+< #if DEBUGBADVAL
+<                   printf ("staprs Value and flag (%7.2f, %1c).\n", qcfptr->staprs, qcfptr->staflg);
+< #endif
+757,764c745,750
+<                   if  (qcfptr->staflg != 'B')
+<                      {
+<                      if (qcfptr->staprs >0.00)
+<                         if (stn_data[stn_no][stnprs][writeover_position] < -990.00) 
+<                            stn_numdata[stn_no][stnprs]++;
+<                      else
+<                         if (stn_data[stn_no][stnprs][writeover_position] > -990.00)
+<                            stn_numdata[stn_no][stnprs]--;
+---
+>                   if (qcfptr->staprs >0.00)
+>                      if (stn_data[stn_no][stnprs][writeover_position] < -990.00) 
+>                         stn_numdata[stn_no][stnprs]++;
+>                   else
+>                      if (stn_data[stn_no][stnprs][writeover_position] > -990.00)
+>                         stn_numdata[stn_no][stnprs]--;
+766,768c752
+<                      stn_data[stn_no][stnprs][writeover_position] = qcfptr->staprs;
+<                      }
+<                   /* else Bad value, leave as reset -999.99 values. */
+---
+>                   stn_data[stn_no][stnprs][writeover_position] = qcfptr->staprs;
+775,777c759
+< #if DEBUGBADVAL
+<                   printf ("seaprs Value and flag (%7.2f, %1c).\n", qcfptr->seaprs, qcfptr->seaflg);
+< #endif
+---
+> 
+779,786c761,766
+<                   if  (qcfptr->seaflg != 'B')
+<                      {
+<                      if (qcfptr->seaprs >0.00)
+<                         if (stn_data[stn_no][slp][writeover_position] < -990.00)
+<                            stn_numdata[stn_no][slp]++;
+<                      else
+<                         if (stn_data[stn_no][slp][writeover_position] > -990.00)
+<                            stn_numdata[stn_no][slp]--;
+---
+>                   if (qcfptr->seaprs >0.00)
+>                      if (stn_data[stn_no][slp][writeover_position] < -990.00)
+>                         stn_numdata[stn_no][slp]++;
+>                   else
+>                      if (stn_data[stn_no][slp][writeover_position] > -990.00)
+>                         stn_numdata[stn_no][slp]--;
+788,790c768
+<                      stn_data[stn_no][slp][writeover_position] = qcfptr->seaprs;
+<                      }
+<                   /* else Bad value, leave as reset -999.99 values. */
+---
+>                   stn_data[stn_no][slp][writeover_position] = qcfptr->seaprs;
+792,794c770
+< #if DEBUGBADVAL
+<                   printf ("cmpsea Value and flag (%7.2f, %1c).\n", qcfptr->cmpsea, qcfptr->cmpflg);
+< #endif
+---
+> 
+796,803c772,777
+<                   if  (qcfptr->cmpflg != 'B')
+<                      {
+<                      if (qcfptr->cmpsea >0.00)
+<                         if (stn_data[stn_no][cslp][writeover_position] < -990.00)
+<                            stn_numdata[stn_no][cslp]++;
+<                      else
+<                         if (stn_data[stn_no][cslp][writeover_position] > -990.00)
+<                            stn_numdata[stn_no][cslp]--;
+---
+>                   if (qcfptr->cmpsea >0.00)
+>                      if (stn_data[stn_no][cslp][writeover_position] < -990.00)
+>                         stn_numdata[stn_no][cslp]++;
+>                   else
+>                      if (stn_data[stn_no][cslp][writeover_position] > -990.00)
+>                         stn_numdata[stn_no][cslp]--;
+805,807c779
+<                      stn_data[stn_no][cslp][writeover_position] = qcfptr->cmpsea;
+<                      }
+<                   /* else Bad value, leave as reset -999.99 values. */
+---
+>                   stn_data[stn_no][cslp][writeover_position] = qcfptr->cmpsea;
+809,811c781
+< #if DEBUGBADVAL
+<                   printf ("temp Value and flag (%7.2f, %1c).\n", qcfptr->temp, qcfptr->tmpflg);
+< #endif
+---
+>  
+813,820c783,788
+<                   if  (qcfptr->tmpflg != 'B')
+<                      {
+<                      if (qcfptr->temp >-999.00)
+<                         if (stn_data[stn_no][temp][writeover_position] < -990.00)
+<                            stn_numdata[stn_no][temp]++;
+<                      else
+<                         if (stn_data[stn_no][temp][writeover_position] > -990.00)
+<                            stn_numdata[stn_no][temp]--;
+---
+>                   if (qcfptr->temp >-999.00)
+>                      if (stn_data[stn_no][temp][writeover_position] < -990.00)
+>                         stn_numdata[stn_no][temp]++;
+>                   else
+>                      if (stn_data[stn_no][temp][writeover_position] > -990.00)
+>                         stn_numdata[stn_no][temp]--;
+822,827c790
+<                      stn_data[stn_no][temp][writeover_position] = qcfptr->temp;
+< #if DEBUGBADVAL
+<                      printf ("Good Temp Val Add In (%7.2f) at hour:min:: %d:%d.\n", qcfptr->temp, qcfptr->hour_nom, qcfptr->minute_nom);
+< #endif
+<                      }
+<                   /* else Bad value, leave as reset -999.99 values. */
+---
+>                   stn_data[stn_no][temp][writeover_position] = qcfptr->temp;
+829,831c792
+< #if DEBUGBADVAL
+<                   printf ("dewpnt Value and flag (%7.2f, %1c).\n", qcfptr->dewpnt, qcfptr->dewflg);
+< #endif
+---
+> 
+833,840c794,799
+<                   if  (qcfptr->dewflg != 'B')
+<                      {
+<                      if (qcfptr->dewpnt >-999.00)
+<                         if (stn_data[stn_no][dewpt][writeover_position] < -990.00)
+<                            stn_numdata[stn_no][dewpt]++;
+<                      else
+<                         if (stn_data[stn_no][dewpt][writeover_position] > -990.00)
+<                            stn_numdata[stn_no][dewpt]--;
+---
+>                   if (qcfptr->dewpnt >-999.00)
+>                      if (stn_data[stn_no][dewpt][writeover_position] < -990.00)
+>                         stn_numdata[stn_no][dewpt]++;
+>                   else
+>                      if (stn_data[stn_no][dewpt][writeover_position] > -990.00)
+>                         stn_numdata[stn_no][dewpt]--;
+842,844c801
+<                      stn_data[stn_no][dewpt][writeover_position] = qcfptr->dewpnt;
+<                      }
+<                   /* else Bad value, leave as reset -999.99 values. */
+---
+>                   stn_data[stn_no][dewpt][writeover_position] = qcfptr->dewpnt;
+846,848c803
+< #if DEBUGBADVAL
+<                   printf ("wndspd Value and flag (%7.2f, %1c).\n", qcfptr->wndspd, qcfptr->spdflg);
+< #endif
+---
+> 
+850,857c805,810
+<                   if  (qcfptr->spdflg != 'B')
+<                      {
+<                      if (qcfptr->wndspd >-999.00)
+<                         if (stn_data[stn_no][windsp][writeover_position] < -990.00)
+<                            stn_numdata[stn_no][windsp]++;
+<                      else
+<                         if (stn_data[stn_no][windsp][writeover_position] > -990.00)
+<                            stn_numdata[stn_no][windsp]--;
+---
+>                   if (qcfptr->wndspd >-999.00)
+>                      if (stn_data[stn_no][windsp][writeover_position] < -990.00)
+>                         stn_numdata[stn_no][windsp]++;
+>                   else
+>                      if (stn_data[stn_no][windsp][writeover_position] > -990.00)
+>                         stn_numdata[stn_no][windsp]--;
+859,865c812,813
+<                      stn_data[stn_no][windsp][writeover_position] = qcfptr->wndspd;
+<                      }
+<                   /* else Bad value, leave as reset -999.99 values. */
+< 
+< #if DEBUGBADVAL
+<                   printf ("wnddir Value and flag (%7.2f, %1c).\n", qcfptr->wnddir, qcfptr->dirflg);
+< #endif
+---
+>                   stn_data[stn_no][windsp][writeover_position] = qcfptr->wndspd;
+>  
+867,874c815,820
+<                   if  (qcfptr->dirflg != 'B')
+<                      {
+<                      if (qcfptr->wnddir >-999.00)
+<                         if (stn_data[stn_no][winddir][writeover_position] < -990.00)
+<                            stn_numdata[stn_no][winddir]++;
+<                      else
+<                         if (stn_data[stn_no][winddir][writeover_position] > -990.00)
+<                            stn_numdata[stn_no][winddir]--;
+---
+>                   if (qcfptr->wnddir >-999.00)
+>                      if (stn_data[stn_no][winddir][writeover_position] < -990.00)
+>                         stn_numdata[stn_no][winddir]++;
+>                   else
+>                      if (stn_data[stn_no][winddir][writeover_position] > -990.00)
+>                         stn_numdata[stn_no][winddir]--;
+876,878c822
+<                      stn_data[stn_no][winddir][writeover_position] = qcfptr->wnddir;
+<                      }
+<                   /* else Bad value, leave as reset -999.99 values. */
+---
+>                   stn_data[stn_no][winddir][writeover_position] = qcfptr->wnddir;

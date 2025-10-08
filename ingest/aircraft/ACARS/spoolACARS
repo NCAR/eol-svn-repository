@@ -1,0 +1,175 @@
+#!/usr/bin/perl -w
+
+# spoolACARStest
+# mark, 2004 June 4
+# sean, 2010 July 14
+#
+# $Id: spoolACARS,v 1.3 2004/06/05 06:08:54 joss Exp joss $
+# $Log: spoolACARS,v $
+# Revision 1.4 2010/07/14 stroble
+# Added ability to insert files into Codiac automatically
+#
+# Revision 1.3  2004/06/05 06:08:54  joss
+# Remove testing stubs.
+#
+# Revision 1.2  2004/06/04 18:05:47  joss
+# Overhaul of script to directly send data to MSS
+#
+#
+# Script to automatically spool compressed netCDF ACARS data to MSS
+#
+# Data is already gzipped, so daily tarfiles (~100M each) will be stored to
+# /JOSS/DATA/RAW/SOUNDING/ACARS/YYYY where YYYY is the year.  Filenames
+# will be acars.YYYYMMDD.tar where YYYYMMDD is the file date.
+#
+# File will run once per day.
+
+#use strict  #THIS REALLY SHOULD BE ENABLED!
+use lib "/net/work/lib/perl/mysql";
+use Time::Local;
+use POSIX "strftime";
+use FindBin qw($Script $Bin);
+use MySqlDatabase;
+use MySqlDataset;
+use MySqlMSSFile;
+
+$monitor="eol-cds-ingest@ucar.edu";
+open STDOUT, "|/bin/mail -s '$Script output' $monitor" or die
+    "Couldn't redirect stdout, $!";
+open STDERR, ">&STDOUT" or die "Couldn't dup stdout, $!";
+select STDERR; $|=1;
+select STDOUT; $|=1;
+
+print "I am $Bin/$Script running on ",`/bin/hostname`,"\n";
+
+$archive_ident='100.016';
+
+$tmp='tmp';
+
+$TAR='/bin/tar';
+
+###$RM='/bin/rm';
+###$RMDIR='/bin/rmdir --ignore-fail-on-non-empty'; # GNU rmdir can be quiet!
+
+$MSRCP='/net/local_lnx/dcs/bin/msrcp';
+$MSLS='/net/local_lnx/dcs/bin/msls';
+
+$srcdir='/scr/satellite/ldm/data/acars/netcdf';
+$destdir='/JOSS/DATA/RAW/SOUNDING/ACARS';
+$wpwd='jossdata';
+$rtpd=32767;
+$opts="-wpwd $wpwd -pe $rtpd";
+
+chdir($srcdir) or die "Couldn't cd to $srcdir, $!";
+print "working from $srcdir\n";
+
+# Figure out day before yesterday:
+($day, $month, $year) = (gmtime(time-2*86400))[3,4,5];
+$dby = sprintf("%04d%02d%02d", $year+1900, $month+1, $day);
+$today=int(time()/86400);
+print "Spooling ACARS older than $dby (UTC)\n";
+
+@years=glob('????');
+foreach $year (@years) {
+    opendir(DIR,$year);
+    @days=sort(grep(/^\d{8}$/,readdir(DIR)));
+    closedir(DIR);
+    #print "Year: $year Days: @days\n";
+    foreach $day (@days) {
+        ($y, $m, $d)=$day=~/^(\d\d\d\d)(\d\d)(\d\d)$/;
+        #print "y, m, d: $y, $m, $d\n";
+        $thisday=int(timegm(0,0,0,$d,$m-1,$y-1900)/86400);
+        #print "today, thisday: $today, $thisday\n";
+	#give it 2 days to finish collecting data to be safe
+	next if ($today-$thisday) <= 2;
+
+        print "Spooling files from $day\n";
+
+        $f="$tmp/acars.$day.tar";
+	print "$TAR cvf $f $year/$day\n";
+	$result=system("$TAR cvf $f $year/$day");
+	if ($result) {
+	    print "ERROR $result in tar!\n";
+	    next;
+	}
+
+	print "$MSRCP $opts $f mss:$destdir/$year/acars.$day.tar\n";
+	$result=system("$MSRCP $opts $f mss:$destdir/$year/acars.$day.tar");
+	if ($result) {
+	    print "ERROR $result in msrcp!\n";
+	    next;
+	}
+
+	print "Inserting $destdir/$year/acars.$day.tar to dataset $archive_ident\n";
+	
+	my $database = MySqlDatabase->new("ingest","gob-ble");
+	#$database->setHost("localhost");
+
+	#check if file is already inserted
+	my @row = $database->select("file", "id", "dataset_id=(select id from dataset where archive_ident='$archive_ident') AND filename='acars.$day.tar' AND directory='$destdir/$year'");
+	if ($#row >= 0) { print "File is already inserted, Skipping Insert\n"; }
+	else {
+	    my $mysqlFile = MySqlMSSFile->new();
+	    #$mysqlFile->setHost("hpss");
+	    $mysqlFile->setDatasetArchiveIdent($archive_ident);
+	    $mysqlFile->setFile("$destdir/$year", "acars.$day.tar");
+	    $mysqlFile->setFormatId(53);
+	    $mysqlFile->setBeginDate($y,$m,$d,0,0,0);
+	    $mysqlFile->setEndDate($y,$m,$d,23,59,59);
+
+	    $database->connect();
+	    my $msg = $mysqlFile->insert($database);
+
+	    if ($msg eq "") { #if insert worked
+		my $msg = expandDate($database, $archive_ident, $mysqlFile);
+	    }
+	    #if expand date and insert worked
+	    if ($msg eq "") { $msg .= $database->commit(); }
+	    #else undo
+	    else { $msg.= "Database rolled back.\n".$database->rollback(); }
+
+	    print "$msg\n";	
+	}
+
+	$database->disconnect();
+
+	
+	$result=system("$MSLS -l $destdir/$year/acars.$day.tar");
+	print "\n";
+	if ($result) {
+	    print "ERROR $result in msls!\n";
+	    next;
+	}
+	###system("$RM $f");
+	###system("$RM -r $year/$day");
+	###system("$RMDIR $year"); # Will only succeed when $year empty
+    }
+}
+sub expandDate {
+    my $database = shift(@_);
+    my $dataset_id = shift(@_);
+    my $mysql = shift(@_);
+    
+    # Create and load the dataset.
+    my $dataset = MySqlDataset->new($dataset_id);
+    $msg = $dataset->selectDataset($database);
+
+    # Only continue if the dataset was retreived successfully.
+    if ($msg eq "") {
+	# Load and format dates
+	my $file_begin = $mysql->getBeginDate(); $file_begin =~ s/[\s:-]//g;
+	my $file_end = $mysql->getEndDate(); $file_end =~ s/[\s:-]//g;
+	my $begin = $dataset->getBeginDate(); $begin =~ s/[\s:-]//g;
+	my $end = $dataset->getEndDate(); $end =~ s/[\s:-]//g;
+	
+	# Compare the dates and change as necessary.
+	if ($file_begin < $begin) { 
+	    $dataset->setBeginDate(split(/[\s:-]/,$mysql->getBeginDate())); }
+	if ($file_end > $end) { 
+	    $dataset->setEndDate(split(/[\s:-]/,$mysql->getEndDate())); }
+	
+	# Update the dataset with the new dates.
+	$msg = $dataset->updateDataset($database);
+    }
+    return $msg;
+}

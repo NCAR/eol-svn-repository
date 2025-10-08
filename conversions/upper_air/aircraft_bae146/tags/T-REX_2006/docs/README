@@ -1,0 +1,94 @@
+TITLE:
+T-REX FAAM BAE-146 Dropsonde dataset
+
+AUTHORS:
+Co-Principal Investigator:
+Dr Simon Vosper
+Manager, Orography Group
+Met Office
+Fitzroy Road
+Exeter
+EX1 3PB
+UK
+Tel: +44 1392 884584  Fax:  +44 1392 885681
+E-mail: simon.vosper@metoffice.gov.uk
+
+Co-Principal Investigator:
+Mr Philip Brown
+Manager, Cloud Physics Research
+Met Office
+Fitzroy Road
+Exeter
+EX1 3PB
+UK
+Tel: +44 1392 886740  Fax:  +44 1392 885681
+E-mail: phil.brown@metoffice.gov.uk
+
+Co-Principal Investigator
+Prof. Stephen Mobbs
+Director, NCAS
+School of Earth & Environment 
+University of Leeds 
+LS2 9JT 
+UK
+Tel: +44 113 3435158  Fax:  +44 113 3436716
+E-mail: stephen@env.leeds.ac.uk
+
+
+DATASET OVERVIEW: 
+This dataset contains data obtained from the UK FAAM BAE-146 dropsondes launched
+during March and April 2006 as part of T-REX. There are 72 data files in total.
+
+DATA FORMAT:
+All files are ASCII format. The file format is the CLASS format (.cls). The "D"
+files are 0.5-second data files, each of which contains data from a single
+dropsonde release. The naming convention used for the files is "D", followed by
+yyyymmdd_hhMMssQC.cls, where yyyy, mm, dd, hh, MM and ss are the year, month,
+day, hour, minute and second of the release time of the dropsonde.
+
+Each file consists of a header (15 lines) followed by the data, listed in
+columns. The header contains information about the sounding, including the
+launch position (GPS latitude and longitude) and altitude (in metres), the
+launch date, launch time and the flight number. The final lines of the header
+are labels for the columns of data:
+
+ Time  Press  Temp  Dewpt  RH    Uwind  Vwind  Wspd  Dir   dZ      Lon     Lat     Alt
+ sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s     deg     deg      m
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- -------- -------
+
+The columns of data are:
+
+1: Time (in seconds) since the launch of the dropsonde
+2: Pressure (in mb)
+3: Temperature (in degrees Celsius)
+4: Dewpoint (in degrees Celsius)
+5: Relative humidity (%)
+6: The zonal wind component (metres per second)
+7: The meridional wind component (metres per second)
+8: Wind speed (metres per second)
+9: Wind direction (degrees)
+10: Ascent rate of the dropsonde (metres per second)
+11: Longitude of the dropsonde (degrees)
+12: Latitude of the dropsonde (degrees)
+13: Geopotential height of the dropsonde, integrated down from release height
+(metres)
+
+Bad data for each column are marked by:
+2: 9999.0
+3: 999.0 
+4: 999.0
+5: 999.0
+6: 999.0
+7: 999.0
+8: 999.0
+9: 999.0
+10: 99.0
+11: 999.000
+12: 999.000
+13: 99999.0
+
+QUALITY CONTROL:
+The raw "D" data files have been passed through the Atmospheric Sounding
+Processing ENvironment (ASPEN) software, which performs smoothing and removes
+bad data points. Note that bad surface measurements, collected after the
+dropsondes have hit the ground, have NOT been removed from this dataset.

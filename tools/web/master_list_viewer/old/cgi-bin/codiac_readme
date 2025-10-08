@@ -1,0 +1,81 @@
+#! /usr/bin/perl -w
+
+# --------------------------------------------------------------
+# codiac_readme:
+#   Obtains the readme file_name and dir_path from CODIAC for
+#    the given storm_id and forwards the user to the page
+#   If no file_name or dir_path are found the user is given
+#    a 'no documentation' found message.
+#
+# Expected Params:
+#   "storm_id" - the storm_id to query from CODIAC.
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+#
+# Modified for the Arctic ML - August 12, 2003
+#
+# Author: Joel Clawson
+# Date: May, 2006
+#
+# Modified to read from MySQL instead of Empress.  (This was missed
+# in the May, 2005 change of the other data.
+# 
+# Author: Morgan Garske
+# Date: July 2014
+#
+# Changed database connection from sferic to farskol
+# --------------------------------------------------------------
+
+use DBI;
+use lib "lib";
+use strict;
+use EQuery;
+use CGI;
+use Util;
+
+my $dbh = DBI->connect( "DBI:mysql:database=zith9;host=emdac.eol.ucar.edu","zithview","look-999",
+			{RaiseError => 1}) || die("Can't connect to the database");
+
+my $cgi = CGI->new();
+my $storm_id = $cgi->param( "storm_id" );
+
+#my $eq = EQuery->new( "catalog_db" );
+#$eq->query( "SELECT dir_path, file_name FROM dataset WHERE storm_id=" . $eq->quote( $storm_id ) );
+
+#my %row = $eq->getRow();
+
+my $sth = $dbh->prepare("SELECT directory,filename FROM file WHERE purpose=? AND dataset_id=(select id from dataset where archive_ident=?)");
+$sth->execute("doc",$storm_id);
+
+my $url;
+#if( %row )
+#{
+#	if( $row{dir_path} ne "" & $row{file_name} ne "" )
+#	{
+#		$url = 	"http://www.joss.ucar.edu" .  substr( $row{dir_path}, length( "/web" ) ) .
+#						"/$row{file_name}";	
+#	}
+#}
+
+my @row = $sth->fetchrow();
+if (@row && $row[0] ne "" && $row[1] ne "") {
+    #$url = sprintf("http://www.joss.ucar.edu%s/%s",substr($row[0],length("/web")),$row[1]);
+    $url = sprintf("http://data.eol.ucar.edu/datafile/nph-get/%s/%s",$storm_id,$row[1]);
+}
+
+if( defined( $url ) && $url ne "" )
+{
+	print( "Location: $url\n\n" );
+	exit 1;
+}
+else
+{
+	println( $cgi->header() );
+	println( "<html><head><title>EOL Documentation Not found</title></head>" );
+	println( "<body bgcolor=white text=black>" );
+	println( "<center><br><br><br>" );
+	println( "<b><font size=+2 face=Verdana>Sorry, no documentation found for this dataset.</font></b>" );
+	println( "</body></html>" );
+}
+

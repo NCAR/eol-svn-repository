@@ -1,0 +1,61 @@
+$Id: Readme.scf_cvts,v 1.2 1992/12/11 20:59:04 john Exp $
+
+"Readme.scf_cvts"
+10 Dec 1992
+
+c2e : CLASS to EBUFR
+s2m : Seconds to Millibars (constant pressure level)
+s2mt : s2m but ignoring time field
+e2f : Errors to Flags (this has no practical use)
+
+See the Readme files.
+
+
+C2E
+====
+
+To run c2e, you must have several files in your working directory.
+They are:
+  class_file
+  desc_file
+  control_scf.txt
+  code_33_254      < be sure this is not an empty file >
+
+"control_scf.txt" is in this module ("scf_cvts"). The others can be
+obtained from "/home/john/GERmore/ebfiles.tar.Z" or made by:
+ 1. get on storm in "/storm/encoder_tables"
+ 2. run "build_encoder_files.sh"
+ 3. answer "y" to all the questions
+ 4. answer "code 33 255" to the "Enter table type" question
+ 5. then "stop" to quit
+ 6. then copy the files appropriately
+
+c2e stops with an error if it finds an Unchecked QC flag that is important.
+This is on purpose. Change the code to change the behavior.
+
+Currently, c2e only processes one sounding per input file.
+It gets the nominal time from the filename.
+
+******* "c2eN" is what you want to use. (This is a separate program for the
+moment.) "c2eN" has the following features:
+  1. is a modification of c2e
+  2. converts SCF files to EBUFR
+  3. converts SCF files with multiple soudings per file that are in
+     the format of the sort on "/data/ftp/fest/sounding/10mb_*.cls"
+  4. obtains the nominal time from the 12th Header line (1-based counting)
+  5. uses the input filename only to generate the output filename
+  6. is a part of the scf_cvts CVS module
+  6. binary is "/home/john/bin/c2eN" (note upper case N)
+
+
+S2M : binaries in "/home/john/bin"
+===================================
+(these were created by changing FFLAGS in Makefile and mv'ing filenames)
+
+s2m : converts to 10 mb levels; uses times to do interpolation and QC judgements
+s2m_lg : s2m with logging turned on (creates a big .log file) and compiled -g
+s2mt : converts to 10 mb levels; ignores times, does interpolation with the
+       log of the pressures, makes no "spatial" judgements about QC
+s2mt_lg : s2mt with .log turned on and compiled -g
+s5m : s2m but converts to 5 mb levels
+s5mt : s2mt but converts to 5 mb levels

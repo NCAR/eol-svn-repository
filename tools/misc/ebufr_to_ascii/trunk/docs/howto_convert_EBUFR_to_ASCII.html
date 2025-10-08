@@ -1,0 +1,201 @@
+<html>
+<head>
+<title>How To: Convert EBUFR to ASCII Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Convert EBUFR to ASCII Data</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#version">Previous Versions</a>
+            <ol>		   
+                <li><a href="#version:EBUFR">EBUFR TO ASCII 2011</a></li>
+            </ol>
+        </li>
+        <li><a href="#directory">Directory Structure</a></li>
+        <li><a href="#process">Processing the Data</a>
+            <ol> 
+			<li><a href="#setup">Initial Processing Setup</a></li>     		
+            <li><a href="#convert">Converting the Data</a></li>
+ 			<li><a href="#visual_qc">Visual QC</a></li>
+            </ol>
+        </li>
+        <li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+	<p>This document contains instructions for converting data files from EBUFR format to ASCII format.  This was required by the Spring 2011 conversion to HPSS, and the loss of the Fortran compiler required to convert EBUFR data on the fly.  For approximately 294 datasets the data had to be converted to ASCII and loaded into the database.  The ebufconverter.pl script has been set up to search the tsunami ("real") database for files of EBUFR format, determine the type of data contained (surface, precipitation or sounding), run the correct converter to convert the files to ASCII, and load the ASCII files into the database.  The files are loaded in a "hidden" state into the merlot test database.  After the files are checked, John Allison will move the files into the tsunami database, hide the existing EBUFR files, and "un-hide" the new ASCII files.</p>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions</h2>
+<div class="block">
+
+    <a name="version:EBUFR"></a><h3>EBUFR to ASCII (2011)</h3>
+    <table class="version">
+	<tr><th>Software:</th><td>&nbsp;<a
+	href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Ftools%2Fmisc%2Febufr_converter%2F#_tools_misc_ebufr_converter_">/dmg/tools/misc/ebruf_converter/ebufconvert.pl</a>&nbsp;</td></tr>
+    </table>         
+    
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">/net/work/Projects/ebufconversion/</h3>
+    <table class="directories">
+		<tr><th>software/</th><td>The directory where the software for the
+		conversion is stored.  This is also the directory where the script will
+		be run, and where the error and other log files will be
+		placed.</td></tr>
+		<tr><th>net/archive/data/*/</th><td>These are the shadow directories
+		created when running the script with the testing variable set (my
+		$testing = 1;).  When the testing variable is turned off, the converted
+		files are created in the "real" /net/archive/data directory where the
+		original EBUFR files are located.</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+
+<a name="process"></a><h2>Processing the Data</h2>
+<div class="block"> 
+    <a name="setup"></a><h3>Initial Processing Setup</h3>
+	<ol>
+
+	<li><p>Change to the <span class="directoryName">software</span> directory.</p></li>
+	<li><p>You will need to set up your environment correctly.  Make sure that a copy of the <span class="softwareName">setup_env</span> script is located in the directory, and source this file:</p>
+	<p class="code">source setup_env</p>
+    </li>
+    </ol>  
+
+    <a name="convert"></a><h3>Converting the Data</h3>
+ 	<p class="note">This step runs Perl code and should work on basically any
+	machine. It has been tested and is known to work on merlot.</p>
+
+	<ol>	
+	<li><p>Edit the <span class="softwareName">ebufconvert.pl</span> script.</p>
+	<ul>
+		<li><p>Inspect the script and make sure that the testing variable is
+		set correctly.  If you don't wish to commit the changes, and only want
+		to test the script, set (my $testing = 1).</p></li>  
+		<li><p>Make sure that the read and write databases are set as you
+		expect (merlot for testing, tsunami is the "real" database).</p></li>
+	</ul>
+	</li>
+	<li><p>Run the <span class="softwareName">ebufconvert.pl</span> script.
+	This will convert the EBUFR data to ASCII format and insert the converted
+	files into the database in a hidden state. NOTE:  The newly created ASCII file will have one of three possible extensions:</p>
+	    <ul>
+		    <li>Surface data:  *.qcf</li>
+			<li>Sounding data:  *.scf</li>
+			<li>Precipitation data:  *.pqcf</li>
+		</ul>
+	</li>
+	<li><p>Check the log files in the <span class="directoryName">software</span>
+	directory to determine if any issues need to be addressed.  Output logs consist of:</p>
+	<ul>
+	    <li><p><span class="softwareName">commands.log:</span> Recorded the dataset ID (followed by dataset/total datasets), file name, the command issued by the script to convert the file, and the resulting output of the called converter.  For the surface converter (ebqcf) and soundings converter (ebscf), successful completion results in no output.  For the precipitation converter (ep2pq), successful completion results in output.</p>
+		    <ul>
+			    <li>Example precipitation command output:
+<pre>
+Dataset: 85.117 (288/294)
+Dataset: 85.117 (288/294) File: 20030706.ebufr (48/48)
+/usr/local/codiac/bin/ep2pq  -f /net/archive/data/bamex/composites/15min_pcp/20030706.ebufr /net/archive/data/bamex/composites/15min_pcp/20030706.pqcf
+End of input.
+/net/archive/data/bamex/composites/15min_pcp/20030: EOF
+1192  records seen.
+0  bad(?) records seen.
+</pre></li>
+
+		        <li>Example of surface command output:
+<pre>
+Dataset: 85.118 (289/294)
+Dataset: 85.118 (289/294) File: 20030706.ebufr (48/48)
+/usr/local/codiac/bin/ebqcf /net/archive/data/bamex/composites/hrly_sfc/20030706.ebufr /net/archive/data/bamex/composites/hrly_sfc/20030706.qcf
+</pre></li>
+
+                <li>Example of sounding command output:
+<pre>
+Dataset: 14.001 (31/294)
+Dataset: 14.001 (31/294) File: LAKE_ICE123197.ebufr (62/62)
+/usr/local/codiac/bin/ebscf /net/archive/data/lakeice/soundings/us_oper/LAKE_ICE123197.ebufr /net/archive/data/lakeice/soundings/us_oper/LAKE_ICE123197.scf
+</pre></li>
+            </ul></li>
+		  <li><p><span class="softwareName">inserts.log:</span> Recorded the database insert commands.</p>
+		  <ul>
+		      <li>Example of insert log output:
+<pre>
+Insert: /net/archive/data/esop_95/5min_sfc/ES5_950930.qcf -&gt; 1.001 (1995-09-30 00:00:00,1995-09-30 23:55:59,18)
+</pre></li></ul>
+		  
+		  <li><p><span class="softwareName">Errors.log:</span>  Recorded the dataset ID, input and output file names for files which failed one of the converter tests, such as file size or date.</p>
+		  <ul>
+		      <li>Example of error log entry:
+<pre>
+Dataset 1.74: Output filesize &lt; 1.5*(input filesize) possible dataloss!
+Inputfile: /net/archive/data/gids1/sao_specs/920430.ebufr
+Outputfile: /net/archive/data/gids1/sao_specs/920430.qcf
+</pre></li></ul>
+		  <p>The errors seen were:</p>
+		  <ul>
+		      <li>File size (as in the example above).</li>
+			  <li>"No files found for dataset <ID> where format_id=10" (with format_id=10 meaning EBUFR files).</li>
+			  <li>Two cases where the file did not exist ("ARM_2003.ebufr does not exist").</li>
+			  <li>Several cases where the file "already exists!" which is not really an error, but an information message.  This occurs in the case of files which are referenced by more than one dataset, and the file has already been converted.  These were noted on the Conversion Status document just in case they later turned out to be important.</li>
+	      </ul>
+		  <p>In addition to being reported in the <span class="softwareName">Errors.log</span> file, the file size errors were also listed in the <span class="softwareName">SizeErrors.log</span> file, and the date/time errors were listed in the <span class="softwareName">DateErrors.log.</span></p>
+		  </li></ul>
+
+
+
+
+
+
+
+
+    </li>
+	</ol>
+
+<a name="visual_qc"></a><h3>Visual QC</h3>
+	<p>Once the script has completed, visually inspect the log files to
+	determine where problems may have occurred.  Problems such as file size and
+	date checking errors will need to be resolved before John Allison can
+	complete the final steps of un-hiding the files. Verification of issues
+	should be recorded on the <a
+	href="http://dmg.eol.ucar.edu/multi_project/EBUFR_Conversion_Status.html">Conversion
+	Status</a> document.</p>
+
+</div>
+<a href="#">Top</a><hr>
+
+
+<a name="documents"></a><h2>Documentation</h2>
+<p>The following are a list of documents that may help with the conversion or
+are related to the raw data.</p>
+<ul>
+    <li><a href="#">How To: Convert EBUFR to ASCII Data</a>:  This document.</li>
+	<li><a href="http://dmg.eol.ucar.edu/multi_project/EBUFR_Conversion_Status.html">EBUFR to ASCII Conversion Status</a></li>
+
+</ul>
+<a href="#">Top</a><hr> 
+<hr>
+
+<p class="foot">Revision History:</p>
+<table class="revhistory">
+	<tr>
+	    <td>13 June 2011</th>
+		<td>Linda Echo-Hawk</td>
+	</tr>
+</table>  
+
+
+</body>
+</html>

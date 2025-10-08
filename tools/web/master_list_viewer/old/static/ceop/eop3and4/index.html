@@ -1,0 +1,1100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+body {font: bold 13px "Century Gothic", Helvetica, sans-serif;}
+h1 {font: bold 21px "Century Gothic", Helvetica, sans-serif; color: black}
+b.red {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: #ff0000}
+b.date {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: #00bb00}
+b.large {font: bold 20px "Century Gothic", Helvetica, sans-serif; color: #00bb00}
+th {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black}
+th.sfc {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#aaddee;
+        text-align: center;}
+th.twr {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#cccc99; border-color: black; border-width:1px}
+th.stm {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#ffccdd; border-color: black; border-width:1px}
+th.flx {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#eeeebb; border-color: black; border-width:1px}
+th.son {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#eecc88; border-color: black; border-width:1px}
+th.empty {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#ffffff;}
+th.header {font: bold 14px "Century Gothic", Helvetica, sans-serif; color: white; background-color:#224477;
+           vertical-align: center; text-align: center}
+tr.baltex {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#dddddd;
+           vertical-align: center; text-align: left;}
+tr.camp {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#ddddcc;
+           vertical-align: center; text-align: left}
+tr.amma {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#aaaaaa;
+           vertical-align: center; text-align: left}
+tr.gapp {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#bbbbcc;
+           vertical-align: center; text-align: left}
+tr.lba {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#dddddd;
+           vertical-align: center; text-align: left}
+tr.mags {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#aaaaaa;
+           vertical-align: center; text-align: left}
+tr.mdb {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#ddddcc;
+           vertical-align: center; text-align: left}
+tr.arm {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; background-color:#bbbbcc;
+           vertical-align: center; text-align: left}
+
+td {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black;}
+th.none {font: bold 13px "Century Gothic", Helvetica, sans-serif; color: black; text-align:center;
+         background-color: black; background-image: url(http://www.eol.ucar.edu/projects/ceop/dm/images/nodata.png);}
+a:link { color: blue; text-decoration: none}
+a:active { color: blue; text-decoration: none}
+a:visited { color: blue; text-decoration: none}
+a:hover { color: red; text-decoration: none}
+table.main {border-width: 4px; border-style: double; border-color: green;}
+//-->
+</style>
+<title>CEOP Reference Site Data Sets</title>
+</head>
+<body>
+<table align=center border=0 cellpadding=5 cellspacing=10>
+<td><img src="http://www.eol.ucar.edu/projects/ceop/dm/images/ceop75.gif"></td>
+<td align=center><h1>CEOP Reference Site Data Sets</h1></td>
+<td><img border="0" src="http://www.eol.ucar.edu/projects/ceop/dm/images/eol75.jpg"></td>
+</tr></table>
+<p>
+<center>
+<b>Last Updated:  7  March     2012.</b>
+<p>
+<b class=red>Most recent updates:</b> 
+
+                      <b class=date>7 Mar 2012</b> - You can now order the complete CEOP data set in netCDF or ASCII <a href="http://data.eol.ucar.edu/codiac/dss/id=76.205">here</a>.
+<table cellspacing=5>
+<tr>
+<td colspan=8 align=center><b class=large><a href="http://data.eol.ucar.edu/codiac/dss/id=76.205">Click here to order the complete CEOP data set in ASCII or netCDF.</a></b><br><br>  You can still order individual data sets by clicking on the appropriate "<font color=blue>X</font>" below.  Note that the dates by the "<font color=blue>X</font>" are the dates the data set was last updated.</b> <br></td>
+</tr><tr>
+<td colspan=8 align=center><b>Additional documentation can be obtained by clicking on the Reference Site Name.<br><br></b></td>
+</tr><tr>
+<td></td>
+<td colspan=3 align=left><b class=red>SFC</b><b> - Surface Meteorology and Radiation</b></td>
+<td></td>
+<td colspan=3 align=left><b class=red>TWR</b><b> - Meteorological Tower</b></td>
+</tr><tr>
+<td></td>
+<td colspan=3 align=left><b class=red>STM</b><b> - Soil Temperature and Moisture</b></td>
+<td></td>
+<td colspan=3 align=left><b class=red>FLX</b><b> - Flux</b></td>
+</tr><tr>
+<td colspan=8 align=center>For other ancillary data sets please click <a href="#ancillary">here</a>.</b></td>
+</tr><tr>
+<td colspan=8 align=center><b>The CEOP data formats are described in the <a href="http://www.eol.ucar.edu/projects/ceop/dm/documents/refdata_report/">CEOP Reference Site Data Set Procedures Report</b></td>
+</tr><tr>
+<td colspan=8 align=center><b>To jump to a particular RHP click on the appropriate logo:</td>
+</tr><tr>
+<td><a href="#baltex"><img border=0 src="http://www.eol.ucar.edu/projects/ghp/dm/logos/BALTEX50.jpg"></a></td>
+<td><a href="#camp"><img border=0 src="http://www.eol.ucar.edu/projects/ghp/dm/logos/CAMP25.gif"></a></td>
+<td><a href="#amma"><img border=0 src="http://www.eol.ucar.edu/projects/ghp/dm/logos/CATCH50.gif"></a></td>
+<td><a href="#gapp"><img border=0 src="http://www.eol.ucar.edu/projects/ghp/dm/logos/GAPP50.jpg"></a></td>
+<td><a href="#lba"><img border=0 src="http://www.eol.ucar.edu/projects/ghp/dm/logos/LBA50.jpg"></a></td>
+<td><a href="#mags"><img border=0 src="http://www.eol.ucar.edu/projects/ghp/dm/logos/MAGS50.gif"></a></td>
+<td><a href="#mdb"><img border=0 src="http://www.eol.ucar.edu/projects/ghp/dm/logos/MDB_logo.jpg"></a></td>
+<td><a href="#arm"><img border=0 src="http://www.eol.ucar.edu/projects/ghp/dm/logos/ARM50.jpg"></a></td>
+</tr></table>
+</center><p>
+<table class=main width="95%"  id="CEOP Reference Site Data Sets" align=center>
+  <tr>
+    <th width="5%" class=header>RHP</th>
+    <th width="9%" class=header>Reference Site Name </th>
+    <th width="8%" class=header>Data Set</th>
+    <th width="8%" class=header>Oct 2002 <br>Dec 2003</th>
+    <th width="8%" class=header>2004</th>
+    <th width="8%" class=header>2005</th>
+    <th width="8%" class=header>2006</th>
+    <th width="8%" class=header>2007</th>
+    <th width="8%" class=header>2008</th>
+    <th width="8%" class=header>2009</th>
+  </tr>
+  <tr class=baltex>
+    <th rowspan=23 align=center>BALTEX</th>
+    <th rowspan=5 align=left><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/baltex/cabauw/cabauw">Cabauw</a></th>
+    <th class=sfc><a name=baltex></a>SFC</th>
+    <th class=sfc colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.116">X</a> (19 Nov 2010)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.119">X</a> (19 Nov 2010)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.118">X</a> (19 Nov 2010)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th colspan=7 class=flx><a href="http://data.eol.ucar.edu/codiac/dss/id=76.117">X</a> (19 Nov 2010)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th colspan=7 class=son><a href="http://data.eol.ucar.edu/codiac/dss/id=76.106">X</a> (17 Nov 2010)</th>
+ </tr><tr>
+</tr> <tr class=baltex>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/baltex/lindenberg/falkenberg">Lindenberg</a></th>
+    <th class=sfc>SFC</th>
+    <th colspan=7 class=sfc><a href="http://data.eol.ucar.edu/codiac/dss/id=76.120">X</a> (10 Jan 2011)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th colspan=7 class=twr><a href="http://data.eol.ucar.edu/codiac/dss/id=76.122">X</a> (10 Jan 2011)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th colspan=7 class=stm><a href="http://data.eol.ucar.edu/codiac/dss/id=76.121">X</a> (23 Feb 2011)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th colspan=7 class=flx><a href="http://data.eol.ucar.edu/codiac/dss/id=76.123">X</a> (12 Jan 2011)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th colspan=7 class=son><a href="http://data.eol.ucar.edu/codiac/dss/id=76.149">X</a> (12 Jan 2011)</th>
+</tr><tr>
+</tr> <tr class=baltex>
+    <th rowspan=5><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/baltex/norunda/norunda">Norunda</a></th>
+    <th class=sfc>SFC</th>
+    <th colspan=1 class=sfc><a href="http://data.eol.ucar.edu/codiac/dss/id=76.186">X</a> (29 Jun 2006)</th>
+    <th class=none colspan=7>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=8></th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=8>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=8>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=8>&nbsp;</th>
+</tr><tr>
+</tr> <tr class=baltex>
+    <th rowspan=5><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/baltex/sodankyla/A">Sodankyl&auml</a></th>
+    <th class=sfc>SFC</th>
+    <th colspan=6 class=sfc><a href="http://data.eol.ucar.edu/codiac/dss/id=76.151">X</a> (05 Feb 2010)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.191">X</a> (25 Jul 2006)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th colspan=6 class=stm><a href="http://data.eol.ucar.edu/codiac/dss/id=76.190">X</a> (06 Apr 2010)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th colspan=2 class=flx><a href="http://data.eol.ucar.edu/codiac/dss/id=76.192">X</a> (25 Jul 2006)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=son colspan=6><a href="http://data.eol.ucar.edu/codiac/dss/id=76.193">X</a> (06 Apr 2010)</th>
+  </tr>
+</tr>
+  <tr class=camp>
+    <th align=center rowspan=5><a name=camp></a>CEOP_AP<br>(CAMP)</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/CMC/Pontianak/">Central Indonesia</a></th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=6></th>
+</tr> <tr>
+    <th width="5%" class=header>RHP</th>
+    <th width="9%" class=header>Reference Site Name </th>
+    <th width="8%" class=header>Data Set</th>
+    <th width="8%" class=header>Oct 2002 <br>Dec 2003</th>
+    <th width="8%" class=header>2004</th>
+    <th width="8%" class=header>2005</th>
+    <th width="8%" class=header>2006</th>
+    <th width="8%" class=header>2007</th>
+    <th width="8%" class=header>2008</th>
+    <th width="8%" class=header>2009</th>
+</tr> <tr class=camp>
+    <th align=center rowspan=25>CEOP_AP<br>(CAMP)</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Central_Vietnam/DaNang/">Central Vietnam</a></th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=empty colspan=6></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Chao/Lampang">Chao Phraya River</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.145">X</a> (11 Dec 2006)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.146">X</a> (11 Dec 2006)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.137">X</a> (11 Dec 2006)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.138">X</a> (11 Dec 2006)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th colspan=4 class=none></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/EMC/Biak">Eastern Indonesia</a></th>
+    <th class=sfc>SFC</th>
+    <th class=none colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=empty colspan=6></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Siberia_Taiga/Larch_Forest/">Eastern Siberia Taiga</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.152">X</a> (28 Sep 2010)</th>
+    <th class=empty colspan=2>
+    <th class=sfc colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.152">X</a> (28 Sep 2010)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.154">X</a> (19 Oct 2006)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.155">X</a> (09 Aug 2006)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.153">X</a> (09 Aug 2006)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=4>&nbsp;</th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Siberia_Tundra/Tiksi/">Eastern Siberia Tundra</a>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.133">X</a> (23 Sep 2010)     </th>   
+    <th class=empty colspan=2>
+    <th class=sfc colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.133">X</a> (23 Sep 2010)</th>
+</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.126">X</a> (09 Aug 2006)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.132">X</a> (09 Aug 2006)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.125">X</a> (09 Jul 2006)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=4>&nbsp;</th>
+</tr><tr>
+    <th width="5%" class=header>RHP</th>
+    <th width="9%" class=header>Reference Site Name </th>
+    <th width="8%" class=header>Data Set</th>
+    <th width="8%" class=header>Oct 2002 <br>Dec 2003</th>
+    <th width="8%" class=header>2004</th>
+    <th width="8%" class=header>2005</th>
+    <th width="8%" class=header>2006</th>
+    <th width="8%" class=header>2007</th>
+    <th width="8%" class=header>2008</th>
+    <th width="8%" class=header>2009</th>
+</tr> <tr class=camp>
+    <th align=center rowspan=25><a name=camp></a>CEOP_AP<br>(CAMP)</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Heihe/Linze">Heihe River Basin</a></th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=6></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Himalayas/Lukla/">Himalayas</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.113">X</a> (22 Jun 2011)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=7></th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.115">X</a> (22 Jun 2011)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.114">X</a> (19 Apr 2011)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=5></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Korean_Haenam/Haenam/">Korean Haenam</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.140">X</a> (23 May 2006)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=4></th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.139">X</a> (15 Feb 2006)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.181">X</a> (15 Feb 2006)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=4></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Korean_Peninsula/DK/">Korean Peninsula</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.161">X</a> (04 May 2005)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.162">X</a> (04 May 2005)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.160">X</a> (03 May 2005)</th>
+    <th colspan=3>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+   <th class=none colspan=4></th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=4></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Lanzhou/SACOL">Lanzhou</a></th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=6></th>
+</tr> <tr>
+    <th width="5%" class=header>RHP</th>
+    <th width="9%" class=header>Reference Site Name </th>
+    <th width="8%" class=header>Data Set</th>
+    <th width="8%" class=header>Oct 2002 <br>Dec 2003</th>
+    <th width="8%" class=header>2004</th>
+    <th width="8%" class=header>2005</th>
+    <th width="8%" class=header>2006</th>
+    <th width="8%" class=header>2007</th>
+    <th width="8%" class=header>2008</th>
+    <th width="8%" class=header>2009</th>
+</tr> <tr class=camp>
+    <th align=center rowspan=25>CEOP_AP<br>(CAMP)</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Yellow_River/Gaoying">Lower Yellow River</a></th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=6></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Mongolia/A3/">Mongolia</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.099">X</a> (14 Sep 2006)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=2>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.124">X</a> (27 Sep 2006)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.100">X</a> (14 Jul 2006)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=2></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Mongol_Arvayheer/Arvayheer">Mongolia Arvayheer</a></th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=6></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Mongol_Nalaikh/Nalaikh/">Mongolia Nalaikh</a></th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=6></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Northeast_Bangladesh/Sylhet">Northeast Bangladesh</a></th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=empty colspan=6></th>
+</tr> <tr>
+    <th width="5%" class=header>RHP</th>
+    <th width="9%" class=header>Reference Site Name </th>
+    <th width="8%" class=header>Data Set</th>
+    <th width="8%" class=header>Oct 2002 <br>Dec 2003</th>
+    <th width="8%" class=header>2004</th>
+    <th width="8%" class=header>2005</th>
+    <th width="8%" class=header>2006</th>
+    <th width="8%" class=header>2007</th>
+    <th width="8%" class=header>2008</th>
+    <th width="8%" class=header>2009</th>
+</tr> <tr class=camp>
+    <th align=center rowspan=25>CEOP_AP<br>(CAMP)</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Northeast_Thailand/Nakhonrachasima/">Northeast Thailand</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.135">X</a> (16 Mar 2007)
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.147">X</a> (16 Mar 2007)
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.136">X</a> (16 Mar 2007)
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.148">X</a> (16 Mar 2007)
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=4>&nbsp;</th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/NMC/Manado">Northern Indonesia</a></th>
+    <th class=sfc>SFC</th>
+    <th class=none colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=empty colspan=6></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Northern_Mongolia/Kherlen">Northern Mongolia</a></th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=6></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/NSCSSJ/Alishan">Northern South China Sea - Southern Japan</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.156">X</a> (14 Jul 2006)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=4>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.158">X</a> (14 Jul 2006)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=4>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=son colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.108">X</a> (7 Feb 2007)</th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Pakistan/Askole">Pakistan Karakorum</a></th>
+    <th class=sfc>SFC</th>
+    <th class=none colspan=1>&nbsp;</th>
+    <th class=sfc colspan=5><a href="http://data.eol.ucar.edu/codiac/dss/id?76.200">X</a> (11 May 2011)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=6></th>
+</tr> <tr>
+    <th width="5%" class=header>RHP</th>
+    <th width="9%" class=header>Reference Site Name </th>
+    <th width="8%" class=header>Data Set</th>
+    <th width="8%" class=header>Oct 2002 <br>Dec 2003</th>
+    <th width="8%" class=header>2004</th>
+    <th width="8%" class=header>2005</th>
+    <th width="8%" class=header>2006</th>
+    <th width="8%" class=header>2007</th>
+    <th width="8%" class=header>2008</th>
+    <th width="8%" class=header>2009</th>
+</tr> <tr class=camp>
+    <th align=center rowspan=25>CEOP_AP<br>(CAMP)</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/SMC/Serpong">Southern Indonesia</a></th>
+    <th class=sfc>SFC</th>
+    <th class=none colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=empty colspan=6></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Tibet/Amdo-Tower/">Tibet</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.127">X</a> (19 Oct 2006)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.150">X</a> (19 Oct 2006)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.129">X</a> (10 Nov 2006)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.128">X</a> (20 Oct 2006)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=1>&nbsp;</th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Tongyu/Cropland">Tongyu (Inner Mongolia)</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.141">X</a> (14 Jul 2006)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.144">X</a> (14 Jul 2006)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.142">X</a> (14 Jul 2006)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.143">X</a> (14 Jul 2006)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=2>&nbsp;</th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/Tsukuba/UT-MtTsukuba">Tsukuba</a></th>
+    <th class=sfc>SFC</th>
+    <th class=none colspan=4>&nbsp;</th>
+    <th class=empty colspan=3>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=4>&nbsp;</th>
+    <th class=twr colspan=3><a href="http://data.eol.ucar.edu/codiac/dss/id=76.202">X</a> (20 Apr 2011)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=4>&nbsp;</th>
+    <th class=stm colspan=3><a href="http://data.eol.ucar.edu/codiac/dss/id=76.204">X</a> (22 Jun 2011)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th colspan=4 class=none>&nbsp;</th>
+    <th class=flx colspan=3><a href="http://data.eol.ucar.edu/codiac/dss/id?76.201">X</a> (23 Feb 2011)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=6></th>
+</tr> <tr class=camp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/WMC/Kototabang">Western Indonesia<br>(Equatorial Island)</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.111">X</a> (24 Sep 2010)</th>
+    <th class=empty colspan=2>
+    <th class=sfc colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.111">X</a> (24 Sep 2010)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th colspan=2 class=none>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th colspan=2 class=none>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th colspan=2 class=none>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=son colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.107">X</a> (29 Mar 2005)</th>
+    <th class=none colspan=3>&nbsp;</th>
+</tr><tr>
+    <th width="5%" class=header>RHP</th>
+    <th width="9%" class=header>Reference Site Name </th>
+    <th width="8%" class=header>Data Set</th>
+    <th width="8%" class=header>Oct 2002 <br>Dec 2003</th>
+    <th width="8%" class=header>2004</th>
+    <th width="8%" class=header>2005</th>
+    <th width="8%" class=header>2006</th>
+    <th width="8%" class=header>2007</th>
+    <th width="8%" class=header>2008</th>
+    <th width="8%" class=header>2009</th>
+</tr> <tr class=camp>
+    <th align=center rowspan=5>CEOP_AP<br>(CAMP)</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/ceop_ap/WPO/Aimeliik">Western Pacific Ocean</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.134">X</a> (11 May 2011)</th>
+    <th class=none colspan=2></th>
+    <th class=sfc colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.134">X</a>  (11 May 2011)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th colspan=7 class=none>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th colspan=7 class=none>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th colspan=7 class=none>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=7>&nbsp;</th>
+</tr> <tr class=mags>
+    <th align=center rowspan=15>CliC<br>(MAGS)</th>
+    <th rowspan=5 align="left">Alert</th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=empty colspan=6></th>
+</tr> <tr class=mags>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/clic/berms/OA/">BERMS</a></th>
+    <th class=sfc><a name=mags></a>SFC</th>
+    <th colspan=7 class=sfc><a href="http://data.eol.ucar.edu/codiac/dss/id=76.199">X</a> (22 Aug 2011)
+        <img border=0 src="http://www.eol.ucar.edu/projects/ceop/dm/images/new.gif"></th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th colspan=7 class=twr><a href="http://data.eol.ucar.edu/codiac/dss/id=76.183">X</a> (19 Apr 2011)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th colspan=7 class=stm><a href="http://data.eol.ucar.edu/codiac/dss/id=76.184">X</a> (19 Apr 2011)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th colspan=2 class=flx><a href="http://data.eol.ucar.edu/codiac/dss/id=76.182">X</a> (23 Feb 2006)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th colspan=2 class=son><a href="http://data.eol.ucar.edu/codiac/dss/id=76.185">X</a> (24 Feb 2006)</th>
+</tr> <tr class=mags>
+    <th rowspan=5 align="left">Eureka</th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=empty colspan=6></th>
+</tr> <tr class=gapp>
+    <th align=center rowspan=5><a name=cppa></a>CPPA<br>(GAPP)</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/cppa/Bondville/Bondville">Bondville</a></th>
+    <th class=sfc><a name=gapp></a>SFC</th>
+    <th class=sfc colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.094">X</a> (01 Dec 2005)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th colspan=5 class=none>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.096">X</a> (01 Dec 2005)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.095">X</a> (01 Dec 2005)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=son colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.102">X</a> (02 Feb 2010)</th>
+</tr><tr>
+    <th width="5%" class=header>RHP</th>
+    <th width="9%" class=header>Reference Site Name </th>
+    <th width="8%" class=header>Data Set</th>
+    <th width="8%" class=header>Oct 2002 <br>Dec 2003</th>
+    <th width="8%" class=header>2004</th>
+    <th width="8%" class=header>2005</th>
+    <th width="8%" class=header>2006</th>
+    <th width="8%" class=header>2007</th>
+    <th width="8%" class=header>2008</th>
+    <th width="8%" class=header>2009</th>
+</tr> <tr class=gapp>
+    <th align=center rowspan=21><a name=cppa></a>CPPA<br>(GAPP)</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/cppa/Ft_peck/Ft_peck/">Ft. Peck</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.086">X</a> (23 Jan 2004)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th colspan=5 class=none>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.085">X</a> (23 Jan 2004)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.087">X</a> (23 Jan 2004)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=son colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.103">X</a> (02 Feb 2010)</th>
+</tr> <tr class=gapp>
+    <th rowspan=5 align="left">Mt. Bigelow</th>
+    <th class=sfc>SFC</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=son colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.105">X</a> (19 May 2005)</th>
+     <th class=none colspan=6></th>
+</tr> <tr class=gapp>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/cppa/Oak_Ridge/Oak_Ridge/">Oak Ridge</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.088">X</a> (23 Jan 2004)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th colspan=5 class=none>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.090">X</a> (23 Jan 2004)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.089">X</a> (23 Jan 2004)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=son colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.104">X</a> (02 Feb 2010)</th>
+</tr><tr>
+</tr> <tr class=gapp>
+    <th rowspan=5 align="left">SGP</th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.097">X</a> (30 Jun 2010)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.101">X</a> (01 Feb 2010)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.112">X</a> (13 Jul 2010)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.098">X</a> (30 Jun 2010)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=son colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=71.006">X</a> (25 Jan 2010)</th>
+</tr><tr>
+</tr> <tr class=lba>
+    <th align=center rowspan=5>LBA</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/lba/Brasilia/Brasilia">Brasilia</a></th>
+    <th class=sfc><a name=lba></a>SFC</th>
+    <th class=none colspan=1>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=4>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.179">X</a> (19 Dec 2005)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=1>&nbsp;</th>
+    <th class=flx colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.180">X</a> (20 Jan 2006)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=1>&nbsp;</th>
+</tr><tr>
+    <th width="5%" class=header>RHP</th>
+    <th width="9%" class=header>Reference Site Name </th>
+    <th width="8%" class=header>Data Set</th>
+    <th width="8%" class=header>Oct 2002 <br>Dec 2003</th>
+    <th width="8%" class=header>2004</th>
+    <th width="8%" class=header>2005</th>
+    <th width="8%" class=header>2006</th>
+    <th width="8%" class=header>2007</th>
+    <th width="8%" class=header>2008</th>
+    <th width="8%" class=header>2009</th>
+</tr> <tr class=lba>
+    <th align=center rowspan=25>LBA</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/lba/Caxiuana/Forest">Caxiuana</a></th>
+    <th class=sfc>SFC</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+</tr> <tr class=lba>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/lba/Manaus/Km34">Manaus</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=3><a href="http://data.eol.ucar.edu/codiac/dss/id=76.157">X</a> (11 Jun 2010)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=1>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.178">X</a> (08 Dec 2005)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+</tr> <tr class=lba>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/lba/Pantanal/Pantanal">Pantanal</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.159">X</a> (18 Apr 2005)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=1>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+</tr> <tr class=lba>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/lba/Rondonia/FNS">Rondonia</a></th>
+    <th class=sfc>SFC</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+</tr> <tr class=lba>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/lba/Santarem/ForestKm83">Santarem</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.164">X</a> (13 May 2005)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.163">X</a> (13 May 2005)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.165">X</a> (26 May 2005)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=1><a href="http://data.eol.ucar.edu/codiac/dss/id=76.166">X</a> (26 May 2005)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+</tr><tr>
+    <th width="5%" class=header>RHP</th>
+    <th width="9%" class=header>Reference Site Name </th>
+    <th width="8%" class=header>Data Set</th>
+    <th width="8%" class=header>Oct 2002 <br>Dec 2003</th>
+    <th width="8%" class=header>2004</th>
+    <th width="8%" class=header>2005</th>
+    <th width="8%" class=header>2006</th>
+    <th width="8%" class=header>2007</th>
+    <th width="8%" class=header>2008</th>
+    <th width="8%" class=header>2009</th>
+</tr> <tr class=camp>
+    <th align=center rowspan=5>LPB</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/lpb/cruz_alta/cruz_alta/">Cruz Alta</a></th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=empty colspan=6></th>
+</tr> <tr class=mdb>
+    <th align=center rowspan=10><a name=mdb>MDB</th>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/mdb/Murrumbidgee/Adelong_Crawfor/">Murrumbidgee</a></th>
+    <th class=sfc><a name=mdb></a>SFC</th>
+    <th class=sfc colspan=5><a href="http://data.eol.ucar.edu/codiac/dss/id=76.194">X</a> (19 Mar 2009)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=2>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=stm colspan=5><a href="http://data.eol.ucar.edu/codiac/dss/id=76.195">X</a> (25 Mar 2009)</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=2>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=2>&nbsp;</th>
+</tr><tr class=mdb>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/mdb/Tumbarumba/Tumbarumba/">Tumbarumba</a></th>
+    <th class=sfc><a name=mdb></a>SFC</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=flx colspan=2><a href="http://data.eol.ucar.edu/codiac/dss/id=76.197">X</a> (20 Nov 2006)</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+</tr> <tr class=amma>
+    <th align=center rowspan=3>AMMA (CATCH)</th>
+    <th rowspan=1 align="left"><a name=amma></a>Gourma</th>
+    <th class=empty colspan=2><a href="#catch">See Below</a></th>
+</tr> <tr class=amma>
+    <th rowspan=1 align="left"><a name=amma></a>Niamey</th>
+    <th class=empty colspan=2><a href="#catch">See Below</a></th>
+</tr> <tr class=amma>
+    <th rowspan=1 align="left">Oueme</th>
+    <th class=empty colspan=2><a href="#catch">See Below</a></th>
+</tr><tr>
+    <th width="5%" class=header>RHP</th>
+    <th width="9%" class=header>Reference Site Name </th>
+    <th width="8%" class=header>Data Set</th>
+    <th width="8%" class=header>Oct 2002 <br>Dec 2003</th>
+    <th width="8%" class=header>2004</th>
+    <th width="8%" class=header>2005</th>
+    <th width="8%" class=header>2006</th>
+    <th width="8%" class=header>2007</th>
+    <th width="8%" class=header>2008</th>
+    <th width="8%" class=header>2009</th>
+</tr> <tr class=arm>
+    <th rowspan=20 align=center><a name=arm></a>Other</th>
+    <th rowspan=5 align=left><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/other/NSA/Barrow/">ARM NSA</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.091">X</a> (18 Mar 2010)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=twr colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.092">X</a> (11 May 2011)</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=7>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=7>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=son colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.130">X</a> (15 Jan 2010)</th>
+</tr> <tr class=arm>
+    <th rowspan=5 align="left"><a href="http://www.eol.ucar.edu/projects/ceop/dm/insitu/sites/other/TWP/Manus/">ARM TWP</a></th>
+    <th class=sfc>SFC</th>
+    <th class=sfc colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.093">X</a> (29 Apr 2010)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=7>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=7>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=7>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=son colspan=7><a href="http://data.eol.ucar.edu/codiac/dss/id=76.131">X</a> (15 Jan 2010)</th>
+</tr><tr class=arm>
+    <th rowspan=5 align="left">Chilbolton</th>
+    <th class=sfc>SFC</th>
+    <th class=empty colspan=6>&nbsp;</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=empty colspan=6>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=empty colspan=6></th>
+</tr> <tr class=arm>
+    <th rowspan=5 align="left">Italy</a></th>
+    <th class=sfc>SFC</th>
+    <th class=none colspan=2>&nbsp;</th>
+    <th class=sfc colspan=5><a href="http://data.eol.ucar.edu/codiac/dss/id=76.203">X</a> (20 Apr 2011)</th>
+  </tr><tr>
+    <th class=twr>TWR</th>
+    <th class=none colspan=7>&nbsp;</th>
+ </tr><tr>
+    <th class=stm>STM</th>
+    <th class=none colspan=7>&nbsp;</th>
+ </tr><tr>
+    <th class=flx>FLX</th>
+    <th class=none colspan=7>&nbsp;</th>
+ </tr><tr>
+    <th class=son>Soundings (Raw)</th>
+    <th class=none colspan=7></th>
+</table>
+<p>
+<a name=ancillary></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Ancillary data sets available in raw format:</b><br>
+<ul>
+<a name=catch>&nbsp;&nbsp;<b>AMMA (CATCH)</b>
+<p>
+<ul>
+<a href="http://data.eol.ucar.edu/codiac/dss/id=76.110">AMMA (CATCH) Precipitation Data Set (2001 to 2003)</a> (09 Nov 2004)
+   <br>
+<a href="http://data.eol.ucar.edu/codiac/dss/id=76.109">AMMA (CATCH) Streamgauge Data Set (2001 and 2002)</a> (02 Mar 2004)
+</ul>
+<p>
+&nbsp;&nbsp;<b>CEOP_AP (CAMP)</b>
+<p>
+<ul>
+<a href="http://data.eol.ucar.edu/codiac/dss/id=76.198">CAMP Mongolia Ulaanbaatar Radar Data</a> (29 Jan 2007)
+</ul>
+</body>
+</html>

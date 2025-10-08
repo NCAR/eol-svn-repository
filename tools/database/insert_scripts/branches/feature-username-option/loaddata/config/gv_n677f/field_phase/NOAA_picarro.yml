@@ -1,0 +1,87 @@
+dataset:
+- title_content: titleSep
+- name: <PROJECT>
+- archive_ident: '999.999'
+- title: Preliminary NOAA Picarro data
+- summary: This data set includes airborne measurements obtained from the NSF/NCAR HIAPER GV aircraft (Tail Number N677F) during the <PROJECT> project. This dataset contains data collected by the NOAA Picarro instrument, and extracted from the ADS data system. These are PRELIMINARY FIELD-PHASE data and are not for publication. Final, production data will be available within <xx> months of the end of the project.
+- begin_date: '1001-01-01 00:00:00'
+- end_date: '7998-12-31 23:59:59'
+- visible: 0
+- auth_reqd: 1
+- eula_reqd: 1
+- version_number: '0.1'
+- quality: 1
+- ingest_location: /scr/raf/Raw_Data/<PROJECT>/field_phase/picarro
+- archive_location: /FS/EOL/<year>/<project>/aircraft/gv_n677f/FIELD_INTERNAL_ONLY/PICARRO
+- filename_pattern: picarro_(\E\E\E\E).asc
+- startdate_pattern: '1001-01-01 00:00:00'
+- enddate_pattern: '7998-12-31 23:59:59'
+- filelength: ''
+- minimum_latitude: '-90.0'
+- maximum_latitude: '90.0'
+- minimum_longitude: '-180.0'
+- maximum_longitude: '180.0'
+- CODIAC_specific_fields: titleSep
+- category_id: 2
+- platform_id: 350
+- is_eol_data: 0
+- format: 146
+- host: hpss
+- frequency_id: 34
+- spatial_type: point
+- point_of_contact_id_codiac: ''
+- internal_contact_id_codiac: 179
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+- dodsable: 0
+- t_subset: 0
+- event_subset: 1
+- file_subset: 0
+- order_allow_compress: 1
+- DTS_specific_fields: titleSep
+- source_contact_id_dts: 203
+- internal_contact_id_dts: 203
+- ingest_contact_id_dts: 203
+- ingest_status_id_dts: 2
+- load_contact_id_dts: 345
+- load_data_location: '*nc'
+- load_status_id_dts: 6
+- approve_contact_id_dts: 345
+- approve_status_id_dts: 6
+- author_id_dts: 203
+- note_type_id: 4
+- note_text: Loaded with new load_data_proj script
+- optional_fields: titleSep
+- archive_location_2: ''
+- filename_pattern_2: ''
+- startdate_pattern_2: ''
+- enddate_pattern_2: ''
+- filelength_2: ''
+- format_2: ''
+- host_2: ''
+- archive_location_3: ''
+- filename_pattern_3: ''
+- startdate_pattern_3: ''
+- enddate_pattern_3: ''
+- filelength_3: ''
+- format_3: ''
+- host_3: ''
+- description: 'default'
+- iso_citation_role: 11
+- contact_id_codiac: 1001
+- datacite_contributor_type: ''
+- iso_citation_role_2: 10
+- contact_id_codiac_2: 1001
+- datacite_contributor_type_2: ''
+- iso_citation_role_3: 1
+- contact_id_codiac_3: ''
+- datacite_contributor_type_3: ''
+- iso_citation_role_4: ''
+- contact_id_codiac_4: ''
+- datacite_contributor_type_4: ''
+- iso_citation_role_5: ''
+- contact_id_codiac_5: ''
+- datacite_contributor_type_5: ''
+- readme_url: 'default'
+- remote_url: 'default'

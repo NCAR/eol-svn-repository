@@ -1,0 +1,137 @@
+<project name="Master List Editor" default="compile" basedir=".">
+
+  <property name="app.name" value="master_list"/>
+  <property name="src" value="src" />
+  <property name="cgi.editor" value="editor/cgi-bin" />
+  <property name="web.editor" value="editor/web"/>
+  <property name="build" value="build"/>
+  <property name="build.classes" value="${build}/classes"/>
+  <property name="deploy.cgi.editor" value="/export/web/dmg/cgi-bin/${app.name}"/>
+  <property name="deploy.jsp.editor" value="/export/web/dmg/webapps/${app.name}"/>
+  <property name="lib"  value="lib"/>
+  <property name="catalina.base" value="/usr/local/java/tomcat/current" />
+  <property name="docs" value="docs" />
+  <property name="docs.api" value="${docs}/api" />
+
+   <path id="theclasspath">
+   <!-- for the record, this is a major pain -->
+
+    <!-- get the old classpath, if available -->
+    <pathelement path="${classpath}"/>
+
+    <fileset dir="${catalina.base}/common/lib">
+       <include name="**/*.jar" />
+    </fileset>
+    <fileset dir="${catalina.base}/common/endorsed">
+       <include name="**/*.jar" />
+    </fileset>
+
+    <pathelement location="${catalina.base}/common/classes" />
+
+    <fileset dir="${lib}">
+     <include name="**/*.jar"/>
+    </fileset>
+
+   </path>
+
+  <property name="classpath" refid="theclasspath"/>
+
+
+  <target name="all" depends="compile"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" classpath="${classpath}" destdir="${build.classes}"
+     debug="off"
+     deprecation="on"
+     verbose="no"
+     />
+     <copy todir="${build.classes}">
+        <fileset dir="${web.editor}/WEB-INF/classes" />
+     </copy>
+  </target>
+
+  <target name="editor-deploy-init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the deploy directories -->
+    <mkdir dir="${deploy.jsp.editor}"/>
+    <mkdir dir="${deploy.jsp.editor}/WEB-INF/classes"/>
+    <mkdir dir="${deploy.jsp.editor}/WEB-INF/lib"/>
+    <mkdir dir="${deploy.jsp.editor}/WEB-INF/logs"/>
+    <mkdir dir="${deploy.cgi.editor}" />
+  </target>
+
+  <target name="deploy-editor" depends="compile,editor-deploy-init">
+    <!-- "static" web and conf files -->
+    <copy todir="${deploy.jsp.editor}">
+      <fileset dir="${web.editor}"/>
+    </copy>
+    <copy todir="${deploy.cgi.editor}">
+      <fileset dir="${cgi.editor}"/>
+    </copy>
+    <chmod dir="${deploy.cgi.editor}" perm="775" />
+    <copy todir="${deploy.jsp.editor}/WEB-INF/classes">
+      <fileset dir="${build.classes}" />
+    </copy>
+    <copy todir="${deploy.jsp.editor}/WEB-INF/lib">
+      <fileset dir="${lib}" />
+    </copy>
+  </target>
+
+  <target name="javadoc">
+     <!-- Create the Java Doc API -->
+     <mkdir dir="${docs.api}" />
+     <javadoc destdir="${docs.api}" author="true" version="true" use="true"
+             windowtitle="DMG Master List Documentation"
+             doctitle="Data Management Group Master List Documentation"
+             header="DMG Master List"
+             overview="${src}/overview.html">
+        <classpath refid="theclasspath" />
+        <fileset dir="${src}" defaultexcludes="yes">
+           <include name="**/*.java" />
+        </fileset>
+        <link href="http://java.sun.com/javaee/javaserverfaces/1.1_01/docs/api" />
+        <link href="http://java.sun.com/j2se/1.5.0/docs/api" />
+     </javadoc>
+  </target>
+
+  <target name="api" depends="javadoc">
+    <copy todir="${deploy.jsp.editor}/${docs.api}">
+      <fileset dir="${docs.api}" />
+    </copy>
+  </target>
+
+  <target name="generalRedefPortFinal" depends="compile">
+     <java classname="dmg.ml.port.GeneralRedefine" fork="yes">
+        <arg value="final" />
+        <classpath>
+           <pathelement path="${build.classes}" />
+           <pathelement path="${classpath}" />
+        </classpath>
+     </java>
+  </target>
+
+  <target name="generalRedefPortTest" depends="compile">
+     <java classname="dmg.ml.port.GeneralRedefine" fork="yes">
+        <arg value="test" />
+        <classpath>
+           <pathelement path="${build.classes}" />
+           <pathelement path="${classpath}" />
+        </classpath>
+     </java>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${docs.api}" />
+  </target>
+
+</project>

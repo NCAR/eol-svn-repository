@@ -1,0 +1,19 @@
+#! /usr/bin/perl -w
+
+use strict;
+#use lib "/net/work/lib/perl/mysql";
+use lib "/net/work/tmp/orin/mysql_perl_lib"; # For Testing
+use MySqlInserter;
+
+&main();
+
+sub main {
+    if (scalar(@ARGV) != 1) {
+	printf("Usage: insert_multiple_files cfg-file\n");
+	exit(1);
+    }
+    my ($cfg_file) = @ARGV;
+    my $inserter = MySqlInserter->new();
+
+    $inserter->insert($cfg_file);
+}

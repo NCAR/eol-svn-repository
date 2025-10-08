@@ -1,0 +1,92 @@
+#! /usr/bin/perl -T -w
+
+##Module----------------------------------------------------------------------
+# <p>The <code>EditEmployeeSelector</code> module is a <code>CGI</code> module
+# that generates a form that allows a user to select an employee from the
+# <code>EmployeeList</code> and edit that employee.</p>
+#
+# @author Joel Clawson
+##Module----------------------------------------------------------------------
+package EditEmployeeSelector;
+use strict;
+use lib ".";
+use EmployeeList;
+use CGI qw(:standard :html3);
+our @ISA = ("CGI");
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+&main();
+
+##--------------------------------------------------------------------------
+# @signature void main()
+# <p>Create the form to select an employee to edit.</p>
+##--------------------------------------------------------------------------
+sub main() {
+   my $self = EditEmployeeSelector->new();
+
+   print($self->header());
+   print("<html>\n");
+
+   print($self->generateForm());
+
+   print("</html>\n");
+}
+
+##--------------------------------------------------------------------------
+# @signature String generateForm()
+# <p>Create the HTML form for selecting an employee.</p>
+# @output $output The HTML to be printed to the web page.
+##--------------------------------------------------------------------------
+sub generateForm {
+   my $self = shift;
+   my $output = "<head>\n<title>Select Employee</title>\n</head>\n";
+
+   $output .= "<body>\n<form method=POST ";
+   $output .= "action=employee_form target=_self>\n";
+
+   $output .= "<h1>Select Employee to Edit</h1>\n";
+   
+   # The drop down box
+   $output .= "<select name=id>\n";
+   $output .= $self->getEmployeeList();
+   $output .= "</select>\n<br>\n";
+
+   # The buttons
+   $output .= $self->submit("employee", "Submit");
+   $output .= "<input type=button value=\"Cancel\" onclick=\"javascript:window.close();\" >\n";
+
+   $output .= "</form>\n</body>\n";
+   return $output;
+}
+
+##--------------------------------------------------------------------------
+# @signature String getEmployeeList()
+# <p>Get the HTML that contains the list of employees that can be edited.</p>
+# @output $output The options for the drop down box that contain the employees
+# that can be edited.</p>
+##--------------------------------------------------------------------------
+sub getEmployeeList {
+   my $self = shift;
+   my $emps = EmployeeList->new();
+   my $output = "";
+
+   my @tmp_lst = ();
+
+   # Create the list of employees as they are to be displayed
+   # (last name, first name (travel id)
+   foreach my $id ($emps->employee_list()) {
+      push(@tmp_lst, sprintf("%s, %s (%s)", $emps->getLastName($id),
+                             $emps->getFirstName($id), $id));
+   }
+
+   # Create the HTML option tags for each employee
+   foreach my $name (sort @tmp_lst) {
+      my $pid = (split(' ', $name))[2];
+      $pid = substr($pid, 1, length($pid) - 2);
+      $output .= sprintf("<option value=%s>%s</option>\n", $pid, $name);
+   }
+
+   return $output;
+}
+

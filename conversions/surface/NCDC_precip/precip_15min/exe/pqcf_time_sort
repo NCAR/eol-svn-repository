@@ -1,0 +1,46 @@
+#
+# This is a new spec.
+# cosort specifications by (Linda Cully)
+sort		# Action
+0		# Record length (Variable)
+1               # Number of input files
+../out/all.pqcf		# Number of input files
+6		# Number of keys
+ascending	# Key 1 direction year
+fixed		#	location
+1		#	starting column
+2		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 2 direction mon
+fixed		#	location
+4		#	starting column
+2		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 3 direction day (all times are 00:00:00)
+fixed		#	location
+7		#	starting column
+2		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 4 direction lat
+fixed		#	location
+46		#	starting column
+10		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 5 direction lon
+fixed		#	location
+57		#	starting column
+11		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 6 direction occur
+fixed		#	location
+69		#	starting column
+3		#	length
+numeric		#	format
+external	#	value interpretation
+file            # Output
+../out/all.pqcf_sort   # Output file name

@@ -1,0 +1,207 @@
+@CHARSET "ISO-8859-1";
+
+/* For views/layout */
+body {
+	background: url("../images/EOL_CDS_watermark.png");
+	max-width: none;
+	margin: 0;
+	   -moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
+}
+
+#ucar_head {
+	height: auto;
+	background-color: #90bcd5;
+	/* background-color: #a42220; */
+	margin-top: 10px !important; /* For the UCAR Nav Bar */
+	padding: 15px;
+}
+
+#ucar_head_container {
+	min-height: 40px;
+	overflow: hidden;
+}
+#ucar_head_container img {
+	float:left;
+	margin-left: -10px;
+	top: 0px;
+}
+#ucar_head_container h1, #ucar_head_container #h2 {
+	font-size: 30px;
+	color: #fff;
+	font-weight: bold;
+	float: left;
+	margin-top: 4px;
+}
+#ucar_head_container #h2 {
+	font-size: 20px;
+	font-weight: normal;
+}
+
+#ucar_body {
+	max-width: 960px;
+	background: #fff;
+}
+
+.nav {
+	background: #e3e4e6;
+	padding: 2px 3000px;
+	margin: 0px -3000px;
+	   -moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
+}
+
+.center_div {
+	width: 960px;
+	margin: 0 auto;
+}
+
+/* Footer Styles Override */
+.footer { max-width: 960px; font-size: 12px !important; }
+.footer a {  }
+.footer a:hover {  }
+.footer a:visited {  }
+.footer table {  }
+.footer table td, .footer table th {  }
+/* **************** */
+
+div.body { padding: 0px 10px; }
+
+#show-project { overflow-y: hidden; }
+
+.login-li { float: right !important; }
+.login-li span { position: relative; top: 0.25em; }
+
+.input-number { width: 60px; }
+.select-fileType { width: 150px; }
+.select-format { width: 85px; }
+.dataSave { background-color: #e7e7e7; }
+.dataSave:hover { background-color: #999; color: #fff; }
+.file-new, .xlink-new {
+	background-color: #efe;
+	border: 1px solid #94bf94;
+	padding: 2px;
+	margin-bottom: 3px;
+}
+
+.tooltip {
+	background-color: #f3f3ff;
+	border: 1px solid #b2d1ff;
+	font-size: 12px;
+	margin: 3px 0px;
+	padding: 5px;
+	color: #006dba;
+}
+
+.tr-dmg { background-color: #c0daea; }
+
+.main-body {
+	padding: 0em 0.75em 0.5em 0.75em;
+}
+
+.dataset-link a {
+	text-decoration: none;
+	font-style: italic;
+}
+.dataset-link a:hover { font-weight: bold; }
+.dataset-link a:visited, .dataset-link a:link { color: #000 !important; }
+
+div#grailsLogo { margin-top: 10px !important; }
+div#grailsLogo, div.footer { background-color: #90BCD5; }
+div#grailsLogo h1 { color: #fff; font-weight: bold; font-size: 28px; }
+div#grailsLogo a { color: #fff; }
+div#grailsLogo a:hover { color: red; }
+div#grailsLogo a:visited { color: indigo; }
+div#banner-user { float: right; padding-right: 10px; }
+
+.admin-nav, .sub-nav {
+	background-color: #c0daea;
+	box-shadow: none;
+	padding: 0px 0px 0px 3025px; /* for Layout styles */
+}
+
+.nav a.clone {
+	background-position: 0.7em center;
+	background-repeat: no-repeat;
+	text-indent: 25px;
+}
+.nav a.clone {
+	background-image: url(../images/skin/database_clone.png);
+}
+
+.buttons {
+	background: #e3e4e6;
+	   -moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	        box-shadow: none;
+}
+
+th:hover, tr:hover {
+	background: #e3e4e6;
+}
+
+
+
+div.statusMessage { padding: 0 10px; }
+.cAuthor { font-weight: bold; color: #48802c; }
+.cDate { float: right; color: #333; font-style: italic; font-size: 15px; }
+.cText { width: 100%; padding: 10px; }
+textarea#message { height: 50px; width: 500px; }
+
+.dateRange { float: left; width: 45%; }
+.side-by-side { float: left; width: 50%; }
+.side-by-side label { width: 35% !important; }
+.side-by-side input, .side-by-side select { float: right; margin-right: 25px; }
+.coords { float: left; width: 45%; }
+.coords label { width: 33% !important; }
+.section-label {
+	color: #666;
+	width: 100%;
+	padding: 1px 0px;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+}
+
+.project-permitted, .ds-list {
+	margin-right: 20px;
+	padding: 10px;
+	border: 1px solid #ccc;
+}
+.project-permitted h4, .ds-list h4 {
+	color: #48802c;
+	font-weight: normal;
+	font-size: 1.05em;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 5px;
+}
+.project-permitted { float: right; }
+.ds-list { margin: 20px; }
+.project-permitted li, .ds-list li {
+	list-style-type: none;
+}
+
+#project-list-div {
+	background: #fff;
+	min-height: 150px;
+}
+.prj {
+	margin: 10px;
+	float: left;
+	border: 1px solid #ccc;
+}
+.prjtop {
+	background: #90BCD5;
+	padding: 5px 10px;
+}
+.prj:hover { border: 1px solid #004779; }
+.prj:hover > .prjtop { background: #004779; }
+.prj:hover > .prjtop, .prjbox { cursor: pointer; }
+.prj:hover > .prjtop .name a { color: #f2f2f2; }
+.prjtop .name a { color: #333; text-decoration: none; font-weight: bold; }
+.prjbox {
+	background: #e7e7e7;
+	padding: 10px;
+}

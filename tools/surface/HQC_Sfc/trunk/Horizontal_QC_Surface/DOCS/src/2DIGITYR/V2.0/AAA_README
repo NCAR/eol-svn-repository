@@ -1,0 +1,28 @@
+The following list contains the 
+differences between V1.0 and V2.0
+of the HQC s/w:
+
+ - Function locate_sigmasq() has
+been updated to handle the searching
+done in the last SIGMA_PERIOD (30)
+days differently. This fn will now
+search the complete (last) SIGMA_PERIOD
+days when searching for a sigmasq value
+for a day within the last SIGMA_PERIOD
+days. The s/w searches forward from the
+day for which the search request was made.
+If the s/w hits the end of the project
+before searching SIGMA_PERIOD days, the s/w
+will continue searching at a date (SIGMA_PERIOD-
+number of days searched) prior to the end
+of the project. The searching process is cyclic.
+
+Example: Given that the project ends on julian
+day 181. Given searching for sigmasq value
+for day 180.
+
+Search process: If sigmasq located on day 181,
+searching complete. If value can not be located
+on day 181, searching will continue back on
+day 152 and will continue forward until day 179.
+(i.e., the complete month of june will be searched.)

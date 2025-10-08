@@ -1,0 +1,45 @@
+#! /usr/bin/perl -w
+
+package DatasetActionCGI;
+use strict;
+use lib ".";
+use lib "lib";
+use ActionCGI;
+use Dataset;
+our @ISA = ("ActionCGI");
+
+&main();
+
+sub main {
+    my $self = DatasetActionCGI->new();
+    $self->buildPage("Dataset Action");
+}
+
+sub processParams {
+    my ($self) = @_;
+    my $dataset = $self->getDataset();
+    $dataset->setName($self->param("name")) if ($self->param("name") !~ /^\s*$/);
+    $dataset->setStatusId($self->param("status"));
+    $dataset->setProcessContactId($self->param("processor"));
+    $dataset->setQuestionFlag($self->param("questions"));
+    $dataset->setHomeDir($self->param("home_dir"));
+    $dataset->setFinalDir($self->param("final_dir"));
+    $dataset->setReposDir($self->param("repos_dir"));
+    $dataset->setPlotDir($self->param("plot_dir"));
+    $dataset->setStationList($self->param("station_list"));
+    $dataset->setHowTo($self->param("howto"));
+    $dataset->setNote($self->param("note_text"));
+    $dataset->setNoteId($self->param("note_id"));
+
+    if ($self->param("action") =~ /^Update/i) {
+	$self->update($dataset);
+    }
+
+    if (defined($self->param("product"))) {
+	if (substr($self->param("product"),0,3) eq "grp") {
+	    $self->{"DB"}->addGroupAssociation(substr($self->param("product"),3),$dataset->getId());
+        } else {
+	    $self->{"DB"}->addDatasetAssociation(substr($self->param("product"),3),$dataset->getId());
+        }
+    }
+}

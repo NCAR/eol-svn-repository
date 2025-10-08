@@ -1,0 +1,176 @@
+
+###############################################################################
+# cfg-template
+#
+# This is a template for a configuration file to use with the MySqlInserter.pm
+# Perl module.  It contains sets of key/value pairs that are used by the 
+# inserter to determine which files to be inserted into the database.  The 
+# inserter is dependant on the file's structure and will be defined shortly.
+#
+# It is also important to note that this file is structured to handle most
+# cases.  It does not handle all of them.  The MySqlInserter module does not
+# handle every case either and may need to be extended to provide the 
+# functionality needed to insert a certain set of files.
+#
+# PART I - FILE NAME
+#
+# The name of the configuration file needs to be of the form:
+#    cfg-dataset_id
+# where the dataset_id is the dataset id for the files to be inserted.  The
+# file is named this way in an attempt to make all of the files inserted with
+# this script be defined in a single file to allow a quick view to see what
+# is inserted and also to be able to quickly make changes if that becomes
+# necessary.
+#
+# PART II - GENERAL STRUCTURE
+#
+# The file is a basic text file.  There are three main structures/pieces of note
+# to the file.  The comments, the blocks, and the pairs.
+#
+#   1.  Comments
+#      Comments are based off of Perl and comment lines should begin with # as
+#      this section implements.  (While this is not completely necessary, it
+#      makes the file easier to decipher what is in it and what it is going
+#      to do.
+#
+#   2.  Blocks
+#      Blocks are sections of the code surrounded by curly brackets {}.  Each
+#      bracket must be the first character on the line.  Anything following the
+#      bracket is ignored.
+#
+#      The block defines a set of files to be inserted.  Contained within the
+#      block are the key/value pairs that are used to define the files that will
+#      be inserted.  Multiple blocks imply that there are either multiple types
+#      of files (gif, jpg, png) or that the file names differ that seperate
+#      blocks make the defining of the values easier.
+#
+#   3.  (Key/Value) Pairs
+#      Each block is made up of a set of key/value pairs.  They are defined by
+#      the key value followed directly by a colon and then the value.  For example:
+#          format: 43
+#      Here, format is the key and 43 is the value.
+#
+#      These pairs are the instructions to the MySqlInserter on how to find the
+#      files, how to parse out dates, and provide any other information about
+#      the file that the database needs and cannot determine on its own.  The
+#      inserter only recognizes a set of keys and they are listed later.
+#
+# PART III - KEYS (for the Key/Value Pairs)
+#
+#   1.  directory
+#      The directory key specifies where the files to be inserted can be found.
+#      It will recursively decend into all subdirectories and find the files
+#      that are to be inserted.  The value can be a symbolic link to a directory
+#      as well as a standard directory.
+#
+#      For users who are more familiar with the database structure.  The 
+#      directory value will be placed in the directory field of the file
+#      table in the database.  (Any subdirectories are appended accordingly.)
+#
+#   2.  filename
+#      The filename key specifies a specialized pattern of the files to be 
+#      inserted.  Certain characters in specific cases have special meanings to
+#      the inserter.  They are as follows.  Any other character is to be an
+#      exact match.
+#
+#      () - Characters between parentheses contain a date/time that is both the
+#           start and end date/time.  It uses the characters Y (year), M (month)
+#           D (day), J (julian day), and (h) hour to denote which values belong
+#           to what part of the date/time.  (Minutes and seconds are not used by
+#           the general inserter so do not mean anything here.)  Any other values
+#           are assumed to be the same as in the file name.
+#      [] - Characters between square brackets contain a begin date/time.  It 
+#           uses the same characters as the parentheses.
+#      {} - The same as square brackets, except that the curly brackets are for
+#           the end date/time.
+#      \d - These are the same as Perl regular expression matching characters.
+#      .  - Replace any character.
+#      +  - Replace multiple characters with any character
+#
+#   3.  filelength
+#      This defines the length of the file in days and hours.  The value is to
+#      be two integer values seperated by a comma.  The first value is the 
+#      number of days covered from the begin date to the end date.  The second
+#      value is the number of hours covered from the begin date to the end date.
+#      Either value can be negative and the numbers work together.  For example,
+#      a pair of 2,-1 will be interpretted as an equivalent of 47 hours (2 days
+#      - 1 hour = 47 hours).
+#
+#   4.  format
+#      The format is an integer that defines the format of the files being
+#      inserted.  These can be found in GUIMaint under the dataset file tab by
+#      pulling the number from the File Format drop down box.  Common formats
+#      are also listed later.
+#
+#   5.  century
+#      This value is an integer to be added to a year when the year is given
+#      in a two digit format.  If the year is given in two digits and the
+#      century variable is not defined, the program will die with an error.
+#
+#   6.  startdate/enddate
+#      These values are to manually define the date and time.  This is mainly
+#      used when there is not a date in the file name.  The date/time must be
+#      in the following format to be handled correctly: YYYY-MM-DD HH:MM:SS
+#
+#   7.  insertrange
+#      This is a value pair seperated by a colon(:) that will only insert files
+#      in the specified date range.  The dates given will be included.  The
+#      entry must be in YYYY-MM-DD:YYYY-MM-DD format to be handled correctly.
+#
+# PART IV - KEYS (That cannot be defined in the config file)
+#
+# There are a set of keys that are created by the inserter that are pointless
+# to define in the config file since they will be overwritten.  They are:
+#   dataset_id
+#   pattern
+#
+# PART V - MANDATORY KEYS
+# 
+# The following keys must be defined for the inserter to work correctly.
+#
+#   1.  directory (inserter needs to know where to look for files)
+#   2.  filename (needs to know what to match)
+#   3.  filelength (only if an end date/time needs to be calculated from the
+#                   start date/time)
+#   4.  format (inserter needs to know what the format of the files are)
+#   5.  startdate/enddate (only if filename does not contain date information)
+#   6.  century (only when year is two digits)
+#
+# PART VI - FORMAT IDs
+#
+#   43 ASCII Text
+#   75 Binary
+#   86 CEOP Flux
+#   87 CEOP Soil
+#   84 CEOP Surface
+#   85 CEOP Tower
+#   10 EBUFR
+#   34 GIF
+#   55 GZIP (.gz)
+#   83 HTML
+#   19 JOSS CLASS
+#   26 JOSS QCF - Precip
+#   18 JOSS QCF - Surface
+#   60 JPG
+#   71 Microsoft Access
+#   67 Microsoft Excel
+#   72 Microsoft PowerPoint
+#   78 Microsoft Word
+#   22 netCDF
+#   68 PDF
+#   82 PNG
+#   50 PostScript
+#   53 Tar (.tar)
+#   57 Tar/GZIP (.tar.gz/.tgz)
+#   56 Tar/Unix Compress (.tar.Z)
+#    0 Unknown
+#   54 Unix Compress (.Z)
+#   15 VHS
+#   51 ZIP (.zip)
+###############################################################################
+
+{
+  directory: /archive/codiac/pacs/soundings/Galapagos
+  filename: PACS_Galapagos_(YYYYMM).ebufr
+  format: 10
+}

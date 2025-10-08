@@ -1,0 +1,37 @@
+Note on the full processing of CAESAR 2024 GTS BUFR processing
+--------------------------------------------------------------
+
+Note that to process the CAESAR 2024 GTS BUFR sounding data, 
+all the typical processing steps were performed once for the IUS raw, input files and also for the IUK raw, input files. 
+In some cases, as directed by the science staff (SL), additional input data can be found in the IUK files. 
+
+To convert the binary BUFR to ascii and then that ascii to a better form/more readable form of ascii. 
+Then the more readable ascii is processed in the ESC (*.cls) format and the normal checks were performed. 
+For most/all other processing of these types of data, that is the final step before visual QC.
+
+For CAESAR 2024, the science staff/S. Loehrer requested an additional step before performing visual QC.  
+See the software to update the nominal times in the /software directory.  It turns out that some of 
+the nominal times in the *.cls output files generated the same nominal times for more than one sounding. 
+This is technically correct per the s/w, however, SL requested that the duplicate nominal times be updated.
+See the s/w to update those times for the rule used to update those times. 
+
+After updating the nominal times, I created the dayfiles and 5mb form of the data to be included 
+in the CAESAR 2024 composites. The converted GTS BUFR dataset was not added to the archive as 
+a stand alone dataset. It was only part of the CAESAR 2024 composites. 
+
+
+Comments on Dir Structure:
+-------------------------
+When CAESAR 2024 GTS BUFR processing was done, all IUS data was processed a GTS_BUFR directory (which is this
+top level repo directory). Then the IUK data files were processed in a separate GTS_BUFR_IUK directory.
+The GTS_BUFR and GTS_BUFR_IUK directories were at the same dir level when the processing was performed.
+After both were processed (but not visually QC'd yet), data from both of those top level dirs' /final directories
+was copied into the final_IUS_IUK combo dir found here in repo. SL then asked for updates to some of the
+nominal times so that post processing work was done in the final_IUS_IUK_UpdatedNomTime dir.  SL then QC'd the "final"
+data in final_IUS_IUK_UpdatedNomTime which was converted into dayfiles and the 5mb dayfiles.
+
+Comments on what's included in this repo:
+-----------------------------------------
+This repo only contains a sample of the full dataset as it was processed. Most samples are for *20240226*.
+
+4 Sept 2024 - LEC

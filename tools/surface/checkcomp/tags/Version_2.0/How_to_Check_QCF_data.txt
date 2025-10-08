@@ -1,0 +1,130 @@
+Now in Plone. Please make all updates to the Plone version!!!!!
+
+		How to Check QCF Surface Data
+		-----------------------------
+
+	There are two programs/levels of checks that should be applied
+	to all QCF surface data. These checks should be applied at the
+        earliest possible level to help catch problems in the earliest
+        stages of data conversion. Generally, the check_QCF_file is 
+        applied before executing the check_QCF_comp program. The two
+        QCF checking programs are described below. Note that for the
+        NESOB96 data processing, a program called check_ext_QCF_comp
+        (and associated process_ext_qcfrec files) was created to check
+        this "extended" QCF data. For the first 255 chars, the "extended"
+        QCF records are identical to the QCF records. There are 30 additional
+        chars added to the end of the QCF records to give an extended record.
+        Three variables and QC flags (U and V wind components and specific
+        humidity) are in the 30 additional chars. Run the check_ext_QCF_comp
+        the same as for check_QCF_comp. The software for the extended
+        format is currently located at /work/0/DPG_HTML/BEST_SW/GENERAL_TOOLS/
+        add_and_check_extended_QCF_format.
+
+	1. check_QCF_file.c - This s/w checks the station information
+           and each parameter within the QCF record that would normally
+           be quality controlled. Gross limit checks are applied to
+           each parameter, as well as some simple consistency checks
+           between the data values and the data flags.
+
+           Warning are issued for values that fall outside the
+           limits, but the data are NOT changed. The check_QCF_file
+           program is currently located in /rraid1/DPG_HTML/BEST_SW/GENERAL_TOOLS/checkfile/.
+           See check-files.sh and check_QCF_file in that directory.
+
+           The check_QCF_file program applies the following limits
+           when performing gross limit checks:
+
+           Parameter		Min Limit	Max Limit
+           --------------------------------------------------
+           elevation	       -200.00		9000.00
+           latitude  		-90.00 		  90.00
+           longitude 	       -180.00 		 180.00
+           pressure  		300.00 		1200.00
+           seaLvlPressure  	800.00 		1200.00
+           CalcSeaLvlPressure 	800.00 		1200.00
+           temperature 	       -100.00 		 100.00
+           dewPoint    	       -100.00 		 100.00
+           windSpeed 		  0.0 		 200.00
+           windDir   		  0.0 		 360.00
+           precipitation 	  0.0 		9999.99
+           squallGust 		  0.0 		9999.99
+           visibility 		  0.0 	       99999.99
+           ceilingHeight1 	  0.0 		9999.99
+           ceilingHeight2 	  0.0 		9999.99
+           ceilingHeight3 	  0.0 		9999.99
+           ceilingFlag		 10 		  15
+           ceilingFlag		 20		  15
+           ceilingFlag		 30 		  15
+           cloudAmount		 10		  15
+           cloudAmount		 20 		  15
+           cloudAmount		 30 		  15
+
+           The check_QCF_file program applies the following consistency
+           checks:
+
+           - If the flag indicates that the value should be missing (M,N,I,C)
+             or unrecorded, check the value is equal to the missing
+             value -999.99.
+
+           - Check a date string to see if it contains a valid date in the
+             form YY/MM/DD where YY is the 2-digit year, MM is the 2-digit
+             month, and DD is the 2-digit day
+
+           - Check a time string to see if it contains a valid time in the
+             form HH:MM where HH is the 2-digit hour and MM is the 2-digit
+             number of minutes past the hour.
+
+	To execute the check_QCF_file program, issue the following command:
+
+	 > check_QCF_file <input_file_name>
+
+
+	2. check_QCF_comp.c - This program was written to check the final
+           QCF surface data composites, but the user may find it useful to
+           execute this program on individual dataset day files. This
+           program assumes and so checks for the following:
+
+           - Data records are in QC format (QCF).
+           - Data is sorted by date/time and then lat/lon.
+             Time (hr/min) is increasing in file.
+             If times are the same, then lat/lon in increasing.
+           - Each input file is a day file and contains only the
+             data for that day. File name must match date of
+             data in file.
+           - Input file names contain: YYMMDD
+             where YY = year, MM = month, DD = day. File suffix is
+             generally qcf (can be 0qc).
+           - Data records are unique. Duplicate records are flagged
+           - Flags impossible dates such as 2/30, 2/31, 4/31, etc.
+           - All hours (00 through 23) are present in file.
+           - File contains only data at specified frequency. Frequency
+             is specified in "data_freq.in" file.
+
+
+           The check_QCF_comp program prints general statistics to stnd 
+           output whether or not any errors are found in the data. The
+           printed stats include: 
+               - Number of records processed.
+               - First and last times in file.
+               - List of all different Networks present in data.
+
+           Warnings are issued when the above checks fail, but data
+           are NOT changed. The check_QCF_comp program is currently
+           located in /rraid1/DPG_HTML/BEST_SW/GENERAL_TOOLS/checkcomp.
+
+
+           Note that this program requires an additional file (named
+           "data_freq.in")to processing any input files. The "data_freq.in"
+           file contains two lines.  The first line contains one integer
+           number that is the data frequency expected in the input file. This
+           should be the highest occuring frequency in the data. For 20 minute
+           data the number "20" should be on the first line of "data_freq.in".
+           The second line contains the position in the input file name that
+           the date (i.e., YYMMDD) begins.  If the file is named 940401.qcf,
+           then the second line should contain a zero. If the file is named
+           OKMESO5_940401.qcf, then the second line of file "data_freq.in"
+           should contain the number "8".
+
+        To execute the check_QCF_comp program, issue the following command: 
+
+        > check_QCF_comp <input_file_name>

@@ -1,0 +1,231 @@
+<html>
+<head>
+<title>VORTEX2 2009-2010 Multi-Network Composite Highest Resolution Upper Air Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">VORTEX2 2009-2010 Multi-Network Composite Highest Resolution Upper Air Data Set</h1>
+
+<h2>1.0 General Description</h2>
+<p>
+This data set is a composite of radiosondes collected from 5 sounding platforms (see Section 2.3)
+during the Verification of the Origins of Rotation in Tornadoes Experiment 2 (VORTEX2) with 
+data collected from  10 May 2009 through 13 June 2009 and from 1 May 2010 through 15 June 2010.  
+This project was conducted in the central United States and contains a total of 4697 soundings.
+<br>
+<br>
+The 2009 data includes 2578 soundings with 241 high vertical resolution (2-sec) soundings from the 
+Atmospheric Radiation Measurement (ARM) Southern Great Plains (SGP) Central Facility (C1) site 
+near Lamont, OK, 106 radiosonde soundings from two mobile GPS Advanced Upper_Air Sounding (GAUS) 
+systems operated by the National Center for Atmospheric Research (NCAR), 118 radiosonde soundings 
+from two mobile GPS Advanced Upper_Air Sounding (GAUS) systems operated by the 
+NOAA National Severe Storm Laboratory (NSSL), two high vertical resolution (2 sec) soundings 
+from the West Texas Mesonet Reese Center, TX site, and 2111 soundings 
+from 17 National Weather Service (NWS) sites (all but one have 1 sec vertical resolution, other is 6 sec).  
+<br>
+<br>
+The 2010 data includes 2121 soundings with 182 high vertical resolution (2-sec) soundings from the
+Atmospheric Radiation Measurement (ARM) Southern Great Plains (SGP) Central Facility (C1) site
+near Lamont, OK, 174 radiosonde soundings from two mobile GPS Advanced Upper_Air Sounding (GAUS)
+systems operated by the National Center for Atmospheric Research (NCAR), 186 radiosonde soundings
+from two mobile GPS Advanced Upper_Air Sounding (GAUS) systems operated by the
+NOAA National Severe Storm Laboratory (NSSL), three high vertical resolution (2 sec) soundings
+from the West Texas Mesonet Reese Center, TX site, and 1576 soundings
+from 17 National Weather Service (NWS) sites (all but one have 1 sec vertical resolution, other is 6 sec).
+<br>
+<br>
+All soundings are provided at the highest possible resolution (i.e. the 'native' resolution).
+</p>
+
+<h3>1.1 Data Set Contact</h3>
+<p>Scot Loehrer<br>
+NCAR/EOL<br>
+loehrer@ucar.edu</p>            
+
+<h2>2.0 Detailed Data Description</h2>
+<h3>2.1 Detailed Format Description</h3>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite Format (ESC).  ESC is a version of the National Center for Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, meteorological and wind data processors.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center" cellpadding=2 cellspacing=1>
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+
+<p>The seven non-standard header lines may contain any label and contents.  The labels are padded to 35 characters to match the standard header lines. Records for this dataset include the following non-standard header lines.</p>
+
+<table border=1 bordercolor="black" align="center" cellpadding=2 cellspacing=1> 
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>6</td><td>Sonde Id/Sonde Type:</td><td>W4342264/Vaisala Loran-C</td></tr>
+<tr><td>7</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>9</td><td>&nbsp;</td><td>&nbsp;</td></tr>    
+<tr><td>10</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>11</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL codes:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1> 
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of VORTEX2 2009 radiosonde data in ESC format.   The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  See section 2.1 for an exact format specification
+
+<pre>
+Data Type:                         West Texas Mesonet/Ascending
+Project ID:                        VORTEX2
+Release Site Type/Site ID:         Reese Center, TX/72267
+Release Location (lon,lat,alt):    102 03.00'W, 33 36.60'N, -102.050, 33.610, 1018.0
+UTC Release Time (y,m,d,h,m,s):    2009, 05, 15, 18:16:00
+Sonde Id/Sonde Type:               W4342264/Vaisala Loran-C
+/
+/
+/
+/
+/
+Nominal Release Time (y,m,d,h,m,s):2009, 05, 15, 18:16:00
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat    Ele   Azi   Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg    deg   deg    m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+   0.0  896.6  32.2  11.9  29.0    1.9    5.2   5.5 200.0 999.0 -102.050  33.610 999.0  20.0  1018.0 99.0 99.0 99.0 99.0 99.0  9.0
+   2.0  895.5  31.5  11.2  29.0    1.9    4.9   5.2 201.0   5.5 -102.050  33.610 999.0  21.0  1029.0 99.0 99.0 99.0 99.0 99.0 99.0
+   4.0  894.3  30.8  10.9  29.0    1.9    4.6   5.0 202.0   6.0 -102.050  33.610 999.0  21.0  1041.0 99.0 99.0 99.0 99.0 99.0 99.0
+   6.0  893.0  30.1  10.8  30.0    1.9    4.3   4.7 203.0   6.5 -102.050  33.610 999.0  22.0  1054.0 99.0 99.0 99.0 99.0 99.0 99.0
+   8.0  891.6  29.8  11.2  31.0    1.8    4.1   4.5 204.0   6.5 -102.050  33.610 999.0  22.0  1067.0 99.0 99.0 99.0 99.0 99.0 99.0
+  10.0  890.3  29.6  11.5  32.0    1.8    3.9   4.3 205.0   6.5 -102.050  33.610 999.0  22.0  1080.0 99.0 99.0 99.0 99.0 99.0 99.0
+</pre>
+
+<h3>2.2 Data Remarks</h3>
+
+<h3>2.3 Station List</h3>
+
+<p> <b>2.3.1 Atmospheric Radiation Measurement - Clouds And Radiation TestBed (ARM-CART)</b></p>
+
+<p> For more infomation on the VORTEX2 2009/2010 ARM-CART sounding data, see the VORTEX2 dataset titled "DOE ARM-CART SGP Lamont, OK (C1) Radiosonde Data".
+<a href="http://data.eol.ucar.edu/datafile/nph-get/114.108/Readme_VORTEX2_ARM_CART_soundings.html">Data set documentation file</a>.
+<p>This station used Vaisala RS92-KL radiosondes with Loran-C windfinding during the VORTEX2 field season.
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE</th> <th>STATE</th> <th>LONG</th> <th>LAT</th> <th>ELEV (m)</th> </tr> 
+<tr><td>SGP_C1_ARM</td><td>Lamont (C1)</td><td>OK</td><td>-97.49000</td><td>36.61000</td><td>315.0</td></tr>
+</table><br>
+
+<p><b>2.3.2  National Center for Atmospheric Research (NCAR) Mobile GPS Advanced Upper_Air Sounding(MGAUS)</b></p>
+<p> For more infomation on the VORTEX2 2009/2010 NCAR MGAUS sounding data, see the VORTEX2 dataset titled "NCAR MGAUS Radiosonde Data [NCAR/EOL]".
+<a href="http://data.eol.ucar.edu/datafile/nph-get/114.115/Readme_VORTEX2_NCAR_MGAUS_soundings.html">Data set documentation file</a>.
+<a href="http://data.eol.ucar.edu/datafile/nph-get/114.111/readme.VORTEX2009.GAUS.radiosondes.doc">2009 submitted data set documentation file</a>.
+<a href="http://data.eol.ucar.edu/datafile/nph-get/114.111/readme.VORTEX2010.GAUS.radiosondes.doc">2010 submitted data set documentation file</a>.
+<p>This station used Vaisala RS92 radiosondes with GPS windfinding during the VORTEX2 field season.
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE</th> <th>STATE</th> <th>LONG</th> <th>LAT</th> <th>ELEV (m)</th> </tr>
+<tr> <td>NCAR1</td> <td>Mobile</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> </tr>
+<tr> <td>NCAR2</td> <td>Mobile</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> </tr>
+</table><br>
+
+<p><b>2.3.3 National Weather Service (NWS) High Resolution Radiosonde Data</b></p>
+<p> For more infomation on the VORTEX2 2009/2010 NWS sounding data, see the VORTEX2 dataset titled "National Weather Service High Resolution Radiosonde Data".
+<a href="http://data.eol.ucar.edu/datafile/nph-get/114.098/readme_VORTEX2_2009_2010_nws_sounding.txt">Data set documentation file</a>.
+<p>Except for Dodge City, KS all stations used the Sippican Mark IIA with uses GPS windfinding.
+Dodge City used the VIZ B2 radiosonde with radiotheodolite windfinding.
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE</th> <th>STATE</th> <th>LONG</th> <th>LAT</th> <th>ELEV (m)</th> </tr>
+<tr><td> DDC</td><td>DodgeCity  </td><td>KS</td><td>-100.0</td><td>37.8</td><td>788.9</td>
+<tr><td>KABQ</td><td>Albuquerque</td><td>NM</td><td>-106.6</td><td>35.0</td><td>1619.0</td>
+<tr><td>KABR</td><td>Aberdeen   </td><td>SD</td><td> -98.4</td><td>45.5</td><td>398.0</td>
+<tr><td>KAMA</td><td>Amarillo   </td><td>TX</td><td>-101.7</td><td>35.2</td><td>1095.0</td>
+<tr><td>KDNR</td><td>Denver     </td><td>CO</td><td>-104.9</td><td>39.8</td><td>1611.0</td>
+<tr><td>KFWD</td><td>FortWorth  </td><td>TX</td><td> -97.3</td><td>32.8</td><td>195.0</td>
+<tr><td>KLBF</td><td>NorthPlatte</td><td>NE</td><td>-100.7</td><td>41.1</td><td>849.0</td>
+<tr><td>KLZK</td><td>LittleRock </td><td>AR</td><td> -92.3</td><td>34.8</td><td>173.0</td>
+<tr><td>KMAF</td><td>Midland    </td><td>TX</td><td>-102.2</td><td>31.9</td><td>874.0</td>
+<tr><td>KMPX</td><td>Minneapolis</td><td>MN</td><td> -93.6</td><td>44.8</td><td>290.0</td>
+<tr><td>KOAX</td><td>Omaha/Valley</td><td>NE</td><td>-96.4</td><td>41.3</td><td>351.0</td>
+<tr><td>KOUN</td><td>Norman      </td><td>OK</td><td>-97.4</td><td>35.2</td><td>345.0</td>
+<tr><td>KRAP</td><td>RapidCity   </td><td>SD</td><td>-103.2</td><td>44.1</td><td>1029.0</td>
+<tr><td>KRIW</td><td>Riverton    </td><td>WY</td><td>-108.5</td><td>43.1</td><td>1699.0</td>
+<tr><td>KSGF</td><td>Springfield </td><td>MO</td><td> -93.4</td><td>37.2</td><td>391.0</td>
+<tr><td>KSHV</td><td>Shreveport  </td><td>LA</td><td> -93.8</td><td>32.5</td><td>85.0</td>
+<tr><td>KTOP</td><td>Topeka      </td><td>KS</td><td> -95.6</td><td>39.1</td><td>268.0</td>
+</table><br>
+
+<p><b>2.3.4 NOAA National Severe Storm Laboratory (NSSL) Mobile GPS Advanced Upper_Air Sounding(MGAUS)</b></p>
+<p> For more infomation on the VORTEX2 2009/2010 ARM-CART sounding data, see the VORTEX2 dataset titled "NSSL MGAUS Radiosonde Data [NCAR/EOL]".
+<a href="http://data.eol.ucar.edu/datafile/nph-get/114.114/Readme_VORTEX2_NSSL_MGAUS_soundings.html">Data set documentation file</a>.
+<a href="http://data.eol.ucar.edu/datafile/nph-get/114.111/readme.VORTEX2009.GAUS.radiosondes.doc">2009 submitted data set documentation file</a>.
+<a href="http://data.eol.ucar.edu/datafile/nph-get/114.110/readme.VORTEX2010.GAUS.radiosondes.doc">2010 submitted data set documentation file</a>.
+<p>This station used Vaisala RS92 radiosondes with GPS windfinding during the VORTEX2 field season.
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE</th> <th>STATE</th> <th>LONG</th> <th>LAT</th> <th>ELEV (m)</th> </tr>
+<tr> <td>NSSL1</td> <td>Mobile</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> </tr>
+<tr> <td>NSSL2</td> <td>Mobile</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> </tr>
+</table><br>
+
+<p><b>2.3.5 West Texas Mesonet</b></p>
+<p> For more infomation on the VORTEX2 2009/2010 West Texas Mesonet sounding data, see the VORTEX2 dataset titled "West Texas Mesonet Radiosonde Data".
+<a href="http://data.eol.ucar.edu/datafile/nph-get/114.109/Readme_VORTEX2_WestTexasMesonet_soundings.html">Data set documentation file</a>.
+<p>The station used Vaisala radiosondes with LORAN-C windfinding. 
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE</th> <th>STATE</th> <th>LONG</th> <th>LAT</th> <th>ELEV (m)</th> </tr>
+<tr> <td>72267</td> <td>Reese Center</td> <td>TX</td> <td>-102.05000</td> <td>33.61000</td> <td>1018.0</td> </tr>
+</table><br>
+
+
+<!-- This is the QC section appropriate for Upsondes  -->
+
+<h2>3.0 Quality Control Processing</h2>
+
+See the documentation files above for information on the quality control processing 
+conducted on each network.
+
+<h2>4.0 References</h2>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<html>
+  <head>
+  <!-- Include dhtml resources -->
+  <link rel="stylesheet" href="css/dhtmlwindow.css" type="text/css" />
+  <script src="js/dhtmlwindow.js"></script>
+
+  <!-- Include Ajax API -->
+<script src="http://www.google.com/jsapi?key=MYKEYHERE"></script>
+
+<!--fixes IE/Safari bug when opening dhtml window-->
+<h1 id="popupwin"></h1> 
+
+<!-- Begin using Ajax Api to generate search tools -->
+<script type="text/javascript">
+google.load('search', '1');
+
+function OnLoad() {
+
+}
+	google.setOnLoadCallback(OnLoad);
+</script>
+
+</head>
+
+<!-- body of html -->
+<body>
+</body>

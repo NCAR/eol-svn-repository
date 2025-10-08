@@ -1,0 +1,55 @@
+Database Overview
+-----------------
+Dan Sullivan
+
+Below is a quick overview of the iven database.  More detailed information can be found in the
+dbinfo.txt file.
+
+* indicates the primary keys
+
+users
+-----
+	{uid*, fname, lname, email, active}
+The uid is a unique identifier used for JOSS staff members throughout the office and in 
+other applications.  The active flag signifies whether or not the user is still active within 
+the office.
+
+projects
+--------
+	{ pjname*, full_name, storm_id_prefix, begin_date, end_date, minlat, maxlat, minlon, 
+	   maxlon, admin_notes, link_source, link_target, charge_num }
+The pjname is a unique identifier used in other JOSS applications.  Most of the attributes 
+are simply displayed at the top of Iven for reference.  The link_source and link_target are 
+the components of a symbolic link established so the data links in the dataset table can be 
+seen on the web.
+
+products
+--------
+	{ pdname*, pjname*, status }
+The pjname attribute is a foreign key of the projects table.
+
+datasets
+--------
+	{ dsname*, pdname*, pjname*, storm_id, user_processing, raw_data, final_data, 
+	  station_info, software, plots, id_type, platform_type, status_notes, admin_notes, 
+	  status, exclude, questions }
+The {pdname, pjname} tuple is a foreign key of the products table.  The user_processing 
+attribute is a foreign key of the users table.
+
+extractions
+-----------
+	{ dsname*, pdname*, pjname*, pdsource, pjsource }
+The {dsname, pdname, pjname } tuple is a foreign key of the datasets table.  The 
+{pdsource, pjsource} tuple is a foreign key of the products table.  The application was 
+written so that the pjname and the pjsource are always equivalent.  The pjsource was 
+included in the database to maintain third normal form.  It is possible these two attributes 
+will not be equivalent in the future but not likely.
+
+
+ 
+
+
+
+
+
+

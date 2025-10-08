@@ -1,0 +1,45 @@
+#! /usr/bin/perl -w
+
+package AddGroupAssociationEditorCGI;
+use strict;
+use lib "..";
+use EditorCGI;
+our @ISA = ("EditorCGI");
+
+&main();
+
+sub main {
+    my $self = AddGroupAssociationEditorCGI->new();
+    $self->buildPage("Group Association Info");
+}
+
+sub buildPageBody {
+    my ($self) = @_;
+    my $product = $self->getGroup();
+
+    printf("<form action=\"add_group_association_action\" method=\"POST\" onSubmit=\"javascript: return validateGroupDatasetAssociation(this);\">\n");
+    printf("   <table class=editTable>\n");
+    printf("      <tr class=editHeading><td colspan=2>Add Group Association</td></tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Group:</th>\n");
+    printf("         <td>%s (%s)</td>\n",$product->getName(),$product->getId());
+    printf("      </tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Source Dataset:</th>\n");
+    printf("         <td><input type=text name=dataset size=15 maxlength=15 /></td>\n");
+    printf("      </tr>\n");
+    printf("      <tr><td class=editSpacer colspan=2></td></tr>\n");
+    
+    printf("      <tr>\n");
+    printf("         <th>Note:</th>\n");
+    printf("         <td>If the dataset is not already in the database, put it in using the DLN before putting it in here.</td>\n");
+    printf("      </tr>\n");
+    printf("      <tr><td class=editSpacer colspan=6></td></tr>\n");
+
+    $self->printButtonRow("Add",2);
+    printf("   </table>\n");
+    printf("   <input type=hidden name=group value=\"%s\" />\n",$product->getId());
+    printf("</form>\n");
+}
+
+

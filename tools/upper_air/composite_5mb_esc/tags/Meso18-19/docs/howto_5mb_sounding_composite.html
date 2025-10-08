@@ -1,0 +1,193 @@
+<html>
+<head>
+<title>How To: Create the 5mb Pressure Level Sounding Composite</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1>How To: Create the 5mb Pressure Level Sounding Composite</h1>
+<h2> See https://internal.eol.ucar.edu/content/sounding-composite-formation for more up-to-date info on the sounding composite formation. Note that both the High Resolution and 5mb composite formation processes are basically the same and use the dayfiles creation tool. There are only minor differences between projects and those are generally changes made to the build.xml file. See the build.xml file for a project to see specifics for that project in SVN. (20 Feb 2020)</h2>
+
+<h2>Table of Contents</h2>
+<ol>
+	<li><a href="#purpose">Purpose</a></li>
+	<li>Previous Versions<ol>
+                <li><a href="#version_mpex">MPEX_2013</a></li>
+                <li><a href="#version_dc3">DC3 2012</a></li>
+                <li><a href="#version_vocals">VOCALS 2008</a></li>
+                <li><a href="#version_rainex">RAINEX 2005</a></li>
+                <li><a href="#version_trex">T-REX 2006</a></li>
+		<li><a href="#version_rico">RICO_2004-2005</a></li>
+		</ol></li>
+	<li><a href="#directory">Directory Structure</a></li>
+	<li>Processing the Data<ol>
+	        <li><a href="#copy">Copy the 5mb CLASS Files</a></li>
+		<li><a href="#day">Creating the Day Files</a></li>
+                <li><a href="#documentation">Creating the Composite Document</a></li>
+		<li><a href="#codiac">Inserting into the Database</a></li>
+		</ol></li>
+	<li><a href="#software">Software</a></li>
+	<li><a href="#documents">Documentation</a></li>
+</ol>
+<hr>
+
+<a name="purpose"></a>
+<h3>Purpose</h3>
+<p>This document contains the instructions on how to generate the 5mb Pressure Level Sounding Composite.</p>
+<hr>
+
+<h3>Previous Versions</h3>
+
+<a name="version_dc3"></a>
+<h4>MPEX (2013)</h4>
+<table>
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Ftools%2Fupper_air%2Fcomposite_5mb_esc%2Ftags%2FMPEX_2013%2F#_tools_upper_air_composite_5mb_esc_tags_MPEX_2013_">SVN MPEX 2013 5mb Composite Formation Tag</a></td></tr>
+        <tr><th>Raw Data:</th><td>Comes from the final processed soundings.</td></tr>
+        <tr><th>Final Data: </th><td>/net/work/Projects/MPEX/data_processing/upper_air/5mb_Composite/database</td></tr>
+</table>
+
+
+<a name="version_dc3"></a>
+<h4>DC3 (2012)</h4>
+<table>
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Ftools%2Fupper_air%2Fcomposite_5mb_esc%2Ftags%2FDC3_2012%2F#_tools_upper_air_composite_5mb_esc_tags_DC3_2012_">SVN DC3 2012 5mb Composite Formation Tag</a></td></tr>
+        <tr><th>Raw Data:</th><td>Comes from the final processed soundings.</td></tr>
+        <tr><th>Final Data: </th><td>See CODIAC 353.107.</td></tr>
+</table>
+
+
+<a name="version_vocals"></a>
+<h4>VOCALS (2008)</h4>
+<table>
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Ftools%2Fupper_air%2Fcomposite_5mb_esc%2Ftags%2FVOCALS_2008%2F#_tools_upper_air_composite_5mb_esc_tags_VOCALS_2008_">http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Ftools%2Fupper_air%2Fcomposite_5mb_esc%2Ftags%2FVOCALS_2008%2F#_tools_upper_air_composite_5mb_esc_tags_VOCALS_2008_</a></td></tr>
+        <tr><th>Raw Data:</th><td>Comes from the final processed soundings.</td></tr>
+        <tr><th>Final Data: </th><td>See CODIAC 89.137.</td></tr>
+</table>
+
+<a name="version_rainex"></a>
+<h4>RAINEX (2005)</h4>
+<table>
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Ftools%2Fupper_air%2Fcomposite_5mb_esc%2Ftags%2FRAINEX_2005%2F#_tools_upper_air_composite_5mb_esc_tags_RAINEX_2005_">http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Ftools%2Fupper_air%2Fcomposite_5mb_esc%2Ftags%2FRAINEX_2005%2F#_tools_upper_air_composite_5mb_esc_tags_RAINEX_2005_</a></td></tr>
+        <tr><th>Raw Data:</th><td>Comes from the final processed soundings.</td></tr>
+        <tr><th>Final Data:</th><td>See CODIAC.</td></tr>
+</table>
+
+<a name="version_trex"></a>
+<h4>T-REX (2006)</h4>
+<table>
+	<tr><th>Software:</th><td>/work/TREX/upper_air/composite_5mb/software</td></tr>
+	<tr><th>Raw Data:</th><td>Comes from the final processed soundings</td></tr>
+	<tr><th>Final Data:</th><td>/archive/data/trex/upper_air/soundings/composite/5mb</td></tr>
+</table>
+
+<a name="version_rico"></a>
+<h4>RICO (2004-2005)</h4>
+<table>
+	<tr><th>Software:</th><td>/work/RICO/upperair/composite/highres/software</td></tr>
+	<tr><th>Raw Data:</th><td>Comes from the final processed soundings</td></tr>
+	<tr><th>Final Data:</th><td>/archive/codiac/rico/upper_air/composite/5mb</td></tr>
+</table>
+<hr>
+
+<a name="directory"></a>
+<h3>Directory Structure</h3>
+<table>
+	<tr><th>composite_5mb/</th><td>The main directory for the processing.</td></tr>
+        <tr><th>build.xml</th><td>Configuration file containing commands to create the composite.</td></tr>
+	<tr><td>database</td><td>The directory where the final 5mb composite day files will be created.</td></tr>
+	<tr><td>data</td><td>The directory where the individual network files are copied. These are the files
+         that will be included in the final composite. These input files should already be in 5mb format.</td></tr>
+	<tr><td>docs</td><td>The directory containing documentation about the processing and the data (i.e., 
+          HowTo for composite creation and Readme doc for the composite.</td></tr>
+</table>
+<hr>
+
+<h3>Processing the Data</h3>
+
+<a name="copy"></a>
+<h4>Updating the Project Specific Information</h4>
+<p>The first step in creating the 5mb  composite, is to update the <b>build.xml</b> file with the current project information.  You will need to change the following properties:</p>
+<ul>
+    <li><b>project</b></li>
+    <li><b>project.dir</b></li>
+</ul>
+<p>These properties are used by the build to properly name and store the day files once they are created.</p>
+
+<h4>Copying the CLASS Files</h4>
+<p>Before the 5mb Composite day files can be created, the individual 5mb network files to be included in the composite need to be copied into the <b>data</b> directory.  You can copy the files by hand from their individual network
+directories or you can use the <b>copy</b> ant command. See this copy command in the build.xml file.
+If you use the <b>build.xml</b> file  to copy files, you must edit it to update file names and locations of the 5mb files to be included in the composite. Depending on the complexity of the composite, it may be easier to just
+hand copy the files. Beware if you use the ant copy command that you copy only (and all) of the 5mb files
+to be included in the composite. It pays to do an inventory of all files in the input data directory before
+forming the composite.
+
+<br><br><i>Note that 5mb sounding files should be created when the original high resolution data
+are converted to ESC format. If not, then this must be done first.
+Each individual network's data must be converted to 5mb and then those 5mb files are combined 
+to form the 5mb composite. <font color=red>Do not combine the high resolution network files 
+into a composite and then convert that composite into the 5mb composite. </font>
+It is unclear whether or not the current s/w will do that conversion correctly!!! </i></p>
+<p class="code">ant copy</p>
+
+<a name="day"></a>
+<h4>Creating the Day Files</h4>
+<p>Once the individual network 5mb data have been copied into the <b>data</b> directory, 
+run the following command to combine the network 5mb data into composite day files.
+ This is done using the command:</p>
+<p class="code">ant dayfiles</p>
+
+<p>This can be a slow process (generally not for 5mb data) as it must read in 
+all of the sounding headers, sort them by their nominal dates, 
+then reload each sounding by day and generate the day file.  
+They will be placed in the <code>dayfile.dir</code> directory defined in the <b>build.xml</b> file.</p>
+
+<a name="documentation"></a>
+<h4>Creating the Composite Document</h4>
+
+<p>Update this How To doc accordingly. Please update to include latest project 5mb composite
+formation information. Update/write the README document for the newly created 5mb composite which
+ will be put online with the composite.  You may wish to start with a previous, 
+similar readme doc as the number of changes required for each project are sometimes minimal. 
+Always have a member of the Scientific Staff review the readme doc  Otherwise, 
+the general document changes will likely include:</p>
+<ul>
+    <li>Changing the Project ID in the document title and header.</li>
+    <li>Changing the list of included networks and links to the specific document in the <i>General Description</i>.</li>
+    <li>Updating the project specific information at the end of the <i>General Description</i>.</li>
+    <li>Changing the project ID in the <i>Sample Data</i> section.</li>
+    <li>Replace the sample data with data from the current project.</li>
+    <li>Update the <i>Station List</i> to include all of the stations included in the composite data set.</li>
+</ul>
+
+<a name="codiac"></a>
+<h4>Inserting into the EMDAC Database</h4>
+<p>Once created, the 5mb dayfiles and the associated readme file
+ need to be inserted into the EMDAC database. Request help from a knowledgeable staff member, 
+if you need help.</p>
+<hr>
+
+<a name="software"></a>
+<h3>Software</h3>
+<p>The following is a list of ant targets defined in the <b>build.xml</b> file.</p>
+<ul>
+   <li><b>copy</b>: This copies all of the best data for each network in the composite into a local data directory.</li>
+   <li><b>dayfiles</b>: This generates properly sorted day files for the data contained in the local data directory.</li>
+</ul>
+<hr>
+
+<a name="documents"></a>
+<h3>Documentation</h3>
+<p>The following are a list of documents that may help with the conversion or are related to the raw data.</p>
+<ul>
+    <li><a href="#">How To: Create a 5mb Pressure Level Sounding Composite</a>- This document.</li>
+    <li><a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use">How To: Set Up and Use Ant</a>- Guide to using and setting up the Ant environment needed to run the composite software.</li>
+    <li><a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/how-to-use-subversion">How To: Use Subversion</a>- Guide to using subversion.</a>
+    <li><a href="readme_rainex_5mb_sounding.html">readme_rainex_5mb_sounding.html</a>- The database readme for the RAINEX project.</li>
+    <li><a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/tutorial/sounding-processing-and-composite-generation">Sounding Processing and Composite Generation Tutorial</a>- Guide to the processing of soundings and the formation of composites.</li>
+</ul>
+<hr>
+
+<p class="foot">Last Updated: 18 April 2012 - L. E.  Cully</p>
+</body>
+</html>

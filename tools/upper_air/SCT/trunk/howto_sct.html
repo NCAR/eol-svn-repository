@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>How To: Compare Multiple Soundings on Plots</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Compare Multiple Soundings on Plots</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#version">Previous Versions</a></li>
+	<li><a href="#desc">Description</a></li>
+        <li><a href="#directory">Directory Structure and Software</a></li>
+	<li><a href="#warning">Warnings</a></li>
+        <li><a href="#view">Viewing the Sounding Plots</a>
+            <ol> 
+			<li><a href="#open">Opening the Plots</a></li>     		
+            <li><a href="#view">Viewing the Plots</a></li>
+ 			<li><a href="#after">After Viewing the Plots</a></li>
+            </ol>
+        </li>
+        <li><a href="#documents">Documentation and Software</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+	<p>This document contains instructions for using the Sounding Comparison Tool (SCT). The need for this project surfaced while researching the best way to update the XQC software (which needed to be updated so that it could run on non-Solaris operating systems). The DMG scientific staff will use this software to overlay and compare multiple soundings to aid in the setting of quality control flags. This tool does not modify the input sounding data files in any way.</p>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions</h2>
+<div class="block">
+
+    <a name="version:EBUFR"></a><h5>There are no previous versions of this software. All software and documentation can be found in the DMG SVN <a class="external-link" href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Ftools%2Fupper_air%2FSCT%2Ftrunk%2FtestingFiles%2F#_tools_upper_air_SCT_trunk_testingFiles_">here</a>.</h5>
+    
+</div>
+
+<a href="#">Top</a><hr />
+<a name = "desc"></a><h2>Description</h2>
+<div class = "block">
+	<p>The purpose of the Sounding Comparison Software is to allow a user to compare the data from up to five soundings which must be formatted in the NCAR EOL Sounding Composite (ESC) format. It would be used by scientific staff to view plots of temperature, relative humidity, wind speed, wind direction, ascension rate, longitude, latitude, U wind and V wind vs. pressure, time or altitude. Pressure and the dropsonde option for time are plotted upside-down with 0 at the top of the y-axis. These plots allow for improved sounding quality control processing. The software displays five small plots, but also allows the user to pick one plot to view larger. See SCT_report.pdf for a more detailed write-up. </p>
+
+</div>
+
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure and Software</h2>
+<div class="block">
+    <table class="directories">
+		<tr><td>The directory where the software is stored: dmg/tools/upper_air/SCT</td></tr>
+    </table>
+    <ol><b>The following files are necessary for the software to run:</b>
+	<li><span class="softwareName"> SCT.java</span>- This is the actual java code behind the software, particularly the interface</li>
+	<li><span class="softwareName">SCT_DataFilter.java</span>- This java file filters the data that is visible when selecting a data file. It makes only directory files, .cls files and .qc files visible while browsing. </li>
+	<li><span class="softwareName">sct_gnuTemplate.gnu</span>- This file contains the basic settings for the gnuplot plots being generated. It also contains keywords so that when file1.gnu and file2.gnu (see next section) are being written, those lines can be replaced with the relevant missing information</li>
+	<li><span class="softwareName">sct_quit.sh</span>- This file deletes the intermediate files generated while running SCT. It is called whenever the "Clear" or "Quit" buttons are pressed</li>
+    </ol>
+    <ol><b>These files are generated in the process of running this software:</b>
+	<li> <span class="softwareName">SCT.class</span> and <span class="softwareName">SCT_DataFilter.class</span>- These files are created during compilation before launching the software. These .class files are the ones that are actually executed</li>
+	<li><span class="softwareName">file1.gnu</span>- This gnuplot template file created from gnuTemplate.gnu contains the proper variables that, when executed, it generates the small plots</li>
+	<li><span class="softwareName">file2.gnu</span>- This gnuplot template file created from file1.gnu contains the proper variables to create the full-screen zoom plots</li>
+	<li><span class="softwareName">tempPlot.gif</span>, <span class="softwareName">rhPlot.gif</span>, <span class="softwareName">windSPlot.gif</span>, <span class="softwareName">windDPlot.gif</span>, and <span class="softwareName">arPlot.gif</span>- These are the small plots generated from executing <span class="softwareName">file1.gnu</span>. These are displayed in the interface, but deleted in quit.sh.</li>
+	<li><span class="softwareName">z_tempPlot.gif</span>, <span class="softwareName">z_rhPlot.gif</span>, <span class="softwareName">z_windSPlot.gif</span>, <span class="softwareName">z_windDPlot.gif</span>, and <span class="softwareName">z_arPlot.gif</span>- These are the full-screen plots. One of these files is displayed in the zoom view. These are all deleted in <span class="softwareName">quit.sh</span>.</li>
+   	<li>User Selected Sounding file (*.cls)- In order to have a consistent marker for missing data, the opened data files are copied almost exactly into the local directory. These intermediate sounding data files(with missing data values changed to '?') are deleted when the plots are cleared or the program is ended via the quit button. The original sounding files are NOT deleted.</li> 
+   </ol>
+
+</div>
+<a href="#">Top</a><hr />
+
+<a name="warning"></a><h2>Warnings</h2>
+<div class="block">
+<p><span class="beware"> Avoid storing and opening datafiles ending in .sct in the same directory as the SCT. They may be overwritten</span></p>
+<p><span class="beware"> If opening a file containing multiple soundings, all data contained in the file will be plotted the same color</span></p>
+
+<a href = "#">Top</a><hr />
+<a name="view"></a><h2>Viewing the Sounding Plots</h2>
+<div class="block"> 
+    <a name="open"></a><h3>Opening the Software and Plots</h3>
+	<ol>
+	<li><p>In order for this software to run, java and gnuplot must both be installed on the computer. The SCT was tested with java 6 and gnuplot 4.0. The computer must also have /bin/bash in order to run a shell script. <span class="softwareName">sct_quit.sh</span>, <span class="softwareName">SCT_DataFilter.java</span>, <span class="softwareName">SCT_DataFilter.class</span> and <span class="softwareName">sct_gnuTemplate.gnu</span> must also be included in the directory with <span class="softwareName">SCT.java</span> and <span class="softwareName">SCT.class</span>.</p></li>
+	<li><p>Open a network terminal and go to the following directory:</br></br><b> /net/work/Projects/XQC_work/sounding_comparison</b></br></br> using the cd command. The first time the software is being run in the session, type the following into the command line to compile the code:</br></br><b>javac SCT.java</b></br></br> If an error occurs, try typing the following before attempting to recompile SCT.java </br></br><b>javac SCT_DataFilter.java</b></br></br>Then type "java SCT" to start the software.</p></li>
+
+	<li><p>Start the software with X11 forwarding enabled. This can be done many different ways but one example could be to click the appropriate box while running Putty from a Windows machine, as well as runing XMing in the background. Make sure <span class="softwareName">DataFilter.java</span>, <span class="softwareName">quit.sh</span> and <span class="softwareName">gnuTemplate.gnu</span> are in the current directory.</p></li>
+	<li><p>Once the main SCT window is displayed, click the "Open" button in the upper right corner. Browse to a .cls or .qc file for a single sounding.</br></br> <span class="beware">NOTE: DO NOT PUT .sct DATAFILES IN THE DIRECTORY CONTAINING SCT.java,</span></br></br> they will be deleted if opened with the software. Also, only use sounding (*.cls) data files with complete data lines. Data filew that end mid-line or are completely empty will not plot. This software expects a single sounding per file to plot properly. If more than one sounding is contained in a selected data file, all soundings from that file will be plotted using the same color!</p></li>
+	<li><p>Repeat the previous step up to four times until there are a maximum of five files selected.</p></li>
+	</ol>  
+
+    <a name="plot"></a><h3>Viewing the Plots</h3>
+	<ol>	
+	<li><p>Once all the sounding files have been selected, choose a y-variable from the drop-down menu on the right side, then click the "Plot" button. Pressure and Time (Dropsonde) plot with the y-axis reversed (with 0 at the top).</p></li>
+	<li><p>Notice that the colors on the plots correspond with the colors used to display the opened files in the header. This is a graph legend of sorts.</p></li>
+	<li><p>Click the "More Plots" button to view another four plots. Click the button again to return to the original plot view. Notice that in these two different views the plots in the Zoom menu correspond to those that are visible </p></li>
+	<li><p>To see a plot full screen, select which one (by x-variable) from the drop-down on the right side, then click the "Zoom" button.</p></li>
+	<li><p>To exit the zoom or full screen mode, press the "Exit" button on the left side of the frame. This will return you to the view of all five plots.</p></li>
+	<li><p>To view the same data plotted with a different variable on the y-axis, just select a different variable from the "Y- variable" menu and press the "Plot" button again.
+	</ol>
+
+<a name="after"></a><h3>After Viewing the Plots</h3>
+	<ol>
+	<li><p>To plot a different set of datafiles, click the "Clear" button in the upper right and repeat the previous steps.</p></li>
+	<li><p>To exit SCT, click the "Quit" button in the upper right.</p></li>
+
+</div>
+<a href="#">Top</a><hr>
+
+
+<a name="documents"></a><h2>Documentation and Software</h2>
+<p>The software is stored in the DMG SVN here: <a class="external-link" href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&amp;path=%2Ftools%2Fupper_air%2FSCT%2F#_tools_upper_air_SCT_">dmg/tools/upper_air/SCT</a></p>
+<a href="#">Top</a><hr> 
+<hr>
+
+<p class="foot">Revision History:</p>
+<table class="revhistory">
+	<tr>
+	    <td>7-20 July 2011</th>
+		<td>Monica Jacobs</td>
+	</tr>
+</table>  
+
+
+</body>
+</html>

@@ -1,0 +1,167 @@
+
+
+
+<html>
+<head>
+   <title>DTS Requirements</title>
+
+</head>
+<body>
+<h1>Data Tracking System Requirements</h1>
+<p>This documentation contains the detailed requirements for the Data Tracking System.</p>
+
+<hr />
+
+<table width="100%">
+   <tr>
+      <td valign="top" width="33%">
+         <h2>General Functionality</h2>
+         <ul>
+            <li>Create A New Dataset</li>
+            <li>Clone A Dataset</li>
+            <li>Edit An Existing Dataset</li>
+         </ul>
+
+         <h2>Restricted Functionality</h2>
+         <ul>
+            <li>Delete a Dataset</li>
+            <li>Create a New Project</li>
+            <li>Edit an Existing Project</li>
+            <li>Create a New User</li>
+            <li>Edit an Existing User</li>
+         </ul>
+
+         <h2>Omitted Functionality</h2>
+         <ul>
+            <li>Delete a Project</li>
+            <li>Delete a User</li>
+         </ul>
+      </td>
+   
+      <td valign="top" width="33%">
+         <h2>Views</h2>
+         <ul>
+            <li>List of Projects</li>
+            <li>List of Datasets by Project</li>
+            <li>List of Processed Datasets by Project</li>
+            <li>List of Composite Dataset by Project</li>
+            <li>List of Datasets by User</li>
+            <li>List of Users</li>
+            <li>Summary of a Project</li>
+            <li>Summary of a Dataset</li>
+         </ul>
+      </td>
+
+      <td valign="top" width="33%">
+         <h2>Editors</h2>
+         <ul>
+            <li>Dataset Ingest Task Editor</li>
+            <li>Dataset Process Task Editor</li>
+            <li>Dataset Load/Approve Task Editor</li>
+            <li>Project Editor</li>
+            <li>User Editor</li>
+         </ul>
+      </td>
+   </tr>
+</table>
+
+<hr />
+
+<table width="100%">
+   <tr>
+      <td rowspan="2" valign="top" width="50%">
+         <h2>Dataset Definition</h2>
+         <ul>
+            <li>Dataset Identifier</li>
+            <li>Dataset Title</li>
+            <li>Dataset Type (Source, Processed, Composite, Link, Imagery)</li>
+            <li>Set of Associated Projects</li>
+            <li>Set of General Notes</li>
+            <li>User Who Entered the Dataset</li>
+            <li>Date the Dataset was Entered</li>
+            <li>Set of Remote URLs</li>
+            <li>Internal Dataset Contact</li>
+            <li>External Dataset (Source) Contact</li>
+            <li>Documentation Flag</li>
+            <li>Master List Flag</li>
+            <li>Ingest Task Information
+               <ul>    
+                  <li>Ingest User</li>
+                  <li>Ingest Status</li>
+                  <li>Ingest Location</li>
+                  <li>Ingest Type (FTP, Email, Manual Download, CD, etc.)</li>
+                  <li>Ingest Specific Notes</li>
+               </ul>
+            </li>
+            <li>Process Task Information
+               <ul>
+                  <li>Working Directory</li>
+                  <li>Repository</li>
+                  <li>Repository Revision Number</li>
+                  <li>Final Data Location</li>
+                  <li>Station List Location</li>
+                  <li>How To URL</li>
+                  <li>Data Plots URL</li>
+                  <li>Question/Issue Flag</li>
+                  <li>Platform</li>
+                  <li>Set of Source Datasets
+                     <ul>
+                        <li>Set of Documentaiton Files</li>
+                        <li>UTC Offset Notes</li>
+                        <li>DST Notes</li>
+                        <li>Notes on Collection Times</li>
+                        <li>Notes for Data Source Information</li>
+                     </ul>
+                  </li>
+                  <li>Processer</li>
+                  <li>Process Status</li>
+                  <li>Processing Priority</li>
+                  <li>Processing Specific Notes</li>
+               </ul>
+            </li>
+            <li>Load Task Information
+               <ul>
+                  <li>Loader</li>
+                  <li>Load Status</li>
+                  <li>Location of the Data to be Loaded</li>
+                  <li>Final Archive Location</li>
+                  <li>Load Specific Notes</li>
+               </ul>
+            </li>
+            <li>Approve Task Information
+               <ul>
+                  <li>Approver</li>
+                  <li>Approve Status</li>
+                  <li>Approve Specific Notes</li>
+               </ul>
+            </li>
+         </ul>
+      </td>
+
+      <td valign="top" width="50%">
+         <h2>Project Definition</h2>
+         <ul>
+            <li>Project Identifier</li>
+            <li>Active Flag</li>
+            <li>Set of Project Notes</li>
+         </ul>
+      </td>
+   </tr>
+   <tr>
+      <td valign="top" width="50%">
+         <h2>User Definition</h2>
+         <ul>
+            <li>Identification Number</li>
+            <li>User Name</li>
+            <li>Password</li>
+            <li>Email Address</li>
+            <li>Active Flag</li>
+            <li>Set of User Roles</li>
+         </ul>
+      </td>
+   </tr>
+</table>
+
+
+</body>
+</html>

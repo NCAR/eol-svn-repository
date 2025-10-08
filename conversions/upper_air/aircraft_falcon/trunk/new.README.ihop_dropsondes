@@ -1,0 +1,183 @@
+IHOP 2002 Dropsonde Soundings
+
+Contacts:               Terry Hock
+		        hock@ucar.edu
+
+		        Junhong Wang
+		        junhong@ucar.edu
+
+		        Kate Beierle
+	                kbeierle@ucar.edu
+
+Mailing Address:        NCAR/Atmospheric Technology Division
+			P.O. Box 3000
+			1850 Table Mesa Drive
+		        Boulder, CO 80307; USA
+
+			Phone: (303)-497-8837
+           		Fax:   (303)-497-8770
+
+
+I. Important Note to Users!!!
+
+THESE SOUNDINGS WERE RECENTLY CORRECTED FOR ERRORS IN GEOPOTENTIAL HEIGHT AND WERE RE-RELEASED IN APRIL 2003
+
+In the previous version, the IHOP dropsonde geopotential height values were calculated 
+integrating from flight level down, using the hydrostatic equation, because unlike with
+dropsondes launched over the ocean the surface altitude of the land is unknown.  
+We recommended not using geopotential altitude data in files from either the IHOP Falcon or
+the Lear jet for two reasons.  First, there are uncertainties in the the flight 
+level heights which are used as a reference by ASPEN to integrate geopotential 
+altitudes.  Second, there are no flight level PTU data for any of the Lear jet
+soundings because there were no PTU sensors on board, and for the Falcon
+soundings there is no flight level pressure data for 37 of the 88 soundings. 
+For the Falcon soundings with flight level PTU data, the data were manually entered and 
+therefore its accuracy is unknown. 
+
+It was recently brought to our attention that there was a systematic ~200-300 m height
+difference found between co-located dropsondes and radiosondes. In order to correct this 
+error we obtained 1-km elevation data from NOAA's National Geophysical Data Center, found
+the elevation of the dropsonde locations from the dataset, integrated geopotential height 
+from the surface to the flight level and inserted the new geopotential height values into 
+the data. 
+After corrections, the new data reduced the difference between co-located dropsonde and 
+radiosonde geopotential heights to less than 30m, however 27 of the dropsondes had missing
+data before reaching the surface and for these, integrating from the surface upward produced
+incorrect geopotential heights.  For these soundings, the geopotential heights were calculated
+integrating downward from flight level by incorporating "close to" flight-level PTU data from
+both the raw file and the QCed file. For pressure we used the first availbale measurement after 
+launch, from the raw file, and for temperature and humidity we manually entered the first
+available data after launch, found in the QC CLASS file, which was most often recorded at 20
+seconds.  This new D-file was then re-run through ASPEN to produce the new corrected QCed data.
+(Note: the assumption of a constant temperature for the first 20 seconds has minor impacts on the 
+geopotential height calculation).
+ 
+Some uncertainties remain about the accuracy of the data because of the uncertainties in the 
+elevation data and flight level heights, and the assumption of a constant temperature for the
+first ~20 seconds.  IN ADDITION, IT IS POSSIBLE THAT THE GEO-POTENTIAL HEIGHTS FOR SOME THE 
+SOUNDINGS MAY STILL HAVE PROBLEMS THAT HAVE YET TO BE FOUND.  THEREFORE, WE RECOMMEND TAKING
+CAUTION WHEN USING THE ALTITUDE DATA.  WE ALSO RECOMMEND NOT USING THE FLIGHT LEVEL DATA 
+(AT time=0s) BECAUSE OF THE MODIFICATIONS MADE TO IT.  IT SHOULD ALSO BE KEPT IN MIND THAT
+THE DATA POINT AT THE LOWEST LEVEL IN THE FINAL DATASET DOES NOT NECESSARILY REPRESENT THE 
+SURFACE DATA.
+
+
+
+II. File Naming Conventions
+
+The "D" files are typically half-second data files with appropriate corrections 
+and quality control measures applied.  The naming convention for these files is 
+the same from project to project - "D", followed by  "yyyymmdd_hhmmssQC.cls" where yyyy = year, mm = month, 
+hh = hour of the day GMT, mm = minute of the hour, ss = second of the hour, QC refers to Quality Controlled,
+and ".cls" refers to the NCAR CLASS format 
+
+
+III. Header Information
+
+The header records contain data type, project ID, site ID, site location, actual release time, 
+and possibly other specialized information.  The first five header lines 
+contain information identifying the sounding, and have rigidly defined form.  The following
+6 header lines contain auxiliary information and commments about the sounding, and they can
+vary from data set to data set. The last 3 header records contain header information for the
+data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains
+dashes (--- characters) signifying the end of the header.
+
+The five standard header lines are as follows:
+
+Line  Label  (fixed to 35 chars in length)                  Contents
+
+1. Data Type:					   Description of type and resolution of 
+						   data.
+2. Project ID:					   ID of weather project.
+3. Launch Site Type/Site ID:			   Description of launch site.
+4. Launch Location (lon,lat,alt):		   Position of launch 
+5. GMT Launch:                                     Time of release, in format:
+						   yyyy, mm, dd, hh:mm:ss
+
+The release location is given as : lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), 
+alt (m).
+
+Longitude in deg min is in the format: ddd mm.mm'W where ddd is the number of degrees from True 
+North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents 
+represents W or E for west or east longitude, respectively. Latitude has the same format as 
+longitude, except there are only two digits for degrees and N or S for north/south latitude.
+The decimal equivalent of longitude and latitude and station elevation follow.
+
+The six non-standard header lines may contain any label and contents.  The label is fixed to 
+35 characters to match the standard header lines.
+
+
+IV. Data Records
+
+The data records each contain time from release, pressure, temperature, dew point, relative 
+humidity, U and V wind components, wind speed and direction, ascent rate, balloon position
+data, altitude, and quality control flags.  
+
+Field                   Parameter                     Units                 Missing Value
+ No. 
+------------------------------------------------------------------------------------------
+
+ 1			Time                         Seconds		     9999.0
+ 2 			Pressure		     Millibars               9999.0
+ 3			Dry-bulb Temp		     Degrees C  	      999.0
+ 4			Dew Point Temp 		     Degrees C		      999.0
+ 5			Relative Humidity            Percent                  999.0
+ 6			U Wind Component             Meters/Second            999.0
+ 7			V Wind Component  	     Meters/Second            999.0
+ 8			Wind Speed		     Meters/Second	      999.0
+ 9			Wind Direction		     Degrees		      999.0
+ 10			Ascension Rate		     Meters/Second            999.0
+ 11			Longitude		     Degrees		      999.0
+ 12			Latitude		     Degrees		      999.0
+ 13		        Range			     Kilometers               999.0	
+ 14			Angle			     Degrees		      999.0
+ 15 			Altitude		     Meters		    99999.0
+ 16			QC flag for Pressure                                   99.0
+ 17			QC flag for Temp				       99.0
+ 18 			QC flag for Humidity                                   99.0
+ 19			QC flag for U Component                                99.0
+ 20			QC flag for V Component				       99.0
+ 21			QC flag for Horizontal Wind			       99.0
+
+
+V. Data File Specifics 
+
+The files contain data calculated at half-second intervals . The variables
+pressure, temperature, and relative humidity are calibrated values from
+measurements made by the sonde.  The dew point is calculated from the relative
+humidity. The altitude value is calculated from the hydrostatic 
+equation using first available pressure, temperature, and dew point. For the 
+dropsondes specifically, if the
+radiosonde is launched over water, the height is calculated by integrating from 
+the surface (sea level) upward.  However, if the radisonde is launched over land, 
+as was the case with IHOP2002, the QC process becomes more complicated and a different
+approach must be taken (please see paragraph I. Important Note to Users)
+The rate of ascent is obtained from the altitude difference between two successive
+time steps.  The position (lat, lon), angle and range come from the GPS and altitude 
+data. This data is interpolated to one second in order to match the wind data.
+
+All wind data are computed from GPS navigation signals received from the sonde.  The
+raw wind values are calculatd at a one half second data rate by a commercial processing
+card.  These raw values are subjected to a digital filter to remove low frequency oscillations
+due to the sonde pendulum motion beneath the balloon. This time record is used in the 
+interpolation of the pressure, temperature, and humidity data. 
+
+VI. Data Quality Control 
+
+The raw soundings are first run through the Atmospheric Sounding Processing 
+ENvironment (ASPEN), which analyzes the data, performs smoothing, and removes 
+suspect data points.  The soundings are then visually evaluated for 
+outliers, or any other obvious problems. For many IHOP Dropsonde soundings
+the sondes continued to transmit data (mostly bad) after hitting the ground. 
+It was nesscary to write a script to solve this problem, and some additional 
+manual corrections were also necessary.  Histograms of the data are 
+then created to check the range, and number of occurances, in values of pressure, 
+temp, RH, wind speed and direction, and are derived from data at all levels for 
+all soundings. Finally, time series plots of temperature, relative humidity, and 
+wind speed and direction are created.  They are used to both examine the consistency
+of soundings launched from the same flight, and to show the variablity of soundings
+from different missions.  
+
+
+
+

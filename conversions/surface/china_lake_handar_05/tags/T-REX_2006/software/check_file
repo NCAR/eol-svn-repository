@@ -1,0 +1,5 @@
+#! /usr/bin/csh
+
+foreach file (../final/*.0qc)
+	/work/software/library/checkfile/Version5/bin/check_QCF_file $file
+end

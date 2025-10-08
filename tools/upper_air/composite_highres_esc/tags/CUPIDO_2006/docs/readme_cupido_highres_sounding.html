@@ -1,0 +1,374 @@
+<html>
+<head>
+<title>CuPIDO Sounding Composite Highest Resolution Upper-Air Data Set [NCAR/EOL]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">CuPIDO Sounding Composite Highest Resolution Upper-Air Data Set</h1>
+
+<h2>1.0 General Description</h2>
+<p>This dataset contains the highest possible resolution (i.e. the 'native' resolution) upper-air sounding data in the National Center for Atmospheric Research (NCAR) Earth Observing Laboratory (EOL) Sounding Composite Format from stations in the following networks:</p>
+<ul>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/97.028/readme_cupido_gts_sounding.html">GTS (mandatory/significant levels) Rawinsonde Data</a>,</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/97.028/readme_cupido_smn_sounding.html">Mexico SMN-CNA Rawinsonde Data</a>,</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/97.028/readme.CuPIDO2006.radiosondes.pdf">NCAR Mobile GAUS (MGAUS) Rawinsonde Data</a>, and the</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/97.028/readme_cupido_nws_sounding.txt">NWS Rawinsonde Data</a>,</li>
+</ul>
+
+<p>Data for the Cumulus Photogrammetric, In-Situ and Doppler Observations (CuPIDO) 2006 domain (23&deg;N to 36&deg;N latitude and 120&deg;W to 100&deg;W) are contained within this dataset.  The dataset covers the time period 1 July 2006 through 31 August 2006.  This CuPIDO 2006 Sounding Composite Highest Resolution Upper-Air Dataset contains 1598 soundings from 4 platforms.</p>
+
+<p><a href="#section2.1">Section 2.1</a>  contains a detailed description of the format of the composite dataset.</p>
+
+<a name="section2.0"></a><h2>2.0 Detailed Data Description</h2>
+
+<a name="section2.1"></a><h2>2.1 Detailed Format Description</h2>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite (ESC) format.  ESC is a version of the National Center for Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, meteorological and wind data processors, and the operator's name and comments.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+<p>The seven nonstandard header lines may contain any label and contents. The 
+  labels are padded to 35 characters to match the standard header lines. Records 
+  for this dataset include the following three nonstandard header lines.</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=1 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL Sounding Composite Format codes:</p>
+
+<table border=1 align="center">
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of a CuPIDO high resolution rawinsonde data in EOL Sounding Composite format.   The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  See section 2.1 for an exact format specification
+
+<pre>
+Data Type:                         National Weather Service Sounding.
+Project ID:                        0
+Release Site Type/Site ID:         DRT Del Rio, TX
+Release Location (lon,lat,alt):    100 54.00'W, 29 24.00'N, -100.900, 29.400, 314.0
+UTC Release Time (y,m,d,h,m,s):    2006, 06, 30, 23:09:00
+Ascension No:                      1363
+Radiosonde Serial Number:          84978459.CSN
+Radiosonde Manufacturer:           VIZ B2
+/
+/
+/
+Nominal Release Time (y,m,d,h,m,s):2006, 07, 01, 00:00:00
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat   Ele   Azi    Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg   deg   deg     m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+   0.0  978.8  26.8  19.2  63.0   -3.2    2.6   4.1 129.1 999.0 -100.900  29.400 999.0 999.0   314.0 99.0 99.0 99.0 99.0 99.0  9.0
+   6.0  974.5  26.5  18.4  61.0 9999.0 9999.0 999.0 999.0   6.5 9999.000 999.000 999.0 999.0   353.0 99.0 99.0 99.0  9.0  9.0 99.0
+  12.0  971.6  26.2  18.3  61.8 9999.0 9999.0 999.0 999.0   4.3 9999.000 999.000 999.0 999.0   379.0 99.0 99.0 99.0  9.0  9.0 99.0
+  18.0  968.1  25.8  18.1  62.4 9999.0 9999.0 999.0 999.0   5.3 9999.000 999.000 999.0 999.0   411.0 99.0 99.0 99.0  9.0  9.0 99.0
+  24.0  964.1  25.3  17.8  63.0 9999.0 9999.0 999.0 999.0   6.2 9999.000 999.000 999.0 999.0   448.0 99.0 99.0 99.0  9.0  9.0 99.0
+  30.0  960.1  24.9  17.6  64.0 9999.0 9999.0 999.0 999.0   6.0 9999.000 999.000 999.0 999.0   484.0 99.0 99.0 99.0  9.0  9.0 99.0
+</pre>
+
+<a name="section2.2"></a><h2>2.2 Station List</h2>
+
+<table border=1 align="center">
+  <tr> 
+    <th>ID</th>
+    <th>SITE</th>
+    <th>STATE</th>
+    <th>COUNTRY</th>
+    <th>LONG</th>
+    <th>LAT</th>
+    <th>ELEV (m)</th>
+    <th>Resolution</th>
+  </tr>
+  <tr>
+    <td>1Y7</td>
+    <td>1Y7 (GTS)</td>
+    <td>AZ</td>
+    <td>US</td>
+    <td>-114.40000</td>
+    <td>32.87000</td>
+    <td>98.0</td>
+    <td>Man/Sig</td>
+  </tr>
+  <tr>
+    <td>ABQ</td>
+    <td>Albuquerque</td>
+    <td>NM</td>
+    <td>US</td>
+    <td>-106.60000</td>
+    <td>35.00000</td>
+    <td>1615.0</td>
+    <td>6 Second</td>
+  </tr>
+  <tr>
+    <td>DRT</td>
+    <td>Del Rio</td>
+    <td>TX</td>
+    <td>US</td>
+    <td>-100.90000</td>
+    <td>29.40000</td>
+    <td>314.0</td>
+    <td>6 Second</td>
+  </tr>
+  <tr>
+    <td>EDW</td>
+    <td>EDW (GTS)</td>
+    <td>CA</td>
+    <td>US</td>
+    <td>-117.92000</td>
+    <td>34.90000</td>
+    <td>724.0</td>
+    <td>Man/Sig</td>
+  </tr>
+  <tr>
+    <td>EPZ</td>
+    <td>Santa Teresa</td>
+    <td>NM</td>
+    <td>US</td>
+    <td>-106.70000</td>
+    <td>31.90000</td>
+    <td>1252.0</td>
+    <td>6 Second</td>
+  </tr>
+  <tr>
+    <td>GYM</td>
+    <td>GYM (GTS)</td>
+    <td>Sonora</td>
+    <td>MX</td>
+    <td>-110.80000</td>
+    <td>27.95000</td>
+    <td>12.0</td>
+    <td>Man/Sig</td>
+  </tr>
+  <tr>
+    <td>KAMA</td>
+    <td>Amarillo, TX / 72363</td>
+    <td>TX</td>
+    <td>US</td>
+    <td>-101.70861</td>
+    <td>35.23250</td>
+    <td>1094.0</td>
+    <td>1 Second</td>
+  </tr>
+  <tr>
+    <td>KFGZ</td>
+    <td>Flagstaff, AZ / 72376</td>
+    <td>AZ</td>
+    <td>US</td>
+    <td>-111.82027</td>
+    <td>35.23056</td>
+    <td>2179.0</td>
+    <td>1 Second</td>
+  </tr>
+  <tr>
+    <td>KMAF</td>
+    <td>Midland, TX / 72265</td>
+    <td>TX</td>
+    <td>US</td>
+    <td>-102.18986</td>
+    <td>31.94267</td>
+    <td>873.0</td>
+    <td>1 Second</td>
+  </tr>
+  <tr>
+    <td>LAP</td>
+    <td>LAP (GTS)</td>
+    <td>Baja California Sur</td>
+    <td>MX</td>
+    <td>-110.33000</td>
+    <td>24.07000</td>
+    <td>14.0</td>
+    <td>Man/Sig</td>
+  </tr>
+  <tr>
+    <td>MCV</td>
+    <td>MCV (GTS)</td>
+    <td>Chihuahua</td>
+    <td>MX</td>
+    <td>-106.07000</td>
+    <td>28.70000</td>
+    <td>1428.0</td>
+    <td>Man/Sig</td>
+  </tr>
+  <tr>
+    <td>MGAUS01</td>
+    <td>MGAUS</td>
+    <td>AZ</td>
+    <td>US</td>
+    <td>-999.99999</td>
+    <td>-99.99999</td>
+    <td>-9999.9</td>
+    <td>1 Second</td>
+  </tr>
+  <tr>
+    <td>MGAUS02</td>
+    <td>MGAUS</td>
+    <td>AZ</td>
+    <td>US</td>
+    <td>-999.99999</td>
+    <td>-99.99999</td>
+    <td>-9999.9</td>
+    <td>1 Second</td>
+  </tr>
+  <tr>
+    <td>MGYM</td>
+    <td>76256 Empalme/Guaymas</td>
+    <td>Sonora</td>
+    <td>MX</td>
+    <td>-110.82510</td>
+    <td>27.94180</td>
+    <td>12.0</td>
+    <td>2 Second</td>
+  </tr>
+  <tr>
+    <td>MMAN</td>
+    <td>76394 Monterrey</td>
+    <td>Nuevo Leon</td>
+    <td>MX</td>
+    <td>-100.23410</td>
+    <td>25.89860</td>
+    <td>450.0</td>
+    <td>2 Second</td>
+  </tr>
+  <tr>
+    <td>MMCU</td>
+    <td>76225 Chihuahua</td>
+    <td>Chihuahua</td>
+    <td>MX</td>
+    <td>-106.11670</td>
+    <td>28.70000</td>
+    <td>1482.0</td>
+    <td>2 Second</td>
+  </tr>
+  <tr>
+    <td>MMZC</td>
+    <td>76526 Zacatecas</td>
+    <td>Zacatecas</td>
+    <td>MX</td>
+    <td>-103.75680</td>
+    <td>22.77140</td>
+    <td>2265.0</td>
+    <td>2 Second</td>
+  </tr>
+  <tr>
+    <td>MMZT</td>
+    <td>76458 Mazatlan</td>
+    <td>Sinaloa</td>
+    <td>MX</td>
+    <td>-106.30100</td>
+    <td>23.14660</td>
+    <td>3.0</td>
+    <td>2 Second</td>
+  </tr>
+  <tr>
+    <td>MTY</td>
+    <td>MTY (GTS)</td>
+    <td>Nuevo Leon</td>
+    <td>MX</td>
+    <td>-100.20000</td>
+    <td>25.87000</td>
+    <td>450.0</td>
+    <td>Man/Sig</td>
+  </tr>
+  <tr>
+    <td>MZT</td>
+    <td>MZT (GTS)</td>
+    <td>Sinaloa</td>
+    <td>MX</td>
+    <td>-106.42000</td>
+    <td>23.18000</td>
+    <td>4.0</td>
+    <td>Man/Sig</td>
+  </tr>
+  <tr>
+    <td>NKX</td>
+    <td>San Diego</td>
+    <td>CA</td>
+    <td>US</td>
+    <td>-117.10000</td>
+    <td>32.80000</td>
+    <td>134.0</td>
+    <td>6 Second</td>
+  </tr>
+  <tr>
+    <td>NSI</td>
+    <td>NSI (GTS)</td>
+    <td>CA</td>
+    <td>US</td>
+    <td>-119.45000</td>
+    <td>33.25000</td>
+    <td>14.0</td>
+    <td>Man/Sig</td>
+  </tr>
+  <tr>
+    <td>NTD</td>
+    <td>NTD (GTS)</td>
+    <td>CA</td>
+    <td>US</td>
+    <td>-119.12000</td>
+    <td>34.10000</td>
+    <td>2.0</td>
+    <td>Man/Sig</td>
+  </tr>
+  <tr>
+    <td>TUS</td>
+    <td>Tucson</td>
+    <td>AZ</td>
+    <td>US</td>
+    <td>-110.90000</td>
+    <td>32.10000</td>
+    <td>787.0</td>
+    <td>6 Second</td>
+  </tr>
+</table>
+</body>
+</html>

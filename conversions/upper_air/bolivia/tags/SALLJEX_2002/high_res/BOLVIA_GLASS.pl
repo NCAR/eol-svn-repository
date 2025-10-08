@@ -1,0 +1,251 @@
+#!/bin/perl -w
+# program NCAR-ISS.pl 
+# Perl script takes NCAR-ISS glass files and converts them to QCF
+# Darren R. Gallant JOSS
+use POSIX;
+use lib "/home/gallant/bin/perl";
+use Formats::Class qw(:DEFAULT &calc_UV &calc_dewpt &remove_dropping);
+use FileHandle;
+@months = keys %MONTHS;
+$TRUE = $CONSTANTS{"TRUE"};$FALSE = $CONSTANTS{"FALSE"};
+$INFO{"Data Type"} = "High Resolution Sounding";
+$INFO{"Project ID"} = "SALLJEX";
+$STN_INFO{SAL}{name} = "Fixed NCAR-GLASS/Bolivia";
+
+$logfile = "SOUNDINGS.log";
+$log = FileHandle->new();
+open($log,">>$logfile") || die "Can't open $logfile\n";
+print "Opening file: $logfile\n";&timestamp;
+if(@ARGV < 1){
+  print "Usage is BOLIVIA_GLASS.pl file(s)\n";
+  exit;
+}
+@files = grep(/^D\d{12}QC\.cls(|\.gz)$/i,@ARGV);
+#@files = grep(/^y\d{7}\.hom(|\.gz)$/i,@ARGV);
+foreach $file(@files){
+    &writefile(&filename(\$file));
+}# end foreach file
+print "FINI\n";&timestamp;undef $log;
+
+sub findmth{
+    my $i = 0;
+    while($i <= scalar(@months)-1){
+	if($MONTHS{$months[$i]}{"MM"} == $_[0]){
+	    return $months[$i];
+        }
+	$i++;
+    }
+    return "NULL";
+}# end sub findmth
+
+
+sub by_number{$a<=>$b};
+
+sub filename{
+    my $file_ref = $_[0];my @OUTFILE = ();
+    if($$file_ref =~ /D(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})QC\.cls/){
+	($year,$mth,$day,$hour,$min) = ($1,$2,$3,$4,$5);
+        $stn_id = "SAL";$sec = "00";
+    }elsif($$file_ref =~ /y(a|b|c)(\d{2})(\d{2})(\d{2})\.(\w{3})/){
+	($mth,$day,$hour,$min,$stn_id) = ($1,$2,$3,$4,$5);
+        $year = "2002";
+	if($mth eq "a"){
+	    $mth = 10;
+	}elsif($mth eq "b"){
+	    $mth = 11;
+        }elsif($mth eq "c"){
+	    $mth = 12;
+        }# end if
+        $stn_id = uc($stn_id);$sec = "00";
+    }# end if-elsif
+    $month = &findmth($mth);
+    if($month ne "NULL" && grep(/$stn_id/,keys %STN_INFO)){
+	if($day <= $MONTHS{$month}{"DAYS"}){
+	    $INFO{"Release Site"} = "$STN_INFO{$stn_id}{name} $stn_id";
+            $outfile = $stn_id.$MONTHS{$month}{"FILE"}.$day;
+            $outfile = $outfile.$hour.$min.".cls";
+            if($hour == 0){
+		$nominal = "00:00:00";
+	    }elsif($hour > 0 && $hour <= 3){
+		$nominal = "03:00:00";
+	    }elsif($hour > 3 && $hour <= 6){
+		$nominal = "06:00:00";
+	    }elsif($hour > 6 && $hour <= 9){
+		$nominal = "09:00:00";
+	    }elsif($hour > 9 && $hour <= 12){
+		$nominal = "12:00:00";
+	    }elsif($hour > 12 && $hour <= 15){
+		$nominal = "15:00:00";
+	    }elsif($hour > 15 && $hour <= 18){
+		$nominal = "18:00:00";
+	    }elsif($hour > 18 && $hour <= 21){
+		$nominal = "21:00:00";
+	    }else{
+		$nominal = "00:00:00";$day++;
+		if($day > $MONTHS{$month}{"DAYS"}){
+		    $day = 1;$month = $MONTHS{$month}{"NEXT"};
+		    if($MONTHS{$month}{"MM"} eq "01"){$year++;}#end if
+		}#end if
+	    }#end if-elsif(6)-else
+            $mm = $MONTHS{$month}{"FILE"};
+            $NOMINAL = "$year, $mth, $day, $nominal";
+            $out = FileHandle->new();    
+	    open($out,">$outfile")||die "Can't open $outfile\n";
+	    print "Class file:$outfile\n";
+            @OUTFILE = &getheader(\$$file_ref);
+	}else{
+	    print "$$file_ref contains incorrect timestamp\n";
+            print $log "$$file_ref contains incorrect timestamp\n";
+	}# end if
+   }else{
+       print "$$file_ref contains incorrect timestamp\n";
+       print $log "$$file_ref contains incorrect timestamp\n";
+   }# end if
+   return @OUTFILE;
+}#end sub filename
+
+sub getheader{
+    my $file_ref = $_[0];my @OUTFILE = ();my @INFILE = ();my @input = ();
+    my ($int_lon,$min_lon,$dir_lon,$int_lat,$min_lat,$dir_lat,$alt);
+    my $data = FileHandle->new();
+    if($$file_ref =~ /\.gz/){
+	open($data,"gzcat $$file_ref|") || die "Can't open $$file_ref\n";
+    }else{
+	open($data,$$file_ref) || die "Can't open $$file_ref\n";
+    }# end if
+    @INFILE = $data->getlines;undef $data;
+    $line = sprintf("%24s %s %4d %s\n",$$file_ref,"contains",scalar(@INFILE),"lines of data");print $line;print $log $line;
+    $INFO{"Input File"} = $$file_ref;
+    for $line(@INFILE){
+	if($line =~ /Launch Location.+:[ ]+(.+)/){
+	    @input = split(',',$1);
+	    if(scalar(@input) == 5){
+		$INFO{LON} = $input[2];
+		$INFO{LAT} = $input[3];
+		$INFO{ALT} = sprintf("%7.1f",$input[4]);
+            }else{
+		@input = split(' ',$1);
+		$INFO{LON} = $input[4];
+		$INFO{LAT} = $input[5];
+		$INFO{ALT} = sprintf("%7.1f",$input[6]);
+            }# end if-else
+        }elsif($line =~ /GMT Launch Time.+:[ ]+(.+)/){
+	    @input = split(',',$1);
+            my $year = $input[0];
+            my $mth = sprintf("%02d",$input[1]);
+            my $day = sprintf("%02d",$input[2]);
+            my($hh,$min,$sec) = split(':',$input[3]);
+            $hh = sprintf("%02d",$hh);
+            $min = sprintf("%02d",$min);
+            $sec = sprintf("%02d",int($sec/10.));
+	    $INFO{UTC} = "$year, $mth, $day, $hh:$min:$sec";
+        }elsif($line =~ /Launch Site Type\/Site ID:[ ]+(.+)/){
+	    $INFO{"Sonde Type"} = $1;
+        }elsif($line =~ /Sonde Id:[ ]+(.+)/){
+	    $INFO{"Serial Number"} = $1;
+        }elsif($line =~ /Met Processor\/Met Smoothing:[ ]+(.+)/){
+	    $INFO{"Met Processor"} = $1;
+        }elsif($line =~ /Winds Type\/Processor\/Smoothing:[ ]+(.+)/){
+	    $INFO{"Winds Type"} = $1;
+        }elsif($line =~ /System Operator\/Comments:[ ]+(.+)/){
+	    $INFO{"System Operator"} = $1;
+	}elsif($line =~ /\d+\.\d+/ && $line !~ /[A-Za-z\/]/){
+	    @input = split(' ',$line);
+	    my ($time,$press,$temp,$dewpt) = @input[0..3];
+	    my $rh = $input[4];
+	    my ($wspd,$wdir,$dz,$lon,$lat) = @input[7..11];
+	    my $height = $input[14];
+	    my @outline = &init_line;
+	    $outline[$field{time}] = $time;
+	    unless($press == 999.0){$outline[$field{press}] = $press;}
+            unless($temp == 999.0){$outline[$field{temp}] = $temp;}
+            unless($rh == 999.0){
+		$outline[$field{RH}] = $rh;
+		$outline[$field{dewpt}] = $dewpt;
+		if($dewpt < -99.9){
+		    $outline[$field{dewpt}] = -99.9;
+		}else{
+		    $outline[$field{dewpt}] = $dewpt;
+		    $outline[$field{Qrh}] = 4.0;# estimated Qrh
+		}# end if-else
+	    }
+            #@outline = &calc_dewpt(@outline);
+	    unless($wdir == 999.0){$outline[$field{Dir}] = $wdir;}
+            unless($wspd == 999.0){$outline[$field{Spd}] = $wspd;}
+            @outline = &calc_UV(@outline);
+            unless($lon == 999.0){$outline[$field{Lon}] = $lon;}
+            unless($lat == 999.0){$outline[$field{Lat}] = $lat;}
+            unless($height == 999.0){$outline[$field{Alt}] = $height;}
+            unless($time > 9999.9 || $press == 9999.0){
+		push(@OUTFILE,&check_line(&line_printer(@outline)));
+            }#end unless
+        }# end if
+	$line_cnt++;
+    }# end foreach
+    return @OUTFILE;
+}# end sub get_header
+
+sub writefile{
+    my $line_cnt = 0;
+    my @OUTFILE = @_;my @input = ();my ($time,$alt) = ($MISS{time},$MISS{Alt});
+    foreach $line(&writeheader){print $out $line;}
+    @OUTFILE = &remove_dropping(@OUTFILE);
+    for $line(@OUTFILE){
+	@input = split(' ',$line);
+	if($input[$field{time}] >= 0 && $input[$field{time}] != $MISS{time}){
+	    if($input[$field{Alt}] != $MISS{Alt}){
+                if($time != $MISS{time} && $alt != $MISS{Alt}){
+		    $input[$field{Wcmp}] = &calc_w($input[$field{Alt}],$alt,$input[$field{time}],$time);
+		    unless ($input[$field{Wcmp}] == $MISS{Wcmp}){$input[$field{Qdz}] = 99.0;}
+                }# end if
+		$time = $input[$field{time}];$alt = $input[$field{Alt}];
+	    }# end if
+        }# end if
+	&printer(\@input,\$out);
+	$line_cnt++;
+    }# end foreach
+    $line = sprintf("%15s %s %4d %s\n",$outfile,"contains",$line_cnt,"lines of data");print $line;print $log $line; 
+    undef $out;undef(@OUTFILE);
+}# end sub writefile
+
+sub check_line{
+    my @input = split(' ',$_[0]);my @outline = &init_line;
+    for $i (2..14){
+	if($input[$i] !~ /9{3,5}\.0/ && $i != 9){
+	    $outline[$i] = $input[$i];
+            #if($i == 1){$outline[15] = 99.0;}# unchecked Qp
+	    if($i == 2){$outline[16] = 99.0;}# unchecked Qt
+            if($i == 4){$outline[17] = 99.0;}# unchecked Qrh
+            if($i == 5){$outline[18] = 99.0;}# unchecked Qu
+            if($i == 6){$outline[19] = 99.0;}# unchecked Qv  
+            if($i == 3){
+		if($outline[$i] < -99.9){$outline[$i] = -99.9;}
+            }# end if   
+	}# end if
+    }# end foreach
+    for $i (0..1){
+	unless($input[$i] == 9999.0){$outline[$i] = $input[$i];}
+	if($i == 1){$outline[15] = 99.0;}# unchecked Qp
+    }# end foreach 
+    return &line_printer(@outline);
+}# end sub check_line
+
+sub timestamp{
+    my($sec,$min,$hour,$mday,$mon,$year,$wday,$julian,$isdst) = gmtime(time);
+    my $TIME = sprintf("%02d%s%02d%s%02d",$hour,":",$min,":",$sec);
+    my $DATE = sprintf("%02d%s%02d%s%02d",$mon+1,"/",$mday,"/",substr($year+1900,2,2));
+    print $log "UTC time and day $TIME $DATE\n";  
+}# end sub timestamp
+
+
+
+
+
+
+
+
+
+
+
+
+

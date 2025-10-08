@@ -1,0 +1,300 @@
+<html>
+<head>
+<title>How To: Process Millersville University Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Process Millersville University Upper Air Sounding Data</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#network">Network Information</a></li>
+        <li><a href="#version">Previous Versions</a>
+            <ol>
+			    <li><a href="#version:OWLeS_2013-14">2013-14 (OWLeS)</a> - first created.</li>
+            </ol>
+        </li>
+        <li><a href="#directory">Directory Structure</a></li>
+        <li><a href="#process">Processing the Data</a>
+            <ol> 
+			<li><a href="#setup">Initial Processing Setup</a></li>     		
+            <li><a href="#convert">Converting the Data</a></li>
+            <li><a href="#autoqc">Auto QC</a></li>
+ 			<li><a href="#visual_qc">Visual QC</a></li>
+            <li><a href="#finalize">Finalization</a></li>   
+			<li><a href="#5mb-extract">5mb Extraction</a></li>      		
+            </ol>
+        </li>
+        <li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+	<p>This document contains instructions for converting Millersville University Radiosonde data from ASCII text format into the EOL Sounding Composite (ESC) format.</p>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+    <li>The ID-Type is 999.</li>
+	<li>The Platform is 415, Vaisala RS92-SGP.</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions</h2>
+<div class="block">
+
+    <a name="version:OWLeS_2013-14"></a><h3>OWLeS (2013-14)</h3>
+    <table class="version">
+	<tr><th>Software:</th><td><a
+	href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FMillersville%2Ftags%2FOWLeS_2013-14%2F#_conversions_upper_air_Millersville_tags_OWLeS_2013-14_">http://svn.eol.ucar.edu/svn/dmg/upper_air/Millersville/tags/OWLeS_2013-14</a></td></tr>
+    <tr><th>Raw Data:</th><td>/net/work/Projects/OWLES/data_processing/upper_air/Millersville/raw_data</td></tr>
+    <tr><th>Final Data:</th><td>/net/work/Projects/OWLES/data_processing/upper_air/Millersville/dayfiles</td></tr>
+    </table> 
+
+
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">Millersville/</h3>
+    <table class="directories">
+		<tr><th>5mb/</th><td>The directory where the extracted 5mb pressure
+		sounding files are stored.</td></tr>
+		<tr><th>build/</th><td>The auto-generated directory for the compiled
+		Java classes.</td></tr>
+		<tr><th>dayfiles/</th><td>The directory where the generated day files
+		are stored.  This is the final processed data that will be put online.</td></tr>
+	    <tr><th>docs/</th><td>The directory containing documentation about the
+	    processing and the data.</td></tr> 
+	    <tr><th>final/</th><td>The directory where the QC'ed files are placed once
+	    they have been created.</td></tr> 
+	    <tr><th>logs/</th><td>The directory where the error/check files from the QC
+	    are placed.</td></tr>
+	    <tr><th>output/</th><td>The directory where the CLASS files are put after
+	    they are generated.</td></tr> 
+	    <tr><th>raw_data/</th><td>The directory where the raw data is
+	    stored.</td></tr>
+	    <tr><th>software/</th><td>The directory where the software for the
+	    conversion is stored.</td></tr>
+	    <tr><th>src/</th><td>Unused directory - required for autoqc to run.</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+
+<a name="process"></a><h2>Processing the Data</h2>
+<div class="block"> 
+    <a name="setup"></a><h3>Initial Processing Setup</h3>
+	<ol>
+	<li>Copy the raw data into the <span
+	class="directoryName">raw_data</span> directory. Check the assumptions made
+	in the script regarding things such as file names and locations.
+
+	<p><i>For OWLeS_2013-14:</i>
+    	<ul>
+			<li>Raw data files were ascii text files.  Ran dos2unix on these
+		files.</li>
+    	</ul>
+    </p>
+
+	</li>         
+    </ol>  
+
+    <a name="convert"></a><h3>Converting the Data</h3>
+ 	<p class="note">This step runs Perl code and should work on basically any
+	machine. However, to run the autoQC and any other processing/data prep done
+	by the build.xml (Ant) file, you must run on any machine with the proper
+	Ant and Java setup, such as tikal.</p>       
+	<p>Converting University of Illinois High Resolution Radiosonde data from ASCII text format into
+	the ESC format consists of the following steps.</p>
+
+	<ol>	
+	<li>Change to the <span class="directoryName">software</span> directory.</li>
+	<li>Edit the <span
+	class="softwareName">Millersville_Radiosonde_Converter.pl</span>
+	script.
+	<ul>
+		<li>Search for "HARD-CODED" to find and change the hard-coded
+		project-specific values in the script to be correct for your project.
+		For example, change the function: <code>getProjectName</code> to the
+		current project.</li>
+		<li>Code was added to the converter (from the Ron Brown Converter)
+		to derive the ascent rate values from the altitude and time
+		data.</li>
+
+        <li><i>For OWLeS 2013-14:</i>
+		<ul>
+			<li><span class="beware">BEWARE: </span>The converter expects
+			the actual data to begin on line 16 of the raw data file.</li>
+			<li>Scot Loehrer provided header information which was
+			hard-coded into the converter.</li>
+			<li>Eight files required "Specialized processing for several files that need adjustments due to including a large amount of interpolated (or acclimatizing) data near the surface." (from Scot L.). The raw data files were manually altered to remove the beginning data lines up to the point indicated by Scot in his instructions (see the IVEN notes). Then code was added to determine if the "surface" data record had a time value of zero. If not, a flag was set indicating that the time should be set to zero and manually incremented.</li>
+            <li>The surface lat/lon/elev was incorrect for several files, so Scot provided this information as well as Site Type. Sondes were released from two locations: Sandy Creek Central School and Finger Lakes Technical Center. Release info for header and surface data are dependent on this location. Raw data is placed in two separate directories: /FingerLakes_raw_data or /SandyCreek_raw_data and the command line switch --SandyCreek is used to determine which data should be processed and what code should be used.</li>
+			<li>The provided surface elevation had to be added to each of the other elevation records in the raw data file. The $alt_adjustment variable contained this value.</li>
+            <li>The last line of each file is blank, so code is included to skip blank lines. Otherwise, missing and bogus values are put in.</li>
+			<li>Per the IVEN notes, there are special cases of files and times for which we do not set the lat/lon. Code is included to handle these special cases.</li>
+			<li>The release time was obtained from the file name.</li>
+			<li>The Sonde ID is obtained from the raw data header information.</li>
+        </ul></li>  
+
+	</ul>
+	</li>
+	<li>Run the <span class="softwareName">Millersville_Radiosonde_Converter.pl</span> script.
+	This will convert data to the ESC format.<br /> 
+
+        <ul><li> <i>For OWLeS 2013-14:</i>
+		<ul>
+            <li><span class="beware">NOTE:</span> The converter must be run twice. Sondes were released from two locations: Sandy Creek Central School and Finger Lakes Technical Center. Release info for header and surface data are dependent on this location. Raw data is placed in two separate directories: /FingerLakes_raw_data or /SandyCreek_raw_data and the command line switch --SandyCreek is used to determine which data should be processed and what code should be used.</li>
+        </ul></li>  
+
+	</ul>
+	</li>
+
+	<li>Run the format checker using the ant command:
+    <p class="code">ant check-format-ESC</p></li>
+	<li>Check the log file (generated by the format checker) in the <span
+	class="directoryName">output</span> directory to determine if any format
+	issues need to be addressed before proceeding with AutoQC.</li>
+	</ol>
+
+
+<a name="autoqc"></a><h3>Auto QC</h3>
+	<p class="note">This step works best on tikal, but can be done on any
+	machine with the proper Ant and Java setup.</p>
+
+	<p>These steps execute the automatic QC on the processed files in the <span
+	class="directoryName">output</span> directory, generate log files in the
+	<span class="directoryName">logs</span> directory, and place the QC'ed data
+	files into the <span class="directoryName">final</span> directory, as
+	specified by the <span class="softwareName">build.xml</span> file.  The
+	final part of the automated process is to run the format checker on
+	the QC'ed files.  To run the sounding Automatic Quality Control
+	Processing:</p>
+    <ol>
+	   <li>Stay in/Change to the top level processing directory where the Ant
+	   <span class="softwareName">build.xml</span> file is located.</li>
+	   <li>Check the <span class="softwareName">build.xml</span> file for the
+	   <code>autoqc</code> target for the following:
+           <ul>
+			   <li>A command to copy the properties file to the build
+			   directory. There is typically a copy of the autoqc properties
+			   file (e.g., "us_plains_autoqc.properties") in the
+			   software directory.</li>   		   
+			   <li>The java command(s) will be executed on the expected data
+			   in the expected locations (i.e., ensure that the directory names
+			   in the build.xml file are correct and what you want.)</li>
+			   <li>You have updated the project name in the build.xml,
+			   if included in the build.xml file.</li>
+		   </ul>
+	   <li>Perform the auto QC by executing the ant command: 
+	   <p class="code">ant autoqc</p></li>  
+	   <li>After all issues have been resolved, notify the Scientific Staff
+	   (Scot) that the data is ready for Visual QC. Also inform him of any
+	   issues noted so that he will be aware of them.</li>
+    </ol>
+
+
+<a name="visual_qc"></a><h3>Visual QC</h3>
+	<p>Once the auto QC is completed, email the scientific staff (i.e., Scot
+	Loehrer) so that they can perform a visual QC on the data and give final
+	approval of the processed data set, as required. Note that the visual qc is
+	not performed on all sounding datasets.</p>
+
+
+
+<a name="finalize"></a><h3>Finalization</h3>
+	<p>After the visual QC is completed, the data set is ready to be finalized
+	(i.e, prep'd for CODIAC).  
+       <ol>
+		 <li>Update this "How To" document to indicate the latest project
+		 this conversion was executed for and include any notes about upgrades
+		 made specifically for that project, as required. A copy of this
+		 document is generally found in the <span
+		 class="directoryName">/docs</span> directory. Place a copy of the
+		 updated doc in <span
+		 class="directoryName">/net/web/dmg/html/software/conversions/upper_air/Millersville</span>
+		 directory. The s/w repository page points to this doc in that web
+		 location, so this must be updated.  The s/w repository page is located
+		 <a
+		 href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/encyclopedia/repository-dmg-subversion-listing"
+		 target='_top'><b>here</b></a>.</li>
+
+		 <li>Update the dataset description (or EMDAC) document for this
+		 conversion. Work with the scientific staff to create an EMDAC
+		 document. Generally, start with an existing "similar" document and
+		 simply update it for this project and dataset.  Generally, a copy of
+		 the EMDAC doc can be found in the <span
+		 class="directoryName">/docs</span> area.</li>
+
+		<li>The next processing step is to create day files that can/will be
+		loaded into the EMDAC/CODIAC database, along with the EMDAC dataset
+		description document.  The dayfiles creation step will generate day
+		files sorted by nominal release date followed by station location as
+		required by CODIAC. It's very important that the output dayfiles be in
+		this expected sort order so that CODIAC can access all the soundings
+		within a single dayfile. Do the following steps to create the day
+		files.</li>
+    <ul>
+	   <li>Ensure that you are in the same (top) directory as the build.xml
+	   file. Create the day files using the ant command:</p>
+	   <p class="code">ant dayfiles</p> <p>This will create a file for each day
+	   where at least one sounding exists in the <span
+	   class="directoryName">dayfiles</span> directory or whichever directory
+	   is specified as the output directory in the build.xml file. If this
+	   dataset is to be put online "as is," these are the dayfiles to load into
+	   CODIAC.</li>
+       </li>
+    </ul>
+    </ol>
+
+
+<a name="5mb-extract"></a><h3>5mb Extraction</h3>
+	<p>If the converted soundings are also going to be placed into a 5mb
+	composite, the soundings need to have the proper 5mb pressure level
+	soundings generated.  This is done through the following steps:</p>
+    <ol>
+        <li>Generate the 5mb pressure level data files using the ant command:
+            <p class="code">ant 5mb-extract</p>
+			This will generate a 5 mb sounding file for each sounding in the
+			<span class="directoryName">final</span> directory and place
+			it in the <span class="directoryName">5mb</span>.  It will also run
+			some final checks to make sure the format is correct. Beware that
+			the file directories listed in the build.xml file are what you
+			expect and want.   	        
+        </li>
+    </ol>
+	<p>The generated 5mb data files will then be available when the composite
+	is generated.</p>
+
+</div>
+<a href="#">Top</a><hr>
+
+<a name="documents"></a><h2>Documentation</h2>
+<p>The following are a list of documents that may help with the conversion or
+are related to the raw data.</p>
+<ul>
+	<li><a href="/software/tools/upper_air/autoqc">How To: AUTO QC Sounding Data</a>:  The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/software/tools/upper_air/esc_format_checker">How To: ESC Format Checker</a>:  The instructions and API for working with the ESC format checker program.</li>
+    <li><a href="#">How To: Process Millersville Sounding Data</a>:  This document.</li>
+
+</ul>
+<a href="#">Top</a><hr>
+
+<!-- NOTE: Mozilla gives local time; Chrome gives UTC time -->
+<script type="text/javascript">
+    document.write("Last Updated: " + document.lastModified);
+</script>
+<hr />
+<br />
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+#!/bin/perl -w
+
+# --------------------------------------------------------------
+# list_table: displays all of the datasets ordered by title for
+#   the given project.  
+#
+# Expected Params:
+#  "project" - the project to display
+#  "hlight" - (optional) the dataset to hilight in yellow, used
+#    when the dataset has been updated and refreshing.
+#  "sleep" - (optional) if defined the script sleeps for 1 
+#    second to allow the proc_update script finish executing.
+#    Also used when editing a dataset.
+#    
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use Project;
+use Utils;
+use Category;
+use Dataset;
+use State;
+use Time::HiRes qw(sleep);
+
+my $sleep = param( "sleep" );
+sleep( 1.00 ) if( $sleep );
+
+my $project = param( "project" );
+my $hlight = param( "hlight" );
+
+my $proj = Project->new();
+$proj->setFromDB( $project );
+
+$hlight = -1 if( !defined( $hlight ) );
+
+my @list = Project::getAllDatasets( $project );
+
+my $state = State->new( State::LIST_TABLE, $project );
+
+my $count = @list;
+println( header( -expires=>'-1d') );
+
+println( "<html><head><title>JOSS ML Editor</title></head>" );
+println( $css );
+println( $jscript );
+println( "<body bgcolor=#e9e9e9 link=#000066 alink=#000066 vlink=#000066 text=black>" );
+println( "<br><br>" );
+println( "<center><table border=0 cellpadding=3 cellspacing=1 width=97%>" );
+
+println( "<tr><td colspan=4 bgcolor=#336699 id=\"path_item\">" );
+	println( &nbsp(2), "<font color=white size=+1><b>Master List: $proj->{name}" );
+println( "</td></tr>" );
+
+showTable( @list );
+
+println( "<tr><td colspan=4 bgcolor=#336699><font color=white><b>$count Datasets</td></tr>" );
+println( "</table>" );
+println( "</body></html>" );
+
+sub showTable
+{
+	my @list = @_;
+	my $readme = "http://www.joss.ucar.edu/master_list/readme.gif";
+
+	foreach my $ds (@list)
+	{
+		my $bgcolor = ( $ds->{hide} == 1 )? "#999999" : "white";
+		$bgcolor = ( $ds->{id} == $hlight )? "#FFFFCC" : $bgcolor;
+
+		println( "<tr bgcolor=$bgcolor onmouseover=\"javascript: style.backgroundColor=\'#ebebf5\'\" onmouseout=\"javascript: style.backgroundColor=\'$bgcolor\'\">" );
+		#println( "<tr bgcolor=$bgcolor>" );
+
+			my $url = "edit_fields?mode=update&dataset=$ds->{id}";
+			$url = $url . $state->getUrlParams();
+
+			println( "<td bgcolor=#e9e9e9 width=5% id=\"edit_link\" align=center>", 
+							 "<a href=\"javascript: editWindow( \'$url\' )\">",
+							 "<font size=-2>EDIT</a></font></td>" );
+			println( "<td width=75% id=\"listing_link\">" );
+				if( defined( $ds->{url} ) && $ds->{url} ne "" )
+				{
+					println( "<a href=$ds->{url} target=_blank>$ds->{title}</a>" );
+				}
+				else
+				{
+					println( "$ds->{title}" );
+				}
+
+			println( "</td>" );
+
+			println( "<td nowrap align=center width=10%>" );
+				if( $ds->{in_progress} == 1 )
+				{ println( "<font color=red>In Progress</font>" ); }
+				elsif( $ds->{date} ne "0000-00-00" )
+				{ println( "$ds->{date}" ); }
+				else
+				{ println( "&nbsp;" ); }
+			println( "</td>" );
+
+			println( "<td nowrap align=center id=\"listing_link\" width=10%>" );
+				if( defined( $ds->{doc_url} ) && $ds->{doc_url} ne "" )
+				{
+					println( "<a href=$ds->{doc_url} target=_blank><font size=-1>documentation</a>" );
+				}
+				else
+				{
+					println( "&nbsp;" );
+				}
+			println( "</td>" );
+		println( "</tr>" );
+	}
+}
+

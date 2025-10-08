@@ -1,0 +1,38 @@
+
+cut_stnlist_to_AOI.pl began at 99/2/12 13:37:45
+Processing input file: stationCD.out, station.out, stn_id.out
+Output file name is: aoi_stationCD.out, aoi_station.out, aoi_stn_id.out
+
+Read line: SLA               16   21.90083   -93.69917   0     5 Slater         IA (SLAI4)                      (N) 19971101 19980131 US 19 ???   0.00 n   50 hourly              315.0 f
+lat=:  21.90083
+lon=:  -93.69917
+This rec is out of AOI - drop it.
+
+Read line: NLG               16   42.20722  -107.79361   0     5 Neligh         NE (NLGN1)                      (N) 19971101 19980131 US 31 ???   0.00 n   50 hourly              524.0 f
+lat=:  42.20722
+lon=: -107.79361
+This rec is out of AOI - drop it.
+
+Read line: MRR               16   72.90556  -101.69473   0     5 Merriman       NE (MRRN1)                      (N) 19971101 19980131 US 31 ???   0.00 n   50 hourly              991.0 f
+lat=:  72.90556
+lon=: -101.69473
+This rec is out of AOI - drop it.
+
+Read line: BLR               16   43.22167   -50.53167   0     5 Blue River     WI (BLRW3)                      (N) 19971101 19980131 US 55 ???   0.00 n   50 hourly              226.0 f
+lat=:  43.22167
+lon=:  -50.53167
+This rec is out of AOI - drop it.
+
+Read line: WDL               16   11.67167   -60.44833   0     5 Wood Lake      MN (WDLM5)                      (N) 19971101 19980131 US 27 ???   0.00 n   50 hourly              319.0 f
+lat=:  11.67167
+lon=:  -60.44833
+This rec is out of AOI - drop it.
+
+Read line: XXX               16   40.67167  -100.44833   0     5 Wood Lake      MN (WDLM5)                      (N) 19971101 19980131 US 27 ???   0.00 n   50 hourly              319.0 f
+lat=:  40.67167
+lon=: -100.44833
+This rec is IN the AOI - keep it.
+Number records read: 6
+Number records cut: 5
+WARNING: sequential numbers in files may now NOT be correct!
+cut_stnlist_to_AOI.pl ended at 99/2/12 13:37:45

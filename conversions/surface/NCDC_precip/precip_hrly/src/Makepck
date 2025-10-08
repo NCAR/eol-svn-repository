@@ -1,0 +1,19 @@
+# $Id$
+# $Log$
+#
+#
+# Makefile for pck program for NCDC 15m precip data.
+# Although pck.c existed, couldn't find Make file so created this.
+# 
+# 11 Oct 93 lec
+#   Created.
+#
+
+#CFLAGS=  -g 
+CFLAGS=-O
+
+pck:	pck.c
+	cc $(CFLAGS) -o pck pck.c
+
+clean:
+	rm -f pck.o

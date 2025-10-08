@@ -1,0 +1,29 @@
+$Id: Readme.precip,v 1.1 1993/02/16 22:36:37 john Exp $
+
+"Readme.precip"
+Overview of Precip Software
+
+by John J. Allison / johna@storm.ofps.ucar.edu
+   UCAR Office of Field Project Support
+   16 Feb 1993
+
+
+ars - convert ARS data to PQCF (*** NO!! ***)
+cks - various checks and mods for PQCF data ******
+ep2pq - EBUFR (NCDC or OFPS) to PQCF (15min or hrly) ******
+	ebufr_data.inc ebufr_obs.inc ebufr_parm.inc ebufr_vars.inc
+	ep2pq ep2pq.f ep2pq.txt
+	*** also needs the EBRR library ("/home/john/lib/libeb.a")
+	    which is cvs module "ebsubs"
+p2e - PQCF (15min or hrly) to EBUFR (OFPS version)
+	control_precip.txt p2e p2e.f p2e.doc
+pqc - PQCF Quality Control program (simple range checks) ******
+	pqc pqc.c pqc_rate.c
+qpq - QCF (surface composite) to PQCF (*** NO!! ****)
+	qpq.spec qpq.txt
+      qpq5: 5-minute surface to 15-minute PQCF
+	qpq5 qpq5.c qpq5_old.c qpq5_sim.c
+      qpq60: hourly surface to hourly PQCF
+	qpq60 qpq60.c qpq60.sc
+presort - ("precip sort") - collection of scripts to help precip conversions (** Maybe**)
+usgs - convert USGS data to PQCF (**** NO!! ****)

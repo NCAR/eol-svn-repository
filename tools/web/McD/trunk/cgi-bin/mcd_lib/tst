@@ -1,0 +1,18 @@
+
+use lib ".";
+use McDDB;
+
+my $dbh = McDDB::connect();
+
+my $sth = $dbh->prepare( "select dataset.*, mlview.* from dataset, mlview, dsproj where dataset.id=dsproj.dataset and mlview.dataset = dataset.id and dsproj.project=5 limit 1" );
+$sth->execute();
+my $names = $sth->{NAME};
+
+foreach my $n (@{$names})
+{
+	print( $n, "\n" );
+}
+
+my $row = $sth->fetchrow_hashref();
+
+print( $row->{date}, "\n" );

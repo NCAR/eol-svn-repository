@@ -1,0 +1,27 @@
+> groovy authorshipConnect.groovy ATLAS
+
+Created log file:	logs/log_20160128143320.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+Found contact 743 for data set 46.619 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 279 for data set 46.619 with sort_key 2 (instead of 3). Will update sort_key.
+Found contact 743 for data set 46.648 with sort_key 2 (instead of 3). Will update sort_key.
+Found contact 276 for data set 46.648 with sort_key 3 (instead of 4). Will update sort_key.
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 5295 and contact_id = 743;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 5295 and contact_id = 279;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 5369 and contact_id = 743;
+
+update dataset_contact set sort_key = 4 where iso_citation_role = 'author' and dataset_id = 5369 and contact_id = 276;
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

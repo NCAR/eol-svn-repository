@@ -1,0 +1,92 @@
+dataset:
+- title_content: titleSep
+- name: cheesehead
+- archive_ident: '592.041'
+- title: Test NCAR/EOL ISFS Surface Meteorology and Flux Products, 5 min averages
+- summary: TEST DATASET. Working with yaml files and RAF loaddata scripts.
+- begin_date: '2019-06-20 00:00:00'
+- end_date: '2019-06-30 23:59:59'
+- visible: 0
+- auth_reqd: 0
+- eula_reqd: 0
+- version_number: '0.1'
+- quality: 1
+- ingest_location: /net/isf/isff/projects/<project>/ISFS/netcdf/qc_geo_tiltcor
+- archive_location: /net/archive/data/<project>/surface/isfs/ ...
+- filename_pattern: isfs_[\Y\Y\Y\Y\M\M\y\y].nc
+- startdate_pattern: YYYY-MM-yy HH:mm:00
+- enddate_pattern: YYYY-MM-yy HH:mm:59
+- filelength: ''
+- minimum_latitude: '41.0'
+- maximum_latitude: '49.0'
+- minimum_longitude: '-96.0'
+- maximum_longitude: '-87.0'
+#----------------------------------
+- CODIAC_specific_fields: titleSep
+- category_id: 18
+- platform_id: 240
+- is_eol_data: 1
+- format: 22
+- host: localhost
+- frequency_id: 3
+- spatial_type: point
+- point_of_contact_id_codiac: 1001
+- internal_contact_id_codiac: 2422
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+- dodsable: 1
+- t_subset: 1
+- event_subset: 0
+- file_subset: 0
+- order_allow_compress: 1
+#---------------------------------
+- DTS_specific_fields: titleSep
+- source_contact_id_dts: 168
+- internal_contact_id_dts: 350
+- ingest_contact_id_dts: 350
+- ingest_status_id_dts: 2
+- load_contact_id_dts: 350
+- load_data_location: /net/archive/data/cheesehead/upper_air/ISS1/radiosonde/test
+- load_status_id_dts: 2
+- approve_contact_id_dts: 327
+- approve_status_id_dts: 6
+- author_id_dts: 350
+- note_type_id: 5
+- note_text: Loading with new load_data_proj script. This is a test.
+- readme_url: 'default'
+- remote_url: 'default'
+#------------------------------------
+- optional_fields: titleSep
+- archive_location_2: ''
+- filename_pattern_2: ''
+- startdate_pattern_2: ''
+- enddate_pattern_2: ''
+- filelength_2: ''
+- format_2: ''
+- host_2: ''
+- archive_location_3: ''
+- filename_pattern_3: ''
+- startdate_pattern_3: ''
+- enddate_pattern_3: ''
+- filelength_3: ''
+- format_3: ''
+- host_3: ''
+#-------------------------------------
+- description: default
+- iso_citation_role: 7
+- contact_id_codiac: 1001
+- datacite_contributor_type: ''
+- iso_citation_role_2: 11
+- contact_id_codiac_2: 2505
+- datacite_contributor_type_2: ''
+# Additional citations below have to be added manually on the data set loading page
+- iso_citation_role_3: 6
+- contact_id_codiac_3: 687
+- datacite_contributor_type_3: ''
+- iso_citation_role_4: 9
+- contact_id_codiac_4: 2422
+- datacite_contributor_type_4: 3
+- iso_citation_role_5: 9
+- contact_id_codiac_5: 2093
+- datacite_contributor_type_5: 3

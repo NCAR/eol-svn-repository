@@ -1,0 +1,371 @@
+##Module------------------------------------------------------------------------
+# <p>The State.pm module contains the State class which is a snap shot of the 
+#  users current state in the Iven application.  The State class is used to
+#  keep track of what state the user is in when editting and allows for easy
+#  transitions between views without having to worry about keeping track
+#  of general state information.  </p>
+#
+# <b>Instance Variables: </b>The following 'public' instance variables
+#  are used to describe the state of the application.
+#  <dd>view - the current view
+#  <dd>project - the project name
+#  <dd>product - the product name
+#  <dd>dataset - the dataset name 
+#  <dd>user - the user id
+#  <dd>edit - the edit mode
+#  <dd>proc_edit - the processing edit mode
+# <br>
+#  The project, product, dataset and user fields are set according to
+#  which view the application is in.  edit and proc_edit are set
+#  when editting portions of the database.
+#
+# <br><br>
+#
+# <b>Export: </b>This module exports the following constants used to 
+#  describe a user's state.<br>
+#  <b>view: </b> for the view field:
+# 	<dd>$PROJECT - user in the project_view  
+# 	<dd>$PRODUCT - user in the product_view  
+# 	<dd>$DATASET - user in the dataset_view  
+# 	<dd>$USER - user in the user_view  
+# 	<dd>$THREAD - user thread_view (or 'dependencies' view)
+# <br>
+#  <b>edit/proc_edit: </b> for the edit and proc_edit fields:
+# 	<dd>$EPROJECT_FIEDS - user editing the project_fields (everything but the notes) 
+# 	<dd>$EPROJECT_NOTES - user editing the project_notes
+# 	<dd>$EPRODUCT - user edditing a product
+# 	<dd>$EDATASET_ADMIN - user edditing a dataset's admin arttributes
+# 	<dd>$EDATASET_STATUS - user edditing a dataset's status arttributes
+# 	<dd>$EEXTRACTION - user edditing an extraction
+#
+# @author Dan Sullivan
+# 
+##Module------------------------------------------------------------------------
+
+package State;
+
+use lib ".";
+use Utils;
+
+require Exporter;
+use vars qw(@ISA @EXPORT $VERSION );
+@ISA = qw(Exporter);
+@EXPORT = qw( $PROJECT $PRODUCT $USER $THREAD $DATASET $EPROJECT_FIELDS 
+							$EPROJECT_NOTES $EPRODUCT $EDATASET_ADMIN $EDATASET_STATUS 
+						  $EEXTRACTION);
+
+# View types
+$PROJECT = 1;
+$PRODUCT = 2;
+$USER = 3;
+$THREAD = 4;
+$DATASET = 5;
+
+# Edit types
+$EPROJECT_FIELDS = 10;
+$EPROJECT_NOTES = 11;
+$EPRODUCT = 12;
+$EDATASET_ADMIN = 13;		#done
+$EDATASET_STATUS = 14;	#done
+$EEXTRACTION = 15;			#done
+
+##-----------------------------------------------------------------------------
+# @signature State new()
+# <p>Creates a new instance of the State class.</p>
+#
+# @output $self instance of State.
+##-----------------------------------------------------------------------------
+sub new
+{
+	my $class = shift;
+	my $self = {};
+
+	$self->{view} = undef(); # $PROJECT, $PRODUCT, $USER, $THREAD
+	$self->{project} = undef(); # Name of project viewing
+
+	$self->{product} = undef(); # Name of product viewing, only in $PRODUCT view
+	$self->{dataset} = undef();  # Name of the dataset viewing, only in $DATASET view
+	$self->{user} = undef(); # Name of user viewing, only in $USER view
+
+	$self->{edit} = undef();
+	$self->{proc_edit} = undef();
+
+	bless( $self, $class );
+}
+
+##-----------------------------------------------------------------------------
+# @signature void setFromParams( CGI $cgi )
+# <p>Pulls the needed state information from the the parameters of the URI.</p>
+##-----------------------------------------------------------------------------
+sub setFromParams
+{
+	my $self = shift;
+	my $cgi = shift;
+
+	$self->{view} = $cgi->param( "view" );
+	$self->{project} = $cgi->param( "project" );
+	$self->{product} = $cgi->param( "product" );
+	$self->{dataset} = $cgi->param( "dataset" );
+	$self->{user} = $cgi->param( "user" );
+	$self->{edit} = $cgi->param( "edit" );
+	$self->{proc_edit} = $cgi->param( "proc_edit" );
+}
+
+sub getUrlStringPrivate
+{
+	my $self = shift;
+	my $js = shift;
+	my %args = (
+							"view" => undef(),
+							"project" => undef(),
+							"product" => undef(),
+							"user" => undef(),
+							"dataset" => undef(),
+							"edit" => undef(),
+							"proc_edit" => undef(),
+							@_
+						 );
+
+	foreach my $a (keys %args)
+	{
+		$args{$a} = $self->{$a} if( !defined( $args{$a} ) );
+	}
+
+	my $url = getScriptName( \%args );
+
+	checkParams( \%args );
+
+	foreach my $a (keys %args)
+	{
+		if( defined( $args{$a} ) )
+		{
+			# Replace all '#' symbols with its ascii equivalent - only for javascript things!!!
+			if( $js )
+			{ $args{$a} =~ s/#/%23/g; }
+
+			$url = $url . "$a=" . uri_escape($args{$a}) . "&";
+		}
+	}
+
+	return $url;
+}
+
+##-----------------------------------------------------------------------------
+# @signature string getUrlString( ... )
+# <p>Returns the needed URL to regain the current state.  This function can
+#  be used to link to a new state by passing in named parameters that do
+#  not modify the state but alter the returned URL. Example: 
+#  <dd><code>
+#   my $url = $state->getUrlString("project"=>"IHOP_2002", "view"=>$PROJECT);
+#  </code><br>
+#  The scipt to link to (e.g. project_view, product_view etc.) is determined
+#  by the current state or the new state specified in the arguments.
+# </p>
+#
+# @input ... no arguments returns a URL describing the current page in view,
+#  named parameters can be used to link to other views.
+# 
+# @output $url a formatted URL 
+##-----------------------------------------------------------------------------
+sub getUrlString
+{
+	my $self = shift;
+	my $js = 0;
+
+	return getUrlStringPrivate( $self, $js, @_ );
+}
+
+##-----------------------------------------------------------------------------
+# @signature string getUrlStringJS( ... )
+# <p>Similar to getUrlString() but espcapes characters which may cause a problem
+#  if used in a javascript function call.  Often URLs are obtained through this
+#  function and then used within javascript to open a new window or something
+#  of the like.</p>
+#
+# @input ... no arguments returns a URL describing the current page in view,
+#  named parameters can be used to link to other views.
+# 
+# @output $url a formatted URL 
+##-----------------------------------------------------------------------------
+sub getUrlStringJS
+{
+	my $self = shift;
+	my $js = 1;
+
+	return getUrlStringPrivate( $self, $js, @_ );
+}
+
+##-----------------------------------------------------------------------------
+# @signature string getHiddenFieldString(...)
+# <p>Returns the set of needed <code>&lt;input type=hidden ...&gt;</code> tags
+#  used to maintain the state in an HTML form.  With no arguments the hidden
+#  field tags returned describes the current state, the state can be modified
+#  using named parameters.  Example:<br>
+#  <dd><code>
+#  my $hidden = $state->getHiddenFieldString("project"=>"IHOP_2002", "view"=>$PROJECT );
+#  </code>
+#  <p>
+# 
+# @input ... named parameters to alter the returned hidden field tags
+# @output $hidden tags to place in an html &lt;form&gt;
+##-----------------------------------------------------------------------------
+sub getHiddenFieldString
+{
+	my $self = shift;
+	my %args = (
+							"view" => undef(),
+							"project" => undef(),
+							"product" => undef(),
+							"user" => undef(),
+							"dataset" => undef(),
+							"edit" => undef(),
+							"proc_edit" => undef(),
+							@_
+						 );
+
+	foreach my $a (keys %args)
+	{
+		$args{$a} = $self->{$a} if( !defined( $args{$a} ) );
+	}
+
+	my $hidden = "";
+
+	checkParams( \%args );
+
+	foreach my $a (keys %args)
+	{
+		if( defined( $args{$a} ) )
+		{ $hidden = $hidden . "<input type=hidden value=\"$args{$a}\" name=$a>"; } 
+	}
+
+	return $hidden;
+}
+
+##-----------------------------------------------------------------------------
+# @signature void setDefaults()
+# <p>Set the default view.</p>
+##-----------------------------------------------------------------------------
+sub setDefaults
+{
+	my $self = shift;
+
+	$self->{view} = $PROJECT;
+	$self->{project} = undef();
+}
+
+##-----------------------------------------------------------------------------
+# @signature void checkParams( hash_ref $args )
+# <p>Checks to make sure the parameters sent to the getUrlString() and 
+#  getHiddenFieldString() functions are consistent.</p>
+#
+# @input $args a reference to a hash containg the given arguments
+# 
+##-----------------------------------------------------------------------------
+sub checkParams
+{
+	my $args = shift;
+
+	if( !$args->{edit} || !$args->{proc_edit} )
+	{
+		if( $args->{view} == $PROJECT )
+		{
+			$args->{product} = undef();
+			$args->{dataset} = undef();
+			$args->{user} = undef();
+		}
+		elsif( $args->{view} == $PRODUCT )
+		{
+			$args->{dataset} = undef();
+			$args->{user} = undef();
+		}
+		elsif( $args->{view} == $DATASET )
+		{
+			$args->{user} = undef();
+		}
+		elsif( $args->{view} == $USER )
+		{
+			$args->{product} = undef();
+			$args->{dataset} = undef();
+		}
+	}
+
+	if( $args->{proc_edit} )
+	{
+		$args->{edit} = undef();
+	}
+}
+
+##-----------------------------------------------------------------------------
+# @signature string getScriptName(hash_ref $args)
+# <p>This subroutine can be considered private.  It is used by the 
+#  getURLString() subroutines to determine which script the URL should point
+#  to.  But if a new script is introduced to the application this subroutine
+#  will most likely have to be updated.
+#
+##-----------------------------------------------------------------------------
+sub getScriptName
+{
+	my $args = shift;
+	my $script = "iven_error";
+
+	if( defined( $args->{edit} ) )
+	{
+		if( $args->{edit} == $EPROJECT_FIELDS )
+		{
+			$script =  "edit_project?";
+		}
+		elsif( $args->{edit} == $EPROJECT_NOTES )
+		{
+			$script =  "edit_proj_notes?";
+		}
+		elsif( $args->{edit} == $EPRODUCT )
+		{
+			$script = "edit_product?";
+		}
+		elsif( $args->{edit} == $EDATASET_ADMIN )
+		{
+			$script = "edit_ds_admin?";
+		}
+		elsif( $args->{edit} == $EDATASET_STATUS )
+		{
+			$script = "edit_ds_status?";
+		}
+		else
+		{
+			$script = "iven_error?msg=" . uri_escape( "Specified edit mode is invalid." );
+		}
+	}
+	elsif( !defined( $args->{project} ) )
+	{
+		$script = "project_list?";
+	}
+	elsif( !defined( $args->{view} ) || $args->{view} == $PROJECT )
+	{
+		$script = "project_view?";
+	}
+	elsif( $args->{view} == $PRODUCT )
+	{
+		$script = "product_view?";
+	}
+	elsif( $args->{view} == $DATASET )
+	{
+		$script = "dataset_view?";
+	}
+	elsif( $args->{view} == $USER )
+	{
+		$script = "user_view?";
+	}
+	elsif( $args->{view} == $THREAD )
+	{
+		$script = "thread_view?";
+	}
+	else
+	{
+		$script = "iven_error?msg=" . uri_escape( "Unable to complete request, view is not valid or project not specified." );
+	}
+
+
+	return $script;
+}
+
+1;

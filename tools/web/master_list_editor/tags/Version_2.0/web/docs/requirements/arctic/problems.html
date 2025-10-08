@@ -1,0 +1,24 @@
+<html>
+<body>
+
+<a name="dts"></a><h1>DTS Problem Statement</h1>
+<p>Design and implement a new set of databases to be used by the DTS and the ML that will augment the data archive database.  The new system will only store information that is not stored in the data archive system.  There will be at least two databases in the set (one of the DTS and one for the ML).  This is to allow future growth in the systems and provide a way for the ML information to easily be folded into the data archive system since that could be in the future.</p>
+<p>The databases should contain tables and attributes with clearly defined names to allow easy understanding.  The tables should only contain attributes that fit with the table.  It should be designed to prevent unnecessary information or duplicate information from being stored.  The database should be normalized.</p>
+
+<a name="dln"></a><h1>DLN Problem Statement</h1>
+<p>Upgrade the DLN to use the new DTS database set.  It will present the user with a web interface for maintaining the ingest, the data loading, and checking information for a dataset.  It will provide a minimal capability to change information in the data archive database when appropriate.  It is not to be a replacement for GUImaint.</p>
+<p>The DLN will only read information from the ML database.  It will not make any changes to that database.</p>
+
+<a name="iven"></a><h1>IVEN Problem Statement</h1>
+<p>Upgrade IVEN to use the new DTS database set.  It will not use the ML database in any way.  IVEN will update the DTS information for datasets that have processing done to it.  It will provide a web interface for updating processing notes, processing locations, documentation, and other information associated with processing a dataset.  It will allow for two types of <i>Products</i>, Groups and Composites.  Composites are datasets and will have all the same information as a regular dataset.  Groups are just collections of processed datasets and contain a small subset of information that is the same for a Composite.</p>
+<p>IVEN will not be able to create new datasets (unless it is a Composite).  It will require the dataset, with a defined dataset id, to be created through another tool before it will appear in the tool.</p>
+
+<a name="ml"></a><h1>ML Problem Statement</h1>
+<p>Upgrade the ML into a single editor that uses the new DTS database set.  It will only use the DTS database that contains the ML information.  It will not use any other DTS database.  It will be able to create and modify datasets in the data archive system.  The single editor will be able to handle both the general and the arctic master lists.</p>
+<p>Create a unified viewer that will provide a single point of access for the ML.  It will delegate control to the appropriate view for the specified project.  (This could become a dynamic viewer if this is the right time to create it.)</p>
+
+<a name="qcodiac"></a><h1>QCODIAC Problem Statement</h1>
+<p>Upgrade QCODIAC to use the latest version of the data archive database.  It will only read from the data archive database and will not change any database and will not use any other one.  It will provide a web view for the information in the database that will a user to view it easily.</p>
+
+</body>
+</html>

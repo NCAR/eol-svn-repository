@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="http://www.ngdc.noaa.gov/metadata/published/xsd/ngdcSchema/schema.xsd">
+
+    - <idinfo>
+        - <citation>
+            - <citeinfo>
+                
+                <pubdate>2009-02-06</pubdate>
+                <title>SNACS Atmospheric Model: Time Series Data - 3-hourly</title>
+                <lworkcit>ARCSS, NSF Arctic System Science</lworkcit>
+            </citeinfo>
+        </citation>
+        - <descript>
+            <abstract><p>This dataset archives the 3-hourly SNACS Polar MM5 atmospheric model data for simulations run with the following forcing data.</p> 
+                <pre>Model years			Data
+1957-1958 to 1978-1979		ERA40
+1979-1980 to 2000-2001		ERA40 + SSMR/SSMI sea ice from National Snow and Ice Data Center (NSIDC) 
+2001-2002 to 2006-2007		TOGA + SSMR/SSMI sea ice from National Snow and Ice Data Center (NSIDC) V2 + NNRP for soil moisture
+</pre> 
+                <p>There are time series data from 28 model grid points near Barrow, AK.</p></abstract>
+            
+        </descript>
+        - <timeperd>
+            - <timeinfo>
+                - <rngdates>
+                    <begdate>1957-09-01</begdate>
+                    <enddate>2006-12-31</enddate>
+                </rngdates>
+            </timeinfo>
+           
+        </timeperd>
+        - <status>
+            <progress>completed</progress>
+           
+        </status>
+        - <spdom>
+            - <bounding>
+                <westbc>-158.01</westbc> 
+                <eastbc>-153.89</eastbc>
+                <northbc>71.87</northbc>
+                <southbc>68.03</southbc>
+            </bounding>
+        </spdom>
+        
+        - <keywords>
+            - <theme>
+                <themekt>ISO 19115 Topic Category</themekt>
+                <themekey><!-- dataset_iso_topic_category.iso_topic_category goes here --></themekey>
+            </theme>
+            - <theme>
+                <themekt>none</themekt>
+                <themekey>Arctic</themekey>
+                
+            </theme>
+            <theme>
+                <themekt>Models/Analyses</themekt>
+                <themekey></themekey>
+                
+            </theme>
+            <theme>
+                <themekt>none</themekt>
+                <themekey>Analysis</themekey>
+                
+            </theme>
+        
+            <theme>
+                <themekt>GCMD</themekt>
+                <themekey><!--gcmd_science_keyword.category&gcmd_science_keyword.topic&gcmd_science_keyword.variable_level_1&gcmd_science_keyword.variable_level_2&gcmd_science_keyword.variable_level_3&gcmd_science_keyword.detailed_variable goes here, repeatable--></themekey>
+            </theme>
+            
+        </keywords>
+        <accconst>none</accconst>
+        <useconst>none</useconst>
+    </idinfo>
+    <digform>
+        <digtinfo>
+            <formname>ACSII</formname>
+            
+        </digtinfo>
+        <digtopt>
+            <onlinopt>
+                <computer>
+                    <networka>http://data.eol.ucar.edu/codiac/dss/id=106.212
+                        <networkr>http://data.eol.ucar.edu/</networkr>
+                    </networka>
+                </computer>
+            </onlinopt>
+        </digtopt>
+    </digform>
+    <ptcontac>
+        <cntinfo>
+            <cntperp>
+                <cntper>Don Stott</cntper>
+                <cntorg>NCAR/EOL/CDS</cntorg>
+            </cntperp>
+           
+            <cntemail>stott @ ucar.edu</cntemail>
+        </cntinfo>
+    </ptcontac>
+    <ptcontac>
+        <cntinfo>
+            <cntperp>
+                <cntper>John Cassano</cntper>
+                <cntorg>University of Colorado</cntorg>
+            </cntperp>
+            
+            <cntemail>john.cassano at colorado.edu</cntemail>
+        </cntinfo>
+    </ptcontac>     
+    - <metainfo>
+        <metd>2009-02-06</metd>
+        <metc>
+            <cntinfo>
+                <cntperp>
+                    <cntper>Don Stott</cntper>
+                    <cntorg>NCAR/EOL/CDS</cntorg>
+                </cntperp>
+               
+                <cntemail>stott at ucar.edu</cntemail>
+            </cntinfo>
+        </metc>
+        - <metc>
+            - <cntinfo>
+                - <cntorgp>
+                    <cntorg>Earth Observing Laboratory</cntorg>
+                </cntorgp>
+                <cntemail>datahelp at eol.ucar.edu</cntemail>
+            </cntinfo>
+        </metc>
+        <metstdn>FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+    </metainfo>
+</metadata>
+<!-- Problems:  It does not give project summary info, link to the project page, add unique identifier, language, refine GCMD input, file size-->

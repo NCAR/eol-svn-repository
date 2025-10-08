@@ -1,0 +1,6 @@
+The backups in this directory (/net/work/db_backups) are backups of the 
+dmg_dts and dmg_merged_ml databases on host emdac.  These backups run at 
+00:20 and 12:20 every day from the dmsutil cron on typhoon:
+
+20 0,12 * * * /net/work/bin/scripts/database_backup/mysql_db_backup.pl
+

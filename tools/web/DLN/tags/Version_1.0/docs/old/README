@@ -1,0 +1,128 @@
+This directory contains the original data loading notes which was retired on January 13, 2004.
+What follows is the original readme file which describes the application and the DB architecture.
+
+
+Data Loading Notes
+==================
+
+This README was current as of 1-30-2003
+
+The main script of the Data Loading Notes project is data_notes located in this directory. 
+That script does everything needed to maintain the Data Loading Notes pages.  There is also
+a maintenance program located at ./notes_maint/notes_maint* this CGI script allows the user
+to add/delete projects and people (Contacts, Loaders, Checkers) to the database.
+
+There is also a new "Data Loading Notes Prototype" that utilizes the exact same database
+but is a different, more user friendly, front end.  It is written using Java Server Pages
+and is still in the testing phases.  
+
+DATABASE:
+========
+
+The Data Loading Notes project is backed by a MySQL database that maintains records for
+each dataset added to the data loading notes through the data_notes CGI-script.  The database
+is called data_loading_notes and contains 6 tables: Checkers, Contacts, Links, Loaders, Notes,
+Projects.  Below is a detailed description of each table and how they are related.
+
+Checkers:
+
+This table maintains a list of people who are to 'check' datasets after they have been loaded and 
+appear in the Checked By drop down box.  id relates to checker_id in the Notes table.
++--------+-------------+------+-----+---------+-----------------------------------------------------------+
+| Field  | Type        | Null | Key | Default | Comments
++--------+-------------+------+-----+---------+-----------------------------------------------------------+
+| id     | int(11)     |      | PRI | 0       | Primary key
+|        |             |      |     |         |  *Relates to checker_id in the Notes table
+| name   | varchar(25) | YES  |     | NULL    | The name (general first name) of the Checker
+| email  | varchar(25) | YES  |     | NULL    | The e-mail address, if person is no longer employed should 
+|        |             |      |     |         |  be set to NULL
+| active | int(11)     | YES  |     | NULL    | yes/no is this person acive within the JOSS office
++--------+-------------+------+-----+---------+-----------------------------------------------------------+
+
+Contacts:
+
+This table maintains a list of people who are internal contacts.  They appear in the internal contact
+drop down box.  id relates to int_contact_id in the Notes table.
++--------+-------------+------+-----+---------+-----------------------------------------------------------+
+| Field  | Type        | Null | Key | Default | Comments
++--------+-------------+------+-----+---------+-----------------------------------------------------------+
+| id     | int(11)     |      | PRI | 0       | Primary key
+| name   | varchar(25) | YES  |     | NULL    | Name of the contact (generally first)
+|        |             |      |     |         |  *Relates to int_contact_id in the Notes table
+| email  | varchar(25) | YES  |     | NULL    | The e-mail address, if person is no longer employed - NULL
+| active | int(11)     | YES  |     | NULL    | yes/no is this person active within the JOSS office
++--------+-------------+------+-----+---------+-----------------------------------------------------------+
+ 
+Loaders:
+
+This table maintains a list of people who are loading the datasets into Codiac.  They appear in the 
+Loading drop down box.  id relates to loader_id in the Notes table.
++--------+-------------+------+-----+---------+-----------------------------------------------------------+
+| Field  | Type        | Null | Key | Default | Comments
++--------+-------------+------+-----+---------+-----------------------------------------------------------+
+| id     | int(11)     |      | PRI | 0       | Primary key
+|        |             |      |     |         |  *Relates to loader_id in the Notes table
+| name   | varchar(25) | YES  |     | NULL    | Name of the Loader
+| email  | varchar(25) | YES  |     | NULL    | The e-mail address, if person is no longer employed - NULL
+| active | int(11)     | YES  |     | NULL    | yes/no is this person active within the JOSS office
++--------+-------------+------+-----+---------+-----------------------------------------------------------+
+
+NOTE: There is probably a better way to represent the three tables above, most likely in a single table.
+Originally there was only one 'user' table but for various reasons I was forced to expand it to three.
+
+Projects:
+
+This table contains a record for each project that uses the data loading notes. id relates to proj_id in the
+Notes table.
++-------+-------------+------+-----+---------+-----------------------------------------------------------+
+| Field | Type        | Null | Key | Default | Comments
++-------+-------------+------+-----+---------+-----------------------------------------------------------+
+| id    | int(11)     |      | PRI | 0       | Primary key
+|       |             |      |     |         |   *Relates to proj_id in the Notes table
+| name  | varchar(25) | YES  |     | NULL    | The name of the project (ATLAS, SHEBA etc.
+| notes | text        | YES  |     | NULL    | Notes for this project - can be a large html page if wanted
++-------+-------------+------+-----+---------+-----------------------------------------------------------+
+
+Links:
+
+This table contains the the name and the url of the links that appear that the top of the tables.  The
+proj_id field relates to the id of the Projects table.
++---------+--------------+------+-----+---------+-----------------------------------------------------------+
+| Field   | Type         | Null | Key | Default | Comments
++---------+--------------+------+-----+---------+-----------------------------------------------------------+
+| id      | int(11)      |      | PRI | 0       | Primary key
+| proj_id | int(11)      | YES  |     | NULL    | The id in the Projects table this link belongs to 
+|         |              |      |     |         |  *Relates to id in the Projects table
+| name    | varchar(100) | YES  |     | NULL    | The name of the link, the text that appears on the screen
+| url     | varchar(200) | YES  |     | NULL    | The url the link points to
++---------+--------------+------+-----+---------+-----------------------------------------------------------+
+
+Notes:
+
+This is the main table of the data loading notes and relates all of the above tables together.
++----------------+--------------+------+-----+------------+-----------------------------------------------------------+
+| Field          | Type         | Null | Key | Default    | Comments
++----------------+--------------+------+-----+------------+-----------------------------------------------------------+
+| id             | int(11)      |      | PRI | 0          | Primary key
+| storm_id       | varchar(15)  | YES  |     | NULL       | The storm id of the dataset
+| title          | varchar(200) | YES  |     | NULL       | The title of the dataset
+| readme         | int(11)      | YES  |     | NULL       | yes/no is the readme completed
+| master         | int(11)      | YES  |     | NULL       | yes/no is the dataset in the master table
+| checked        | int(11)      | YES  |     | NULL       | yes/no has the entry into Codiac been checked 
+| date           | date         | YES  |     | 0000-00-00 | The date (submitted or added to the loading notes)
+| notes          | text         | YES  |     | NULL       | Notes on this dataset
+| proj_id        | int(11)      | YES  |     | NULL       | The project the dataset belongs to 
+|                |              |      |     |            |   *Relates to the id of the Projects table 
+| loader_id      | int(11)      | YES  |     | NULL       | The person loading the dataset into Codiac
+|                |              |      |     |            |   *Relates to the id of the Loaders table 
+| checker_id     | int(11)      | YES  |     | NULL       | The person checking the dataset
+|                |              |      |     |            |   *Relates to the id of the Checkers table 
+| int_contact_id | int(11)      | YES  |     | NULL       | The internal contact of the dataset 
+|                |              |      |     |            |   *Relates to the id of the Contacts table 
+| ext_contact    | varchar(25)  | YES  |     | NULL       | The name of the external contact
+| ext_email      | varchar(25)  | YES  |     | NULL       | The e-mail of the external contact
+| ingest         | varchar(100) | YES  |     | NULL       | The ingest location of the data
+| archive        | varchar(100) | YES  |     | NULL       | The archive location of the data 
+| ext_link       | varchar(150) | YES  |     | NULL       | The external link of this dataset
++----------------+--------------+------+-----+------------+-----------------------------------------------------------+
+ 

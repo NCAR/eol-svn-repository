@@ -1,0 +1,323 @@
+<html>
+<head>
+<title>How To: Process MISS Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Process MISS Upper Air Sounding Data</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#network">Network Information</a></li>
+        <li><a href="#version">Previous Versions</a>
+            <ol>			
+                <li><a href="#version:PLOWS_2008-2009">2008-2009 (PLOWS)</a></li>
+                <li><a href="#version:T-REX">2006 (T-REX)</a></li>
+				<li><a href="#version:NAME">2004 (NAME)</a></li>
+            </ol>
+        </li>
+        <li><a href="#directory">Directory Structure</a></li>
+        <li><a href="#process">Processing the Data</a>
+            <ol>
+			<li><a href="#setup">Initial Processing Setup</a></li> 
+            <li><a href="#convert">Converting the Data</a></li>
+            <li><a href="#autoqc">Auto QC</a></li>
+			<li><a href="#visual_qc">Visual QC</a></li>
+            <li><a href="#finalize">Finalization</a></li>   
+			<li><a href="#5mb-extract">5mb Extraction</a></li>  
+            </ol>
+        </li>
+        <li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+	<p>This document contains instructions for converting MISS upper air (upsonde)
+	sounding data from the ISF EOL format into the EOL Sounding Composite (ESC)
+	format.</p>
+</div>
+<a href="#">Top</a><hr />                                        
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+    <li>The ID-Type is 99.</li>
+    <li>The Platform is 121, Rawinsonde, NCAR/ISS.
+	<p><i>For PLOWS_2008-2009:</i></p>
+		<p>The platform was originally set to "298, Rawinsonde, GAUS" but was
+		changed to the ISS platform after consulting with the scientific staff
+		(Scot).</p>		
+		<p><span class="note">Scot's reply regarding choice of platform:</span>
+		"GAUS (or really MGAUS for mobile GAUS) is the radiosonde. But ISS (or
+		really MISS) is the overall system (profiler, surface met, radiosonde).
+		We tend to use ISS for the platform when the overall system is used for
+		a project and GAUS when just the radiosonde system is used. In this
+		case the entire ISS system was used so I'd go for that."</p>
+		</li>
+</ul>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions</h2>
+<div class="block">
+ 
+    <a name="version:PLOWS_2008-2009"></a><h3>PLOWS (2008-2009)</h3>
+    <table class="version">
+	<tr><th>Software:</th><td><a
+	href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FISS%2F#_conversions_upper_air_ISS_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/ISS/tags/PLOWS_2008-2009</a></td></tr>
+    <tr><th>Raw Data:</th><td>/net/work/Projects/PLOWS/upper_air/MISS/raw_data</td></tr>
+    <tr><th>Final Data:</th><td>/net/work/Projects/PLOWS/upper_air/MISS/final</td></tr>
+    </table>
+
+    <a name="version:T-REX"></a><h3>T-REX (2006)</h3>
+    <table class="version">
+    <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FISS%2Ftags%2FT-REX_2006%2F_conversions_upper_air_ISS_tags_T-REX_2006_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/ISS/tags/T-REX_2006</a></td></tr>
+    <tr><th>Raw Data:</th><td>N/A</td></tr>
+    <tr><th>Final Data:</th><td>N/A</td></tr> 
+    </table>     
+
+     <a name="version:NAME"></a><h3>NAME(2004)</h3>
+    <table class="version">
+    <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FISS%2Ftags%2FNAME_2004%2F_conversions_upper_air_ISS_tags_NAME_2004_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/ISS/tags/NAME_2004</a></td></tr>
+    <tr><th>Raw Data:</th><td>N/A</td></tr>
+    <tr><th>Final Data:</th><td>N/A</td></tr>                                      
+    </table>     
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">MISS/</h3>
+    <table class="directories">
+		<tr><th>5mb/</th><td>The directory where the extracted 5mb pressure
+		sounding files are stored.</td></tr>
+		<tr><th>build/</th><td>The auto-generated directory for the compiled
+		Java classes.</td></tr>
+		<tr><th>database/</th><td>The directory where the final processed data
+		that will be put on line is stored.</td></tr>
+		<tr><th>dayfiles/</th><td>The directory where the generated day files
+		are stored.</td></tr>
+	    <tr><th>docs/</th><td>The directory containing documentation about the
+	    processing and the data.</td></tr> 
+	    <tr><th>final/</th><td>The directory where the QC'ed files are placed once
+	    they have been created.</td></tr> 
+	    <tr><th>logs/</th><td>The directory where the error/check files from the QC
+	    are placed.</td></tr>
+	    <tr><th>output/</th><td>The directory where the CLASS files are put after
+	    they are generated.</td></tr> 
+	    <tr><th>raw_data/</th><td>The directory where the raw data is
+	    stored.</td></tr>
+	    <tr><th>software/</th><td>The directory where the software for the
+	    conversion is stored.</td></tr>
+	    <tr><th>src/</th><td>Unused directory.</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="process"></a><h2>Processing the Data</h2>
+<div class="block">
+    <a name="setup"></a><h3>Initial Processing Setup</h3>
+	<ol>	
+	<li><p>Copy the raw data into the <span
+	class="directoryName">raw_data</span> directory.</p></li>               
+    </ol>
+
+    <a name="convert"></a><h3>Converting the Data</h3>
+	<p class="note">This step runs Perl code and should work on basically any
+	machine. However, to run the autoQC and any other processing/data prep done
+	by the build.xml (Ant) file, you must run on any machine with the proper
+	Ant and Java setup. Such as merlot.</p>    
+	<p>Converting ISF EOL formatted MISS upsonde data into the ESC format consists
+	of the following steps.</p>
+
+	<ol>
+	<li><p>Change to the <span class="directoryName">software</span> directory.</p></li>
+	<li><p>Edit the <span class="softwareName">ISS_Converter.pl</span> script.</p>
+	<ul>
+   </ul>
+
+		<li><p>Change hard-coded values for project-specific items such as
+		Project, Network, State, etc.</p> 
+		
+		<p><i>For PLOWS 2008-2009</i>:</p>
+	    <ul>
+		<li><p><span class="beware">BEWARE:</span> This project converted MISS
+		(mobile ISS) data.  To use the converter for ISS data, change the
+		hard-coded "NETWORK" and Header ID to "ISS". This needs to be changed
+		in the <span class="softwareName">build.xml</span> file also.</P></li>
+		<li><p>In the <code>build_default_station</code> code, the state was
+		set to "IA." After the conversion was completed, it was learned that
+		soundings were taken in Iowa and Wisconsin.  The Station CD file was
+		hand-edited to reflect a state code of "99" since there was more than
+		one state. </p></li>
+		<li><p>The platform was originally set to "298, Rawinsonde, GAUS" but
+		was changed to the ISS platform "121 Rawinsonde, NCAR/ISS" after
+		consultation with the scientific staff (Scot). The Station CD file was
+		hand-edited to reflect a platform of "121."</p></li>
+		<li><p><code>$header->setType</code> returns "GAUS SOUNDING DATA".</p></li>		
+		<li><p><code>$header->setId</code> returns "MISS".</p></li>
+	    </ul>
+	    
+	    <li><p>Verify that the raw data columns match the required ESC
+format (<a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/tutorial/sounding-processing-and-composite-generation/appendix-esc-format-description">see
+example</a>).</p></li>
+	</ul>
+	</li>
+	<li><p>Run the <span class="softwareName">ISS_Converter</span> script.
+	This will convert the EOL data to the ESC format.</p></li>
+	<li><p>Run the format checker using the ant command:</p>
+    <p class="code">ant check-format-ESC</p>
+	<p>Check the log file in the <span class="directoryName">output</span>
+	directory to determine if any format issues need to be addressed before
+	proceeding with AutoQC.</p></li>
+	</ol>
+
+<a name="autoqc"></a><h3>Auto QC</h3>
+	<p class="note">This step works best on merlot, but can be done on any
+	machine with the proper Ant and Java setup.</p>
+
+	<p>These steps execute the automatic QC on the processed files in the <span
+	class="directoryName">output</span> directory, generate log files in the
+	<span class="directoryName">logs</span> directory, and place the QC'ed data
+	files into the <span class="directoryName">final</span> directory, as
+	specified by the <span class="softwareName">build.xml</span> file.  After
+	the QC processing has completed, the <span class="softwareName">ant
+	autoqc</span> command runs the format checker on the QC'ed files. Here are
+	the steps to run the sounding Automatic Quality Control Processing:</p>
+    <ol>
+	   <li><p>Stay in/Change to the top level processing directory where the Ant
+	   <span class="softwareName">build.xml</span> file is located.</p></li>
+	   <li><p>Check the <span class="softwareName">build.xml</span> file for the
+	   <code>autoqc</code> target for the following:</p>
+           <ol>
+			   <li><p>A command to copy the properties file to the build
+			   directory. There is typically a copy of the autoqc properties
+			   file (e.g., "us_plains_autoqc.properties") in the software
+			   directory.</p></li>   		   
+			   <li><p>The java command(s) will be executed on the expected data in
+			   the expected locations (i.e., ensure that the directory names in
+			   the build.xml file are correct and what you want.)</p></li>
+			   <li><p>You have updated the project name in the build.xml,
+			   if included in the build.xml file.</p></li>
+		   </ol>	
+       <li><p>Perform the auto QC by executing the ant command:</p>
+           <p class="code">ant autoqc</p>
+  	    <p><i>For PLOWS 2008-2009:</i></p>
+	    <ul>
+		<li><p>Format checker warnings for differences between surface altitude
+		and header altitude were seen.  Header altitude used GPSalt while GeoPoAlt
+		was used in the actual data.</p></li>
+	    </ul>  
+		</li>  
+		</ol>
+
+	
+
+<a name="visual_qc"></a><h3>Visual QC</h3>
+	<p>Once the auto QC is completed, email the scientific staff (i.e., Scot
+	Loehrer) so that they can perform a visual QC on the data and give final
+	approval of the processed data set, as required. Note that the visual qc is
+	not performed on all sounding datasets.</p>
+
+
+<a name="finalize"></a><h3>Finalization</h3>
+	<p>After the visual QC is completed, the data set is ready to be finalized
+	(i.e, prep'd for CODIAC).  
+       <ol>
+		 <li><p> Update this "How To" document to indicate the latest project
+		 this conversion was executed for and include any notes about upgrades
+		 made specifically for that project, as required. A copy of this
+		 document is generally found in the <span
+		 class="directoryName">/docs</span> directory. Place a copy of the
+		 updated doc in <span
+		 class="directoryName">/net/web/dmg/html/software/conversions/upper_air/MISS
+		 </span> directory. The s/w repository page points to this doc in that
+		 web location, so this must be updated.  The s/w repository page is
+		 located <a
+		 href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/encyclopedia/repository-dmg-subversion-listing"
+		 target='_top'><b>here</b></a>. </p>
+
+		 <li><p>Update the dataset description (or EMDAC) document for this
+		 conversion. Work with the scientific staff to create an EMDAC
+		 document. Generally, start with an existing "similar" document and
+		 simply update it for this project and dataset.  Generally, a copy of
+		 the EMDAC doc can be found in the <span
+		 class="directoryName">/docs</span> area.</p>
+
+		<li><p>The next processing step is to create day files that can/will be
+		loaded into the EMDAC/CODIAC database, along with the EMDAC dataset
+		description document.  The dayfiles creation step will generate day
+		files sorted by nominal release date followed by station location as
+		required by CODIAC. It's very important that the output dayfiles be in
+		this expected sort order so that CODIAC can access all the soundings
+		within a single dayfile. Do the following steps to create the day
+		files.</p>
+    <ol>
+	   <li><p>Ensure that you are in the same (top) directory as the build.xml
+	   file. Create the day files using the ant command:</p>
+	   <p class="code">ant dayfiles</p> <p>This will create a file for each day
+	   where at least one sounding exists in the <span
+	   class="directoryName">database</span> directory or whichever directory
+	   is specified as the output directory in the build.xml file. If this
+	   dataset is to be put online "as is", these ar the dayfiles to load into
+	   CODIAC.</p>
+       </li>
+    </ol>
+    </ol>
+
+
+<a name="5mb-extract"></a><h3>5mb Extraction</h3>
+	<p>If the converted soundings are also going to be placed into a 5mb
+	composite, the soundings need to have the proper 5mb pressure level
+	soundings generated.  This is done through the following steps:</p>
+    <ol>
+        <li><p>Generate the 5mb pressure level data files using the ant command:</p>
+            <p class="code">ant 5mb-extract</p>
+			<p>This will generate a 5 mb sounding file for each sounding in the
+			<span class="directoryName">final</span> directory and place
+			it in the <span class="directoryName">5mb</span>.  It will also run
+			some final checks to make sure the format is correct. Beware that
+			the file directories listed in the build.xml file are what you
+			expect and want.</p>
+   	        <p><i>For PLOWS 2008-2009:</i></p>
+	        <ul>
+			<li><p>Because the build.xml file expected to see files with a .cls
+			extension, the non-qc'd files in the <span
+			class="directoryName">final</span> directory were moved out to the
+			top level directory into a "NonQC" directory, and the files with
+			the .qc extension were renamed.</p></li>
+	        </ul> 
+        </li>
+    </ol>
+	<p>The generated 5mb data files will then be available when the composite
+	is generated.</p>
+
+	</div>
+<a href="#">Top</a><hr>
+
+<a name="documents"></a><h2>Documentation</h2>
+<p>The following are a list of documents that may help with the conversion or
+are related to the raw data.</p>
+<ul>
+	<li><a href="/software/tools/upper_air/autoqc">How To: AUTO QC Sounding Data</a>:  The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/software/tools/upper_air/esc_format_checker">How To: ESC Format Checker</a>:  The instructions and API for working with the ESC format checker program.</li>
+    <li><a href="#">How To: Process MISS Sounding Data</a>:  This document.</li>
+
+<!-- documentation no longer found
+
+    <li><a href="howto_insert_text_class_soundings.html">How To: Insert Text CLASS Sounding Data into the Database</a>: The instructions on how insert the ESC sounding data into the database.</li>
+    <li><a href="./readme_t-parc_gts_sounding.html">readme_tparc_nrl_p3_soundings.html</a>: The database readme file for T-PARC.</li>
+    <li><a href="./fsl_format-new.cgi">fsl_format-new.cgi</a>: The raw data readme for the T-PARC data.</li>
+
+-->
+</ul>
+<a href="#">Top</a><hr>      
+
+<p class="foot">Last Updated: 2009/09/14 - Linda Echo-Hawk</p>
+</body>
+</html>

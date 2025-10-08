@@ -1,0 +1,37 @@
+.MAKE_VERSION:	VERSION-1.0
+.BUILT_LAST_MAKE_RUN:
+getdays.o:
+	f77 -fast -O3  -c  getdays.f
+.BUILT_LAST_MAKE_RUN:
+getstncode.o:
+	f77 -fast -O3  -c  getstncode.f
+.BUILT_LAST_MAKE_RUN:
+getqcfrec.o:
+	f77 -fast -O3  -c  getqcfrec.f
+.BUILT_LAST_MAKE_RUN:
+stnstat.o:	qcglobal.h stnstatcom.h debug.h ioerr.h qcfcom.h stncom.h platform.h parmnames.h 
+	f77 -fast -O3  -c  stnstat.f
+.BUILT_LAST_MAKE_RUN:
+getntime.o:
+	f77 -fast -O3  -c  getntime.f
+.BUILT_LAST_MAKE_RUN:
+getplatform.o:
+	f77 -fast -O3  -c  getplatform.f
+.BUILT_LAST_MAKE_RUN:
+getqcftime.o:
+	f77 -fast -O3  -c  getqcftime.f
+.BUILT_LAST_MAKE_RUN:
+getstns.o:
+	f77 -fast -O3  -c  getstns.f
+.BUILT_LAST_MAKE_RUN:
+ll2xy.o:
+	f77 -fast -O3  -c  ll2xy.f
+.BUILT_LAST_MAKE_RUN:
+getqcfrec2.o:
+	f77 -fast -O3  -c  getqcfrec2.f
+.BUILT_LAST_MAKE_RUN:
+getconfig.o:
+	f77 -fast -O3  -c  getconfig.f
+.BUILT_LAST_MAKE_RUN:
+getbtime.o:
+	f77 -fast -O3  -c  getbtime.f

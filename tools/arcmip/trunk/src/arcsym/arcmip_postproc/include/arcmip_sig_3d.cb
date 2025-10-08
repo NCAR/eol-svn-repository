@@ -1,0 +1,15 @@
+c---------------------------------------------------------------------
+c ARCSyM atmospheric 3d variables (on sigma levels)
+      real *4 u_mod_sig(ix,jx,kx), v_mod_sig(ix,jx,kx),
+     +        u_sig(ix,jx,kx), v_sig(ix,jx,kx),
+     +        w_sig(ix,jx,kx), t_sig(ix,jx,kx),
+     +        z_sig(ix,jx,kx), rh_sig(ix,jx,kx),
+     +        qv_sig(ix,jx,kx), spechum_sig(ix,jx,kx),
+     +        cld_sig(ix,jx,kx), ice_sig(ix,jx,kx),
+     +        cld_frac_sig(ix,jx,kx)
+      common /arcmip_sig_3d/ u_mod_sig, v_mod_sig, u_sig,
+     +                       v_sig, w_sig, t_sig,
+     +                       z_sig, rh_sig, qv_sig,
+     +                       spechum_sig, cld_sig, ice_sig,
+     +                       cld_frac_sig
+c---------------------------------------------------------------------

@@ -1,0 +1,55 @@
+<project name="MIPS Sounding Converter" default="compile" basedir=".">
+
+  <property name="src" value="src"/>
+  <property name="build" value="build"/>
+  <property name="build.classes" value="${build}/classes"/>
+
+   <path id="theclasspath">
+   <!-- for the record, this is a major pain -->
+
+    <!-- get the old classpath, if available -->
+    <pathelement path="${classpath}"/>
+    <pathelement path="${build.classes}" />
+
+    <fileset dir="/net/work/lib/java">
+       <include name="utilities.jar" />
+       <include name="station.jar" />
+       <include name="upper_air.jar" />
+    </fileset>
+   </path>
+
+  <property name="classpath" refid="theclasspath"/>
+
+
+  <target name="all" depends="compile"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" classpath="${classpath}" destdir="${build.classes}"
+     debug="off"
+     deprecation="on"
+     verbose="no" />
+  </target>
+
+  <target name="convert" depends="compile">
+    <java classname="dmg.ua.sounding.convert.mips.MipsConverter" classpath="${classpath}" fork="yes" failonerror="true">
+       <arg value="-Z" />
+       <arg value="-P BAMEX" />
+       <arg value="-r raw_data" />
+       <arg value="-o output" />
+       <arg value="-f final" />
+    </java>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${dist}" />
+  </target>
+</project>

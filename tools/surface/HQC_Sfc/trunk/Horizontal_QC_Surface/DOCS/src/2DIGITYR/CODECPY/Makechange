@@ -1,0 +1,11 @@
+SHELL = /bin/sh
+
+CC=cc
+
+procncdc: changenum.o
+	$(LINK.c) -o changenum.exe changenum.o 
+	mv changenum.exe changenum
+	chmod 0755 changenum
+
+clean:
+	rm *.o

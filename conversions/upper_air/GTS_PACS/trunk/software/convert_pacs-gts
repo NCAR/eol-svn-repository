@@ -1,0 +1,5 @@
+#! /bin/csh
+
+foreach file (../raw_data/upa*)
+	./pacs-gts_converter.pl $file
+end

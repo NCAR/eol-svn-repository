@@ -1,0 +1,12 @@
+<project name="PacMARS">
+
+	<cruiseInfo display="Cruise Information">
+		<cruise type="String" display="Cruise"></cruise>
+	</cruiseInfo>
+	
+	<mapserverOptions display="Mapserver Options">
+		<displayPreference type="String" textArea="true" display="What is the best way to display this data and how should the data be visualized? (i.e. plot chlorophyll on a color scale from blues to greens to yellows to reds or plot biomass with graduated circles in one color)" />
+		<dataRangePreference type="String" textArea="true" display="What are the ranges for the data to be plotted? (i.e. biomass 10-19, 20-29, 30-39 with larger circles for larger numbers or evenly spread chlorophyll values across color scale with 25 different colors on a blue-green-yellow-orange-red color scale)" />
+		<additionalVisualPreference type="String" textArea="true" display="Are there additional ways the data can be visualized? Please list them in order of preference." />
+	</mapserverOptions>
+</project>

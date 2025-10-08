@@ -1,0 +1,148 @@
+<html>
+<head>
+<title>How To: Process NWS GTS Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Process NWS GTS Upper Air Sounding Data</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#network">Network Information</a></li>
+        <li><a href="#version">Previous Versions</a>
+            <ol>
+                <li><a href="#version:cupido">2006 (CuPIDO)</a></li>
+            </ol>
+        </li>
+        <li><a href="#directory">Directory Structure</a></li>
+        <li>Processing the Data
+            <ol>
+	        <li><a href="#converting">Converting the Data</a></li>
+	        <li><a href="#autoqc">QC'ing the Data</a></li>
+	        <li><a href="#dayfiles">Creating the Day Files</a></li>
+	        <li><a href="#codiac">Inserting into the Database</a></li>
+            </ol>
+        </li>
+        <li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+    <p>This document contains the instructions on how to process the sounding data from the GTS from FSL into the EOL Sounding Composite (ESC) format.</p>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+	<li>The ID-Type is 99.</li>
+	<li>The Platform is 202.</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions</h2>
+<div class="block">
+
+    <a name="version:cupido"></a><h3>CuPIDO (2006)</h3>
+    <table class="version">
+	<tr><th>Software:</th><td>/net/work/CUPIDO/upper_air/GTS/software</td></tr>
+	<tr><th>Raw Data:</th><td>/ingest/cupido/upper_air/GTS</td></tr>
+	<tr><th>Final Data:</th><td>/export/archive/data/cupido/upper_air/GTS</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">GTS/</h3>
+    <table class="directories">
+        <tr><th>database/</th><td>The directory where the day files are placed when ready for the database.</td></tr>
+	<tr><th>docs/</tdh><td>The directory containing documentation about the processing and the data.</td></tr>
+	<tr><th>final/</th><td>The directory where the QC'ed files are placed once they have been created.</td></tr>
+	<tr><th>logs/</th><td>The directory where the error/check files from the QC are placed.</td></tr>
+	<tr><th>output/</th><td>The directory where the CLASS files are put after they are generated.</td></tr>
+	<tr><th>raw_data/</th><td>The directory where the raw data is stored.</td></tr>
+	<tr><th>software/</th><td>The directory where the software for the conversion is stored.</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="process"></a><h2>Processing the Data</h2>
+<div class="block">
+    <a name="convert"></a><h3>Converting the Data</h3>
+    <p>The following is how to convert the EOL formatted data into the ESC format ready to be QC'ed.</p>
+    <ol>
+	<li>Copy the raw data into the <span class="directoryName">raw_data</span> directory.</li>
+	<li>Change to the <span class="directoryName">software</span> directory.</li>
+	<li>Edit the <span class="softwareName">GTS_FSL_Converter.pl</span> script.
+            <ol>
+		<li>Change the function: <code>getProjectName</code> to the current project near the top of the script.</li>
+	    </ol>
+        </li>
+	<li>Run the <span class="softwareName">GTS_FSL_Converter.pl</span> script.  This will convert the EOL data to the ESC format.</li>
+    </ol>
+
+    <a name="autoqc"></a><h3>QC'ing the Data</h3>
+    <p>Auto QC was not performed for the CuPIDO project.</p>
+
+    <p>The following explains how to QC the ESC formatted sounding data.  This assumes that the auto qc binary is already created.  For more information on the auto qc, see <a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>.</p>
+    <ol>
+	<li>Change to the <span class="directoryName">software</span> directory (if you are not already there).</li>
+	<li>Edit the <span class="softwareName">autoqc.pl</span> script.
+	    <p>The variable <code>$AUTOQC</code> needs to be changed to point to the correct autoqc program for the current project.</p>
+	</li>
+	<li>Run the <span class="softwareName">autoqc.pl</span> script.
+ 	    <p>This script takes each file in the <span class="directoryName">output</span> directory, runs the auto qc program on it, and creates a new ESC file that is placed in the <span class="directoryName">final</span> directory and a check/error log file that is placed in the <span class="directoryName">log</span> directory.</p>
+        </li>
+    </ol>
+
+    <a name="dayfiles"></a><h3>Creating the Day Files</h3>
+    <div class="block">
+
+        <h4>ESC Formatted Files</h4>
+        <div class="block">
+        <p>The following explains how to generate ESC format day files.</p>
+            <ol>
+                <li>Change to the <span class="directoryName">software</span> directory (if you are not already there).</li>
+                <li>Edit the <span class="softwareName">make_dayfiles</span> script.
+                    <ol>
+                        <li>Change the directories to the directories where the generated files should be placed and where the source files for the day files are located.</li>
+		        <li>Change the first parameter to the <span class="softwareName">make_esc_dayfiles</span> script to be the list of files to use to make the day files.</li>
+                        <li>Update, if necessary, the final parameter ot the <span class="softwareName">make_esc_dayfiles</span> script to be the appropriate prefix for the day files to be generated.  This includes the directory where the fiels are to be placed.</li>
+                    </ol>
+                </li>
+                <li>Run the <span class="softwareName">make_dayfiles</span> script.
+                    <p>The script takes the nominal time from the header of the ESC files and puts them in a day file using that date.  The files are put into the natural sort order of the file names using the unix <span class="softwareName">sort</span> command.</p>
+                </li>
+            </ol>
+        </div>
+
+    <a name="codiac"></a><h3>Inserting into the Database</h3>
+    <div class="block">
+        <div class="block">
+            <p>With the day files created, they are ready to be inserted into the database.  This is a general process and is explained in the document: <a href="howto_insert_text_class_soundings.html">How To: Insert Text CLASS Sounding Data</a>.</p>
+        </div>
+    </div>
+</div>
+<a href="#">Top</a><hr>
+
+<a name="documents"></a><h2>Documentation</h2>
+<p>The following are a list of documents that may help with the conversion or are related to the raw data.</p>
+<ul>
+	<li><a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>- The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="howto_insert_text_class_soundings.html">How To: Insert Text CLASS Sounding Data into the Database</a>- The instructions on how insert the ESC sounding data into the database.</li>
+	<li><a href="#">How To: Process NWS GTS Sounding Data</a>- This document.</li>
+	<li><a href="./readme_cupido_gts_sounding.html">readme_cupido_gts_sounding.html</a>- The database readme file for CuPIDO.</li>
+	<li><a href="./fsl_format-new.cgi">fsl_format-new.cgi</a>- The raw data readme for the CuPIDO data.</li>
+</ul>
+<hr>
+
+<p class="foot">Last Updated: 2008/04/16 - Joel Clawson</p>
+</body>
+</html>

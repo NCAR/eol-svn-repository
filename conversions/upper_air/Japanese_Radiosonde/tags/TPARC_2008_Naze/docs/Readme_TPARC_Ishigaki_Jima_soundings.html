@@ -1,0 +1,291 @@
+<html>
+<head>
+<title>T-PARC Ishigaki Jima Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">T-PARC Ishigaki Jima Sounding Data</h1>
+
+
+<h2>1.0 General Description</h2>
+<p>This is one of the upper air data sets developed for the THORPEX Pacific Asian Regional Campaign (T-PARC 2008).  The data set includes 179 high vertical resolution (1-second) soundings from Ishigakijima, Japan (WMO - 47918).  The data cover August and September 2008 and soundings were typically released at 00 and 12 UTC with some special releases during periods of nearby tropical storms.  The data are in the EOL Sounding Composite format which is columnar ASCII.  The data were provided by JMA.
+
+
+<h3>1.1 Data Set Contact</h3>
+
+<p>Scot Loehrer<br>
+NCAR/EOL<br>
+loehrer@ucar.edu</p>
+
+<h2>2.0 Detailed Data Description</h2>
+<h3>2.1 Detailed Format Description</h3>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite Format (ESC).  ESC is a version of the National Center for Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, and meteorological and wind data processors.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center" cellpadding=2 cellspacing=1>
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+
+<p>The seven non-standard header lines may contain any label and contents.  The labels are padded to 35 characters to match the standard header lines. Records for this dataset include the following non-standard header lines.</p>
+
+<table border=1 bordercolor="black" align="center" cellpadding=2 cellspacing=1> 
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>6</td><td>Sonde Id/Sonde Type:</td><td>7712085/Meisei RS-01GM</td></tr>
+<tr><td>7</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>9</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>10</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>11</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL codes:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1> 
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of T-PARC Ishigakijima high resolution sounding data in ESC format.   The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  See section 2.1 for an exact format specification.
+
+<pre>
+Data Type:                         Ishigaki Jima/Ascending
+Project ID:                        T-PARC
+Release Site Type/Site ID:         Ishigaki Jima, Japan/47918
+Release Location (lon,lat,alt):    124 09.88'E, 24 20.22'N, 124.165, 24.337, 8.0
+UTC Release Time (y,m,d,h,m,s):    2008, 08, 01, 08:30:43
+Sonde Id/Sonde Type:               7712085/Meisei RS-01GM
+/
+/
+/
+/
+/
+Nominal Release Time (y,m,d,h,m,s):2008, 08, 01, 08:30:43
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat    Ele   Azi   Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg    deg   deg    m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+   0.0 1010.9  29.1  24.7  77.0   -4.5    0.8   4.6 100.0 999.0  124.164  24.337 999.0 999.0     7.7 99.0 99.0 99.0 99.0 99.0  9.0
+   1.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+   2.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+   3.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+   4.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+   5.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+   6.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+   7.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+   8.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+   9.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+  10.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+  11.0 1008.0  28.4  26.3  88.6   -5.4   -0.7   5.5  83.0   2.3  124.164  24.337 999.0 999.0    33.0 99.0 99.0 99.0 99.0 99.0 99.0
+  12.0 1007.4  28.4  26.0  86.8   -5.1    0.1   5.1  91.3   5.6  124.164  24.337 999.0 999.0    38.6 99.0 99.0 99.0 99.0 99.0 99.0
+  13.0 1006.8  28.3  25.6  85.3   -5.1    0.2   5.1  92.0   5.2  124.164  24.337 999.0 999.0    43.8 99.0 99.0 99.0 99.0 99.0 99.0
+  14.0 1006.2  28.2  25.2  83.8   -4.6    0.4   4.6  95.2   6.0  124.164  24.337 999.0 999.0    49.8 99.0 99.0 99.0 99.0 99.0 99.0
+  15.0 1005.5  28.2  25.0  82.6   -4.5    0.2   4.5  92.9   6.1  124.164  24.337 999.0 999.0    55.9 99.0 99.0 99.0 99.0 99.0 99.0
+  16.0 1004.7  28.1  24.6  81.4   -3.9    0.1   3.9  91.4   7.4  124.164  24.337 999.0 999.0    63.3 99.0 99.0 99.0 99.0 99.0 99.0
+  17.0 1003.9  28.0  24.4  80.8   -3.4    0.1   3.5  91.7   6.5  124.164  24.337 999.0 999.0    69.8 99.0 99.0 99.0 99.0 99.0 99.0
+  18.0 1003.2  27.9  24.1  79.7   -3.5    0.2   3.5  93.0   7.0  124.164  24.337 999.0 999.0    76.8 99.0 99.0 99.0 99.0 99.0 99.0
+  19.0 1002.4 999.0 999.0  79.4   -2.9    0.3   3.0  96.7   6.6 9999.000 999.000 999.0 999.0    83.4 99.0  9.0 99.0 99.0 99.0 99.0
+  20.0 1001.7 999.0 999.0 999.0   -2.9    0.3   3.0  96.4   6.3 9999.000 999.000 999.0 999.0    89.7 99.0  9.0  9.0 99.0 99.0 99.0
+  21.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+  22.0 1001.0  27.6  23.5  78.3   -3.5    0.5   3.5  98.8   3.4  124.163  24.337 999.0 999.0    96.4 99.0 99.0 99.0 99.0 99.0 99.0
+  23.0 1000.2  27.7  23.5  78.1   -4.1    0.6   4.1  99.0   6.4 9999.000 999.000 999.0 999.0   102.8 99.0 99.0 99.0 99.0 99.0 99.0
+</pre>
+
+<h3>2.2 Data Remarks</h3>
+
+<h3>2.3 Station List</h3>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr>
+<th>ID</th>
+<th>SITE</th>
+<th>COUNTRY</th>
+<th>LONG</th>
+<th>LAT</th>
+<th>ELEV (m)</th>
+</tr>
+<tr>
+<td>47918</td>
+<td>Ishigake Jima</td>
+<!-- Use state 2-letter postal code  -->
+<td>Japan</td>
+<td>124.16472</td>
+<td>24.33694</td>
+<td>8.0</td>
+</tr>
+</table>
+
+
+<!-- This is the QC section appropriate for Upsondes  -->
+<h2>3.0 Quality Control Processing</h2>
+
+<p>The 0 second record is the independent surface record. 
+<p>The first 10 seconds of raw data after radiosonde release were set entirely
+to missing as the radiosonde is adjusting to the environment.  
+<p>This dataset underwent an automated QC process.  The dataset underwent
+internal consistency checks which included two types of checks, gross limit
+checks on all parameters and rate-of-change checks on temperature, pressure and
+ascension rate. Some further information on the QC processing conducted by
+NCAR/EOL can be found in Loehrer et al. (1996) and Loehrer et al. (1998).</p>
+
+<h3>3.1  Gross Limit Checks</h3>
+<!-- Insert the appropriate project name in this paragraph  -->
+<p>These checks were conducted on each sounding and data were automatically
+flagged as appropriate.  Only the data point under examination was flagged.
+NCAR/EOL conducted the following gross limit checks on the T-PARC Ishigaki Jima 
+sounding dataset.  In the table P = pressure, T = temperature, RH = relative
+humidity, U = U wind component, V = V wind component, B = bad, and Q =
+questionable.</p>
+
+<table border=1 style="{font-size:10pt;}" align="center">
+<tr><th>Parameter</th><th>Gross Limit Check</th><th>Parameter(s) Flagged</th><th>Flag Applied</th></tr>
+<tr><td>Pressure</td>
+        <td align="center">&lt; 0 mb or &gt; 1050 mb</td>
+        <td align="center">P</td><td align="center">B</td>
+        </tr>
+<tr><td>Altitude</td>
+        <td align="center">&lt; 0 m or &gt; 40000 m</td>
+        <td align="center">P, T, RH</td><td align="center">Q</td>
+        </tr>
+<tr><td>Temperature</td>
+        <td align="center">&lt; -90 &deg;C or &gt; 45 &deg;C</td>
+        <td align="center">T</td><td align="center">T</td>
+        </tr>
+<tr><td>Dew Point</td>
+        <td align="center">&lt; -99.9 &deg;C or &gt; 33 &deg;C<br>&gt; Temperature</td>
+        <td align="center">RH<br>T, RH</td><td align="center">Q<br>Q</td>
+        </tr>
+<tr><td>Relative Humidity</td>
+        <td align="center">&lt; 0% or &gt; 100%</td>
+        <td align="center">RH</td><td align="center">B</td>
+        </tr>
+<tr><td>Wind Speed</td>
+        <td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+        <td align="center">U, V<br>U, V</td><td align="center">Q<br>B</td>
+        </tr>
+<tr><td>U Wind Component</td>
+        <td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+        <td align="center">U<br>U</td><td align="center">Q<br>B</td>
+        </tr>
+<tr><td>V Wind Component</td>
+        <td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+        <td align="center">V<br>V</td><td align="center">Q<br>B</td>
+        </tr>
+<tr><td>Wind Direction</td>
+        <td align="center">&lt; 0&deg; or &gt; 360&deg;</td>
+        <td align="center">U, V</td><td align="center">B</td>
+        </tr>
+<tr><td>Ascent Rate</td>
+        <td align="center">&lt; -10 m/s or &gt; 10 m/s</td>
+        <td align="center">P, T, RH</td><td align="center">Q</td>
+        </tr>
+</table>
+
+<h3>3.2  Vertical Consistency Checks</h3>
+<p>These checks were conducted on each sounding and data were automatically
+flagged as appropriate.  These checks were started at the lowest level of the
+sounding and compared neighboring 2-sec data points (except at pressures less
+than 100 mb where 30-sec average values were used).  In the case of checks
+ensuring that the values increased/decreased as expected, only the data point
+under examination was flagged.  However, for the other checks, all of the data
+points used in the examination were flagged.   All items within the table are
+as previously defined.</p>
+
+<table border=1 style="{font-size:10pt;}" align="center">
+<tr><th>Parameter</th><th>Vertical Consitency Check</th><th>Parameter(s) Flagged</th><th>Flag Applied</th></tr>
+<tr><td>Time</td>
+        <td align="center">decreasing / equal</td>
+        <td align="center">None</td><td align="center">None</td>
+        </tr>
+<tr><td>Altitude</td>
+        <td align="center">decreasing / equal</td>
+        <td align="center">P, T, RH</td><td align="center">Q</td>
+        </tr>
+<tr><td>Pressure</td>
+        <td align="center">increasing / equal<br>&gt; 1 mb/s or &lt; -1 mb/s<br>&gt; 2 mb/s or &lt; -2 mb/s</td>
+        <td align="center">P, T, RH<br>P, T, RH<br>P, T, RH</td><td align="center">Q<br>Q<br>B</td>
+        </tr>
+<tr><td>Temperature</td>
+        <td align="center">&lt; -15 &deg;C/km<br>&lt; -30 &deg;C/km<br>&gt 50 &deg;C/km (not applied at p &lt; 250 mb)<br>&gt;100 &deg;C/km (not applied at p &lt; 2
+50 mb)</td>
+        <td align="center">P, T, RH<br>P, T, RH<br>P, T, RH<br>P, T, RH</td>
+        <td align="center">Q<br>B<br>Q<br>B</td>
+        </tr>
+<tr><td>Ascent Rate</td>
+        <td align="center">change of &gt; 3 m/s or & lt; -3 m/s<br>change of &gt; 5 m/s or &lt; -5 m/s</td>
+        <td align="center">P<br>P</td><td align="center">Q<br>B</td>
+        </tr>
+</table>
+
+<h3>3.3 Visual Quality Checks</h3>
+<p>Each sounding was visually examined for data quality issues. Any issues
+found were flagged in the data file and/or noted in Section 3.4.</p>
+
+<h3>3.4 Data Quality Issues</h3>
+
+<p>The humidity measurements for many of the soundings are still adjusting
+to the environment beyond the initial 10 second period after release that
+were set entirely to missing.  The humidity had been flagged as questionable
+during this adjustment period.
+<p>
+Three soundings (200809112330, 200809120830, and 200809272330) were 
+significantly imapacted by icing and had a period of descent around the
+freezing level.  In each case, the ice eventually melted and the radiosonde
+started to ascend again.  The periods of descent were each flagged by the
+automated checking process.
+
+
+<h2>4.0 References</h2>
+
+
+<p>Loehrer, S. M., T. A. Edmands, and J. A. Moore, 1996: TOGA COARE upper-air sounding data archive: development and quality control procedures.  Bull. Amer. Meteor. Soc., 77, 2651-2671.</p>
+<p>Loehrer, S. M., S. F. Williams, and J. A. Moore, 1998: Results from UCAR/JOSS quality control of atmospheric soundings from field projects.  Preprints, Tenth Symposium on Meteorological Observations and Instrumentation, Phoenix, AZ, Amer. Meteor. Soc., 1-6.</p>
+
+</body>
+</html>

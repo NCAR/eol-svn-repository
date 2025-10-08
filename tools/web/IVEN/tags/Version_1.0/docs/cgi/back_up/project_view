@@ -1,0 +1,157 @@
+
+use strict;
+use CGI;
+
+use lib "lib";
+use ProjectDBA;
+
+sub project_view
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $pjname = $state->{project};
+
+	my $project = ProjectDBA::buildProjectView( $pjname );
+
+	println( $cgi->header() ); 
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>Iven Project View</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+
+	println( "<body>" );
+	menu( $state, $cgi );
+	
+	#println( "<center><h1>Iventory and Status Page: $project->{pjname}</h1></center>" );
+	println( "<br>" );
+
+	my $st_table = getStatusTable( $project->{products} );
+	
+	println( "<center>$st_table</center>" );
+	println( "<br>" );
+	println( "<table border=0 width=100% class=notesTable>" );
+		println( "<tr class=notesHeading><td align=center><font size=+2><b>General Notes:</b></td></tr>" );
+		println( "<tr class=notesRow><td>$project->{admin_notes}</b></td></tr>" );
+	println( "</table>" );
+
+	println( "<br>" );
+	my $ncols = 3;
+	foreach my $pd (@{$project->{products}})
+	{
+		my $url = $state->getUrlString( "view" => $PRODUCT, "product" => $pd->{pdname} );
+		my $aname = uri_escape( $pd->{pdname} );
+		println( "<center>" );
+		println( "<table cellpadding=4 cellspacing=1 class=productTable width=98%>" );
+			println( "<tr class=productTitle>" );
+				println( "<td colspan=$ncols><a name=$aname><a href=$url>$pd->{pdname}</a></a></td>" );
+			println( "</tr>" );
+			println( "<tr class=productHead>" );
+				println( "<td width=25%>Dataset</td>" );
+				println( "<td width=10%>Converting</td>" );
+				println( "<td width=8%>Status</td>" );
+				#println( "<td width=57%>Notes</td>" );
+			println( "</tr>" );
+		foreach my $ds (@{$pd->{datasets}})
+		{
+			my $trclass = "dsRow";
+			$trclass = "exRow" if( $ds->{is_extraction} );
+
+			my $url = $state->getUrlString( "view" => $DATASET, "dataset" => $ds->{dsname}, "product" => $pd->{pdname} );
+			println( "<tr class=$trclass onmouseover=\"cursorOver(this)\" onmouseout=\"cursorOut(this)\">" );	
+				println( "<td width=25%><a href=$url>$ds->{dsname}</a></td>" );
+				println( "<td width=10%>$ds->{user_processing_object}->{fname} $ds->{user_processing_object}->{lname}</td>" );
+				println( "<td width=8%>" );
+					println( getStatus( $ds->{status} ) );
+				println( "</td>" );
+				#println( "<td width=57%><div style=\"position:relative;height:100px;overflow:auto;\"> $ds->{admin_notes}</div></td>" );
+			println( "</tr>" );	
+		}
+
+		println( "</table><br>" );
+		println( "</center>" );
+	}
+
+	println( "</body>" );
+	println( "</html>" );
+
+}
+
+sub getStatus
+{
+	my $st = shift;
+	my $ret;
+
+	if( $st eq "done" )
+	{
+		$ret = "<font color=blue>DONE</font>";
+	}
+	elsif( $st eq "tbd" )
+	{
+		$ret = "<font color=red>TBD</font>";
+	}
+	elsif( $st eq "na" )
+	{
+		$ret = "<font color=gray>N/A</font>";
+	}
+
+	return $ret;
+}
+
+sub getStatusTable
+{
+	my $products = shift;
+	my $table;
+
+	my ($tbd, $done) = getStatusLists( $products );
+	my $tbd_size = @$tbd;	
+	my $done_size = @$done;
+	my $size = $tbd_size;
+	$size = $done_size if( $size < $done_size );
+
+	$table = "<table class=productTable border=0 cellpading=3 cellspacing=1 width=50%>";
+	$table = $table . "<tr class=productHead><td width=50%>TBD Products</td><td width=50%>Done Products</th>";
+	
+		for( my $x = 0; $x < $size; $x++ )
+		{
+			$table = $table . "<tr class=dsRow><td>";
+			
+				if( $x < $tbd_size )
+				{ $table = $table . "<a href=#" . uri_escape( $tbd->[$x]->{pdname} ) . ">$tbd->[$x]->{pdname}</a>"; }
+				else
+				{ $table = $table . "&nbsp;"; }
+
+				$table = $table . "</td><td>";
+
+				if( $x < $done_size )
+				{ $table = $table . "<a href=#" . uri_escape( $done->[$x]->{pdname} ) . ">$done->[$x]->{pdname}</a>"; }
+				else
+				{ $table = $table . "&nbsp;"; }
+
+
+			$table = $table . "</td></tr>";
+		}
+
+	$table = $table. "</table>";
+}
+
+sub getStatusLists
+{
+	my $pds = shift;
+	my @done;
+	my @tbd;
+
+	foreach my $pd (@$pds)
+	{
+		if( $pd->{status} eq "done" )
+		{ $done[scalar(@done)] = $pd; }
+		else
+		{ $tbd[scalar(@tbd)] = $pd; }
+	}
+
+	return( \@tbd, \@done );
+}
+
+1; 

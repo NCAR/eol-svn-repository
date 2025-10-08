@@ -1,0 +1,1388 @@
+2020-02-12T12:49:42 - eccodes - DEBUG - ---------------------------------------------------------
+2020-02-12T12:49:42 - eccodes - DEBUG - Environment:
+2020-02-12T12:49:42 - eccodes - DEBUG - ---------------------------------------------------------
+USER=anstett
+LOGNAME=anstett
+HOME=/h/eol/anstett
+PATH=/bin:/usr/bin:/opt/local/bin:/opt/local/anaconda2/bin:/etc/alternatives/java_sdk/bin:/h/eol/anstett/software/nvu:/usr/local/bin
+MAIL=/var/spool/mail/anstett
+SHELL=/bin/tcsh
+SSH_CLIENT=128.117.83.7 48788 22
+SSH_CONNECTION=128.117.83.7 48788 128.117.83.221 22
+SSH_TTY=/dev/pts/4
+TERM=vt102
+DISPLAY=localhost:13.0
+XDG_SESSION_ID=107746
+XDG_RUNTIME_DIR=/run/user/8503
+HOSTTYPE=x86_64-linux
+VENDOR=unknown
+OSTYPE=linux
+MACHTYPE=x86_64
+SHLVL=1
+PWD=/opt/local/bufr/build
+GROUP=eol
+HOST=tsunami
+REMOTEHOST=tikal.eol.ucar.edu
+HOSTNAME=tsunami.eol.ucar.edu
+LS_COLORS=
+CVS_RSH=ssh
+LANG=C
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+QT_GRAPHICSSYSTEM_CHECKED=1
+QTDIR=/usr/lib64/qt-3.3
+QTINC=/usr/lib64/qt-3.3/include
+QTLIB=/usr/lib64/qt-3.3/lib
+NO_PROMPT=
+MYOS=Linux
+IDL_DIR=/opt/local/harris/idl
+EDITOR=emacs
+PAGER=less -r
+LPDEST=new-color
+DATA_DIR=/net/work/janet
+SOFTWARE=/h/eol/anstett/software
+CVSROOT=/code/cvs
+TMPDIR=/tmp
+LOCAL=/usr/local
+JAVA_HOME=/etc/alternatives/java_sdk
+PGHOST=sferic-dev
+PGDATA=/data/postgres
+NVU=/h/eol/anstett/software/nvu
+LD_LIBRARY_PATH=/usr/lib:/usr/X11R6/lib:/usr/local/lib:/usr/openwin/lib
+CLASSPATH=/h/eol/anstett/java:/code/anstett/javalib
+XKEYSYMDB=/usr/X11R6/lib/X11/XKeysymDB
+HISTFILE=/h/eol/anstett/.history
+HISTSIZE=200
+CC=/bin/cc
+LC_ALL=
+LC_MESSAGES=
+
+2020-02-12T12:49:42 - eccodes - DEBUG - ---------------------------------------------------------
+2020-02-12T12:49:42 - eccodes - INFO - ecbuild   3.2.0	/opt/local/bufr/eccodes-2.16.0-Source/cmake
+2020-02-12T12:49:42 - eccodes - INFO - cmake     3.15.7	/net/opt_lnx/local_el7_64/cmake-3.15.7-Linux-x86_64/bin/cmake
+2020-02-12T12:49:42 - eccodes - INFO - ---------------------------------------------------------
+2020-02-12T12:49:42 - eccodes - DEBUG - ecbuild_compiler_flags(C): try include /opt/local/bufr/eccodes-2.16.0-Source/cmake/compiler_flags/GNU_C.cmake 
+2020-02-12T12:49:42 - eccodes - DEBUG - CMAKE_C_FLAGS : 
+2020-02-12T12:49:42 - eccodes - DEBUG - CMAKE_C_FLAGS_NONE : 
+2020-02-12T12:49:42 - eccodes - DEBUG - CMAKE_C_FLAGS_DEBUG : -O0 -g
+2020-02-12T12:49:42 - eccodes - DEBUG - CMAKE_C_FLAGS_BIT : -O2 -DNDEBUG
+2020-02-12T12:49:42 - eccodes - DEBUG - CMAKE_C_FLAGS_PRODUCTION : -O2 -g
+2020-02-12T12:49:42 - eccodes - DEBUG - CMAKE_C_FLAGS_RELEASE : -O3 -DNDEBUG
+2020-02-12T12:49:42 - eccodes - DEBUG - CMAKE_C_FLAGS_RELWITHDEBINFO : -O2 -g -DNDEBUG
+2020-02-12T12:49:42 - eccodes - DEBUG - C FLAG [-pipe] added
+2020-02-12T12:49:45 - eccodes - WARNING - The linker does not support $ORIGIN at link-time,             disabling dynamic symbol check when linking against shared libraries
+2020-02-12T12:49:45 - eccodes - DEBUG - ecbuild_add_option(TESTS): defaults to ON
+2020-02-12T12:49:45 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_TESTS_condition): checking condition '' -> TRUE
+2020-02-12T12:49:45 - eccodes - DEBUG - ecbuild_add_option(TESTS): ENABLE_TESTS not found in cache
+2020-02-12T12:49:45 - eccodes - DEBUG - ecbuild_add_option(TESTS): defining option ENABLE_TESTS 'Enable the unit tests' ON
+2020-02-12T12:49:45 - eccodes - DEBUG - ecbuild_add_option(TESTS): ENABLE_TESTS=ON
+2020-02-12T12:49:45 - eccodes - DEBUG - ecbuild_add_option(TESTS): feature enabled
+2020-02-12T12:49:45 - eccodes - INFO - Feature TESTS enabled
+2020-02-12T12:49:45 - eccodes - DEBUG - MEMORYCHECK_COMMAND : /bin/valgrind
+2020-02-12T12:49:45 - eccodes - DEBUG - MEMORYCHECK_COMMAND_OPTIONS : --trace-children=yes --leak-check=full --error-exitcode=1
+2020-02-12T12:49:45 - eccodes - DEBUG - MEMORYCHECK_SUPPRESSIONS_FILE : 
+2020-02-12T12:49:45 - eccodes - INFO - ---------------------------------------------------------
+2020-02-12T12:49:45 - eccodes - INFO - ---------------------------------------------------------
+2020-02-12T12:49:45 - eccodes - INFO - [eccodes] (2.16.0)
+2020-02-12T12:49:48 - eccodes - DEBUG - ECCODES_BIG_ENDIAN=0
+2020-02-12T12:49:48 - eccodes - DEBUG - ECCODES_LITTLE_ENDIAN=1
+2020-02-12T12:49:48 - eccodes - INFO - Operating system=Linux-3.10.0-1062.1.2.el7.x86_64 (64 bits)
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(EXAMPLES): defaults to ON
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_EXAMPLES_condition): checking condition '' -> TRUE
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(EXAMPLES): ENABLE_EXAMPLES not found in cache
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(EXAMPLES): defining option ENABLE_EXAMPLES 'Build the examples' ON
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(EXAMPLES): ENABLE_EXAMPLES=ON
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(EXAMPLES): feature enabled
+2020-02-12T12:49:48 - eccodes - INFO - Feature EXAMPLES enabled
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(JPG): defaults to ON
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_JPG_condition): checking condition '' -> TRUE
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(JPG): ENABLE_JPG not found in cache
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(JPG): defining option ENABLE_JPG 'Support for JPG decoding/encoding' ON
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(JPG): ENABLE_JPG=ON
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(JPG): feature enabled
+2020-02-12T12:49:48 - eccodes - INFO - Feature JPG enabled
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(JPG_LIBJASPER): defaults to ON
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_JPG_LIBJASPER_condition): checking condition 'ENABLE_JPG' -> TRUE
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(JPG_LIBJASPER): ENABLE_JPG_LIBJASPER not found in cache
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(JPG_LIBJASPER): defining option ENABLE_JPG_LIBJASPER 'Support for JPG decoding/encoding with the Jasper library' ON
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(JPG_LIBJASPER): ENABLE_JPG_LIBJASPER=ON
+2020-02-12T12:49:48 - eccodes - DEBUG - ecbuild_add_option(JPG_LIBJASPER): feature enabled
+2020-02-12T12:49:49 - eccodes - INFO - Feature JPG_LIBJASPER enabled
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(JPG_LIBOPENJPEG): defaults to ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_JPG_LIBOPENJPEG_condition): checking condition 'ENABLE_JPG' -> TRUE
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(JPG_LIBOPENJPEG): ENABLE_JPG_LIBOPENJPEG not found in cache
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(JPG_LIBOPENJPEG): defining option ENABLE_JPG_LIBOPENJPEG 'Support for JPG decoding/encoding with the OpenJPEG library' ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(JPG_LIBOPENJPEG): ENABLE_JPG_LIBOPENJPEG=ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(JPG_LIBOPENJPEG): feature enabled
+2020-02-12T12:49:49 - eccodes - INFO - Feature JPG_LIBOPENJPEG enabled
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PNG): defaults to OFF
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_PNG_condition): checking condition '' -> TRUE
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PNG): ENABLE_PNG not found in cache
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PNG): defining option ENABLE_PNG 'Support for PNG decoding/encoding' OFF
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PNG): ENABLE_PNG=OFF
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PNG): feature disabled
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(NETCDF): defaults to ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_NETCDF_condition): checking condition '' -> TRUE
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(NETCDF): ENABLE_NETCDF not found in cache
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(NETCDF): defining option ENABLE_NETCDF 'Support for GRIB to NetCDF conversion' ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(NETCDF): ENABLE_NETCDF=ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(NETCDF): feature enabled
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(NETCDF): searching for dependent package NetCDF
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_compat_require(NetCDF): searching for package NetCDF - find_package(NetCDF)
+2020-02-12T12:49:49 - eccodes - INFO - Found package NetCDF required for feature NETCDF
+2020-02-12T12:49:49 - eccodes - INFO - Feature NETCDF enabled
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(AEC): defaults to OFF
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_AEC_condition): checking condition '' -> TRUE
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(AEC): ENABLE_AEC not found in cache
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(AEC): defining option ENABLE_AEC 'Support for Adaptive Entropy Coding' OFF
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(AEC): ENABLE_AEC=OFF
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(AEC): feature disabled
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PYTHON): defaults to ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_PYTHON_condition): checking condition '' -> TRUE
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PYTHON): ENABLE_PYTHON not found in cache
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PYTHON): defining option ENABLE_PYTHON 'Build the ecCodes Python interface' ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PYTHON): ENABLE_PYTHON=ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PYTHON): feature enabled
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PYTHON): searching for dependent package Python VERSION 2.6 NO_LIBS
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_compat_require(Python): searching for Python - ecbuild_find_python(VERSION 2.6 NO_LIBS)
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_find_python: Searching for Python interpreter ...
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_find_python: Found Python interpreter version '2.7.5' at '/bin/python'
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_find_python: PYTHON_SITE_PACKAGES=/usr/lib/python2.7/site-packages
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_find_python: NOT searching for Python libraries
+2020-02-12T12:49:49 - eccodes - DEBUG - PYTHONINTERP_FOUND : TRUE
+2020-02-12T12:49:49 - eccodes - DEBUG - PYTHON_FOUND : TRUE
+2020-02-12T12:49:49 - eccodes - DEBUG - PYTHON_EXECUTABLE : /bin/python
+2020-02-12T12:49:49 - eccodes - DEBUG - PYTHON_CONFIG_EXECUTABLE : 
+2020-02-12T12:49:49 - eccodes - DEBUG - PYTHON_VERSION_MAJOR : 2
+2020-02-12T12:49:49 - eccodes - DEBUG - PYTHON_VERSION_MINOR : 7
+2020-02-12T12:49:49 - eccodes - DEBUG - PYTHON_VERSION_PATCH : 5
+2020-02-12T12:49:49 - eccodes - DEBUG - PYTHON_VERSION_STRING : 2.7.5
+2020-02-12T12:49:49 - eccodes - DEBUG - PYTHON_INCLUDE_DIRS : 
+2020-02-12T12:49:49 - eccodes - DEBUG - PYTHON_LIBRARIES : 
+2020-02-12T12:49:49 - eccodes - DEBUG - PYTHON_SITE_PACKAGES : /usr/lib/python2.7/site-packages
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_compat_require(Python): appending Python to ECCODES_TPLS
+2020-02-12T12:49:49 - eccodes - INFO - Found package Python required for feature PYTHON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(PYTHON): searching for dependent package NumPy
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_compat_require(NumPy): searching for package NumPy - find_package(NumPy)
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_compat_require(NumPy): appending NumPy to ECCODES_TPLS
+2020-02-12T12:49:49 - eccodes - INFO - Found package NumPy required for feature PYTHON
+2020-02-12T12:49:49 - eccodes - INFO - Feature PYTHON enabled
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(FORTRAN): defaults to ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_FORTRAN_condition): checking condition '' -> TRUE
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(FORTRAN): ENABLE_FORTRAN not found in cache
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(FORTRAN): defining option ENABLE_FORTRAN 'Build the ecCodes Fortran interface' ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(FORTRAN): ENABLE_FORTRAN=ON
+2020-02-12T12:49:49 - eccodes - DEBUG - ecbuild_add_option(FORTRAN): feature enabled
+2020-02-12T12:49:49 - eccodes - INFO - Feature FORTRAN enabled
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_compiler_flags(Fortran): try include /opt/local/bufr/eccodes-2.16.0-Source/cmake/compiler_flags/GNU_Fortran.cmake 
+2020-02-12T12:49:50 - eccodes - DEBUG - CMAKE_Fortran_FLAGS : 
+2020-02-12T12:49:50 - eccodes - DEBUG - CMAKE_Fortran_FLAGS_NONE : 
+2020-02-12T12:49:50 - eccodes - DEBUG - CMAKE_Fortran_FLAGS_DEBUG : -O0 -g -fcheck=bounds -fbacktrace -finit-real=snan
+2020-02-12T12:49:50 - eccodes - DEBUG - CMAKE_Fortran_FLAGS_BIT : -O2 -DNDEBUG -fno-range-check -fconvert=big-endian
+2020-02-12T12:49:50 - eccodes - DEBUG - CMAKE_Fortran_FLAGS_PRODUCTION : -O2 -g
+2020-02-12T12:49:50 - eccodes - DEBUG - CMAKE_Fortran_FLAGS_RELEASE : -O3 -DNDEBUG -funroll-all-loops -finline-functions
+2020-02-12T12:49:50 - eccodes - DEBUG - CMAKE_Fortran_FLAGS_RELWITHDEBINFO : -O2 -g -DNDEBUG
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(MEMFS): defaults to OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_MEMFS_condition): checking condition 'ECCODES_HAVE_FMEMOPEN OR ECCODES_HAVE_FUNOPEN OR ( EC_OS_NAME MATCHES windows )' -> TRUE
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(MEMFS): ENABLE_MEMFS not found in cache
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(MEMFS): defining option ENABLE_MEMFS 'Memory based access to definitions/samples' OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(MEMFS): ENABLE_MEMFS=OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(MEMFS): feature disabled
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(INSTALL_ECCODES_DEFINITIONS): defaults to ON
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_INSTALL_ECCODES_DEFINITIONS_condition): checking condition '' -> TRUE
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(INSTALL_ECCODES_DEFINITIONS): ENABLE_INSTALL_ECCODES_DEFINITIONS not found in cache
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(INSTALL_ECCODES_DEFINITIONS): defining option ENABLE_INSTALL_ECCODES_DEFINITIONS 'Install the ecCodes definitions' ON
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(INSTALL_ECCODES_DEFINITIONS): ENABLE_INSTALL_ECCODES_DEFINITIONS=ON
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(INSTALL_ECCODES_DEFINITIONS): feature enabled
+2020-02-12T12:49:50 - eccodes - INFO - Feature INSTALL_ECCODES_DEFINITIONS enabled
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(INSTALL_ECCODES_SAMPLES): defaults to ON
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_INSTALL_ECCODES_SAMPLES_condition): checking condition '' -> TRUE
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(INSTALL_ECCODES_SAMPLES): ENABLE_INSTALL_ECCODES_SAMPLES not found in cache
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(INSTALL_ECCODES_SAMPLES): defining option ENABLE_INSTALL_ECCODES_SAMPLES 'Install the ecCodes samples, including IFS samples' ON
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(INSTALL_ECCODES_SAMPLES): ENABLE_INSTALL_ECCODES_SAMPLES=ON
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(INSTALL_ECCODES_SAMPLES): feature enabled
+2020-02-12T12:49:50 - eccodes - INFO - Feature INSTALL_ECCODES_SAMPLES enabled
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(MEMORY_MANAGEMENT): defaults to OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_MEMORY_MANAGEMENT_condition): checking condition '' -> TRUE
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(MEMORY_MANAGEMENT): ENABLE_MEMORY_MANAGEMENT not found in cache
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(MEMORY_MANAGEMENT): defining option ENABLE_MEMORY_MANAGEMENT 'Enable memory management' OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(MEMORY_MANAGEMENT): ENABLE_MEMORY_MANAGEMENT=OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(MEMORY_MANAGEMENT): feature disabled
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ALIGN_MEMORY): defaults to OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_ALIGN_MEMORY_condition): checking condition '' -> TRUE
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ALIGN_MEMORY): ENABLE_ALIGN_MEMORY not found in cache
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ALIGN_MEMORY): defining option ENABLE_ALIGN_MEMORY 'Enable memory alignment' OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ALIGN_MEMORY): ENABLE_ALIGN_MEMORY=OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ALIGN_MEMORY): feature disabled
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(GRIB_TIMER): defaults to OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_GRIB_TIMER_condition): checking condition '' -> TRUE
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(GRIB_TIMER): ENABLE_GRIB_TIMER not found in cache
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(GRIB_TIMER): defining option ENABLE_GRIB_TIMER 'Enable timer' OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(GRIB_TIMER): ENABLE_GRIB_TIMER=OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(GRIB_TIMER): feature disabled
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ECCODES_THREADS): defaults to OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_ECCODES_THREADS_condition): checking condition '' -> TRUE
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ECCODES_THREADS): ENABLE_ECCODES_THREADS not found in cache
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ECCODES_THREADS): defining option ENABLE_ECCODES_THREADS 'Enable POSIX threads' OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ECCODES_THREADS): ENABLE_ECCODES_THREADS=OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ECCODES_THREADS): feature disabled
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ECCODES_OMP_THREADS): defaults to OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_ECCODES_OMP_THREADS_condition): checking condition '' -> TRUE
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ECCODES_OMP_THREADS): ENABLE_ECCODES_OMP_THREADS not found in cache
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ECCODES_OMP_THREADS): defining option ENABLE_ECCODES_OMP_THREADS 'Enable OMP threads' OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ECCODES_OMP_THREADS): ENABLE_ECCODES_OMP_THREADS=OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(ECCODES_OMP_THREADS): feature disabled
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(EXTRA_TESTS): defaults to OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_EXTRA_TESTS_condition): checking condition '' -> TRUE
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(EXTRA_TESTS): ENABLE_EXTRA_TESTS not found in cache
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(EXTRA_TESTS): defining option ENABLE_EXTRA_TESTS 'Enable extended regression testing' OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(EXTRA_TESTS): ENABLE_EXTRA_TESTS=OFF
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_add_option(EXTRA_TESTS): feature disabled
+2020-02-12T12:49:50 - eccodes - DEPRECATION -  ecbuild_add_extra_search_paths modifies CMAKE_PREFIX_PATH, which can affect future package discovery if not undone by the caller. The current CMAKE_PREFIX_PATH is being backed up as _CMAKE_PREFIX_PATH so it can later be restored.
+2020-02-12T12:49:50 - eccodes - DEPRECATION -  ecbuild_list_extra_search_paths should no longer be used and is going to be removed in a future version of ecBuild.
+2020-02-12T12:49:50 - eccodes - DEBUG - ecbuild_list_extra_search_paths(jasper): setting CMAKE_PREFIX_PATH to 
+2020-02-12T12:49:50 - eccodes - INFO -  HAVE_JPEG=1
+2020-02-12T12:49:50 - eccodes - INFO -  HAVE_LIBJASPER=1
+2020-02-12T12:49:50 - eccodes - INFO -  HAVE_LIBOPENJPEG=0
+2020-02-12T12:49:51 - eccodes - INFO -  CMAKE_THREAD_LIBS_INIT=-lpthread
+2020-02-12T12:49:51 - eccodes - INFO -  CMAKE_USE_PTHREADS_INIT=1
+2020-02-12T12:49:51 - eccodes - INFO -  HAVE_ECCODES_THREADS=0
+2020-02-12T12:49:51 - eccodes - INFO -  GRIB_PTHREADS=0
+2020-02-12T12:49:51 - eccodes - INFO -  GRIB_OMP_THREADS=0
+2020-02-12T12:49:52 - eccodes - DEBUG - C FLAG [-pedantic] added
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_library(eccodes): removing grib_bits_fast_big_endian.c grib_bits_any_endian.c grib_bits_fast_big_endian_vector.c grib_bits_any_endian_vector.c grib_bits_fast_big_endian_simple.c grib_bits_any_endian_simple.c grib_bits_fast_big_endian_omp.c grib_bits_any_endian_omp.c encode_double_array.c grib_bits_ibmpow.c grib_bits_ibmpow_opt.c minmax_val.c from sources
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_library(eccodes): linking with [/usr/lib64/libm.so /usr/lib64/libjasper.so /usr/lib64/libjpeg.so -lpthread] PUBLIC
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_library(eccodes): [] not found - not linking PUBLIC
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_library(eccodes): mark as generated grib_api_version.c
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_library(eccodes): installing to lib
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_tools_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_library(grib_tools): library type is STATIC
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_library(grib_tools): linking with [eccodes] PUBLIC
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_library(grib_tools): [] not found - not linking PUBLIC
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_codes_info_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_info): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_info): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_info): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_codes_count_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_count): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_count): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_count): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_codes_split_file_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_split_file): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_split_file): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_split_file): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_histogram_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_histogram): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_histogram): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_histogram): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_filter_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_filter): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_filter): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_filter): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_ls_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_ls): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_ls): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_ls): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_dump_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_dump): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_dump): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_dump): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_merge_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_merge): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_merge): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_merge): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib2ppm_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib2ppm): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib2ppm): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib2ppm): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_set_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_set): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_set): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_set): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_get_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_get): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_get): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_get): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_get_data_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_get_data): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_get_data): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_get_data): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_copy_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_copy): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_copy): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_copy): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_compare_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_compare): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_compare): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_compare): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_codes_parser_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_parser): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_parser): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(codes_parser): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_index_build_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_index_build): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_index_build): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(grib_index_build): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_ls_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(bufr_ls): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(bufr_ls): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(bufr_ls): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_dump_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(bufr_dump): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(bufr_dump): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(bufr_dump): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_set_condition): checking condition '' -> TRUE
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(bufr_set): linking with [grib_tools]
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(bufr_set): [] not found - not linking
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_add_executable(bufr_set): installing to bin
+2020-02-12T12:49:52 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_get_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_get): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_get): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_get): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_copy_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_copy): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_copy): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_copy): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_compare_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_compare): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_compare): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_compare): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_gts_get_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_get): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_get): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_get): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_gts_compare_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_compare): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_compare): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_compare): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_gts_copy_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_copy): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_copy): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_copy): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_gts_dump_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_dump): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_dump): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_dump): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_gts_filter_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_filter): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_filter): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_filter): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_gts_ls_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_ls): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_ls): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_ls): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_metar_dump_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_dump): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_dump): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_dump): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_metar_ls_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_ls): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_ls): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_ls): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_metar_compare_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_compare): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_compare): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_compare): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_metar_get_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_get): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_get): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_get): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_metar_filter_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_filter): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_filter): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_filter): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_metar_copy_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_copy): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_copy): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(metar_copy): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_big2gribex_condition): checking condition 'ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_gg_sub_area_check_condition): checking condition 'ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_repair_condition): checking condition 'ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_to_json_condition): checking condition 'ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_check_gaussian_grid_condition): checking condition 'ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_split_by_rdbSubtype_condition): checking condition 'ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_count_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(grib_count): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(grib_count): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(grib_count): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_count_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_count): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_count): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(bufr_count): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_gts_count_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_count): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_count): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(gts_count): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_to_netcdf_condition): checking condition 'HAVE_NETCDF' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(grib_to_netcdf): add [/usr/local/bin/../../include] to include_directories
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(grib_to_netcdf): [] not found - not adding to include_directories
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(grib_to_netcdf): linking with [grib_tools /bin/../../lib64/libnetcdf.so]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(grib_to_netcdf): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(grib_to_netcdf): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_list_keys_condition): checking condition 'ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_codes_bufr_filter_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(codes_bufr_filter): linking with [grib_tools]
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(codes_bufr_filter): [] not found - not linking
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(codes_bufr_filter): installing to bin
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_types_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_executable(grib_types): not installing
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f90_condition): checking condition '' -> TRUE
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_library(eccodes_f90): linking with [eccodes] PUBLIC
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_library(eccodes_f90): [] not found - not linking PUBLIC
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_library(eccodes_f90): mark as generated grib_f90.f90 eccodes_f90.f90
+2020-02-12T12:49:53 - eccodes - DEBUG - ecbuild_add_library(eccodes_f90): installing to lib
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bpv_limit_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bpv_limit): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bpv_limit): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bpv_limit): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_double_cmp_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_double_cmp): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_double_cmp): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_double_cmp): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_read_any_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(read_any): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(read_any): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(read_any): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_julian_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(julian): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(julian): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(julian): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_index_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(index): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(index): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(index): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_multi_from_message_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_multi_from_message): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_multi_from_message): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_multi_from_message): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_read_index_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(read_index): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(read_index): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(read_index): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_unit_tests_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(unit_tests): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(unit_tests): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(unit_tests): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_keys_iter_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_keys_iter): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_keys_iter): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_keys_iter): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_gauss_sub_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(gauss_sub): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(gauss_sub): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(gauss_sub): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_nearest_test_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_nearest_test): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_nearest_test): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_nearest_test): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_util_set_spec_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_util_set_spec): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_util_set_spec): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_util_set_spec): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_local_MeteoFrance_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_local_MeteoFrance): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_local_MeteoFrance): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_local_MeteoFrance): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_2nd_order_numValues_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_2nd_order_numValues): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_2nd_order_numValues): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_2nd_order_numValues): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_optimize_scaling_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_optimize_scaling): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_optimize_scaling): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_optimize_scaling): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_optimize_scaling_sh_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_optimize_scaling_sh): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_optimize_scaling_sh): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_optimize_scaling_sh): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_ecc-386_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_ecc-386): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_ecc-386): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_ecc-386): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_ecc-517_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_ecc-517): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_ecc-517): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_ecc-517): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_get_element_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_get_element): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_get_element): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_get_element): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_bufr_extract_headers_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_extract_headers): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_extract_headers): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(bufr_extract_headers): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_sh_ieee64_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_sh_ieee64): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_sh_ieee64): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(grib_sh_ieee64): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_ieee_condition): checking condition '' -> TRUE
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(ieee): linking with [eccodes]
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(ieee): [] not found - not linking
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_add_executable(ieee): not installing
+2020-02-12T12:49:54 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_sh_imag_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(grib_sh_imag): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(grib_sh_imag): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(grib_sh_imag): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_lam_bf_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(grib_lam_bf): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(grib_lam_bf): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(grib_lam_bf): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_grib_lam_gp_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(grib_lam_gp): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(grib_lam_gp): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(grib_lam_gp): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_definitions_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_definitions): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_calendar_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_grib_calendar): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_unit_tests_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_unit_tests): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_md5_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_md5): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_uerra_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_grib_uerra): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_2nd_order_numValues_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_grib_2nd_order_numValues): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-136_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_grib_ecc-136): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-967_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_grib_ecc-967): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_julian_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_julian): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_dump_samples_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_bufr_dump_samples): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_json_samples_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_bufr_json_samples): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-359_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_bufr_ecc-359): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-517_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_bufr_ecc-517): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_rdbSubTypes_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_bufr_rdbSubTypes): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_efas_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_grib_efas): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_sh_imag_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_grib_sh_imag): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_diag_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_test(eccodes_t_diag): assign labels eccodes script
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_check_gaussian_grids_condition): checking condition 'ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_data_quality_checks_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bpv_limit_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_complex_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_double_cmp_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_change_packing_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_dump_data_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_dump_descriptors_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_dump_subset_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_dump_decode_filter_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_dump_encode_filter_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufrdc_desc_ref_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufrdc_ref_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_compare_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_copy_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_count_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_get_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_filter_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_filter_extract_datetime_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_filter_extract_area_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_json_data_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ls_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ls_json_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_change_edition_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_keys_iter_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_get_element_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_wmo_tables_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_extract_headers_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-673_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-428_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-286_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-288_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-313_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-616_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-686_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-690_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-379_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-393_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-433_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-750_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-765_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-875_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-887_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-490_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-756_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-873_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-600_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-923_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-979_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-984_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-1000_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-1001_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-1030_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-556_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_gts_get_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_gts_ls_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_gts_count_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_gts_compare_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_metar_ls_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_metar_get_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_metar_dump_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_metar_compare_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_set_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_ieee_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_sh_ieee64_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_optimize_scaling_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_optimize_scaling_sh_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_lam_bf_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_lam_gp_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib1to2_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib2to1_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib1to3_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib2to3_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib3_templates_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_badgrib_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ls_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ls_json_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_filter_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_multi_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_nearest_test_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_budg_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_gridType_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_octahedral_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_global_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_concept_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_decimalPrecision_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_bitsPerValue_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_get_fail_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_missing_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_local_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_step_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_set_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_iterator_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_compare_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_copy_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_level_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_index_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_bitmap_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_list_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_second_order_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_multi_from_message_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_change_scanning_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_statistics_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_tigge_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_read_any_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_dump_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_dump_debug_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_dump_json_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_local_MeteoFrance_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_neg_fctime_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_codes_split_file_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_mars_types_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_lamb_az_eq_area_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_tools_data_from_stdin_condition): checking condition 'NOT ECCODES_ON_WINDOWS AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_ecc-197_condition): checking condition 'NOT ECCODES_ON_WINDOWS AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_to_netcdf_condition): checking condition 'HAVE_NETCDF AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_jpeg_condition): checking condition 'HAVE_JPEG AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_png_condition): checking condition 'HAVE_PNG AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ccsds_condition): checking condition 'HAVE_AEC AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_check_param_concepts_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_bufr_split_by_rdbSubtype_condition): checking condition 'ENABLE_EXTRA_TESTS AND ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_t_grib_ecc-386_condition): checking condition 'ENABLE_EXTRA_TESTS AND ENABLE_GRIB_TIMER' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_tigge_tools_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_library(tigge_tools): library type is STATIC
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_tigge_check_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(tigge_check): add [/usr/lib64/python2.7/site-packages/numpy/core/include /usr/include] to include_directories
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(tigge_check): [] not found - not adding to include_directories
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(tigge_check): linking with [eccodes tigge_tools]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(tigge_check): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(tigge_check): installing to bin
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_tigge_name_condition): checking condition 'ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_tigge_accumulations_condition): checking condition 'ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_tigge_split_condition): checking condition 'ECCODES_INSTALL_EXTRA_TOOLS' -> FALSE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_nearest_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_nearest): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_nearest): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_nearest): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_set_bitmap_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_bitmap): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_bitmap): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_bitmap): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_iterator_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_iterator): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_iterator): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_iterator): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_get_keys_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_get_keys): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_get_keys): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_get_keys): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_print_data_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_print_data): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_print_data): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_print_data): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_set_keys_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_keys): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_keys): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_keys): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_index_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_index): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_index): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_index): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_set_missing_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_set_missing): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_set_missing): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_set_missing): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_keys_iterator_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_keys_iterator): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_keys_iterator): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_keys_iterator): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_set_data_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_data): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_data): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_data): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_mars_param_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_mars_param): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_mars_param): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_mars_param): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_values_check_condition): checking condition '' -> TRUE
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_values_check): linking with [eccodes]
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_values_check): [] not found - not linking
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_add_executable(c_values_check): not installing
+2020-02-12T12:49:55 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_box_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_box): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_box): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_box): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_nearest_multiple_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_nearest_multiple): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_nearest_multiple): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_nearest_multiple): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_multi_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_multi): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_multi): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_multi): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_multi2_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_multi2): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_multi2): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_multi2): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_multi_write_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_multi_write): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_multi_write): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_multi_write): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_precision_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_precision): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_precision): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_precision): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_set_pv_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_pv): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_pv): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_set_pv): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_list_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_list): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_list): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_list): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_get_data_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_get_data): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_get_data): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_get_data): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_sections_copy_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_sections_copy): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_sections_copy): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_sections_copy): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_iterator_bitmap_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_iterator_bitmap): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_iterator_bitmap): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_iterator_bitmap): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_large_grib1_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_large_grib1): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_large_grib1): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_large_grib1): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_clone_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_clone): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_clone): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_clone): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_copy_message_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_copy_message): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_copy_message): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_copy_message): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_grib_ensemble_index_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_ensemble_index): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_ensemble_index): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_grib_ensemble_index): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_get_product_kind_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_get_product_kind): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_get_product_kind): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_get_product_kind): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_copy_data_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_copy_data): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_copy_data): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_copy_data): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_attributes_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_attributes): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_attributes): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_attributes): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_clone_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_clone): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_clone): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_clone): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_expanded_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_expanded): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_expanded): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_expanded): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_get_keys_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_get_keys): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_get_keys): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_get_keys): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_get_string_array_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_get_string_array): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_get_string_array): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_get_string_array): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_keys_iterator_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_keys_iterator): linking with [eccodes]
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_keys_iterator): [] not found - not linking
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_keys_iterator): not installing
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_missing_condition): checking condition '' -> TRUE
+2020-02-12T12:49:56 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_missing): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_missing): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_missing): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_read_header_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_header): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_header): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_header): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_read_scatterometer_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_scatterometer): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_scatterometer): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_scatterometer): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_read_synop_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_synop): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_synop): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_synop): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_read_temp_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_temp): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_temp): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_read_temp): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_set_keys_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_set_keys): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_set_keys): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_set_keys): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_c_bufr_subset_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_subset): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_subset): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(c_bufr_subset): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_multi_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_c_grib_multi): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_set_data_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_c_grib_set_data): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_large_grib1_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_c_large_grib1): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_sections_copy_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_c_grib_sections_copy): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_get_product_kind_samples_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_c_get_product_kind_samples): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_iterator_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_get_keys_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_print_data_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_set_keys_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_keys_iterator_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_multi_write_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_precision_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_clone_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_copy_message_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_ensemble_index_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_set_pv_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_set_bitmap_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_list_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_get_data_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_grib_nearest_multiple_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_set_missing_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_attributes_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_copy_data_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_clone_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_expanded_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_get_keys_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_get_string_array_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_keys_iterator_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_missing_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_read_header_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_read_scatterometer_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_read_synop_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_read_temp_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_set_keys_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_bufr_subset_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_get_product_kind_condition): checking condition 'ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_c_new_sample_condition): checking condition '' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_c_new_sample): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_c_new_sample): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_c_new_sample): assign labels eccodes executable
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_set_pv_condition): checking condition 'HAVE_FORTRAN' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_set_pv): copying resources bufr_read_scatterometer_f.ref
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_set_pv): linking with [eccodes_f90 eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_set_pv): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_set_pv): using linker language Fortran
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_set_pv): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_set_data_condition): checking condition 'HAVE_FORTRAN' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_set_data): copying resources bufr_read_scatterometer_f.ref
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_set_data): linking with [eccodes_f90 eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_set_data): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_set_data): using linker language Fortran
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_set_data): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_ecc-671_condition): checking condition 'HAVE_FORTRAN' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_ecc-671): copying resources bufr_read_scatterometer_f.ref
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_ecc-671): linking with [eccodes_f90 eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_ecc-671): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_ecc-671): using linker language Fortran
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_f_grib_ecc-671): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_index_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_copy_message_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_copy_message_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_get_keys_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_get_data_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_get_pl_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_get_pv_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_keys_iterator_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_multi_write_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_multi_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_nearest_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_precision_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_print_data_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_set_keys_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_set_bitmap_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_set_missing_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_samples_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_count_messages_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_count_messages_multi_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_copy_namespace_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_read_message_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_read_from_file_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_get_set_uuid_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_clone_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_attributes_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_copy_data_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_clone_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_expanded_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_get_keys_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_get_string_array_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_keys_iterator_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_read_header_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_read_scatterometer_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_read_synop_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_read_temp_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_read_tropical_cyclone_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_set_keys_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_copy_keys_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_bufr_subset_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_get_product_kind_condition): checking condition 'HAVE_FORTRAN AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_new_from_file_condition): checking condition 'HAVE_FORTRAN' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_new_from_file): linking with [eccodes_f90 eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_new_from_file): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_new_from_file): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_new_from_file): using linker language Fortran
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_set_gvc_condition): checking condition 'HAVE_FORTRAN' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_grib_set_gvc): linking with [eccodes_f90 eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_grib_set_gvc): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_grib_set_gvc): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_grib_set_gvc): using linker language Fortran
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_f_grib_print_data_static_condition): checking condition 'HAVE_FORTRAN' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_grib_print_data_static): linking with [eccodes_f90 eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_grib_print_data_static): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_grib_print_data_static): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(eccodes_f_grib_print_data_static): using linker language Fortran
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_p_grib_keys_iterator_condition): checking condition 'HAVE_PYTHON' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_keys_iterator): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_keys_iterator): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_keys_iterator): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_p_grib_print_data_condition): checking condition 'HAVE_PYTHON' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_print_data): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_print_data): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_print_data): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_p_grib_iterator_condition): checking condition 'HAVE_PYTHON' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_iterator): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_iterator): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_iterator): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_p_grib_count_messages_condition): checking condition 'HAVE_PYTHON' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_find_perl: found perl version 5.16.3 as /bin/perl
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_persistent: adding persistent layer for []
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_count_messages): linking with [eccodes]
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_count_messages): [] not found - not linking
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_executable(p_grib_count_messages): not installing
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_set_pv_test_condition): checking condition 'HAVE_PYTHON' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_p_grib_set_pv_test): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_read_sample_test_condition): checking condition 'HAVE_PYTHON' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_p_grib_read_sample_test): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_read_sample_test_condition): checking condition 'HAVE_PYTHON' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_p_bufr_read_sample_test): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_ecc-869_test_condition): checking condition 'HAVE_PYTHON' -> TRUE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_add_test(eccodes_p_bufr_ecc-869_test): assign labels eccodes script
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_clone_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_count_messages_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_get_message_offset_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_get_keys_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_index_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_iterator_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_keys_iterator_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_multi_write_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_nearest_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_print_data_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_samples_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_set_missing_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_binary_message_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_set_bitmap_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_attributes_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_clone_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_copy_data_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_expanded_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_get_keys_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_keys_iterator_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_read_header_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_read_scatterometer_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_read_tropical_cyclone_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_read_synop_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_read_temp_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_set_keys_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_subset_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_get_product_kind_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_gts_get_keys_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_metar_get_keys_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_ecc-448_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_high_level_api_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_set_keys_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_bufr_encode_flight_test_condition): checking condition 'HAVE_PYTHON AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:49:57 - eccodes - DEBUG - ecbuild_evaluate_dynamic_condition(_eccodes_p_grib_ccsds_test_condition): checking condition 'HAVE_PYTHON AND HAVE_AEC AND ENABLE_EXTRA_TESTS' -> FALSE
+2020-02-12T12:50:00 - eccodes - INFO - pkg-config file to be created during build: eccodes.pc
+2020-02-12T12:50:00 - eccodes - INFO - pkg-config file to be created during build: eccodes_f90.pc
+2020-02-12T12:50:00 - eccodes - DEBUG - Found /opt/local/bufr/eccodes-2.16.0-Source/eccodes-import.cmake.in - configuring to /opt/local/bufr/build/eccodes-import.cmake
+2020-02-12T12:50:00 - eccodes - INFO - ---------------------------------------------------------
+2020-02-12T12:50:00 - eccodes - INFO - Project eccodes summary
+2020-02-12T12:50:00 - eccodes - INFO - ---------------------------------------------------------
+2020-02-12T12:50:00 - eccodes - INFO - ---------------------------------------------------------
+2020-02-12T12:50:00 - eccodes - INFO - Build summary
+2020-02-12T12:50:00 - eccodes - INFO - ---------------------------------------------------------
+2020-02-12T12:50:00 - eccodes - INFO - system : [tsunami.eol.ucar.edu] [Linux-3.10.0-1062.1.2.el7.x86_64] [linux.64]
+2020-02-12T12:50:00 - eccodes - INFO - processor        : [x86_64]
+2020-02-12T12:50:00 - eccodes - INFO - endiness         : Little Endian -- IEEE [1]
+2020-02-12T12:50:00 - eccodes - INFO - build type       : [RelWithDebInfo]
+2020-02-12T12:50:00 - eccodes - INFO - timestamp        : [20200212124945]
+2020-02-12T12:50:00 - eccodes - INFO - install prefix   : [/opt/local/bufr]
+2020-02-12T12:50:00 - eccodes - INFO -   bin dir        : [/opt/local/bufr/bin]
+2020-02-12T12:50:00 - eccodes - INFO -   lib dir        : [/opt/local/bufr/lib]
+2020-02-12T12:50:00 - eccodes - INFO -   include dir    : [/opt/local/bufr/include]
+2020-02-12T12:50:00 - eccodes - INFO -   data dir       : [/opt/local/bufr/share/eccodes]
+2020-02-12T12:50:00 - eccodes - INFO -   cmake dir      : [/opt/local/bufr/lib/cmake/eccodes]
+2020-02-12T12:50:00 - eccodes - INFO - ---------------------------------------------------------
+2020-02-12T12:50:00 - eccodes - INFO - C -- GNU 4.8.5
+2020-02-12T12:50:00 - eccodes - INFO -     compiler   : /bin/cc
+2020-02-12T12:50:00 - eccodes - INFO -     flags      :  -pipe -pedantic -O2 -g -DNDEBUG  
+2020-02-12T12:50:00 - eccodes - INFO -     link flags : 
+2020-02-12T12:50:00 - eccodes - INFO - Fortran -- GNU 4.8.5
+2020-02-12T12:50:00 - eccodes - INFO -     compiler   : /bin/gfortran
+2020-02-12T12:50:00 - eccodes - INFO -     flags      :  -O2 -g -DNDEBUG  
+2020-02-12T12:50:00 - eccodes - INFO -     link flags : 
+2020-02-12T12:50:00 - eccodes - INFO - linker : /bin/ld
+2020-02-12T12:50:00 - eccodes - INFO - ar     : /bin/ar
+2020-02-12T12:50:00 - eccodes - INFO - ranlib : /bin/ranlib
+2020-02-12T12:50:00 - eccodes - INFO - link flags
+2020-02-12T12:50:00 - eccodes - INFO -     executable [    -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined ]
+2020-02-12T12:50:00 - eccodes - INFO -     shared lib [ -Wl,--disable-new-dtags -Wl,--allow-shlib-undefined ]
+2020-02-12T12:50:00 - eccodes - INFO -     static lib [ -Wl,--disable-new-dtags -Wl,--allow-shlib-undefined ]
+2020-02-12T12:50:00 - eccodes - INFO - install rpath  : $ORIGIN/../lib
+2020-02-12T12:50:00 - eccodes - INFO - common definitions: HAVE_ECCODES_CONFIG_H
+2020-02-12T12:50:00 - eccodes - INFO - ---------------------------------------------------------
+2020-02-12T12:50:00 - eccodes - INFO - Feature summary
+2020-02-12T12:50:00 - eccodes - INFO - ---------------------------------------------------------
+The following features have been enabled:
+
+ * TESTS, eccodes: Enable the unit tests
+ * EXAMPLES, eccodes: Build the examples
+ * JPG, eccodes: Support for JPG decoding/encoding
+ * JPG_LIBJASPER, eccodes: Support for JPG decoding/encoding with the Jasper library
+ * JPG_LIBOPENJPEG, eccodes: Support for JPG decoding/encoding with the OpenJPEG library
+ * NETCDF, eccodes: Support for GRIB to NetCDF conversion
+ * PYTHON, eccodes: Build the ecCodes Python interface
+ * FORTRAN, eccodes: Build the ecCodes Fortran interface
+ * INSTALL_ECCODES_DEFINITIONS, eccodes: Install the ecCodes definitions
+ * INSTALL_ECCODES_SAMPLES, eccodes: Install the ecCodes samples, including IFS samples
+
+-- The following OPTIONAL packages have been found:
+
+ * Git
+ * NetCDF
+ * PythonInterp, Python interpreter, <http://python.org>
+ * NumPy
+ * CMath
+ * JPEG
+ * Jasper
+ * Perl
+
+-- The following REQUIRED packages have been found:
+
+ * Threads
+
+-- The following features have been disabled:
+
+ * PNG, eccodes: Support for PNG decoding/encoding
+ * AEC, eccodes: Support for Adaptive Entropy Coding
+ * MEMFS, eccodes: Memory based access to definitions/samples
+ * MEMORY_MANAGEMENT, eccodes: Enable memory management
+ * ALIGN_MEMORY, eccodes: Enable memory alignment
+ * GRIB_TIMER, eccodes: Enable timer
+ * ECCODES_THREADS, eccodes: Enable POSIX threads
+ * ECCODES_OMP_THREADS, eccodes: Enable OMP threads
+ * EXTRA_TESTS, eccodes: Enable extended regression testing
+
+-- The following OPTIONAL packages have not been found:
+
+ * OpenJPEG
+2020-02-12T12:50:00 - eccodes - INFO - 
+2020-02-12T12:50:00 - eccodes - INFO -    +--------------------------+
+2020-02-12T12:50:00 - eccodes - INFO -    |  ecCodes version 2.16.0  |
+2020-02-12T12:50:00 - eccodes - INFO -    +--------------------------+
+2020-02-12T12:50:00 - eccodes - INFO - 
+2020-02-12T12:50:00 - eccodes - INFO -    +--------------------------------------+
+2020-02-12T12:50:00 - eccodes - INFO -    | Please note:                         |
+2020-02-12T12:50:00 - eccodes - INFO -    | For Python3 support, first install   |
+2020-02-12T12:50:00 - eccodes - INFO -    | ecCodes and then install the Python  |
+2020-02-12T12:50:00 - eccodes - INFO -    | bindings from PyPI with:             |
+2020-02-12T12:50:00 - eccodes - INFO -    |   $ pip3 install eccodes-python      |
+2020-02-12T12:50:00 - eccodes - INFO -    +--------------------------------------+
+2020-02-12T12:50:00 - eccodes - INFO - 

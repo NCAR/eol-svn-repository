@@ -1,0 +1,20 @@
+# $Id$
+# $Log$
+#
+#
+# Makefile for snm program for NCDC precip data.
+# This program places the stn names in the pqcf file.
+# It also updates the 15min precip times.
+# 
+# 11 Oct 93 lec
+#   Created.
+#
+
+#CFLAGS=  -g 
+CFLAGS=-O
+
+snm:	snm.c
+	cc $(CFLAGS) -o snm snm.c
+
+clean:
+	rm -f snm.o

@@ -1,0 +1,69 @@
+#!/bin/perl -w
+
+# Test to see how InnoDB locking works, no results - more messing around needed.
+# Dan - June, 2003
+
+ue DBI;
+
+
+my $dbh1 = connectToDB( "ml", "hurricane", "stormdba", "codiac" );
+my $dbh2 = connectToDB( "ml", "hurricane", "stormdba", "codiac" );
+
+$dbh1->do( "BEGIN" );
+$dbh2->do( "BEGIN" );
+
+my $sth = $dbh1->prepare( "SELECT * FROM link WHERE id=1" );
+$sth->execute();
+my @arr = $sth->fetchrow();
+if( @arr )
+{
+	print( "Result for dbh1 select!!\n" );
+}
+else
+{
+	print( "NO Result for dbh1 select!!\n" );
+}
+
+$sth->finish();
+$sth = $dbh2->prepare( "SELECT * FROM link WHERE id=1" );
+$sth->execute();
+@arr = $sth->fetchrow();
+if( @arr )
+{
+	print( "Result for dbh2 select!!\n" );
+}
+else
+{
+	print( "NO Result for dbh2 select!!\n" );
+}
+
+my $result = $dbh2->do( "UPDATE link set name=\"name3\" WHERE id=1" );
+
+if( $result )
+{
+	print( "true result: $result\n" );
+}
+else
+{
+	print( "false result: $result\n" );
+}
+
+
+$dbh1->do( "COMMIT" );
+$dbh2->do( "COMMIT" );
+
+$sth->finish();
+$dbh1->disconnect();
+$dbh2->disconnect();
+
+exit 0;
+
+sub connectToDB
+{
+  my $db = shift;
+  my $host = shift;
+  my $user = shift;
+  my $passw = shift;
+  return DBI->connect( "DBI:mysql:database=$db;host=$host",
+                        $user, $passw, { RaiseError=>1} ) || die( "Unable to connect to database: $db" );
+}

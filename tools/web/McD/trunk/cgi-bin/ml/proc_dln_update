@@ -1,0 +1,196 @@
+#!/bin/perl -w
+
+use strict;
+use CGI;
+
+use lib "lib";
+use State;
+
+use lib "../dln/lib";
+use DLNUtils;
+
+use lib "../mcd_lib";
+use DLNDatasetDBA;
+use MLDatasetDBA;
+use UserDBA;
+use ProjectDBA;
+
+my %actions = ( "Update" => \&updateDataset,
+								 "Cancel" => \&cancel,
+							);
+my $cgi = CGI->new();
+my $state = State->new();
+$state->setFromParams();
+
+proc_edit($state, $cgi );
+
+sub proc_edit
+{
+	$state = shift;
+	$cgi = shift;	
+	my $dataset = getDataset();
+
+	my $action = $cgi->param( "action" );
+
+	if( exists( $actions{$action} ) )
+	{
+		$actions{$action}->($dataset);
+	}
+	else
+	{
+		die( "Action does not exist: $action\n" );
+	}
+}
+
+sub updateDataset
+{
+	my $ds = shift;
+	my $ds_old;
+	my $dba = DLNDatasetDBA->new();
+	$ds_old = $dba->getFromDB( $ds->{id} );	
+
+	# Set the dlnview date to 'today' if loader is assigned
+	if( $ds_old->{loader} eq "unassigned" && $ds->{loader} ne "unassigned" )
+	{ $ds->{date} = today(); }
+
+	checkEmail( $ds );
+
+	$dba->updateDB( $ds );
+
+	showPage( "Dataset Has Been Updated", $ds->{id} );
+}
+
+sub cancel
+{
+	my $ds = shift;
+
+	showPage( "Action Cancelled", $ds->{id}, 1 );
+}
+
+sub getDataset
+{
+	my $dataset = DLNDataset->new();
+
+	$dataset->{id} = $cgi->param( "id" );
+	$dataset->{storm_id} = $cgi->param( "storm_id" );
+	$dataset->{title} = $cgi->param( "title" );
+	$dataset->{date} = $cgi->param( "date" );
+	$dataset->{loader} = $cgi->param( "loader" );
+	$dataset->{checker} = $cgi->param( "checker" );
+	$dataset->{int_contact} = $cgi->param( "int_contact" );
+	$dataset->{ext_contact} = $cgi->param( "ext_contact" );
+	$dataset->{ext_email} = $cgi->param( "ext_email" );
+	$dataset->{ingest} = $cgi->param( "ingest" );
+	$dataset->{archive} = $cgi->param( "archive" );
+	$dataset->{notes} = $cgi->param( "notes" );
+	$dataset->{remote_url} = $cgi->param( "remote_url" );
+
+	$dataset->{status}->{dataset} = $dataset->{id};
+	$dataset->{status}->{documented} = $cgi->param( "documented" );
+	$dataset->{status}->{checked} = $cgi->param( "checked" );
+	$dataset->{status}->{loaded} = $cgi->param( "loaded" );
+
+	$dataset->{status}->{documented} = 1 if( $dataset->{status}->{documented} );
+	$dataset->{status}->{checked} = 1 if( $dataset->{status}->{checked} );
+	$dataset->{status}->{loaded} = 1 if( $dataset->{status}->{loaded} );
+
+	$dataset->checkDefined();
+
+	return $dataset;
+}
+
+sub showPage
+{
+	my $msg = shift;
+	my $hlight = shift;
+	my $cancel = shift;
+
+	my $url = $state->getUrl() . "&hlight=$hlight";
+	#my $url = "controller?hlight=$hlight&" . $state->getUrlString();
+	my $onLoad = "\"setFrames( top.opener.parent, null, null, \'$url\')\""; 
+
+	$onLoad = "\"top.opener.parent.focus()\"" if( $cancel );
+
+	print( cr(
+		$cgi->header( -expires=>'-1d'),
+		"<html>",
+			"<head>",
+			"<title>DLN: Edit Dataset</title>",
+			$body_css,
+			$jscript,
+			"</head>",
+		"<body onLoad=$onLoad>",
+			"<table border=0 width=100%>",
+				"<tr class=titleBar>",
+					"<td width=100%>",
+						"Data Loading Notes: Edit/Add Dataset",
+					"</td>",
+				"</tr>",
+				"<tr><td>&nbsp;</td></tr>",
+				"<tr><td>&nbsp;</td></tr>",
+				"<tr><td>&nbsp;</td></tr>",
+				"<tr><td>&nbsp;</td></tr>",
+				"<tr>",
+					"<td width=100% height=100% align=center>",
+						"<b>$msg</font><br><br>",
+						"<input type=submit value=\"Close Window\" onClick=\"window.close()\">",	
+					"</td>",
+				"</tr>",
+				"<tr><td>&nbsp;</td></tr>",
+				"<tr><td>&nbsp;</td></tr>",
+			"</table>",
+		"</body>",
+		"</html>" 
+		) );	
+}
+
+# Sends an e-mail to the loader
+sub checkEmail
+{
+	my $ds = shift;
+
+	my $send_mail = $cgi->param( "send_mail" );
+
+	if( $send_mail eq "y" )
+	{
+		my $udba = UserDBA->new();
+		my $pdba = ProjectDBA->new();
+
+		my $pid = $cgi->param( "project" );
+		my $project = $pdba->getFromDB( $pid );
+
+		my $loader = $udba->getFromDB( $ds->{loader} );
+		my $checker = $udba->getFromDB( $ds->{checker} );
+
+		if( $loader->{active} && $loader->{email} && $checker->{active} && $checker->{email} )
+		{
+			open( MAIL, "|/usr/lib/sendmail -t" ) || die( "Unable to open sendmail" );
+
+			my $from = "From: $checker->{email}\n";
+			my $to = "To: $loader->{email}\n";
+			my $subject = "Subject: $project->{name} Dataset Is Ready To Be Loaded.\n\n\n";
+
+			my $msg = "$loader->{display_name},\n\n";
+			$msg = $msg . "A dataset has been entered into the data loading notes page for you to load into Codiac.\n";
+			$msg = $msg . "Below is a summary of what has been entered into the notes page.  For more information\n";
+			$msg = $msg . "refer to the data loading notes pages at http://www.joss.ucar.edu/mcd.\n\n";
+
+			$msg = $msg . "Title: " . $ds->{title} . "\n";
+			$msg = $msg . "Project: " . $project->{name}  . "\n";
+
+			$msg = $msg . "Date: " . $ds->{date}  . "\n";
+			$msg = $msg . "Person Checking: " . $checker->{display_name}  . "\n\n";
+
+			$msg = $msg . "Notes: \n" . $ds->{notes}  . "\n";
+
+			print( MAIL $to );
+			print( MAIL $from );
+			print( MAIL $subject );
+			print( MAIL $msg );
+			print( MAIL "\n\n\n" );
+
+			close( MAIL );
+		}
+	}
+}
+1;

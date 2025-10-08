@@ -1,0 +1,174 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------------------
+# <p>The insert_frd_soundings is a script used for inserting FRD sounding files
+# into the database.  It asks the user for the dataset id and the archive
+# directory.  The script will use this directory to read the date and time
+# from the FRD files and recursively descend any directories found.  It will
+# prompt the user to accept the insert before committing the files to the
+# database.  If a problem occurs, the database will be rolled back and the
+# script with die.</p>
+#
+# @use /net/work/bin/scripts/insert/insert_frd_soundings
+#
+# @author Joel Clawson
+# @version 1.0 This script was originally created for RAINEX NOAA aircraft
+# soundings.
+##Module-----------------------------------------------------------------------
+use strict;
+use lib "/net/work/dev/mysql/lib";
+use lib "/work/dev/mysql/lib";
+use MySqlDatabase;
+use MySqlFile;
+
+&main();
+
+##------------------------------------------------
+# @signature void main()
+# Ask the user for relevant information and insert the files into the database.
+##------------------------------------------------
+sub main {
+    printf("This script will read the dates and times from FRD formatted sounding files and load them into the database.\n\n");
+
+    # Read in the dataset id.
+    printf("Enter the dataset id: ");
+    my $dataset_id = <STDIN>;
+
+    # Read in the archive directory.
+    printf("Enter the archive directory where the FRD files are stored: ");
+    my $directory = <STDIN>;
+
+    # Clean up the values that were read in from STDIN
+    $dataset_id = trim($dataset_id);
+    $directory = trim($directory);
+
+    # Read in the files in the archive.
+    my @files = read_archive_directory($dataset_id,$directory);
+
+    # Only try to insert if there are files to insert.
+    if (@files > 0) {
+        my $database = MySqlDatabase->new("zediupdate","change-456");
+        my $err = $database->connect();
+
+        die($err) if ($err ne "");
+
+        # Loop thre the files and insert them into the database.
+        foreach my $file (@files) {
+            printf("%s %s %s %02d %05d %s/%s\n",$file->getDatasetId(),$file->getBeginDate(),$file->getEndDate(),$file->getFormatId(),$file->getSize(),$file->getDirectory(),$file->getFilename());        
+            $err = $file->insert($database);
+
+            if ($err ne "") {
+                printf("%s  Rolling back previous commands.\n",$err);
+                printf("%s",$database->rollback());
+                printf("%s",$database->disconnect());
+                exit(1);            
+            }
+        }
+
+        # Provide the user the ability to cancel the commit.
+        printf("\n\nTo insert the files, press Enter.\n");
+        printf("To cancel the insert, enter any value and press Enter.\n\n");
+        printf(">> ");
+        my $result = <STDIN>;
+
+        if ($result =~ /^\s*$/) {
+            printf("\n");
+            # Finalize the insert.
+            $err = $database->commit();
+        
+            # Undo the commands when the commit fails.
+            if ($err ne "") {
+                printf("%s  Rolling back previous commands.\n",$err);
+                printf("%s",$database->rollback());
+                printf("%s",$database->disconnect());
+                exit(1);
+            } else {
+                printf("\n\n%d files inserted successfully.\n\n",scalar(@files));
+            }
+        } else {
+            printf("\nUser selected to cancel.  Rolling back previous commands\n");
+            printf("%s",$database->rollback());
+            printf("%s",$database->disconnect());
+            exit(1);
+        }
+
+        # Close the connection.
+        printf("%s",$database->disconnect());
+    } else {
+        printf("\n\nNo files were found!\n\nNo files are being inserted!!\n\n\n");
+    }
+}
+
+##----------------------------------------------
+# @signature MySqlFile parse_file(String dataset_id, String directory, String file)
+# Parse the specified file for loading into the database.
+# @input $dataset_id The id of the dataset the file is being assigned to.
+# @input $directory The directory where the file is located.
+# @input $file The name of the file being inserted.
+# @output $mysql The MySqlFile definition for the specified file.
+##----------------------------------------------
+sub parse_file {
+    my ($dataset_id,$directory,$file) = @_;
+
+    # Read in the file data.
+    open(my $FILE,sprintf("%s/%s",$directory,$file)) or die("Can't open file $directory/$file\n");
+    my @lines = <$FILE>;
+    close($FILE);
+
+    # Parse out the date and time from the file.
+    $lines[3] =~ /Date:\s+(\d{6})\s+Time:\s+(\d{6})/i;
+    my $date = sprintf("20%06d",$1);
+    my $time = $2;
+
+    # Define the file.
+    my $mysql = MySqlFile->new();
+    $mysql->setBeginDate(substr($date,0,4),substr($date,4,2),substr($date,6,2),0,0,0);
+    $mysql->setEndDate(substr($date,0,4),substr($date,4,2),substr($date,6,2),23,59,59);
+    $mysql->setDatasetId($dataset_id);
+    $mysql->setFile($directory,$file);
+    $mysql->setFormatId(43);
+
+    return $mysql;
+}
+
+##------------------------------------------------
+# @signature MySqlFile[] read_archive_directory(String dataset_id, String directory)
+# Read and parse the FRD files in the specified directory.
+# @input $dataset_id The id of the dataset the files are being assigned to.
+# @input $directory The directory where the files are stored.
+# @output files[] The list of files to be inserted into the database.
+##-------------------------------------------------
+sub read_archive_directory {
+    my ($dataset_id,$directory) = @_;
+
+    printf("Reading directory %s for dataset %s.\n",$directory,$dataset_id);
+
+    # Read the non .* files in the directory.
+    opendir(my $RAW,$directory) or die("Cannot read $directory\n");
+    my @raw_files = grep(/^[^\.]/,readdir($RAW));
+    closedir($RAW);
+
+    my @files = ();
+    foreach my $file (@raw_files) {
+        my $datafile = sprintf("%s/%s",$directory,$file);
+
+        # Parse the frd file or recursively decend the directory.
+        if (-d $datafile) { push(@files,read_archive_directory($dataset_id,$datafile)); }
+        else { push(@files,parse_file($dataset_id,$directory,$file)) if ($file =~ /\.frd$/i); }
+    }
+
+    return @files;
+}
+
+##------------------------------------------------
+# @signature String trim(String line)
+# Remove the leading and trailing whitespace from the specified line.
+# @input $line The line to be trimmed.
+# @output $line The trimmed line.
+##------------------------------------------------
+sub trim {
+    my ($line) = @_;
+    $line =~ s/^\s+//;
+    $line =~ s/\s+$//;
+    return $line;
+}

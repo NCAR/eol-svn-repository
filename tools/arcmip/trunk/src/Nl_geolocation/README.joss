@@ -1,0 +1,8 @@
+/* John Allison <john@joss.ucar.edu> */
+
+/* cudom.c - convert & print the CU SHEBA/ARCSyM grid to our "N5" EASE-Grid */
+
+/* ezcvt.c - converts to/from our "N5" EASE-Grid and latlons
+ * reads stdin, writes stdout
+ * if at least 1 coord on stdin has a '.' then assume latlon else row,col
+ */

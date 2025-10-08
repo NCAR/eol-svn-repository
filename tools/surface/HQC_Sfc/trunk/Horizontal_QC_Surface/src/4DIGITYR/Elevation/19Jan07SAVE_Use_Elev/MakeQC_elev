@@ -1,0 +1,16 @@
+SHELL = /bin/sh
+#    Makefile for QCF rec s/w.
+#
+
+#CC=purify acc -g
+#CC=acc -p
+#CC=/opt/SUNWspro/bin/CC
+CC=cc
+##CFLAGS = -g
+
+main_qc_elev: main_qc_elev.o gQC_4DYR.o dist.o process_qcfrec_4DYR.o date_4DYR.o locate_sigmasq_4DYR.o
+	$(LINK.c) -o main_qc_elev main_qc_elev.o gQC_4DYR.o dist.o process_qcfrec_4DYR.o date_4DYR.o locate_sigmasq_4DYR.o -lm
+	chmod 0755 main_qc_elev
+
+clean:
+	rm *.o

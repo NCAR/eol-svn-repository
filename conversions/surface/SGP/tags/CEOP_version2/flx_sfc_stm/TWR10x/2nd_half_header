@@ -1,0 +1,202 @@
+netcdf sgp30twr10xC1.b1.20021101.000000 {
+dimensions:
+	time = UNLIMITED ; // (48 currently)
+variables:
+	int base_time ;
+		base_time:string = "1-Nov-2002,0:00:00 GMT" ;
+		base_time:long_name = "Base time in Epoch" ;
+		base_time:units = "seconds since 1970-1-1 0:00:00 0:00" ;
+	double time_offset(time) ;
+		time_offset:long_name = "Time offset from base_time" ;
+		time_offset:units = "seconds since 2002-11-01 00:00:00 0:00" ;
+	float temp_60m(time) ;
+		temp_60m:long_name = "60 m Air Temperature" ;
+		temp_60m:units = "C" ;
+		temp_60m:valid_min = -50.f ;
+		temp_60m:valid_max = 50.f ;
+		temp_60m:resolution = 0.01f ;
+		temp_60m:missing_value = -9999.f ;
+	int qc_temp_60m(time) ;
+		qc_temp_60m:long_name = "Quality check results on field: 60 m Air Temperature" ;
+		qc_temp_60m:units = "unitless" ;
+	float temp_25m(time) ;
+		temp_25m:long_name = "25 m Air Temperature" ;
+		temp_25m:units = "C" ;
+		temp_25m:valid_min = -50.f ;
+		temp_25m:valid_max = 50.f ;
+		temp_25m:resolution = 0.01f ;
+		temp_25m:missing_value = -9999.f ;
+	int qc_temp_25m(time) ;
+		qc_temp_25m:long_name = "Quality check results on field: 25 m Air Temperature" ;
+		qc_temp_25m:units = "unitless" ;
+	float rh_60m(time) ;
+		rh_60m:long_name = "60 m Relative Humidity" ;
+		rh_60m:units = "%" ;
+		rh_60m:valid_min = 0.f ;
+		rh_60m:valid_max = 102.f ;
+		rh_60m:resolution = 0.1f ;
+		rh_60m:missing_value = -9999.f ;
+	int qc_rh_60m(time) ;
+		qc_rh_60m:long_name = "Quality check results on field: 60 m Relative Humidity" ;
+		qc_rh_60m:units = "unitless" ;
+	float rh_25m(time) ;
+		rh_25m:long_name = "25 m Relative Humidity" ;
+		rh_25m:units = "%" ;
+		rh_25m:valid_min = 0.f ;
+		rh_25m:valid_max = 102.f ;
+		rh_25m:resolution = 0.1f ;
+		rh_25m:missing_value = -9999.f ;
+	int qc_rh_25m(time) ;
+		qc_rh_25m:long_name = "Quality check results on field: 25 m Relative Humidity" ;
+		qc_rh_25m:units = "unitless" ;
+	float vap_pres_60m(time) ;
+		vap_pres_60m:long_name = "60 m Vapor Pressure" ;
+		vap_pres_60m:units = "kPa" ;
+		vap_pres_60m:valid_min = 0.f ;
+		vap_pres_60m:valid_max = 10.f ;
+		vap_pres_60m:resolution = 0.001f ;
+		vap_pres_60m:missing_value = -9999.f ;
+	int qc_vap_pres_60m(time) ;
+		qc_vap_pres_60m:long_name = "Quality check results on field: 60 m Vapor Pressure" ;
+		qc_vap_pres_60m:units = "unitless" ;
+	float vap_pres_25m(time) ;
+		vap_pres_25m:long_name = "25 m Vapor Pressure" ;
+		vap_pres_25m:units = "kPa" ;
+		vap_pres_25m:valid_min = 0.f ;
+		vap_pres_25m:valid_max = 10.f ;
+		vap_pres_25m:resolution = 0.001f ;
+		vap_pres_25m:missing_value = -9999.f ;
+	int qc_vap_pres_25m(time) ;
+		qc_vap_pres_25m:long_name = "Quality check results on field: 25 m Vapor Pressure" ;
+		qc_vap_pres_25m:units = "unitless" ;
+	float sd_temp_60m(time) ;
+		sd_temp_60m:long_name = "Standard Deviation of 60 m Temperature" ;
+		sd_temp_60m:units = "C" ;
+		sd_temp_60m:valid_min = 0.f ;
+		sd_temp_60m:valid_max = 2.f ;
+		sd_temp_60m:resolution = 0.01f ;
+		sd_temp_60m:missing_value = -9999.f ;
+	int qc_sd_temp_60m(time) ;
+		qc_sd_temp_60m:long_name = "Quality check results on field: Standard Deviation of 60 m Temperature" ;
+		qc_sd_temp_60m:units = "unitless" ;
+	float sd_temp_25m(time) ;
+		sd_temp_25m:long_name = "Standard Deviation of 25 m Temperature" ;
+		sd_temp_25m:units = "C" ;
+		sd_temp_25m:valid_min = 0.f ;
+		sd_temp_25m:valid_max = 2.f ;
+		sd_temp_25m:resolution = 0.01f ;
+		sd_temp_25m:missing_value = -9999.f ;
+	int qc_sd_temp_25m(time) ;
+		qc_sd_temp_25m:long_name = "Quality check results on field: Standard Deviation of 25 m Temperature" ;
+		qc_sd_temp_25m:units = "unitless" ;
+	float sd_rh_60m(time) ;
+		sd_rh_60m:long_name = "Standard Deviation of 60 m Relative Humidity" ;
+		sd_rh_60m:units = "%" ;
+		sd_rh_60m:valid_min = 0.f ;
+		sd_rh_60m:valid_max = 20.f ;
+		sd_rh_60m:resolution = 0.1f ;
+		sd_rh_60m:missing_value = -9999.f ;
+	int qc_sd_rh_60m(time) ;
+		qc_sd_rh_60m:long_name = "Quality check results on field: Standard Deviation of 60 m Relative Humidity" ;
+		qc_sd_rh_60m:units = "unitless" ;
+	float sd_rh_25m(time) ;
+		sd_rh_25m:long_name = "Standard Deviation of 25 m Relative Humidity" ;
+		sd_rh_25m:units = "%" ;
+		sd_rh_25m:valid_min = 0.f ;
+		sd_rh_25m:valid_max = 20.f ;
+		sd_rh_25m:resolution = 0.1f ;
+		sd_rh_25m:missing_value = -9999.f ;
+	int qc_sd_rh_25m(time) ;
+		qc_sd_rh_25m:long_name = "Quality check results on field: Standard Deviation of 25 m Relative Humidity" ;
+		qc_sd_rh_25m:units = "unitless" ;
+	float sd_vap_pres_60m(time) ;
+		sd_vap_pres_60m:long_name = "Standard Deviation of 60 m Vapor Pressure" ;
+		sd_vap_pres_60m:units = "kPa" ;
+		sd_vap_pres_60m:valid_min = 0.f ;
+		sd_vap_pres_60m:valid_max = 1.f ;
+		sd_vap_pres_60m:resolution = 0.001f ;
+		sd_vap_pres_60m:missing_value = -9999.f ;
+	int qc_sd_vap_pres_60m(time) ;
+		qc_sd_vap_pres_60m:long_name = "Quality check results on field: Standard Deviation of 60 m Vapor Pressure" ;
+		qc_sd_vap_pres_60m:units = "unitless" ;
+	float sd_vap_pres_25m(time) ;
+		sd_vap_pres_25m:long_name = "Standard Deviation of 25 m Vapor Pressure" ;
+		sd_vap_pres_25m:units = "kPa" ;
+		sd_vap_pres_25m:valid_min = 0.f ;
+		sd_vap_pres_25m:valid_max = 1.f ;
+		sd_vap_pres_25m:resolution = 0.001f ;
+		sd_vap_pres_25m:missing_value = -9999.f ;
+	int qc_sd_vap_pres_25m(time) ;
+		qc_sd_vap_pres_25m:long_name = "Quality check results on field: Standard Deviation of 25 m Vapor Pressure" ;
+		qc_sd_vap_pres_25m:units = "unitless" ;
+	float lat ;
+		lat:long_name = "north latitude" ;
+		lat:units = "degrees" ;
+		lat:valid_min = -90.f ;
+		lat:valid_max = 90.f ;
+	float lon ;
+		lon:long_name = "east longitude" ;
+		lon:units = "degrees" ;
+		lon:valid_min = -180.f ;
+		lon:valid_max = 180.f ;
+	float alt ;
+		alt:long_name = "altitude" ;
+		alt:units = "meters above Mean Sea Level" ;
+
+// global attributes:
+		:qc_method = "Standard Mentor QC" ;
+		:Mentor_QC_Field_Information = "For each qc_<field> interpret the values as follows:\n",
+    "\n",
+    "Basic mentor QC checks:\n",
+    "=======================\n",
+    "A value of  0 means that no mentor QC (missing/min/max/delta) checks failed\n",
+    "A value of  1 means that the sample contained a \'missing data\' value\n",
+    "A value of  2 means that the sample failed the \'minimum\' check\n",
+    "A value of  4 means that the sample failed the \'maximum\' check\n",
+    "A value of  8 means that the sample failed the \'delta\' check\n",
+    "\n",
+    "  Note that the delta computation for multi-dimensioned data \n",
+    "  compares the absolute value between points in the same spatial \n",
+    "  location, at the next point in time. \n",
+    "\n",
+    "Possible Combinations of mentor QC check results:\n",
+    "=================================================\n",
+    "\n",
+    "A value of  3 means that the sample failed the \'missing and minimum\' checks\n",
+    "A value of  5 means that the sample failed the \'missing and maximum\' checks\n",
+    "A value of  7 means that the sample failed the \'missing, minimum and maximum\' checks\n",
+    "A value of  9 means that the sample failed the \'missing and delta\' checks\n",
+    "A value of 10 means that the sample failed the \'minimum and delta\' checks\n",
+    "A value of 11 means that the sample failed the \'missing, minimum and delta\' checks\n",
+    "A value of 12 means that the sample failed the \'maximum and delta\' checks\n",
+    "A value of 14 means that the sample failed the \'minimum, maximum and delta\' checks\n",
+    "A value of 15 means that the sample failed the \'missing, minimum, maximum and delta\' checks\n",
+    "\n",
+    "If the associated non-QC field does not contain any mentor-specified minimum,\n",
+    "maximum or delta information, we do not generate a qc_field.\n",
+    "" ;
+		:mqc_software = "$Id: mentorQC_main.c,v 1.42 2002/03/14 20:51:04 koontz process-qc-mentorQC-7.20-0 $" ;
+		:proc_level = "b1" ;
+		:ingest_software = " twr_ingest.c,v 7.1 2001/02/06 02:15:58 ermold Exp $" ;
+		:input_source = "a1 file generated from: twr10x1:/data/collection/sgp/sgptwr10xC1.00/1036105320.icm" ;
+		:site_id = "sgp" ;
+		:facility_id = "C1 : Central_Facility" ;
+		:sample_int = "1 second" ;
+		:averaging_int = "30 minutes" ;
+		:serial_number = "N/A" ;
+		:comment = "The time assigned to each data point indicates the end of any period of\n",
+    "averaging of the geophysical data." ;
+		:resolution_description = "The resolution field attributes refer to the number of significant\n",
+    "digits relative to the decimal point that should be used in\n",
+    "calculations.  Using fewer digits might result in greater uncertainty;\n",
+    "using a larger number of digits should have no effect and thus is\n",
+    "unnecessary.  However, analyses based on differences in values with\n",
+    "a larger number of significant digits than indicated could lead to\n",
+    "erroneous results or misleading scientific conclusions.\n",
+    "\n",
+    "resolution for lat= 0.001\n",
+    "resolution for lon = 0.001\n",
+    "resolution for alt = 1" ;
+		:zeb_platform = "sgp30twr10xC1.b1" ;
+		:history = "created by user dsmgr on machine ds1-sgpc1 at 1-Nov-2002,1:33:39, using $State: ds-zebra-zeblib-4.10-0 $" ;
+}

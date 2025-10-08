@@ -1,0 +1,1703 @@
+From jmoore@ucar.edu  Tue Nov 26 13:50:41 2002
+Delivery-Date: Tue, 26 Nov 2002 20:50:41 +0000
+Return-Path: jmoore@ucar.edu
+Received: from mscan4.ucar.edu (mscan4.ucar.edu [128.117.64.126])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id NAA11388
+	for <john@joss.ucar.edu>; Tue, 26 Nov 2002 13:50:41 -0700 (MST)
+Received: by mscan4.ucar.edu (Postfix)
+	id AD133DAB7B; Tue, 26 Nov 2002 13:50:41 -0700 (MST)
+Delivered-To: jallison@ucar.edu
+Received: from localhost (localhost [127.0.0.1])
+	by mscan4.ucar.edu (Postfix) with ESMTP id 8A32EDAB73
+	for <jallison@ucar.edu>; Tue, 26 Nov 2002 13:50:41 -0700 (MST)
+Received: from thunder.joss.ucar.edu (thunder.joss.ucar.edu [128.117.90.64])
+	by mscan4.ucar.edu (Postfix) with ESMTP id D726FDAB7B
+	for <jallison@ucar.edu>; Tue, 26 Nov 2002 13:50:29 -0700 (MST)
+Received: from odin (odin [128.117.90.160])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with SMTP id NAA11379;
+	Tue, 26 Nov 2002 13:50:29 -0700 (MST)
+Message-ID: <002401c2958e$328707c0$a05a7580@odin>
+From: "jmoore" <jmoore@ucar.edu>
+To: "Ron Murdock" <murdock@joss.ucar.edu>, <jallison@ucar.edu>
+Subject: Fw: EASE grid information
+Date: Tue, 26 Nov 2002 13:55:47 -0700
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2800.1106
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+X-Spam-Status: No, hits=-2.1 required=5.0
+	tests=INVALID_MSGID,OUTLOOK_FW_MSG,QUOTED_EMAIL_TEXT,
+	      SPAM_PHRASE_05_08,USER_AGENT_OE
+	version=2.41
+Status: RO
+
+Gents,  The ARCMIP effort is moving forward.  We are
+requested to do some coordinate conversions from lat long
+to this EASE grid.  AS you see below, info is forthcoming.
+We will see what Mr. Fowler has to offer. cheers,
+Jim M
+-----------------------------------------------
+----- Original Message -----
+From: "Jim Maslanik" <James.Maslanik@colorado.edu>
+To: "jmoore" <jmoore@ucar.edu>
+Sent: Tuesday, November 26, 2002 9:40 AM
+Subject: Re: EASE grid information
+
+
+> Hi Jim,
+>
+> Yes, we should be able to help with this.  Chuck Fowler here in our group
+> recently passed along some information to Judy about EASE grid.
+>
+> I'm leaving town for a couple of weeks, so I'm going to forward your
+> request to Chuck to see if he can provide what you need.  I'll be back on
+> 14 December, so please let me know if you still need any help at that
+> time.
+>
+> regards,
+> Jim
+>
+> jmoore wrote:
+>
+> >Hi Jim,
+> >
+> >At the recent SHEBA meeting, I think I mentioned to you
+> >that JOSS has been asked to handle from coordinate converstion tasks for
+> >the ARCMIP project be ing directed by Judy Curry.  She suggested the
+> >you would have some reference information on the EASE grid or could
+> >point us in the right direction.
+> >
+> >It appears that we will get several different model output datasets
+> >from both US and European sources that will require conversion.  If
+> >you had somewhere on a shelf a routine that you may have used to
+> >convert lat/longs to EASE, that would also be appreciated.
+> >
+> >Help is appreciated,  Jim M
+> >
+> >
+>
+>
+
+
+From jmoore@ucar.edu  Tue Nov 26 13:53:23 2002
+Delivery-Date: Tue, 26 Nov 2002 20:53:23 +0000
+Return-Path: jmoore@ucar.edu
+Received: from mscan2.ucar.edu (mscan2.ucar.edu [128.117.64.124])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id NAA11558
+	for <john@joss.ucar.edu>; Tue, 26 Nov 2002 13:53:23 -0700 (MST)
+Received: by mscan2.ucar.edu (Postfix)
+	id 604A4124015; Tue, 26 Nov 2002 13:53:23 -0700 (MST)
+Delivered-To: jallison@ucar.edu
+Received: from localhost (localhost [127.0.0.1])
+	by mscan2.ucar.edu (Postfix) with ESMTP id 3FEC512400C
+	for <jallison@ucar.edu>; Tue, 26 Nov 2002 13:53:23 -0700 (MST)
+Received: from thunder.joss.ucar.edu (thunder.joss.ucar.edu [128.117.90.64])
+	by mscan2.ucar.edu (Postfix) with ESMTP id 76D5912400C
+	for <jallison@ucar.edu>; Tue, 26 Nov 2002 13:53:20 -0700 (MST)
+Received: from odin (odin [128.117.90.160])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with SMTP id NAA11549;
+	Tue, 26 Nov 2002 13:53:20 -0700 (MST)
+Message-ID: <002a01c2958e$985c0fa0$a05a7580@odin>
+From: "jmoore" <jmoore@ucar.edu>
+To: <jallison@ucar.edu>, "Ron Murdock" <murdock@joss.ucar.edu>
+Subject: Fw: EASE grid
+Date: Tue, 26 Nov 2002 13:58:39 -0700
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2800.1106
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
+X-Spam-Status: No, hits=-3.5 required=5.0
+	tests=INVALID_MSGID,OUTLOOK_FW_MSG,QUOTED_EMAIL_TEXT,
+	      SPAM_PHRASE_02_03,USER_AGENT_OE
+	version=2.41
+Status: RO
+
+Even as I sent the earlier message, this was waiting.  Please
+look it over John and speak with John directly
+if there are questions.  Thanks,  Jim
+PS-We haven't received any offical ARCMIP datasets yetr
+but there is a rumor that Judy Curry will have one to us within
+days. 
+-------------------------------------------------
+----- Original Message ----- 
+From: "Chuck Fowler" <Charles.Fowler@colorado.edu>
+To: "jmoore" <jmoore@ucar.edu>; "jimm" <jimm@colorado.edu>
+Sent: Tuesday, November 26, 2002 1:27 PM
+Subject: EASE grid
+
+
+> Jim,
+> 
+> Jim Maslanik forwarded me your message.
+> 
+> This web page at NSIDC may answer most of your questions.
+> 
+> http://nsidc.org/data/ease/ease_grid.html
+> 
+> Let me know if you need more info.
+> 
+> Chuck
+> 
+> -- 
+> 
+> 
+> ************************************************************
+> * Charles Fowler          cfowler@colorado.edu             *
+> * Voice (303) 492-0975    FAX   (303) 492-2825             *
+> * Colorado Center for Astrodynamics Research            *
+> * University of Colorado at Boulder      *
+> * 431 UCB    ECNT 323                                      *
+> * Boulder, Colorado 80309-0431                             *
+> ************************************************************
+> 
+> 
+> 
+> 
+> 
+
+From jmoore@ucar.edu  Wed Jan 29 13:56:37 2003
+Delivery-Date: Wed, 29 Jan 2003 20:56:37 +0000
+Return-Path: jmoore@ucar.edu
+Received: from mscan3.ucar.edu (mscan3.ucar.edu [128.117.64.125])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id NAA13383
+	for <john@joss.ucar.edu>; Wed, 29 Jan 2003 13:56:37 -0700 (MST)
+Received: by mscan3.ucar.edu (Postfix)
+	id 80B3ADAB9C; Wed, 29 Jan 2003 13:56:37 -0700 (MST)
+Delivered-To: jallison@ucar.edu
+Received: from localhost (localhost [127.0.0.1])
+	by mscan3.ucar.edu (Postfix) with ESMTP
+	id 34133DAB8A; Wed, 29 Jan 2003 13:56:37 -0700 (MST)
+Received: from thunder.joss.ucar.edu (thunder.joss.ucar.edu [128.117.90.64])
+	by mscan3.ucar.edu (Postfix) with ESMTP
+	id B4228DAB8A; Wed, 29 Jan 2003 13:56:30 -0700 (MST)
+Received: from ucar.edu (odin [128.117.90.160])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id NAA13367;
+	Wed, 29 Jan 2003 13:56:30 -0700 (MST)
+Message-ID: <3E384237.7040808@ucar.edu>
+Date: Wed, 29 Jan 2003 14:05:59 -0700
+From: Jim Moore <jmoore@ucar.edu>
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.0.1) Gecko/20020823 Netscape/7.0
+X-Accept-Language: en-us, en
+MIME-Version: 1.0
+To: "John J. Allison" <jallison@ucar.edu>
+Cc: "Ronald A. Murdock" <murdock@ucar.edu>
+Subject: [Fwd: Re: ARCMIP model output to JOSS]
+Content-Type: multipart/mixed;
+ boundary="------------070108030605050901040907"
+X-Spam-Status: No, hits=-0.5 required=5.0
+	tests=FWD_MSG,SPAM_PHRASE_00_01,USER_AGENT,USER_AGENT_MOZILLA_UA,
+	      X_ACCEPT_LANG
+	version=2.41
+Status: RO
+
+This is a multi-part message in MIME format.
+--------------070108030605050901040907
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+
+John,  FYI on ARCMIP.  It would be useful to
+provide an update to Judy and what you have
+been doing.  Can we discuss this after you read
+this over?  When Will it be possible to have some
+coordinate conversions completed os that Judy and others
+can compare.    We can talk about it,
+
+Thanks,  JIm
+
+--------------070108030605050901040907
+Content-Type: message/rfc822;
+ name="Re: ARCMIP model output to JOSS"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="Re: ARCMIP model output to JOSS"
+
+Received: from mscan5.ucar.edu (mscan5.ucar.edu [128.117.64.127])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id KAA11461
+	for <moore@joss.ucar.edu>; Sat, 25 Jan 2003 10:23:14 -0700 (MST)
+Received: by mscan5.ucar.edu (Postfix)
+	id D3D02FA8AF; Sat, 25 Jan 2003 10:23:13 -0700 (MST)
+Delivered-To: jmoore@ucar.edu
+Received: from localhost (localhost [127.0.0.1])
+	by mscan5.ucar.edu (Postfix) with ESMTP
+	id 92517FA878; Sat, 25 Jan 2003 10:23:13 -0700 (MST)
+Received: from eas.gatech.edu (vorlon.eas.gatech.edu [130.207.64.251])
+	by mscan5.ucar.edu (Postfix) with ESMTP
+	id 373C2FA878; Sat, 25 Jan 2003 10:23:04 -0700 (MST)
+Received: from [130.207.64.171] (jc1.eas.gatech.edu [130.207.64.171])
+	by eas.gatech.edu (8.11.6/8.11.6) with ESMTP id h0PHKpb29992;
+	Sat, 25 Jan 2003 12:20:51 -0500
+Mime-Version: 1.0
+Message-Id: <a05111b31ba587072c9c6@[130.207.64.171]>
+In-Reply-To: <3E2C1C79.3BAFC068@smhi.se>
+References: <a05111b3fba0932667cda@[130.207.64.171]>	
+ <3DE4EA18.756621D4@smhi.se> <a0510033bba0a9dbb2e4d@[10.0.1.2]>
+ <3E2C1C79.3BAFC068@smhi.se>
+Date: Sat, 25 Jan 2003 12:13:44 -0500
+To: "Colin.Jones" <cjones@smhi.se>
+From: Judith Curry <curryja@eas.gatech.edu>
+Subject: Re: ARCMIP model output to JOSS
+Cc: Andrey Proshutinsky <aproshutinsky@whoi.edu>, <arinke@AWI-Potsdam.DE>,
+        <beckmann@awi-bremerhaven.de>, <blanchet.jean-pierre@uqam.ca>,
+        <bruceb@ucar.edu>, <cassano@cires.colorado.edu>,
+        Cinda Gillilan <cindagil@monsoon.colorado.edu>,
+        <Claude.Duguay@ggr.ulaval.ca>, Colin Jones <colin.jones@smhi.se>,
+        Judy Curry <curryja@cloud.Colorado.EDU>, <dethloff@AWI-Potsdam.DE>,
+        <dickm@apl.washington.edu>, <Francis.Zwiers@ec.gc.ca>,
+        <gachonp@dfo-mpo.gc.ca>, <girard@CERCA.UMontreal.CA>,
+        <Greg.Flato@ec.gc.ca>, <grell@fsl.noaa.gov>, <gutowski@iastate.edu>,
+        <hu@atlas.sca.uqam.ca>, <hugh@monsoon.colorado.edu>,
+        <hwei@polarmet1.mps.ohio-state.edu>, <jacob@dkrz.de>, <jhc@dmi.dk>,
+        <jian-wen.bao@noaa.gov>, Jim Maslanik <jimm@northwind.colorado.edu>,
+        <jkey@ssec.wisc.edu>, <jmoore@ucar.edu>, <john.fyfe@ec.gc.ca>,
+        <jwalsh@iarc.uaf.edu>, <kirill.kondratyev@niersc.spb.ru>,
+        <liston@iceberg.ATMOS.ColoState.EDU>, <manda@cires.colorado.edu>,
+        <mholland@ucar.edu>, <mirocha@monsoon.colorado.edu>,
+        <mrothste@monsoon.colorado.edu>, <ola.persson@noaa.gov>,
+        rreeder@cloud.Colorado.EDU, <pinto@monsoon.colorado.edu>,
+        <semmler@dkrz.de>, <wanli@cires.colorado.edu>, <wrossow@giss.nasa.gov>,
+        jkey@ssec.wisc.edu, michaelt@misu.su.se
+X-Spam-Status: No, hits=-4.7 required=5.0
+	tests=IN_REP_TO,REFERENCES,SPAM_PHRASE_00_01
+	version=2.41
+Content-Type: multipart/alternative; boundary="============_-1168607548==_ma============"
+
+--============_-1168607548==_ma============
+Content-Type: text/plain; charset="us-ascii" ; format="flowed"
+
+Here are a few updates on arcmip.  From what I am hearing most of the 
+groups are making excellent progress towards completing their 
+simulations and getting them ready for JOSS.
+
+The CASPR and ISCCP satellite data sets are almost finished in terms 
+of interpolating to ease grid, and comparison with sheba data is 
+underway.  will keep  you posted on this.
+
+The ARCMIP BAMS article is underway, hope to have a very rough draft 
+out for comments fairly soon
+
+Colin has raised a few issues of relevance to the whole group.
+
+For the 1D output at sheba grid pint, for the advective tendencies 
+save  only the adiabatic tendencies, vertical and horizontal 
+tendencies separately.
+
+For height of lowest cloud base, hugh morrison and matt shupe have 
+been using 10^-5 g m-3 as a threshold value in comparison of model 
+with cloud radar for sheba,  not terribly sensitive to the threshold 
+value between 10^-3 and 10^-7 g m^-3.  For those models allowing 
+fraction, this is less straightforward, because there are so many 
+ways this can be handled incl overlap issues, etc.  Would be open to 
+anything that anyone has to suggest here
+
+Klaus reports that the new GLIMPSE homepage is at 
+<http://www.awi-potsdam.de/www-pot/atmo/glimpse/index.html>http://www.awi-potsdam.de/www-pot/atmo/glimpse/index.html
+
+As far as I know we are still on for the next ARCMIP workshop in in 
+Potsdam on 2 and 3 June 2003, in conjunction with the GLIMPSE 
+meeting.  Definitely gives us a deadline for getting things done!
+
+Judy
+
+
+
+
+--============_-1168607548==_ma============
+Content-Type: text/html; charset="us-ascii"
+
+<!doctype html public "-//W3C//DTD W3 HTML//EN">
+<html><head><style type="text/css"><!--
+blockquote, dl, ul, ol, li { padding-top: 0 ; padding-bottom: 0 }
+ --></style><title>Re: ARCMIP model output to
+JOSS</title></head><body>
+<div>Here are a few updates on arcmip.&nbsp; From what I am hearing
+most of the groups are making excellent progress towards completing
+their simulations and getting them ready for JOSS.</div>
+<div><br></div>
+<div>The CASPR and ISCCP satellite data sets are almost finished in
+terms of interpolating to ease grid, and comparison with sheba data is
+underway.&nbsp; will keep&nbsp; you posted on this.</div>
+<div><br></div>
+<div>The ARCMIP BAMS article is underway, hope to have a very rough
+draft out for comments fairly soon</div>
+<div><br></div>
+<div>Colin has raised a few issues of relevance to the whole
+group.</div>
+<div><br></div>
+<div>For the 1D output at sheba grid pint, for the advective
+tendencies save&nbsp; only the adiabatic tendencies, vertical and
+horizontal tendencies separately.</div>
+<div><br></div>
+<div>For height of lowest cloud base, hugh morrison and matt shupe
+have been using 10^-5 g m-3 as a threshold value in comparison of
+model with cloud radar for sheba,&nbsp; not terribly sensitive to the
+threshold value between 10^-3 and 10^-7 g m^-3.&nbsp; For those models
+allowing fraction, this is less straightforward, because there are so
+many ways this can be handled incl overlap issues, etc.&nbsp; Would be
+open to anything that anyone has to suggest here</div>
+<div><br></div>
+<div>Klaus reports that the new GLIMPSE homepage is at <a
+href="http://www.awi-potsdam.de/www-pot/atmo/glimpse/index.html"><b
+>http://www.awi-potsdam.de/www-pot/atmo/glimpse/index.html</b></a></div
+>
+<div><br></div>
+<div>As far as I know we are still on for the next ARCMIP workshop in
+in Potsdam on 2 and 3 June 2003, in conjunction with the GLIMPSE
+meeting.&nbsp; Definitely gives us a deadline for getting things
+done!</div>
+<div><br></div>
+<div>Judy</div>
+<div><br></div>
+<div><br></div>
+<div><br></div>
+<div><br></div>
+</body>
+</html>
+--============_-1168607548==_ma============--
+
+--------------070108030605050901040907--
+
+
+From jmoore@ucar.edu  Thu Jan 30 16:10:24 2003
+Delivery-Date: Thu, 30 Jan 2003 23:10:25 +0000
+Return-Path: jmoore@ucar.edu
+Received: from mscan3.ucar.edu (mscan3.ucar.edu [128.117.64.125])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id QAA05716
+	for <john@joss.ucar.edu>; Thu, 30 Jan 2003 16:10:23 -0700 (MST)
+Received: by mscan3.ucar.edu (Postfix)
+	id C9469DABAD; Thu, 30 Jan 2003 16:10:22 -0700 (MST)
+Delivered-To: jallison@ucar.edu
+Received: from localhost (localhost [127.0.0.1])
+	by mscan3.ucar.edu (Postfix) with ESMTP
+	id 74F1FDAB70; Thu, 30 Jan 2003 16:10:21 -0700 (MST)
+Received: from thunder.joss.ucar.edu (thunder.joss.ucar.edu [128.117.90.64])
+	by mscan3.ucar.edu (Postfix) with ESMTP
+	id 08C49DAB70; Thu, 30 Jan 2003 16:10:17 -0700 (MST)
+Received: from ucar.edu (odin [128.117.90.160])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id QAA05703;
+	Thu, 30 Jan 2003 16:10:16 -0700 (MST)
+Message-ID: <3E39B30E.6020706@ucar.edu>
+Date: Thu, 30 Jan 2003 16:19:42 -0700
+From: Jim Moore <jmoore@ucar.edu>
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.0.1) Gecko/20020823 Netscape/7.0
+X-Accept-Language: en-us, en
+MIME-Version: 1.0
+To: Greg Stossmeister <gstoss@ucar.edu>, "Scot M. Loehrer" <loehrer@ucar.edu>,
+        sroberts@ucar.edu, "Richard A. Dirks" <dirks2@ucar.edu>,
+        "Ronald A. Murdock" <murdock@ucar.edu>, sfw@ucar.edu,
+        "John J. Allison" <jallison@ucar.edu>,
+        "Linda E. Cully" <cully@ucar.edu>,
+        "Janine A. Goldstein" <janine@ucar.edu>, Jose Meitin <meitin@ucar.edu>,
+        Don Stott <stott@ucar.edu>, Mark Bradford <mark@ucar.edu>,
+        "Paula M. Robinson" <probinso@ucar.edu>
+Subject: [Fwd: ESRI Site License and Training Classes]
+Content-Type: multipart/mixed;
+ boundary="------------050803020105080802050700"
+X-Spam-Status: No, hits=-1.4 required=5.0
+	tests=FWD_MSG,SIGNATURE_LONG_SPARSE,SPAM_PHRASE_00_01,
+	      SUSPICIOUS_RECIPS,USER_AGENT,USER_AGENT_MOZILLA_UA,
+	      X_ACCEPT_LANG
+	version=2.41
+Status: RO
+
+This is a multi-part message in MIME format.
+--------------050803020105080802050700
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Hi All,  This may be a great opportunity to get JOSS some
+"free" experience with GIS tools.  I think it would
+be highly desirable to be represented here, especially
+if students are interested.  Please respond to Olga
+ASAP with possibilities since seating is very limited.
+Greg and I will be out at SBI mtg for the first offering
+on 6-7 March.
+
+Jim
+
+--------------050803020105080802050700
+Content-Type: message/rfc822;
+ name="ESRI Site License and Training Classes"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="ESRI Site License and Training Classes"
+
+Received: from mscan4.ucar.edu (mscan4.ucar.edu [128.117.64.126])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id OAA03640
+	for <moore@joss.ucar.edu>; Thu, 30 Jan 2003 14:53:21 -0700 (MST)
+Received: by mscan4.ucar.edu (Postfix)
+	id 8546FDABB3; Thu, 30 Jan 2003 14:53:21 -0700 (MST)
+Delivered-To: jmoore@ucar.edu
+Received: from localhost (localhost [127.0.0.1])
+	by mscan4.ucar.edu (Postfix) with ESMTP
+	id D2DA5DABA6; Thu, 30 Jan 2003 14:53:19 -0700 (MST)
+Received: from ale.atd.ucar.edu (ale.atd.ucar.edu [128.117.80.15])
+	by mscan4.ucar.edu (Postfix) with ESMTP
+	id D4BD9DABA5; Thu, 30 Jan 2003 14:53:14 -0700 (MST)
+Received: from atd.ucar.edu (dyn78-69.atd.ucar.edu [128.117.78.169])
+	by ale.atd.ucar.edu (8.10.2+Sun/8.8.8) with ESMTP id h0ULrEN00858;
+	Thu, 30 Jan 2003 14:53:14 -0700 (MST)
+Message-ID: <3E399F5F.606@atd.ucar.edu>
+Date: Thu, 30 Jan 2003 14:55:43 -0700
+From: Olga Wilhelmi <olgaw@atd.ucar.edu>
+Reply-To: olgaw@ucar.edu
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.1) Gecko/20020826
+X-Accept-Language: en-us, en
+MIME-Version: 1.0
+To: gis@atd.ucar.edu, Steve Aulenbach <aulenbac@cgd.ucar.edu>
+Subject: ESRI Site License and Training Classes
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, hits=-3.1 required=5.0
+	tests=SIGNATURE_LONG_DENSE,SPAM_PHRASE_01_02,USER_AGENT,
+	      USER_AGENT_MOZILLA_UA,X_ACCEPT_LANG
+	version=2.41
+Content-Type: text/plain; charset=us-ascii; format=flowed
+
+Dear GIS Advisory Group,
+
+I would like to announce a couple of GIS-related news.
+
+1. The GIS Initiative web site has been updated. The new url is: 
+http://www.gis.ucar.edu
+2. NCAR now has a site license for ESRI GIS software. To see access and 
+installation guidelines, please visit: http://www.gis.ucar.edu/license.html
+3. We will be offering two free introductory ArcGIS classes for 
+NCAR-UCAR staff. Two two-day classes are scheduled for March 6-7, 2003 
+and March 10-11, 2003. Classes will be taught by ESRI instructors and 
+will take place at UCAR Corporate Training Center at Pearl Street. Seats 
+are limited (12 students per class), so first come... To sign up, 
+interested individuals need to send me e-mail with the following 
+information:
+
+1. Name of the participant
+2. Dates of the class (March 6-7 or March 10-11)
+
+Cheers,
+Olga
+
+-- 
+
+Dr. Olga Wilhelmi
+Environmental and Societal Impacts Group
+NCAR
+P.O. Box 3000 Boulder CO 80307-3000
+Tel: 303.497.8126
+Fax: 303.497.8125
+E-mail: olgaw@ucar.edu
+
+
+
+
+
+--------------050803020105080802050700--
+
+
+From gstoss@ucar.edu  Thu Feb  6 10:58:47 2003
+Delivery-Date: Thu, 06 Feb 2003 17:58:47 +0000
+Return-Path: gstoss@ucar.edu
+Received: from mscan5.ucar.edu (mscan5.ucar.edu [128.117.64.127])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id KAA14896
+	for <john@joss.ucar.edu>; Thu, 6 Feb 2003 10:58:47 -0700 (MST)
+Received: by mscan5.ucar.edu (Postfix)
+	id 85DC0FA882; Thu,  6 Feb 2003 10:58:47 -0700 (MST)
+Delivered-To: jallison@ucar.edu
+Received: from localhost (localhost [127.0.0.1])
+	by mscan5.ucar.edu (Postfix) with ESMTP id 67F54FA86F
+	for <jallison@ucar.edu>; Thu,  6 Feb 2003 10:58:47 -0700 (MST)
+Received: from thunder.joss.ucar.edu (thunder.joss.ucar.edu [128.117.90.64])
+	by mscan5.ucar.edu (Postfix) with ESMTP id 84334FA86F
+	for <jallison@ucar.edu>; Thu,  6 Feb 2003 10:58:44 -0700 (MST)
+Received: from ucar.edu (cumulus [128.117.90.174])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id KAA14891
+	for <jallison@ucar.edu>; Thu, 6 Feb 2003 10:58:44 -0700 (MST)
+Message-ID: <3E42A236.7090405@ucar.edu>
+Date: Thu, 06 Feb 2003 10:58:14 -0700
+From: Greg Stossmeister <gstoss@ucar.edu>
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.0.2) Gecko/20021120 Netscape/7.01
+X-Accept-Language: en-us, en
+MIME-Version: 1.0
+To: "John J. Allison" <jallison@ucar.edu>
+Subject: [Fwd: ARCMIP model output]
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, hits=-3.0 required=5.0
+	tests=FWD_MSG,GAPPY_TEXT,SIGNATURE_SHORT_DENSE,SPAM_PHRASE_00_01,
+	      USER_AGENT,USER_AGENT_MOZILLA_UA,X_ACCEPT_LANG
+	version=2.41
+Status: RO
+
+  John,
+    Here's some description of the ARCMIP CD I just gave you.
+
+Greg
+
+-------- Original Message --------
+Subject: ARCMIP model output
+Date: Mon, 3 Feb 2003 16:55:24 -0700 (MST)
+From: John Cassano <cassano@cires.colorado.edu>
+To: gstoss@ucar.edu
+CC: John Cassano <cassano@cires.colorado.edu>
+
+
+
+Hi Greg,
+
+I have a CD that contains the ARCSyM ARCMIP model output. What is
+the best way to get this to you?
+
+The data documentation form for this data is given below.
+
+Let me know if you have any questions about this data or the information
+I have provided.
+
+Cheers,
+John
+
+PS. I'll be at a meeting at NCAR Tuesday through Thursday, so I won't be
+reading my e-mail on a regular basis.
+
+-- 
+John Cassano
+Research Scientist
+CIRES
+216 UCB
+University of Colorado at Boulder
+Boulder, CO 80309-0216
+phone: 303-492-2221
+fax: 303-492-1149
+e-mail: cassano@cires.colorado.edu
+
+-----------------------------------------------------------------------------------
+
+
+---TITLE:
+ARCSyM ar05 model output for ARCMIP
+
+
+---AUTHOR(S):
+John Cassano and Amanda Lynch
+
+Contact information:
+John Cassano
+Cooperative Institute for Research in Environmental Sciences
+University of Colorado
+216 UCB
+Boulder, CO 80309
+phone: 303-492-2221
+fax: 303-492-1149
+e-mail: cassano@cires.colorado.edu
+web: http://cires.colorado.edu/arcsym/
+
+
+---FUNDING SOURCE AND GRANT NUMBER
+National Science Foundation
+
+
+---DATA SET OVERVIEW:
+
+ARCMIP experiment 1 model output from ARCSyM (Arctic Regional Climate System Model).
+
+See http://paos.colorado.edu/~curryja/arcmip/index.html for a description of
+the ARCMIP experiment.
+
+Time period: 1 Sep 1997 through 30 Sep 1998
+
+Data location: Polar stereographic model domain centered at 72N and 153W. The domain consists
+of 70 grid points in the e/w direction and 55 grid points in the n/s direction, with a grid
+spacing of 50 km.
+Lower left corner: 56.03N, 179.08E
+Upper right corner: 72.57N, 79.18W
+
+Data source: ARCSyM model output
+
+Relevant web pages:
+http://cires.colorado.edu/arcsym/
+http://cires.colorado.edu/arcsym/arcinfo.html
+http://paos.colorado.edu/~curryja/arcmip/index.html
+
+
+---INSTRUMENT DESCRIPTION:
+ARCSyM version 4.1
+http://cires.colorado.edu/arcsym/arcinfo.html
+
+
+---DATA COLLECTION and PROCESSING:
+
+
+---DATA FORMAT:
+
+Files: arcsym_ar05_metadata.txt
+         ASCII file with description of model configuration for model run ar05.
+
+       arcsym_ar05_domain.nc
+         NetCDF file
+         Contains model domain information (terrain elevation, latitude,
+         and longitude at each model grid point).
+
+       arcsym_ar05_mon_yymm.nc
+         NetCDF files for each yymm from 9709 to 9809.
+         Contain monthly mean values at the surface and on constant pressure
+         levels for all model horizontal grid points (including lateral boundary
+         forcing zones).
+
+       arcsym_ar05_col_yymmdd.nc
+         NetCDF files for each yymmdd from 970901 to 980930.
+         Contains instantaneous 3h values at surface and on constant pressure
+         levels for 9 model horizontal grid points centered on the SHEBA ship location.
+
+       arcsym_ar05_may_yymmdd.nc
+         NetCDF files for each yymmdd from 980501 to 980531.
+         Contains instantaneous 3h values at surface and on constant pressure levels
+         for all model horizontal grid locations (including lateral boundary
+         forcing zones).
+
+
+---DATA REMARKS:
+
+
+---REFERENCES:
+
+
+
+
+
+-- 
+~~U~N~I~V.~~C~O~R~P.~~F~O~R~~A~T~M~O~S.~~R~E~S~E~A~R~C~H~~~~~~
+  Greg Stossmeister		e-mail: gstoss@ucar.edu
+  UCAR/JOSS			phone: (303)497-8692
+  P.O. Box 3000			fax: (303)497-8158
+  Boulder, CO 80307-3000	web: http://www.joss.ucar.edu
+~~J~O~I~N~T~~O~F~F~I~C~E~~F~O~R~~S~C~I~E~N~C~E~~S~U~P~P~O~R~T~~
+
+
+
+From jmoore@ucar.edu  Fri Feb  7 15:24:17 2003
+Delivery-Date: Fri, 07 Feb 2003 22:24:18 +0000
+Return-Path: jmoore@ucar.edu
+Received: from mscan5.ucar.edu (mscan5.ucar.edu [128.117.64.127])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id PAA08590
+	for <john@joss.ucar.edu>; Fri, 7 Feb 2003 15:24:16 -0700 (MST)
+Received: by mscan5.ucar.edu (Postfix)
+	id 21C53FA8A3; Fri,  7 Feb 2003 15:24:16 -0700 (MST)
+Delivered-To: jallison@ucar.edu
+Received: from localhost (localhost [127.0.0.1])
+	by mscan5.ucar.edu (Postfix) with ESMTP
+	id E8200FA88E; Fri,  7 Feb 2003 15:24:15 -0700 (MST)
+Received: from thunder.joss.ucar.edu (thunder.joss.ucar.edu [128.117.90.64])
+	by mscan5.ucar.edu (Postfix) with ESMTP
+	id D17F7FA88E; Fri,  7 Feb 2003 15:24:10 -0700 (MST)
+Received: from ucar.edu (odin [128.117.90.160])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id PAA08582;
+	Fri, 7 Feb 2003 15:24:09 -0700 (MST)
+Message-ID: <3E443470.7030205@ucar.edu>
+Date: Fri, 07 Feb 2003 15:34:24 -0700
+From: Jim Moore <jmoore@ucar.edu>
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.0.1) Gecko/20020823 Netscape/7.0
+X-Accept-Language: en-us, en
+MIME-Version: 1.0
+To: Judith Curry <curryja@eas.gatech.edu>
+Cc: "John J. Allison" <jallison@ucar.edu>, mrothe@monsoon.colorado.edu
+Subject: Re: ARCMIP model output to JOSS
+References: <a05111b3fba0932667cda@[130.207.64.171]>	 <3DE4EA18.756621D4@smhi.se> <a0510033bba0a9dbb2e4d@[10.0.1.2]> <3E2C1C79.3BAFC068@smhi.se> <a05111b31ba587072c9c6@[130.207.64.171]>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, hits=-7.2 required=5.0
+	tests=QUOTED_EMAIL_TEXT,REFERENCES,SPAM_PHRASE_02_03,USER_AGENT,
+	      USER_AGENT_MOZILLA_UA,X_ACCEPT_LANG
+	version=2.41
+Status: RO
+
+Hi Judy,  Hope things are well with you and Peter in Georgia.
+Until 5 days ago, I think there was more snow in Georgia than
+on the Front Range of Colorado.  We've managed to get 6-8 inches
+out at my house.
+
+Just to update you on ARCMIP activities from our end.  We just received 
+the first set of model data from John Cassano sending along ARCSyM
+data.  We have done some homework on the EASE grid transforms and will 
+start the conversion processing in the near future
+
+I spoke to John at length about the data he is providing along with the
+data that we might expect from other ARCMIP participants.  In the case 
+of ARCSyM, the data are a 50 km resolution and John believes most others 
+will be of similar spatial resolution.
+
+ From your notes below, I understand that the CASPR/ISCCP satellite data 
+are being converted to EASE at 25 km.  Now, back in Nov. you and I 
+discussed this and the conclusion was that we should convert model 
+output to EASE at 25 km.  However, John Cassano points out that going 
+from 50 to 25 km for the model output really adds nothing to the 
+dataset.  I just want to make sure about what resolution we want for the 
+model output in EASE.  If we go with 25km resolution, do you recommend a 
+preferred interpolation scheme to "fill" the data?
+
+You should know that our plan is to coordinate our conversion work with 
+the CASPR/ISCCP work being done by Math Rothstein at CU so that the 
+generated model grids will overlay properly (e.g. model EASE grid point 
+of origin and projection matches the  EASE grid for the CASPR data ). 
+John Cassano will also help with this work.
+
+I have CC'ed John C. and Math R. on this note in the hopes of reaching 
+resolution that meets all requirements.  Guidance appreciated.
+
+Have a good weekend,  Jim M
+---------------------------------------------------------
+Judith Curry wrote:
+> Here are a few updates on arcmip.  From what I am hearing most of the 
+> groups are making excellent progress towards completing their 
+> simulations and getting them ready for JOSS.
+> 
+> The CASPR and ISCCP satellite data sets are almost finished in terms of 
+> interpolating to ease grid, and comparison with sheba data is underway.  
+> will keep  you posted on this.
+> 
+> The ARCMIP BAMS article is underway, hope to have a very rough draft out 
+> for comments fairly soon
+> 
+> Colin has raised a few issues of relevance to the whole group.
+> 
+> For the 1D output at sheba grid pint, for the advective tendencies save  
+> only the adiabatic tendencies, vertical and horizontal tendencies 
+> separately.
+> 
+> For height of lowest cloud base, hugh morrison and matt shupe have been 
+> using 10^-5 g m-3 as a threshold value in comparison of model with cloud 
+> radar for sheba,  not terribly sensitive to the threshold value between 
+> 10^-3 and 10^-7 g m^-3.  For those models allowing fraction, this is 
+> less straightforward, because there are so many ways this can be handled 
+> incl overlap issues, etc.  Would be open to anything that anyone has to 
+> suggest here
+> 
+> Klaus reports that the new GLIMPSE homepage is at 
+> http://www.awi-potsdam.de/www-pot/atmo/glimpse/index.html
+> 
+> As far as I know we are still on for the next ARCMIP workshop in in 
+> Potsdam on 2 and 3 June 2003, in conjunction with the GLIMPSE meeting.  
+> Definitely gives us a deadline for getting things done!
+> 
+> Judy
+> 
+> 
+> 
+> 
+
+
+
+From curryja@eas.gatech.edu  Fri Feb  7 18:17:57 2003
+Delivery-Date: Sat, 08 Feb 2003 01:17:57 +0000
+Return-Path: curryja@eas.gatech.edu
+Received: from mscan3.ucar.edu (mscan3.ucar.edu [128.117.64.125])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id SAA10097
+	for <john@joss.ucar.edu>; Fri, 7 Feb 2003 18:17:57 -0700 (MST)
+Received: by mscan3.ucar.edu (Postfix)
+	id D4AE6DAB84; Fri,  7 Feb 2003 18:17:56 -0700 (MST)
+Delivered-To: jallison@ucar.edu
+Received: from localhost (localhost [127.0.0.1])
+	by mscan3.ucar.edu (Postfix) with ESMTP
+	id 9A3C9DAB80; Fri,  7 Feb 2003 18:17:56 -0700 (MST)
+Received: from rwcrmhc52.attbi.com (rwcrmhc52.attbi.com [216.148.227.88])
+	by mscan3.ucar.edu (Postfix) with ESMTP
+	id 78ED2DAB83; Fri,  7 Feb 2003 18:17:25 -0700 (MST)
+Received: from [10.0.1.2] (c-66-56-8-130.atl.client2.attbi.com[66.56.8.130])
+          by rwcrmhc52.attbi.com (rwcrmhc52) with ESMTP
+          id <2003020801172305200jvk4re>; Sat, 8 Feb 2003 01:17:23 +0000
+Mime-Version: 1.0
+Message-Id: <a05100301ba6a0a7b638b@[10.0.1.2]>
+In-Reply-To: <3E443470.7030205@ucar.edu>
+References: <a05111b3fba0932667cda@[130.207.64.171]>	
+ <3DE4EA18.756621D4@smhi.se> <a0510033bba0a9dbb2e4d@[10.0.1.2]>
+ <3E2C1C79.3BAFC068@smhi.se> <a05111b31ba587072c9c6@[130.207.64.171]>
+ <3E443470.7030205@ucar.edu>
+Date: Fri, 7 Feb 2003 20:17:21 -0500
+To: Jim Moore <jmoore@ucar.edu>
+From: Judith Curry <curryja@eas.gatech.edu>
+Subject: Re: ARCMIP model output to JOSS
+Cc: "John J. Allison" <jallison@ucar.edu>, mrothe@monsoon.colorado.edu,
+        cassano@cires.colorado.edu, randolph.reeder@eas.gatech.edu
+Content-Type: text/plain; charset="us-ascii" ; format="flowed"
+X-Spam-Status: No, hits=-6.0 required=5.0
+	tests=IN_REP_TO,REFERENCES,SPAM_PHRASE_02_03
+	version=2.41
+Status: RO
+
+hi jim all this sounds great.  i'm not sure why the decision was made 
+to do the satellite data at 25 km, personally i thought it should be 
+50 km.  randy reeder is working on the caspr satellite data, pls 
+coordinate with him also (i think he and mat are coordinating at 
+least somewhat).  can't wait til that model output starts rolling in 
+...
+
+
+
+>Hi Judy,  Hope things are well with you and Peter in Georgia.
+>Until 5 days ago, I think there was more snow in Georgia than
+>on the Front Range of Colorado.  We've managed to get 6-8 inches
+>out at my house.
+>
+>Just to update you on ARCMIP activities from our end.  We just 
+>received the first set of model data from John Cassano sending along 
+>ARCSyM
+>data.  We have done some homework on the EASE grid transforms and 
+>will start the conversion processing in the near future
+>
+>I spoke to John at length about the data he is providing along with the
+>data that we might expect from other ARCMIP participants.  In the 
+>case of ARCSyM, the data are a 50 km resolution and John believes 
+>most others will be of similar spatial resolution.
+>
+>From your notes below, I understand that the CASPR/ISCCP satellite 
+>data are being converted to EASE at 25 km.  Now, back in Nov. you 
+>and I discussed this and the conclusion was that we should convert 
+>model output to EASE at 25 km.  However, John Cassano points out 
+>that going from 50 to 25 km for the model output really adds nothing 
+>to the dataset.  I just want to make sure about what resolution we 
+>want for the model output in EASE.  If we go with 25km resolution, 
+>do you recommend a preferred interpolation scheme to "fill" the data?
+>
+>You should know that our plan is to coordinate our conversion work 
+>with the CASPR/ISCCP work being done by Math Rothstein at CU so that 
+>the generated model grids will overlay properly (e.g. model EASE 
+>grid point of origin and projection matches the  EASE grid for the 
+>CASPR data ). John Cassano will also help with this work.
+>
+>I have CC'ed John C. and Math R. on this note in the hopes of 
+>reaching resolution that meets all requirements.  Guidance 
+>appreciated.
+>
+>Have a good weekend,  Jim M
+>---------------------------------------------------------
+>Judith Curry wrote:
+>>Here are a few updates on arcmip.  From what I am hearing most of 
+>>the groups are making excellent progress towards completing their 
+>>simulations and getting them ready for JOSS.
+>>
+>>The CASPR and ISCCP satellite data sets are almost finished in 
+>>terms of interpolating to ease grid, and comparison with sheba data 
+>>is underway.  will keep  you posted on this.
+>>
+>>The ARCMIP BAMS article is underway, hope to have a very rough 
+>>draft out for comments fairly soon
+>>
+>>Colin has raised a few issues of relevance to the whole group.
+>>
+>>For the 1D output at sheba grid pint, for the advective tendencies 
+>>save  only the adiabatic tendencies, vertical and horizontal 
+>>tendencies separately.
+>>
+>>For height of lowest cloud base, hugh morrison and matt shupe have 
+>>been using 10^-5 g m-3 as a threshold value in comparison of model 
+>>with cloud radar for sheba,  not terribly sensitive to the 
+>>threshold value between 10^-3 and 10^-7 g m^-3.  For those models 
+>>allowing fraction, this is less straightforward, because there are 
+>>so many ways this can be handled incl overlap issues, etc.  Would 
+>>be open to anything that anyone has to suggest here
+>>
+>>Klaus reports that the new GLIMPSE homepage is at 
+>>http://www.awi-potsdam.de/www-pot/atmo/glimpse/index.html
+>>
+>>As far as I know we are still on for the next ARCMIP workshop in in 
+>>Potsdam on 2 and 3 June 2003, in conjunction with the GLIMPSE 
+>>meeting.  Definitely gives us a deadline for getting things done!
+>>
+>>Judy
+
+
+-- 
+
+From jmoore@ucar.edu  Mon Feb 10 08:58:10 2003
+Delivery-Date: Mon, 10 Feb 2003 15:58:10 +0000
+Return-Path: jmoore@ucar.edu
+Received: from mscan5.ucar.edu (mscan5.ucar.edu [128.117.64.127])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id IAA26865
+	for <john@joss.ucar.edu>; Mon, 10 Feb 2003 08:58:10 -0700 (MST)
+Received: by mscan5.ucar.edu (Postfix)
+	id 8A5F3FA871; Mon, 10 Feb 2003 08:58:10 -0700 (MST)
+Delivered-To: jallison@ucar.edu
+Received: from localhost (localhost [127.0.0.1])
+	by mscan5.ucar.edu (Postfix) with ESMTP
+	id 59FB7FA86E; Mon, 10 Feb 2003 08:58:10 -0700 (MST)
+Received: from thunder.joss.ucar.edu (thunder.joss.ucar.edu [128.117.90.64])
+	by mscan5.ucar.edu (Postfix) with ESMTP
+	id 491B5FA870; Mon, 10 Feb 2003 08:58:04 -0700 (MST)
+Received: from ucar.edu (odin [128.117.90.160])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id IAA26858;
+	Mon, 10 Feb 2003 08:57:57 -0700 (MST)
+Message-ID: <3E47CE89.4020200@ucar.edu>
+Date: Mon, 10 Feb 2003 09:08:41 -0700
+From: Jim Moore <jmoore@ucar.edu>
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.0; en-US; rv:1.0.1) Gecko/20020823 Netscape/7.0
+X-Accept-Language: en-us, en
+MIME-Version: 1.0
+To: Judith Curry <curryja@eas.gatech.edu>
+Cc: "John J. Allison" <jallison@ucar.edu>, mrothste@monsoon.colorado.edu,
+        cassano@cires.colorado.edu, randolph.reeder@eas.gatech.edu
+Subject: Re: ARCMIP model output to JOSS
+References: <a05111b3fba0932667cda@[130.207.64.171]>	 <3DE4EA18.756621D4@smhi.se> <a0510033bba0a9dbb2e4d@[10.0.1.2]> <3E2C1C79.3BAFC068@smhi.se> <a05111b31ba587072c9c6@[130.207.64.171]> <3E443470.7030205@ucar.edu> <a05100301ba6a0a7b638b@[10.0.1.2]>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, hits=-7.2 required=5.0
+	tests=QUOTED_EMAIL_TEXT,REFERENCES,SPAM_PHRASE_02_03,USER_AGENT,
+	      USER_AGENT_MOZILLA_UA,X_ACCEPT_LANG
+	version=2.41
+Status: RO
+
+Hi Judy,  Since we have not started any processing, given
+your comment below, and discussions with John C. and others,
+  all ARCMIP model output will be converted to a 50 km EASE grid.
+
+We will coordinate with Messrs. Rothstein and
+Reeder to make everything is compatible.
+
+Regards,  Jim
+-----------------------------------------------------
+Judith Curry wrote:
+> hi jim all this sounds great.  i'm not sure why the decision was made to 
+> do the satellite data at 25 km, personally i thought it should be 50 
+> km.  randy reeder is working on the caspr satellite data, pls coordinate 
+> with him also (i think he and mat are coordinating at least somewhat).  
+> can't wait til that model output starts rolling in ...
+> 
+> 
+> 
+>> Hi Judy,  Hope things are well with you and Peter in Georgia.
+>> Until 5 days ago, I think there was more snow in Georgia than
+>> on the Front Range of Colorado.  We've managed to get 6-8 inches
+>> out at my house.
+>>
+>> Just to update you on ARCMIP activities from our end.  We just 
+>> received the first set of model data from John Cassano sending along 
+>> ARCSyM
+>> data.  We have done some homework on the EASE grid transforms and will 
+>> start the conversion processing in the near future
+>>
+>> I spoke to John at length about the data he is providing along with the
+>> data that we might expect from other ARCMIP participants.  In the case 
+>> of ARCSyM, the data are a 50 km resolution and John believes most 
+>> others will be of similar spatial resolution.
+>>
+>> From your notes below, I understand that the CASPR/ISCCP satellite 
+>> data are being converted to EASE at 25 km.  Now, back in Nov. you and 
+>> I discussed this and the conclusion was that we should convert model 
+>> output to EASE at 25 km.  However, John Cassano points out that going 
+>> from 50 to 25 km for the model output really adds nothing to the 
+>> dataset.  I just want to make sure about what resolution we want for 
+>> the model output in EASE.  If we go with 25km resolution, do you 
+>> recommend a preferred interpolation scheme to "fill" the data?
+>>
+>> You should know that our plan is to coordinate our conversion work 
+>> with the CASPR/ISCCP work being done by Math Rothstein at CU so that 
+>> the generated model grids will overlay properly (e.g. model EASE grid 
+>> point of origin and projection matches the  EASE grid for the CASPR 
+>> data ). John Cassano will also help with this work.
+>>
+>> I have CC'ed John C. and Math R. on this note in the hopes of reaching 
+>> resolution that meets all requirements.  Guidance appreciated.
+>>
+>> Have a good weekend,  Jim M
+>> ---------------------------------------------------------
+>> Judith Curry wrote:
+>>
+>>> Here are a few updates on arcmip.  From what I am hearing most of the 
+>>> groups are making excellent progress towards completing their 
+>>> simulations and getting them ready for JOSS.
+>>>
+>>> The CASPR and ISCCP satellite data sets are almost finished in terms 
+>>> of interpolating to ease grid, and comparison with sheba data is 
+>>> underway.  will keep  you posted on this.
+>>>
+>>> The ARCMIP BAMS article is underway, hope to have a very rough draft 
+>>> out for comments fairly soon
+>>>
+>>> Colin has raised a few issues of relevance to the whole group.
+>>>
+>>> For the 1D output at sheba grid pint, for the advective tendencies 
+>>> save  only the adiabatic tendencies, vertical and horizontal 
+>>> tendencies separately.
+>>>
+>>> For height of lowest cloud base, hugh morrison and matt shupe have 
+>>> been using 10^-5 g m-3 as a threshold value in comparison of model 
+>>> with cloud radar for sheba,  not terribly sensitive to the threshold 
+>>> value between 10^-3 and 10^-7 g m^-3.  For those models allowing 
+>>> fraction, this is less straightforward, because there are so many 
+>>> ways this can be handled incl overlap issues, etc.  Would be open to 
+>>> anything that anyone has to suggest here
+>>>
+>>> Klaus reports that the new GLIMPSE homepage is at 
+>>> http://www.awi-potsdam.de/www-pot/atmo/glimpse/index.html
+>>>
+>>> As far as I know we are still on for the next ARCMIP workshop in in 
+>>> Potsdam on 2 and 3 June 2003, in conjunction with the GLIMPSE 
+>>> meeting.  Definitely gives us a deadline for getting things done!
+>>>
+>>> Judy
+>>
+> 
+> 
+
+
+
+From cassano@cires.colorado.edu  Mon Feb 10 11:10:02 2003
+Delivery-Date: Mon, 10 Feb 2003 18:10:02 +0000
+Return-Path: cassano@cires.colorado.edu
+Received: from mscan3.ucar.edu (mscan3.ucar.edu [128.117.64.125])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id LAA00250
+	for <john@joss.ucar.edu>; Mon, 10 Feb 2003 11:10:02 -0700 (MST)
+Received: by mscan3.ucar.edu (Postfix)
+	id 4CA40DAB74; Mon, 10 Feb 2003 11:10:02 -0700 (MST)
+Delivered-To: jallison@ucar.edu
+Received: from localhost (localhost [127.0.0.1])
+	by mscan3.ucar.edu (Postfix) with ESMTP
+	id 12FB5DAB71; Mon, 10 Feb 2003 11:10:02 -0700 (MST)
+Received: from cires.colorado.edu (cires.Colorado.EDU [128.138.136.5])
+	by mscan3.ucar.edu (Postfix) with ESMTP
+	id F3693DAB71; Mon, 10 Feb 2003 11:09:56 -0700 (MST)
+Received: from localhost (cassano@localhost)
+	by cires.colorado.edu (8.9.3/8.9.3/ITS-5.0/standard) with ESMTP id LAA05471;
+	Mon, 10 Feb 2003 11:09:56 -0700 (MST)
+Date: Mon, 10 Feb 2003 11:09:56 -0700 (MST)
+From: John Cassano <cassano@cires.colorado.edu>
+To: Jim Moore <jmoore@ucar.edu>
+Cc: John Cassano <cassano@cires.colorado.edu>,
+        Judith Curry <curryja@eas.gatech.edu>,
+        "John J. Allison" <jallison@ucar.edu>, <mrothste@monsoon.colorado.edu>,
+        <randolph.reeder@eas.gatech.edu>
+Subject: Re: ARCMIP model output to JOSS
+In-Reply-To: <3E47CE89.4020200@ucar.edu>
+Message-ID: <Pine.GSO.4.43.0302101101050.24175-100000@cires.colorado.edu>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-Spam-Status: No, hits=-8.8 required=5.0
+	tests=EMAIL_ATTRIBUTION,IN_REP_TO,QUOTED_EMAIL_TEXT,
+	      SPAM_PHRASE_01_02,USER_AGENT_PINE
+	version=2.41
+Status: RO
+
+
+Hi Jim
+
+I just spoke with Math. There is some concern about having the
+model data at 50km and the validation data at 25km. My opinion
+is that we are better off to keep the observational data at a
+relatively high resolution, and each modeling group can interpolate
+or average that data to coarser resolution if needed. Also, by
+having the higher resolution observational data the modelers can
+assess sub-grid scale variability.
+
+With all of that said, Math made the point that he wasn't aware of
+a 50km EASE grid. I thought the EASE grid could be used at any resolution,
+and with us choosing a 50km grid it would be easily compatible with
+the 25km grid he is using for the observational data. Could you provide
+us with the details for the 50km EASE grid you plan on using? I think
+it is essential that the 50km EASE grid points align with everyother
+25km EASE grid point of the observational data.
+
+I'd appreciate your thoughts on this. Since JOSS just got the first
+model output and the interpolation hasn't begun yet it seems best to
+settle these issues now.
+
+Thanks,
+John
+
+-- 
+John Cassano
+Research Scientist
+CIRES
+216 UCB
+University of Colorado at Boulder
+Boulder, CO 80309-0216
+phone: 303-492-2221
+fax: 303-492-1149
+e-mail: cassano@cires.colorado.edu
+
+
+On Mon, 10 Feb 2003, Jim Moore wrote:
+
+> Date: Mon, 10 Feb 2003 09:08:41 -0700
+> From: Jim Moore <jmoore@ucar.edu>
+> To: Judith Curry <curryja@eas.gatech.edu>
+> Cc: John J. Allison <jallison@ucar.edu>, mrothste@monsoon.colorado.edu,
+>      cassano@cires.colorado.edu, randolph.reeder@eas.gatech.edu
+> Subject: Re: ARCMIP model output to JOSS
+>
+> Hi Judy,  Since we have not started any processing, given
+> your comment below, and discussions with John C. and others,
+>   all ARCMIP model output will be converted to a 50 km EASE grid.
+>
+> We will coordinate with Messrs. Rothstein and
+> Reeder to make everything is compatible.
+>
+> Regards,  Jim
+> -----------------------------------------------------
+> Judith Curry wrote:
+> > hi jim all this sounds great.  i'm not sure why the decision was made to
+> > do the satellite data at 25 km, personally i thought it should be 50
+> > km.  randy reeder is working on the caspr satellite data, pls coordinate
+> > with him also (i think he and mat are coordinating at least somewhat).
+> > can't wait til that model output starts rolling in ...
+> >
+> >
+> >
+> >> Hi Judy,  Hope things are well with you and Peter in Georgia.
+> >> Until 5 days ago, I think there was more snow in Georgia than
+> >> on the Front Range of Colorado.  We've managed to get 6-8 inches
+> >> out at my house.
+> >>
+> >> Just to update you on ARCMIP activities from our end.  We just
+> >> received the first set of model data from John Cassano sending along
+> >> ARCSyM
+> >> data.  We have done some homework on the EASE grid transforms and will
+> >> start the conversion processing in the near future
+> >>
+> >> I spoke to John at length about the data he is providing along with the
+> >> data that we might expect from other ARCMIP participants.  In the case
+> >> of ARCSyM, the data are a 50 km resolution and John believes most
+> >> others will be of similar spatial resolution.
+> >>
+> >> From your notes below, I understand that the CASPR/ISCCP satellite
+> >> data are being converted to EASE at 25 km.  Now, back in Nov. you and
+> >> I discussed this and the conclusion was that we should convert model
+> >> output to EASE at 25 km.  However, John Cassano points out that going
+> >> from 50 to 25 km for the model output really adds nothing to the
+> >> dataset.  I just want to make sure about what resolution we want for
+> >> the model output in EASE.  If we go with 25km resolution, do you
+> >> recommend a preferred interpolation scheme to "fill" the data?
+> >>
+> >> You should know that our plan is to coordinate our conversion work
+> >> with the CASPR/ISCCP work being done by Math Rothstein at CU so that
+> >> the generated model grids will overlay properly (e.g. model EASE grid
+> >> point of origin and projection matches the  EASE grid for the CASPR
+> >> data ). John Cassano will also help with this work.
+> >>
+> >> I have CC'ed John C. and Math R. on this note in the hopes of reaching
+> >> resolution that meets all requirements.  Guidance appreciated.
+> >>
+> >> Have a good weekend,  Jim M
+> >> ---------------------------------------------------------
+> >> Judith Curry wrote:
+> >>
+> >>> Here are a few updates on arcmip.  From what I am hearing most of the
+> >>> groups are making excellent progress towards completing their
+> >>> simulations and getting them ready for JOSS.
+> >>>
+> >>> The CASPR and ISCCP satellite data sets are almost finished in terms
+> >>> of interpolating to ease grid, and comparison with sheba data is
+> >>> underway.  will keep  you posted on this.
+> >>>
+> >>> The ARCMIP BAMS article is underway, hope to have a very rough draft
+> >>> out for comments fairly soon
+> >>>
+> >>> Colin has raised a few issues of relevance to the whole group.
+> >>>
+> >>> For the 1D output at sheba grid pint, for the advective tendencies
+> >>> save  only the adiabatic tendencies, vertical and horizontal
+> >>> tendencies separately.
+> >>>
+> >>> For height of lowest cloud base, hugh morrison and matt shupe have
+> >>> been using 10^-5 g m-3 as a threshold value in comparison of model
+> >>> with cloud radar for sheba,  not terribly sensitive to the threshold
+> >>> value between 10^-3 and 10^-7 g m^-3.  For those models allowing
+> >>> fraction, this is less straightforward, because there are so many
+> >>> ways this can be handled incl overlap issues, etc.  Would be open to
+> >>> anything that anyone has to suggest here
+> >>>
+> >>> Klaus reports that the new GLIMPSE homepage is at
+> >>> http://www.awi-potsdam.de/www-pot/atmo/glimpse/index.html
+> >>>
+> >>> As far as I know we are still on for the next ARCMIP workshop in in
+> >>> Potsdam on 2 and 3 June 2003, in conjunction with the GLIMPSE
+> >>> meeting.  Definitely gives us a deadline for getting things done!
+> >>>
+> >>> Judy
+> >>
+> >
+> >
+>
+>
+
+
+From mrothste@monsoon.colorado.edu  Mon Feb 10 15:05:20 2003
+Delivery-Date: Mon, 10 Feb 2003 22:05:20 +0000
+Return-Path: mrothste@monsoon.colorado.edu
+Received: from mscan4.ucar.edu (mscan4.ucar.edu [128.117.64.126])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id PAA05735
+	for <john@joss.ucar.edu>; Mon, 10 Feb 2003 15:05:20 -0700 (MST)
+Received: from localhost (localhost [127.0.0.1])
+	by mscan4.ucar.edu (Postfix) with ESMTP
+	id 1CB44DAB77; Mon, 10 Feb 2003 15:05:20 -0700 (MST)
+Received: from monsoon.colorado.edu (monsoon.Colorado.EDU [128.138.188.88])
+	by mscan4.ucar.edu (Postfix) with ESMTP
+	id 4130FDAB6D; Mon, 10 Feb 2003 15:05:11 -0700 (MST)
+Received: from pueblo.Colorado.EDU (mrothste@pueblo [128.138.188.9])
+	by monsoon.colorado.edu (8.9.3/8.9.3/UnixOps+Hesiod (PDH)) with SMTP id PAA22026;
+	Mon, 10 Feb 2003 15:05:10 -0700 (MST)
+Message-Id: <200302102205.PAA22026@monsoon.colorado.edu>
+Date: Mon, 10 Feb 2003 15:05:08 -0700 (MST)
+From: Mathew Rothstein <mrothste@monsoon.colorado.edu>
+Reply-To: Mathew Rothstein <mrothste@monsoon.colorado.edu>
+Subject: Re: ARCMIP model output to JOSS
+To: john@joss.ucar.edu
+Cc: curryja@eas.gatech.edu, jmoore@ucar.edu, cassano@cires.colorado.edu,
+        randolph.reeder@eas.gatech.edu
+MIME-Version: 1.0
+Content-Type: TEXT/plain; charset=us-ascii
+Content-MD5: 45TG74/swEmU4rUu64ENkQ==
+X-Mailer: dtmail 1.3.0 @(#)CDE Version 1.4.6_06 SunOS 5.8 sun4u sparc 
+X-Spam-Status: No, hits=-4.2 required=5.0
+	tests=QUOTED_EMAIL_TEXT,SPAM_PHRASE_02_03
+	version=2.41
+Status: RO
+
+
+john...
+
+unfortunately, i cannot answer all of your questions...hopefully 
+some of the others will respond...
+
+i can, however, give you a description of the grid we're using for 
+the observational data, and i think it's a good idea to collocate any 
+50km grid you establish for model output with this...and this should 
+be easy, since our grid is merely a subset of the northern hemispheric 
+25km ease-grid described in the webpages you referenced...in fact, it 
+is the inner-most 321x321 square...converting between our grid and the 
+hemispheric is simply a matter of adding or subtracting 200 to the row 
+and column...
+
+hope that helps...i'm available for any questions...
+
+-mathew 
+
+ps...i'm just finishing up the documentation now and will be sending 
+you the isccp product on 8mm tape...
+
+
+
+
+>From: "John J. Allison" <john@joss.ucar.edu>
+>Date: Mon, 10 Feb 2003 13:04:57 -0700 (MST)
+>To: cassano@cires.colorado.edu
+>Subject: Re: ARCMIP model output to JOSS
+>Cc: curryja@eas.gatech.edu, jmoore@ucar.edu, mrothste@monsoon.colorado.edu, 
+randolph.reeder@eas.gatech.edu
+>
+>Hello all, I am John Allison here at UCAR/JOSS.
+>I will be writing the JOSS software to regrid the ARCMIP data.
+>
+>> With all of that said, Math made the point that he wasn't aware of
+>> a 50km EASE grid. I thought the EASE grid could be used at any resolution,
+>> and with us choosing a 50km grid it would be easily compatible with
+>> the 25km grid he is using for the observational data. Could you provide
+>> us with the details for the 50km EASE grid you plan on using? I think
+>> it is essential that the 50km EASE grid points align with everyother
+>> 25km EASE grid point of the observational data.
+>
+>It was also my understanding that EASE-grid is a system, including
+>both a project and a grid definition:
+>
+>"(EASE-Grid) consists of a set of three equal-area projections,
+>combined with an infinite number of possible grid definitions."
+>http://nsidc.org/data/ease/ease_grid.html
+>
+>Anybody can define what is appropriate for their project.
+>That is why we are asking questions.
+>
+>The CASPR data we have is at:
+>http://www.joss.ucar.edu/cgi-bin/codiac/dss?61.002
+>
+>It's documentation claims to be 25km.
+>It's domain.txt file is the same as the ARCMIP website's,
+>which claims to be 50km:
+>http://cires.colorado.edu/lynch/arcmip/domain.txt
+>
+>This is getting a bit confusing. I've scanned the data via ncdump,
+>but haven't investigated it thoroughly. I also haven't (yet)
+>plotted that domain.txt file on a map or calculated its
+>resolution from its data...
+>
+>
+>But perhaps it is best to start at the beginning in defining your
+>desired EASE-Grid. Following the EASE-Grid website, using the
+>commonalities of what I've seen so far for ARCMIP:
+>
+>Map: that used by AVHRR (N200)
+> Projection: azimuthal equal-area for the northern hemisphere
+> Scale: 200 km/pixel (really 200.5402)
+>Number grid cells per map unit: 4 for 50km, 8 for 25km
+>
+>After picking a resolution, do you want to pick a grid size,
+>e.g. 70 columns, 55 rows or do you want to pick a certain
+>area of the map (e.g. SHEBA domain)? Obviously 70x55 will
+>cover different areas of the map depending on resolution,
+>which is one of the things that has confused me thus far.
+>
+>Lastly is to locate the grid on the map, it appears a center
+>of 72N, 153W is what you want.
+>
+>
+>After fully defining the EASE-Grid being used, I'll need to know
+>what kind of data filling/interpolation scheme I should use
+>when re-gridding data. Particularly, how would I create 4 points
+>of data in a 25km grid from 1 supplied point of 50km data?
+>In the reverse case, any interpolation, weighted avgs, or just
+>nearest neighbor?
+>
+>I hope all that made sense, or at least leads to things making sense.
+>I'm new to EASE-Grid myself.
+>
+>John Allison
+>john@joss.ucar.edu
+
+
+From cassano@cires.colorado.edu  Mon Feb 10 15:10:52 2003
+Delivery-Date: Mon, 10 Feb 2003 22:10:52 +0000
+Return-Path: cassano@cires.colorado.edu
+Received: from mscan4.ucar.edu (mscan4.ucar.edu [128.117.64.126])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id PAA05885
+	for <john@joss.ucar.edu>; Mon, 10 Feb 2003 15:10:52 -0700 (MST)
+Received: from localhost (localhost [127.0.0.1])
+	by mscan4.ucar.edu (Postfix) with ESMTP
+	id 048DCDAB77; Mon, 10 Feb 2003 15:10:52 -0700 (MST)
+Received: from cires.colorado.edu (cires.Colorado.EDU [128.138.136.5])
+	by mscan4.ucar.edu (Postfix) with ESMTP
+	id 2E470DAB6D; Mon, 10 Feb 2003 15:10:45 -0700 (MST)
+Received: from localhost (cassano@localhost)
+	by cires.colorado.edu (8.9.3/8.9.3/ITS-5.0/standard) with ESMTP id PAA19681;
+	Mon, 10 Feb 2003 15:10:42 -0700 (MST)
+Date: Mon, 10 Feb 2003 15:10:42 -0700 (MST)
+From: John Cassano <cassano@cires.colorado.edu>
+To: "John J. Allison" <john@joss.ucar.edu>
+Cc: Judy Curry <curryja@eas.gatech.edu>,
+        John Cassano <cassano@cires.colorado.edu>, <jmoore@ucar.edu>,
+        <mrothste@monsoon.colorado.edu>, <randolph.reeder@coloradoA.edu>
+Subject: Re: ARCMIP model output to JOSS
+In-Reply-To: <200302102004.NAA18129@virga.joss.ucar.edu>
+Message-ID: <Pine.GSO.4.43.0302101449160.16835-100000@cires.colorado.edu>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-Spam-Status: No, hits=-10.7 required=5.0
+	tests=IN_REP_TO,QUOTED_EMAIL_TEXT,SIGNATURE_LONG_DENSE,
+	      SPAM_PHRASE_01_02,USER_AGENT_PINE
+	version=2.41
+Status: RO
+
+
+Hi John,
+
+I'll offer my $0.02 worth of thoughts on this, and hopefully help clear
+up some of the confusion.
+
+> > With all of that said, Math made the point that he wasn't aware of
+> > a 50km EASE grid. I thought the EASE grid could be used at any resolution,
+> > and with us choosing a 50km grid it would be easily compatible with
+> > the 25km grid he is using for the observational data. Could you provide
+> > us with the details for the 50km EASE grid you plan on using? I think
+> > it is essential that the 50km EASE grid points align with everyother
+> > 25km EASE grid point of the observational data.
+>
+> It was also my understanding that EASE-grid is a system, including
+> both a project and a grid definition:
+>
+> "(EASE-Grid) consists of a set of three equal-area projections,
+> combined with an infinite number of possible grid definitions."
+> http://nsidc.org/data/ease/ease_grid.html
+>
+> Anybody can define what is appropriate for their project.
+> That is why we are asking questions.
+>
+> The CASPR data we have is at:
+> http://www.joss.ucar.edu/cgi-bin/codiac/dss?61.002
+>
+> It's documentation claims to be 25km.
+> It's domain.txt file is the same as the ARCMIP website's,
+> which claims to be 50km:
+> http://cires.colorado.edu/lynch/arcmip/domain.txt
+>
+> This is getting a bit confusing. I've scanned the data via ncdump,
+> but haven't investigated it thoroughly. I also haven't (yet)
+> plotted that domain.txt file on a map or calculated its
+> resolution from its data...
+
+The infomation in the domain.txt file does correspond to a 50km resolution
+polar stereographic map projection centered at 72N and 153W. From reading
+the README file for CASPR ARCMIP data it seems to me that the CASPR
+ARCMIP data has been subsampled from the original 25km resolution to
+match the 50km ARCMIP domain resolution. I believe Randy Reeder was the
+person that handled this conversion from the original AVHRR data to the
+ARCMIP domain.
+
+>
+>
+> But perhaps it is best to start at the beginning in defining your
+> desired EASE-Grid. Following the EASE-Grid website, using the
+> commonalities of what I've seen so far for ARCMIP:
+>
+> Map: that used by AVHRR (N200)
+>  Projection: azimuthal equal-area for the northern hemisphere
+>  Scale: 200 km/pixel (really 200.5402)
+> Number grid cells per map unit: 4 for 50km, 8 for 25km
+>
+> After picking a resolution, do you want to pick a grid size,
+> e.g. 70 columns, 55 rows or do you want to pick a certain
+> area of the map (e.g. SHEBA domain)? Obviously 70x55 will
+> cover different areas of the map depending on resolution,
+> which is one of the things that has confused me thus far.
+>
+> Lastly is to locate the grid on the map, it appears a center
+> of 72N, 153W is what you want.
+
+I believe we were planning on using a 50km grid size for the ARCMIP
+model output. This grid would be a subset of points from a 50km northern
+hemisphere EASE grid (similar to the N200 projection described above,
+except it would be an N50 project).
+
+The grid should be centered at 72N and 153W and should encompass the entire
+standard ARCMIP model domain (see the blue outline in the attached JPEG
+file). Obviously the orientation of this ARCMIP model domain, relative
+to the northern hemisphere EASE grid will require a bigger EASE grid
+domain than just 70x55 grid points. I think the important point is
+that the new ARCMIP EASE grid encompasses all of the standard ARCMIP
+model domain grid points (and probably a slight buffer region beyond
+this standard model domain to account for differences in model domains
+between the different ARCMIP modeling groups).
+
+The other very important point about the 50km EASE grid for the ARCMIP
+model output is that the points in this domain should correspond to every
+other point on Math Rothstein's 25km EASE grid for the ISCCP satellite data.
+I believe he will be in contact shortly with the EASE grid map projection
+information for his domain.
+
+>
+>
+> After fully defining the EASE-Grid being used, I'll need to know
+> what kind of data filling/interpolation scheme I should use
+> when re-gridding data. Particularly, how would I create 4 points
+> of data in a 25km grid from 1 supplied point of 50km data?
+> In the reverse case, any interpolation, weighted avgs, or just
+> nearest neighbor?
+>
+
+This won't be an issue since you will be using a 50km EASE grid with
+50km model output.
+
+I hope this helps.
+
+Cheers,
+John
+
+-- 
+John Cassano
+Research Scientist
+CIRES
+216 UCB
+University of Colorado at Boulder
+Boulder, CO 80309-0216
+phone: 303-492-2221
+fax: 303-492-1149
+e-mail: cassano@cires.colorado.edu
+
+
+
+From Randolph.Reeder@Colorado.EDU  Mon Feb 10 16:20:47 2003
+Delivery-Date: Mon, 10 Feb 2003 23:20:47 +0000
+Return-Path: Randolph.Reeder@Colorado.EDU
+Received: from mscan4.ucar.edu (mscan4.ucar.edu [128.117.64.126])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id QAA07276
+	for <john@joss.ucar.edu>; Mon, 10 Feb 2003 16:20:47 -0700 (MST)
+Received: from localhost (localhost [127.0.0.1])
+	by mscan4.ucar.edu (Postfix) with ESMTP id 388DBDAB78
+	for <john@joss.ucar.edu>; Mon, 10 Feb 2003 16:20:47 -0700 (MST)
+Received: from cloud8.colorado.edu (cloud8.Colorado.EDU [128.138.208.60])
+	by mscan4.ucar.edu (Postfix) with ESMTP id 1A763DAB78
+	for <john@joss.ucar.edu>; Mon, 10 Feb 2003 16:20:40 -0700 (MST)
+Received: from localhost (rreeder@localhost)
+	by cloud8.colorado.edu (8.10.1/8.10.1/UnixOps+Hesiod) with ESMTP id h1ANKd409762;
+	Mon, 10 Feb 2003 16:20:39 -0700 (MST)
+Date: Mon, 10 Feb 2003 16:20:39 -0700 (MST)
+From: Randy Reeder <Randolph.Reeder@Colorado.EDU>
+To: john@joss.ucar.edu
+Cc: curryja@eas.gatech.edu, mrothste@monsoon.colorado.edu
+Subject: CASPR data files
+Message-ID: <Pine.GSO.4.53.0302101619070.9758@cloud8.colorado.edu>
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+X-Spam-Status: No, hits=-1.2 required=5.0
+	tests=SPAM_PHRASE_00_01,USER_AGENT_PINE
+	version=2.41
+Status: RO
+
+  Hi John,
+
+    The CASPR data you have at JOSS was
+ submitted by me in early December. The
+ original data from which this subset was
+ produced is the SHEBA AVHRR Full Arctic 25 km
+ Retrievals produced using the Cloud and Surface Parameter
+ Retrieval ( CASPR ) algorithms produced by Jeff Key
+ and available at  stratus.ssec.wisc.edu/products .
+
+    The data files submitted to JOSS ( caspr_arcmip_1997.tar.gz
+ and caspr_arcmip_1998.tar.gz ) are subsets of the above data
+ for the years 1997-1998 covering the 'ARCMIP region' as given
+ in the domain.txt file. As such they have the resolution of
+ the domain.txt file ( ~ 50 km ) and are not related to the
+ EASE grid.
+
+    I am in the process of producing new CASPR data files that
+ do correspond to the `new' ARCMIP region using the EASE grid.
+ I have programs to produce this data set assuming a 25 km
+ resolution and a region defined by columns 200 -> 520 and
+ rows 200 -> 520 in the Northern Hemisphere EASE coordinates.
+ It appears now that I should wait until the final resolution
+ and ARCMIP region are defined.
+
+                            Randy Reeder
+                            reeder@cloud.colorado.edu
+
+
+From mrothste@monsoon.colorado.edu  Wed Feb 12 09:32:09 2003
+Delivery-Date: Wed, 12 Feb 2003 16:32:10 +0000
+Return-Path: mrothste@monsoon.colorado.edu
+Received: from mscan4.ucar.edu (mscan4.ucar.edu [128.117.64.126])
+	by thunder.joss.ucar.edu (8.9.1/8.9.1) with ESMTP id JAA02621
+	for <john@joss.ucar.edu>; Wed, 12 Feb 2003 09:32:09 -0700 (MST)
+Received: from localhost (localhost [127.0.0.1])
+	by mscan4.ucar.edu (Postfix) with ESMTP id 8E151DAB83
+	for <john@joss.ucar.edu>; Wed, 12 Feb 2003 09:32:09 -0700 (MST)
+Received: from monsoon.colorado.edu (monsoon.Colorado.EDU [128.138.188.88])
+	by mscan4.ucar.edu (Postfix) with ESMTP id 38293DAB7F
+	for <john@joss.ucar.edu>; Wed, 12 Feb 2003 09:32:05 -0700 (MST)
+Received: from pueblo.Colorado.EDU (mrothste@pueblo [128.138.188.9])
+	by monsoon.colorado.edu (8.9.3/8.9.3/UnixOps+Hesiod (PDH)) with SMTP id JAA29925;
+	Wed, 12 Feb 2003 09:31:59 -0700 (MST)
+Message-Id: <200302121631.JAA29925@monsoon.colorado.edu>
+Date: Wed, 12 Feb 2003 09:31:59 -0700 (MST)
+From: Mathew Rothstein <mrothste@monsoon.colorado.edu>
+Reply-To: Mathew Rothstein <mrothste@monsoon.colorado.edu>
+Subject: Re: ARCMIP model output to JOSS
+To: john@joss.ucar.edu
+Cc: curryja@eas.gatech.edu, Randolph.Reeder@Colorado.EDU,
+        cassano@cires.colorado.edu
+MIME-Version: 1.0
+Content-Type: TEXT/plain; charset=us-ascii
+Content-MD5: F89PGilaWaprfafRxT5CJA==
+X-Mailer: dtmail 1.3.0 @(#)CDE Version 1.4.6_06 SunOS 5.8 sun4u sparc 
+X-Spam-Status: No, hits=0.6 required=5.0
+	tests=SPAM_PHRASE_00_01
+	version=2.41
+Status: RO
+
+
+hi john...
+
+it appears having everyone on a 50km grid is the desired goal...
+i will reprocess the isccp data at this resolution and send it to 
+you...the parameters are similar as the 25km grid i previously 
+described and are as follows...
+
+again it is a northern hemispheric ease grid, this time at 50km, making 
+it a 361x361 square...it is "bore-centered" to the other ease grids (the 
+12.5km and 25km described on nsidc's webpages)...i will be placing the 
+isccp data (and randy the caspar data) on a subset of this grid starting 
+at column 100, row 100 and which will comprise the inner-most 161x161 grid...
+
+here is some c code i'll be using to conver from lat/lon to grid 
+coordinates...i downloaded this code from nsidc's website and made 
+just a few modifications (scale=0.5) to create the 50km grid...
+remember to round the resulting grid coordinates up at .5 to get 
+the integer row and column...
+
+int ease_conv(double lat, double lon, double *r, double *s) {
+   double Rg, phi, lam, rho, r0, s0, scale;
+   int cols, rows;
+
+   scale = 0.5;  /* 50km grid */
+
+   cols = 721;
+   rows = 721;
+
+   /* radius of earth / nominal cell size */
+   Rg = scale*6371.228/25.067525;
+
+   r0 = (cols-1)/2. * scale;
+   s0 = (rows-1)/2. * scale;
+
+   /* degrees to radians */
+   phi = lat*3.14159/180.0;
+   lam = lon*3.14159/180.0;
+
+   rho = 2 * Rg * sin(3.14159/4. - phi/2.);
+   *r = r0 + rho * sin(lam);
+   *s = s0 + rho * cos(lam);
+
+   return(0);
+ }
+
+
+hope that helps...mathew 
+
+
+From john Wed May  7 11:56:22 2003
+To: cassano@cires.colorado.edu, curryja@eas.gatech.edu, mrothste@monsoon.colorado.edu,
+    randolph.reeder@eas.gatech.edu
+Subject: arcmip ease-grid questions
+Status: RO
+
+Hi all, I'm (finally) back working on the ARCMIP regridding
+to the EASE-Grid. Sorry for the delay, but it is now my top
+priority and I hope to finish soon. Although we have just 2
+sets of model data here at JOSS (plus the CASPR and ISSCP
+data which is now available for ordering).
+There are a couple of open issues left over from our last
+round of discussion, most importantly interpolation.
+
+1. What should I do when more than one model point
+falls into an EASE-Grid cell. For example, there are
+327 EASE-Grid cells that contain 2 points from the
+domain.txt file. (325 in the ARCSyM domain.nc)
+Shall I average, some sort of weighted average,
+take the point closest to center of the EASE-Grid cell, ... ?
+
+2. fyi 37 of these duplicate cells have conflicting land uses.
+If you would like to resolve this and produce a new domain.txt for
+the EASE-Grid, somebody point me to a land use database and
+conflict-resolution algorithm. I can then generate from the
+EASE-Grid latlons directly.
+
+3. fyi
+I have put the EASE-Grid version of domain.txt on the web
+for you to browse:
+
+http://www.joss.ucar.edu/~john/tmp/ease_domain.txt
+
+r=column, s=row for the EASE-Grid NL at 50km.
+elat,elon are the centers of those grid cells.
+Look at the bottom of the file to see some little stats,
+incl the duplicates for land use clashes.
+
+4. For the model data, I will leave "empty" cells in the new grid
+as some sort of missing value, whatever the model already uses.
+
+5. The EASE-Grid for domain.txt is 90x82. How much of a buffer
+around this do you want (#cells, km, or degrees latlon) to
+accomodate different models' edges? The latlons of the centers
+of the corner cells are:
+upper left   45.352936, -140.042451
+upper right  53.890356,  159.954751
+lower left   61.578634,  -83.558400
+lower right  77.398961,   75.465545
+
+6. Finally, fyi, a simple gif showing the grid bounds:
+
+http://www.joss.ucar.edu/~john/tmp/ease_domain.gif
+
+Thanks for your time,
+
+John Allison
+john@joss.ucar.edu
+

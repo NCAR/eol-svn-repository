@@ -1,0 +1,1947 @@
+> groovy authorshipConnect.groovy all
+
+Created log file:	logs/log_20140210124438.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ARCSS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ATLAS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BAMEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ESRL
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-ESRL
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1210
+
+		1210	null	null	Earth System Research Labortory (ESRL), NOAA	(null)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	USDA-ARS
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		USDA-ARS
+Please enter in a contact ID for this author, or press zero if unknown.
+>  471
+
+		471	null	null	Agricultural Research Service (ARS), USDA	(null)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	USDA-NRCS
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		USDA-NRCS
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1356
+
+		1356	null	null	Natural Resources Conservation Service (NRCS), USDA	(null)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-AOC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-AOC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  573
+
+		573	null	null	Aircraft Operations Center (AOC), NOAA	(null)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BEST
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1295 for data set 102.063
+--------------------------------------------------------------------------------
+  BEST:  102.278
+		Hunt, George L., Martin Renner, Kathy Kuletz, John Piatt, Gary Drew
+Which of these contacts matches this author:	George L. Hunt
+
+		222	jwalters	Justin Walters	U. Alabama Huntsville
+		734	ehunter	Eli Hunter	Institute for Marine and Coastal Sciences, Rutgers University
+		986	null	Henry P. Huntington	null
+		990	null	Larry Carey	University of Alabama Huntsville
+		1213	null	null	University of Alabama Huntsville
+		1332	null	George Hunt	University of Washington
+		1362	null	null	National Space Science and Technology Center (NSSTC), University of Alabama - Huntsville
+		1498	null	Heidi Huntrieser	German Aerospace Center
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1332
+
+		1332	null	George Hunt	University of Washington	(glhunt@uci.edu)
+
+Is this the author? (y/n)  > y
+--------------------------------------------------------------------------------
+  BEST:  102.278
+		Hunt, George L., Martin Renner, Kathy Kuletz, John Piatt, Gary Drew
+Which of these contacts matches this author:	Martin Renner
+
+		1581	null	Martin Renner	Tern Again Consulting
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1581
+
+		1581	null	Martin Renner	Tern Again Consulting	(mrenner@gmx.com)
+
+Is this the author? (y/n)  > y
+--------------------------------------------------------------------------------
+  BEST:  102.278
+		Hunt, George L., Martin Renner, Kathy Kuletz, John Piatt, Gary Drew
+Which of these contacts matches this author:	John Piatt
+
+		1582	null	John Piatt	USGS
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1582
+
+		1582	null	John Piatt	USGS	(john_piatt@usgs.gov)
+
+Is this the author? (y/n)  > y
+--------------------------------------------------------------------------------
+  BEST:  102.278
+		Hunt, George L., Martin Renner, Kathy Kuletz, John Piatt, Gary Drew
+Which of these contacts matches this author:	Gary Drew
+
+		1583	null	Gary Drew	USGS
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1583
+
+		1583	null	Gary Drew	USGS	(gary_drew@usgs.gov)
+
+Is this the author? (y/n)  > y
+--------------------------------------------------------------------------------
+  BEST:  102.279
+		Coyle, Ken and George L. Hunt
+Which of these contacts matches this author:	Ken Coyle
+
+		829	kcoyle	Ken Coyle	University of Alaska Fairbanks
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 829
+
+		829	kcoyle	Ken Coyle	University of Alaska Fairbanks	(coyle@ims.uaf.edu)
+
+Is this the author? (y/n)  > y
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1295, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.063';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BSIERP
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1298 for data set 245.B71-001
+Unable to find 1255 for data set 245.B71-001
+Unable to find 1254 for data set 245.B72-001
+Unable to find 1317 for data set 245.B74-001
+Unable to find 1322 for data set 245.B75-001
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1298, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B71-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1255, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B71-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1254, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B72-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1317, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B74-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1322, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B75-001';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+CASES-97
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ATDD
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-ATDD
+Please enter in a contact ID for this author, or press zero if unknown.
+>  543
+
+		543	null	null	Atmospheric Turbulence and Diffusion Division (ATDD), NOAA	(null)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+CuPIDO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+DC3
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	ESRL-GSD
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		ESRL-GSD
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1358
+
+		1358	null	null	Global Systems Division (GSD), Earth System Research Laboratory, NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1358 for data set 100.016
+Unable to find 1210 for data set 100.019
+Unable to find 1210 for data set 100.020
+Unable to find 1210 for data set 100.021
+Unable to find 1210 for data set 353.021
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NSSTC UAH
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NSSTC UAH
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1362
+
+		1362	null	null	National Space Science and Technology Center (NSSTC), University of Alabama - Huntsville	(null)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	D. Lauritsen
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		D. Lauritsen
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NSSL-WRDD
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-NSSL-WRDD
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1347
+
+		1347	null	null	Warning R & D Division (WRDD), National Severe Storms Laboratory, NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1347 for data set 353.089
+Unable to find 1347 for data set 353.093
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-CMDL
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-CMDL
+Please enter in a contact ID for this author, or press zero if unknown.
+>  541
+
+		541	null	null	Climate Monitoring and Diagnostic Laboratory (CMDL), NOAA	(null)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Univ. of New Hampshire
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Univ. of New Hampshire
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+--------------------------------------------------------------------------------
+  DC3:  353.163
+		Froyd, Karl, and Milos Markovic (NOAA-CSD) and Paul Lawson (SPEC Inc.)
+Which of these contacts matches this author:	SPEC Inc.
+
+		22	vidone	Vincent P. Idone	SUNY-A
+		449	mit/ll	null	Massachusetts Institute of Technology/Lincoln Laboratory
+		463	unl	null	University of Nebraska at Lincoln
+		481	qualimet	James Spots	Qualimetrics, Inc.
+		507	aeromet	null	Aeromet Inc.
+		525	null	null	Princeton University
+		1171	null	Alexei I. Pinchuk	null
+		1272	null	null	Exponent, Inc.
+		1291	null	null	LGL Alaska Research Associates Inc.
+		1317	null	Simone Vincenzi	University of California
+		1357	null	null	Weather Modification, Inc. (WMI)
+		1366	null	Mark A. Zondlo	Atmospheric Chemistry Group, Center for Mid-Infrared Technologies for Health and the Environment (MIRTHE), Princeton University
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-CSD
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-CSD
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1340
+
+		1340	null	null	Chemical Sciences Division (CSD), Earth System Research Laboratory, NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1340 for data set 353.164
+--------------------------------------------------------------------------------
+  DC3:  353.167
+		Langridge, Justin (NOAA)
+Which of these contacts matches this author:	NOAA
+
+		446	null	Ken Hadeen	National Climatic Data Center (NCDC), NOAA
+		454	null	null	National Severe Storms Laboratory (NSSL), NOAA
+		457	null	null	Satellite and Information Service (NESDIS), NOAA
+		460	null	null	Office of Aircraft Operations (OAO), NOAA
+		464	null	Marjorie Mcguirk	Forecast Systems Laboratory (FSL), NOAA
+		477	null	null	Wave Propagation Lab (WPL), NOAA
+		486	null	Frank Marks	Hurricane Research Division (HRD), NOAA
+		492	null	null	Aeronomy Laboratory (AL), NOAA
+		512	null	null	Air Resources Laboratory (ARL), NOAA
+		513	null	null	Pacific Marine Environmental Laboratory (PMEL), NOAA
+		524	null	null	Atlantic Oceanographic and Meteorological Laboratory (AOML), NOAA
+		532	null	null	Environmental Technology Laboratory (ETL), NOAA
+		534	null	null	Climate Diagnostic Center (CDC), NOAA
+		541	null	null	Climate Monitoring and Diagnostic Laboratory (CMDL), NOAA
+		543	null	null	Atmospheric Turbulence and Diffusion Division (ATDD), NOAA
+		551	null	null	Climate Prediction Center (CPC), NOAA
+		567	null	null	National Data Buoy Center (NDBC), NOAA
+		573	null	null	Aircraft Operations Center (AOC), NOAA
+		642	null	null	Comprehensive Large Array-data Stewardship System (CLASS), NOAA
+		751	null	null	Global Historical Climatology Network (GHCN), NOAA
+		785	null	null	World Data Center (WDC) for Paleoclimatology, National Geophysical Data Center, NOAA
+		1210	null	null	Earth System Research Labortory (ESRL), NOAA
+		1304	null	null	National Centers for Environmental Prediction (NCEP), NOAA
+		1340	null	null	Chemical Sciences Division (CSD), Earth System Research Laboratory, NOAA
+		1341	null	null	Global Monitoring Division (GMD), Earth System Research Laboratory, NOAA
+		1342	null	null	Global Forecast System (GFS), National Centers for Environmental Prediction, NOAA
+		1343	null	null	Physical Sciences Division (PSD), Earth System Research Laboratory, NOAA
+		1344	null	null	National Geophysical Data Center (NGDC), NOAA
+		1345	null	null	National Operational Hydrologic Remote Sensing Center (NOHRSC), NOAA
+		1346	null	null	National Hurricane Center (NHC), NOAA
+		1347	null	null	Warning R & D Division (WRDD), National Severe Storms Laboratory, NOAA
+		1348	null	null	Ocean Chemistry Division (OCD), Atlantic Oceanographic and Meteorological Laboratory, NOAA
+		1354	null	null	Storm Prediction Center (SPC), National Centers for Environmental Prediction, NOAA
+		1358	null	null	Global Systems Division (GSD), Earth System Research Laboratory, NOAA
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	D. Futterer
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		D. Futterer
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	K. Heimerl
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		K. Heimerl
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Daniel Sauer
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Daniel Sauer
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+Unable to find 1412 for data set 353.171
+Found 1493 for data set 353.181 and has sort_key of 65534 (instead of 1).
+Found 1460 for data set 353.181 and has sort_key of 65534 (instead of 2).
+Found 1498 for data set 353.181 and has sort_key of 2 (instead of 3).
+Found 1376 for data set 353.181 and has sort_key of 3 (instead of 4).
+Found 238 for data set 353.184 and has sort_key of 65534 (instead of 1).
+Found 917 for data set 353.184 and has sort_key of 65534 (instead of 2).
+Found 1455 for data set 353.184 and has sort_key of 2 (instead of 3).
+Found 1568 for data set 353.184 and has sort_key of 3 (instead of 4).
+Found 1144 for data set 353.184 and has sort_key of 4 (instead of 5).
+Found 526 for data set 353.184 and has sort_key of 5 (instead of 6).
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NASA-LARC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NASA-LARC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  964
+
+		964	nasa/larc	null	Langley Research Center (LaRC), NASA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 964 for data set 353.187
+Unable to find 964 for data set 353.188
+Unable to find 964 for data set 353.189
+Unable to find 964 for data set 353.190
+Unable to find 964 for data set 353.191
+Unable to find 964 for data set 353.192
+Unable to find 964 for data set 353.193
+Unable to find 964 for data set 353.194
+Unable to find 964 for data set 353.195
+Unable to find 964 for data set 353.196
+Unable to find 964 for data set 353.197
+Found 806 for data set 353.199 and has sort_key of 2 (instead of 1).
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1358, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '100.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '100.019';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '100.020';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '100.021';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.021';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1347, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.089';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1347, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.093';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1340, 'author', 3, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.164';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1412, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.171';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 66426 and contact_id = 1493;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 66426 and contact_id = 1460;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 66426 and contact_id = 1498;
+
+update dataset_contact set sort_key = 4 where iso_citation_role = 'author' and dataset_id = 66426 and contact_id = 1376;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 66429 and contact_id = 238;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 66429 and contact_id = 917;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 66429 and contact_id = 1455;
+
+update dataset_contact set sort_key = 4 where iso_citation_role = 'author' and dataset_id = 66429 and contact_id = 1568;
+
+update dataset_contact set sort_key = 5 where iso_citation_role = 'author' and dataset_id = 66429 and contact_id = 1144;
+
+update dataset_contact set sort_key = 6 where iso_citation_role = 'author' and dataset_id = 66429 and contact_id = 526;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.187';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.188';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.189';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.190';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.191';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.192';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.193';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.194';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.195';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.196';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '353.197';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 66444 and contact_id = 806;
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+DYNAMO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	M. Dixon
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		M. Dixon
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-CPC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-CPC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  551
+
+		551	null	null	Climate Prediction Center (CPC), NOAA	(null)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	REMSS
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		REMSS
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+Unable to find 514 for data set 347.058
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NSSL
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-NSSL
+Please enter in a contact ID for this author, or press zero if unknown.
+>  454
+
+		454	null	null	National Severe Storms Laboratory (NSSL), NOAA	(null)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	UCAR-COSMIC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		UCAR-COSMIC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1367
+
+		1367	null	null	Constellation Observing System for Meteorology, Ionosphere, and Climate (COSMIC), UCAR	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1367 for data set 347.132
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 514, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '347.058';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1367, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '347.132';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+EPIC
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NDBC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-NDBC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  567
+
+		567	null	null	National Data Buoy Center (NDBC), NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 573 for data set 72.024
+Unable to find 573 for data set 72.046
+Unable to find 573 for data set 72.061
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-AL
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-AL
+Please enter in a contact ID for this author, or press zero if unknown.
+>  492
+
+		492	null	null	Aeronomy Laboratory (AL), NOAA	(null)
+
+Is this the author? (y/n)  > y
+--------------------------------------------------------------------------------
+  EPIC:  72.113
+		Morley
+Which of these known contacts matches this author:	Morley
+
+		1217	null	Rebecca Morley	Applied Physics Lab/Univ of WA
+		1563	null	Bruce Morley	NCAR-EOL-RSF
+
+Press zero to select none of the above or enter your own contact id.
+--------------------------------------------------------------------------------
+> 1563
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '72.024';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '72.046';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '72.061';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+HIPPO-1
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ESRL-GMD
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-ESRL-GMD
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1341
+
+		1341	null	null	Global Monitoring Division (GMD), Earth System Research Laboratory, NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1210 for data set 112.012
+Unable to find 1210 for data set 112.013
+Unable to find 1210 for data set 112.015
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	UCSD-SCRIPPS
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		UCSD-SCRIPPS
+Please enter in a contact ID for this author, or press zero if unknown.
+>  509
+
+		509	sio	null	Scripps Institute of Oceanography	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 509 for data set 112.016
+Unable to find 509 for data set 112.017
+Unable to find 1210 for data set 112.019
+Unable to find 1210 for data set 112.020
+Unable to find 1210 for data set 112.027
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '112.012';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '112.013';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '112.015';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 509, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '112.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 509, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '112.017';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '112.019';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '112.020';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '112.027';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+HIPPO-2
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	UW-CIMSS
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		UW-CIMSS
+Please enter in a contact ID for this author, or press zero if unknown.
+>  963
+
+		963	null	null	Cooperative Institute for Meteorological Satellite Studies (CIMSS), Space Science & Engineering Center, University of Wisconsin-Madison	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1210 for data set 117.088
+Unable to find 1210 for data set 117.089
+Unable to find 1210 for data set 117.090
+Unable to find 509 for data set 117.091
+Unable to find 509 for data set 117.092
+Unable to find 1210 for data set 117.094
+Unable to find 1210 for data set 117.102
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '117.088';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '117.089';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '117.090';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 509, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '117.091';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 509, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '117.092';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '117.094';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '117.102';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+HIPPO-3
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1210 for data set 121.010
+Unable to find 509 for data set 121.015
+Unable to find 509 for data set 121.016
+Unable to find 1210 for data set 121.017
+Unable to find 1210 for data set 121.020
+Unable to find 1210 for data set 121.021
+Unable to find 1210 for data set 121.024
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '121.010';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 509, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '121.015';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 509, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '121.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '121.017';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '121.020';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '121.021';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '121.024';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+HIPPO-4
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1210 for data set 248.014
+Unable to find 1210 for data set 248.016
+Unable to find 1210 for data set 248.017
+Unable to find 509 for data set 248.022
+Unable to find 509 for data set 248.023
+Unable to find 1210 for data set 248.025
+Unable to find 1210 for data set 248.026
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '248.014';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '248.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '248.017';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 509, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '248.022';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 509, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '248.023';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '248.025';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '248.026';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+HIPPO-5
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1210 for data set 249.014
+Unable to find 1210 for data set 249.016
+Unable to find 509 for data set 249.021
+Unable to find 509 for data set 249.022
+Unable to find 1210 for data set 249.024
+Unable to find 1210 for data set 249.025
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '249.014';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '249.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 509, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '249.021';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 509, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '249.022';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '249.024';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '249.025';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ICE-L
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NCAR-RAL
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NCAR-RAL
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NCEP-GFS
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-NCEP-GFS
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1342
+
+		1342	null	null	Global Forecast System (GFS), National Centers for Environmental Prediction, NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1342 for data set 105.046
+Unable to find 632 for data set 105.109
+Unable to find 806 for data set 105.109
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1342, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '105.046';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 632, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '105.109';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 806, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '105.109';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ICE-T
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ICEBRIDGE
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-1
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-2
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-3
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-4_C130
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-4_GV
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IHOP_2002
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	UMass
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		UMass
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1377
+
+		1377	null	null	University of Massachusetts Amherst	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1210 for data set 77.041
+Unable to find 1210 for data set 77.079
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ETL
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-ETL
+Please enter in a contact ID for this author, or press zero if unknown.
+>  532
+
+		532	null	null	Environmental Technology Laboratory (ETL), NOAA	(null)
+
+Is this the author? (y/n)  > y
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '77.041';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 3, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '77.079';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+INDOEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-PMEL
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-PMEL
+Please enter in a contact ID for this author, or press zero if unknown.
+>  513
+
+		513	null	null	Pacific Marine Environmental Laboratory (PMEL), NOAA	(null)
+
+Is this the author? (y/n)  > y
+--------------------------------------------------------------------------------
+  INDOEX:  22.039
+		Heymsfield, Andy (NCAR)
+Which of these contacts matches this author:	NCAR
+
+		444	ncar/scd	Roy Jenne	National Center for Atmospheric Research
+		448	ncar/rdp	null	National Center for Atmospheric Research
+		490	ncar/mmm	Daniel Breed	NCAR/Mesoscale and Microscale Meteorology Division
+		508	ncar/raf	null	NCAR/EOL Research Aviation Facility
+		511	ncar/iss	null	NCAR Integrated SOunding System
+		520	ncar/atd	null	NCAR Atmospheric Technology Division
+		526	null	null	NCAR Atmospheric Chemistry Division (ACD)
+		572	null	null	Advanced Study Program (ASP), NCAR
+		954	null	null	UCAR/NCAR - Earth Observing Laboratory/Computing, Data, and Software Facility
+		1014	null	null	NCAR Research Applications Laboratory
+		1442	null	null	Earth System Laboratory (ESL), NCAR
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-CIRES-ETL
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-CIRES-ETL
+Please enter in a contact ID for this author, or press zero if unknown.
+>  532
+
+		532	null	null	Environmental Technology Laboratory (ETL), NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 513 for data set 22.104
+Unable to find 513 for data set 22.105
+Unable to find 513 for data set 22.106
+Unable to find 513 for data set 22.107
+--------------------------------------------------------------------------------
+  INDOEX:  22.155
+		Wagner/Schiller/Fischer (Max Planck Institute)
+Which of these known contacts matches this author:	Wagner
+
+		1120	null	Tim Wagner	null
+		1489	null	Nicholas L. Wagner	NOAA
+		1528	null	Volker Wagner	Max Planck Institute for Chemistry
+
+Press zero to select none of the above or enter your own contact id.
+--------------------------------------------------------------------------------
+> 1528
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Schiller
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Schiller
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+--------------------------------------------------------------------------------
+  INDOEX:  22.156
+		Wagner/Schiller/Fischer (Max Planck Institute)
+Which of these known contacts matches this author:	Wagner
+
+		1120	null	Tim Wagner	null
+		1489	null	Nicholas L. Wagner	NOAA
+		1528	null	Volker Wagner	Max Planck Institute for Chemistry
+
+Press zero to select none of the above or enter your own contact id.
+--------------------------------------------------------------------------------
+> 1528
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ESRL-CSD
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-ESRL-CSD
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1340
+
+		1340	null	null	Chemical Sciences Division (CSD), Earth System Research Laboratory, NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1340 for data set 22.163
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 513, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '22.104';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 513, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '22.105';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 513, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '22.106';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 513, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '22.107';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1340, 'author', 3, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '22.163';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ITEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ITOP
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NCEP
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-NCEP
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1304
+
+		1304	null	null	National Centers for Environmental Prediction (NCEP), NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1304 for data set 209.038
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-AOML
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-AOML
+Please enter in a contact ID for this author, or press zero if unknown.
+>  524
+
+		524	null	null	Atlantic Oceanographic and Meteorological Laboratory (AOML), NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1210 for data set 209.098
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NCDC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-NCDC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  446
+
+		446	null	Ken Hadeen	National Climatic Data Center (NCDC), NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 446 for data set 209.099
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1304, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '209.038';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '209.098';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 446, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '209.099';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+LPB
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+MILAGRO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+MPEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+NAME
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ESRL-PSD
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-ESRL-PSD
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1343
+
+		1343	null	null	Physical Sciences Division (PSD), Earth System Research Laboratory, NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1343 for data set 82.076
+Unable to find 1343 for data set 82.103
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-CLASS
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-CLASS
+Please enter in a contact ID for this author, or press zero if unknown.
+>  642
+
+		642	null	null	Comprehensive Large Array-data Stewardship System (CLASS), NOAA	(info@class.noaa.gov)
+
+Is this the author? (y/n)  > y
+Unable to find 642 for data set 82.160
+Unable to find 642 for data set 82.161
+Unable to find 642 for data set 82.162
+Unable to find 1343 for data set 82.277
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1343, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.076';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1343, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.103';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 642, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.160';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 642, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.161';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 642, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.162';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1343, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.277';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PACDEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1340 for data set 96.003
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1340, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '96.003';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PacMARS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.014
+		Bluhm, B. A., I. R. MacDonald, C. Debenham, K. Iken
+Which of these contacts matches this author:	I. R. MacDonald
+
+		1574	null	Ian R. MacDonald	Department of Oceanography, Florida State University
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1574
+
+		1574	null	Ian R. MacDonald	Department of Oceanography, Florida State University	(imacdonald@fsu.edu)
+
+Is this the author? (y/n)  > y
+--------------------------------------------------------------------------------
+  PacMARS:  255.014
+		Bluhm, B. A., I. R. MacDonald, C. Debenham, K. Iken
+Which of these contacts matches this author:	C. Debenham
+
+		1575	null	C. Debenham	School of Fisheries and Ocean Sciences, Institute of Marine Science, University of Alaska Fairbanks
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1575
+
+		1575	null	C. Debenham	School of Fisheries and Ocean Sciences, Institute of Marine Science, University of Alaska Fairbanks	(null)
+
+Is this the author? (y/n)  > y
+--------------------------------------------------------------------------------
+  PacMARS:  255.014
+		Bluhm, B. A., I. R. MacDonald, C. Debenham, K. Iken
+Which of these contacts matches this author:	K. Iken
+
+		1165	null	Katrin Iken 	University of Alaska - Fairbanks, Institute of Marine Science
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1165
+
+		1165	null	Katrin Iken 	University of Alaska - Fairbanks, Institute of Marine Science	(kbiken@alaska.edu)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PACS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PASE
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Hiekes
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Hiekes
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PLOWS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1304 for data set 113.002
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NOHRSC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-NOHRSC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1345
+
+		1345	null	null	National Operational Hydrologic Remote Sensing Center (NOHRSC), NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1345 for data set 113.013
+Unable to find 1304 for data set 113.028
+Unable to find 1304 for data set 113.034
+Unable to find 1304 for data set 113.035
+Unable to find 1345 for data set 113.047
+Unable to find 1345 for data set 113.048
+Unable to find 1304 for data set 113.055
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1304, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '113.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1345, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '113.013';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1304, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '113.028';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1304, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '113.034';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1304, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '113.035';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1345, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '113.047';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1345, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '113.048';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1304, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '113.055';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+POST
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  POST:  111.050
+		Patrick Chuang
+Which of these contacts matches this author:	Patrick Chuang
+
+		48	pchuang	Patrick Chuang	SDMC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 48
+
+		48	pchuang	Patrick Chuang	SDMC	(pchuang@es.ucsc.edu)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PREDICT
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+RAINEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 573 for data set 88.022
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-HRD
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-HRD
+Please enter in a contact ID for this author, or press zero if unknown.
+>  486
+
+		486	null	Frank Marks	Hurricane Research Division (HRD), NOAA	(null)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	TAMU-Corpus
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		TAMU-Corpus
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1404
+
+		1404	null	null	Texas A&M University - Corpus Christi	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1404 for data set 88.067
+Unable to find 573 for data set 88.178
+Unable to find 573 for data set 88.179
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NHC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-NHC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1346
+
+		1346	null	null	National Hurricane Center (NHC), NOAA	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1346 for data set 88.193
+Unable to find 573 for data set 88.204
+Unable to find 573 for data set 88.205
+Unable to find 573 for data set 88.207
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.022';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1404, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.067';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.178';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.179';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1346, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.193';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.204';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.205';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.207';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+RICO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NGDC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NOAA-NGDC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1344
+
+		1344	null	null	National Geophysical Data Center (NGDC), NOAA	(ngdc.info@noaa.gov)
+
+Is this the author? (y/n)  > y
+Unable to find 1344 for data set 87.038
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1344, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.038';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SAANGRIA-TEST
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SALLJEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 573 for data set 83.001
+Unable to find 573 for data set 83.008
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '83.001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '83.008';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SAS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Dean Lauritsen
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Dean Lauritsen
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NCAR-ESL
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NCAR-ESL
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1442
+
+		1442	null	null	Earth System Laboratory (ESL), NCAR	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1442 for data set 373.016
+Unable to find 573 for data set 373.019
+--------------------------------------------------------------------------------
+  SAS:  373.020
+		Ambrose, Jesse L., Lynne Gratz, and Dan Jaffe (Univ. of Wash-Bothell)
+Which of these contacts matches this author:	Jesse L. Ambrose
+
+		790	null	William G. Ambrose Jr.	Bates College - Department of Biology
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Lynne Gratz
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Lynne Gratz
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+--------------------------------------------------------------------------------
+  SAS:  373.020
+		Ambrose, Jesse L., Lynne Gratz, and Dan Jaffe (Univ. of Wash-Bothell)
+Which of these contacts matches this author:	Dan Jaffe
+
+		20	bjafferies	Bill Jafferies	NASA/KSC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+Unable to find 1584 for data set 373.020
+--------------------------------------------------------------------------------
+  SAS:  373.024
+		Cantrell, Chris (CU-ATOC)
+Which of these contacts matches this author:	Chris Cantrell
+
+		272	wcantrell	Will Cantrell	Indiana University
+		922	ccantrell	Christopher A Cantrell	NESL/NCAR
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	CU-ATOC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		CU-ATOC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+--------------------------------------------------------------------------------
+  SAS:  373.025
+		Mauldin, Roy Lee (CU-ATOC)
+Which of these contacts matches this author:	Roy Lee Mauldin
+
+		749	lmauldin	Lee Mauldin	NCAR/ACD
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1442, 'author', 3, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '373.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 573, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '373.019';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1584, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '373.020';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SBI
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SHEBA
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SPRITES-II
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+START08
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	CU-LASP
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		CU-LASP
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1409
+
+		1409	null	null	Laboratory for Atmospheric and Space Physics (LASP), University of Colorado - Boulder	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1409 for data set 107.015
+Unable to find 1340 for data set 107.016
+Unable to find 1210 for data set 107.018
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1409, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '107.015';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1340, 'author', 3, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '107.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '107.018';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+T-28
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+T-PARC
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	BMRC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		BMRC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+Unable to find 446 for data set 110.029
+Unable to find 1304 for data set 110.056
+Unable to find 1304 for data set 110.057
+Unable to find 1304 for data set 110.059
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	UK MetOffice
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		UK MetOffice
+Please enter in a contact ID for this author, or press zero if unknown.
+>  1411
+
+		1411	null	null	UK Met Office (UKMO)	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 1411 for data set 110.068
+Unable to find 1443 for data set 110.90
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 446, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '110.029';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1304, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '110.056';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1304, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '110.057';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1304, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '110.059';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1411, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '110.068';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1443, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '110.90';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+T-REX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1411 for data set 92.046
+Unable to find 642 for data set 92.063
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1411, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '92.046';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 642, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '92.063';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+TIMREX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Scott Ellis
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Scott Ellis
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+Unable to find 812 for data set 119.003
+--------------------------------------------------------------------------------
+  TIMREX:  119.004
+		Lee, Wen-Chau, Robert Rilling (NCAR)
+Which of these contacts matches this author:	Robert Rilling
+
+		841	rilling	Bob Rilling	NCAR/EOL/CDS
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 841
+
+		841	rilling	Bob Rilling	NCAR/EOL/CDS	(rilling@ucar.edu)
+
+Is this the author? (y/n)  > y
+Unable to find 812 for data set 119.004
+Unable to find 841 for data set 119.004
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 812, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '119.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 812, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '119.004';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 841, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '119.004';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+TORERO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1340 for data set 352.067
+Unable to find 1340 for data set 352.068
+Unable to find 1210 for data set 352.078
+Unable to find 1409 for data set 352.080
+Unable to find 1409 for data set 352.081
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1340, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '352.067';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1340, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '352.068';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1210, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '352.078';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1409, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '352.080';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1409, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '352.081';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+VOCALS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1304 for data set 89.105
+--------------------------------------------------------------------------------
+  VOCALS:  89.106
+		Munoz (DGF, U. Chile)
+Which of these known contacts matches this author:	Munoz
+
+		1102	null	Esther Munoz	School of Oceanography
+		1391	null	Ricardo Munoz	Departamento de Geofisica (DGF), Universidad de Chile
+
+Press zero to select none of the above or enter your own contact id.
+--------------------------------------------------------------------------------
+> 1391
+
+--------------------------------------------------------------------------------
+  VOCALS:  89.107
+		Munoz (DGF, U. Chile)
+Which of these known contacts matches this author:	Munoz
+
+		1102	null	Esther Munoz	School of Oceanography
+		1391	null	Ricardo Munoz	Departamento de Geofisica (DGF), Universidad de Chile
+
+Press zero to select none of the above or enter your own contact id.
+--------------------------------------------------------------------------------
+> 1391
+
+--------------------------------------------------------------------------------
+  VOCALS:  89.129
+		Chuang, P. (U. California-Santa Cruz)
+Which of these contacts matches this author:	P. Chuang
+
+		48	pchuang	Patrick Chuang	SDMC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 48
+
+		48	pchuang	Patrick Chuang	SDMC	(pchuang@es.ucsc.edu)
+
+Is this the author? (y/n)  > y
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	U. California-Irvine
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		U. California-Irvine
+Please enter in a contact ID for this author, or press zero if unknown.
+>  514
+
+		514	uci	null	University of California - Irvine	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 514 for data set 89.138
+Unable to find 514 for data set 89.139
+Unable to find 1340 for data set 89.165
+Unable to find 536 for data set 89.171
+Unable to find 536 for data set 89.172
+Unable to find 826 for data set 98.113
+Unable to find 575 for data set 98.113
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1304, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '89.105';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 514, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '89.138';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 514, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '89.139';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1340, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '89.165';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 536, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '89.171';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 536, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '89.172';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 826, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '98.113';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 575, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '98.113';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+VORTEX2
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+WAMME
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1411 for data set 95.005
+Unable to find 1411 for data set 95.006
+Unable to find 1411 for data set 95.008
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NCAR-ASP
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		NCAR-ASP
+Please enter in a contact ID for this author, or press zero if unknown.
+>  572
+
+		572	null	null	Advanced Study Program (ASP), NCAR	(null)
+
+Is this the author? (y/n)  > y
+Unable to find 572 for data set 95.013
+Unable to find 572 for data set 95.014
+Unable to find 572 for data set 95.015
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1411, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '95.005';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1411, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '95.006';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1411, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '95.008';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 572, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '95.013';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 572, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '95.014';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 572, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '95.015';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

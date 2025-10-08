@@ -1,0 +1,632 @@
+#!/bin/perl -w
+
+#----------------------------------------------------
+# query_daily: 
+#		This script is run as a cronjob on hurricane.  Each
+#		day it queries mass store to see what new data has 
+#		been added for the previous day.  It only looks at
+#		the previous day so will not catch any additions for
+#		previous years.
+#
+# Author: Dan Sullivan
+# Date: Summer, 2002
+#----------------------------------------------------
+
+use lib "/home/suldan/mass_store/perl/lib";
+use DayRecord;
+use FileRecord;
+use Table;
+use QC;
+use Schedule;
+use Event;
+use Time;
+use DBI;
+
+my $date = $ARGV[0];
+my $today;
+
+if( !defined( $date ) )
+{
+	# Get today's and yesterday's date
+	my $d = `date +%j`;
+	chop( $d );
+	my $y = `date +%y`;
+	chop( $y );
+	$y = 2000 + $y;
+
+	$today = $y . $d;
+	$d = $d - 1;
+	$date = $today - 1; 
+}
+else
+{
+	$today = $date + 1;
+}
+	#$today = "2003093";
+#$date = "2003092";
+
+print( "date proc: $date\n" );
+print( "today: $today\n" );
+
+
+#exit 0;
+
+my $dbh = connectToDB();
+
+# Pull the schedules from the database
+my %routine_sch;
+my %rso_sch;
+my %srso_sch;
+
+$routine_sch{G12} = getSchedule( "G12" );
+$routine_sch{G10} = getSchedule( "G10" );
+
+$rso_sch{"G12"} = getSchedule( "G12/RSO" );
+$rso_sch{"G10"} = getSchedule( "G10/RSO" );
+
+$srso_sch{"G12"} = getSchedule( "G12/SRSO" );
+$srso_sch{"G10"} = getSchedule( "G10/SRSO" );
+
+my @intervals;
+my $int_count;
+
+my $year = substr( $date, 0, 4 );
+
+# Path on the mass store
+my $path = "/JOSS/DATA/RAW/SATELLITE/GOES";
+
+# Each satellite and each resolution
+my @sat = ( "G10", "G12" );
+my @res = ( "1KM", "4KM" );
+
+# Get the last id number of the DayTable
+$id = getLastId();
+
+# Loop through each satellite and each resolution
+foreach $satellite (@sat)
+{
+	foreach $resolution (@res )
+	{
+		my $prev_tm = 0;
+		$id++;
+		my $fileTable = Table->new();
+		my $totSize = 0;
+
+		# Establish a new DayRecord
+		my $day = DayRecord->new();
+		$day->{id} = $id;
+		$day->{satellite} = $satellite;
+		$day->{resolution} = $resolution;
+		$day->{date} = $date;
+		$day->{path} = "$path/$satellite/$resolution/$year/$date";
+
+		# List the files on mass store for this day
+		my @files = `/opt/dcs/bin/msls -l $day->{path}`;
+		my $size = @files;
+		if( $size == 0 )
+		{
+			print( "WARNING: The path does not exist, skipping $date $satellite $resolution\n" );
+			next;
+		}	
+
+		# Set the number of files
+		$day->{nfiles} = @files - 1;
+
+		# Loop through each file and get the needed information	
+		for( my $x = 1; $x < @files; $x++ )
+		{
+			my $file = $files[$x];
+			chop( $file );
+
+			# Start a new file record
+			$fileRec = getFileRecord( $file );
+		
+			# Set the day record id number this file belongs to
+			$fileRec->{day_id} = $id;
+
+			# Add the file record to the table
+			$fileTable->addRecord( $fileRec );
+
+			# Add this file's size to the total size for this day
+			$totSize += $fileRec->{size};
+
+			# Set the path
+			$fileRec->{path} = $day->{path} . "/" . $fileRec->{path};
+
+			# Flag this day has having missing data if there is a one hour
+ 			#  time block that contains no data
+			if( $fileRec->{out_time} - $prev_tm > 100 )
+			{
+				$day->{missing} = 1;
+			}
+			$prev_tm = $fileRec->{out_time};
+		}	
+
+		# Get the first file of the next day
+		my $nxtPath = "$path/$satellite/$resolution/$year/$today";
+		my @nxtFile = `/opt/dcs/bin/msls -l $nxtPath | head -2`;
+		my $nSize = @nxtFile;
+
+		if( $nSize != 0 )
+		{
+			chop( $nxtFile[1] );	
+			$day->{nxtFile} = getFileRecord( $nxtFile[1] );
+		}
+		else
+		{
+			print( "WARNING: The path for today $nxtPath does not exist, yet\n" ); 
+			$day->{nxtFile} = undef;
+		}
+
+		if( $prev_tm < 2300 )
+		{
+			$day->{missing} = 1;
+		}
+
+		$day->{nfiles} = $fileTable->{count};
+		$day->{size} = $totSize;
+
+		#-----------------------------------------------------------------
+		# Match the schedule to the files for this day.
+		#	This is performed in three phases.  First all of the files are
+		# compared to the routine schedule.  When the sector of a file 
+		# cannot be determined it is marked as 'unknown'.  The second phase looks
+		# for periods where there are many unknowns and tries to match these
+		# periods to the rapid scan schedule.  This is then performed a third
+		# time, looking for periods with several unknowns, using the super
+		# rapid scan schedule.
+		#
+		# Match with the routine schedule
+		matchRoutine( $fileTable, $routine_sch{$satellite} );	
+
+		# Match with the rapid scan schedule
+		matchSectors( $fileTable, $satellite, $rso_sch{$satellite}, \&matchRSO );	
+
+		# Match with the super rapid scan schedule
+		matchSectors( $fileTable, $satellite, $srso_sch{$satellite}, \&matchSRSO );	
+		#-----------------------------------------------------------------
+
+		# Write a summary to the screen
+		$day->write( *STDOUT );
+
+		# Add the DayRecord to the database
+		$day->addToDB( $dbh );
+
+		# Write a sumary to the screen
+		$fileTable->write( *STDOUT );
+
+		# Add all of the FileRecords to the database
+		$fileTable->addToDB( $dbh );
+	}
+}
+$dbh->disconnect();
+
+sub connectToDB
+{
+	return DBI->connect( "DBI:mysql:database=suldan;host=thunder",
+												"suldan", "hithere", {RaiseError=>1} ) || die( "Unable to Connect to database" );
+}
+
+sub getLastId
+{
+	my $sql = "SELECT MAX(id) FROM DayTable";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute;
+	my @row = $sth->fetchrow();
+	$sth->finish();
+	return $row[0];
+}
+
+sub getSchedule
+{
+  my $sat = shift;
+  my @row;
+
+  my $sql = "SELECT Schedule.id, Schedule.time, Schedule.sector, Sector.abrv, Sector.duration FROM Schedule, Sector WHERE " .
+            "Schedule.sector=Sector.id and Schedule.satellite=\"$sat\" ORDER BY Schedule.time";
+  my $sch = Schedule->new();
+
+  my $sth = $dbh->prepare( $sql );
+  $sth->execute();
+
+  while( (@row=$sth->fetchrow()) )
+  {
+    my $event = Event->new( $row[0], Time->new( roundTime( $row[1] ) ), $row[2], $row[3], Time->new( $row[4] ) );
+    $sch->addEvent( $event );
+  }
+
+  $sth->finish();
+  return $sch;
+}
+
+
+
+
+sub convertTime
+{  
+  my $time = shift;
+  my $hour = int($time / 100);
+  my $min = $time - int($hour * 100);
+
+  return( sprintf( "%2.2d", $hour) . ":" . sprintf( "%2.2d", $min ) . ":00\n" );
+}
+
+sub roundTime
+{
+	my $time = shift;
+	my @arr = split( /:/, $time );
+
+	my $hr = $arr[0];
+	my $mn = $arr[1];
+	my $sc = $arr[2];
+
+	if( $sc >= 30 )
+	{ $mn++; }
+	$sc = 0;
+
+	if( $mn >= 60 )
+	{
+		$mn -= 60;
+		$hr++;
+	}
+	if( $hr >= 24 )
+	{
+		$hr -= 24;
+	}
+
+	return( sprintf( "%2.2d", $hr ) . ":" . sprintf( "%2.2d", $mn ) . ":00" );
+}
+
+
+sub getFileRecord
+{
+	my $file = shift;
+	
+	my $fileRec = FileRecord->new();
+	my @data = split( / +/, $file );
+	my @dt_tm = split( /\./, $data[8] );
+
+	$fileRec->{date} = $dt_tm[1];
+	$fileRec->{time} = Time->new( convertTime( $dt_tm[2] ) );
+
+	$fileRec->{out_time} = $dt_tm[2];
+	$fileRec->{size} = $data[4] / 1000;
+	$fileRec->{path} = $data[8];	
+	return $fileRec;
+}
+
+
+#-----------------------------------------------------------------
+# Loops through all of the files in a day and determines intervals
+#  where there are several 'unknown' sectors.  Then sends these
+#  intervals to the appropriate matching subroutine to match the
+#  files with the sectors. 
+#-----------------------------------------------------------------
+sub matchSectors
+{
+	my $day = shift;
+	my $sat = shift;
+	my $sch = shift;
+	my $sect_match = shift;
+
+	my $start = -1;
+	my $end = -1;
+	my $prev_uk = -1;
+
+	my $count = 0;
+	my $uk = 0;
+
+	my $c = $day->{count};
+
+	for( my $x = 0; $x < $c; $x++ )
+	{
+		if( $day->{array}[$x]->{sector} == 11 )
+		{
+			$uk++;
+			if( $prev_uk == -1 )
+			{ $prev_uk = $x; }
+			elsif( $start == -1 )
+			{
+				my $diff = Time::minuteDiff( $day->{array}[$x]->{time}, $day->{array}[$prev_uk]->{time} );
+				if( abs( $diff ) < 90 )
+				{
+					$start = $prev_uk; 
+				}
+				$prev_uk = $x;
+			}
+			else
+			{
+				my $diff = Time::minuteDiff( $day->{array}[$x]->{time}, $day->{array}[$prev_uk]->{time} );
+				if( abs( $diff ) > 60 )
+				{
+					$end = $prev_uk; 
+					$count = $end - $start + 1;
+
+					my $fac = int( $count / $uk );
+					if( $fac <= 3 && ($end - $start) > 1 )
+					{
+						$sect_match->( $day, $sat, $sch, $start, $end );
+					}
+					$end = -1;
+					$start = -1;
+					$uk = 0;
+				}
+				$prev_uk = $x;
+			}
+		}
+	}
+
+	if( $prev_uk == $start )
+	{
+		$end = $c-1;
+	}
+	else
+	{
+		$end = $prev_uk;
+	}
+
+	my $fac = 99;
+	$count = ($end) - $start + 1;
+
+	if( $uk != 0 )
+	{ $fac = int( $count / $uk ); }
+
+	if( $start != -1 && $fac <= 3 && ($end - $start) > 1 )
+	{ $sect_match->( $day, $sat, $sch, $start, $end ); }
+}
+
+#-----------------------------------------------------------------
+# Matches the files with the rapid scan schedule.  Maintains the 
+#  intervals chosen to match in ther @intervals array in order to
+#  check later when matching for the SRSO.
+#-----------------------------------------------------------------
+sub matchRSO
+{
+	my $day = shift;
+	my $sat = shift;
+	my $sch = shift;
+	my $start = shift;
+	my $end = shift;
+
+	my $uk_count = 0;
+
+	# Store the interval matching
+	$intervals[$int_count++] = $start;
+	$intervals[$int_count++] = $end;
+
+	for( my $x = $start; $x <= $end; $x++ )
+	{
+		my $loc = 0;
+		my $file = $day->{array}[$x];
+		while( $loc < $sch->{count} )
+		{
+			my $diff = Time::minuteDiff( $file->{time}, $sch->{events}[$loc]->{time} );
+
+			if( abs( $diff ) <= 1 )
+			{
+				if( $x+1 ne $day->{count} )
+				{
+					$file->setSector( $sch->{events}[$loc], $day->{array}[$x+1] ); 
+				}
+				else
+				{
+					$file->{sector} = $sch->{events}[$loc]->{sector};
+					$file->{qc} = $OTHER;
+				}
+				last;
+			} 
+			elsif( $diff < 0 )
+			{
+				# no sector found for this file, have gone past in the sch
+				$file->{sector} = 11;
+				$file->{qc} = $UNKNOWN;
+				$uk_count++;
+				last;
+			}
+			$loc++;
+			#elsif( $diff > 0 )
+			#{} continue down the schedule 		
+		}
+	}
+
+	if( $uk_count != 0 && ($end - $start) / $uk_count <= 3 )
+	{
+		matchRoutine( $day, $routine_sch{$sat}, $start, $end );
+	}
+}
+
+#-----------------------------------------------------------------
+# This subroutine matches the files to the super rapid scan schedule
+#  in the given interval.  It first checks the @intervals array to
+#  see if a similar interval was matched for the rapid scan schedule
+#  if so it uses that interval to search for matches. 
+#-----------------------------------------------------------------
+sub matchSRSO
+{
+	my $day = shift;
+	my $sat = shift;
+	my $sch = shift;
+	my $start = shift;
+	my $end = shift;
+
+	my $uk_count = 0;
+
+	# Check to see if a similar inteval was used for the RSO.
+	#  if so, use that interval 
+	for( my $x = 0; $x < $int_count; $x+=2 )
+	{
+		if( $start > $intervals[$x] && $start < $intervals[$x+1] )
+		{
+			$start = $intervals[$x];
+			if( $intervals[$x+1] > $end )
+			{
+				$end = $intervals[$x+1];
+			}
+			last;
+		}
+	}
+
+	for( my $x = $start; $x <= $end; $x++ )
+	{
+		my $loc = 0;
+		my $file = $day->{array}[$x];
+		while( $loc < $sch->{count} )
+		{
+			my $diff = Time::minuteDiff( $file->{time}, $sch->{events}[$loc]->{time} );
+
+			if( abs( $diff ) <= 1 )
+			{
+				if( $x+1 ne $day->{count} )
+				{
+					$file->setSector( $sch->{events}[$loc], $day->{array}[$x+1] ); 
+				}
+				else
+				{
+					$file->{sector} = $sch->{events}[$loc]->{sector};
+					$file->{qc} = $OTHER;
+				}
+				last;
+			} 
+			elsif( $diff < 0 )
+			{
+				# no sector found for this file, have gone past in the sch
+				$file->{sector} = 11;
+				$file->{qc} = $UNKNOWN;
+				$uk_count++;
+				last;
+			}
+			$loc++;
+			#elsif( $diff > 0 )
+			#{} continue down the schedule 		
+		}
+	}
+
+	# Check to see if the matching was more or less successful.
+	# If 33% of the files are still unknown re-apply the routine
+	#  schedule.
+	if( $uk_count != 0 && ($end - $start) / $uk_count <= 3 )
+	{
+		matchRoutine( $day, $routine_sch{$sat}, $start, $end );
+	}
+}
+
+#-----------------------------------------------------------------
+# Match the files passed in the Table called day to the schedule.
+#  This subroutine can use any schedule but it was written with the
+#  routine schedule in mind.
+#-----------------------------------------------------------------
+sub matchRoutine
+{
+	my $day = shift;
+	my $sch = shift;
+	my $start = shift;
+	my $end = shift;
+
+	# Check to see if matching an interval or the whole day
+	if( !defined( $start ) || !defined( $end ) )
+	{
+		$start = 0;
+		$end = $day->{count} - 2;
+	}
+
+	my @files = @{$day->{array}};
+
+	for( my $x = $start; $x <= $end; $x++ )
+	{
+		my $loc = 0;
+		my $file = $files[$x];
+
+		while( $loc < $sch->{count} )
+		{
+			my $diff = Time::minuteDiff( $file->{time}, $sch->{events}[$loc]->{time} );
+
+			if( abs( $diff ) <= 1 )
+			{
+				$file->setSector( $sch->{events}[$loc], $files[$x+1] ); 
+				last;
+			} 
+			elsif( $diff < 0 )
+			{
+				# no sector found for this file, have gone past in the sch
+				$file->{sector} = 11;
+				$file->{qc} = $UNKNOWN;
+				last;
+			}
+			$loc++;
+			#elsif( $diff > 0 )
+			#{} continue down the schedule 		
+		}
+	}
+
+	# Check the last file of the day - find the sector first!!!
+	my $last = $day->{array}[$day->{count}-1];
+	$loc = 0;
+	my $sector = undef;
+	while( $loc < $sch->{count} )
+	{
+		my $diff = Time::minuteDiff( $last->{time}, $sch->{events}[$loc]->{time} );
+		if( abs( $diff ) <= 1 )
+		{
+			$sector = $sch->{events}[$loc]; 
+			last;
+		} 
+		elsif( $diff < 0 )
+		{
+			# no sector found for this file, have gone past in the sch
+			$sector = undef;
+			last;
+		}
+		$loc++;
+	}
+
+	if( !defined( $sector ) )
+	{
+		$last->{sector} = 11;
+		$last->{qc} = $UNKNOWN;
+	}
+	elsif( defined( $day->{nxtFile} ) )
+	{
+		my $remain = Time::minuteDiff( Time->new( "24:00:00" ), $last->{time} );
+		my $between = $remain + $day->{nxtFile}->{time}->{min};
+		#my $check_diff = Time::minuteDiff( $between, $sector->{duration} ); 
+		my $check_diff = $between - $sector->{duration}->{min};
+		my $diff = Time::minuteDiff( $last->{time}, $sector->{time} );
+
+		if( $check_diff < 0 )
+		{
+			$last->{sector} = 11;
+			$last->{qc} = $UNKNOWN;
+		}
+		elsif( $check_diff > 5 )
+		{
+			if( $diff == 0 )
+			{ $last->{qc} = $ZERO_UK; }
+			elsif( $diff > 0 )
+			{ $last->{qc} = $PONE_UK; }
+			elsif( $diff < 0 )
+			{ $last->{qc} = $MONE_UK; }
+			$last->{sector} = $sector->{sector};
+		}
+		else
+		{
+			if( $diff == 0 )
+			{ $last->{qc} = $ZERO_CP; }
+			elsif( $diff > 0 )
+			{ $last->{qc} = $PONE_CP; }
+			elsif( $diff < 0 )
+			{ $last->{qc} = $MONE_CP; }
+			$last->{sector} = $sector->{sector};
+		}
+	}
+	else
+	{
+		$last->{sector} = $sector->{sector};
+		my $diff = Time::minuteDiff( $last->{time}, $sector->{time} );
+		if( $diff == 0 )
+		{ $last->{qc} = $ZERO_UK; }
+		elsif( $diff > 0 )
+		{ $last->{qc} = $PONE_UK; }
+		elsif( $diff < 0 )
+		{ $last->{qc} = $MONE_UK; }
+	}
+}

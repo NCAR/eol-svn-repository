@@ -1,0 +1,435 @@
+INSTITUTE OF ATMOSPHERIC SCIENCE, 
+SCHOOL OF EARTH AND ENVIRONMENT (ENVIRONMENT),
+UNIVERSITY OF LEEDS,
+LEEDS LS2 9JT
+UK
+
+
+
+-------------------------
+T-REX RADIOSONDE DATA SET
+-------------------------
+
+
+0. Document Version
+-------------------
+
+Version 1.0: 12th October 2006.
+
+1. General Description
+----------------------
+
+These data represent the radiosonde data collected during the field
+phase of the T-REX experiment, 1st March - 30th April 2006. The data
+were collected at the site specified below. 
+
+2. Launch site
+--------------
+
+The launch site was situated next to the NCAR trailer at Independence
+Airport, 36.81N, 118.20W (WGS84).
+
+3. Sonde type
+-------------
+
+Sondes were of the Vaisala RS-80 variety. See Appendix for serial
+numbers of sondes launched.
+
+4. File names
+-------------
+
+Files are named according to
+
+YYYYMMDDHHMM.vsf
+
+where YYYY, MM, DD, HH and MM are the year, month, day, hour and minute
+of the radiosonde launch, respectively.
+
+5. File description
+-------------------
+
+Files are in ASCII format (the size of the files is sufficiently small
+that converting to netCDF (say) would not add any obvious benefit.) Each
+sonde file contains a header and 8 columns of data.
+
+A). Header
+
+An example header is shown below (for a file 200602282014.vsf):
+
+#0,3681,-11820,28,2,2006,20,14
+#TIME  PRESS  TEMP  HUM  SONDHT  RADHT   DIR  SPEED
+# s     hPa   degC   %     m       m     deg   m/s
+#       *10   *10                              *10
+
+Line 1: 
+
+#idum,lat*100,lon*100,DD,MM,YYYY,HH,MM
+
+(#0,3681,-11820,28,2,2006,20,14)
+
+contains a dummy variable, the latitude of the launch site (multiplied
+by 100, i.e. 36.81N), the longitude of the launch site (multiplied by
+100, i.e. 118.20W), the date (in this case 28 February 2006),
+and the time of launch (in this case 20:14). All times are UTC.
+
+The column labels follow; note that pressure, temperature and speed are
+multiplied by 10: this means that all fields are integer values.
+
+B) Data
+
+8 columns of data constitute the data record:
+
+TIME  PRESS  TEMP  HUM  SONDHT  RADHT   DIR  SPEED
+
+Col. 1: TIME (units: s)
+
+Time since sonde launch.
+
+Col. 2: PRESS (units: hPa)
+
+Pressure as recorded by the sonde.
+
+Col. 3: TEMP (units: degC)
+
+Air temperature as recorded by the sonde.
+
+Col. 4: HUM (units: % (percent))
+
+Relative humidity as recorded by the sonde.
+
+Col. 5: SONDHT (units: m)
+
+Height of the sonde above sea level.
+
+Col. 6: RADHT (units: m)
+
+Not to be used.
+
+Col. 7: DIR (units: deg)
+
+Wind direction as recorded by the sonde (degrees from True North).
+
+Col. 8: SPEED (units: m/s)
+
+Wind speed as recorded by the sonde.
+
+
+Notes:
+i) Missing values in any field are assigned the value -32768 
+ii) Relative humidity has *not been corrected* in any way. Suggested
+corrections are contained in, e.g.
+
+Fleming, R. J. "A Note on Temperature and Relative Humidity Corrections
+for Humidity Sensors", Journal of Atmospheric and Oceanic Technology,
+Volume 15, 1511-1515 (1998)
+
+Roy, B. and Halverson, J. B. "The influence of Radiosonde 'Age' on TRMM
+Field Campaign Soundings: Humidity Correction", Journal of Atmospheric
+and Oceanic Technology, Volume 21, 470-480 (2004)
+
+It is left to the end user to implement any such correction, if deemed
+fit. Serial numbers of the sondes (from which the age of the sonde may
+be deduced) are contained in the Appendix to this document.
+
+6. Quality Control
+------------------
+
+All QC is automatically performed by the Vaisala processing software and
+no further corrections/amendments have been made.
+
+7. Contact Information
+----------------------
+
+The Leeds T-REX P.I. is Stephen Mobbs who can be contacted at
+the address at the head of this document, or at
+stephen@env.leeds.ac.uk
+The author of this document is Ralph Burton, same address as above,
+or at
+ralph@env.leeds.ac.uk
+
+
+8. Use of the Data
+------------------
+
+Please use the following citation as an acknowledgement when
+using this data in any scientific report/paper/presentation:
+
+        "This radiosonde data was gathered as part of the Terrain-induced
+Rotor experiment (T-REX). The primary sponsor of T-REX was the US
+National Science Foundation. The acquisition of this radiosonde data was
+carried out by workers at the Institute for Atmospheric Science,
+University of Leeds, UK and was funded by the Natural Environment
+Research Council (NERC), UK."
+
+If the contribution of this data product is significant to the
+publication/presentation, the Leeds P.I.s should be offered the right to
+joint authorship.
+
+Any redistribution of this data must include this data 
+acknowledgement statement.
+
+
+Appendix. Serial numbers of sondes
+----------------------------------
+
+Caveat: this list of serial numbers (not complete) relies upon the
+operators' listing of the time of launch. Every effort has been made to
+transcribe the operators' notes contained upon the sonde calibration
+tape. Times given below are often approximate and should be related to the
+actual time of sonde launch (as listed on the T-REX catalogue).
+
+Under each day of the field phase of T-REX, described by DD/MM/YY, are
+listed the sonde serial numbers of the sondes launched that day, with
+the (approximate) time of launch following in brackets. 
+
+Some tapes are missing/were not filled in correctly and thus the list is
+not complete.
+
+
+R.R. Burton 20/10/06
+ralph@env.leeds.ac.uk
+
+
+
+List of Serial numbers below
+----------------------------
+
+
+01/03/06
+207150705(2300)
+02/03/06
+314609404(1400)
+03/03/06
+945409915(1400)
+04/03/06
+945210201(1400)
+05/03/06
+945100901(1400)
+207253712(2330)
+06/03/06
+207150709(1400)
+07/03/06
+945100612(1400)
+08/03/06
+945101013(1400)
+945103005(2100)
+945107803(2300)
+09/03/06
+945108306(1400)
+207253713(2300)
+10/03/06
+945107802(1400)
+945209707(2300)
+11/03/06
+945108114(1400)
+945101015(2300)gps failed
+12/03/06
+945100502(1400)
+13/03/06
+945103010(1400)
+14/03/06
+945102812(1400)
+207150707(2355)
+945100615(2300)
+15/03/06
+945102802(1400)
+945100503(2300)
+16/03/06
+945100614(2300)
+945210203(2340)
+17/03/06
+9????8301(1400)
+945100613(2300)
+18/03/06
+945210312(0030)
+19/03/06
+207150706(1400)
+945100501(2300)
+20/03/06
+314609613(1400)
+21/03/06
+314609215(2300)
+22/03/06
+23/03/06
+945204801(1400)
+24/03/06
+945204803(1400)
+207253714(2300)
+25/03/06
+945102911(1400)
+26/03/06
+945204804(1400)
+314008700(2300)
+27/03/06
+945102705(1400)
+945209712(1530)
+945204802(2325)
+28/03/06
+207150608(1400)
+945102900(2340)
+29/03/06
+314609211(0030)
+314608807(0200)
+30/03/06
+945209702(0500)
+945101312(0630)
+945103801(0800)
+314608815(0930)
+945102810(1100)
+945209903(1230)
+945209713(1400)
+945209900(1530)
+945210104(1700)
+314609401(1830)
+945209913(2000)
+106304305(2300)
+31/03/06
+945209602(1400)
+207150610(2300)
+01/04/06
+207150601(1400)
+106202410(2300)
+02/04/06
+207150609(1400)
+207150604(2300)
+03/04/06
+106405701(1400)
+106304111(2300)
+04/04/06
+106103810(1418)
+106206501(2300)
+05/04/06
+105705215(1300)
+106508409(2300)
+06/04/06
+106202406(1300)
+106508409(2300)
+07/04/06
+106304107(1300)
+106304212(2300)
+08/04/06
+106306404(1400)
+106305804(2300)
+09/04/06
+106306715(1430)
+106304015(2300)
+10/04/06
+106508306(1400)
+106303908(2300)
+11/04/06
+106304007(1400)
+106203312(2300)
+12/04/06
+106306610(1400)
+207150602(2300)
+13/04/06
+945209908(1300)
+106400500(2300)
+14/04/06
+106206401(1400)
+106100801(2300)
+15/04/06
+106103709(1400)
+106400700(2300)
+16/04/06
+207150606(1400)
+106508413(2300)
+17/04/06
+106303411(1300)
+106310104(2300)
+18/04/06
+106104515(0330)
+106400106(0500)
+106304102(0700)
+106404702(1300)
+106304008(1300)
+106202002(1330)
+106306408(1700)
+106403706(2300)
+19/04/06
+106400808(0030)
+106103313(0200)
+945209914(0315)
+106104412(0900)
+106403803(1100)
+106304011(1300)
+106104500(1330)
+106508406(1500)
+106203300(1600)
+106410211(1700)
+106410210(1830)
+106206512(2000)
+106304413(2100)
+945210115(2330)
+20/04/06
+945209703(0115)
+945210103(0320)
+945209909(0500)
+945409914(0630)
+945206315(0715)
+945210110(0910)
+945206202(1050)
+106508415(1300)
+945102815(1500)
+945206312(1700)
+945206308(1716)
+106101213(2000)
+21/04/06
+10641?207(1400)
+207150704(2311)
+22/04/06
+106303903(1300)
+106202905(2311)
+23/04/06
+945107800(1120)
+945209901(1300)
+24/04/06
+945100600(1300)
+945100602(2325)
+25/04/06
+945210107(1300)
+945108313(2304)
+26/04/06
+207150613(1400)
+106103815(2254)
+27/04/06
+207150702(1400)
+106306115(2300)
+28/04/06
+945100606(1300)
+945103704(2315)
+29/04/06
+106303413(0055)
+945103703(0141)
+106400707(0330)
+106203311(0700)
+106405712(0900)
+945108102(1100)
+945????03(1300)
+106104614(1400)
+106202111(1500)
+106306109(1600)
+106400104(1615)
+106202512(1708)
+105705104(1804)
+945210101(1938)
+945100605(2257)
+30/04/06
+945210100(0035)
+105703708(0200)
+106101212(0330)
+106306306(0500)
+106410213(0700)
+106305403(0900)
+106310105(1100)
+105703712(1300)
+106101205(1400)
+106410205(1500)
+106104506(1600)
+106508408(1700)
+106304308(1734)
+106400715(1830)
+207150703(1950)
+
+
+End of Document

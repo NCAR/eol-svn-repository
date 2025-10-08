@@ -1,0 +1,63 @@
+How_to_Process_Lear_Dropsondes   
+
+Updated 26 June 2008 - LECully
+
+BEWARE: Use the How To doc for this processing found in the CDS/DMG
+Plone documentation area. Keep that doc up-to-date. That is/should
+be a better and more complete doc than this one. Please update the
+Plone version of this doc for all subsequent runs.
+
+Download the updated set of dirs and software from the svn library.
+This s/w was updated for the IHOP 2002 reprocessing.
+
+Use "ant" with the build.xml file to automate processing. The commands
+are listed below.
+
+
+1. From the svn checkout, you should see the following files and dirs:
+
+build.xml - ant build.xml command file used to automate the processing.
+
+5mb - 5MB extraction directory. 5mb data are placed in this dir.
+database - This dir contains the final data file ready to be placed into
+    the EMDAC system.
+docs - documents dir.
+final - "Final" dir where ....data is located.
+logs - log files from the autoqc processing are placed here. User may also
+    place all other logs in this dir, too.
+output - Contains files converted from EOL Class to ESC format. The Lear*.pl code
+    output is here.
+raw_data - raw data files in Class format are located here. These files will be
+    converted to ESD format.  Ensure that the data files are in subdirs by research
+    flight number, e.g., "RF23". The conversion s/w expects this or may fail
+    silently!
+software - The software to do the conversion from EOL Class format to ESC format is here.
+tools - assortment of scripts. May not be needed.
+
+
+2. Convert the raw data from Class to ESC.
+
+Go to the /software directory and run Lear_Dropsonde_Converter.pl. This s/w will
+place *** files in the /output dir. The s/w outputs a list of files that are being processed.
+
+3. Check the format of ESC converted data.
+
+Execute the following command at the command line:
+"ant check-format-ESC" .
+
+See the check-format-ESC section in the build.xml file in the 
+top directory and run from that directory. This command will format check the ESC files
+in the "output" directory. An output checker log will be placed in that same dir.
+Examine that log and pass on to scientific staff.
+
+4. Run autoqc on the format checked data.
+Ensure that you are using the correct autoqc properties file. For the IHOP2002 
+reprocessing, we used file "us_plains_autoqc.properties". This file must be
+placed in the software directory.
+
+5. Create dayfiles by using the appropriate ant command. See the build.xml
+file. Verify that the check formater is run automatically by the ant command.
+
+Hint: Also see the How To for the Falcon data processing.
+---end of file---
+

@@ -1,0 +1,64 @@
+Mass Store GOES Data summary
+===========================
+
+Note: This 'inventory' was compiled to give me and Don an idea of what was
+on Mass Store before I began working on the application, may be of interest 
+  -Dan 2004-04-22.
+
+This is a quick summary of the GOES data on mass store.  I did not take the
+time to determine all the days for which we have data but this will give the 
+general idea.
+
+General Notes:
+	compression: sometime in 2002 - not sure when - the files are gzipped so
+		the names contain the .gz on the end, before that there appears to be
+		no zipping - according to Greg S. gzipping maybe began sometime in Jan.
+	naming: the 1999 goes8 has a different naming convention than 2000,2001,2002.
+		the file name begins with g8 instead of g08 - don't know why
+
+Directory rundown:
+
+/JOSS/DATA/RAW/SATELLITE/GOES:
+	-Contains two subdirectories G10 and G08
+
+	./G10:
+		-Contains subdirs 1KM and 4KM
+		-./G10/1KM
+			-Broken down by year - 1999, 2000, 2001, 2002
+			-Under each year there is a directory for everyday there is data
+				-in the daily directories the files are in the format:
+					g10.YYYYDDD.HHMM
+			-There is also a directory ./G10/1KM/0209 - I'm not sure what this is, 
+				but I don't think it is something to worry about.
+		-./G10/4KM
+			-1999, 2000, 2001, 2002
+			-Same run down as the 1KM
+			-./G10/1KM/0209 - another one of these - why?
+
+	./G08
+		-Similar to G10
+		-Contains subdirs 1KM, 4KM and 8KM
+		-./G08/1KM
+			-1999, 2000, 2001, 2002
+			-Each year has daily directories like goes10
+			-1999:
+				-On 6-7-2002 Becky was putting this data on mass store from tape
+				-the File format is: g8.YYYYDDD.HHMM
+			-2000,2001, and 2002
+				-the File format is g08.YYYYDDD.HHMM
+				-notice the difference compared to 1999!!
+		-./G08/4KM
+			-1999, 2000, 2001, 2002
+			-Same run down as 1KM
+			-Another random extra dir - 2021
+		-./G08/8KM
+			-Only 1999 with one day and one file	
+		
+
+goes_data.pl script:
+
+This script was run to list all of the files for goes10 4KM 2002.  It was run
+on day 158 of 2002.  The file generated is goes_stat.keep.txt.  It took about
+an hour to list all of the files and determine some general stats about them. 
+This was for only six months of one resolution of one satellite, so it may take
+some time to populate a database if that is the plan.	

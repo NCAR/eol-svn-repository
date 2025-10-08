@@ -1,0 +1,21 @@
+To Generate a MADIS station list:
+
+1) make_MADIS_stnlist.pl
+
+Run make_MADIS_stnlist.pl to generate date.out files which contain all stations in the raw netCDF files, and their location.  By default files are downloaded to the "raw/" subdir. Output files are written to the "out/" subdir.
+
+	Usage: ./make_MADIS_stnlist.pl [-d] year month day
+	-d: download files from HPSS
+	    leave off if files are already downloaded
+
+Check that you found the same number of stations that the MADIS web pages say we should have.
+
+Note that code will append to output files, so if you want to start fresh, delete them before run code.
+
+The code will also print out two files: date.precipAccum.freq and date.temperature.freq which show the frequency (in seconds) with which each station reported precip and temperature, respectively. e.g. blocks of:
+
+NETWORK STN LAT LON ALT
+freq(s) count
+freq(s) count
+...
+

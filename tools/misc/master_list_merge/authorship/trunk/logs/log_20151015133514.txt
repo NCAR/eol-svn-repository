@@ -1,0 +1,32 @@
+> groovy authorshipConnect.groovy BSIERP
+
+Created log file:	logs/log_20151015133514.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+--------------------------------------------------------------------------------
+  BSIERP:  245.B77-001
+		Jones, Nathan, Kathy Turco
+Which of these contacts matches this author:	Kathy Turco
+
+		2018	null	Kathy Turco	Alaska's Spirit Speaks: Sound & Science
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 2018
+
+Unable to find contact 2018 for data set 245.B77-001. Will insert contact.
+Unable to find contact 879 for data set 245.B77-002. Will insert contact.
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 2018, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B77-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 879, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B77-002';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

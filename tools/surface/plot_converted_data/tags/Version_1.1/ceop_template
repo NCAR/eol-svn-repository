@@ -1,0 +1,27 @@
+# Version 1
+set terminal postscript landscape monochrome dashed "Helvetica" 14
+
+# graph title
+set title "CEOP Ft. Peck XPARAMETERX Station XSTATION XHEIGHTX"
+
+# other
+set missing "-999.99"
+set nokey
+
+# x-axis stuff
+set timefmt "%Y/%m/%d"
+set xdata time
+set xlabel "Date" 0,0
+set xrange ["2002/10/01":"2002/12/31"]
+set format x "%Y/%m/%d"
+
+# A temporary awk program is created to pull out the needed columns
+# it adds the '+' to the data format, for some reason ' ' was causing 
+# an error.
+set timefmt "%Y/%m/%d+%H:%M"
+
+# y-axis
+set ylabel "XPARAMETERX (XUNITSX)" 0,0
+
+set output 'XOUTFILEX'
+plot "< awk -f XAWKFILEX XDATAFILESX" using 1:2 with lines

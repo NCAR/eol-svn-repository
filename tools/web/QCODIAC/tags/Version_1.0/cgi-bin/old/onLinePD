@@ -1,0 +1,97 @@
+#!/bin/perl -w
+
+use CGI qw(:standard :html3 );
+
+my $ids = param( "ids" );
+
+if( !$ids || $ids eq "" )
+{
+	showForm();
+}
+else
+{
+	queryOnLinePD( $ids );
+}
+
+
+sub showForm
+{
+	println( header() );
+	println( "<html><head><title>QUERY CODIAC: On Line Phys Dir</title></head><body bgcolor=white>" );
+	println( "<center><h3>QUERY CODIAC: On Line Phys Dir</h3>" );
+	println( "<br><center>" );
+
+	println( "<form method=POST action=onLinePD>" );
+	println( "<font size=+1>Enter a list of comma-delimited storm_id numbers (e.g. 77.018,77.019,46.006):<br>" );
+	println( "<input type=text name=ids size=100><br>" );
+	println( "<input type=submit>" );
+	println( "</form>" );
+	println( "</body></html>" );
+}
+
+
+sub queryOnLinePD
+{
+	my $id = shift;
+	my @ids = split( /,/, $id );
+
+	$ENV{MSPATH} = "/usr/empress8.20/rdbms";
+	$ENV{MSQLSELCOLSEP} = "";
+	my $db_path = "/storm/codiac/codiac_db";
+
+	println( header() );
+	println( "<html><head><title>QUERY CODIAC: On Line Phys Dir</title></head><body bgcolor=white>" );
+	println( "<center><h3>QUERY CODIAC: On Line Phys Dir</h3></center>" );
+	println( "<pre>" );
+
+	for( my $x = 0; $x < @ids; $x++ )
+	{
+		my $sql = "\"SELECT dir_path, file_name from on_line_phys_dir WHERE l_dds_id=\'$ids[$x]\'\"";
+	
+		my @files = `/usr/empress8.20/rdbms/bin/empcmd $db_path/phys_dir_db $sql`;
+
+		if( defined( $files[2] ) )
+		{
+			println( "$ids[$x] :" );
+			for( my $y = 2; $y < @files; $y++ )
+			{
+				my @data = split( //, $files[$y] );
+				$data[0] = trim( $data[0] );
+				$data[1] = trim( $data[1] );
+				print( $data[0], &nbsp( 8 ), $data[1], "\n" );
+			}
+			my $size = @files - 2;
+			print( "<b>Total: </b> $size", "\n" ); 
+		}	
+		else
+		{
+			print( $ids[$x], ": No Files Found\n" );
+			$found = 0;
+		}
+
+
+		print( "\n" );
+	}
+}
+
+sub nbsp
+{
+	my $n = shift;
+	my $str = "";
+	for( my $x = 0; $x < $n; $x++ )
+	{	$str = $str . "&nbsp;"; }
+
+	return $str;
+}
+sub trim
+{
+	my $str = shift;
+	$str =~ s/^\s+//;
+	$str =~ s/\s+$//;
+	return $str;
+}
+
+sub println
+{
+	print( @_, "\n" );
+}

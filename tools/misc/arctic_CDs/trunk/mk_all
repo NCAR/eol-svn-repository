@@ -1,0 +1,7 @@
+#!/bin/perl -w
+
+print( `./mk_seward_tables.pl ../data_tables/all_data.htm ../new_tables disc` );
+print( `./mk_seward_tables.pl ../data_tables/all_data.htm ../new_tables date` );
+print( `./mk_seward_tables.pl ../data_tables/all_data.htm ../new_tables site` );
+print( `./mk_seward_tables.pl ../data_tables/all_data.htm ../new_tables group` );
+print( `./mk_seward_tables.pl ../data_tables/all_data.htm ../new_tables sitegroup` );

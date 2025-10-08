@@ -1,0 +1,678 @@
+/*--------------------------------------------------------
+ * main_qc.c -  Performs Horizontal Quality Control.
+ *       
+ * 10 Dec 94 lec
+ *   Created.
+ *-------------------------------------------------------*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <errno.h>
+
+#include "local.h"
+#include "process_qcfrec.h"
+#include "qcfrec.h"
+#include "gQC.h"
+#include "date.h"
+
+#define  debug 0
+
+
+/*---------------------------------------------------------
+ * main() - controls Quality Control processing flow.
+ *
+ * 10 Dec 94 lec
+ *   Created.
+ *--------------------------------------------------------*/
+int main()
+   {
+   /* local variables */
+   char         init_input_file_name[NAMELEN_MAX];
+   char         input_file_name[NAMELEN_MAX];
+   char         sigma_output_file_name[15] = "\0";
+   char         qcf_output_file_name[15] = "\0";
+   char         debug_output_file_name[15] = "test.out\0";
+
+   FILE         *init_input_stream;
+   FILE         *input_stream;
+   FILE         *sigma_output_stream;
+   FILE         *qcf_output_stream;
+   FILE         *debug_output_stream;
+
+   char         pathname[NAMELEN_MAX];
+   char         sigpathname[NAMELEN_MAX];
+
+   char         uncompress_cmd [NAMELEN_MAX+10];
+
+   QCFREC       *qcfptr;
+   QCFREC       *current_qcfptr;
+
+   QCFREC       *qcfptr_array[MAXNUMSTNS];
+ 
+   int          i,ii,j,jj,k,kk,mm,zz,yy,xx,yyy = 0;
+   int          data_freq   = 0;
+   STRING16     stn_list[MAXNUMSTNS];
+   long         stn_no      = -1;
+   long         numstns     = 0;
+   long         numstns_inp = 0;
+   long         index = 0;
+   long         print_order[MAXNUMSTNS];
+
+   float        bmax;
+   float        dmin;
+
+   float        alpha_sq[4] = {0.0,0.0,0.0,0.0};   /* input values */
+
+   int          pmethod;
+   float        min_weight;
+
+   char         qcflag = 'U';
+
+   float        A [MAXNUMSTNS][4];
+ 
+   float        theta_o[NUMQCPARMS][MAXNUMSTNS];  /* observations at stns in array A[][] */
+   int          numtheta_o[NUMQCPARMS];
+ 
+   float        theta_obs;                        /* observation at current stn */
+ 
+   double       x,y = 0.0;
+
+   int          current_yr   = 0;
+   int          current_hr   = 0;
+   int          current_min   = 0;
+   int          current_date = 0; /* Julian date */
+ 
+   char         date[7]      = "\0\0\0\0\0\0\0";
+ 
+   char         proj_begin_date[7] ="\0\0\0\0\0\0\0"; /* Date project began. This is the date
+                                                         Compute_sigma used to calc variances.
+                                                         From proj_begin_date to project_begin_date+
+                                                         SIGMA_PERIOD+1 the set of sigma files
+                                                         dated project_begin_date+SIGMA_PERIOD
+                                                         are used. After that date each day has
+                                                         recomputed variances. */
+   char         begin_date[7] ="\0\0\0\0\0\0\0"; /* Input date to begin (QC) processing */
+   char         end_date[7]   ="\0\0\0\0\0\0\0"; /* Input date to end processing   */
+ 
+   int          proj_begin_jdate  = 0;           /* See description above. input value!! */
+   int          begin_jdate  = 0;                /* beginning Julian date of data - input value!! */
+   int          end_jdate    = 0;                /* ending Julian date of data - input value!! */
+   int          process_jdate = 0;               /* beginning Julian date of current days for which
+                                                    sigmasq is begin computed. This var increments
+                                                    along one day at a time through the complete
+                                                    project period or the specified time. It increments
+                                                    one day, then sigmasq's are computed for all stns
+                                                    and all parameters at all times over the current
+                                                    sigma period. These new sigmasq's are valid for
+                                                    the date = process_jdate+SIGMA_PERIOD only. The only
+                                                    exception to this rule is that the first set of
+                                                    sigmasq's computed are used to QC data from day
+                                                    1 of project to day = begin_date+SIGMA_PERIOD+1. */
+ 
+   /*
+    * stn_data - data from which sigmas are computed.
+    * stn_numdata - number of data points in stn_data by parameter.
+    * sigma_sq - variances for each stn and each parameter at a specified time.
+    */
+   float stn_data[MAXNUMSTNS][NUMQCPARMS][SIGMA_PERIOD];
+ 
+   int   stn_numdata[MAXNUMSTNS][NUMQCPARMS] = {{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},
+                                                {0,0,0,0,0,0,0}, {0,0,0,0,0,0,0},{0,0,0,0,0,0,0},
+                                                {0,0,0,0,0,0,0}};
+ 
+   float sigma_sq[MAXNUMSTNS][NUMQCPARMS]    = {{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},{0,0,0,0,0,0,0},
+                                                {0,0,0,0,0,0,0}, {0,0,0,0,0,0,0},{0,0,0,0,0,0,0},
+                                                {0,0,0,0,0,0,0}};
+
+   /*
+    * Initialize from input file.
+    */
+   printf ("\nInput name of QC initialization file: (e.g., QCinit.inp)\n");
+   scanf ("%s", init_input_file_name);
+   printf ("Input file name: xxx%-sxxx\n", init_input_file_name);
+   
+   open_file (init_input_file_name, "r", &init_input_stream);
+ 
+   fscanf (init_input_stream, "%d", &pmethod);   STRIPLINE(init_input_stream);
+   fscanf (init_input_stream, "%f", &min_weight);STRIPLINE(init_input_stream);
+   fscanf (init_input_stream, "%d", &data_freq); STRIPLINE(init_input_stream);
+   fscanf (init_input_stream, "%f", &bmax);      STRIPLINE(init_input_stream);
+   fscanf (init_input_stream, "%f", &dmin);      STRIPLINE(init_input_stream);
+   fscanf (init_input_stream, "%d", &current_yr);STRIPLINE(init_input_stream); 
+   fscanf (init_input_stream, "%s", proj_begin_date); STRIPLINE(init_input_stream);
+   proj_begin_date[6] = '\0';
+   fscanf (init_input_stream, "%s", begin_date); STRIPLINE(init_input_stream);
+   begin_date[6] = '\0';
+   fscanf (init_input_stream, "%s", end_date); STRIPLINE(init_input_stream);
+   end_date[6] = '\0';
+   fscanf (init_input_stream, "%s", pathname); STRIPLINE(init_input_stream);
+   fscanf (init_input_stream, "%s", sigpathname); STRIPLINE(init_input_stream);
+
+   for (yy=0;yy<4;yy++)         /* read default alphas */
+      {
+      fscanf (init_input_stream, "%f", &alpha_sq[yy]); STRIPLINE(init_input_stream);
+      printf ("alpha_sq[%d]= %f\n", yy, alpha_sq[yy]);
+      }
+
+   printf ("p, min_weight, data_freq, bmax, dmin: %d %f %d %f %f\n",
+            pmethod, min_weight, data_freq, bmax, dmin);
+   printf ("current_yr:%d\n", current_yr);
+   printf ("proj_begin_date: xxx%-sxxxx\n", proj_begin_date);
+   printf ("begin_date, end_date: xxx%-sxxxx xxx%-sxxx\n", begin_date, end_date);
+   printf ("pathname, sigpathname: xxx%-sxxx xxx%-sxxx\n", pathname, sigpathname);
+
+
+   /*
+    * Begin processing.
+    */
+#if debug
+   open_file (debug_output_file_name, "w", &debug_output_stream);  /* debug for now */
+#endif
+
+   date_to_julian (proj_begin_date, current_yr, &proj_begin_jdate);
+   date_to_julian (begin_date, current_yr, &begin_jdate);
+   date_to_julian (end_date, current_yr, &end_jdate);
+
+   /*
+    * Construct qcfrec pointers then read the data.
+    */
+   construct_qcfptr (&qcfptr);
+   construct_qcfptr (&current_qcfptr);
+ 
+   for (ii=0;ii<MAXNUMSTNS;ii++)
+      {
+      construct_qcfptr ( &qcfptr_array[ii]);
+      reset_qcfrec( qcfptr_array[ii] );
+      print_order[ii] = 0;
+      }
+
+   /*
+    * Have sigma_sq...get surrounding observations...compute qcflag.
+    * Do Quality Control processing on all requested data. Read proper
+    * sigma file (according to date and time of data being QC'd) and
+    * stn_list info.
+    */
+   for (current_date=begin_jdate; current_date<=end_jdate; current_date++) 
+      {
+      /*
+       * Form name of input file and open. Assume name of data being QC'd
+       * is of the form yyddmm.0qc and the QC'd file will be yyddmm.qcf.
+       */
+      printf ("\nCurrent julian date is: %d\n", current_date);
+
+      julian_to_date (current_date, current_yr, date);
+
+      sprintf (input_file_name, "%-s%-s.0qc", pathname, date);
+      open_file (input_file_name, "r", &input_stream);
+      printf ("Open input file: %-s\n", input_file_name);
+
+      sprintf (qcf_output_file_name, "%-s%-s.qcf", pathname, date);
+      printf ("Open output file: %-s\n", qcf_output_file_name);
+      open_file (qcf_output_file_name, "w", &qcf_output_stream);
+
+      numstns = 0;
+
+      reset_qcfrec( qcfptr );
+      read_qcfrec (&input_stream, qcfptr);
+
+      
+      /*
+       * We assume that the input 0qc files are sorted by
+       * date/time.
+       */
+      while (!feof(input_stream))
+         {
+         current_hr = qcfptr->hour_nom;
+         current_min = qcfptr->minute_nom;
+
+         printf ("------GET NEXT TIME: current_hr, current_min: %d %d\n", current_hr, current_min);
+
+         /*
+          * Open, read the sigmasq (variance) file which
+          * contains the variances for all stns at time
+          * t. For the first SIGMA_PERIOD+1 days use the
+          * sigmasq's computed during the first SIGMA_PERIOD.
+          */
+         if (current_date <= proj_begin_jdate+SIGMA_PERIOD)
+            sprintf (sigma_output_file_name, "%-s%02d%03d%02d%02d.sig",
+                     sigpathname, current_yr, proj_begin_jdate+SIGMA_PERIOD,
+                     current_hr, current_min);
+         else
+            sprintf (sigma_output_file_name, "%-s%02d%03d%02d%02d.sig",
+                     sigpathname, current_yr, current_date, current_hr, current_min);
+
+
+         sprintf (uncompress_cmd, "gunzip %-s.gz", sigma_output_file_name);
+
+         printf ("excuting cmd:%-sxxx\n", uncompress_cmd); 
+
+         system (uncompress_cmd);
+
+         open_file (sigma_output_file_name, "r", &sigma_output_stream);
+
+         fscanf (sigma_output_stream, "%ld\n", &numstns_inp);
+#if debug
+         printf ("numstns_inp: %ld\n", numstns_inp);
+#endif
+
+         for (ii=0;ii<numstns_inp;ii++)
+            {
+            fscanf (sigma_output_stream, "%d %s", &ii, stn_list[ii]);
+#if debug
+            printf ("stn_list[%d] =  %sxxx\n", ii, stn_list[ii]);
+#endif
+            }
+
+         STRIPLINE (sigma_output_stream); /* Skip the comment line. */
+         STRIPLINE (sigma_output_stream); /* Skip the comment line. */
+
+         while (!feof(sigma_output_stream))
+            {
+            fscanf (sigma_output_stream, "%d%d", &ii, &kk);
+            fscanf (sigma_output_stream, "%f", &sigma_sq[ii][kk]);
+            if (feof(sigma_output_stream)) break;
+#if debug 
+            printf ("(read)sigma_sq[%d][%d] = %f\n", ii, kk, sigma_sq[ii][kk]);
+#endif
+            } /* data in file */
+ 
+         close_file (&sigma_output_stream);
+
+         sprintf (uncompress_cmd, "gzip %-s\0", sigma_output_file_name);
+         system (uncompress_cmd);
+
+         numstns = 0;
+
+         for (zz=0;zz<NUMQCPARMS;zz++)
+            numtheta_o[zz]= 0;
+
+
+         for (xx=0;xx<MAXNUMSTNS;xx++)
+            {
+            A[xx][0] = -999.99; /*lat*/
+            A[xx][1] = -999.99; /*lon*/
+            A[xx][2] = 0.0;     /*weight*/
+            A[xx][3] = 0.0;     /*distance*/
+            }
+
+         for (xx=0;xx<NUMQCPARMS;xx++)
+            for (yyy=0;yyy<MAXNUMSTNS;yyy++)
+               theta_o[xx][yyy] = -999.99;       /* reinit to missing! Prevents adding
+                                                    in bad values when stn in area of 
+                                                    influence, yet data value missing, 
+                                                    0.00,etc.*/
+
+
+         while ( (qcfptr->hour_nom == current_hr) && (qcfptr->minute_nom == current_min))
+            {
+            /*
+             * Determine internal stn number from stn_list. Note that at 
+             * this point numstns should not be changed by the following fn.
+             * May want to check this.
+             */
+            stn_no = determine_stn_no(stn_list, &numstns_inp, qcfptr->statn);
+            
+            /*
+             * Retain knowledge of the input order, so can print out
+             * in same order...not in stn_no order.
+             */
+            print_order[numstns] = stn_no;
+#if debug
+            printf ("qcfptr->statn, stn_no: %-sxxx %d\n", qcfptr->statn, stn_no);
+            printf ("qcfptr->lat, lon: %7.2f %7.2f\n", qcfptr->lat, qcfptr->lon);
+#endif
+            copy_qcfrec (qcfptr_array[stn_no],qcfptr); 
+   
+            /*
+             * Fill up A's lat/lons and theta_o values.
+             */
+            A[stn_no][0] = qcfptr->lat;
+            A[stn_no][1] = qcfptr->lon;
+
+            if (qcfptr->staprs >0.00)
+               {
+               theta_o[stnprs][stn_no] = qcfptr->staprs;
+               numtheta_o[stnprs]++;
+               }
+ 
+            if (qcfptr->seaprs >0.00)
+               {
+               theta_o[slp][stn_no] = qcfptr->seaprs;
+               numtheta_o[slp]++;
+               }
+ 
+            if (qcfptr->cmpsea >0.00)
+               {
+               theta_o[cslp][stn_no] = qcfptr->cmpsea;
+               numtheta_o[cslp]++;
+               }
+ 
+            if (qcfptr->temp >-999.00)
+               {
+               theta_o[temp][stn_no] = qcfptr->temp;
+               numtheta_o[temp]++;
+               }
+ 
+            if (qcfptr->dewpnt >-999.00)
+               {
+               theta_o[dewpt][stn_no] = qcfptr->dewpnt;
+               numtheta_o[dewpt]++;
+               }
+ 
+            if (qcfptr->wndspd >-999.00)
+               {
+               theta_o[windsp][stn_no] = qcfptr->wndspd;
+               numtheta_o[windsp]++;
+               }
+ 
+            if (qcfptr->wnddir >-999.00)
+               {
+               theta_o[winddir][stn_no] = qcfptr->wnddir;
+               numtheta_o[winddir]++;
+               }
+
+            numstns++;   /* actually equals the number of recs at this time!! Stn nos
+                            are not necessarily in order. */
+
+            reset_qcfrec( qcfptr );
+
+            if (feof(input_stream)) break;
+
+            read_qcfrec (&input_stream, qcfptr);
+            
+            } /* while qcfptr times equal current times.*/
+
+         /*
+          * At this point have read in all data for current time.
+          */
+#if debug
+         printf ("Completed filling A now compute qcflag. numstns, numstns_inp: %ld %ld\n", 
+                  numstns, numstns_inp);
+#endif
+
+         /*
+          * Compute distances and weights only once. They apply for all parameters 
+          * at this time at a particular stn. Beware applying to more times, cause 
+          * at different times may have different set of stns (or some stns may
+          * drop out on some parameters).
+          *
+          * Distances vary according to location of reference stn. 
+          * Loop through stations letting each in turn be the ref stn when
+          * QCing that stns data.
+          *
+          * Do numstns_inp not numstns cause must check all possible stns to see if
+          * data read. Using numstns may cause last statns to not get QC'd.
+          */
+         for (mm=0;mm<numstns_inp;mm++)
+            {
+            copy_qcfrec(current_qcfptr, qcfptr_array[mm]);
+   
+            /*
+             * Don't process blank stns. Not all possible stns may
+             * occur at each time.
+             */
+            if (!strncmp(current_qcfptr->statn,"               \0",15)) continue;
+
+            stn_no = determine_stn_no(stn_list, &numstns_inp, current_qcfptr->statn);
+#if debug
+            printf ("\nCompute dist and weights for Current stn, stn_no: %-s %d<---------------\n", 
+                    current_qcfptr->statn,stn_no);
+#endif
+            /*
+             *  Let current station be the reference station.
+             *  Compute distances from ref station and put in A[,4]
+             *  Don't processing against missing stations.
+             *  Must check numstns_inp here, too.
+             */
+            for (ii=0;ii<numstns_inp;ii++)
+               {
+               if (A[ii][0]>-990.00 && A[ii][1] >-990.00)
+                  {
+                  ll2xydrv( current_qcfptr->lat, current_qcfptr->lon, &x, &y, A[ii][0], A[ii][1]); 
+                  A[ii][3]=sqrt(x*x+y*y);                                           /* distance */
+#if debug
+                  printf ("x, y, A[%d][3]: %lf %lf %f\n", ii, x, y, A[ii][3]); 
+#endif
+                  }
+#if debug
+               else
+                  printf ("Station (%d) is missing. no lat/lon pair = no distance\n",ii );
+#endif
+               }
+  
+            /*
+             * Determine "weights" (influence) of other stations.
+             * (Ensure dist/weight is 0.0 if lat/lon = -999.99)
+             * Need numstns_inp here too.
+             */
+            weight(A, numstns_inp, pmethod);
+
+            /*
+             * Determine QC flag for all parameters at current stn.
+             */
+            for (jj=0;jj<NUMQCPARMS;jj++)
+               {
+               /*
+                * Leave Missing (M), Not Measured (N), and Glitch (X) flags unchanged.
+                * Also if value is -999.99, set flag to missing.
+                *
+                * The original QC (which used MAPS data) also applied a series
+                * of logical checks. Some of the same (but not all) are applied
+                * below. 
+                */
+               switch (jj) {
+                  case 0:   /*Station Pressure*/
+                     theta_obs = current_qcfptr->staprs;
+                     qcflag = current_qcfptr->staflg;
+                     break;
+                  case 1:  /*Sea Level Pressure*/
+                     theta_obs = current_qcfptr->seaprs;
+                     qcflag = current_qcfptr->seaflg;
+                     break;
+                  case 2:  /*Computed Sea Level Pressure*/
+                     theta_obs = current_qcfptr->cmpsea;
+                     qcflag = current_qcfptr->cmpflg;
+                     break;
+                  case 3:  /*Temperature*/
+                     theta_obs = current_qcfptr->temp;
+                     qcflag = current_qcfptr->tmpflg;
+                     break;
+                  case 4:  /*Dew Point*/
+                     theta_obs = current_qcfptr->dewpnt;
+                     qcflag = current_qcfptr->dewflg;
+                     break;
+                  case 5:  /*Wind Speed*/
+                     theta_obs = current_qcfptr->wndspd;
+                     qcflag = current_qcfptr->spdflg;
+                     break;
+                  case 6:  /*Wind Direction*/
+                     theta_obs = current_qcfptr->wnddir;
+                     qcflag = current_qcfptr->dirflg;
+                     break;
+                  default:
+                     printf ("Error: Unknown parameter");
+                  } /* switch */
+ 
+               if (qcflag != 'M' && qcflag != 'N' && qcflag != 'X')
+                  {
+                  /*
+                   * QC the parameter.
+                   */
+                  if (numtheta_o[jj] >1)
+                     determine_qcflag(A, theta_o[jj], numstns_inp,
+                                      theta_obs, sigma_sq[stn_no][jj],
+                                      min_weight, alpha_sq, jj, &qcflag);
+#if debug
+                  else
+                     printf ("numtheta_o[%d] = %ld. --NO QC FOR stn=%-s\n", 
+                              jj, numtheta_o[jj], current_qcfptr->statn);
+#endif
+#if debug
+                  fprintf (debug_output_stream,
+                     "\ntheta_obs, current_qcfptr->lat, current_qcfprt->lon: %7.2f %10.5f %11.5f \n", 
+                     theta_obs, current_qcfptr->lat, current_qcfptr->lon);
+                  fprintf (debug_output_stream,"sigma_sq[%d], qcflag: %f %c \n", jj, sigma_sq[jj], qcflag);
+#endif
+#if debug
+                  printf ("theta_obs,  current_qcfptr->lat, lon: %7.2f %10.5f %11.5f \n",
+                           theta_obs, current_qcfptr->lat, current_qcfptr->lon);
+                  printf ("sigma_sq[%d][%d], qcflag:  %f %c \n", stn_no, jj, sigma_sq[stn_no][jj], qcflag);
+#endif
+   
+                  /*
+                   * Assign qcflag for this parameter.
+                   */
+                  switch (jj) {
+                     case 0:
+                        current_qcfptr->staflg = qcflag;
+                        break;
+                     case 1:
+                        current_qcfptr->seaflg = qcflag;
+                        break;
+                     case 2:
+                        current_qcfptr->cmpflg = qcflag;
+                        break;
+                     case 3:
+                        current_qcfptr->tmpflg = qcflag;
+                        break;
+                     case 4: 
+                        current_qcfptr->dewflg = qcflag;
+                        break;
+                     case 5: 
+                        current_qcfptr->spdflg = qcflag;
+                        break;
+                     case 6: 
+                        current_qcfptr->dirflg = qcflag;
+                        break;
+                     default:
+                        printf ("Error: Attempt to set qcflag for unknown parameter");
+                     } /* switch */
+                  } /* qcflag != M,N,X */
+               } /* for QC all parameters (NUMQCPARMS) (jj)*/
+
+           
+            /*------------------------------------------------------------------------
+             * Extraneous/logical QC checks (some were) taken from original QC method.
+             *-----------------------------------------------------------------------*/
+ 
+            /*
+             * Gross limit check the precip. Update the flags!
+             * This limit check only works properly if data is all at
+             * same frequency in the composite. VORTEX is not this way!
+             *
+             * B overrides E, but D does NOT. Estimated values are
+             * are only reset if found to be bad.
+             *
+             */
+            if (current_qcfptr->prcflg != 'M' && current_qcfptr->prcflg != 'N' &&
+                current_qcfptr->prcflg != 'X')
+               {
+               if (current_qcfptr->precip < -999.00)
+                  current_qcfptr->prcflg = 'M';
+               else if (current_qcfptr->precip >bmax || current_qcfptr->precip< 0.0)
+                  current_qcfptr->prcflg = 'B';
+               else if (current_qcfptr->precip >dmin && current_qcfptr->prcflg != 'E')
+                  current_qcfptr->prcflg = 'D';
+               else
+                  if (current_qcfptr->prcflg != 'E') current_qcfptr->prcflg = 'G';
+               }
+
+            /*
+             * Can't have precip in clear air.
+             */
+            if (current_qcfptr->precip >0.0 && current_qcfptr->prcflg == 'G' &&
+                current_qcfptr->clamt1 == 0)
+               current_qcfptr->prcflg = 'D';
+
+
+            /*
+             * If first cloud layer is present then next
+             * levels should be Not available instead of Missing.
+             * Reset ceiling height flags and cloud amount qc flags.
+             */
+            if (current_qcfptr->c1flg == 'U' || current_qcfptr->c1flg == 'E')
+               {
+               if (current_qcfptr->c2flg == 'M')current_qcfptr->c2flg = 'N';
+               if (current_qcfptr->c3flg == 'M')current_qcfptr->c3flg = 'N';
+               if (current_qcfptr->ca2flg == 'M')current_qcfptr->ca2flg = 'N';
+               if (current_qcfptr->ca3flg == 'M')current_qcfptr->ca3flg = 'N';
+               }
+
+            /*
+             *  Squall/Gust winds should be not available
+             *  instead of Missing unless winds are missing.
+             */
+            if (current_qcfptr->sqlflg == 'M' && current_qcfptr->spdflg != 'M')
+               current_qcfptr->sqlflg = 'N';
+
+            /*
+             * Dew point should be less than or equal to temperature.
+             */
+            if ((current_qcfptr->dewpnt > current_qcfptr->temp) &&
+                (current_qcfptr->dewflg =='G' && current_qcfptr->tmpflg =='G'))
+               current_qcfptr->dewpnt = 'D';
+
+            /*
+             * Wind speed must be >=0.0 and not missing.
+             */
+            if (current_qcfptr->wndspd <0.0 && current_qcfptr->wndspd > -999.00)
+               current_qcfptr->spdflg = 'B';
+
+            /*
+             * Wind dir must be >0 && < 360 and not missing.
+             */
+            if ( current_qcfptr->wnddir > -999.00 && 
+                 (current_qcfptr->wnddir <0.0 || current_qcfptr->wnddir >360.0))
+               current_qcfptr->dirflg = 'B'; 
+
+            /*
+             * Use Calculated sea level pressure to flag the station
+             * pressure and sea level pressures if they are present...
+             * As long as the CSLP flag != M,N,X, or U.
+             */
+            if (current_qcfptr->cmpflg !='M' && current_qcfptr->cmpflg !='N' &&
+                current_qcfptr->cmpflg !='X' && current_qcfptr->cmpflg !='U')
+               {
+               if (current_qcfptr->staflg !='M' && current_qcfptr->staflg !='N' &&
+                   current_qcfptr->staflg !='X') 
+                  current_qcfptr->staflg = current_qcfptr->cmpflg;
+
+               if (current_qcfptr->seaflg !='M' && current_qcfptr->seaflg !='N' &&
+                   current_qcfptr->seaflg !='X') 
+                  current_qcfptr->seaflg = current_qcfptr->cmpflg;
+               }
+
+            /*
+             * Save QC'd rec in array for later printing.
+             */
+            copy_qcfrec(qcfptr_array[mm], current_qcfptr);
+
+            } /* for all stns at current hour and minute. (mm) */
+
+
+         /*
+          * Write out chunk of QC'd qcfrecs for this time.
+          * In the order read.
+          */
+         for (zz=0;zz<numstns;zz++)    
+            {
+            index = print_order[zz];
+            write_qcfrec (&qcf_output_stream, qcfptr_array[index]);
+            reset_qcfrec (qcfptr_array[index]); /* blank out for next time */
+            }
+
+         } /* while data in input file  - Read next set of data for next time.*/
+
+      printf ("Completed processing input_stream for %d. Go to next date\n", current_date);
+
+      close_file (&input_stream);
+      close_file (&qcf_output_stream);
+
+      } /* for current_date = begin to end */
+
+
+   destruct_qcfptr (&qcfptr);
+#if debug
+   close_file (&debug_output_stream);
+#endif
+   }  /* main() */

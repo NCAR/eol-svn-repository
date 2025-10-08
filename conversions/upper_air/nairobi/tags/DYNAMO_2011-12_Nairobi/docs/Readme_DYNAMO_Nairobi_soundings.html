@@ -1,0 +1,279 @@
+<html>
+<head>
+<title>DYMAMO 2011-12 Nairobi Radiosonde Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">DYNAMO 2011-12 Nairobi Radiosonde Data</h1>
+
+
+<h2>1.0 General Description</h2>
+<p>This preliminary dataset includes 198 high vertical resolution soundings from Nairobi collected during the DYNAMO field campaign for 2011-12. Soundings were typically released daily at 00 UTC from 31 August to 29 September 2011, then two times per day at 00 and 12 UTC from 30 September to 24 November 2011, then daily at 12 UTC from 7-29 January 2012 and finally daily at 00 UTC from 31 January to 6 March 2012. The station used Vaisala RS92-SGPD radiosondes.  These soundings were provided by JAMSTEC.  These data are preliminary and there may be corrections applied to these data at a later point.  If you order this data set now, you will be notified if a new version is released.</p>
+
+<h3>1.1 Data Set Contact</h3>
+
+<p>Scot Loehrer<br>
+NCAR/EOL<br>
+loehrer@ucar.edu</p>
+
+<h2>2.0 Detailed Data Description</h2>
+<h3>2.1 Detailed Format Description</h3>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite Format (ESC).  ESC is a version of the National Center for Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, and meteorological and wind data processors.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center" cellpadding=2 cellspacing=1>
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+
+<p>The seven non-standard header lines may contain any label and contents.  The labels are padded to 35 characters to match the standard header lines. Records for this dataset include the following non-standard header lines.</p>
+
+<table border=1 bordercolor="black" align="center" cellpadding=2 cellspacing=1> 
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>6</td><td>Sonde Id/Sonde Type:</td><td>524310814/Vaisala RS80-15L with Loran-C wind-finding</td></tr>
+<tr><td>7</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>9</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>10</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>11</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL codes:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1> 
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of DYNAMO Nairobi High Resolution Radiosonde sounding data in ESC format.   The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  See section 2.1 for an exact format specification.
+
+<pre>
+Data Type:                         Nairobi Radiosonde/Ascending
+Project ID:                        DYNAMO
+Release Site Type/Site ID:         Nairobi, Kenya/63741
+Release Location (lon,lat,alt):    036 45.60'E, 01 18.00'S, 36.760, -1.300, 1795.0
+UTC Release Time (y,m,d,h,m,s):    2011, 08, 31, 22:43:00
+Sonde Id/Sonde Type:               1324485/Vaisala RS92-SGPD with GPS Windfinding
+Ground Station Software:           Digicora II/MW15
+Ground Check Pressure:             Ref 0.8 Sonde 0.0 Corr 0.8
+Ground Check Temperature:          Ref -0.3 Sonde 0.0 Corr -0.3
+Ground Check Humidity:             Ref 0 Sonde 0 Corr 0
+/
+Nominal Release Time (y,m,d,h,m,s):2011, 08, 31, 22:00:00
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat    Ele   Azi   Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg    deg   deg    m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+   0.0  824.2  14.7  12.2  85.0   -0.0   -0.0   0.0   0.0 999.0   36.760  -1.300 999.0 999.0  1795.0 99.0 99.0 99.0 99.0 99.0  9.0
+   2.0  823.1  14.5  11.1  80.0   -0.4    0.9   1.0 157.0   5.0 9999.000 999.000 999.0 999.0  1805.0 99.0 99.0 99.0 99.0 99.0 99.0
+   4.0  821.9  14.5  11.3  81.0   -0.8    1.3   1.5 148.0   6.5 9999.000 999.000 999.0 999.0  1818.0 99.0 99.0 99.0 99.0 99.0 99.0
+   6.0  820.9  14.5  11.5  82.0   -1.2    1.4   1.8 140.0   5.0 9999.000 999.000 999.0 999.0  1828.0 99.0 99.0 99.0 99.0 99.0 99.0
+   8.0  819.7  14.4  11.6  83.0   -1.4    1.3   1.9 134.0   6.5 9999.000 999.000 999.0 999.0  1841.0 99.0 99.0 99.0 99.0 99.0 99.0
+  10.0  818.7  14.3  11.6  84.0   -1.6    1.3   2.0 129.0   5.0 9999.000 999.000 999.0 999.0  1851.0 99.0 99.0 99.0 99.0 99.0 99.0
+  12.0  817.7  14.2  11.7  85.0   -1.6    1.2   2.0 126.0   5.0 9999.000 999.000 999.0 999.0  1861.0 99.0 99.0 99.0 99.0 99.0 99.0
+  14.0  816.7  14.1  11.8  86.0   -1.7    1.2   2.1 125.0   5.5 9999.000 999.000 999.0 999.0  1872.0 99.0 99.0 99.0 99.0 99.0 99.0
+  16.0  815.5  14.0  11.9  87.0   -1.8    1.2   2.2 123.0   6.0 9999.000 999.000 999.0 999.0  1884.0 99.0 99.0 99.0 99.0 99.0 99.0
+  18.0  814.4  13.9  12.0  88.0   -2.0    1.2   2.3 122.0   6.0 9999.000 999.000 999.0 999.0  1896.0 99.0 99.0 99.0 99.0 99.0 99.0
+  20.0  813.0  13.8  12.0  89.0   -2.2    1.2   2.5 120.0   7.5 9999.000 999.000 999.0 999.0  1911.0 99.0 99.0 99.0 99.0 99.0 99.0
+  22.0  811.8  13.7  12.1  90.0   -2.3    1.3   2.6 119.0   6.0 9999.000 999.000 999.0 999.0  1923.0 99.0 99.0 99.0 99.0 99.0 99.0
+  24.0  810.6  13.6  12.0  90.0   -2.5    1.3   2.8 118.0   6.5 9999.000 999.000 999.0 999.0  1936.0 99.0 99.0 99.0 99.0 99.0 99.0
+  26.0  809.6  13.6  12.3  92.0   -2.7    1.4   3.0 117.0   5.0 9999.000 999.000 999.0 999.0  1946.0 99.0 99.0 99.0 99.0 99.0 99.0
+  28.0  808.6  13.5  12.4  93.0   -2.9    1.4   3.2 115.0   5.0 9999.000 999.000 999.0 999.0  1956.0 99.0 99.0 99.0 99.0 99.0 99.0
+  30.0  807.8  13.4  12.5  94.0   -3.1    1.4   3.4 114.0   4.0 9999.000 999.000 999.0 999.0  1964.0 99.0 99.0 99.0 99.0 99.0 99.0
+  32.0  806.8  13.2  12.3  94.0   -3.3    1.4   3.6 113.0   5.5 9999.000 999.000 999.0 999.0  1975.0 99.0 99.0 99.0 99.0 99.0 99.0
+  34.0  805.8  13.1  12.3  95.0   -3.5    1.4   3.8 112.0   5.0 9999.000 999.000 999.0 999.0  1985.0 99.0 99.0 99.0 99.0 99.0 99.0
+  36.0  805.1  13.1  12.3  95.0   -3.6    1.4   3.9 111.0   4.0 9999.000 999.000 999.0 999.0  1993.0 99.0 99.0 99.0 99.0 99.0 99.0
+  38.0  804.1  13.0  12.4  96.0   -3.9    1.4   4.1 110.0   5.5 9999.000 999.000 999.0 999.0  2004.0 99.0 99.0 99.0 99.0 99.0 99.0
+  40.0  803.3  12.9  12.3  96.0   -4.0    1.5   4.3 110.0   4.0 9999.000 999.000 999.0 999.0  2012.0 99.0 99.0 99.0 99.0 99.0 99.0
+  42.0  802.3  12.7  12.2  97.0   -4.1    1.5   4.4 110.0   5.0 9999.000 999.000 999.0 999.0  2022.0 99.0 99.0 99.0 99.0 99.0 99.0
+  44.0  801.3  12.7  12.2  97.0   -4.3    1.6   4.6 111.0   5.0 9999.000 999.000 999.0 999.0  2032.0 99.0 99.0 99.0 99.0 99.0 99.0
+  46.0  800.4  12.6  12.3  98.0   -4.4    1.8   4.7 112.0   5.5 9999.000 999.000 999.0 999.0  2043.0 99.0 99.0 99.0 99.0 99.0 99.0
+  48.0  799.6  12.5  12.2  98.0   -4.4    1.9   4.8 113.0   4.0 9999.000 999.000 999.0 999.0  2051.0 99.0 99.0 99.0 99.0 99.0 99.0
+  50.0  798.4  12.4  12.2  99.0   -4.5    2.0   4.9 114.0   6.0 9999.000 999.000 999.0 999.0  2063.0 99.0 99.0 99.0 99.0 99.0 99.0
+</pre>
+
+<h3>2.2 Data Remarks</h3>
+
+<h3>2.3 Station List</h3>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr>
+<th>ID</th>
+<th>SITE</th>
+<th>COUNTRY</th>
+<th>LONG</th>
+<th>LAT</th>
+<th>ELEV (m)</th>
+</tr>
+<tr>
+<td>Nairobi</td>
+<td>63741</td>
+<td>Kenya</td>
+<td>36.760</td>
+<td>-1.300</td>
+<td>1795.0</td>
+</tr>
+</table>
+
+
+<!-- This is the QC section appropriate for Upsondes  -->
+<h2>3.0 Quality Control Processing</h2>
+
+
+<p>This dataset underwent an automated QC process.  The dataset underwent
+internal consistency checks which included two types of checks, gross limit
+checks on all parameters and rate-of-change checks on temperature, pressure and
+ascension rate. Some further information on the QC processing conducted by
+NCAR/EOL can be found in Loehrer et al. (1996) and Loehrer et al. (1998).</p>
+
+<h3>3.1  Gross Limit Checks</h3>
+<!-- Insert the appropriate project name in this paragraph  -->
+<p>These checks were conducted on each sounding and data were automatically
+flagged as appropriate.  Only the data point under examination was flagged.
+NCAR/EOL conducted the following gross limit checks on the DYNAMO 2011-12 Nairobi
+sounding dataset.  In the table P = pressure, T = temperature, RH = relative
+humidity, U = U wind component, V = V wind component, B = bad, and Q =
+questionable.</p>
+
+<table border=1 style="{font-size:10pt;}" align="center">
+<tr><th>Parameter</th><th>Gross Limit Check</th><th>Parameter(s) Flagged</th><th>Flag Applied</th></tr>
+<tr><td>Pressure</td>
+        <td align="center">&lt; 0 mb or &gt; 1050 mb</td>
+        <td align="center">P</td><td align="center">B</td>
+        </tr>
+<tr><td>Altitude</td>
+        <td align="center">&lt; 0 m or &gt; 40000 m</td>
+        <td align="center">P, T, RH</td><td align="center">Q</td>
+        </tr>
+<tr><td>Temperature</td>
+        <td align="center">&lt; -90 &deg;C or &gt; 45 &deg;C</td>
+        <td align="center">T</td><td align="center">T</td>
+        </tr>
+<tr><td>Dew Point</td>
+        <td align="center">&lt; -99.9 &deg;C or &gt; 33 &deg;C<br>&gt; Temperature</td>
+        <td align="center">RH<br>T, RH</td><td align="center">Q<br>Q</td>
+        </tr>
+<tr><td>Relative Humidity</td>
+        <td align="center">&lt; 0% or &gt; 100%</td>
+        <td align="center">RH</td><td align="center">B</td>
+        </tr>
+<tr><td>Wind Speed</td>
+        <td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+        <td align="center">U, V<br>U, V</td><td align="center">Q<br>B</td>
+        </tr>
+<tr><td>U Wind Component</td>
+        <td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+        <td align="center">U<br>U</td><td align="center">Q<br>B</td>
+        </tr>
+<tr><td>V Wind Component</td>
+        <td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+        <td align="center">V<br>V</td><td align="center">Q<br>B</td>
+        </tr>
+<tr><td>Wind Direction</td>
+        <td align="center">&lt; 0&deg; or &gt; 360&deg;</td>
+        <td align="center">U, V</td><td align="center">B</td>
+        </tr>
+<tr><td>Ascent Rate</td>
+        <td align="center">&lt; -10 m/s or &gt; 10 m/s</td>
+        <td align="center">P, T, RH</td><td align="center">Q</td>
+        </tr>
+</table>
+
+<h3>3.2  Vertical Consistency Checks</h3>
+<p>These checks were conducted on each sounding and data were automatically
+flagged as appropriate.  These checks were started at the lowest level of the
+sounding and compared neighboring 2-sec data points (except at pressures less
+than 100 mb where 30-sec average values were used).  In the case of checks
+ensuring that the values increased/decreased as expected, only the data point
+under examination was flagged.  However, for the other checks, all of the data
+points used in the examination were flagged.   All items within the table are
+as previously defined.</p>
+
+<table border=1 style="{font-size:10pt;}" align="center">
+<tr><th>Parameter</th><th>Vertical Consitency Check</th><th>Parameter(s) Flagged</th><th>Flag Applied</th></tr>
+<tr><td>Time</td>
+        <td align="center">decreasing / equal</td>
+        <td align="center">None</td><td align="center">None</td>
+        </tr>
+<tr><td>Altitude</td>
+        <td align="center">decreasing / equal</td>
+        <td align="center">P, T, RH</td><td align="center">Q</td>
+        </tr>
+<tr><td>Pressure</td>
+        <td align="center">increasing / equal<br>&gt; 1 mb/s or &lt; -1 mb/s<br>&gt; 2 mb/s or &lt; -2 mb/s</td>
+        <td align="center">P, T, RH<br>P, T, RH<br>P, T, RH</td><td align="center">Q<br>Q<br>B</td>
+        </tr>
+<tr><td>Temperature</td>
+        <td align="center">&lt; -15 &deg;C/km<br>&lt; -30 &deg;C/km<br>&gt 50 &deg;C/km (not applied at p &lt; 250 mb)<br>&gt;100 &deg;C/km (not applied at p &lt; 2
+50 mb)</td>
+        <td align="center">P, T, RH<br>P, T, RH<br>P, T, RH<br>P, T, RH</td>
+        <td align="center">Q<br>B<br>Q<br>B</td>
+        </tr>
+<tr><td>Ascent Rate</td>
+        <td align="center">change of &gt; 3 m/s or & lt; -3 m/s<br>change of &gt; 5 m/s or &lt; -5 m/s</td>
+        <td align="center">P<br>P</td><td align="center">Q<br>B</td>
+        </tr>
+</table>
+
+<h3>3.3 Visual Quality Checks</h3>
+<p>Each sounding was visually examined for data quality issues. Any issues
+found were flagged in the data file and/or noted in Section 3.4.</p>
+
+<h3>3.4 Data Quality Issues</h3>
+
+No issues.
+
+<h2>4.0 References</h2>
+
+
+<p>Loehrer, S. M., T. A. Edmands, and J. A. Moore, 1996: TOGA COARE upper-air sounding data archive: development and quality control procedures.  Bull. Amer. Meteor. Soc., 77, 2651-2671.</p>
+<p>Loehrer, S. M., S. F. Williams, and J. A. Moore, 1998: Results from UCAR/JOSS quality control of atmospheric soundings from field projects.  Preprints, Tenth Symposium on Meteorological Observations and Instrumentation, Phoenix, AZ, Amer. Meteor. Soc., 1-6.</p>
+
+</body>
+</html>

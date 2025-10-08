@@ -1,0 +1,1 @@
+/bin/cc  -pipe -pedantic -O2 -g -DNDEBUG      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined CMakeFiles/grib_ls.dir/grib_ls.c.o  -o ../bin/grib_ls -Wl,-rpath,"\$ORIGIN/../lib" libgrib_tools.a ../lib/libeccodes.so /usr/lib64/libm.so /usr/lib64/libjasper.so /usr/lib64/libjpeg.so -lpthread 

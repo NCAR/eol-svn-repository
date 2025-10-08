@@ -1,0 +1,95 @@
+#!/bin/perl -w
+
+# CODIAC to MySQL: this version of the script has been updated 
+#  for the move to MySQL.  Currently the injedi3 database on gale
+#  is queried.  If the host and name of the database
+#  has changed since May 11, 2004 then the call to connectToDB()
+#  will have to be changed.  The parameters are as follows:
+#    connectToDB( host, database, user, password )  
+#
+# Dan Sullivan
+# May 11, 2004
+
+
+# --------------------------------------------------------------
+# codiac_readme:
+#   Obtains the readme file from CODIAC for 
+#    the given storm_id and forwards the user to the page
+#   If no readme found the user is given a 'no documentation' 
+#     found message.
+#
+# Expected Params:
+#   "storm_id" - the storm_id to query from CODIAC.
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+#
+# Modified for the Arctic ML - August 12, 2003
+# --------------------------------------------------------------
+
+use lib "lib";
+use strict;
+use CGI;
+use DBI;
+use Util;
+
+# Connect to the database
+my $dbh = connectToDB( "gale", "injedi3", "stormdba", "codiac" );
+
+my $cgi = CGI->new();
+
+# Get the storm_id
+my $storm_id = $cgi->param( "storm_id" );
+
+# SQL to query the database
+my $sql = "SELECT directory, filename FROM file WHERE " . 
+					"dataset_id_fk=" . $dbh->quote( $storm_id ) . 
+					" AND purpose='doc'";
+
+# Execute the SQL statement
+my $sth = $dbh->prepare( $sql );
+$sth->execute();
+
+my $row = $sth->fetchrow_hashref();
+my $url;
+
+# If a row was found...
+if( $row )
+{
+	# Formulate the URL for the readme
+	if( $row->{directory} ne "" && $row->{filename} ne "" )
+	{
+		my $readme = "$row->{directory}/$row->{filename}";
+		$url = 	"http://www.joss.ucar.edu" .  substr( $readme, length( "/web" ) ); 
+	}
+}
+
+# If a readme found, forward the user to the readme
+if( defined( $url ) && $url ne "" )
+{
+	print( "Location: $url\n\n" );
+	exit 1;
+}
+else 
+{
+	# No readme found, tell the user
+	println( $cgi->header() );
+	println( "<html><head><title>JOSS Documentation Not found</title></head>" );
+	println( "<body bgcolor=white text=black>" );
+	println( "<center><br><br><br>" );
+	println( "<b><font size=+2 face=Verdana>Sorry, no documentation found for this dataset.</font></b>" );
+	println( "</body></html>" );
+}
+
+# Returns a database handle to the database specified in the 
+#  parameters
+sub connectToDB
+{
+	my $host = shift;
+	my $database = shift;
+	my $user = shift;
+	my $password = shift;
+
+	return DBI->connect( "DBI:mysql:database=$database;host=$host",
+												$user, $password, { RaiseError=>1} ) || die( "Unable to connect to database" );
+}

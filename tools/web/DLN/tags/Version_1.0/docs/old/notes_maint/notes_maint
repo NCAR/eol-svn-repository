@@ -1,0 +1,660 @@
+#!/bin/perl
+
+#-----------------------------------------------------------------
+# notes_maint: this CGI script allows the user to add projects and
+#  people to the data loading notes database.  When a project is 
+#  added, updated, or deleted this script re-writes the sortFrame.html
+#  file for the main notes page.  This is needed for javascript 
+#  purposes. 
+#
+# Author: Dan Sullivan
+# Date: Summer, 2002
+#-----------------------------------------------------------------
+
+use lib "../lib";
+use lib ".";
+use sortFrame;
+use GlobalVars;
+use CGI qw(:standard :html3 );
+use DBI;
+
+#--------------------Initialize some variables--------------------
+
+# The location of this script
+my $my_url = "http://www.joss.ucar.edu/cgi-bin/notes/notes_maint/notes_maint";
+
+# The location of the sortFrame to re-write if necessary
+my $sortFrame = "/web/docs/dpg/notes/sortFrame.html";
+#my $sortFrame = "sortFrame.html";
+
+# The url the data_notes script
+my $notes_url = "http://www.joss.ucar.edu/cgi-bin/notes/data_notes";
+
+my %actions = (	"start up", \&showMainMenu, 
+								"Done", \&showMainMenu,
+								"modprojects", \&modifyProjects,
+								"modloaders", \&modifyLoaders,
+								"modcheckers", \&modifyCheckers,
+								"modcontacts", \&modifyContacts,
+								"Add/Update", \&addupdate,  
+								"Update", \&update_proj,  
+								"Delete Project", \&delete_proj,  
+								"Update Link", \&update_link,  
+								"Update Person", \&update_person,  
+								"Delete Link", \&delete_link,  
+								"Delete Person", \&delete_person,  
+								">>", \&edit_link,  
+								"->", \&edit_person,  
+								"Cancel", \&cancel_link,  
+								"cancel", \&cancel_person,
+								"Add Link", \&addlink,
+								"Add Person", \&add_person );
+#-----------------------------------------------------------------
+
+#---------------------Main Program--------------------------------
+
+my $action = param( "Action" );
+
+if( !defined( $action ) ) { $action = "start up"; }
+
+my $dbh = connectToDB();
+								
+$actions{$action}->();
+$dbh->disconnect();
+
+#-----------------------------------------------------------------
+
+#--------------------Subroutines----------------------------------
+
+#-----------------------------------------------------------------
+# Display the main menu
+#-----------------------------------------------------------------
+sub showMainMenu
+{
+	println( header() );
+	println( "<html><head><title>Data Notes Maintenance</title></head><body>" );
+	println( "<br>" );
+	showTitle( "Data Notes Maintenance" );
+
+	println( "<br><br><center><table cellpadding=8 cellspacing=8>" );
+	println( "<tr><td align=center>" );
+		println( "<b><font size=+2><a href=$my_url?Action=modprojects>Add/Update Projects</a>" );	
+	println( "</tr></td>" );
+	println( "<tr><td align=center>" );
+		println( "<b><font size=+2><a href=$my_url?Action=modloaders>Add/Update Loaders</a>" );	
+	println( "</tr></td>" );
+	println( "<tr><td align=center>" );
+		println( "<b><font size=+2><a href=$my_url?Action=modcheckers>Add/Update Checkers</a>" );	
+	println( "</tr></td>" );
+	println( "<tr><td align=center>" );
+		println( "<b><font size=+2><a href=$my_url?Action=modcontacts>Add/Update Contacts</a>" );	
+	println( "</tr></td>" );
+	println( "</table></center></body></html>" );
+}
+
+#-----------------------------------------------------------------
+# Allow user to add, update, delete projects from the notes
+#-----------------------------------------------------------------
+sub modifyProjects
+{
+	# Start html header
+	println( header() );
+	println( "<html><head><title>Add/Update Project</title></head><body>" );
+	showTitle( "Add/Update Project" );
+
+	# Query the database
+	my $sql = "SELECT id, name, notes FROM Projects ORDER BY name ASC";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @row;
+
+	# Show select box of Projects the user can update
+	println( "<br>" );
+	println( "<center><font size=+2><b><u>Update</u></b></font><br>" );
+	println( "<form method=post action=\"$my_url\">" );
+		println( "<select name=proj_list>" );
+			println( "<option value=none>Select</option>" );
+			while( (@row = $sth->fetchrow() ) )
+			{
+				println( "<option value=$row[0]>$row[1]</option>" );
+			} 
+		println( "</select><br>" );
+
+	# Display text box and area so use can add a new project
+	println( "<br><font size=+2><b><u>Add New</b></u></font><br><br>" );
+	println( "<table border=0 cellpadding=1 cellspacing=5>" );
+	println( "<tr>" );
+		println( "<td algin=left valign=bottom><b>Name: </td>" );
+		println( "<td algin=left valign=bottom><b>&nbsp;&nbsp;Notes: </td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=left valign=top><input type=text width=25 maxlength=25 name=name></input></td>" );
+		println( "<td align=left valign=top>&nbsp;&nbsp;<textarea name=notes cols=40 rows=5></textarea></td>" );
+	println( "</tr></table>" );
+	println( "<br><input name=Action type=submit value=\"Add/Update\"></input>" );
+	println( "</form></center><br>" );
+
+	# Show all of the projects in a table
+	showProjects();
+
+	println( "</body></html>" );
+	$sth->finish();
+}
+
+#-----------------------------------------------------------------
+# Add and/or update a project.  If use selects a project in the 
+#  drop down box then simply allow them to update the project.  If
+#  user adds a new project, add the project to the database and 
+#  then allow him/her to update it.
+#-----------------------------------------------------------------
+sub addupdate
+{
+	my $select = param( "proj_list" );
+
+	# Add the new project if the user did not select a project to edit
+	if( $select eq "none" )
+	{
+		my $name = param( "name" );
+		my $notes = param( "notes" );
+
+		# Add the project to the database
+		my $sql = "INSERT INTO Projects ( id, name, notes ) VALUES ( NULL, " . 
+							$dbh->quote( $name ) . ", " . $dbh->quote( $notes ) . ")";
+
+		$dbh->do( $sql ) || die( "doing: $dbh->errstr" );
+
+		# Get the id number of the new project
+		$sql = "SELECT MAX( id ) FROM Projects";
+		my $sth = $dbh->prepare( $sql );
+		$sth->execute();
+		my @row = $sth->fetchrow();
+
+		$select = $row[0];
+
+		# Write a new sort frame because a project has been added
+		sortFrame::createSortFrame( $dbh, $sortFrame );
+	}
+
+	# Allow user to modify (update) the selected project
+	modify( $select );
+}
+
+#-----------------------------------------------------------------
+# Show all of the projects in the database in a table.
+#-----------------------------------------------------------------
+sub showProjects
+{
+	# Query the database
+	my $sql = "SELECT id, name, notes FROM Projects ORDER BY name ASC";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @row;
+
+	# Display the table of projects
+	println( "<b><font size=+1><center>Current Projects:</b></font><br>" );
+	println( "<table border=1 width=50% cellpadding=2 cellspacing=2>" );
+		println( "<tr>" );
+			println( "<th width=10%>Id</th>" );
+			println( "<th width=30%>Name</th>" );
+			println( "<th width=60%>Notes</th>" );
+		println( "</tr>" );
+		while( (@row=$sth->fetchrow()) )
+		{
+			println( "<tr><td align=center>$row[0]</td>" );
+			println( "<td align=center>$row[1]</td>" );
+			#println( "<td align=center>$row[2]</td></tr>" );
+			println( "<td align=center><a href=$notes_url?Action=getProjectNotes&project=$row[0]>View/Edit Notes</a></td></tr>" );
+		}	
+	println( "</table></center>" );
+
+	$sth->finish();
+}
+
+#-----------------------------------------------------------------
+# Allow the user to modify the project with the given id number.
+#-----------------------------------------------------------------
+sub modify
+{
+	my $id = shift;
+	my $link_id = shift;
+	println( header() );
+	println( "<html><head><title>Modify Project</title></head><body>" );
+
+	# The the project's information from the database
+	my $sql = "SELECT name, notes FROM Projects WHERE id = $id";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @row = $sth->fetchrow();
+	my $name = $row[0];
+	my $notes = $row[1];
+
+	showTitle( "Updating: $name" );
+
+	# Display the project's information in the form
+	println( "<form name=updateInfo method=post action=$my_url>" );
+	println( "<center><table border=0 cellpadding=1 cellspacing=5>" );
+	println( "<tr>" );
+		println( "<td algin=left valign=bottom><b>Name: </td>" );
+		println( "<td algin=left valign=bottom><b>&nbsp;&nbsp;Notes: </td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=left valign=top><input type=text width=25 maxlength=25 name=name value=\"$name\"></input></td>" );
+		println( "<td align=left valign=top>&nbsp;&nbsp;<textarea name=notes cols=40 rows=5>$notes</textarea></td>" );
+	println( "<tr>" );
+		println( "<td align=right colspan=2><input type=submit value=Update name=Action></input>" );
+		println( "<input type=submit value=\"Delete Project\" name=Action></input></td>" );
+		println( "<input type=hidden value=$id name=id></input>" );
+		println( "</form>" );
+	println( "</tr></table>" );
+
+	my $link_name = "";
+	my $link_url = "";
+
+	# Check to see if the user selected a link to update - if so display it in the 
+	#  form
+	if( defined( $link_id ) )
+	{
+		# Pull the links from the database
+		my $sql = "SELECT name, url FROM Links WHERE id=$link_id";
+		my $sth = $dbh->prepare( $sql );
+		$sth->execute();
+		my @row = $sth->fetchrow();
+		$link_name = $row[0];
+		$link_url = $row[1];
+		$sth->finish();
+	}		
+
+	# Display form that allows user to add/update/delete links from the this project
+	println( "<table width=85% border=0 cellpadding=3 cellspacing=3>" );
+		println( "<tr><form method=post action=$my_url>" );
+			println( "<td><b>Link Name: <input type=text value=\"$link_name\" name=link_name size=40 maxlength=100></input></td>" );
+			println( "<td><b>Link URL: <input type=text value=\"$link_url\" name=link_url size=70 maxlength=200></input></td>" );
+		println( "<tr><td align=right colspan=2>" );
+			if( defined( $link_id ) )
+			{
+				println( "<input type=submit name=Action value=\"Update Link\"></input>&nbsp;&nbsp;" ); 
+				println( "<input type=submit name=Action value=\"Delete Link\"></input>&nbsp;<input type=submit name=Action value=Cancel></input></td</tr>" ); 
+				println( "<input type=hidden name=link_id value=\"$link_id\"></input>" );
+			}
+			else
+			{
+				println( "<input type=submit name=Action value=\"Add Link\"></input></td></tr>" );
+			}
+		println( "<input type=hidden name=id value=$id></input></form></tr>" );
+		println( "<tr><td colspan=2 align=right><form method=post action=$my_url><input type=submit name=Action value=Done></input></td></tr>" );
+	println( "</table>" );
+
+	# Display the links for this project
+	showLinks( $id );
+}
+
+#-----------------------------------------------------------------
+# Display the links that belong to the project of the given id number
+#-----------------------------------------------------------------
+sub showLinks
+{
+	my $id = shift;
+
+	# Query the database
+	my $sql = "SELECT proj_id, name, url, id FROM Links WHERE proj_id = $id";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @row;
+
+	# Display the links in a table
+	println( "<b><font size=+1>Current Links:</b></font><br>" );
+	println( "<table border=1 cellpadding=2 cellspacing=2>" );
+	println( "<tr>" );
+		println( "<th>Link Name</th>" );
+		println( "<th>Link URL</th>" );
+	println( "</tr>" );
+	while( (@row = $sth->fetchrow()) )
+	{
+		println( "<tr>" );
+			println( "<td>" );
+
+				# Display a submit button so the user can select this link to update/delete it
+				print( "<form method=post action=$my_url>" );
+					print( "<input type=hidden name=id value=\"$row[0]\"></input>" );
+					print( "<input type=hidden name=link_id value=\"$row[3]\"></input>" );
+					#print( "<input type=hidden name=link_name value=\"$row[1]\"></input>" );
+					#print( "<input type=hidden name=url value=\"$row[2]\"></input>" );
+					print( "<input type=submit value=\"&gt;&gt;\" name=Action></input>" );
+					println( "&nbsp;<a href=$row[2]>$row[1]</a></td>" );
+				print( "</form>" );
+			println( "<td>$row[2]</td>" );
+		println( "</tr>" );
+	}
+	println( "</table>" );
+}
+
+#-----------------------------------------------------------------
+# Show a title
+#-----------------------------------------------------------------
+sub showTitle
+{
+	my $title = shift;
+
+	println( "<center><table width=75% border=0 bgcolor=#6699CC>" );
+		println( "<tr><td align=center><b><font color=white size=6>$title</td></tr>" );
+	println( "</table></center>" );
+}
+
+#-----------------------------------------------------------------
+# Establish a connection to the database
+#-----------------------------------------------------------------
+sub connectToDB
+{
+	return DBI->connect( "DBI:mysql:database=data_loading_notes;host=thunder",
+												"suldan", "hithere", { RaiseError=>1} ) || die( "Unable to connect to database" );
+}
+
+#-----------------------------------------------------------------
+# Add the new link entered by the user to the database
+#-----------------------------------------------------------------
+sub addlink
+{
+	my $id = param( "id" );
+	my $name = param( "link_name" );
+	my $url = param( "link_url" );
+	my $sql = "INSERT INTO Links ( proj_id, name, url, id ) VALUES ( $id, " . 
+						$dbh->quote( $name ) . ", " . $dbh->quote( $url ) . ", NULL )";
+
+	$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+	modify( $id );
+}
+
+#-----------------------------------------------------------------
+# Update the selected project with the new information 
+#-----------------------------------------------------------------
+sub update_proj
+{
+	my $id = param( "id" );
+	my $name = param( "name" );
+	my $notes = param( "notes" );
+
+	# Update the project in the database
+	my $sql = "UPDATE Projects SET name=" . $dbh->quote( $name ) . ", notes=" . $dbh->quote( $notes ) . " WHERE id=$id";
+
+	$dbh->do( $sql ) || die ( "doing: $dbh->errstr " );
+
+	# Re-write the sortFrame.html file - could have changed a project name
+	sortFrame::createSortFrame( $dbh, $sortFrame );
+
+	# Return to the Update Project page 
+	modify( $id );
+}
+
+#-----------------------------------------------------------------
+# Delete the selected project from the database 
+#-----------------------------------------------------------------
+sub delete_proj
+{
+	my $id = param( "id" );
+	my $sql = "DELETE FROM Projects WHERE id=$id";
+
+	$dbh->do( $sql ) || die ( "doing: $dbh->errstr " );
+
+	$sql = "DELETE FROM Links WHERE proj_id=$id";
+
+	$dbh->do( $sql ) || die ( "doing: $dbh->errstr " );
+
+	sortFrame::createSortFrame( $dbh, $sortFrame );
+
+	modifyProjects();
+}
+
+#-----------------------------------------------------------------
+# Show the selected link the in the form and allow user to update
+#  the link info.
+#-----------------------------------------------------------------
+sub edit_link
+{
+	my $id = param( "id" );
+	my $link_id = param( "link_id" );
+
+	modify( $id, $link_id );	
+}
+
+sub cancel_link
+{
+	my $id = param( "id" );
+	modify( $id );
+}
+
+sub cancel_person
+{
+	my $table = param( "table" );
+	showPeopleMod( $table );
+}
+
+sub update_link
+{
+	my $id = param( "id" );
+	my $name = param( "link_name" );
+	my $url = param( "link_url" );
+	my $link_id = param( "link_id" );
+
+	my $sql = "UPDATE Links SET name=" . $dbh->quote( $name ) . ", url=" . $dbh->quote( $url ) . " WHERE id=$link_id";
+	$dbh->do( $sql ) || die( "doing: $dbh->errstr" );
+
+	modify( $id );
+}
+
+sub delete_link
+{
+	my $id = param( "id" );
+	my $link_id = param( "link_id" );
+
+	my $sql = "DELETE FROM Links WHERE id=$link_id";
+
+	$dbh->do( $sql ) || die( "doing: $dbh->errstr" );
+	modify( $id );
+}
+
+sub modifyLoaders
+{
+	showPeopleMod( "Loaders" );
+}
+sub modifyCheckers
+{
+	showPeopleMod( "Checkers" );
+}
+sub modifyContacts
+{
+	showPeopleMod( "Contacts" );
+}
+
+
+sub showPeopleMod
+{
+	my $table = shift;
+	my $id = shift;
+	my $name = shift;
+	my $email = shift;
+	my $active = shift;
+
+	println( header() );
+	println( "<html><head><title>Add/Update $table</title></head><body>" );
+	showTitle( "Add/Update $table" );
+
+	println( "<form method=post action=$my_url>" );
+	println( "<center><table cellpadding=5 cellspacing=5 border=0>" );
+		println( "<tr>" );
+			println( "<td><b>Name: </b><input type=text name=pname value=\"$name\"></input></td>" );
+			println( "<td><b>E-mail: </b><input type=text name=pemail value=\"$email\"></input></td>" );
+			if( $active == 0 )
+			{
+				println( "<td><b>Active: </b><input type=checkbox name=pactive></input></td>" );
+			}
+			else
+			{
+				println( "<td><b>Active: </b><input type=checkbox name=pactive checked></input></td>" );
+			}
+		println( "</tr>" );
+		println( "<tr>" );
+			if( !defined( $id ) )
+			{
+				println( "<td colspan=2 align=right><input type=submit name=Action value=\"Add Person\"></input></td>" );
+			}
+			else
+			{
+				println( "<td colspan=2 align=right><input type=submit name=Action value=\"Update Person\"></input>" );
+				#println( "<input type=submit name=Action value=\"Delete Person\"></input>" );
+				println( "<input type=submit name=Action value=\"cancel\"></input>" );
+				println( "<input type=hidden name=pid value=$id></input>" );
+			}
+			println( "<input type=hidden name=table value=$table></input>" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td colspan=2 align=right><input type=submit name=Action value=Done></input></td>" );
+		println( "</tr>" );
+	println( "</table></form>" );
+
+	showPeopleTable( $table );
+
+	println( "</body></html>" );
+
+}
+
+sub showPeopleTable
+{
+	my $table = shift;
+
+	my $sql = "SELECT id, name, email, active FROM $table";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @row;
+
+	println( "<b><font size=+1>Current People in the $table table:<br></b></font>" );
+	println( "<table border=1 cellpadding=6 width=35% cellspacing=2>" );
+	println( "<tr>" );
+		println( "<th>Id</th>" );
+		println( "<th>Name</th>" );
+		println( "<th>E-mail</th>" );
+		println( "<th>Active</th>" );
+	println( "</tr>" );
+	while( (@row = $sth->fetchrow()) )
+	{
+		println( "<tr>" );
+			println( "<td align=left nowrap><form method=post action=$my_url>" );
+				println( "<input type=submit name=Action value=\"-&gt;\"></input>" );
+				println( "<input type=hidden name=pid value=$row[0]></input>" );
+				println( "<input type=hidden name=pname value=$row[1]></input>" );
+				println( "<input type=hidden name=pemail value=$row[2]></input>" );
+				println( "<input type=hidden name=pactive value=$row[3]></input>" );
+				println( "<input type=hidden name=table value=$table></input>" );
+				println( "&nbsp;$row[0]</td>" );
+			println( "</form>" );
+			if( defined( $row[2] ) )
+			{
+				println( "<td align=center><a href=mailto:$row[2]>$row[1]</a></td>" );
+				println( "<td align=center>$row[2]</td>" );
+			}
+			else
+			{
+				println( "<td align=center>$row[1]</a></td>" );
+				println( "<td align=center>NULL</td>" );
+			}
+			if( $row[3] == 0 )
+			{
+				println( "<td align=center><font color=red>N</font></td>" );
+			}
+			else
+			{
+				println( "<td align=center><font color=blue>Y</font></td>" );
+			}
+		println( "</tr>" );
+	}
+	println( "</table>" );	
+	$sth->finish();
+}
+
+sub edit_person
+{
+	my $id = param( "pid" );
+	my $name = param( "pname" );
+	my $email = param( "pemail" );
+	my $table = param( "table" );
+	my $active = param( "pactive" );
+
+	if( $email eq "" ) { $email = "NULL"; }
+	showPeopleMod( $table, $id, $name, $email, $active );
+}
+
+sub update_person
+{
+	my $id = param( "pid" );
+	my $name = param( "pname" );
+	my $email = param( "pemail" );
+	my $table = param( "table" );
+	my $active = param( "pactive" );
+
+	my $sql = "UPDATE $table SET name=\"$name\", ";
+	if( $email eq "NULL" )
+	{
+		$sql = $sql . "email=NULL, ";
+	}
+	else
+	{
+		$sql = $sql . "email=\"$email\", ";
+	}
+
+	if( defined( $active ) )
+	{
+		$sql = $sql . "active=1";
+	}
+	else
+	{
+		$sql = $sql . "active=0";
+	}
+
+	$sql = $sql . " WHERE id=$id";
+
+	$dbh->do( $sql ) || die( "doing: $dbh->errstr" );
+
+	showPeopleMod( $table );
+}
+
+sub delete_person
+{
+	my $id = param( "pid" );
+	my $table = param( "table" );
+
+	my $sql = "DELETE FROM $table WHERE id=$id";
+
+	$dbh->do( $sql ) || die( "doing: $dbh->errstr" );
+
+	showPeopleMod( $table );
+}
+
+sub add_person
+{
+	my $name = param( "pname" );
+	my $email = param( "pemail" );
+	my $active = param( "pactive" );
+	my $table = param( "table" );
+
+	my $sql = "INSERT INTO $table ( id, name, email, active ) VALUES ( NULL, " . $dbh->quote( $name ) . ", ";
+	if( $email eq "NULL" )
+	{
+		$sql = $sql . "NULL, ";
+	}
+	else
+	{
+		$sql = $sql . $dbh->quote($email) . ", ";
+	}
+	
+	if( defined( $active ) )
+	{
+		$sql = $sql . "1 )";
+	}
+	else
+	{
+		$sql = $sql . "0 )";
+	}
+	$dbh->do( $sql ) || die( "doing: $dbh->errstr" );
+
+	showPeopleMod( $table );
+
+}

@@ -1,0 +1,113 @@
+
+use strict;
+use lib "lib";
+use Utils;
+use ProjectDBA;
+use ExtractionDBA;
+
+sub thread_view
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	println( $cgi->header() );
+
+	println( "<head>" );
+		println( "<title>Iven User View</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+
+	println( "<body>" );
+
+	menu( $state, $cgi );
+	my $proj = ProjectDBA::buildThreadView( $state->{project} );
+
+	my $tgroup = $proj->{tgroup};
+	my $count = 1;
+
+	println( "<br><center>" );	
+	foreach my $list (@{$tgroup->{thread_lists}})
+	{
+		showDependency( $state, $list, $count++ );
+		println( "<br>" );	
+	}
+
+	println( "<table border=0 cellpadding=3 cellspacing=1 class=productTable width=75%>" );
+		println( "<tr class=productTitle>" );
+			print( "<td>Products With No Dependencies:</td>" );
+		println( "</tr>" );
+
+		foreach my $pd (@{$proj->{no_deps}})
+		{
+			println( "<tr class=dsRow>" );
+
+				my $url = $state->getUrlString( "view"=>$PRODUCT, "product"=>$pd->{pdname} );
+				println( "<td><a href=$url>$pd->{pdname}</a></td>" );
+			println( "</tr>" );
+		}
+	println( "</table>" );
+
+	println("</body></html>" );
+}
+
+sub traverse
+{
+	my $list = shift;
+	my $count = shift;
+	my $state = shift;
+
+	if( !defined( $list ) )
+	{
+		return;
+	}
+	else
+	{
+		println( "<tr class=dsRow>" );
+			println( "<td>" );
+				for( my $x = 0; $x < $count; $x++ )
+				{
+					print( "<img src=$img_src/blank.gif border=0>" );
+				}
+				if( $count != 0 )
+				{ print( "<img src=$img_src/thread.gif border=0>" ); }
+				
+				my $url = $state->getUrlString( "view"=>$PRODUCT, "product"=>$list->{pdname} );	
+				print( "&nbsp;", "<a href=$url>$list->{pdname}</a>" );
+			println( "</td>" );
+			println( "<td>" );	
+			my $exts = ExtractionDBA::getByProduct( $list->{pdname}, $state->{project} );
+
+			foreach my $ex (@$exts)
+			{
+				my $url = $state->getUrlString( "view"=>$DATASET, "dataset"=>$ex->{dsname}, "product"=>$list->{pdname} );	
+				println( "<a href=$url>$ex->{extname}</a>", "<br>" );
+			}
+			println( "</td>" );
+			
+
+
+		println( "</tr>" );
+
+
+		traverse( $list->{next}, $count+1, $state );
+	}
+}
+
+sub showDependency
+{
+	my $state = shift;
+	my $list = shift;
+	my $count = shift;
+
+	println( "<table border=0 cellpadding=3 cellspacing=1 class=productTable width=75%>" );
+		println( "<tr class=productTitle><td colspan=2>Dependency #$count</td></tr>" );
+		println( "<tr class=productHead>" );
+			println( "<td>Product Name</td>" );
+			println( "<td>Related Extraction(s)</td>" );
+		println( "</tr>" );
+
+		traverse( $list, 0, $state );
+	println( "</table>" );
+}
+1;

@@ -1,0 +1,138 @@
+From: Scot Loehrer <loehrer@ucar.edu>
+Date: January 6, 2010 9:48:55 AM MST
+To: Don Stott <stott@ucar.edu>, Linda Cully <cully@ucar.edu>
+Subject: CEOP CPPA ARM SGP FLX 2005-2009 data ready for conversion
+
+Don/Linda,
+
+The CEOP CPPA ARM SGP FLX data for 2005-2009 are in-house and ready
+for conversion.
+
+This data set is comprised of EBBR and ECOR data:
+/ingest/CEOP/v2/ARM/SGP/EBBR
+/ingest/CEOP/v2/ARM/SGP/ECOR
+
+The DQR-based flags are:
+/ingest/CEOP/v2/ARM/SGP/EBBR/flagging/SGP_EBBR_flagging_2005_2009.txt
+/ingest/CEOP/v2/ARM/SGP/ECOR/flagging/SGP_ECOR_flagging_2005_2009.txt
+
+Several items to note here.
+
+The 2003-2004 ARM SGP data had GAPP as the RHP (CSE).  For the data from
+2005 on that should be CPPA instead.
+
+You will note that some stations do not continue through the end of
+2009.  These stations have been decommissioned and there will be no
+further data from them.
+
+The EBBR data changed parameter names starting 1 Jan 2009.  They are
+much more sensible(!) names now.  The parameters we should be using are:
+
+latent_heat_flux in place of e
+sensible_heat_flux in place of h
+surface_soil_heat_flux_avg in place of g1
+corr_soil_heat_flow_1 in place of c_shf1
+
+The parameter names for ECOR data remain the same throughout.
+
+For the ECOR data at station E21 the times are incorrect (DST rather
+than UTC) from 01/20/2009 at 2030 to 01/22/2009 at 1800.  Go ahead and
+add 5 hours to the times in this period to correct this problem.
+
+When it comes to checking and plotting these will need to be combined
+with the archived data:
+/export/archive/data/ceop/eop3and4/GAPP/SGP/GAPP_SGP_20021001_20041231.flx
+
+Let me know if you have any questions.
+
+Thanks.
+
+Scot
+
+----------------------------------------------------------------
+
+From: Scot Loehrer <loehrer@ucar.edu>
+Date: January 7, 2010 5:41:37 AM MST
+To: stott@ucar.edu
+Cc: cully@ucar.edu
+Subject: CEOP CPPA ARM SGP STM 2005-2009 data ready for conversion
+
+Don/Linda,
+
+The CEOP CPPA ARM SGP STM data for 2005-2009 are in-house and ready
+for conversion.
+
+This data set is comprised of SWATS data:
+/ingest/CEOP/v2/ARM/SGP/SWATS
+
+The DQR-based flags are:
+/ingest/CEOP/v2/ARM/SGP/SWATS/flagging/SGP_SWATS_flagging_2005_2009.txt
+
+When it comes to checking and plotting these will need to be combined
+with the archived data:
+/export/archive/data/ceop/eop3and4/GAPP/SGP/GAPP_SGP_20021001_20041231.stm
+
+Note that the earlier data had GAPP as the RHP (CSE).  For the new data
+that should be CPPA.
+
+Let me know if you have any questions.
+
+Thanks.
+
+Scot
+
+----------------------------------------------------------------
+
+
+
+From: Scot Loehrer <loehrer@ucar.edu>
+Date: January 11, 2010 8:01:02 AM MST
+To: Don Stott <stott@ucar.edu>
+Cc: Linda Cully <cully@ucar.edu>
+Subject: CEOP CPPA ARM SGP SFC 2005-2009 data ready for conversion
+
+Linda/Don,
+
+The CEOP CPPA ARM SGP SFC data for 2005-2009 are in-house and ready
+for conversion.
+
+This data set is comprised of SMOS, SIRS, IRT, and MET data:
+/ingest/CEOP/v2/ARM/SGP/SMOS
+/ingest/CEOP/v2/ARM/SGP/MET
+/ingest/CEOP/v2/ARM/SGP/SIRS
+/ingest/CEOP/v2/ARM/SGP/IRT
+
+The DQR-based flags are:
+/ingest/CEOP/v2/ARM/SGP/SIRS/flagging/SGP_SIRS_flagging_2005_2009.txt
+/ingest/CEOP/v2/ARM/SGP/SMOS/flagging/SGP_SMOS_flagging_2005_2009.txt
+
+There are no DQR flags for the IRT or MET data sets.
+
+Note that SMOS is replaced by MET as of 1 Oct 2009.  Also, some stations
+start dropping out during the latter portion of 2009.
+
+Here are the parameters to grab from MET:
+atmos_pressure
+temp_mean
+rh_mean
+wspd_vec_mean
+wdir_vec_mean
+tbrg_precip_total_corr
+
+We need to apply the following corrections to SIRS:
+E27 from 1649 on 05/20/2009 to 2005 on 06/03/2009
+up_short_hemisp(new) = up_short_hemisp(old) * 116.66/111.85
+down_short_hemisp(new) = down_short_hemisp(old) * 128.92 / 104.15
+
+When it comes to checking and plotting these will need to be combined
+with the archived data:
+/export/archive/data/ceop/eop3and4/GAPP/SGP/GAPP_SGP_20021001_20041231.sfc
+
+Note that the earlier data had GAPP as the RHP (CSE).  For the new data
+that should be CPPA.
+
+Let me know if you have any questions.
+
+Thanks.
+
+Scot

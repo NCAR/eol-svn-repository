@@ -1,0 +1,938 @@
+#ifndef lint
+static char *rcsid = "$Id: xqc.c,v 1.2 1994/07/19 20:48:41 mark Exp $";
+#endif
+
+
+/*
+ * $Log: xqc.c,v $
+ * Revision 1.2  1994/07/19  20:48:41  mark
+ * Enable pressure display
+ * Extend to 50 mb
+ * Fix zoom bug (hopefully)
+ *
+ * Revision 1.1  1992/12/03  00:53:09  mark
+ * Initial revision
+ *
+ *
+ */
+
+#include <xview/xview.h>
+#include <xview/panel.h>
+#include <xview/canvas.h>
+#include <xview/cms.h>
+#include <xview/xv_xrect.h>
+#include <xview/cursor.h>
+#include <X11/cursorfont.h>
+#include <X11/Xlib.h>
+
+#include <stdio.h>
+#include <string.h>
+#include <sgtty.h>
+#include <sys/ttychars.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#include <ctype.h>
+#include <pwd.h>
+#include <unistd.h>
+#include <libgen.h>
+
+#include "xqc.h"
+#include "GC.h"
+
+/*
+ * Colors
+ */
+#define	WHITE	0
+#define	BLACK	1
+#define	DARKGRAY	2
+#define	LIGHTGRAY	3
+
+char		*xqcName;
+
+Display		*display;
+int		screen_number;
+Visual		*visual;
+Colormap	colormap;
+XFontStruct	*theFont;
+Cursor 		theCursor, busyCursor;
+Window 		xqcWin;
+Window 		iconWin;
+Window 		dispWin;
+
+int		foreground;
+int		background;
+
+int parameter=DP;
+int mark_as=MAYBE;
+int auto_read=1;
+int auto_write=1;
+int reverseColor=0;
+
+GC		fgGC;
+GC		bgGC;
+int should_clear=1;
+int write_needed=0;
+int zooming=0;
+int zoomed=0;
+
+#define WTYP_DISP 0
+#define WTYP_BUT 1
+#define WTYP_SKT 2
+
+char *myFontName = 	"8x13";
+
+struct skt_t
+    {
+    int drawn;
+    int first_call;
+    GC gc;
+    int old_x, old_y;
+    } curs = { 0, 1, (GC) 0, 0, 0},
+      box  = { 0, 0, (GC) 0, 0, 0};
+
+Frame frame, subframe;
+Panel_item site_name, zoom, unzoom, cur_pres;
+
+extern void sk_Skewt();
+
+static int startup=1;
+
+/* For getopt: */
+extern int optind;
+extern char *optchar;
+extern char *optarg;
+
+void
+repaint(canvas, paint, disp, xwin, area)
+Canvas canvas;
+Xv_Window paint;
+Display *disp;
+Window xwin;
+Xv_xrectlist *area;
+    {
+    GC gc;
+    int width, height;
+
+    puts("Redrawing.");
+    if (startup)
+	{
+	xqc_read();
+	startup=0;
+	}
+    if (display != disp)
+	puts("Hey, display ain't disp.");
+    if ((Window)xv_get(paint, XV_XID) != xwin)
+	puts("Hey, paintwin ain't xwin.");
+    if (xwin != dispWin)
+	puts("Hey, xwin ain't dispWin.");
+
+    sk_Skewt();
+    }
+
+void handle_event(window, event, arg)
+Xv_Window window;
+Event *event;
+Notify_arg arg;
+    {
+    static int start_y;
+    char p[128];
+
+    if (event_is_ascii(event))
+	{
+        /*
+         * note that shift modifier is reflected in the event code by
+         * virtue of the char printed is upper/lower case.
+         */
+	/*
+        sprintf(p, "Keyboard: key '%c' (%d) %s at %d,%d",
+            event_action(event), event_action(event),
+            event_is_down(event)? "pressed" : "released",
+            event_x(event), event_y(event));
+	*/
+	}
+    else switch (event_action(event))
+	{
+        case ACTION_SELECT :
+        case ACTION_ADJUST :
+        case ACTION_MENU :
+	    if (event_is_down(event))
+		/* Button pressed */
+		{
+		if (zooming)
+		    {
+		    zoomIn(event_x(event), event_y(event));
+		    box.drawn=0;
+		    }
+		else
+		    {
+		    start_y=event_y(event);
+		    if (curs.first_call)
+			{
+			curs.gc = XCreateGC(display, dispWin,
+					    0, NULL);
+			XSetForeground(display,
+				       curs.gc,
+				       WhitePixel(display, screen_number)^
+				       BlackPixel(display, screen_number));
+			XSetFunction(display, curs.gc, GXxor);
+			curs.first_call=0;
+			}
+		    /* Nuke old cursor line while we remember where it */
+		    /* is: */
+		    if (curs.drawn)
+			XDrawLine(display, dispWin, curs.gc,
+				  0, curs.old_y,
+				  700, curs.old_y);
+		    curs.old_y=start_y;
+		    /* and add a new cursor line where we are RIGHT */
+		    /* NOW */
+		    XDrawLine(display, dispWin, curs.gc, 0, curs.old_y,
+			      700, curs.old_y);
+		    /* Draw it twice, so it'll stay when we move: */
+		    XDrawLine(display, dispWin, curs.gc, 0, curs.old_y,
+			      700, curs.old_y);
+		    curs.drawn=1;
+		    }
+		}
+	    else
+		/* Button released */
+		{
+		if (zooming)
+		    {
+		    zooming=0;
+		    zoomed=1;
+		    }
+		else
+		    {
+		    write_needed=1;
+		    printf("Ending window coords: X = %d, Y = %d\n",
+			   curs.old_x, curs.old_y);
+		    /* Delete starting  cursor line: */
+		    XDrawLine(display, dispWin,
+			      curs.gc, 0, start_y, 700, start_y);
+		    setBad(start_y, event_y(event));
+		    should_clear=(mark_as == GOOD);
+		    curs.drawn=!should_clear;
+		    sk_Skewt();
+		    }
+		}
+            break;
+        case LOC_MOVE:
+            sprintf(p, "Pointer: moved to %d,%d",
+                    event_x(event),event_y(event));
+	    if (zooming)
+		updateBox(event_x(event), event_y(event));
+	    else
+		updateCursor(event_x(event), event_y(event));
+	    break;
+        case LOC_DRAG:
+            sprintf(p, "Pointer: dragged to %d,%d",
+                    event_x(event), event_y(event));
+	    if (zooming)
+		updateBox(event_x(event), event_y(event));
+	    else
+		updateCursor(event_x(event), event_y(event));
+	    break;
+        case LOC_WINENTER:
+            win_set_kbd_focus(window, xv_get(window, XV_XID));
+            sprintf(p, "Pointer: entered window at %d,%d",
+                    event_x(event), event_y(event));
+            break;
+        case LOC_WINEXIT:
+            sprintf(p, "Pointer: exited window at %d,%d",
+                    event_x(event), event_y(event));
+	    if (curs.drawn)
+		{
+		XDrawLine(display, dispWin,
+			  curs.gc, 0, curs.old_y,
+			  700, curs.old_y);
+		curs.drawn=0;
+		}
+	    if (box.drawn)
+		{
+		XDrawRectangle(display, dispWin, curs.gc,
+			       box.old_x-(BOXSIZE/2),
+			       box.old_y-(BOXSIZE/2), BOXSIZE, BOXSIZE);
+		box.drawn=0;
+		}
+	    break;
+        case WIN_RESIZE :
+        case WIN_REPAINT :
+            return;
+        default :
+            /* There are too many ACTION events to trap -- ignore the
+             * ones we're not interested in.
+             */
+            return;
+	    }
+/*    printf("Action: %s\n", p); */
+    XFlush(display);
+    }
+
+main(argc, argv)
+int argc;
+char **argv;
+    {
+    Panel panel;
+    Canvas canvas, windCanvas;
+    int xqc_next(), xqc_prev(), xqc_quit(), xqc_read(), xqc_write(),
+    xqc_clear(), xqc_site(), xqc_mark(), xqc_parm(), xqc_auto(),
+    xqc_auto2(), xqc_zoom(), xqc_unzoom(), xqc_orig();
+    int numlines, result, i;
+    char *file, *s, *c;
+    XGCValues values;
+    Xv_singlecolor fg, bg;
+    int opt;
+
+    /*
+    printf("Arg: %s\n", argv[1]);
+    xv_init(XV_INIT_ARGC_PTR_ARGV, &argc, argv, NULL);
+
+    while ((opt=getopt(argc, argv, "r"))!= -1)
+	{
+	switch(opt)
+	    {
+	    case 'r':
+		reverseColor=1;
+		break;
+	    default:
+		fprintf(stderr, "unknown argument %c\n", opt);
+		Usage();
+		exit(1);
+	    }
+	}
+    argc -= optind;
+    argv += optind;
+    */
+    /*
+     * Check for any arguments left
+     */
+    if (argc != 2)
+	{
+	Usage();
+	exit(1);
+	}
+    if ((infile=(char *)malloc(LINEBUF * sizeof(char)))==NULL)
+	oops(OUTOFMEMORY);
+    if ((outfile=(char *)malloc(LINEBUF * sizeof(char)))==NULL)
+	oops(OUTOFMEMORY);
+    /*
+    path[0]='\0';
+    if ((c=strrchr(argv[0], '/')) != NULL)
+	{
+	strncpy(path, argv[0], c-argv[1]+1);
+	argv[1] = ++c;
+	}
+    strcpy(infile, argv[0]);
+    */
+    strcpy(infile,basename(argv[1]));
+    strcpy(path,dirname(argv[1]));
+/*    printf("Path: %s Infile: %s Arg: %s\n", path, infile, argv[1]); */
+    if (strlen(infile)==3)
+	/* Only site name given */
+	{
+	strcpy(site, infile);
+	if (new_site(infile)==NULL)
+	    oops(BADSITE);
+	printf("First file of site %s: %s\n", site, infile);
+	}
+    compressed=(infile[strlen(infile)-1]=='Z');
+    if (compressed)
+	infile[strlen(infile)-2]='\0';
+    strcpy(outfile, infile);
+    strcat(outfile, ".qc");
+
+    strncpy(site, infile, 3);
+    site[3]='\0';
+    printf("Path: %s Infile: %s Outfile: %s\n", path, infile, outfile);
+
+    if (chdir(path))
+	oops(CANTCD);
+    make_dir();
+    if (setthisfile())
+	oops(CANTFIND);
+
+    fg.red=255, fg.green=255, fg.blue=255;
+    bg.red=0, bg.green=0, bg.blue=0;
+    frame=(Frame)xv_create(NULL, FRAME,
+			   FRAME_LABEL, "XQC",
+			   FRAME_BACKGROUND_COLOR, &bg,
+			   FRAME_FOREGROUND_COLOR, &fg,
+			   FRAME_INHERIT_COLORS, TRUE,
+			   NULL);
+    display=(Display *)xv_get(frame, XV_DISPLAY);
+    screen_number = DefaultScreen(display);
+    visual = DefaultVisual(display, screen_number);
+    colormap = DefaultColormap(display, screen_number);
+/*    if (reverseColor)
+	{
+	background = WhitePixel(display, screen_number);
+	foreground = BlackPixel(display, screen_number);
+	}
+    else */
+	{
+	background = BlackPixel(display, screen_number);
+	foreground = WhitePixel(display, screen_number);
+	}
+
+    if ((theFont = XLoadQueryFont (display, myFontName)) ==
+            NULL)
+	{
+        (void) fprintf(stderr, "xqc: can't open font %s\n",
+                myFontName);
+        exit(-1);
+	}
+
+    makeCursor();
+
+    /*
+     * Make the utility gc's.
+     */
+    values.font = theFont->fid;
+    values.foreground = foreground;
+    fgGC = XCreateGC(display, DefaultRootWindow(display),
+            GCForeground | GCFont, &values);
+    values.foreground = background;
+    values.function = GXcopy;
+    bgGC = XCreateGC(display, DefaultRootWindow(display),
+            GCForeground | GCFont | GCFunction, &values);
+
+    xqcWin=(Window)xv_get(frame, XV_XID);
+
+    canvas=(Canvas)xv_create(frame, CANVAS,
+			     XV_WIDTH, 700,
+			     XV_HEIGHT, 700,
+			     CANVAS_WIDTH, 700,
+			     CANVAS_HEIGHT, 700,
+			     CANVAS_AUTO_SHRINK, FALSE,
+			     CANVAS_AUTO_EXPAND, FALSE,
+			     CANVAS_X_PAINT_WINDOW, TRUE,
+			     CANVAS_REPAINT_PROC, repaint,
+			     NULL);
+
+    dispWin=(Window)xv_get(canvas_paint_window(canvas), XV_XID);
+
+    xv_set(canvas_paint_window(canvas),
+	   WIN_CONSUME_EVENTS,
+	   WIN_NO_EVENTS,
+	   LOC_MOVE,
+	   LOC_DRAG, LOC_WINENTER, LOC_WINEXIT, WIN_MOUSE_BUTTONS,
+	   NULL,
+	   WIN_EVENT_PROC, handle_event,
+	   WIN_CURSOR, (Xv_Cursor)xv_create(NULL, CURSOR,
+					    CURSOR_SRC_CHAR, 22,
+					    CURSOR_MASK_CHAR, 23,
+					    NULL), 
+	   NULL);
+/*
+    windCanvas=(Canvas)xv_create(frame, CANVAS,
+				 XV_WIDTH, 150,
+				 XV_HEIGHT, 700,
+				 NULL);
+*/
+    panel=(Panel)xv_create(frame, PANEL,
+			   PANEL_LAYOUT, PANEL_VERTICAL,
+			   NULL);
+
+    (void)xv_create(panel, PANEL_BUTTON,
+		    PANEL_LABEL_STRING, "Clear",
+		    PANEL_NOTIFY_PROC, xqc_clear,
+		    NULL);
+    (void)xv_create(panel, PANEL_BUTTON,
+		    PANEL_LABEL_STRING, "Read",
+		    PANEL_NOTIFY_PROC, xqc_read,
+		    NULL);
+    (void)xv_create(panel, PANEL_BUTTON,
+		    PANEL_LABEL_STRING, "Read Original",
+		    PANEL_NOTIFY_PROC, xqc_orig,
+		    NULL);
+    (void)xv_create(panel, PANEL_BUTTON,
+		    PANEL_LABEL_STRING, "Write",
+		    PANEL_NOTIFY_PROC, xqc_write,
+		    NULL);
+    (void)xv_create(panel, PANEL_BUTTON,
+		    PANEL_LABEL_STRING, "Next",
+		    PANEL_NOTIFY_PROC, xqc_next,
+		    NULL);
+    (void)xv_create(panel, PANEL_BUTTON,
+		    PANEL_LABEL_STRING, "Prev",
+		    PANEL_NOTIFY_PROC, xqc_prev,
+		    NULL);
+    site_name=(Panel_item)xv_create(panel, PANEL_TEXT,
+		    PANEL_LAYOUT, PANEL_VERTICAL,
+		    PANEL_LABEL_STRING, "Site:",
+		    PANEL_VALUE, site,
+		    PANEL_VALUE_DISPLAY_LENGTH, 10,
+		    NULL);
+    (void)xv_create(panel, PANEL_BUTTON,
+		    PANEL_LABEL_STRING, "Set Site",
+		    PANEL_NOTIFY_PROC, xqc_site,
+		    NULL);
+    (void)xv_create(panel, PANEL_CHOICE,
+		    PANEL_LAYOUT, PANEL_VERTICAL,
+		    PANEL_LABEL_STRING, "Mark as:",
+		    PANEL_CHOICE_STRINGS, "Good", "Bad", "Quest", NULL,
+		    PANEL_VALUE, 2,
+		    PANEL_NOTIFY_PROC, xqc_mark,
+		    NULL);
+    (void)xv_create(panel, PANEL_TOGGLE,
+		    PANEL_LAYOUT, PANEL_VERTICAL,
+		    PANEL_LABEL_STRING, "Parameter:",
+		    PANEL_CHOICE_STRINGS, "Pres", "DP", "Temp",
+		    "Winds", NULL,
+		    PANEL_VALUE, parameter,
+		    PANEL_NOTIFY_PROC, xqc_parm,
+		    NULL);
+/*    (void)xv_create(panel, PANEL_CHOICE,
+		    PANEL_LAYOUT, PANEL_VERTICAL,
+		    PANEL_LABEL_STRING, "Auto Read:",
+		    PANEL_CHOICE_STRINGS, "On", "Off", NULL,
+		    PANEL_VALUE, 0,
+		    PANEL_NOTIFY_PROC, xqc_auto,
+		    NULL);
+    (void)xv_create(panel, PANEL_CHOICE,
+		    PANEL_LAYOUT, PANEL_VERTICAL,
+		    PANEL_LABEL_STRING, "Auto Write:",
+		    PANEL_CHOICE_STRINGS, "On", "Off", NULL,
+		    PANEL_VALUE, 0,
+		    PANEL_NOTIFY_PROC, xqc_auto2,
+		    NULL);
+		    */
+    zoom=(Panel_item)xv_create(panel, PANEL_BUTTON,
+		    PANEL_LABEL_STRING, "Zoom",
+		    PANEL_NOTIFY_PROC, xqc_zoom,
+		    NULL);
+    unzoom=(Panel_item)xv_create(panel, PANEL_BUTTON,
+		    PANEL_LABEL_STRING, "Unzoom",
+		    PANEL_NOTIFY_PROC, xqc_unzoom,
+/*		    PANEL_INACTIVE, TRUE, */
+		    NULL);
+    (void)xv_create(panel, PANEL_BUTTON,
+		    PANEL_LAYOUT, PANEL_VERTICAL,
+		    PANEL_LABEL_STRING, "Quit",
+		    PANEL_NOTIFY_PROC, xqc_quit,
+		    NULL);
+cur_pres=(Panel_item)xv_create(panel, PANEL_MESSAGE,
+			       PANEL_LABEL_STRING, "Pres:", NULL);
+
+    window_fit(canvas);
+/*    window_fit(windCanvas); */
+    window_fit_width(panel);
+    window_fit(frame);
+    xv_main_loop(frame);
+    }
+
+
+/*
+ * Print message to stderr and exit
+ */
+Usage ()
+{
+    (void) fprintf (stderr, "Usage: %s [-r] filename\nor: %s [-r] sitename\n",
+            xqcName ? xqcName : "xqc", xqcName ? xqcName : "xqc");
+    exit (1);
+}
+
+/*
+ * Make the cursor
+ */
+makeCursor ()
+{
+    theCursor = XCreateFontCursor (display, XC_crosshair);
+    busyCursor = XCreateFontCursor (display, XC_watch);
+}
+
+
+/* Hokay, now for the nitty-gritty QC stuff. */
+
+xqc_clear(item, event)
+Frame item;
+Event *event;
+    {
+    puts("Current sounding cleared.");
+    if (write_okay)
+	{
+	XClearWindow(display, dispWin);
+	sk_Background();
+	}
+    write_okay=0;
+    write_needed=0;
+    return;
+    }
+
+xqc_read()
+    {
+    char filename[LINEBUF];
+    struct stat b;
+
+    strcpy(filename, outfile);
+    if (compressed)
+	strcat(filename, ".Z");
+    if (!stat(filename, &b))
+	/* qc file exists! */
+	{
+	strcpy(filename, outfile);
+	printf("Reading QC file %s.\n", filename);
+	}
+    else
+	/* Get original file */
+	{
+	strcpy(filename, infile);
+	printf("Reading original file %s.\n", filename);
+	}
+    read_class(filename, &numlines);
+    write_okay=1;
+    write_needed=1;
+    if (zoomed)
+	xqc_unzoom();
+    should_clear=1;
+    sk_Skewt();
+    return;
+    }
+
+xqc_orig()
+    {
+    char filename[LINEBUF];
+
+    strcpy(filename, infile);
+    printf("Reading original file %s.\n", filename);
+    read_class(filename, &numlines);
+    write_okay=1;
+    write_needed=1;
+    if (zoomed)
+	xqc_unzoom();
+    sk_Skewt();
+    return;
+    }
+
+xqc_write()
+    {
+    char filename[LINEBUF];
+
+    if (write_okay && write_needed)
+	{
+	XDefineCursor(display, xqcWin, busyCursor);
+	XFlush(display);
+	strcpy(filename, outfile);
+	printf("Writing file %s.\n", filename);
+	write_class(filename, numlines);
+	write_needed=0;
+	XDefineCursor(display, xqcWin, theCursor);
+	}
+    else if (write_okay)
+	printf("No write needed.\n");
+    else
+	{
+	printf("No current file.\n");
+	}
+    return;
+    }
+
+xqc_prev(item, event)
+Frame item;
+Event *event;
+    {
+    char s[81];
+
+    if ((prev_file(s))!=NULL)
+	{
+	if (auto_write)
+	    xqc_write();
+/*	xqc_clear(); */
+	should_clear=1;
+	strcpy(infile, s);
+	printf("Reversed to %s.\n", infile);
+	compressed=(infile[strlen(infile)-1]=='Z');
+	if (compressed)
+	    infile[strlen(infile)-2]='\0';
+	strcpy(outfile, infile);
+	strcat(outfile, ".qc");
+	if (auto_read)
+	    xqc_read();
+	return;
+	}
+    else
+	printf("No previous file.\n");
+    return;
+    }
+
+xqc_next(item, event)
+Frame item;
+Event *event;
+    {
+    char s[81];
+
+    if ((next_file(s))!=NULL)
+	{
+	if (auto_write)
+	    xqc_write();
+/*	xqc_clear(); */
+	should_clear=1;
+	strcpy(infile, s);
+	printf("Advanced to %s.\n", infile);
+	compressed=(infile[strlen(infile)-1]=='Z');
+	if (compressed)
+	    infile[strlen(infile)-2]='\0';
+	strcpy(outfile, infile);
+	strcat(outfile, ".qc");
+	if (auto_read)
+	    xqc_read();
+	return;
+	}
+    else
+	printf("No next file.\n");
+    return;
+    }
+
+xqc_quit(item, event)
+Frame item;
+Event *event;
+    {
+    printf("Exiting.\n");
+    if (auto_write)
+	xqc_write();
+    xv_destroy_safe(frame);
+    exit (0);
+    return;
+    }
+
+xqc_site(item, event)
+Frame item;
+Event *event;
+    {
+    char s1[81], s2[81];
+
+    puts("Changing site.");
+    strcpy(s2, site);
+    strcpy(site, (char *)xv_get(site_name, PANEL_VALUE));
+    if (new_site(s1)!=NULL) /* switch okay */
+	{
+	if (auto_write)
+	    xqc_write();
+/*	xqc_clear(); */
+	strcpy(infile, s1);
+	printf("Changed to %s.\n", infile);
+	compressed=(infile[strlen(infile)-1]=='Z');
+	if (compressed)
+	    infile[strlen(infile)-2]='\0';
+	strcpy(outfile, infile);
+	strcat(outfile, ".qc");
+	if (auto_read)
+	    xqc_read();
+	return;
+	}
+    /* We're here, so switch failed */
+    printf("Invalid site: %s.\n", site);
+    strcpy(site, s2);
+    free_dir();
+    make_dir();
+    xv_set(site_name, PANEL_VALUE, site, NULL);
+    return;
+    }
+
+xqc_mark(item, value, event)
+Panel_item item;
+int value;
+Event *event;
+    {
+    switch (value)
+	{
+    case 0:
+	mark_as=GOOD;
+	break;
+    case 1:
+	mark_as=BAD;
+	break;
+    case 2:
+	mark_as=MAYBE;
+	break;
+    default:
+	fprintf(stderr,"Unknown mark_as value.\n");
+	break;
+	}
+    return;
+    }
+
+xqc_parm(item, value, event)
+Panel_item item;
+int value;
+Event *event;
+    {
+    parameter=value;
+/*    switch (value)
+	{
+    case 0:
+	parameter=PRES;
+	break;
+    case 1:
+	parameter=DP;
+	break;
+    case 2:
+	parameter=TEMP;
+	break;
+    case 3:
+	parameter=WINDS;
+	break;
+    default:
+	fprintf(stderr,"Unknown parameter value.\n");
+	break;
+	}
+*/
+    return;
+    }
+
+xqc_auto(item, value, event)
+Panel_item item;
+int value;
+Event *event;
+    {
+    switch (value)
+	{
+    case 0:
+	auto_read=1;
+	break;
+    case 1:
+	auto_read=0;
+	break;
+    default:
+	fprintf(stderr,"Unknown auto_read value.\n");
+	break;
+	}
+    return;
+    }
+
+xqc_auto2(item, value, event)
+Panel_item item;
+int value;
+Event *event;
+    {
+    switch (value)
+	{
+    case 0:
+	auto_write=1;
+	break;
+    case 1:
+	auto_write=0;
+	break;
+    default:
+	fprintf(stderr,"Unknown auto_write value.\n");
+	break;
+	}
+    return;
+    }
+
+xqc_zoom(item, event)
+Panel_item item;
+Event *event;
+    {
+    if (!zoomed)
+        {
+        printf("Zooming.  Select center of zoom region and press a button\n");
+        zooming=1;
+/*        xv_set(zoom, PANEL_INACTIVE, TRUE);
+        xv_set(unzoom, PANEL_INACTIVE, FALSE); */
+	}
+    return;
+    }
+
+xqc_unzoom(item, event)
+Panel_item item;
+Event *event;
+    {
+    if (zoomed)
+        {
+        puts("Unzooming.");
+/*        xv_set(unzoom, PANEL_INACTIVE, TRUE);
+        xv_set(zoom, PANEL_INACTIVE, FALSE); */
+        zoomOut();
+        zoomed=0;
+        zooming=0;
+        should_clear=1;
+        curs.drawn=0;
+        sk_Skewt();
+	}
+    return;
+    }
+
+updateCursor(x, y)
+int x, y;
+    {
+    double pressure();
+    if (curs.first_call)
+	{
+	curs.gc = XCreateGC(display, dispWin, 0, NULL);
+	XSetForeground(display, curs.gc, BlackPixel(display,
+						    screen_number) ^
+		       WhitePixel(display, screen_number));
+	XSetFunction(display, curs.gc, GXxor);
+	curs.first_call=0;
+	}
+    if (box.drawn)
+	XDrawRectangle(display, dispWin, curs.gc,
+		       box.old_x-(BOXSIZE/2), box.old_y-(BOXSIZE/2),
+		       BOXSIZE, BOXSIZE);
+    if (curs.drawn)
+	XDrawLine(display, dispWin, curs.gc, 0, curs.old_y, 700, curs.old_y);
+    XDrawLine(display, dispWin, curs.gc, 0, y, 700, y);
+    curs.old_y=y;
+    curs.drawn=1;
+    {
+    char s[20];
+    sprintf(s, "Pres: %g mb", pressure(y));
+    xv_set(cur_pres, PANEL_LABEL_STRING, s, NULL);
+    }
+    XFlush(display);
+    }
+
+updateBox(x, y)
+int x, y;
+    {
+    if (curs.first_call)
+	{
+	curs.gc = XCreateGC(display, dispWin, 0, NULL);
+	XSetForeground(display, curs.gc, BlackPixel(display,
+						    screen_number) ^
+		       WhitePixel(display, screen_number));
+	XSetFunction(display, curs.gc, GXxor);
+	curs.first_call=0;
+	}
+    if (curs.drawn)
+	{
+	XDrawLine(display, dispWin, curs.gc, 0, curs.old_y, 700, curs.old_y);
+	curs.drawn=0;
+	}
+    if (box.drawn)
+	/* Erase old box */
+	XDrawRectangle(display, dispWin, curs.gc,
+		       box.old_x-(BOXSIZE/2), box.old_y-(BOXSIZE/2),
+		       BOXSIZE, BOXSIZE);
+    /* Draw new box */
+    XDrawRectangle(display, dispWin, curs.gc, x-(BOXSIZE/2), y-(BOXSIZE/2),
+		   BOXSIZE, BOXSIZE);
+    box.old_x=x;
+    box.old_y=y;
+    box.drawn=1;
+    XFlush(display);
+    }
+
+msg_ELog(i, s)
+int i;
+char *s;
+    {
+    printf("msg_ELog: %s\n", s);
+    }
+
+ui_error(msg)
+char *msg;
+    {
+    printf("UI_ERROR: %s\n", msg);
+    }
+
+ui_epush()
+    {
+    }
+
+ui_epop()
+    {
+    }

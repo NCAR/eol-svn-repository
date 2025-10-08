@@ -1,0 +1,126 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------
+# <p>The DewPoint script is a CGI script that provides a web
+# interface for the dew point calculation in the conversion
+# modules.</p>
+#
+# @author Joel Clawson
+# @version 3.0 (Version number used to match conversion version.)
+# <p>Refactored the original web interface into individual conversion
+# scripts and a super WebInterface module that the scripts inherit
+# from.</p>
+# <p>Updated to Version 3 of the conversion modules.</p>
+#
+# @author Joel Clawson
+# @version 1.0 Original Creation.
+##Module-----------------------------------------------------------
+package DewPoint;
+use strict;
+use lib "..";
+use lib "/net/work/lib/perl/Utilities";
+use DpgCalculations qw(:DEFAULT);
+use DpgConversions qw(:DEFAULT);
+use WebInterface;
+our @ISA = ("WebInterface");
+
+main();
+
+##------------------------------------------------------------------
+# @signature void main()
+# <p>Run the script that creates the dew point calculations web 
+# interface.</p>
+##------------------------------------------------------------------
+sub main {
+    my $self = DewPoint->new();
+    $self->makePage();    
+}
+
+##------------------------------------------------------------------
+# @signature String createForm()
+# <p>Create the HTML that defines the input form for the calculation.</p>
+# @output $form The HTML code.
+##------------------------------------------------------------------
+sub createForm {
+    my $self = shift;
+    my $form = "<table><tbody>\n";
+
+    # Make the temperature row.
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>\n","Temperature:",$self->textfield("temperature"),$self->getTemperatureUnits("temp_unit"));
+
+    # Make the relative humidity row.
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Relative Humidity:",$self->textfield("rel_humid"),$self->getRelativeHumidityUnits("rel_humid_unit"));
+
+    # Make the dew point row.
+    $form .= sprintf("<tr class=result_line><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Dew Point:",$self->getValue(),$self->getTemperatureUnits("dewpt_unit"));
+
+    $form .= sprintf("<tr><td class=submit colspan=3>%s</td></tr>\n",$self->submit("Calculate"));
+
+    $form .= "</tbody></table>\n";
+
+    return $form;
+}
+
+##------------------------------------------------------------------
+# @signature String getCGI()
+# <p>Get the name of the script to call when the form is submitted.</p>
+# @output $cgi The script name.
+##------------------------------------------------------------------
+sub getCGI { return "calculations/dewpoint"; }
+
+##------------------------------------------------------------------
+# @signature String getEquationPage()
+# <p>Get the name of the web page that contains the equations for
+# the calculation.</p>
+# @output $page The equation web page.
+##------------------------------------------------------------------
+sub getEquationPage { "equations_calc.html#dewpoint"; }
+
+##------------------------------------------------------------------
+# @signature String getInstructions()
+# <p>Get the HTML containing the instructions on how to use the 
+# script.</p>
+# @output $instr The HTML instructions.
+##------------------------------------------------------------------
+sub getInstructions {
+    my $self = shift;
+    my $instr = "<p>Insert the temperature and relative humidity values along with the appropriate units of the values.  Update the units for the output of the dew point and press the <b>Calculate</b> button.  The value will appear in the table between the name and unit.</p>\n";
+    $instr .= "<p>The warnings have been turned off for the calculation.  If no result appears, it is because a value was entered into one of the fields that does not allow the calculation to complete correctly.</p>\n";
+    $instr .= "<p class=warning>The calculation requires the temperature to be in Celsius and the relative humidity in percent.  The returned dew point is in Celcius.  Any other units that are chosen will convert the value to the appropriate unit for the calculation and the output.</p>\n";
+    return $instr;
+}
+
+##------------------------------------------------------------------
+# @signature String getOnSubmit()
+# <p>Get the javascript command to run when the form is submitted.</p>
+# @output $js The javascript command.
+##------------------------------------------------------------------
+sub getOnSubmit { return "javascript: return (checkValue('Temperature',temperature) && checkRhWindSpd('Relative Humidity',rel_humid));"; }
+
+##------------------------------------------------------------------
+# @signature String getTitle()
+# <p>Get the title of the script.</p>
+# @output $title The script title.
+##------------------------------------------------------------------
+sub getTitle { return "Calculate Dew Point"; }
+
+##------------------------------------------------------------------
+# @signature String getValue()
+# <p>Get the calculated value or the &amp;nbsp; character when it
+# cannot be calculated.</p>
+# @output $value The float formated value.
+##------------------------------------------------------------------
+sub getValue {
+    my $self = shift;
+    if (defined($self->param("temperature"))) {
+	my $value = calculateDewPoint(convertTemperature($self->param("temperature"),
+							 $self->param("temp_unit"),"C"),
+				      $self->param("rel_humid"),0);
+	
+	if (defined($value)) {
+	    return sprintf("%f",convertTemperature($value,"C",$self->param("dewpt_unit")));
+	}
+    }
+    return "&nbsp;";
+}
+

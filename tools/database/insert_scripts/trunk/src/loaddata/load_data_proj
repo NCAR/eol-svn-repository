@@ -1,0 +1,1077 @@
+#!/usr/bin/env python3
+
+# =========================================================================== #
+# load_data_proj                                                              #
+#                                                                             #
+# This script can load a yaml file containing dataset information and         #
+# display it in the GUI, or save a yaml file with needed dataset              #
+# information.                                                                #
+#                                                                             #
+# Datasets are compromised by five types of data: one line, more than         #
+# one line, drop box, check box, and date/time.                               #
+# For more information, check the respective python scripts for               #
+# detailed comments.                                                          #
+#                                                                             #
+# To add additional fields to the script, read the instructions in the        #
+# configYaml.yml file.                                                        #
+#                                                                             #
+# For more information, please visit the internal EOL website under:          #
+# DMG Documentation - EMDAC - "Load a Dataset with load_data_proj"            #
+#                                                                             #
+# =========================================================================== #
+# created by Soo Park 2015                                                    #
+# updated: 4/24/15                                                            #
+# version: 1.0                                                                #
+# Ported to Python3 and PyQt5: 3/13/2021                                      #
+# copyright: University Corporation for Atmospheric Research, 2015            #
+# =========================================================================== #
+import re
+import sys
+import yaml
+import copy
+import argparse
+import os
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QWidget, QApplication, QMessageBox, QFileDialog, \
+    QGridLayout, QLabel, QSpacerItem, QSizePolicy, QTabWidget, \
+    QPushButton, QScrollArea, QDesktopWidget
+import lineEdit
+import plainTextEdit
+import comboBox
+import checkBox
+import dateTimeEdit
+from mysql_connect import mysqlConnect
+
+# Set the version of the code to be displayed at the top of the GUI.
+# Update this as new versions are released.
+version = "1.0"
+
+
+class loadDataModel(QWidget):
+    def __init__(self):
+
+        super(loadDataModel, self).__init__()
+
+        # Determine where this script is located (irregardless of where you
+        # called it from)
+        self.devDir = os.path.abspath(os.path.dirname(__file__))
+        print("Working in " + self.devDir)
+
+        # Different directories for loading, saving, and also for dataset
+        # config file and the comboBox config files.
+        self.loadDir = self.devDir + "/config/"
+        self.saveDir = "/net/work/cfg-files/"
+
+        # Determine if reading from development database or production 
+        # database and set .my.cnf group
+        if args.dev:
+            self.group = "loaddata.py-dev"
+        else:
+            self.group = "loaddata.py"
+
+        self.configYaml = self.loadDir + "configYaml.yml"
+        # comboBox config files directory
+        loadDataModel.comboBoxConfigDir = self.loadDir+"comboBox/%s.yml"
+        # field messages, aka tooltips, directory
+        loadDataModel.fieldMsgsDir = self.loadDir+"fieldMsgs.yml"
+
+        # open config file and load as dictionary(yaml default style)
+        self.configYamlFile = open(self.configYaml, 'r')
+        loadDataModel.configData = yaml.load(self.configYamlFile,
+                                             Loader=yaml.FullLoader)
+
+        # open field messages file and load as dictionary
+        self.fieldMsgsFile = open(loadDataModel.fieldMsgsDir, 'r')
+        loadDataModel.fieldMsgsData = yaml.load(self.fieldMsgsFile,
+                                                Loader=yaml.FullLoader)
+
+        # copy config file and deepcopy file as blank data. Delete all the
+        # field type values.
+        self.titleSepList = []
+        loadDataModel.blankData = copy.deepcopy(loadDataModel.configData)
+        for key1, val1 in loadDataModel.blankData.items():
+            for index in range(0, len(val1)):
+                for key2, val2 in val1[index].items():
+                    if val2 == "titleSep":
+                        self.titleSepList.append(key2)
+                    loadDataModel.blankData[key1][index][key2] = ""
+
+    # Loading Method
+    def loadYaml(self):
+
+        # Opening whatever yaml file you want to load
+        if args.called:
+            openFileName = sys.argv[2]
+        else:
+            openFileName = QFileDialog.getOpenFileName(None, "Open File",
+                                                       self.loadDir,
+                                                       "Yaml(*.yml)")
+
+        if openFileName[0]:
+            openFile = open(openFileName[0], 'r')
+            loadDataView.fileNameLabel.setText("File Name: " + openFileName[0])
+
+            # parsing pre-selected yaml file for python use. prettyLoadData is
+            # used primarily for testing purposes.
+            self.loadData = yaml.load(openFile, Loader=yaml.FullLoader)
+            # prettyLoadData = yaml.dump(self.loadData,
+            #     default_flow_style=False)
+
+            # call loadCheck. It will ultimately return the correctly formated
+            # data or make the user open a new file.
+            self.loadData = self.loadCheck(self.loadData)
+
+            if self.loadData:
+                # formatting the data so that it is human readable
+                # prettyLoadData_fixed = yaml.dump(self.loadData,
+                #                                  default_flow_style=False)
+
+                # special load check for filelength and enddate pattern.
+                # checking whether one field is empty so the check box can be
+                # checked.
+                for key, val in loadDataView.fields_dict.items():
+                    if "loadDataView.filelength" in key or \
+                       "loadDataView.enddate_pattern" in key:
+                        getattr(loadDataView.fields_dict[key],
+                                "line_checkLoad")(self.loadData)
+                    else:
+                        getattr(loadDataView.fields_dict[key],
+                                "load")(self.loadData)
+
+    # Check the dataset that is being loaded for correct format/version
+    def loadCheck(self, loadData):
+
+        self.loadData = loadData
+        self.loadKeyList = []
+        self.configKeyList = []
+
+        # creating a list of keys in loadData
+        for key1, val1 in self.loadData.items():
+            # if the file isn't a dataset
+            if key1 != 'dataset':
+                # fileTypeError = QMessageBox.question(
+                #     self, "File Type Error", "The file that you're " +
+                #     trying to load is not a dataset. " +
+                #     "Please load a file that starts with 'dataset'.\n",
+                #     QMessageBox.Ok)
+                return self.loadYaml()
+            else:
+                for index1 in range(0, len(val1)):
+                    for key2, val2 in val1[index1].items():
+                        self.loadKeyList.append(key2)
+
+        # creating a list of keys in blankData
+        for key3, val3 in loadDataModel.blankData.items():
+            for index2 in range(0, len(val3)):
+                for key4, val4 in val3[index2].items():
+                    self.configKeyList.append(key4)
+
+        # copy of configKeyList
+        self.tempList = copy.deepcopy(self.configKeyList)
+        # if the keys that are in blankData are in loData, delete it from
+        # self.tempList. if not, add to the self.tempList
+
+        # creating a list of fields that do not match with the config list.
+        for keys in self.loadKeyList:
+            try:
+                self.tempList.remove(keys)
+            except ValueError:
+                self.tempList.append(keys)
+
+        # if self.tempList is empty; hence if all the fields are present in
+        # loadData
+        if not self.tempList:
+            for i in range(0, len(self.configKeyList)-1):
+
+                # if the order is wrong
+                if self.loadKeyList[i] != self.configKeyList[i]:
+
+                    wrongOrderError = QMessageBox.question(
+                        self, "Wrong Order",
+                        "The dataset that you're trying to load is in the " +
+                        "wrong order near '- " + self.loadKeyList[i] +
+                        "'. Click 'Yes' to to overwrite the dataset with the" +
+                        "correct ordering. Click 'No' to load a new dataset " +
+                        "or edit the dataset file manually.\n", QMessageBox.Yes
+                        | QMessageBox.No, QMessageBox.No)
+                    # if user wants to reorder dataset
+                    if wrongOrderError == QMessageBox.Yes:
+
+                        # call reOrder function and save the reordered data as
+                        # the new loadData
+                        self.addFieldVar = False
+                        self.newLoadData = self.reOrder()
+                        return self.newLoadData
+
+                    # if not, open new dataset
+                    else:
+                        return self.loadYaml()
+
+            # if reordering is not needed, return true
+            return self.loadData
+
+        # if self.tempList has items; config keys and loadData keys don't match
+        else:
+            mismatchError = QMessageBox.question(
+                self, "Warning",
+                "The dataset that you're trying to load is outdated. The " +
+                "following fields are either missing from the dataset that " +
+                "you're trying to load, or the config dataset does not " +
+                "recognize them. Click 'Yes' to automatically add the " +
+                "missing field to the dataset, or click 'No' to edit the " +
+                "yaml file manually by hand. \n\n" + "\n".join(self.tempList),
+                QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+            if mismatchError == QMessageBox.Yes:
+                self.newLoadData = self.addField()
+
+                return self.newLoadData
+            else:
+                return False
+
+    # add fields that are missing from dataset
+    def addField(self):
+
+        for i in range(0, len(self.tempList)):
+            tempDic = {self.tempList[i]: ""}
+            for key, val in self.loadData.items():
+                val.append(tempDic)
+        self.addFieldVar = True
+        self.newLoadData = self.reOrder()
+        return self.newLoadData
+
+    # reorder loadData
+    def reOrder(self):
+
+        # use the config key list then just set the values again
+        reOrderList = []
+        for loadKey, loadDataList in self.loadData.items():
+            for configKey, blankDataList in self.blankData.items():
+                loadDataList_copy = copy.deepcopy(loadDataList)
+
+                loadDataList = blankDataList[:]
+
+        for index1 in range(0, len(loadDataList)):
+            for key1, val1 in loadDataList[index1].items():
+                for index2 in range(0, len(loadDataList_copy)):
+                    for key2, val2 in loadDataList_copy[index2].items():
+                        if key1 == key2:
+                            loadDataList[index1][key1] = val2
+
+        self.newLoadData = {'dataset': loadDataList}
+
+        if not self.addFieldVar:
+            for i in range(0, len(self.configKeyList)):
+                if self.configKeyList[i] != self.loadKeyList[i]:
+                    reOrderList.append(self.loadKeyList[i])
+
+            # reOrderMsg = QMessageBox.question(
+            #     self, "Warning",
+            #     "The following items have been reordered:\n\n" + "\n" +
+            #     "\n".join(reOrderList))
+
+        return self.newLoadData
+
+    # Checking for Incomplete Field Inputs
+    def errorMsgs(self):
+
+        # Empty list that will later contain the list of fields that are
+        # erroneous
+        errorList = []
+        genericErrorMsg = "The following fields do not have proper formats" + \
+                          " or are empty. Please enter again. \n\n"
+        # for filelength and enddate checking
+        self.filelength1 = False
+        self.filelength2 = False
+
+        # Finding the row where all the optional fields start
+        for key, val in self.configData.items():
+            for row1 in range(0, len(val)):
+                # In Python3, keys() returns a dictionary view object.
+                # Find first item in that object using list()[0]
+                # In our case, each row only has one object
+                if list(self.configData['dataset'][row1].keys())[0] == \
+                        "optional_fields":
+                    optionalRow = row1
+
+        # returning True for Final and False for Prelim
+        for row in range(0, len(loadDataView.fields_dict)):
+            for key2, val2 in loadDataView.fields_dict.items():
+                if getattr(loadDataView.fields_dict[key2], "name") == \
+                        "version_number":
+                    check_version = getattr(loadDataView.fields_dict[key2],
+                                            "versionCheck")()
+                    # versionNumber = getattr(loadDataView.fields_dict[key2],
+                    #                         "returnVersion")()
+
+        # check each fields. archive ident is an exception field that does not
+        # use the primary ".check()" method.
+        for row in range(0, len(loadDataView.fields_dict)):
+            for key1, val1 in loadDataView.fields_dict.items():
+                # checking for order
+                if row == getattr(loadDataView.fields_dict[key1], "row"):
+                    # exceptions that do not use ".check()" go here with
+                    # their respective checking methods
+
+                    # ============== #
+                    # archive_ident
+                    if getattr(loadDataView.fields_dict[key1], "name") == \
+                            "archive_ident":
+                        check_arcid = getattr(loadDataView.fields_dict[key1],
+                                              "str_arcIdCheck")()
+                        if check_arcid:
+                            errorList.append(check_arcid)
+                    # =============== #
+                    # begin and end_date
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "begin_date":
+                        begin = getattr(loadDataView.fields_dict[key1],
+                                        "dateTimeVar")()
+                        begin_empty = getattr(loadDataView.fields_dict[key1],
+                                              "check")()
+                        if begin_empty:
+                            errorList.append(begin_empty)
+
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "end_date":
+                        end = getattr(loadDataView.fields_dict[key1],
+                                      "dateTimeVar")()
+                        end_empty = getattr(loadDataView.fields_dict[key1],
+                                            "check")()
+                        if end_empty:
+                            errorList.append(end_empty)
+
+                    # ============== #
+                    # version_number
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "version_number":
+                        check_version = getattr(loadDataView.fields_dict[key1],
+                                                "versionCheck")()
+                        if check_version == "Version Number":
+                            errorList.append(check_version)
+
+                    # =============== #
+                    # quality
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "quality":
+                        check_quality = getattr(loadDataView.fields_dict[key1],
+                                                "qualityCheck")(check_version)
+                        if check_quality:
+                            errorList.append(check_quality)
+
+                    # ============== #
+                    # check for enddate_pattern and filelength
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "filelength":
+                        self.check_length = \
+                            getattr(loadDataView.fields_dict[key1],
+                                    "filelengthCheck")()
+                        # filelength is checked
+                        if self.check_length:
+                            pass
+                        elif not self.check_length:
+                            check_length2 = \
+                                getattr(loadDataView.fields_dict[key1],
+                                        "str_unitCheck")()
+                            if check_length2:
+                                errorList.append(check_length2)
+
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "enddate_pattern":
+                        self.check_end = \
+                                getattr(loadDataView.fields_dict[key1],
+                                        "filelengthCheck")()
+                        if self.check_end:
+                            pass
+                        elif not self.check_end:
+                            check_end2 = \
+                                getattr(loadDataView.fields_dict[key1],
+                                        "check")()
+                            if check_end2:
+                                errorList.append(check_end2)
+                    # ================ #
+                    # check for point of contact id codiac
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "point_of_contact_id_codiac":
+                        self.checkCodiac = \
+                                getattr(loadDataView.fields_dict[key1],
+                                        "pointCodiacCheck")()
+                        # if self.checkCodiac:
+                        #     contactCodiacMsg = \
+                        #        "'Point Of Contact CODIAC' field has been" + \
+                        #        "changed from its default 'local'. Please" + \
+                        #        "make sure this is the correct index.\n\n"
+                        #     codiacWarning = QMessageBox.question(
+                        #            self, "Warning", contactCodiacMsg,
+                        #            QMessageBox.Ok)
+
+                    # ============== #
+                    # check for long/lat change
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "minimum_latitude":
+                        minLatCheck = getattr(loadDataView.fields_dict[key1],
+                                              "latCheck")()
+                        if minLatCheck:
+                            errorList.append(minLatCheck)
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "maximum_latitude":
+                        maxLatCheck = getattr(loadDataView.fields_dict[key1],
+                                              "latCheck")()
+                        if maxLatCheck:
+                            errorList.append(maxLatCheck)
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "minimum_longitude":
+                        minLongCheck = getattr(loadDataView.fields_dict[key1],
+                                               "longCheck")()
+                        if minLongCheck:
+                            errorList.append(minLongCheck)
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "maximum_longitude":
+                        maxLongCheck = getattr(loadDataView.fields_dict[key1],
+                                               "longCheck")()
+                        if maxLongCheck:
+                            errorList.append(maxLongCheck)
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "gcmd_science_keyword_id":
+                       gcmdListCheck = getattr(loadDataView.fields_dict[key1],
+                                               "gcmd_xlinkCheck")()
+                       if gcmdListCheck:
+                           errorList.append(gcmdListCheck)
+                    elif getattr(loadDataView.fields_dict[key1], "name") == \
+                            "xlink_id":
+                       xlinkListCheck = getattr(loadDataView.fields_dict[key1],
+                                               "gcmd_xlinkCheck")()
+                       if xlinkListCheck:
+                           errorList.append(xlinkListCheck)
+                    # ============== #
+                    # don't check optional fields if they're in the optional
+                    # section and also empty
+                    elif (getattr(loadDataView.fields_dict[key1], "row") >
+                            optionalRow):
+
+                        # check if the fields are empty
+                        emptyCheck = getattr(loadDataView.fields_dict[key1],
+                                             "emptyCheck")()
+
+                        # unless they're filelength and enddate pattern
+                        if (getattr(loadDataView.fields_dict[key1], "name") ==
+                                "filelength_2") or (
+                                getattr(loadDataView.fields_dict[key1],
+                                        "name") == "enddate_pattern_2"):
+
+                            emptyCheckLength2 = getattr(
+                                loadDataView.fields_dict[
+                                    "loadDataView.filelength_2"],
+                                "emptyCheck")()
+                            emptyCheckEnd2 = getattr(
+                                loadDataView.fields_dict[
+                                    "loadDataView.enddate_pattern_2"],
+                                "emptyCheck")()
+
+                            if not(emptyCheckLength2 and emptyCheckEnd2):
+                                self.filelength1 = True
+                                if getattr(loadDataView.fields_dict[key1],
+                                           "name") == "filelength_2":
+                                    self.check_length_optional1 = getattr(
+                                        loadDataView.fields_dict[key1],
+                                        "filelengthCheck")()
+                                    if self.check_length_optional1:
+                                        pass
+                                    elif not self.check_length_optional1:
+                                        check_length_optional1_1 = getattr(
+                                            loadDataView.fields_dict[key1],
+                                            "str_unitCheck")()
+                                        if check_length_optional1_1:
+                                            errorList.append(
+                                                check_length_optional1_1)
+
+                                elif getattr(loadDataView.fields_dict[key1],
+                                             "name") == "enddate_pattern_2":
+                                    self.check_end_optional1 = getattr(
+                                        loadDataView.fields_dict[key1],
+                                        "filelengthCheck")()
+                                    if self.check_end_optional1:
+                                        pass
+                                    elif not self.check_end_optional1:
+                                        check_end_optional1_1 = getattr(
+                                            loadDataView.fields_dict[key1],
+                                            "check")()
+                                        if check_end_optional1_1:
+                                            errorList.append(
+                                                check_end_optional1_1)
+
+                            else:  # both fields are empty
+                                pass
+                                # ================= #
+
+                        # checking for filelength and enddate pattern still...
+                        elif (getattr(loadDataView.fields_dict[key1],
+                                      "name") == "filelength_3") or (getattr(
+                                          loadDataView.fields_dict[key1],
+                                          "name") == "enddate_pattern_3"):
+
+                            emptyCheckLength3 = getattr(
+                                loadDataView.fields_dict[
+                                    "loadDataView.filelength_3"],
+                                "emptyCheck")()
+                            emptyCheckEnd3 = getattr(
+                                loadDataView.fields_dict[
+                                    "loadDataView.enddate_pattern_3"],
+                                "emptyCheck")()
+
+                            if not(emptyCheckLength3 and emptyCheckEnd3):
+
+                                self.filelength2 = True
+
+                                if getattr(loadDataView.fields_dict[key1],
+                                           "name") == "filelength_3":
+                                    self.check_length_optional2 = getattr(
+                                        loadDataView.fields_dict[key1],
+                                        "filelengthCheck")()
+                                    if self.check_length_optional2:
+                                        pass
+                                    elif not self.check_length_optional2:
+                                        check_length_optional2_2 = getattr(
+                                                loadDataView.fields_dict[key1],
+                                                "str_unitCheck")()
+                                        if check_length_optional2_2:
+                                            errorList.append(
+                                                    check_length_optional2_2)
+
+                                elif getattr(loadDataView.fields_dict[key1],
+                                             "name") == "enddate_pattern_3":
+                                    self.check_end_optional2 = getattr(
+                                            loadDataView.fields_dict[key1],
+                                            "filelengthCheck")()
+                                    if self.check_end_optional2:
+                                        pass
+                                    elif not self.check_end_optional2:
+                                        check_end_optional2_2 = getattr(
+                                                loadDataView.fields_dict[key1],
+                                                "check")()
+                                        if check_end_optional2_2:
+                                            errorList.append(
+                                                    check_end_optional2_2)
+
+                            else:  # both are empty
+                                pass
+                                # ================= #
+                                # if not filelength/enddate pattern
+                        else:
+                            # if empty, don't check
+                            if emptyCheck:
+                                pass
+                            # if not empty, just do a regular check
+                            else:
+                                optionalCheck = getattr(
+                                        loadDataView.fields_dict[key1],
+                                        "check")()
+                                if optionalCheck:
+                                    errorList.append(optionalCheck)
+
+                    # ============== #
+                    # normal .check()
+                    else:
+                        check_normal = getattr(loadDataView.fields_dict[key1],
+                                               "check")()
+                        if check_normal:
+                            errorList.append(check_normal)
+
+        # error messages for filelength and enddate pattern
+        if (self.check_length and self.check_end) or \
+           (not self.check_length and not self.check_end):
+            errorList.append(
+                "\n ==========================\n Only one of " +
+                " 'Enddate Pattern' or 'Filelength' can be used at once. " +
+                "Please enter in only one of the fields by disabling the " +
+                "other by checking the box next to the label. \n")
+
+        if self.filelength1:
+            if (self.check_length_optional1 and self.check_end_optional1) or \
+               (not self.check_length_optional1 and
+                    not self.check_end_optional1):
+                errorList.append(
+                    "\n ==========================\n Only one of " +
+                    "'Enddate Pattern 2' or 'Filelength 2' can be used at " +
+                    "once. Please enter in only one of the fields by " +
+                    "disabling the other by checking the box next to the " +
+                    "label. \n")
+
+        if self.filelength2:
+            if (self.check_length_optional2 and self.check_end_optional2) or \
+               (not self.check_length_optional2 and
+                   not self.check_end_optional2):
+                errorList.append(
+                    "\n ==========================\n Only one of " +
+                    "'Enddate Pattern 3' or 'Filelength 3' can be used at " +
+                    "once. Please enter in only one of the fields by " +
+                    "disabling the other by checking the box next to the " +
+                    "label. \n")
+
+        # additional date range check
+        dateRangeError = ""
+        days = begin.daysTo(end)
+        if days == 0:
+            secs = begin.secsTo(end)
+            if secs <= 0:
+                dateRangeError = "The End Date is before the Begin Date, " + \
+                                 "or they are set equaly. Please enter " + \
+                                 "again.\n"
+        elif days < 0:
+            dateRangeError = "The End Date is before the Begin Date, or " + \
+                             "they are set equally. Please enter again.\n"
+
+        # if in admin mode, can ignore all problems. Like god.
+        if args.admin:
+            if not errorList and not dateRangeError:
+                self.saveYaml()
+            elif not errorList and dateRangeError:
+                ErrorBox = QMessageBox.question(
+                        self, "Warning", dateRangeError,
+                        QMessageBox.Ok | QMessageBox.Ignore)
+                if ErrorBox == QMessageBox.Ignore:
+                    self.saveYaml()
+
+            # if errorList has something but dateRange is empty
+            elif errorList and not dateRangeError:
+                ErrorBox = QMessageBox.question(
+                        self, "Warning", genericErrorMsg +
+                        "\n".join(errorList), QMessageBox.Ok |
+                        QMessageBox.Ignore)
+                if ErrorBox == QMessageBox.Ignore:
+                    self.saveYaml()
+
+            # if both have something
+            elif errorList and dateRangeError:
+                ErrorBox = QMessageBox.question(
+                        self, "Warning", genericErrorMsg +
+                        "\n".join(errorList) +
+                        "\n\n===================================\n\n" +
+                        dateRangeError, QMessageBox.Ok | QMessageBox.Ignore)
+                if ErrorBox == QMessageBox.Ignore:
+                    self.saveYaml()
+
+        # but if you're human like us... (not admin)
+        else:
+            if not errorList and not dateRangeError:
+                self.saveYaml()
+            elif not errorList and dateRangeError:
+                ErrorBox = QMessageBox.question(
+                        self, "Warning", dateRangeError, QMessageBox.Ok)
+            elif errorList and not dateRangeError:
+                ErrorBox = QMessageBox.question(
+                        self, "Warning", genericErrorMsg +
+                        "\n".join(errorList), QMessageBox.Ok)
+            elif errorList and dateRangeError:
+                ErrorBox = QMessageBox.question(
+                        self, "Warning", genericErrorMsg +
+                        "\n".join(errorList) +
+                        "\n\n===================================\n\n" +
+                        dateRangeError, QMessageBox.Ok | QMessageBox.Ignore)
+
+    # Checking the Saving Directory
+    def saveFileNameCheck(self):
+
+        # save file dialog
+        self.saveFileName = QFileDialog.getSaveFileName(
+                self, "Save File", self.saveDir)[0]
+        if self.saveFileName:
+            # error message warning where the user is trying to save. can
+            # cancel and go back to the file dialog.
+            if self.loadDir in self.saveFileName:
+                saveFileNameError = QMessageBox.question(
+                        self, "Warning", "You are about to overwrite a " +
+                        "default configuration file. Files are normally " +
+                        "saved to the project-specific dir. Are you sure " +
+                        "you want to overwrite the default configuration?",
+                        QMessageBox.Yes | QMessageBox.No)
+                if saveFileNameError == QMessageBox.Yes:
+                    return True
+                else:
+                    self.saveFileNameCheck()
+            else:
+                return True
+
+    # Saving Dataset as a Yaml File.
+    def saveYaml(self):
+
+        # deepcopy blank data and create a new blank saveData
+        self.saveData = copy.deepcopy(loadDataModel.blankData)
+
+        # call save methods
+        for key1, value1 in loadDataView.fields_dict.items():
+            getattr(loadDataView.fields_dict[key1], "save")(self.saveData)
+
+        for key, val in self.saveData.items():
+            for index in range(0, len(val)):
+                for name, type in val[index].items():
+                    if name in self.titleSepList:
+                        # insert "titleSep" for all fields that are title
+                        # separators
+                        self.saveData['dataset'][index][name] = "titleSep"
+                    # if checked, clear out field even if they filled it out
+                    if "filelength" in name:
+                        if self.check_length:
+                            self.saveData['dataset'][index][name] = ""
+                        elif self.filelength1:
+                            if self.check_length_optional1:
+                                self.saveData['dataset'][index][name] = ""
+                        elif self.filelength2:
+                            if self.check_length_optional2:
+                                self.saveData['dataset'][index][name] = ""
+                    elif "enddate_pattern" in name:
+                        if self.check_end:
+                            self.saveData['dataset'][index][name] = ""
+                        elif self.filelength1:
+                            if self.check_end_optional1:
+                                self.saveData['dataset'][index][name] = ""
+                        elif self.filelength2:
+                            if self.check_end_optional2:
+                                self.saveData['dataset'][index][name] = ""
+
+        # format save data so it's pretty.
+        savePrettyData = yaml.dump(self.saveData, default_flow_style=False,
+                                   width=10000000)
+
+        # testing purposes :D:D:D:D:
+        # print savePrettyData
+
+        # call saveFileNameCheck so it brings up the save file dialog and
+        # checks for directory
+        if self.saveFileNameCheck():
+            saveFile = open(self.saveFileName, 'w')
+            saveFile.write(savePrettyData)
+            saveFile.close()
+
+        # update file name
+        loadDataView.fileNameLabel.setText("File Name: " + self.saveFileName)
+
+        # clear fields in GUI
+    def clearFields(self):
+        for key, val in loadDataView.fields_dict.items():
+            getattr(loadDataView.fields_dict[key], "clear")()
+            loadDataView.fileNameLabel.setText("File Name: ")
+
+
+class loadDataView(QWidget):
+    def __init__(self):
+
+        super(loadDataView, self).__init__()
+
+        # main layout for the whole main window
+        self.mainLayout = QGridLayout(self)
+        self.setGeometry(0, 0, 650, 700)
+        self.center()
+
+        # !!!have to change this depending on version!!!
+        self.setWindowTitle("Dataset Loading Tool v1.0")
+
+        # display name of file
+        loadDataView.fileNameLabel = QLabel("File Name: ")
+        self.mainLayout.addWidget(loadDataView.fileNameLabel, 0, 0, 1, 4)
+
+        # vertical spacer
+        self.spacerItem = QSpacerItem(20, 40, QSizePolicy.Minimum,
+                                      QSizePolicy.Expanding)
+
+        # primary tab widget
+        self.tabPrime = QTabWidget(self)
+
+        self.model = loadDataModel()
+
+        # create the field objects
+        loadDataView.fields_dict = {}
+        configFields = []
+        msgFields = []
+
+        # Connect to database so can access updated metadata
+        lF = mysqlConnect(self.model.group)
+
+        # iterate through config data
+        for key1, fields in loadDataModel.configData.items():
+            for row in range(0, len(fields)):
+                for loadDataView.field_name, field_type in fields[row].items():
+
+                    configFields.append(loadDataView.field_name)
+
+                    # if you see titleSep
+                    if field_type == "titleSep":
+                        # add tab then add a scroll area within the tab
+                        self.addTab()
+                        self.scroll()
+                        self.scrollAreaLayout.addItem(self.spacerItem,
+                                                      200, 0, 1, 4)
+
+                        # Add a reload button to allow user to request update
+                        # of comboBox files by reading new content from CODIAC.
+                        # This is now done automatically for each comboBox
+                        # field below, so no need for this button.
+                        # if loadDataView.field_name=="CODIAC_specific_fields":
+                        #     self.updateCODIACButton = \
+                        #         QPushButton("update dropdown lists")
+                        #     self.scrollAreaLayout.addWidget(\
+                        #         self.updateCODIACButton, 2, 0, 1, 1)
+                        # if loadDataView.field_name == "DTS_specific_fields":
+                        #     self.updateDTSButton = \
+                        #         QPushButton("update dropdown lists")
+                        #     self.scrollAreaLayout.addWidget(\
+                        #         self.updateDTSButton, 2, 0, 1, 1)
+
+                    else:
+                        # comboBox config file directory
+                        self.comboBoxConfigDir = \
+                            loadDataModel.comboBoxConfigDir % \
+                            loadDataView.field_name
+
+                        # filling fields_dict which will store all attributes
+                        # of fields such as name, row, value...
+                        loadDataView.varName = "loadDataView.%s" % \
+                            loadDataView.field_name
+                        instance = getattr(
+                                eval(field_type), field_type +
+                                "Field")(str(loadDataView.field_name),
+                                         self.scrollAreaLayout, row,
+                                         self.scrollAreaWidgetContents)
+                        loadDataView.fields_dict[loadDataView.varName] = \
+                            instance
+
+                        if field_type == "comboBox":
+                            # Get a pointer to the dictionary that holds the
+                            # database metadata
+                            zith9dict = getattr(loadDataView.fields_dict
+                                             [loadDataView.varName], "tables")
+
+                            # Update the comboBox dropdowns with the latest
+                            # values from the database
+                            self.populateComboBox(lF, zith9dict)
+
+                        # iterating through fieldMsgs to populate GUI with
+                        # This 'for' handles the case where there is more than
+                        # one dictionary in the yaml file. Should usually just
+                        # be one instance, so for loop doesn't add much
+                        # overhead.
+                        for k1, v1 in loadDataModel.fieldMsgsData.items():
+                            # Area of improvement - yml.load returns an array
+                            # of dicts. Figure out how to flatten into a single
+                            # dictionary and won't have to loop
+                            for i in range(0, len(v1)):
+                                for field_name_toolTip, field_toolTip in \
+                                        v1[i].items():
+
+                                    msgFields.append(field_name_toolTip)
+
+                                    # check if the field has a tooltip
+                                    if field_toolTip is None:  # if not empty
+                                        field_toolTip = ""     # string
+                                    else:
+                                        field_toolTip = str(field_toolTip)
+
+                                    # if the tooltip name and field name match
+                                    if field_name_toolTip == loadDataView.\
+                                       field_name:
+                                        # need a separate getattr call for
+                                        # comboBox fields
+                                        if field_type == "comboBox":
+                                            getattr(loadDataView.fields_dict[
+                                                    loadDataView.varName],
+                                                    "add")(
+                                                    self.comboBoxConfigDir,
+                                                    field_toolTip)
+                                        else:
+                                            getattr(loadDataView.fields_dict[
+                                                    loadDataView.varName],
+                                                    "add")(field_toolTip)
+                    self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+                    self.tabPrimeLayout.addWidget(self.scrollArea, 0, 0, 1, 4)
+
+        # Disconnect from the databas
+        #lF.close
+
+        # check if all the tooltip fields are there
+        missingList = []
+        for missingField in configFields:
+            if missingField not in msgFields:
+                missingList.append(missingField)
+
+        # if missingList:
+        #     toolTipError = QMessageBox.question(
+        #        self, "Warning", "The following fields " +
+        #        "are missing from the fieldMsgs.yml file. The code will not" +
+        #        " work. Please quit the GUI and edit the fieldMsgs.yml file" +
+        #        " by hand by adding the missing field manually.\n\n" +
+        #        "\n".join(missingList), QMessageBox.Ok)
+        #     automatically quitting app still in development
+        #     if toolTipError == QMessageBox.Ok:
+        #         print "CLOSE"
+        #         QApplication.quit()
+
+        # buttons
+        self.loadButton = QPushButton("Load")
+        self.saveButton = QPushButton("Save")
+        self.quitButton = QPushButton("Quit")
+        self.clearButton = QPushButton("Clear")
+
+        # add buttons to the primary layout and not within scroll area
+        self.mainLayout.addWidget(self.loadButton, 2, 0, 1, 1)
+        self.mainLayout.addWidget(self.saveButton, 2, 1, 1, 1)
+        self.mainLayout.addWidget(self.clearButton, 2, 2, 1, 1)
+        self.mainLayout.addWidget(self.quitButton, 2, 3, 1, 1)
+
+        # button connections
+        self.loadButton.clicked.connect(self.model.loadYaml)
+        # save button actually goes to error msgs function first so the user
+        # can correct the incomplete fields before actually saving
+        self.saveButton.clicked.connect(self.model.errorMsgs)
+        self.clearButton.clicked.connect(self.model.clearFields)
+        self.quitButton.clicked.connect(self.close)
+
+        if args.called:
+            self.model.loadYaml()
+
+    # def updateComboBox(self):
+    #      QComboBox.additem(self.comboBoxConfigDir, field_toolTip)
+
+    def populateComboBox(self, lF, zith9dict):
+
+        """ Read metadata from dictionary to populate comboBox dropdown """
+        # Each of the database keys has to have an empty entry in the file
+        # zith9.py. Format of connect is lF.connectCODIAC(column, table,
+        # write_name, DBdict)
+        #print(loadDataView.field_name)
+        if re.match(r".*format.*", loadDataView.field_name):
+            lF.connectCODIAC("full_name", "format", "format", zith9dict)
+        elif re.match(r".*category_id.*", loadDataView.field_name):
+            lF.connectCODIAC("name", "category", "category_id", zith9dict)
+        elif re.match(r".*frequency_id.*", loadDataView.field_name):
+            lF.connectCODIAC("name", "frequency", "frequency_id", zith9dict)
+        elif re.match(r".*platform_id.*", loadDataView.field_name):
+            lF.connectCODIAC("name", "platform", "platform_id", zith9dict)
+        elif re.match(r".*instrument_id.*", loadDataView.field_name):
+            lF.connectCODIAC("name", "instrument", "instrument_id", zith9dict)
+        #elif re.match(r".*note_type_id.*", loadDataView.field_name):
+        #    lF.connectDTS("type_name", "note_type", "note_type_id", zith9dict)
+
+
+        keys = ['ingest_status_id_dts', 'load_status_id_dts',
+                'approve_status_id_dts']
+        for key in keys:
+            if re.match(r".*"+key+".*", loadDataView.field_name):
+                lF.connectDTS("name", "status", "dts_status_id", zith9dict)
+
+        keys = ['ingest_contact_id_dts', 'load_contact_id_dts',
+                'approve_contact_id_dts', 'internal_contact_id_dts',
+                'author_id_dts']
+        for key in keys:
+            if re.match(r".*"+key+".*", loadDataView.field_name):
+                lF.connectDTS("contact_short_name", "contact",
+                              "dts_contact_id_active", zith9dict)
+
+        keys = ['source_contact_id_dts', 'dts_contact_id_all']
+        for key in keys:
+            if re.match(r".*"+key+".*", loadDataView.field_name):
+                lF.connectDTS("contact_short_name", "contact",
+                              "dts_contact_id_all", zith9dict)
+
+
+        keys = ['point_of_contact_id_codiac', 'contact_id_codiac',
+                'codiac_contact_id_all']
+        for key in keys:
+            if re.match(r".*"+key+".*", loadDataView.field_name):
+                lF.connectCODIAC("person_name", "contact",
+                                 "codiac_contact_id_all", zith9dict)
+
+        keys = ['internal_contact_id_codiac',
+                'codiac_contact_id_active']
+        for key in keys:
+            if re.match(r".*"+key+".*", loadDataView.field_name):
+                lF.connectCODIAC("person_name", "contact",
+                             "codiac_contact_id_active", zith9dict)
+
+    def addTab(self):
+
+        # tab label
+        if "CODIAC" in loadDataView.field_name:
+            self.labelName = loadDataView.field_name.replace("_", " ").title()
+            self.labelName = self.labelName.replace("Codiac", "CODIAC")
+
+        elif "DTS" in loadDataView.field_name:
+            self.labelName = loadDataView.field_name.replace("_", " ").title()
+            self.labelName = self.labelName.replace("Dts", "DTS")
+
+        # currently not in use
+        elif "DOI" in loadDataView.field_name:
+            self.labelName = loadDataView.field_name.replace("_", " ").title()
+            self.labelName = self.labelName.replace("Doi", "DOI")
+
+        else:
+            self.labelName = loadDataView.field_name.replace("_", " ").title()
+
+        # secondary individual tabs
+        self.tab = QWidget()
+        # change the color of first tab
+        self.tabPrime.tabBar().setTabTextColor(0, QtCore.Qt.red)
+        # set the tab to grid layout
+        self.tabPrimeLayout = QGridLayout(self.tab)
+        # add the individual tab to the primary tab widget
+        self.tabPrime.addTab(self.tab, self.labelName)
+        # add the modified tab widget to the main layout
+        self.mainLayout.addWidget(self.tabPrime, 1, 0, 1, 4)
+
+    # Scroll Function
+    def scroll(self):
+
+        # create a scroll area widget
+        self.scrollArea = QScrollArea(self)
+        self.scrollArea.setMinimumSize(QtCore.QSize(0, 0))
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollAreaWidgetContents = QWidget(self.scrollArea)
+        self.scrollAreaLayout = QGridLayout(self.scrollAreaWidgetContents)
+        self.scrollAreaLayout.setVerticalSpacing(0)
+
+    # Center Window Function
+    def center(self):
+
+        centerWindow = self.frameGeometry()
+        centerScreen = QDesktopWidget().availableGeometry().center()
+        centerWindow.moveCenter(centerScreen)
+        self.move(centerWindow.topLeft())
+
+    # When "X" is Pressed
+    def closeEvent(self, event):
+
+        quitMsg = QMessageBox.question(self, "Message", "Are you sure you " +
+                                       "want to quit? All unsaved changed " +
+                                       "will be discarded.", QMessageBox.Yes |
+                                       QMessageBox.No, QMessageBox.No)
+        if quitMsg == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
+
+
+def main():
+    app = QApplication(sys.argv)
+    # main window class is LoadDataView not LoadDataModel
+    mainWindow = loadDataView()
+    mainWindow.show()
+    sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(
+        description='This is a dataset loading tool')
+    # admin argument
+    parser.add_argument('-a', '--admin', help='enable admin mode editing',
+                        required=False, action='store_true')
+    # called argument from movefiles script
+    parser.add_argument('-c', '--called', nargs=1,
+                        help="For when the script is called from movefiles",
+                        required=False)
+    # where movefiles yaml file is saved
+    parser.add_argument('-dev', '--dev', help='Development mode. Read ' +
+                        'metadata from data.dev', required=False,
+                        action='store_true')
+    args = parser.parse_args()
+
+    main()

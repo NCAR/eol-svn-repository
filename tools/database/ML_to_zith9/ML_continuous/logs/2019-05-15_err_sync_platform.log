@@ -1,0 +1,2 @@
+QUERY: INSERT INTO dataset_platform (dataset_id, platform_id) VALUES (271631, (SELECT id FROM platform WHERE name='Aircraft, Citation\n' LIMIT 1));
+ERROR: (1048, "Column 'platform_id' cannot be null")

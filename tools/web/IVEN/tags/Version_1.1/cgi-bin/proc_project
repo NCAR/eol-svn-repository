@@ -1,0 +1,147 @@
+#! /usr/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>
+# </p>
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Utils;
+use Project;
+use ProjectDBA;
+use State;
+use CGI;
+
+# The possible actions the user can request, or the possible buttons to click
+my %actions = ( "Add Project" => \&add,
+								"Update Project" => \&update,
+								"Cancel" => \&cancel
+							);
+
+# Get the state information
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+proc_project( $state, $cgi );
+
+sub proc_project
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	# Determine the button clicked and do the action
+	my $action = $cgi->param( "action" );
+	$actions{$action}->($state, $cgi);
+	
+}
+
+#------------------------------------------------------------------------------
+# Populates a Project object with the values entered into the html form.
+#------------------------------------------------------------------------------
+sub getFromParams
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $pj = Project->new();
+
+	$pj->{pjname} = $cgi->param( "pjname" );
+	$pj->{full_name} = $cgi->param( "full_name" );
+	$pj->{storm_id_prefix} = $cgi->param( "storm_id_prefix" );
+	$pj->{begin_date} = $cgi->param( "begin_date" );
+	$pj->{end_date} = $cgi->param( "end_date" );
+	$pj->{minlat} = $cgi->param( "minlat" );
+	$pj->{maxlat} = $cgi->param( "maxlat" );
+	$pj->{minlon} = $cgi->param( "minlon" );
+	$pj->{maxlon} = $cgi->param( "maxlon" );
+	$pj->{link_source} = $cgi->param( "link_source" );
+	$pj->{link_target} = $cgi->param( "link_target" );
+	$pj->{charge_num} = $cgi->param( "charge_num" );
+
+	return $pj;
+}
+
+#------------------------------------------------------------------------------
+# Adds a new project to the database with the values entered into the form.
+#------------------------------------------------------------------------------
+sub add
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $pj = getFromParams( $state, $cgi );
+
+	ProjectDBA::insertDB( $pj );
+
+	$state->{proc_edit} = undef();
+
+	my $url = $state->getUrlString();
+	$url = "project_list";
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "New Project Added" );	
+}
+
+#------------------------------------------------------------------------------
+# Cancels the action, does nothing.
+#------------------------------------------------------------------------------
+sub cancel
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $onLoad = "\"top.opener.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Action Canceled" );	
+}
+
+#------------------------------------------------------------------------------
+# Updates the selecte project
+#------------------------------------------------------------------------------
+sub update
+{
+	my $state = shift;
+	my $cgi = shift;
+	
+	my $pj = getFromParams( $state, $cgi );
+
+	my $source_pjname = $cgi->param( "source_pjname" );
+	ProjectDBA::updateDB( $pj, $source_pjname );
+
+	my $url = $state->getUrlString();
+	$url = "project_list";
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Project Updated" );	
+}
+
+#------------------------------------------------------------------------------
+# Displays the return page of all actions.  This consists of a provided 
+# message and the 'Close Window' button.
+#------------------------------------------------------------------------------
+sub showStatus
+{
+	my $state = shift;
+	my $cgi = shift;
+	my $onLoad = shift;
+	my $msg = shift;
+
+
+	println( $cgi->header() );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>$msg</title>" );
+	println( "</head>" );
+	println( "<body onLoad=$onLoad>" );
+	println( "<center><br><br><br>" );
+	println( "<b>$msg</b>" );
+	println( "<br>" );
+	println( "<input type=submit value='Close Window' onClick=\"window.close()\">" );
+
+	println( "</body></html>" );
+}
+
+1;

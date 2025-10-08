@@ -1,0 +1,51 @@
+c------------------------------------------------------------
+c
+c 2d variables - surface
+c
+      real psfc(ix,jx),     ! surface pressure (hPa)
+     +     tsfc(ix,jx),     ! surface temperature (K)
+     +     t2m(ix,jx),      ! 2m air temperature (K)
+     +     t2m_min(ix,jx),  ! minimum 2m air temperature (K)
+     +     t2m_max(ix,jx),  ! maximum 2m air temperature (K)
+     +     t1m_soil(ix,jx), ! 1m soil temperature (K)
+     +     soil_wat(ix,jx), ! volumetric soil water content
+                            ! from surface to depth of 1 m (fraction)
+     +     precip(ix,jx),   ! accumulated precipitation (mm)
+     +     rain(ix,jx),     ! accumulated rain (mm)
+     +     snow(ix,jx),     ! accumulated snow (mm)
+     +     swe(ix,jx),      ! snow water equivalent (mm)
+     +     tot_cld_frac(ix,jx), ! cloud fraction (fraction)
+     +     cld_base(ix,jx), ! cloud base (m)
+     +     lhf(ix,jx),      ! surface latent heat flux (W/m^2)
+     +     shf(ix,jx),      ! surface sensible heat flux (W/m^2)
+     +     ust(ix,jx),      ! friction velocity (m/s)
+     +     swd_sfc(ix,jx),  ! surface downward shortwave radiation (W/m^2)
+     +     swu_sfc(ix,jx),  ! surface upward shortwave radiation (W/m^2)
+     +     lwd_sfc(ix,jx),  ! surface downward longwave radiation (W/m^2)
+     +     lwu_sfc(ix,jx),  ! surface upward longwave radiation (W/m^2)
+     +     swd_toa(ix,jx),  ! top of atmosphere downward shortwave radiation (W/m^2)
+     +     swu_toa(ix,jx),  ! top of atmosphere upward shortwave radiation (W/m^2)
+     +     lwu_toa(ix,jx)   ! top of atmosphere upward longwave radiation (W/m^2)
+c
+c 3d variables - pressure level
+c
+      real u(ix,jx,nprs),       ! zonal component of wind (m/s)
+     +     v(ix,jx,nprs),       ! meridional component of wind (m/s)
+     +     w(ix,jx,nprs),       ! vertical velocitiy (m/s)
+     +     t(ix,jx,nprs),       ! air temperature (K)
+     +     z(ix,jx,nprs),       ! height (m)
+     +     rh(ix,jx,nprs),      ! relative humidity (%)
+     +     spechum(ix,jx,nprs), ! specific humidity (kg/kg)
+     +     cld(ix,jx,nprs),     ! cloud water mixing ratio (kg/kg)
+     +     ice(ix,jx,nprs),     ! ice water mixing ratio (kg/kg)
+     +     cld_frac(ix,jx,nprs) ! cloud fraction (fraction)
+c
+c define common block for variables to be read from netCDF file
+c
+      common /mon_netcdf/ psfc, tsfc, t2m, t2m_min,
+     +   t2m_max, t1m_soil, soil_wat, precip, rain,
+     +   snow, swe, tot_cld_frac, cld_base, lhf, shf,
+     +   ust, swd_sfc, swu_sfc, lwd_sfc, lwu_sfc,
+     +   swd_toa, swu_toa, lwu_toa, u, v, w, t, z,
+     +   rh, spechum, cld, ice, cld_frac
+c------------------------------------------------------------

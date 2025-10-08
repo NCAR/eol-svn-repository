@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for QCF rec s/w.
+#
+
+CC=acc
+##CFLAGS = -g
+
+build_stn_info: build_stn_info.o process_stn_data.o process_qcdata.o
+	$(LINK.c) -o build_stn_info build_stn_info.o process_stn_data.o process_qcdata.o
+	chmod 0755 build_stn_info
+
+clean:
+	rm *.o

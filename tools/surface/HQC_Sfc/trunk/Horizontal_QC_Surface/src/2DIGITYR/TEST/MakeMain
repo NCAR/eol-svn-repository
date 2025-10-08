@@ -1,0 +1,14 @@
+SHELL = /bin/sh
+
+#CC=purify acc -g
+#CC=acc -p
+#CC=/opt/SUNWspro/bin/CC
+CC=cc
+##CFLAGS = -g
+
+main: main.o process_qcfrec.o signal_err.o
+	$(LINK.c) -o main main.o process_qcfrec.o signal_err.o -lm
+	chmod 0755 main
+
+clean:
+	rm *.o

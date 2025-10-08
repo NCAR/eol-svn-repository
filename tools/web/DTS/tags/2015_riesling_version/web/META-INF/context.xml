@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context cookies="true" crossContext="true" override="true" useNaming="true"
+    swallowOutput="true" 
+    >
+
+    <Realm
+        className="org.apache.catalina.realm.JDBCRealm" 
+        digest="MD5"
+
+        connectionName="dts-full"
+        connectionPassword="l@micbc"
+        connectionURL="jdbc:mysql://localhost/dmg_dts"
+        driverName="com.mysql.jdbc.Driver"
+
+        roleNameCol="rolename"
+        userCredCol="password"
+        userNameCol="contact_short_name"
+        userRoleTable="role NATURAL JOIN user_role NATURAL JOIN contact"
+        userTable="contact"
+        />
+
+</Context>

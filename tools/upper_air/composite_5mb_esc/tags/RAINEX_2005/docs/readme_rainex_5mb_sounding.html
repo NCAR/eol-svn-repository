@@ -1,0 +1,603 @@
+<html>
+<head>
+<title>RAINEX Sounding Composite 5-mb Resolution Upper-Air Data Set [NCAR/EOL]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">RAINEX Sounding Composite 5-mb Resolution Upper-Air Data Set</h1>
+
+<h2>1.0 General Description</h2>
+<p>This dataset contains upper-air sounding data interpolated to a constant vertical 
+  resolution of 5 hPa in the National Center for Atmospheric Research (NCAR) Earth 
+  Observing Laboratory (EOL) Sounding Composite Format from stations in the following 
+  networks:</p>
+<ul>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/XX.xxx/README_RAINEX_Barbados_sounding.html">Barbados Rawinsonde Data</a>,</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/XX.xxx/README_RAINEX_Belize_sounding.html">Belize City, Belize Rawinsonde Data</a>,</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/XX.xxx/README_RAINEX_Curacao_sounding.html">Curacao Rawinsonde Data</a>,</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/XX.xxx/README_RAINEX_SMN_sounding.html">Mexico SMN-CNA Rawinsonde Data</a>,</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/XX.xxx/readme_rainex_noaa_giv_n49_soundings.html">NOAA G-IV Dropsonde Data</a>,</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/XX.xxx/readme_rainex_noaa_p3_n42_soundings.html">NOAA N42 P-3 Dropsonde Data</a>,</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/XX.xxx/readme_rainex_noaa_p3_n43_soundings.html">NOAA N43 P-3 Dropsonde Data</a>,</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/XX.xxx/README_RAINEX_NWS_SOUNDING.txt">NOAA/NWS Rawinsonde Data</a>,</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/XX.xxx/README_RAINEX_NRL_dropsondes.pdf">NRL P-3 Dropsonde Data</a>,</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/XX.xxx/README_RAINEX_StMaarten_sounding.html">St. Maarten Rawinsonde Data</a>, and the</li>
+  <li><a href="http://data.eol.ucar.edu/datafile/nph-get/XX.xxx/README_RAINEX_Trinidad_sounding.html">Trinidad Rawinsonde Data</a></li>
+</ul>
+
+<p>Data for the Hurricane Rainband and Intensity Change Experiment (RAINEX) 2005 domain (10&deg;N to 40&deg;N latitude and 100&deg;W to 50&deg;W longitude) are contained within this dataset.  The dataset covers the time period 1 July 2005 through 31 October 2005 and covers the storms of Dennis, Emily, Gert, Katrina, Ophelia, Rita, and Wilma.  This RAINEX 2005 5-mb Resolution Upper-Air Composite Dataset contains XXXX soundings from XX platforms.</p>
+
+<p><a href="#section2.1">Section 2.1</a> contains a detailed description of the 
+format of the composite dataset. See <a href="#section3.0">Section 3.0</a> below 
+for the quality control processing  performed by NCAR/EOL on this dataset. 
+<a href="#section4.0">Section 4.0</a> contains references.</p>
+
+<a name="section2.0"></a><h2>2.0 Detailed Data Description</h2>
+<p>
+The `native' resolution data for every sounding were interpolated to 5 hPa vertical resolution files. The surface data point was kept
+as the initial level in each sounding. The first interpolated data point was at the next lowest pressure evenly divisible by 5 and then
+every 5 hPa pressure level beyond that point to either 50 hPa or the lowest pressure level reached by the radiosonde, whichever came
+first. The first 15 lines of each file (the header information) were kept without change.
+<p>
+For the interpolation, the software searched for two data points around the desired pressure level. The search was conducted by looking
+for two valid (i.e. non-missing) data points around the desired pressure level, while also paying attention to the time difference
+between the two data points as well as their quality control flags. There was a search for the two best possible data points to use in
+the interpolation. If the desired pressure level was within the original dataset, that data point was used without interpolation.
+<p>
+There was first a search for values flagged as good within some time range (50 sec for temperature, humidity, and wind and 100 sec for
+pressure; hereafter termed the ARANGE) and the interpolated data point was flagged as good. Failing that, it searched for values
+flagged as estimated within the same time range and the interpolated data point was flagged as estimated. Then the search went for good
+values within a wider time range (100 sec for temperature, humidity, and wind and 200 sec for pressure; hereafter termed the BRANGE)
+the flag for the interpolated data point here was then degraded (even though two `good' data points were used there was a significant
+time difference between them) to questionable. Then, in turn, estimated values within the BRANGE were used (flag set to questionable),
+questionable values within the BRANGE (flag set to bad), good values greater than the BRANGE apart (flag set to bad), estimated values
+greater than BRANGE apart (flag set to bad), questionable values greater than BRANGE apart (flag set to bad), finally any bad values
+(flag set to bad). This search was conducted separately for each interpolated variable (pressure, temperature, relative humidity, and
+the u and v wind components.
+<p>
+Thus for each interpolated data point, the quality control flag was set to the worst case among the data points used in the
+interpolation, except, for each time range apart, the quality control flag was degraded one level (i.e. good to questionable, etc).
+<p>
+The quality control flags should be carefully heeded in these files. While some of the data may look good, it may have been
+interpolated over large pressure intervals, and thus be suspect.
+<p>
+For each interpolated data point the dew point was calculated from the temperature and relative humidity (Bolton 1980) and the total
+wind speed and direction were calculated from the interpolated u and v component values. Also, the altitude and time were interpolated
+using the same data points used for the pressure interpolation. The ascension rate was recalculated based on the time and altitude
+values from the two data points used to interpolate the 5 hPa data point. Thus the ascension rate values do not reflect the values
+based on the interpolated data. The latitude and longitude values were interpolated using the same data points used in the wind
+component interpolation.
+<p>
+For the AFRL Radiosonde and Thermosonde data, no times are included in the submitted data set.  So a similar
+procedure was used as described above.  First, the wind records in the submitted data set did not include
+pressure values.  The pressure for the wind records was interpolated using the altitude at the wind record
+and the surrounding PTH records that included both altitude and pressure.  Once every record has a pressure
+value, the 5 mb records were interpolated for each parameter separately based on the two records with 
+pressures on either side of the 5 mb level and non-missing values of the pressure in question.  The quality
+control flag was set to the worst case among the data points used in the interpolation.  If values more
+than 5 mb apart were used to interpolate a questionable flag was applied (unless the flag was already bad).
+<p>
+<a name="section2.1"></a><h2>2.1 Detailed Format Description</h2>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite Format (ESCF).  ESCF is a version of the National Center for Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, meteorological and wind data processors, and the operator's name and comments.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+<p>The seven nonstandard header lines may contain any label and contents. The 
+  labels are padded to 35 characters to match the standard header lines. Records 
+  for this dataset include the following three nonstandard header lines.</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=1 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL Sounding Composite Format codes:</p>
+
+<table border=1 align="center">
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of a RAINEX 5-mb rawinsonde data in EOL Sounding Composite format.   The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  See section 2.1 for an exact format specification
+
+<pre>
+Data Type:                         National Weather Service Sounding.
+Project ID:                        0
+Release Site Type/Site ID:         BRO Brownsville, TX
+Release Location (lon,lat,alt):    097 24.00'W, 25 54.00'N, -97.400, 25.900, 7.0
+UTC Release Time (y,m,d,h,m,s):    2005, 08, 07, 11:21:00
+Ascension No:                      1435
+Radiosonde Serial Number:          84953279.CSN
+Radiosonde Manufacturer:           VIZ B2
+/
+/
+/
+Nominal Release Time (y,m,d,h,m,s):2005, 08, 07, 12:00:00
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat   Ele   Azi    Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg   deg   deg     m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+   0.0 1015.4  23.9  22.9  94.0    0.0    0.0   0.0 180.0 999.0  -97.400  25.900 999.0 999.0     7.0  2.0  2.0  2.0  1.0  1.0  9.0
+9999.0 1015.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0 99.0  9.0  9.0  9.0  9.0  9.0
+9999.0 1010.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0 99.0  9.0  9.0  9.0  9.0  9.0
+  16.4 1005.0  26.2  25.3  94.8   -0.4    1.8   1.9 168.5   4.8 9999.000 999.000 999.0 999.0    98.1  3.0  1.0  1.0  4.0  4.0 99.0
+  25.8 1000.0  26.2  25.3  94.8   -0.5    2.9   2.9 169.6   5.3 9999.000 999.000 999.0 999.0   141.8  1.0  1.0  1.0  4.0  4.0 99.0
+  34.7  995.0  25.9  24.9  94.0   -0.7    3.8   3.8 169.8   4.8 9999.000 999.000 999.0 999.0   186.7  1.0  1.0  1.0  4.0  4.0 99.0
+  45.4  990.0  25.6  24.5  93.6   -0.9    4.8   4.9 169.8   4.2  -97.401  25.902 999.0 999.0   231.3  1.0  1.0  1.0  4.0  4.0 99.0
+  55.4  985.0  25.2  24.2  94.0   -0.9    5.6   5.7 170.6   4.7  -97.401  25.902 999.0 999.0   276.3  1.0  1.0  1.0  4.0  4.0 99.0
+  65.8  980.0  24.8  23.9  94.6   -0.9    5.7   5.8 171.0   4.0  -97.401  25.903 999.0 999.0   321.1  1.0  1.0  1.0  4.0  4.0 99.0
+  76.1  975.0  24.5  23.6  94.7   -0.7    5.5   5.5 172.4   4.8  -97.401  25.904 999.0 999.0   365.9  1.0  1.0  1.0  4.0  4.0 99.0
+</pre>
+
+<a name="section2.2"></a><h2>2.2 Station List</h2>
+
+<table border=1 align="center">
+  <tr>
+    <th>ID</th>
+    <th>SITE</th>
+    <th>STATE</th>
+    <th>COUNTRY</th>
+    <th>LONG</th>
+    <th>LAT</th>
+    <th>ELEV (m)</th>
+    <th>Resolution</th>
+  </tr>
+  <tr>
+    <td>154587</td>
+    <td>Lockheed P-3D</td>
+    <td>&nbsp;</td>
+    <td>US</td>
+    <td>-999.99</td>
+    <td>-999.99</td>
+    <td>-9999.9</td>
+    <td>.5 second</td>
+  </tr>
+  <tr>
+    <td>BMX</td>
+    <td>Shelby County</td>
+    <td>AL</td>
+    <td>US</td>
+    <td>-86.8</td>
+    <td>33.2</td>
+    <td>178.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>BRO</td>
+    <td>Brownsville</td>
+    <td>TX</td>
+    <td>US</td>
+    <td>-97.4</td>
+    <td>25.9</td>
+    <td>7.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>CHS</td>
+    <td>Charleston</td>
+    <td>SC</td>
+    <td>US</td>
+    <td>-80.0</td>
+    <td>32.9</td>
+    <td>21.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>CRP</td>
+    <td>Corpus Christi</td>
+    <td>TX</td>
+    <td>US</td>
+    <td>-97.5</td>
+    <td>27.8</td>
+    <td>14.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>EYW</td>
+    <td>Key West</td>
+    <td>FL</td>
+    <td>US</td>
+    <td>-81.8</td>
+    <td>24.5</td>
+    <td>2.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>FFC</td>
+    <td>Peachtree City</td>
+    <td>GA</td>
+    <td>US</td>
+    <td>-84.6</td>
+    <td>33.4</td>
+    <td>245.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>FWD</td>
+    <td>Fort Worth</td>
+    <td>TX</td>
+    <td>US</td>
+    <td>-97.3</td>
+    <td>32.8</td>
+    <td>198.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>JAN</td>
+    <td>Jackson</td>
+    <td>MS</td>
+    <td>US</td>
+    <td>-90.1</td>
+    <td>32.3</td>
+    <td>91.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>JAX</td>
+    <td>Jacksonville</td>
+    <td>FL</td>
+    <td>US</td>
+    <td>-81.7</td>
+    <td>30.5</td>
+    <td>11.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>LCH</td>
+    <td>Lake Charles</td>
+    <td>LA</td>
+    <td>US</td>
+    <td>-93.2</td>
+    <td>30.1</td>
+    <td>5.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>LIX</td>
+    <td>Slidell</td>
+    <td>LA</td>
+    <td>US</td>
+    <td>-89.8</td>
+    <td>30.4</td>
+    <td>10.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>LZK</td>
+    <td>Little Rock</td>
+    <td>AR</td>
+    <td>US</td>
+    <td>-92.3</td>
+    <td>34.8</td>
+    <td>172.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>MFL</td>
+    <td>Miami</td>
+    <td>FL</td>
+    <td>US</td>
+    <td>-80.4</td>
+    <td>25.8</td>
+    <td>5.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>MHX</td>
+    <td>Newport</td>
+    <td>NC</td>
+    <td>US</td>
+    <td>-76.9</td>
+    <td>34.8</td>
+    <td>11.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>MMMD</td>
+    <td>76644 Merida</td>
+    <td>&nbsp;</td>
+    <td>MX</td>
+    <td>-89.65</td>
+    <td>20.98</td>
+    <td>11.0</td>
+    <td>2 second</td>
+  </tr>
+  <tr>
+    <td>MVER</td>
+    <td>76692 Vera Cruz</td>
+    <td>&nbsp;</td>
+    <td>MX</td>
+    <td>-96.12</td>
+    <td>19.15</td>
+    <td>16.0</td>
+    <td>2 second</td>
+  </tr>
+  <tr>
+    <td>MZBZ</td>
+    <td>78583 Belize City, Belize</td>
+    <td>&nbsp;</td>
+    <td>BZ</td>
+    <td>-88.30</td>
+    <td>17.483</td>
+    <td>5.0</td>
+    <td>2 second</td>
+  </tr>
+  <tr>
+    <td>N42RF</td>
+    <td>NOAA P-3 N42RF</td>
+    <td>FL</td>
+    <td>US</td>
+    <td>-999.99</td>
+    <td>-999.99</td>
+    <td>-9999.9</td>
+    <td>.5 second</td>
+  </tr>
+  <tr>
+    <td>N43RF</td>
+    <td>NOAA P-3 N43RF</td>
+    <td>FL</td>
+    <td>US</td>
+    <td>-999.99</td>
+    <td>-999.99</td>
+    <td>-9999.9</td>
+    <td>.5 second</td>
+  </tr>
+  <tr>
+    <td>N49RF</td>
+    <td>NOAA G-IV N49RF</td>
+    <td>FL</td>
+    <td>US</td>
+    <td>-999.99</td>
+    <td>-999.99</td>
+    <td>-9999.9</td>
+    <td>.5 second</td>
+  </tr>
+  <tr>
+    <td>SHV</td>
+    <td>Shreveport</td>
+    <td>LA</td>
+    <td>US</td>
+    <td>-93.8</td>
+    <td>32.5</td>
+    <td>85.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>SJU</td>
+    <td>San Juan</td>
+    <td>&nbsp;</td>
+    <td>PR</td>
+    <td>-66.0</td>
+    <td>18.0</td>
+    <td>3.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>TAE</td>
+    <td>Tallahassee</td>
+    <td>FL</td>
+    <td>US</td>
+    <td>-84.3</td>
+    <td>30.5</td>
+    <td>53.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>TBPB</td>
+    <td>78954 Barbados</td>
+    <td>&nbsp;</td>
+    <td>BB</td>
+    <td>-59.50</td>
+    <td>13.067</td>
+    <td>47.0</td>
+    <td>2 second</td>
+  </tr>
+  <tr>
+    <td>TBW</td>
+    <td>Tampa Bay Area</td>
+    <td>FL</td>
+    <td>US</td>
+    <td>-82.4</td>
+    <td>27.7</td>
+    <td>13.0</td>
+    <td>6 second</td>
+  </tr>
+  <tr>
+    <td>TNCC</td>
+    <td>78988 Curacao</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>-68.95</td>
+    <td>12.167</td>
+    <td>54.0</td>
+    <td>2 second</td>
+  </tr>
+  <tr>
+    <td>TNCM</td>
+    <td>78866 St. Maarten</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>-63.10</td>
+    <td>18.033</td>
+    <td>5.0</td>
+    <td>2 second</td>
+  </tr>
+  <tr>
+    <td>TTPP</td>
+    <td>78970 Trinidad</td>
+    <td>&nbsp;</td>
+    <td>TD</td>
+    <td>-61.35</td>
+    <td>10.567</td>
+    <td>12.0</td>
+    <td>2 second</td>
+  </tr>
+</table>
+
+<a name="section3.0"></a><h2>3.0 Quality Control Processing</h2>
+<p>This dataset underwent an automated QC process.  The dataset underwent internal consistency checks which included two types of checks, gross limit checks on all parameters and rate-of-change checks on temperature, pressure and ascension rate. Some further information on the QC processing conducted by EOL can be found in <a href="#section4.0">Loehrer et al. (1996)</a> and <a href="#section4.0">Loehrer et al. (1998)</a>.</p>
+
+<a name="section3.1"></a><h2>3.1  Gross Limit Checks</h2>
+<p>These checks were conducted on each sounding and data were automatically flagged as appropriate.  Only the data point under examination was flagged.  EOL conducted the following gross limit checks on the RAINEX sounding datasets.  In the table P = pressure, T = temperature, RH = relative humidity, U = U wind component, V = V wind component, B = bad, and Q = questionable.</p>
+
+<table border=1 style="{font-size:10pt;}" align="center">
+<tr><th>Parameter</th><th>Gross Limit Check</th><th>Parameter(s) Flagged</th><th>Flag Applied</th></tr>
+<tr><td>Pressure</td>
+	<td align="center">&lt; 0 mb or &gt; 1050 Mb</td>
+	<td align="center">P</td><td align="center">B</td>
+	</tr>
+<tr><td>Altitude</td>
+	<td align="center">&lt; 0 m or &gt; 40000 m</td>
+	<td align="center">P, T, RH</td><td align="center">Q</td>
+	</tr>
+<tr><td>Temperature</td>
+	<td align="center">&lt; -90 &deg;C or &gt; 45 &deg;C</td>
+	<td align="center">T</td><td align="center">T</td>
+	</tr>
+<tr><td>Dew Point</td>
+	<td align="center">&lt; -99.9 &deg;C or &gt; 33 &deg;C<br>&gt; Temperature</td>
+	<td align="center">RH<br>T, RH</td><td align="center">Q<br>Q</td>
+	</tr>
+<tr><td>Relative Humidity</td>
+	<td align="center">&lt; 0% or &gt; 100%</td>
+	<td align="center">RH</td><td align="center">B</td>
+	</tr>
+<tr><td>Wind Speed</td>
+	<td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+	<td align="center">U, V<br>U, V</td><td align="center">Q<br>B</td>
+	</tr>
+<tr><td>U Wind Component</td>
+	<td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+	<td align="center">U<br>U</td><td align="center">Q<br>B</td>
+	</tr>
+<tr><td>V Wind Component</td>
+	<td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+	<td align="center">V<br>V</td><td align="center">Q<br>B</td>
+	</tr>
+<tr><td>Wind Direction</td>
+	<td align="center">&lt; 0&deg; or &gt; 360&deg;</td>
+	<td align="center">U, V</td><td align="center">B</td>
+	</tr>
+<tr><td>Ascent Rate</td>
+	<td align="center">&lt; -10 m/s or &gt; 10 m/s</td>
+	<td align="center">P, T, RH</td><td align="center">Q</td>
+	</tr>
+</table>
+
+<a name="section3.2"></a><h2>3.2  Vertical Consistency Checks</h2>
+<p>These checks were conducted on each sounding and data were automatically flagged 
+  as appropriate. These checks were started at the lowest level of the sounding 
+  and compared neighboring 2-sec data points (except at pressures less than 100 
+  Mb where 30-sec average values were used. In the case of checks ensuring that 
+  the values increased/decreased as expected, only the data point under examination 
+  was flagged. However, for the other checks, all of the data points used in the 
+  examination were flagged. All items within the table are as previously defined.</p>
+
+<table border=1 style="{font-size:10pt;}" align="center">
+<tr><th>Parameter</th>
+    <th>Vertical Consistency Check</th>
+    <th>Parameter(s) Flagged</th><th>Flag Applied</th></tr>
+<tr><td>Time</td>
+	<td align="center">decreasing / equal</td>
+	<td align="center">None</td><td align="center">None</td>
+	</tr>
+<tr><td>Altitude</td>
+	<td align="center">decreasing / equal</td>
+	<td align="center">P, T, RH</td><td align="center">Q</td>
+	</tr>
+<tr><td>Pressure</td>
+	<td align="center">increasing / equal<br>
+      &gt; 1 Mb/s or &lt; -1 Mb/s<br>
+      &gt; 2 Mb/s or &lt; -2 Mb/s</td>
+	<td align="center">P, T, RH<br>P, T, RH<br>P, T, RH</td><td align="center">Q<br>Q<br>B</td>
+	</tr>
+<tr><td>Temperature</td>
+	<td align="center">&lt; -15 &deg;C/km<br>&lt; -30 &deg;C/km<br>
+      &gt 50 &deg;C/km (not applied at p &lt; 250 Mb)<br>
+      &gt;100 &deg;C/km (not applied at p &lt; 250 Mb)</td>
+	<td align="center">P, T, RH<br>P, T, RH<br>P, T, RH<br>P, T, RH</td>
+	<td align="center">Q<br>B<br>Q<br>B</td>
+	</tr>
+<tr><td>Ascent Rate</td>
+	<td align="center">change of &gt; 3 m/s or & lt; -3 m/s<br>change of &gt; 5 m/s or &lt; -5 m/s</td>
+	<td align="center">P<br>P</td><td align="center">Q<br>B</td>
+	</tr>
+</table>
+
+<h2>3.3 Data Quality Issues</h2>
+
+<a name="section4.0"></a><h2>4.0 References</h2>
+
+<p><b>Bolton, D., 1980:</b> The Computation of Equivalent Potential Temperature. 
+  Mon. Wea. Rev., 108, 171-180.</p>
+<p><b>Loehrer, S. M., T. A. Edmands, and J. A. Moore, 1996</b>: TOGA COARE upper-air 
+  sounding data archive: development and quality control procedures. Bull. Amer. 
+  Meteor. Soc., 77, 2651-2671.</p>
+<p><b>Loehrer, S. M., S. F. Williams, and J. A. Moore, 1998</b>: Results from 
+  UCAR/JOSS quality control of atmospheric soundings from field projects. Preprints, 
+  Tenth Symposium on Meteorological Observations and Instrumentation, Phoenix, 
+  AZ, Amer. Meteor. Soc., 1-6.</p>
+<p><b>NCAR/EOL, cited 2006</b>: GPS Dropsonde [Available online from <a href="http://www.atd.ucar.edu/rtf/facilities/dropsonde">http://www.atd.ucar.edu/rtf/facilities/dropsonde</a>].</p>
+<p><b>NWS, 1991</b>: Micro-ART Observation and Rework Programs Technical Document, 
+  National Weather Service, National Oceanic and Atmospheric Administration, Washington, D.C., March 1991.</p>
+<p><b>Wade, C. G., 1995</b>: Calibration and data reduction problems affecting 
+  National Weather Service radiosonde humidity measurements. Preprints, Ninth 
+  Symposium on Meteorological Observations and Instrumentation, Charlotte, NC, 
+  Amer. Meteor. Soc., 37-42. 
+<p><b>Williams, S. F., C. G. Wade, and C. Morel, 1993</b>: A comparison of high 
+  resolution radiosonde winds: 6-second Micro-ART winds versus 10-second CLASS 
+  LORAN winds. Preprints, Eighth Symposium on Meteorological Observations and 
+  Instrumentation, Anaheim, California, Amer. Meteor. Soc., 60-65. 
+<p><b>Williams, S. F., S. M. Loehrer, and D. R. Gallant, 1998</b>: Computation 
+  of high-resolution National Weather Service rawinsonde winds. Preprints, Tenth 
+  Symposium on Meteorological Observations and Instrumentation, Phoenix, AZ, Amer. 
+  Meteor. Soc., 387-391. 
+</body>
+</html>

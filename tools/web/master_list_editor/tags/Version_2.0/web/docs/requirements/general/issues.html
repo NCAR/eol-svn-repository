@@ -1,0 +1,79 @@
+<html>
+  <head>
+    <title>General Master List Issues</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <style>
+<!--
+      p.resolution {
+           color: #909;
+           font-style: italic;
+      }
+-->
+    </style>
+  </head>
+  
+  <body bgcolor="#FFFFFF" text="#000000">
+    
+    <h1>General Master List Issues</h1>
+    <ul>
+      <li>
+	<p><b>Does not support Multiple Projects:</b></p>
+	<p>This system was originally written for IHOP_2002 and not for use by multiple projects. Therefore each time a new project is added a new set of tables has to be created and a new version of the script has to be set up. The Improved Master List was developed to get rid of all the down-falls of this system but was never put into use.</p>
+	<p class="resolution">In version 3.x and later versions, a new database will be defined that corrects this problem.</p>
+      </li>
+
+      <li>
+	<p><b>Categories in Data Set Titles:</b></p>
+	<p>What is the best way to handle the category names in the start of the dataset title?  Should the categories be just removed and assumed to be assigned to the correct categories?  Do we need to worry about the data archive system at this time?</p>
+	<p class="resolution">Scot said we should be able to just remove the categories from the title.  We can assume they are matched correctly because they would look out of place in the master list otherwise.  We should not have to worry about the data archive system at this time since we can deal with it in later versions once the <i>final</i> master list that uses the data archive system is in place.</p>
+      </li>
+
+      <li>
+	<p><b>Mismatched Entry Dates for the Same Data Set:</b></p>
+	<p>Because of the way the database was originally defined, a data set is entered multiple times if it has multiple categories or if it is in multiple projects.  What is the best way to handle the mismatched dates?  Should it be the oldest date?  Should there be a separate date for each project?</p>
+      </li>
+
+      <li>
+	<p><b>Prevention of Multiple Clones:</b></p>
+	<p>When a person starts a clone of a project for a new project, should the tool prevent any other clones for the project from being created?</p>
+	<p class="resolution">There should only be one clone for a new project.</p>
+      </li>
+
+      <li>
+	<p><b>Saving Incomplete Master List Clones:</b></p>
+	<p>What is the best way to handle incomplete clones of a Master List?  Should it be stored in the database?  Should it be in a file like XML?</p>
+	<ul>
+	  <li>Does this allow for multiple editors?  Should multiple editors be allowed?</li>
+	  <li>Storing in the database could be easier, but would potentially make the database more confusing.  There would be several tables that existed in the database that would be empty most of the time.</li>
+	  <li>The data file could allow for multiple versions (if allowed).  Would allow a cleaner database.  A DTD may need to be defined if using XML.  JSP has XML tags in the JSTL to handle XML parsing.  This would create extra files in the system for saving the state.</li>
+	  <li>Could put into the database with specialized/reserved dataset ids that get changed to real ids when finalized.  This could be a lot of overhead.  May not prevent Master List from being available to the public in the dynamic viewer (once it is created).  This may also look like it is finalized and ready to be manipulated normally.</li>
+	  <li>Possibly could be stored as a serialized Java Object.  Binary file easy to save and read by the Object.</li>
+	  <li>Tool would need to remove data file or database information once the master list was finialized.</li>
+	  <li>Can't just do a straight copy because it would create a mess with the dataset ids.</li>
+	</ul>
+      </li>
+	
+      <li>
+	<p><b>Empty Categories:</b></p>
+	<p>Should the viewer show non-hidden categories that do not have any associated datasets for the project?</p>
+      </li>
+
+      <li>
+	<p><b>Status Table:</b></p>
+	<p>Should the master list tool have a status table (Expected, Updated, In Progress, Done) instead of having separate flags?</p>
+	<ul>
+	  <li>Probably would only need a single date field and foreign key status field with the dataset instead of several flags and multiple dates</li>
+	  <li>Would allow for more flexibility for future upgrades</li>
+	  <li>Have the potential for status explosion.</li>
+	  <li>Have the potential for misunderstood definitions between users.  (Could still happen with flags.)</li>
+	</ul>
+      </li>
+
+      <li>
+	<p><b>Cloning a Data Set:</b></p>
+	<p>Should a dataset be allowed to be cloned?</p>
+      </li>
+
+    </ul>
+  </body>
+</html>

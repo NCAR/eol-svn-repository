@@ -1,0 +1,99 @@
+> groovy authorshipConnect.groovy MILAGRO MPEX
+
+Created log file:	logs/log_20140108151811.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ETL
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+MPEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  MPEX:  100.015
+		(High Plains Regional Climate Center)
+Which of these contacts matches this author:	High Plains Regional Climate Center
+
+		191	liaison	null	National Ice Center
+		444	ncar/scd	Roy Jenne	National Center for Atmospheric Research
+		446	ncdc	Ken Hadeen	National Climatic Data Center
+		447	nmc	Paul Julian	National Meteorological Center
+		448	ncar/rdp	null	National Center for Atmospheric Research
+		450	nasa/ksc	null	NASA/Kennedy Space Center
+		451	nasa/msfc	null	NASA/Marshall Space Flight Center
+		452	nasa/gsfc	null	NASA/Goddard Space Flight Center
+		470	null	null	Tulsa River Forecast Center
+		478	fnoc	Dennis Laws	Fleet Numerical Oceanography Center (USN)
+		487	cu/nsidc	Greg Scharfen	CU/National Snow and Ice Data Center
+		496	nssfc	null	National Severe Storms Forecast Center
+		506	nasa/arc	null	NASA Ames Research Center
+		534	noaa/cdc	null	Climate Diagnostic Center
+		538	nwcc	null	National Water and Climate Center
+		547	cdiac	null	Carbon Dioxide Information Analysis Center
+		549	ncrfc	null	North Central River Forecast Center
+		550	lmrfc	null	Lower Mississippi River Forecast Center
+		551	noaa/cpc	null	Climate Prediction Center
+		556	ncep/emc	null	NCEP Environmental Modeling Center
+		557	npmoc	null	Naval Pacific Meteorology and Oceanography Center
+		567	null	null	National Data Buoy Center
+		573	noaa/aoc	null	NOAA Aircraft Operations Center
+		785	paleoclim	null	World Data Center for Paleoclimatology
+		794	ncdc/climate	NCDC/Climate Services Branch	National Climatic Data Center - Climate Services Branch
+		964	nasa/larc	null	NASA/Langley Research Center
+		976	null	null	Ocean Prediction Center (OPC)
+		1304	null	null	NOAA - National Centers for Environmental Prediction (NCEP)
+		1329	null	null	University of Wisconsin - Space Science & Engineering Center (SSEC)
+		1331	null	null	Center for Severe Weather Research
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ESRL
+
+--------------------------------------------------------------------------------
+
+Unable to find 508 for data set 371.002
+Unable to find 508 for data set 371.003
+Unable to find 508 for data set 371.008
+Unable to find 508 for data set 371.009
+Unable to find 508 for data set 371.010
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	WSI
+
+--------------------------------------------------------------------------------
+
+Unable to find 508 for data set 371.017
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '371.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '371.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '371.008';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '371.009';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '371.010';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '371.017';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

@@ -1,0 +1,12 @@
+
+select name from platform where id=207 or id=983 or id=1477; 
+
+begin;
+update platform set name = "Aircraft, Citation" where id=207;
+update platform set name="Aircraft, Honeywell B757" where id=983;
+update platform set name="Aircraft, NEON AOP3 Twin Otter" where id=1477;
+update category set name="Aerosols" where id=1;
+insert into category (name, row_create_contact_id, row_create_time) VALUES ("Underway", 361, '2018-11-28 12:00:01');
+insert into category (name, row_create_contact_id, row_create_time) VALUES ("Canadian Archipelago Throughflow Study (CATS)", 149, '2019-03-06 10:10:01');
+insert into category (name, row_create_contact_id, row_create_time) VALUES ("Carbon Dioxide Information Analysis Center (CDIAC)", 149, '2019-03-06 10:10:01');
+

@@ -1,0 +1,47 @@
+#!/bin/perl -w
+
+$day = "2002_4km_day.txt";
+$file = "2002_4km_file.txt";
+
+open( DAY, "<$day" );
+open( FILE, "<$file" );
+
+open( DAY_OUT, ">new/$day" );
+open( FILE_OUT, ">new/$file" );
+
+$input = <FILE>;
+@file_data = split( /\t/, $input );
+$day_id = 1;
+$file_id = 1;
+while( !eof( DAY ) )
+{
+	$input = <DAY>;
+	@data = split( /\t/, $input );
+
+	while( $file_data[0] == $data[0] )
+	{
+		$wt = join( "\t", @file_data );
+		$wt = $file_id . "\t$wt";
+		print( FILE_OUT $wt );	
+
+		$input = <FILE>;
+		@file_data = split( /\t/, $input );
+	}
+
+	$wt = join( "\t", @data );
+	$wt = $day_id . "\t$wt";
+	print( DAY_OUT $wt );
+	$day_id++;
+	$file_id++;
+}
+
+close( FILE_OUT );
+close( DAY_OUT );
+
+sub println
+{
+	*OUT = shift;
+	$var = shift;
+	print( OUT $var, "\n" );
+}
+

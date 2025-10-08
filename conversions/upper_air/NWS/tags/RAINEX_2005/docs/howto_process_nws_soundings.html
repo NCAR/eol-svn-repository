@@ -1,0 +1,197 @@
+<html>
+<head>
+<title>How To: Process NWS Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Process National Weather Service (NWS) Upper Air Sounding Data</h1>
+<a name="toc"></a><h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+	<li><a href="#network">Network Information</a></li>
+	<li>Previous Versions<ol>
+		<li><a href="#version_name">2004 (NAME)</a></li>
+		<li><a href="#version_rico">2004_2005 (RICO)</a></li>
+		<li><a href="#version_rainex">2005 (RAINEX)</a></li>
+		<li><a href="#version_trex">2006 (T-REX)</a></li>
+		</ol></li>
+	<li><a href="directory">Directory Structure</a></li>
+	<li>Processing the Data<ol>
+		<li><a href="#mat_library">Creating the Matrix Library</a></li>
+		<li><a href="#programs">Creating the Conversion Programs</a></li>
+		<li><a href="#converting">Converting the Data</a></li>
+		<li><a href="#autoqc">QC'ing the Data</a></li>
+		<li><a href="#ebufr">Converting to EBUFR</a></li>
+		<li><a href="#codiac">Inserting into the Database</a></li>
+		</ol></li>
+	<li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+    <p>This document contains the process of how to convert the National Weather Service (NWS) upper air sounding data EOL receives from NCDC from their ASCII file format to the ESC format.</p>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+	<li>The ID-Type is 15.</li>
+	<li>The Platform is 53.</li>
+        <li>The soundings are recorded in UTC.</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions</h2>
+<div class="block">
+    <a name="version:trex"></a><h3>T-REX (2006)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td>/work/TREX/upper_air/NWS/software</td></tr>
+        <tr><th>Raw Data:</th><td>/work/operational/soundings/NWS/archive/ascii_files/2006</td></tr>
+        <tr><th>Final Data:</th><td>/export/archive/data/trex/upper_air/soundings/NWS</td></tr>
+    </table>
+
+    <a name="version:rainex"></a><h3>RAINEX (2005)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td>/work/RAINEX/upper_air/NWS/software</td></tr>
+        <tr><th>Raw Data:</th><td>/work/operational/soundings/NWS/archive/ascii_files</td></tr>
+        <tr><th>Final Data:</th><td>/archive/codiac/rainex/upper_air/NWS</td></tr>
+    </table>
+
+    <a name="version:rico"></a><h3>RICO (2004-2005)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td>/work/RICO/upperair/upsonde/NWS/software</td></tr>
+        <tr><th>Raw Data:</th><td>/work/operational/soundings/NWS/archive/ascii_files</td></tr>
+        <tr><th>Final Data:</th><td>/archive/codiac/rico/upper_air/upsonde/NWS</td></tr>
+    </table>
+
+    <a name="version:name"></a><h3>NAME (2004)</h3>
+    <table class="version">
+	<tr><th>Software:</th><td>/work/NAME/upper_air/NWS/software</td></tr>
+	<tr><th>Raw Data:</th><td>/work/ncdc/ascii_files</td></tr>
+	<tr><th>Final Data:</th><td>/archive/codiac/name/upper_air/soundings/NWS</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">NWS/</h3>
+    <table class="directories">
+	<tr><th>docs/</th><td>The directory containing documentation about the processing and the data.</td></tr>
+	<tr><th>ebufr/</th><td>The directory where the EBUFR files are placed once they have been created.</td></tr>
+	<tr><th>final/</th><td>The directory where the QC'ed files are placed once they have been created.</td></tr>
+	<tr><th>lib/</th><td>The directory containing libraries for the conversion.</td></tr>
+	<tr><th>logs/</th><td>The directory where the error/check files from the QC are placed.</td></tr>
+	<tr><th>matlib/</th><td>The directory that contains the source code and header files for the matrix library used by the NWS conversion programs.</td></tr>
+	<tr><th>nws_src/</th><td>The directory that contains the source code for the NWS conversion programs.</td></tr>
+	<tr><th>output/</th><td>The directory where the CLASS files are put after they are generated.</td></tr>
+	<tr><th>raw_data/</th><td>The directory where the raw data is stored.</td></tr>
+	<tr><th>software/</th><td>The directory where the software for the conversion is stored.</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<h2>Processing the Data</h2>
+<div class="block">
+
+<a name="mat_library"></a><h3>Creating the Matrix Library</h3>
+<div class="block">
+    <p>The matrix library is a download from the internet that is dated from 1992-1995.  As of April 2005, the online version is the same as the EOL version and has not been updated.  The EOL version has been updated to work with the current version of g++, which the online version does not.  The change was to add the <b>const</b> keyword to the matrix::matrix(matrix &y) function so now the function prototype looks like: matrix::matrix(const matrix &y).</p>
+    <p>The following steps are how to generate the matrix library, <span class="softwareName">libmat.a</span>:</p>
+    <ol>
+	<li>Change to the <span class="directoryName">libmat</span> directory.  This contains all of the header and code files for the library, along with the makefile: libmat.mak to generate the library.</li>
+	<li>Create the library:
+		<p>This will create the library <span class="softwareName">matrix_lib.a</span> in the <span class="directoryName">lib</span> directory and copy the needed <span class="softwareName">matrix.hpp</span> file to the <span class="directoryName">lib</span> directory as well.  To make the library issue the command:</p>
+		<p class="softwareName">make -f libmat.mak</p>
+		</li>
+	<li>Change to the <span class="directoryName">lib</span> directory to make sure that the <b>matrix_lib.a</b> library and the <b>matrix.hpp</b> header file both are in the directory.</li>
+    </ol>
+</div>
+
+<a name="programs"></a><h3>Creating the Conversion Programs</h3>
+<div class="block">
+    <p>The following steps will create the binaries for converting the raw data into the class format.</p>
+    <ol>
+	<li>Change to the <span class="directoryName">nws_src</span> directory.</li>
+	<li>Run the command to make the binaries and put them into the <span class="directoryName">software</span> directory.
+		<p class="softwareName">make all</p>
+		</li>
+    </ol>
+</div>
+
+<a name="convert"></a><h3>Converting the Data</h3>
+<div class="block">
+    <p>The following is how to convert the raw ASCII data into the CLASS format ready to be QC'ed.</p>
+    <ol>
+	<li>Copy the raw data into the <span class="directoryName">raw_data</span> directory.</li>
+	<li>Change to the <span class="directoryName">software</span> directory.</li>
+	<li>Check to see if the <span class="softwareName">nwsVIZ</span> and <span class="softwareName">nwsVaisala</span> executables are in the <span class="directoryName">software</span> directory.  (They are what actually converts the raw data into the CLASS format.)  See the <a href="#programs">Creating the Conversion Programs</a> section for more information.</li>
+	<li>Run the <span class="softwareName">NWS_Converter.pl</span> script.  This will convert the raw data to CLASS format and run a wind correction algorithm on the CLASS files.
+		<p class="note">This is a slow process.  (A month file takes about 20-30 minutes to convert.)  It should be run with <span class="softwareName">/usr/bin/nice -5</span> or so to prevent it from taking over the system.</p>
+		</li>
+    </ol>
+</div>
+
+<a name="autoqc"></a><h3>QC'ing the Data</h3>
+<div class="block">
+    <p>The following explains how to QC the CLASS formatted sounding data.  This assumes that the auto qc binary is already created.  For more information on the auto qc, see <a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>.</p>
+    <ol>
+	<li>Change to the software directory (if you are not already there).</li>
+	<li>Edit the <span class="softwareName">autoqc.pl</span> script.
+		<p>The variable <code>$AUTOQC</code> needs to be changed to point to the correct autoqc program for the current project.</p>
+		</li>
+	<li>Run the <span class="softwareName">autoqc.pl</span> script.
+		<p>This script takes each file in the <span class="directoryName">output</span> directory, runs the auto qc program on it, and creates a new CLASS file that is placed in the <span class="directoryName">final</span> directory and a check/error log file that is placed in the <span class="directoryName">log</span> directory.</p>
+    </ol>
+</div>
+
+<a name="ebufr"></a><h3>Converting to EBUFR</h3>
+<div class="block">
+    <p>The following explains how to EBUFR the QC'ed CLASS files.  This assumes that the class2ebufr binary file has been generated.  For more information on the EBUFR process, see <a href="/dpg/GENERAL/soundings/howto_ebufr_class_soundings.html">How To: EBUFR CLASS Sounding Data</a>.</p>
+    <ol>
+	<li>Change to the software directory (if you are not already there).
+	<li>Make sure the EBUFR configuration files are in the directory.  There should be five (class_file, code_08_021, code_33_254, control_scf.txt, desc_file).  The program will crash without these files.</li>
+	<li>Make sure there is a copy of the executable (or a symbolic link to it) in the directory.</li>
+	<li>Edit the <span class="softwareName">control_scf.txt</span> file.
+		<p>On the 12th line, (two lines above the "END FILE" line) the project name needs to be edited to match the current project.  The rest of the files should remain untouched.</p>
+	<li>Edit the <span class="softwareName">create_ebufr_files.pl</span> script.<ol>
+		<li>Change the variable: <code>$PROJECT</code> to the name of the current project.</li>
+		<li>Change the variable: <code>$PROGRAM</code> to the path of where the class2ebufr program for the current project is located.</li>
+		</ol></li>
+	<li>Run the <span class="softwareName">create_ebufr_files.pl</span> script.  This will concatonate the CLASS files into day CLASS file which will be used to generate the EBUFR day files.
+		<p class="note">Near the end of the file is a pattern for generating the names of the outputed ebufr files.  Make sure the network name is changed to NWS.</p>
+		<p class="note">The script copies the five aforementioned files to the <b>ebufr</b> directory and removes them once the processing is finished.  This is to force all of the intermediate and final files to be saved in the <b>ebufr</b> directory.</p>
+    </ol>
+</div>
+
+<a name="codiac"></a><h3>Inserting into the Database</h3>
+<div class="block">
+    <p>With all of the EBUFR files created, they need to be inserted into the database.  This is a general process and is explained in the document: <a href="/dpg/GENERAL/soundings/howto_insert_ebufred_class_soundings.html">How To: Insert EBUFRed CLASS Sounding Data</a>.</p>
+</div>
+
+</div>
+<a href="#">Top</a><hr />
+
+<a name="documents"></a><h2>Documentation</h2>
+<div class="block">
+    <p>The following are a list of documents that may help with the conversion or are related to the raw data.</p>
+    <ul>
+	<li><a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>- The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/dpg/GENERAL/soundings/howto_ebufr_class_soundings.html">How To: EBUFR CLASS Sounding Data</a>- The instructions for dealing with the EBUFR software that relate to CLASS Soundings.</li>
+	<li><a href="/dpg/GENERAL/soundings/howto_insert_ebufred_class_soundings.html">How To: Insert EBUFR'ed CLASS Sounding Data into the Database</a>- The instructions on how insert the EBUFR'ed sounding data into the database.</li>
+	<li><a href="#">How To: Process NWS Sounding Data</a>- This document.</li>
+	<li><a href="README_TREX_NWS_SOUNDING.txt">README_TREX_NWS_SOUNDING.txt</a>- The CODIAC readme file for T-REX.</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr>
+
+<p class="foot">Last Updated: 2006/10/16 - Joel Clawson</p>
+</body>
+</html>

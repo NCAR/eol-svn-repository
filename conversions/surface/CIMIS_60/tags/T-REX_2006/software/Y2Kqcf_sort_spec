@@ -1,0 +1,71 @@
+#
+# Created to sort QCF data so that it can be divided into day
+# files using create_day_files
+#
+# Run this sort input file by typing: cosort  qcf_sort_spec
+#
+# If input is large, consider running cosort as back ground task &/or at
+# a lower priority.
+#
+# Also you must sometimes indicate where you would like the cosort utility to
+# work by setting the environment variable such as indicated below. Please 
+# refer to the cosort documentation book for more on the cosort tuner.
+#
+# setenv COSORT_TUNER=500000:/data6=400000
+#
+#
+sort		# Action
+0		# Record length (Variable)
+1               # Number of input files
+stdin		# Name of input file
+8		# Number of keys
+ascending       # Key 1 direction year
+fixed           #       location
+1               #       starting column
+4               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 2 direction mon
+fixed           #       location
+6               #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 3 direction day 
+fixed           #       location
+9               #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 4 direction hr 
+fixed           #       location
+12              #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 5 direction min 
+fixed           #       location
+15              #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending	# Key 6 direction lat
+fixed		#	location
+62		#	starting column
+10		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 7 direction lon
+fixed		#	location
+73		#	starting column
+11		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 8 direction occur
+fixed		#	location
+85		#	starting column
+3		#	length
+numeric		#	format
+external	#	value interpretation
+file            # Output
+stdout          # Output file name

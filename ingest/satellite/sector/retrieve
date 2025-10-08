@@ -1,0 +1,84 @@
+#!/usr/bin/perl -w
+
+# $Log: retrieve,v $
+# Revision 1.4  2006/09/28 15:36:22  joss
+# Tweaks to run on Linux
+#
+# Revision 1.3  2006/06/01 00:28:19  joss
+# Reorganize processing, fix URL
+#
+
+use FindBin qw($Script $Bin);
+
+$monitor="gstoss";
+open STDOUT, "|/bin/mailx -s '$Script output' $monitor" or die
+    "Couldn't redirect stdout, $!";
+open STDERR, ">&STDOUT" or die "Couldn't dup stdout, $!";
+select STDERR; $|=1;
+select STDOUT; $|=1;
+
+print "I am $Bin/$Script running on ",`/bin/hostname`;
+print "\n";
+
+# Turn on auto-flushing so STDOUT and STDERR are in synch
+$|=1;
+# Figure out where script lives and change to that directory
+($homedir)=$0=~/(.*)\//;
+chdir $homedir || die "Couldn't reach $homedir: $!";
+
+use File::Basename;
+
+use LWP::UserAgent;
+$ua = new LWP::UserAgent;
+
+#$urlPrefix="http://www.cdc.noaa.gov/~climsat/images/pacs";
+#$urlPrefix="http://www.etl.noaa.gov/et6/satres/data/images";
+$urlPrefix="http://www.esrl.noaa.gov/psd/psd3/satres/data/images";
+$dest="/ingest/cdc/data";
+
+$base{'goes8'}='eastrgn';
+$dirs{'goes8'}=['11u', 'sst', 'vis', 'wv'];
+$base{'goes10'}='pacs';
+$dirs{'goes10'}=['11u', 'sst', 'vis', 'wv' ];
+$base{'dmsp'}='pacs';
+$dirs{'dmsp'}=['clw', 'rn2', 'rn3', 'wvp'];
+
+dbmopen(%T,"retrieved",0644);
+foreach $sat (qw(goes8 goes10 dmsp)) {
+    $base=$base{$sat};
+    foreach $dir (@{$dirs{$sat}}) {
+	print "Retrieving from $base/$dir:\n";
+	$req=new HTTP::Request 'GET', "$urlPrefix/$base/$dir/";
+	$res=$ua->request($req);
+	die "Request failed, ".$res->message unless $res->is_success;
+#print "Listing:\n",$res->content;
+
+    	(@lines)=split(/\n/,$res->content);
+
+    	foreach $line (@lines) {
+	    if (($img) = $line =~ /href=\"(\S+.png)\"/) {
+	    	unless ($img =~ /recent/) {
+    		    next if $T{"${sat}_${img}"};
+    		    print "Retrieving $img.\n";
+		    $req=new HTTP::Request 'GET', "$urlPrefix/$base/$dir/$img";
+	    	    $res=$ua->request($req);
+	    	    if ($res->is_error) {
+	    		print "Error: ",$res->code," ",$res->message," ";
+	    		print "while fetching $img\n";
+	    	    } elsif (length($res->content) > 0) {
+	    		die "Request failed!" unless $res->is_success;
+	    		$file=basename($img);
+	    		open(FILE,">$dest/${sat}_$file") or die
+			    "Couldn't open $dest/${sat}_$file, $!";
+			print FILE $res->content;
+			close(FILE);
+			$T{"${sat}_${img}"}=1;
+		    }
+		}
+	    }
+	}
+    }
+}
+
+dbmclose(%T);
+

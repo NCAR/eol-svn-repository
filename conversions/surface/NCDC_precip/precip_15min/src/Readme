@@ -1,0 +1,19 @@
+The source code that performs the
+conversion and the QC for precip
+handles both hourly and 15min precip
+data. Since the hourly precip was
+performed first, all source code
+which applies to both hourly and 15min
+is located in /precip_hrly/src.
+To prevent duplicates and outdated 
+code, the best source for precip
+processing will be kept under the
+hourly processing.  Note that the 
+hourly and 15min processing also uses  
+the same conversion s/w (ep2pq.f).
+
+In the process_precip program, the user
+will note that the sck or station check
+program is only executed for 15min precip
+data...not hrly. The sck program extracts
+hrly stations from 15 min data.

@@ -1,0 +1,74 @@
+Expires: Thu, 31 Jul 2003 14:26:34 GMT
+Date: Fri, 01 Aug 2003 14:26:34 GMT
+Content-Type: text/html; charset=ISO-8859-1
+
+
+<html><head><title>Dataset Edit</title></head>
+<link rel="STYLESHEET" type="text/css" href="http://www.joss.ucar.edu/mcd/dev/ml/css/main.css">
+<script language=javascript src="http://www.joss.ucar.edu/mcd/dev/ml/ml2.js"></script>
+<body bgcolor=#e9e9e9 link=white alink=white vlink=white text=black>
+<center>
+<form method=post action=proc_update name="main_form">
+
+<table border=0 cellpadding=3 cellspacing=8 width=95% bgcolor=#dcdcdc>
+<tr bgcolor=#336699><td colspan=2><font color=white size=+1>Edit/Add Dataset</td></tr>
+<tr>
+<td align=right><b>Project: </b></td>
+<td><b>BAMEX</b></td>
+<input type=hidden name="project" value="1">
+</tr>
+<tr>
+<td align=right nowrap><b>Date Posted: </b></td>
+<td>
+<input type=text size=4 maxlength=4 name="year" value=2003>-<input type=text size=2 maxlength=2 name="month" value=08>-<input type=text size=2 maxlength=2 name="day" value=01>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript: today( document.main_form )"><font size=-1 color=blue>today</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript: blank( document.main_form )"><font size=-1 color=blue>blank</a>
+</td>
+</tr>
+<tr>
+<td align=right nowrap><b>Storm Id: </b></td>
+<td>
+<input type=text size=10 maxlength=15 name="storm_id" value="99.999" onChange="setUrl( this.form, true )" >
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript: noStormId( document.main_form )"><font size=-1 color=blue>99.999</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript: setUrl( document.main_form, false )"><font size=-1 color=blue>Set URL</a>
+</td>
+</tr>
+<tr>
+<td align=right><b>Title: </b></td>
+<td><input type=text size=75 name="title" value=""></td>
+</tr>
+<tr>
+<td align=right><b>URL: </b></td>
+<td><input type=text size=75 name="url" value=""></td>
+</tr>
+<tr>
+<td align=right><b>Doc URL: </b></td>
+<td><input type=text size=75 name="doc_url" value=""></td>
+</tr>
+<tr>
+<td align=right nowrap><b>In Progress: </b></td>
+<td>
+<input type=checkbox name="in_progress" >
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Hide From Public:</b> <input type=checkbox name="hide" >
+</td>
+</tr>
+<tr>
+<td colspan=2 align=center bgcolor=#336699><font color=white>&nbsp;</td>
+</tr>
+<tr>
+<td colspan=2 align=right>
+<input type=submit name="editButton" value="Next >>">
+</td>
+</tr>
+<tr>
+<td colspan=2 align=right>
+<input type=hidden name="id" value="-1">
+<input type=hidden name="mode" value="add">
+<input type=reset name="editButton" value="Clear">
+<input type=submit name="editButton" value="Cancel" onClick="return doCancel( this.form, top.opener.parent ) ">
+</tr>
+<tr>
+<td colspan=2 align=center bgcolor=#336699><font color=white>&nbsp;</td>
+</tr>
+</form></table>
+</body></html>

@@ -1,0 +1,667 @@
+#! /usr/bin/perl -w
+
+#--------------------------------------------------------------------------------
+# create_DBcmds.pl
+#
+# This software generates the SQL commands to apply pre-determined GCMD keywords
+# to specified netCDF datasets.
+#
+# This Perl script tool is the third step in auto generating GCMD:
+#  1. Run determine_GCMD.pl to generate *.dataTypes and All_uniq_data_types_*_parm.txt
+#  files.
+#
+#  2. The most knowledgable science person/data manager then adds GCMD keywords
+#  to the end of the parm lines (after the xxx) in file All_uniq_data_types_*_parm.txt.
+#
+#  3. Run create_DBcmds.pl with All_uniq_data_types_*_parm.txt with GCMD keywords
+#  to generate (by dataset) the SQL commands to apply to each dataset (*.GCMDcmd).
+#
+#
+# For info on the determine_GCMD.pl software, please that see the header on
+#    that code. Here's a short summary on determine_GCMD.pl....
+#    The determine_GCMD.pl software creates the All_uniq_data_types_*_parm.txt 
+#    output file. The most knowledgable science person/data manager then adds
+#    GCMD keywords to the end of the parm lines (after the xxx) that are to be
+#    applied for that parameter.  That updated All_uniq_data_types_*_parm.txt
+#    file is an input to this create_DBcmds.pl software. determine_GCMD.pl will
+#    only work on netCDF files (*.nc or *.cdf) and the first seven chars of the
+#    input netCDF files needs to be the CODIAC/Dataset ID (e.g., 534-001).
+#
+# Execute: 
+#    create_DBcmds.pl <input_data_dir> <output_dir> 
+#
+# Examples: 
+#    create_DBcmds.pl ../input_data ../output_data
+#
+# Input: 
+#    <input_data_dir> - directory where *.dataTypes AND All_uniq_data_types_*_parm.txt
+#    files for each dataset can be found. This is typically the output directory for the 
+#    determine_GCMD.pl program.
+#
+#    This software also requires the following input files in the same dir as this software:
+#       1. all_datasets_id_archive_ident.txt - File relating dataset ID to CODIAC/ZINC internal DB ID.
+#       2. all_gcmd_id_uuid.txt - File relating GCMD keywords (as set by sci staff) to GCMD number.
+#
+# Output: 
+#    <output_data_dir> - The location where the *.GCMDcmd files will be located (e.g.,
+#    105-004_RF07.20071130.155800_203700.PNI.nc.GMCDcmd, 218-001_RF02.cdf.dataTypes.GCMDcmd, 
+#    etc.)
+#
+# Notes and Assumptions:
+#
+# 1. The user should search for HARDCODED, ASSUMPTIONS, BEWARE, WARNING, and ERROR in this code. 
+#    The user should also search for "exit" in this code so that they know all the possible
+#    places/reasons why this code will stop executing.
+#
+# 2. ASSUMPTION: That the *.dataTypes and All_uniq_data_types_*_parm.txt files exist
+#    in the <input_data_dir>.
+#
+# 3. ASSUMPTION: That the <output_dir> exists.
+#
+#
+# Created: L. Cully Feruary 2020
+#
+# Updates: None.
+#
+#--------------------------------------------------------------------------------
+package create_DBcmds;
+use strict;
+
+if (-e "/net/work") {
+    use lib "/net/work/lib/perl/Utilities";
+} else {
+    use lib "/work/lib/perl/Utilities";
+}
+
+
+my $debug  = 1; # BEWARE: Generates output to screen
+my $TotalFilesProcessed = 0;
+my $OutputRec = 0;
+my $parm;
+
+printf "\ncreate_DBcmds.pl began on ";print scalar localtime;printf "\n\n";
+&main();
+printf "\ncreate_DBcmds.pl ended on ";print scalar localtime;printf "\n";
+
+
+#--------------------------------------------------------------
+# void main()
+# Run the scripts to determine uniq set of netCDF data_types
+# in all files so they can be translated by science staff into
+# GCMD keywords.
+#--------------------------------------------------------------
+sub main 
+   {
+   if ($debug) {print "Enter Main:: length ARGV = $#ARGV,  ARGV() = @ARGV\n";}
+
+   if ($#ARGV < 1)
+      { 
+      print "Incorrect number of command line arguments!\n ARGV = @ARGV\n";
+      print "Usage: create_DBcmds.pl <input_dir> <output_dir>\n";
+      exit(1);
+      }
+
+   my $INPUT_netCDF_DIR  = $ARGV[0];
+   if ($debug) {print "INPUT_netCDF_DIR = $INPUT_netCDF_DIR \n";}
+
+   my $OUTPUT_DIR  = $ARGV[1];
+   if ($debug) {print "OUTPUT_DIR = $OUTPUT_DIR \n";}
+
+   #---------------------------------------------------------------
+   # Read in the list of dataTypes files to process (*.dataTypes).
+   #---------------------------------------------------------------
+   printf "Opening INPUT_netCDF_DIR:: $INPUT_netCDF_DIR\n";
+   opendir(my $INPUT_DIR, $INPUT_netCDF_DIR) or die("Cannot open INPUT_netCDF_DIR\n");
+
+   my @files = grep(/\.dataTypes$/,readdir($INPUT_DIR));      # HARDCODED
+
+   closedir($INPUT_DIR);
+
+   #----------------------------------------------------
+   # Read in info from file that relates GCMD IDs to
+   # UUID's. These next files are assumed to be located
+   # in same dir as this s/w.
+   #---------------------------------------------------
+   my $input_file = "./all_gcmd_id_uuid.txt";  # HARDCODED
+   my $INPUT_GCMD_RELATION_FILE;
+
+   open( INPUT_GCMD_RELATION_FILE,"<", $input_file) or   
+        die("Can't open $input_file for reading\n");
+
+   my @lines = <$INPUT_GCMD_RELATION_FILE>;
+   my $number_lines_in_file = $#lines+1;
+   my %Input_UUID_GCMDID = ();  # Clear Hash
+
+   print "Read into Hash the info from INPUT_GCMD_RELATION_FILE. File has $number_lines_in_file lines.\n";
+
+   foreach my $line (@lines)
+      {
+      chomp ($line); #remove return \n
+      if ($debug) {print "\nUUID vs GCMD ID RELATION FILE Line: xxx $line xxx\n";}
+
+      my @record = split (/|/, $line);
+      my $key_ID = trim($record[1]);  # This is the UUID associated with GCMD keywords
+      my $DB_GCMD_ID = trim($record[0]);
+
+      if ($debug) {print "UUID key_ID = $key_ID; DB_GCMD_ID = zzz $DB_GCMD_ID zzz\n";}
+
+      $Input_UUID_GCMDID{$key_ID} = $DB_GCMD_ID;
+      }
+
+   if ($debug)
+      {
+      print "\n*****Input Hash UUID vs GCMD IDs *****\n";
+      print "\nInput_UUID_GCMDID Hash Contents::\n   \n";
+      for my $parm ( sort keys %Input_UUID_GCMDID ) { print "$parm: @{ $Input_UUID_GCMDID{$parm} }\n"; }
+      }
+
+
+   #----------------------------------------------------
+   # Read in info from file that relates datasetID to
+   # DB internal ID... aka archive Ident.
+   #----------------------------------------------------
+   $input_file = "./all_datasets_id_archive_ident.txt";
+   my $INPUT_DATASET_ID_RELATION_FILE;
+
+   open(INPUT_DATASET_ID_RELATION_FILE,"<", $input_file) or     # HARDCODED
+        die("Can't open $input_file for reading\n");
+
+   @lines = <$INPUT_DATASET_ID_RELATION_FILE>;
+   $number_lines_in_file = $#lines+1;
+   my %Input_DatasetID_archID = ();  # Clear Hash
+
+   print "Read into Hash the info from INPUT_DATASET_ID_RELATION_FILE. File has $number_lines_in_file lines.\n";
+
+   foreach my $line (@lines)
+      {
+      chomp ($line); #remove return \n
+      if ($debug) {print "\nDATASET ID RELATION FILE Line: xxx $line xxx\n";}
+
+      my @record = split (/|/, $line);  # Split on vertial bar and add to hash.
+                                        # DatasetID will be the hash key.
+
+      my $key_ID = trim($record[1]);
+      my $archID = trim($record[0]);
+
+      if ($debug) {print "key_ID = $key_ID; archID = zzz $archID zzz\n";}
+
+      $Input_DatasetID_archID{$key_ID} = $archID;
+      }
+
+   if ($debug)
+      {
+      print "\n*****Input Hash DatasetIDs vs Archive Idents *****\n";
+      print "\nInput_DatasetID_archID Hash Contents::\n   \n";
+      for my $parm ( sort keys %Input_DatasetID_archID ) { print "$parm: @{ $Input_DatasetID_archID{$parm} }\n"; }
+      }
+
+exit(22);   
+
+   #--------------------------------------------------------------------------------
+   # Read in the parameters vs GCMD keywords files (All_uniq_data_types_*_parm.txt).
+   # Put info into GCMD hash.
+   #--------------------------------------------------------------------------------
+   my $INPUT_GCMD_KEYWORD_FILE;
+
+   open(INPUT_GCMD_KEYWORD_FILE,"<", "All_uniq_data_types_C130_LRT_parm.txt") or     # HARDCODED
+        die("Can't open file for reading: "."All_uniq_data_types_C130_LRT_parm.txt");
+
+   @lines = <$INPUT_GCMD_KEYWORD_FILE>;
+   $number_lines_in_file = $#lines+1;
+   my $TotalRecProc = 0;
+
+   my %ALL_InputFileDataTypes = ();  # Hash of dataTypes and GCMD keywords
+
+   foreach my $line (@lines)
+      {
+      $TotalRecProc++;
+
+      chomp ($line); #remove return \n
+      if ($debug) {print "\nOrig Line: xxx $line xxx\n";}
+
+      my @record = split (/xxx/, $line);  # split on 'xxx' which divides the parm  -- HARDCODED
+                                          # input info and the GMCD keywords to apply to that parm.
+
+      my @first_part = split (/,/, $$record[0]);
+      my $All_parm_name = $first_part[0];
+
+     # ------------------------------------------------------------------
+     # FIX THIS SECTION when have final input format!!!!!!!!!!
+     # ------------------------------------------------------------------
+     # Currently, length of @All_GCMD_keywords first element could only 
+     # contain a single comma since the return was cut off above. 
+     # And No yyy to split on.  Think only a comma in the first element
+     # of All_GCMD_keywords[0] = '\'' and array length is only that
+     # element....how to test nothing at end of line after xxx.
+     # ***Or search for 'yyy' in the string and if not found then no
+     # keywords!!!!
+     # ------------------------------------------------------------------
+     if (index($record[1], "yyy") != -1)  # Does line have yyy => there are GCMD keywords for this parm
+        {
+        # ------------------------------------------------------------------
+        # There are keywords. The number of 'yyy' found is one less than the 
+        # total number of keywords to apply - verify.
+        # ------------------------------------------------------------------
+        my @All_GCMD_keywords = split (/yyy/, $record[1]);  #HARDCODED - May be nothing except return if no keywords to apply
+
+        if ($debug) {print "All_parm_name = $All_parm_name; All_GCMD_keywords = zzz @All_GCMD_keywords zzz\n";}
+
+        $ALL_InputFileDataTypes{$All_parm_name} = [@All_GCMD_keywords]; 
+
+        }
+     else
+        {
+        if ($debug) {print "No Keywords found for parm = $All_parm_name\n";}
+        $ALL_InputFileDataTypes{$All_parm_name} = "none";
+        }
+
+      }; # Read lines of All_uniq_data_types_C130_LRT_parm.txt
+
+   closedir($INPUT_DIR);
+
+
+   #-----------------------------------------------------------------
+   # Process every dataTypes file (*.dataTypes) in the input directory.
+   # Determine unique set of data_types for each file and for all
+   # input files combined.
+   #-----------------------------------------------------------------
+   foreach my $file (sort(@files)) 
+      {
+      #----------------------------------------------------------------
+      # Form and execute system command to dump netCDF file header
+      # that includes list of parameters in the data.
+      # That is, run "ncdump -h" executable on input files.
+      #----------------------------------------------------------------
+      $TotalFilesProcessed++;
+
+      if ($debug) {print "-----------------------------\n";}
+      printf "\nprocessing input file: $file \n";
+
+      # ----------------------------------------
+      # Open the *.dataTypes file for processing 
+      # ----------------------------------------
+      my $INPUT_FILE_DATATYPES;
+      if ($debug) {print "OPEN: Input dataTypes file reading = $file\n";}
+      open($INPUT_FILE_DATATYPES,"<", $file) or die("Can't open file for READING: ".$file);
+
+      #----------------------------------------------------------------------
+      # Create file name to dump GCMD commands into [input_file_name].GCMDcmd
+      # These files are specific to an individual input/datasetID file.
+      #----------------------------------------------------------------------
+      my $output_GCMD_file = sprintf("%s/%s.GCMDcmd", $OUTPUT_DIR, $file);    # HARDCODED
+
+      if ($debug) {print "OPEN: Output GCMD SQL Commands GCMD_file = $GCMD_file\n";}
+      open(OUTFILE_GCMDcmd_FILE,">", $output_GCMD_file) or die("Can't open file for writing: ".$output_GCMD_file);
+
+
+      #-----------------------------------------------------------
+      # Process the data_type lines in the header dump and add
+      # counts to hashes then write to output files for science
+      # staff to review and translation to GCMD keywords. 
+      #-----------------------------------------------------------
+      my @lines = <$INPUT_FILE_DATATYPES>;
+      my $number_lines_in_file = $#lines+1;
+      my $TotalRecProc = 0;
+
+
+      # --------------------------------------------
+      # Loop through file lines in header dump file.
+      # --------------------------------------------
+      foreach my $line (@lines)
+         {
+         $TotalRecProc++;
+
+         chomp ($line); #remove return \n
+         if ($debug) {print "\nOrig Line: xxx $line xxx\n";}
+
+         # -------------------------------------------------
+         # If line is blank skip it else check for data_type
+         # and count data_type if found. There should NEVER
+         # be a blank line.
+         # -------------------------------------------------
+         $line =~ s/^\s+|\s+$//g; #Strip white space from both ends of string
+
+         if ($line =~ /^\s*$/)
+            {
+            if ($debug) {print "SKIP Blank Line: $line\n";}
+            next;
+            }
+         else
+            {
+            # --------------------------------------------------------------
+            # Pick off the parm/variable name and match with GCMD keyword(s)
+            # to apply then write this to *.GCMDcmd output file for that
+            # datasetID. 
+            # 
+            # Example record expected in *.dataTypes file:
+            # ATX, long_name = "Ambient Temperature, Reference" ;, units = "C" ;, Category = "Atmos. State" ;,
+            #
+            # Example record expected in All_uniq_data_types*_parm.txt with GCMD Keywords:
+            # ACCELX_BGP, long_name = "X-Axis of 3-Axis Accelerometer" ;, units = "G" ;, Category = "Analog" ;, 1 , 
+            #    xxx, GCMD_Keyword1 yyy GCMD_Keyword2 yyy GCMD_Keyword3
+            # --------------------------------------------------------------
+            # ------------------------------------------------------------------------
+            # Pick the parm/variable name off the input *.dataTypes line(s)
+            # and match with GCMD keywords in the All_uniq_data_types*_parm.txt file.
+            # ------------------------------------------------------------------------
+            my @record = split (/,/, $line); # split on comma  #HARDCODED
+            my $parm_name = trim ($record[0]);
+
+            if ( exists($ALL_InputFileDataTypes[{$parm_name}]) )
+               {
+               my @GCMD_keywords = %ALL_InputFileDataTypes[$parm_name];   # FIX THIS
+
+               if ($debug) {print "Input Key for hash EXISTS:: parm_name = $parm_name with GCMD Keywords: @GCMD_keywords\n";}
+
+               # Write SQL command(s) to *.GCMDcmd file for datasetID            
+               #---------------------------------------------------------------------------------------------------------
+               # From CBS: This is the MySQL insert statement that I prefer to use for making the updates:
+               # INSERT IGNORE INTO dataset_gcmd_science_keyword (dataset_id, gcmd_science_keyword_id) SELECT d.id, 623 FROM 
+               #    dataset d WHERE d.id IN (7282,1014,...)
+               #---------------------------------------------------------------------------------------------------------
+               print OUTPUT_GCMD_KEYWORDS_FILE "INSERT IGNORE INTO dataset_gcmd_science_keyword ($dataset_id, $gcmd_science_keyword_id) SELECT d.id, $623 FROM dataset d WHERE d.id IN ($7282,$1014)\n";
+
+               }
+            else
+               {
+               if ($debug) {print "NO GMCD Keywords for parm_name = $parm_name\n";}
+               }
+
+
+#------------------------------  Old sample code below - remove !!!!! 
+            # ---------------------------------------------------------
+            # If first line element matches a known netCDF3 data_type
+            # then count in hashes.
+            #
+            # Also find next long_name to save off.
+            # ---------------------------------------------------------
+            if ( exists($netCDF3_dataTypes{$input_key}) )
+               {
+               if ($debug) {print "   *** FOUND VALID data_type = $input_key . Increment count in both hashes for this data_type.\n";}
+
+               my $parm1 = trim ($record[1]); # parameter name found as second line element
+               $parm = trim (split (/\(/, $parm1)); # pick off just the parm name
+
+               if ($debug) {print "   *** parm1 = xxx $parm1 xxx  parm = xxx $parm xxx\n";}
+
+               if (exists ($InputFileDataTypes{$parm}))
+                  {
+                  print "   WARNING: Duplicate Parm names ($parm) in input file ($file) already in hash.\n";
+                  }
+               else
+                  {
+                  if ($debug) {print "   NEW Parm ($parm) to add to input file hash. Set fields to unknown\n";}
+                  $fields[0] = "long_name = unknown,";  # long_name
+                  $fields[1] = "units = unknown,";  # units
+                  $fields[2] = "Category = unknown,";  # category 
+
+                  $InputFileDataTypes{$parm} = [@fields]; 
+                  }
+
+
+               #---------------------------------------------
+               # Set parm values for Total/All files
+               # Has 4 fields: 
+               #   $ALL_fields[0] = $long_name; 
+               #   $ALL_fields[1] = $units; 
+               #   $ALL_fields[2] = $category;
+               #   $ALL_fields[3] = $total_FilesHaveThisParm;
+               #---------------------------------------------
+               if ( exists ($ALL_InputFileDataTypes{$parm}) )
+                  {
+                  if ($debug) {print "   This Parm ($parm) exists in TOTAL/ALL files hash. Increment the count of file that have this parmeter.\n";}
+
+                  if ($debug) {print "   BEFORE: Total Files Having $parm = $ALL_InputFileDataTypes{$parm}[3]\n";}
+
+                  $ALL_InputFileDataTypes{$parm}[3]++;
+
+                  if ($debug) {print "   AFTER: Total Files Having $parm = $ALL_InputFileDataTypes{$parm}[3]\n";}
+
+                  }
+               else
+                  {
+                  if ($debug) {print "   NEW Parm ($parm) to add to TOTAL/ALL files hash. Set fields to unknown\n";}
+                  $ALL_fields[0] = "long_name = unknown,";  # long_name
+                  $ALL_fields[1] = "units = unknown,";  # units
+                  $ALL_fields[2] = "Category = unknown,";  # category
+                  $ALL_fields[3] = 1;  # Total number input files with this parm. Count the first one!
+
+                  $ALL_InputFileDataTypes{$parm} = [@ALL_fields];
+                  }
+
+               }
+            else  # Unknown data_type (i.e.,  NOT any of known data_types: int, float, double, etc.)
+               {
+               if ($debug) {print "   NOT a valid data_type = $input_key . Skip if not long_name, units, category.\n";}
+
+               my @line_parts = split(/:/, $line);
+
+               # --------------------------------------------------------------------------------------
+               # Assumes long_name, units, category records will follow data_type record for that parm.
+               # --------------------------------------------------------------------------------------
+               
+               # ---------------------------------------------
+               # Set Long Name if in line. Set in both hashes.
+               # Note that "long_name" was not found other than
+               # in the long_name header lines. 
+               # ---------------------------------------------
+               if (index($line, "long_name") != -1)
+                 {
+                 $long_name = $line_parts[1] . ",";
+                 if ($debug) {print "   *** LINE: $line CONTAINS phrase xxx $long_name xxx. Set ($parm) long_name.\n";}
+
+                 $InputFileDataTypes{$parm}[0] = $long_name; 
+                 $ALL_InputFileDataTypes{$parm}[0] = $long_name; 
+
+                 $long_name = "long_name = unknown,";
+                 } # Set long_name
+
+               # -----------------------------------------
+               # Set Units if in line. Set in both hashes.
+               # Note that "units" was not found other than
+               # in the unit hdr lines.
+               # -----------------------------------------
+               if (index($line, "units") != -1)
+                 {
+                 $units = $line_parts[1] . ",";
+                 if ($debug) {print "   *** LINE: $line CONTAINS phrase xxx $units xxx. Set ($parm) units.\n";}
+
+                 $InputFileDataTypes{$parm}[1] = $units; 
+                 $ALL_InputFileDataTypes{$parm}[1] = $units; 
+
+                 $units = "units = unknown,"; 
+                 } # Set units
+
+               # --------------------------------------------
+               # Set Category if in line. Set in both hashes.
+               #
+               # WARNING: "Category" was found in both the
+               # Category and "long_name" lines so must search
+               # for Category right after colon. 
+               # --------------------------------------------
+               if (index($line, ":Category") != -1)
+                 {
+                 $category = $line_parts[1] . ",";
+                 if ($debug) {print "   *** LINE: $line CONTAINS phrase xxx $category xxx. Set ($parm) category.\n";}
+
+                 $InputFileDataTypes{$parm}[2] = $category;
+                 $ALL_InputFileDataTypes{$parm}[2] = $category;
+
+                 $category = "Category = unknown,";
+                 } # Set units
+
+               } #unknown data_type or not a data_type record
+
+            } # Add data_type &/or count to hashes
+
+         } # end foreach all lines in the file
+
+      if ($debug)
+         {
+         print "\n*****Total Lines Processed from Input File ($file): $TotalRecProc *****\n";
+         print "\n*****Hash output individual Input File Data_type Hash for file= $file*****\n";
+         print "\nInputFileDataTypes Hash Contents::\n   \n";
+         for $parm ( sort keys %InputFileDataTypes ) { print "$parm: @{ $InputFileDataTypes{$parm} }\n"; }
+         }
+
+      print OUTFILE_UNIQPARMS_FILE  "-------Parms found in File: $file\n";
+      for $parm ( sort keys %InputFileDataTypes ) { print OUTFILE_UNIQPARMS_FILE "$parm, @{ $InputFileDataTypes{$parm} }\n" }
+
+      close (OUTFILE_UNIQPARMS_FILE);
+
+
+      } # for each input file
+
+   # ---------------------------------------------------
+   # ---------------------------------------------------
+   # All input files processed. Now print sorted output
+   # to files. Sort by parm (same as by hash keys), by
+   # category, and by count where count is the number of
+   # files that contain that parameter.  Write output
+   # to separate files into output directory. Output
+   # file names will have the form: 
+   #    All_uniq_data_types_xxxx.txt where xxxx is
+   #    either parm, category, or count. 
+   # ---------------------------------------------------
+   # ----------------------------------------------------------
+   # First print to output file total uniq list of data types
+   # sorted by parm that were found in all input files combined. 
+   #    All_uniq_data_types_parm.txt
+   # -----------------------------------------------------------
+   if ($debug)
+     {
+     # Print to screen/log
+      print "-----------------------------------------------------\n";
+      print "-------   Total Number of Files Processed: $TotalFilesProcessed -------\n";
+      print "-----------------------------------------------------\n";
+      print " Parm Short Name: Parm Long Name; Number Files have Parm\n";
+      print "---------------------------------------------------------------------\n";
+      for $parm ( sort keys %ALL_InputFileDataTypes ) { print "$parm: @{ $ALL_InputFileDataTypes{$parm} }\n"; } 
+      } # Debug
+
+   # --------------------------------------------------------------
+   # Print (debug really) by "unnamed" array element of hash table
+   # to test access.
+   # --------------------------------------------------------------
+   if ($debug)
+      {
+      foreach my $hash_key (keys %ALL_InputFileDataTypes)
+         {
+         print "Elements on Hash key::  $hash_key\n ";
+         for my $i (0..$#{ $ALL_InputFileDataTypes{$hash_key} } )
+            { print " Array[$i] xxx $ALL_InputFileDataTypes{ $hash_key }[$i] xxx "; }
+         print "\n\n";
+         }
+      } # Debug
+
+
+   # -------------------------------------------------
+   # -------------------------------------------------
+   # Print to output file All_uniq_data_types_parm.txt
+   # SORTED BY PARAMETER (PARM). Write to output file:
+   #
+   #    All_uniq_data_types_parm.txt
+   # -------------------------------------------------
+   # -------------------------------------------------
+#   print OUTFILE_UNIQPARMS_ALL  "----------------------------------------------------------------------\n";
+#   print OUTFILE_UNIQPARMS_ALL  "------   Total Number of Input Files Processed: $TotalFilesProcessed ------\n";
+#   print OUTFILE_UNIQPARMS_ALL  "----------------------------------------------------------------------\n";
+#   print OUTFILE_UNIQPARMS_ALL  " SHORT Name, LONG Name, UNITS, CATEGORY,  NUMBER INPUT FILES with Parm\n";
+#   print OUTFILE_UNIQPARMS_ALL  "----------------------------------------------------------------------\n";
+
+   for $parm ( sort keys %ALL_InputFileDataTypes ) { print OUTFILE_UNIQPARMS_ALL "$parm, @{ $ALL_InputFileDataTypes{$parm} } , xxx,\n"; }
+
+
+   # -----------------------------------------------------------
+   # -----------------------------------------------------------
+   # Next print to output file total uniq list of data types
+   # SORTED BY COUNT that were found in all input files combined. 
+   # Write to output file:
+   #
+   #    All_uniq_data_types_count.txt
+   # -----------------------------------------------------------
+   # -----------------------------------------------------------
+   my $output_byCount = sprintf("%s/%s%s%s", $OUTPUT_DIR, "All_uniq_data_types_",$platform_freq,"_count.txt"); # HARDCODED
+   open(OUTFILE_UNIQPARMS_COUNT,">", $output_byCount) or die("Can't open file for writing: ".$output_byCount);
+ 
+#   print OUTFILE_UNIQPARMS_COUNT  "----------------------------------------------------------------------------------\n";
+#   print OUTFILE_UNIQPARMS_COUNT  "-------------                Sorted by COUNT                  ----------------------\n";
+#   print OUTFILE_UNIQPARMS_COUNT  "----------------------------------------------------------------------------------\n";
+#   print OUTFILE_UNIQPARMS_COUNT  " NumberFilesWithParm      PARM      LONG NAME     UNITS     CATEGORY \n";
+#   print OUTFILE_UNIQPARMS_COUNT  "----------------------------------------------------------------------------------\n";
+
+   #--------------------------------------------------------
+   # Sort hash records (i.e., parms) by COUNT which is the
+   # total number files that a parm was found in. 
+   #--------------------------------------------------------
+   my @countSorted = sort countsort (keys %ALL_InputFileDataTypes);
+   sub countsort {
+     $ALL_InputFileDataTypes{$a}[3] <=> $ALL_InputFileDataTypes{$b}[3] # This does a numeric sort!
+     } #end countsort
+
+   for my $ii (0..$#countSorted)
+      {
+      if ($debug)
+         { print  "countSorted[$ii], FilesWithParm = $ALL_InputFileDataTypes{$countSorted[$ii]}[3], Parm = $countSorted[$ii], $ALL_InputFileDataTypes{$countSorted[$ii]}[0] $ALL_InputFileDataTypes{$countSorted[$ii]}[1] $ALL_InputFileDataTypes{$countSorted[$ii]}[2]\n"; } # Debug
+
+      print OUTFILE_UNIQPARMS_COUNT  "$ALL_InputFileDataTypes{$countSorted[$ii]}[3], $countSorted[$ii], $ALL_InputFileDataTypes{$countSorted[$ii]}[0] $ALL_InputFileDataTypes{$countSorted[$ii]}[1] $ALL_InputFileDataTypes{$countSorted[$ii]}[2] , xxx,\n";
+      } # End Print Sorted by Count
+
+   #--------------------------------------------------------
+   #--------------------------------------------------------
+   # Next print to output file total uniq list of data types
+   # SORTED BY CATEGORY. This requires an alphabetical search
+   # since the category is text. Simple "sort" on external
+   # file works fine. Write to output file:
+   #
+   #     All_uniq_data_types_category.txt
+   #--------------------------------------------------------
+   #--------------------------------------------------------
+   my $output_byCat = sprintf("%s/%s%s%s", $OUTPUT_DIR, "All_uniq_data_types_",$platform_freq,"_category.txt"); # HARDCODED
+   open(OUTFILE_UNIQPARMS_CATEGORY,">", $output_byCat) or die("Can't open file for writing: ".$output_byCat);
+
+###   my @countSorted = sort countsort (keys %ALL_InputFileDataTypes);  # See countedSorted above.
+
+   for my $ii (0..$#countSorted)
+      { print OUTFILE_UNIQPARMS_CATEGORY "$ALL_InputFileDataTypes{$countSorted[$ii]}[2] $countSorted[$ii], $ALL_InputFileDataTypes{$countSorted[$ii]}[0]  $ALL_InputFileDataTypes{$countSorted[$ii]}[1] $ALL_InputFileDataTypes{$countSorted[$ii]}[3] , xxx,\n"; }
+
+   my $cmd_catSort = sprintf("sort $output_byCat > $output_byCat.sorted");
+
+   print "\nExecute system cmd:: $cmd_catSort\n";
+   system ($cmd_catSort); # Sort by Category 
+
+
+   # Move the sorted file into the sorted by category file
+   my $cmd_overwrite = sprintf("mv -f $output_byCat.sorted $output_byCat");
+
+   print "\nExecute system cmd:: $cmd_overwrite\n";
+   system ($cmd_overwrite); # Sort by Category
+
+
+   # Write some general stats to screen
+   print "\n-------   Total Number of Files Processed: $TotalFilesProcessed -------\n";
+
+   my $size = keys %ALL_InputFileDataTypes;
+   print "Size of Hash (equals number uniq parms found):  %ALL_InputFileDataTypes = $size\n";
+
+
+   close (OUTFILE_UNIQPARMS_ALL); # sorted by parm
+   close (OUTFILE_UNIQPARMS_COUNT); # sorted by count
+   close (OUTFILE_UNIQPARMS_CATEGORY); # sorted by category
+   } # main
+
+
+##------------------------------------------------------------------------------
+# @signature String trim(String line)
+# <p>Remove all leading and trailing whitespace from the specified String.</p>
+#
+# @input $line The String to be trimmed.
+# @output $line The trimmed String.
+##------------------------------------------------------------------------------
+sub trim {
+    my ($line) = @_;
+    return $line if (!defined($line));
+    $line =~ s/^\s+//;
+    $line =~ s/\s+$//;
+    return $line;
+} # trim()

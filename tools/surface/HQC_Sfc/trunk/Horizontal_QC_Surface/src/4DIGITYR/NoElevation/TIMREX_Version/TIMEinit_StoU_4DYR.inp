@@ -1,0 +1,10 @@
+TIMREX                     Project Name.             (25 characters only.)
+0                          Conversion type. 1 = UTC to SOLAR; 0 = SOLAR to UTC.
+1                          Data frequency (minutes). (Set to highest freq in input) (input_data_freq)
+0                          Mixed Frequency flag. 0 = 1 freq in data; 1 = multiple freq in data.
+2008                       Century/Year data was collected. (Integer YYYY) (current_year)
+20080514                   Begin date of data to process YYYYMMDD (begin_date)
+20080627                   End   date of data to process YYYYMMDD (end_date) 
+/net/work/Projects/TIMREX/surface/HQC_1min/SOLAR/    Path name (and general name prefix) of input qcf files to process.
+/net/work/Projects/TIMREX/surface/HQC_1min/UTC/      Path name of output qcf files and *.txt files.
+130.00                     Reference Longitude (Use same ref lon for shifting in both directions!)

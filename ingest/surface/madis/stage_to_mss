@@ -1,0 +1,144 @@
+#!/bin/perl -w
+#
+# Stage MADIS mesonet data to Mass Store
+# April 10, 2002
+# Janine Goldstein
+# (taken from /home/joss/goes/stage_to_mss 4/10/2002)
+#
+# JAG 4/16/02 Eliminated copy - just tar directly to TMP dir 
+#
+
+$|=1;
+
+use NDBM_File;
+
+use Time::Local;
+
+BEGIN {
+    use Fcntl;       # for O_ constants 
+    use POSIX qw(tmpnam);
+    do { $name = tmpnam() } until sysopen(FH, $name, O_RDWR|O_CREAT|O_EXCL);
+
+    open STDOUT, ">&FH" or die "Couldn't redirect stdout, $!";
+    open STDERR, ">&STDOUT" or die "Couldn't dup stdout, $!";
+    select STDERR; $|=1;
+    select STDOUT; $|=1;
+}
+
+END {
+    close(FH);
+    $monitor="janine";
+    $subject="MADIS mesonet stage to Mass Store";
+    if (-s $name > 0) {
+	system("/bin/mailx -s '$subject' $monitor < $name");
+    }
+    unlink($name);
+}
+
+BEGIN {
+    use FindBin qw($Script $Bin);
+    print "Running $Script in $Bin\n";
+    chdir $Bin or die "Couldn't cd to $Bin: $!";
+    if (-f "LOCK") {
+	if ((-M "LOCK")*24 > 6) {
+	    print "WARNING: Lock file older than 6 hours, ignoring\n";
+	} else {
+#           print "Lockfile exists, exiting.\n";
+    	    exit(0);
+        }
+    }
+    open(LOCK, ">LOCK") or die "Couldn't open lockfile: $!";
+    close(LOCK);
+}
+
+END {
+    unlink("LOCK");
+}
+
+$LOG="$Script.log";
+
+sub log_msg {
+    my ($msg)=@_;
+    my ($sec,$min,$hour,$mday,$mon,$year) = localtime(time);
+    my $timestamp=sprintf("%04d%02d%02d %02d:%02d:%02d", $year+1900, $mon+1,
+        $mday, $hour, $min, $sec);
+    $today = sprintf("%04d%02d%02d", $year+1900, $mon+1, $mday);
+    open LOG, ">>$LOG" or die "Couldn't open $LOG, $!";
+    print LOG "$timestamp $msg";
+    close(LOG);
+}
+
+$MSRCP='/opt/dcs/bin/msrcp';
+$MSLS='/opt/dcs/bin/msls';
+
+$GZIP='/opt/bin/gzip';
+$TAR='/opt/bin/tar';
+$RM='/bin/rm';
+$TMP='/ingest/tmp/madis';
+#$TMP = '/home/janine/madis/tmp';
+
+$destroot='/JOSS/DATA/RAW/SURFACE/MADIS/MESONET1';
+$wpwd='jossdata';
+$rtpd=32767;
+$opts="-wpwd $wpwd -pe $rtpd";
+
+tie %SENT, "NDBM_File", "$Bin/sent", O_RDWR|O_CREAT, 0644;
+
+    $dir="/ingest/ldm/data/madis/mesonet1";
+   #$dir="/home/janine/madis/mesonet1";
+    opendir(DIR,$dir) or die "Couldn't open $dir, $!";
+    @files=readdir(DIR);
+    closedir(DIR);
+    #	print "Files: @files\n";
+    # Two stages: 1) get dates to send 2) tar to $TMP, compress, and send to MSS
+    log_msg("Getting dates of files to be sent\n");
+
+    foreach $file (@files) {
+	# Send file if it has yesterdays date or older and hasn't been sent
+	next unless $file =~ /^(\d+)_(\d+)\.gz$/;
+	my ($filedate, $filetime) = ($1, $2);
+        next if $file =~ /^$today/;
+
+        # Make a list of the dates of files sent
+        $temp = join(" ",@dates);
+        if ($temp !~ /$filedate/) {push @dates, $filedate;}
+    }
+    log_msg("Will send files for dates $temp\n");
+
+    foreach $filedate (@dates) {
+        log_msg("Tarring files for $filedate\n");
+        chdir $dir or die "Couldn't cd to $dir: $!";
+        $dest = "$TMP/$filedate.tar";
+	$result=system("$TAR -cvf $dest ${filedate}_*");
+	if ($result) {
+	    print "ERROR in tar.";
+	    next;
+	}
+	$result=system("$RM -f ${filedate}_*");
+	if ($result) {
+	    print "ERROR in rm.";
+	    next;
+	}
+        chdir $Bin or die "Couldn't cd to $Bin: $!";
+               
+	$src="$TMP/$filedate.tar";
+
+        log_msg("Sending files for $filedate\n");
+	next if ($SENT{"$src"});
+	$year=substr($filedate,0,4);
+	$dest="$destroot/$year/$filedate.tar";
+	log_msg("Sending $src to $dest...\n");
+	$result=system("$MSRCP $opts $src mss:$dest");
+	log_msg("status $result\n");
+	$SENT{"$src"}=1 unless $result;
+	if ($result) {
+	    print "ERROR in msrcp.";
+	    print "After: ",`/bin/ls -l $src`;
+	    print "MSLS: ",`$MSLS -l $dest`;
+	} else {
+	    unlink("$src");
+	}
+    }
+#    sleep 300;
+     
+untie %SENT;

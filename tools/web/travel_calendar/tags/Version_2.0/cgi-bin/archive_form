@@ -1,0 +1,55 @@
+#! /usr/bin/perl -T -w
+
+##Module---------------------------------------------------------------------
+# <p>The <code>ArchiveForm</code> module is a <code>CGI</code> module that
+# creates a menu for archiving/unarchiving an employee.  It is used to place
+# all of the archiving functionality in a single menu without having it 
+# clutter up the rest of the interface.</p>
+#
+# @author Joel Clawson
+##Module---------------------------------------------------------------------
+package ArchiveForm;
+use strict;
+use lib ".";
+use EmployeeList;
+use CGI qw(:standard :html3);
+our @ISA = ("CGI");
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+&main();
+
+##---------------------------------------------------------------------------
+# @signature void main()
+# <p>Create the archive menu form.</p>
+##---------------------------------------------------------------------------
+sub main() {
+  my $self = ArchiveForm->new();
+
+  print($self->header());
+  print("<html>\n");
+  print("<head>\n<title>Archive Data</title>\n<script type=\"text/javascript\" src=\"/web/docs/travel/javascript/travel.js\"></script>\n</head>\n\n");
+  print("<body>\n");
+
+  print("<h1 align=center>Employee Archive Utility</h1>\n");
+
+  print("<form method=POST action=\'archiver\' >\n");
+
+  print("<p>This tool allows you to archive an Employee and their travel ");
+  print("information.  This will prevent any information for the Employee ");
+  print(" from showing in any part of the calendar tool.</p>\n");
+
+  printf("<p align=center>%s</p>\n", 
+	 $self->submit("archive", "Archive Employee"));
+  printf("<p align=center>%s</p>\n",
+         $self->submit("archive", "Unarchive Employee"));
+
+  print("</form></body>\n</html>\n");
+}
+
+
+
+
+
+
+

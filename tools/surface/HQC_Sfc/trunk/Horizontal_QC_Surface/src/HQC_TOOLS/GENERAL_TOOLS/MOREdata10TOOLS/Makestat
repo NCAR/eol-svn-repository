@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for statprecip precip (daily) s/w.
+#
+
+CC=acc
+##CFLAGS = -g
+
+statprecip: statprecip.o
+	$(LINK.c) -o statprecip statprecip.o 
+	chmod 0755 statprecip
+
+clean:
+	rm *.o

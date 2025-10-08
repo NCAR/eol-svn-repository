@@ -1,0 +1,8 @@
+The .htm files in this directory are the orignal data files used to create the schedules in the database.
+The ext_sch.pl script parses these files and adds the schedules to the database.
+
+The goes??_sectors.txt files contian the original routine sectors (not the RSO or SRSO) that were added using 
+the addSectors script.
+
+The lib/ directory contains the needed modules to run the scripts - this module is similar to what is used
+by the query script in the cgi-bin.

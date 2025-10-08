@@ -1,0 +1,1411 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@ * @;
+
+
+1.2
+date	94.07.19.20.48.41;	author mark;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	92.12.03.00.52.07;	author mark;	state Exp;
+branches;
+next	;
+
+
+desc
+@Auto-checkin done by rcsify
+@
+
+
+1.2
+log
+@Enable pressure display
+Extend to 50 mb
+Fix zoom bug (hopefully)
+@
+text
+@
+/*
+ * $Log: Skewt.c,v $
+ * Revision 1.1  1992/12/03  00:52:07  mark
+ * Initial revision
+ *
+ *
+ */
+
+/*
+ * Skew-t plotting module
+ */
+static char *rcsid = "$Id: Skewt.c,v 1.1 1992/12/03 00:52:07 mark Exp $";
+/*		Copyright (C) 1987,88,89,90,91 by UCAR
+ *	University Corporation for Atmospheric Research
+ *		   All rights reserved
+ *
+ * No part of this work covered by the copyrights herein may be reproduced
+ * or used in any form or by any means -- graphic, electronic, or mechanical,
+ * including photocopying, recording, taping, or information storage and
+ * retrieval systems -- without permission of the copyright owner.
+ * 
+ * This software and any accompanying written materials are provided "as is"
+ * without warranty of any kind.  UCAR expressly disclaims all warranties of
+ * any kind, either express or implied, including but not limited to the
+ * implied warranties of merchantibility and fitness for a particular purpose.
+ * UCAR does not indemnify any infringement of copyright, patent, or trademark
+ * through use or modification of this software.  UCAR does not provide 
+ * maintenance or updates for its software.
+ */
+# include "config.h"
+
+# include <math.h>
+# include <X11/Intrinsic.h>
+#include <xview/xview.h>
+#include <xview/canvas.h>
+#include <xview/xv_xrect.h>
+# include <ui.h>
+# include <ui_error.h>
+# include <defs.h>
+# include <pd.h>
+# include <message.h>
+# include "derive.h"
+# include "GraphProc.h"
+# include "GC.h"
+# include "PixelCoord.h"
+# include "DrawText.h"
+
+#include "xqc.h"
+
+float Xlo, Xhi, Ylo, Yhi;
+
+/*
+ * General definitions
+ */
+# define T_K	273.15
+# define DEG_TO_RAD(x)	((x) * 0.017453292)
+# define RAD_TO_DEG(x)	((x) * 57.29577951)
+# define BADVAL	999.0
+# define BUFLEN	1024
+
+/*
+ * Plot limits (initialized in sk_Init below)
+ */
+static float	Pmin=PMIN, Pmax=PMAX;
+static int	Pstep = 50;
+static float	Tmin=TMIN, Tmax=TMAX;
+static int	Tstep = 10;
+
+/*
+ * Slope of the isotherms
+ */
+static float SKEWSLOPE=1.0;
+
+/*
+ * Mapping functions from pres to y and from (temp,y) to x
+ */
+# define YPOS(p)	(log((p)/Pmax) / log(Pmin/Pmax))
+# define XPOS(t,y)	(((t)-Tmin)/(Tmax-Tmin) + (y)/SKEWSLOPE)
+# define PPOS(y)	(Pmax*exp((double)y*log(Pmin/Pmax)))
+
+/*
+ * Winds stuff
+ */
+static float	W_scale = 40.0;
+
+/*
+ * Forward declarations
+ */
+void	sk_Skewt (), sk_Background (), sk_Lift (), sk_Thermo (), sk_Winds ();
+void	sk_Polyline (), sk_DrawText (), sk_Clip (), sk_Surface ();
+int	sk_700mb ();
+
+/*
+ * Line style
+ */
+typedef enum {L_solid, L_dashed, L_dotted, L_thick} LineStyle;
+
+/*
+ * Color array and indices
+ */
+static XColor	*Colors;
+static int	Ncolors=15;
+static int 	Tacmatch = TRUE;
+static XColor 	Tadefclr;
+/*
+ * Feet vs. Kilometer flag.
+ */
+static int	DoFeet = FALSE;
+
+# define C_BLACK	0
+# define C_WHITE	1
+# define C_BG1		2
+# define C_BG2		3
+# define C_BG3		4
+# define C_BG4		5
+# define C_DATA(i)	(6 + (i))
+
+static char *cname[] =
+    {
+    "black", "white", "gray60", "gray45", "steel blue", "sienna",
+    "yellow", "cyan", "magenta", "medium slate blue", "yellow", "green",
+    "gold", "dark orchid", "pale green",
+    };
+
+
+void
+sk_Skewt ()
+/*
+ * Draw a skew-t, log p plot based on the given PD component.
+ */
+{
+	bool	ok;
+	int	status, i, npts, plat, nplat;
+	char	platforms[80], annot[80], ctname[20], tadefcolor[30];
+	time	ptime;
+	char	*pnames[5];
+	char	*flist[5];
+	float		*pres, *temp, *dp, *u_wind, *v_wind;
+	static int firstcall=1;
+
+/*	dispWin=xwin;
+	if (display!=disp)
+	    printf("Hey!\n");
+	dispWin=(Window)xv_get(win, XV_XID);
+	*/
+	if (firstcall)
+	    {
+	    setupColors();
+	    firstcall=0;
+	    }
+
+/*
+ * Look for data limits; set them to defaults if necessary
+ */
+/*	Pmin = 100.0;
+	Pmax = 1050.0;
+	Tmin = -40.0;
+	Tmax = 35.0;
+*/
+/*
+ * Set the plot limits
+ */
+	Xlo = -0.2;
+	Ylo = -0.1;
+	Xhi = 1.4;
+	Yhi = 1.15;
+/*
+ * Plot the background and top annotation
+ */
+	if (should_clear)
+	    {
+	    XClearWindow(display, dispWin);
+	    sk_Background ();
+	    should_clear=0;
+	    }
+	/*
+	 * Plot the thermo data and then the winds data
+	 */
+	if (write_okay)
+	    {
+	    sk_Thermo ();
+	    sk_Winds ();
+	    }
+
+/*
+ * Unclip since we want to return the shared GC in clean condition
+ */
+	sk_Clip (Xlo, Ylo, Xhi, Yhi);
+
+/*
+ * Write the filename
+ */
+	sk_DrawText (infile, 0., 1.1, 0., Colors[C_WHITE], 0.04,
+		     JustifyLeft, JustifyBottom);
+}
+
+setupColors()
+    {
+    int i;
+    XColor bogus;
+
+    if ((Colors=(XColor *)malloc(Ncolors * sizeof(XColor)))==NULL)
+	oops(OUTOFMEMORY);
+    for (i=0; i<Ncolors; i++)
+	if (!XAllocNamedColor(display, DefaultColormap(display,
+						       screen_number),
+			      cname[i], Colors+i, &bogus))
+	    oops(BADCOLOR);
+    return;
+    }
+
+
+void
+sk_Background ()
+/*
+ * Draw the background for a skew T, log p diagram
+ */
+    {
+    int	i;
+    float	x[128], y[128];
+    char	string[64];
+    float	t, pt, p, annot_angle, slope, intercept, xloc, yloc;
+    static float mr[] =
+	{
+	0.1, 0.2, 0.4, 1.0, 2.0, 3.0, 5.0, 8.0, 
+	12.0, 20.0, 30.0, 40.0, 50.0, 60.0, 0.0
+	};
+/*
+ * ICAO standard atmosphere pressures for altitudes from 0 km to 16 km
+ * every 1 km
+ */
+    static float alt_pres[] = {1013.2, 898.8, 795.0, 701.2, 616.5,
+			       540.3, 471.9, 410.7, 356.1, 307.6, 264.5,
+			       226.3, 193.3, 165.1, 141.0, 120.4,
+			       102.9, 87.9, 75.0, 64.1, 54.7};
+    int n_pres=sizeof(alt_pres)/sizeof(float);    
+/*
+ * Draw the outside rectangle
+ */
+    x[0] = 0.0; y[0] = 0.0;
+    x[1] = 1.0; y[1] = 0.0;
+    x[2] = 1.0; y[2] = 1.0;
+    x[3] = 0.0; y[3] = 1.0;
+    x[4] = 0.0; y[4] = 0.0;
+    sk_Polyline (x, y, 5, L_solid, Colors[C_BG2]);
+/*
+ * Isotherms
+ */
+    y[0] = 0.0;
+    y[1] = 1.0;
+
+    annot_angle = RAD_TO_DEG (atan (SKEWSLOPE));
+
+    for (t = -120; t <= 50; t += Tstep)
+	{
+	/*
+	 * Draw the isotherm
+	 */
+	sk_Clip (0.0, 0.0, 1.0, 1.0);
+
+	x[0] = XPOS (t, y[0]);
+	x[1] = XPOS (t, y[1]);
+	if (x[1] < 0.0)
+	    continue;
+
+	sk_Polyline (x, y, 2, L_solid, Colors[C_BG2]);
+	/*
+	 * Unclip so we can annotate outside the border
+	 */
+	sk_Clip (Xlo, Ylo, Xhi, Yhi);
+	/*
+	 * Write the number either on the top or on the right side depending
+	 * on the isotherm
+	 */
+	sprintf (string, "%d", (int) t);
+
+	if (x[1] <= 1.0)
+	    sk_DrawText (string, x[1] + 0.01 * SKEWSLOPE, 1.01,
+			 annot_angle, Colors[C_WHITE], 0.020,
+			 JustifyLeft, JustifyCenter);
+	else
+	    {
+	    float	intercept = SKEWSLOPE * (1.01 - x[0]);
+	    if (intercept > 0.0)
+		sk_DrawText (string, 1.01, intercept, 
+			     annot_angle, Colors[C_WHITE], 0.020,
+			     JustifyLeft, JustifyCenter);
+	    }
+	}
+/*
+ * Isobars
+ */
+    sk_Clip (Xlo, Ylo, Xhi, Yhi);
+    x[0] = 0.0;
+    x[1] = 1.0;
+    for (p = Pmax; p >= Pmin; 
+	 p -= ((int) p % Pstep) ? ((int) p % Pstep) : Pstep)
+	{
+	/*
+	 * Draw the isobar
+	 */
+	y[0] = y[1] = YPOS (p);
+
+	sk_Polyline (x, y, 2, L_solid, Colors[C_BG2]);
+	/*
+	 * Annotate along the left side
+	 */
+	sprintf (string, "%d", (int) p);
+	sk_DrawText (string, -0.01, y[0], 0.0, Colors[C_WHITE], 0.020,
+		     JustifyRight, JustifyCenter);
+	}
+/*
+ * Standard atmosphere altitude scale
+ */
+    sk_Clip (Xlo, 0.0, 0.0, 1.0);
+
+    x[0] = x[1] = Xlo / 2.0;
+    y[0] = 0.0;
+    y[1] = 1.0;
+    sk_Polyline (x, y, 2, L_solid, Colors[C_BG2]);
+
+    x[0] = Xlo / 2.0;
+    x[1] = x[0] - 0.01;
+    for (i = 0; i < n_pres; i++)
+	{
+	/*
+	 * Tick mark
+	 */
+	y[0] = y[1] = YPOS (alt_pres[i]);
+	sk_Polyline (x, y, 2, L_solid, Colors[C_BG2]);
+	/*
+	 * Label
+	 */
+	if (DoFeet)
+	    sprintf (string, "%.1f ", i*1000.0/0.30480);
+	else
+	    sprintf (string, "%d ", i);
+	sk_DrawText (string, x[1], y[1], 0.0, Colors[C_BG2], 0.02, 
+		     JustifyRight, JustifyCenter);
+	}
+
+    /*
+     * Velocity scale
+     */
+    sk_Clip (Xlo, Ylo, Xhi, Yhi);
+    for (i = 0; i<=100; i+=20)
+	{
+	sprintf (string, "%.1f ", (float)i);
+	sk_DrawText (string, (float)i/100., -.03, 0., Colors[C_WHITE],
+		     0.02, JustifyCenter, JustifyCenter);
+	}
+/*
+ * Saturation mixing ratio lines
+ */
+    sk_Clip (0.0, 0.0, 1.0, 1.0);
+    y[0] = 0.0;
+    y[1] = YPOS ((Pmin + Pmax) / 2.0);
+    for (i = 0; mr[i] > 0.0; i++)
+	{
+	/*
+	 * The lines go from Pmax to (Pmax + Pmin) / 2
+	 */
+	x[0] = XPOS (t_mr (Pmax, mr[i]) - T_K, y[0]);
+	x[1] = XPOS (t_mr ((Pmin + Pmax) / 2.0, mr[i]) - T_K, y[1]);
+	/*
+	 * Find the angle for the annotation
+	 */
+	annot_angle = RAD_TO_DEG (atan ((y[1] - y[0])/(x[1] - x[0])));
+	/*
+	 * Plot the line and annotate just above the top of the line
+	 */
+	sk_Polyline (x, y, 2, L_dashed, Colors[C_BG2]);
+	sprintf (string, "%03.1f", mr[i]);
+	sk_DrawText (string, x[1], y[1] + 0.01, annot_angle, 
+		     Colors[C_BG2], 0.02, JustifyLeft, JustifyCenter);
+	}
+/*
+ * Saturated adiabats
+ */
+    for (t = 0; t <= 36; t += 4)
+	{
+	int	npts = 0;
+	float	ept;
+	/*
+	 * Find the equivalent potential temperature which corresponds
+	 * to a saturated parcel at the surface at temperature t
+	 */
+	ept = theta_e (t + T_K, t + T_K, 1000.);
+	/*
+	 * Build the "iso-ept" curve
+	 */
+	for (p = Pmin + 100; p < Pmax + 15; p += 15)
+	    {
+	    float	temp = t_sat (ept, p) - T_K;
+	    y[npts] = YPOS (p);
+	    x[npts] = XPOS (temp, y[npts]);
+	    npts++;
+	    }
+	/*
+	 * Plot the curve and annotate just above the (Pmin + 100) isobar
+	 */
+	sk_Polyline (x, y, npts, L_dotted, Colors[C_BG3]);
+
+	if (x[0] > 0.0 && x[0] < 1.0)
+	    {
+	    annot_angle = 
+		RAD_TO_DEG (atan2 (y[1] - y[0], x[1] - x[0]));
+	    if (annot_angle > 0.0)
+		annot_angle -= 180.0;
+
+	    sprintf (string, "%d", (int) t);
+	    sk_DrawText (string, x[0], y[0] + 0.01, annot_angle, 
+			 Colors[C_BG3], 0.02, JustifyRight, 
+			 JustifyCenter);
+	    }
+	}
+/*
+ * Dry adiabats
+ */
+    for (pt = Tmin - (int) Tmin % 10; pt < Tmax + 200; pt += 10)
+	{
+	int	npts = 0;
+	/*
+	 * Build a constant potential temperature curve, assuming a dry parcel
+	 */
+	for (p = Pmin; p < Pmax + 15; p += 15)
+	    {
+	    float	temp = theta_to_t (pt + T_K, p) - T_K;
+	    y[npts] = YPOS (p);
+	    x[npts] = XPOS (temp, y[npts]);
+	    npts++;
+	    }
+	/*
+	 * Plot the curve and annotate just inside either the left or top
+	 * boundary
+	 */
+	sk_Polyline (x, y, npts, L_dotted, Colors[C_BG4]);
+
+	sprintf (string, "%d", (int) (pt));
+
+	if (x[0] > 0.0 && x[0] <= 1.0)
+	    {
+	    slope = (y[1] - y[0]) / (x[1] - x[0]);
+	    annot_angle = RAD_TO_DEG (atan (slope));
+	    /*
+	     * Nasty stuff for annotation positioning
+	     */
+	    xloc = x[0] - 0.02 / slope;
+	    xloc -= 0.005 * slope / sqrt (1.0 + slope * slope);
+
+	    yloc = 0.98;
+	    yloc += 0.005 / sqrt (1.0 + slope * slope);
+	    /*
+	     * Write the number
+	     */
+	    sk_DrawText (string, xloc, yloc, annot_angle, 
+			 Colors[C_BG4], 0.02, JustifyLeft, 
+			 JustifyBottom);
+	    }
+	else if (x[0] <= 0.0)
+	    {
+	    for (i = 0; i < npts; i++)
+		if (x[i] > 0.0)
+		    break;
+
+	    if (i != npts)
+		{
+		/*
+		 * Nasty stuff for the annotation positioning
+		 */
+		slope = (y[i] - y[i-1]) / (x[i] - x[i-1]);
+		annot_angle = RAD_TO_DEG (atan (slope));
+
+		intercept = y[i] - slope * x[i];
+		xloc = 0.0;
+		xloc -= 0.005 * 
+		    slope / sqrt (1.0 + slope * slope);
+
+		yloc = intercept;
+		yloc += 0.005 / sqrt (1.0 + slope * slope);
+		/*
+		 * Write the number
+		 */
+		sk_DrawText (string, xloc, yloc, annot_angle,
+			     Colors[C_BG4], 0.02, JustifyLeft, 
+			     JustifyBottom);
+		}
+	    }
+	}
+    }
+
+
+
+
+void
+sk_Lift ()
+/*
+ * Draw the lines for a lifted parcel for the given pressure, temperature,
+ * and dp data
+ */
+{
+	int	npts, ndx_700, do_700;
+	float	x[500], y[500];
+	float	p_lcl, t_lcl, pt, w, t_sfc, p_sfc, dp_sfc, ept;
+	float	t_700, dp_700, p_lcl700, t_lcl700, ept_700, pt_700;
+	float	p, pstep = 10, t, min_lcl;
+/*
+ * Find the first good point and use it as the surface point
+ */
+ERRORCATCH
+	sk_Surface (&t_sfc, &p_sfc, &dp_sfc);
+	sk_700mb (p_sfc, dp_sfc, &t_700, &dp_700, 
+		&ndx_700);
+ON_ERROR
+/*	msg_ELog (EF_INFO, "About to return from sk_Lift");
+	ui_epop ();
+*/
+	return;
+ENDCATCH
+
+	t_sfc += T_K;	t_700 += T_K;
+	dp_sfc += T_K;	dp_700 += T_K;
+/*
+ * Find the mixing ratio for our surface point
+ */
+	w = w_sat (dp_sfc, p_sfc);
+/*
+ * Get the potential temperature, LCL pressure and temperature, and the 
+ * eqivalent potential temperature at the surface
+ */
+	pt = theta_dry (t_sfc, p_sfc);
+	p_lcl = lcl_pres (t_sfc, dp_sfc, p_sfc);
+	t_lcl = lcl_temp (t_sfc, dp_sfc);
+	ept = theta_e (t_lcl, t_lcl, p_lcl);
+/*
+ * Get the forecasted (700 mb) LCL pressure, temp, and ept
+ */
+	if (t_700 > dp_700)
+	{
+		pt_700 = theta_dry (t_700, 700.0);
+		p_lcl700 = lcl_pres (t_700, dp_700, 700.0);
+		t_lcl700 = lcl_temp (t_700, dp_700);
+		ept_700 = theta_e (t_lcl700, t_lcl700, p_lcl700);
+		do_700 = TRUE;
+	}
+	else
+	{
+		do_700 = FALSE;
+		msg_ELog (EF_INFO, 
+			"Unable to calculate forecasted lifted parcel");
+	}
+/*
+ * Draw the saturated adiabat from the LCL up
+ */
+	npts = 0;
+
+	for (p = p_lcl; p >= Pmin - pstep; p -= pstep)
+	{
+		t = t_sat (ept, p) - T_K;
+		y[npts] = YPOS (p);
+		x[npts] = XPOS ((float) t, y[npts]);
+		npts++;
+	}
+
+	sk_Polyline (x, y, npts, L_dotted, Colors[C_BG1]);
+/*
+ * Draw the saturated adiabat from the forecasted LCL up
+ */
+	if (do_700)
+	{
+		npts = 0;
+
+		for (p = p_lcl700; p >= Pmin - pstep; p -= pstep)
+		{
+			t = t_sat (ept_700, p) - T_K;
+			y[npts] = YPOS (p);
+			x[npts] = XPOS ((float) t, y[npts]);
+			npts++;
+		}
+
+		sk_Polyline (x, y, npts, L_dotted, Colors[C_BG1]);
+	}
+/*
+ * Draw the dry adiabat from the LCL down
+ */
+	npts = 0;
+
+	for (p = p_lcl; p < p_sfc + pstep; p += pstep)
+	{
+	/*
+	 * Stop at the surface pressure
+	 */
+		if (p > p_sfc)
+			p = p_sfc + pstep;
+	/*
+	 * Get the temp corresponding to our theta at this pressure
+	 */
+		t = theta_to_t (pt, p) - T_K;
+	/*
+	 * Translate into overlay coordinates
+	 */
+		if (npts < 500)
+		    {
+		    y[npts] = YPOS (p);
+		    x[npts] = XPOS ((float) t, y[npts]);
+		    npts++;
+		    }
+	}
+
+	sk_Polyline (x, y, npts, L_dotted, Colors[C_BG1]);
+/*
+ * Draw the dry adiabat from the forecasted LCL down
+ */
+	if (do_700)
+	{
+		npts = 0;
+
+		for (p = p_lcl700; p < 700.0 + pstep; p += pstep)
+		{
+		/*
+		 * Stop at 700 mb
+		 */
+			if (p > 700.0)
+				p = 700.0 + pstep;
+		/*
+		 * Get the temp corresponding to our theta at this pressure
+		 */
+			t = theta_to_t (pt_700, p) - T_K;
+		/*
+		 * Translate into overlay coordinates
+		 */
+			y[npts] = YPOS (p);
+			x[npts] = XPOS ((float) t, y[npts]);
+			npts++;
+		}
+
+		sk_Polyline (x, y, npts, L_dotted, Colors[C_BG1]);
+	}
+/*
+ * Draw the saturation mixing ratio line from the surface up to the LCL
+ * with the lower pressure
+ */
+	if (do_700)
+		min_lcl = (p_lcl < p_lcl700 ? p_lcl : p_lcl700);
+	else
+		min_lcl = p_lcl;
+
+	t = t_mr (min_lcl, w) - T_K;
+	y[0] = YPOS ((float) min_lcl);
+	x[0] = XPOS ((float) t, y[0]);
+
+	t = t_mr (p_sfc, w) - T_K;
+	y[1] = YPOS ((float) p_sfc);
+	x[1] = XPOS ((float) t, y[1]);
+
+	npts = 2;
+
+	sk_Polyline (x, y, npts, L_dotted, Colors[C_BG1]);
+/*
+ * Done
+ */
+	return;
+}
+
+
+
+
+void
+sk_Thermo ()
+/*
+ * Plot the thermo data for the given sounding
+ */
+{
+	float	xt[MAXLINES], xd[MAXLINES], yt[MAXLINES], yd[MAXLINES];
+	float	xtm[MAXLINES], xdm[MAXLINES], ytm[MAXLINES], ydm[MAXLINES];
+	float   xw[MAXLINES], yw[MAXLINES], xwm[MAXLINES], ywm[MAXLINES];
+	float   xdir[MAXLINES], ydir[MAXLINES], xdirm[MAXLINES];
+	float	y;
+	int	i, good_d = 0, good_t = 0, mark_d=0, mark_t=0;
+	int good_w=0, mark_w=0;
+
+/*
+ * Clip
+ */
+	sk_Clip (0.0, 0.0, 1.0, 1.0);
+/*
+ * Translate to skew-t coordinates
+ */
+	for (i = 0; i < numlines; i++)
+	    {
+	    if ((d[i].pres == BADVAL) ||
+		(qc[i].qp == MISSING))
+		continue;
+	    else
+		{
+		y = YPOS (d[i].pres);
+		yt[good_t] = y;
+		yd[good_d] = y;
+		yw[good_w] = y;
+		}
+
+	    if ((d[i].t != BADVAL) &&
+		(qc[i].qt != MISSING))
+		{
+		xt[good_t++] = XPOS (d[i].t, y);
+		if (qc[i].qt != GOOD || qc[i].qp != GOOD)
+		    {
+		    ytm[mark_t] = y;
+		    xtm[mark_t++] = XPOS (d[i].t, y);
+		    }
+		}
+		
+	    if ((d[i].dp != BADVAL) &&
+		(qc[i].qh != MISSING))
+		{
+		xd[good_d++] = XPOS (d[i].dp, y);
+		if (qc[i].qh != GOOD || qc[i].qp != GOOD)
+		    {
+		    ydm[mark_d] = y;
+		    xdm[mark_d++] = XPOS (d[i].dp, y);
+		    }
+		}
+
+	    if ((d[i].wspd != BADVAL) &&
+		(qc[i].qu != MISSING))
+		{
+		xdir[good_w] = d[i].wdir/360.;
+		xw[good_w++] = d[i].wspd/100.;
+		if (qc[i].qu != GOOD || qc[i].qp != GOOD)
+		    {
+		    ywm[mark_w] = y;
+		    xdirm[mark_w] = d[i].wdir/360.;
+		    xwm[mark_w++] = d[i].wspd/100.;
+		    }
+		}
+	    }
+/*
+ * Draw the lines
+ */
+	sk_Polyline (xt, yt, good_t, L_solid, Colors[C_DATA (0)]);
+	sk_Polyline (xd, yd, good_d, L_solid, Colors[C_DATA (1)]);
+	sk_Polyline (xw, yw, good_w, L_solid, Colors[C_DATA (2)]);
+/*	sk_Polyline (xdir, yw, good_w, L_solid, Colors[C_DATA (3)]); */
+	sk_Polypoint (xtm, ytm, mark_t, L_solid, Colors[C_WHITE]);
+	sk_Polypoint (xdm, ydm, mark_d, L_solid, Colors[C_WHITE]);
+	sk_Polypoint (xwm, ywm, mark_w, L_solid, Colors[C_WHITE]);
+/*	sk_Polypoint (xdirm, ywm, mark_w, L_solid, Colors[C_WHITE]); */
+/*
+ * Draw the lifted parcel lines
+ */
+	sk_Lift ();
+
+	return;
+}
+
+
+
+
+void
+sk_Winds ()
+/*
+ * Plot the winds for the given sounding
+ */
+{
+	float	xstart, xscale, yscale, xov[2], yov[2], w_aspect;
+	int	plot_ndx=0, nplots=1;
+	int	i;
+
+/*
+ * Calculate the x starting position and the x and y scaling factors
+ */
+	xstart = 1.0 + 
+		(Xhi - 1.0) * (float) (plot_ndx + 0.5);
+	xscale = (Xhi - 1.0) / (W_scale * 2 * nplots);
+
+	w_aspect = (Yhi - Ylo) / (Xhi - 1.0) * 700. /
+		700.;
+	yscale = w_aspect * xscale;
+/*
+ * Plot the winds
+ */
+	sk_Clip (Xlo, Ylo, Xhi, Yhi);
+
+	for (i = 0; i < numlines; i++)
+	{
+		if (d[i].pres == BADVAL || qc[i].qp == MISSING ||
+		    d[i].pres < Pmin || d[i].pres > Pmax)
+			continue;
+	/*
+	 * Get the starting point
+	 */
+		xov[0] = xstart;
+		yov[0] = YPOS (d[i].pres);
+	/*
+	 * Convert to the overlay coordinates
+	 */
+		if ((d[i].uwind != BADVAL) &&
+		    (qc[i].qu != MISSING))
+			xov[1] = xov[0] + d[i].uwind * xscale;
+		else
+			continue;
+
+		if ((d[i].vwind != BADVAL) &&
+		    (qc[i].qv != MISSING))
+			yov[1] = yov[0] + d[i].vwind * yscale;
+		else
+			continue;
+	/*
+	 * Draw the wind line
+	 */
+		sk_Polyline (xov, yov, 2,
+			     (qc[i].qu != GOOD || qc[i].qv != GOOD)
+			     ? L_thick:L_solid,
+			     Colors[((qc[i].qu != GOOD ||  qc[i].qv != GOOD)
+				     ? C_WHITE:C_DATA (i%6))]);
+	}
+/*
+ * Draw the staff
+ */
+	xov[0] = xstart;	xov[1] = xstart;
+	yov[0] = 0.0;		yov[1] = 1.0;
+
+	sk_Polyline (xov, yov, 2, L_solid, Colors[C_BG2]);
+/*
+ * Annotate on the first one
+ */
+	if (plot_ndx == 0)
+	{
+		sk_DrawText ("WINDS PROFILE", 1.0 + 0.5 * (Xhi - 1.0), -0.01, 
+			0.0, Colors[C_WHITE], 0.025, JustifyCenter, JustifyTop);
+		sk_DrawText (" = 10 M/S", 1.0 + 0.5 * (Xhi - 1.0), -0.06, 0.0, 
+			Colors[C_WHITE], 0.02, JustifyLeft, JustifyCenter); 
+
+		xov[0] = 1.0 + 0.5 * (Xhi - 1.0) - (10.0 * xscale);
+		xov[1] = 1.0 + 0.5 * (Xhi - 1.0);
+		yov[0] = -0.06;
+		yov[1] = -0.06;
+		sk_Polyline (xov, yov, 2, L_solid, Colors[C_WHITE]);
+	}
+/*
+ * Done
+ */
+	return;
+}
+
+
+
+
+void
+sk_DrawText (text, x, y, rot, color_ndx, cheight, hjust, vjust)
+char	*text;
+float	x, y, rot, cheight;
+XColor	color_ndx;
+int	hjust, vjust;
+/*
+ * ENTRY:
+ *	text	string to write
+ *	x,y	where to write (the lower left corner of the skew-t box
+ *		is at (0.0,0.0) and the upper right corner is at (1.0,1.0))
+ *	rot	rotation in degrees counter-clockwise from horizontal
+ *	color_ndx	index of the color to be used
+ *	cheight	text height w.r.t. skew-t box height
+ *	hjust	horizontal justification (see DrawText.h)
+ *	vjust	vertical justification
+ * EXIT:
+ *	The string has been written
+ */
+{
+	int	xpix, ypix;
+	float	scale;
+	Pixel	color;
+/*
+ * Find the pixel location
+ */
+	xpix = XPIX (x);
+	ypix = YPIX (y);
+/*
+ * Set up a graphics context with the correct foreground color
+ */
+	color = color_ndx.pixel;
+	XSetForeground (display, Gcontext, color);
+/*
+ * Draw the text
+ */
+	scale = cheight / (Yhi - Ylo);
+	DrawText (dispWin, Gcontext, xpix, ypix, text, 
+		rot, scale, hjust, vjust);
+}
+
+
+
+
+void
+sk_Clip (xlo, ylo, xhi, yhi)
+float	xlo, ylo, xhi, yhi;
+/*
+ * Set the clipping window
+ */
+{
+	XRectangle	r;
+/*
+ * Build the clip rectangle (XRectangle (x,y) is its upper left corner)
+ */
+	r.x = XPIX (xlo);
+	r.y = YPIX (yhi);
+
+	r.width = XPIX (xhi) - r.x + 1;
+	r.height = YPIX (ylo) - r.y + 1;
+/*
+ * Put the clip rectangle into the GC
+ */
+	XSetClipRectangles (display, Gcontext, 0, 0, &r, 1, 
+		Unsorted);
+}
+
+
+
+
+void
+sk_Polyline (x, y, npts, style, color_ndx)
+float		*x, *y;
+int		npts;
+LineStyle	style;
+XColor		color_ndx;
+/*
+ * ENTRY:
+ *	x,y	location arrays (the lower left corner of the skew-t box
+ *		is at (0.0,0.0) and the upper right corner is at (1.0,1.0))
+ *	npts	the number of points
+ *	style	line type (solid, dashed, or dotted)
+ *	color_ndx	index of the color to use
+ * EXIT:
+ *	The polyline has been drawn
+ */
+{
+	int	i, line_style;
+	XPoint	*pts;
+	char	dash[2];
+	Pixel	color;
+	int line_width=0;
+
+	if (npts == 0)
+		return;
+/*
+ * Allocate the XPoint array
+ */
+	pts = (XPoint*) malloc (npts * sizeof (XPoint));
+/*
+ * Fill the pixel location arrays
+ */
+	for (i = 0; i < npts; i++)
+	{
+		pts[i].x = XPIX (x[i]);
+		pts[i].y = YPIX (y[i]);
+	}
+/*
+ * Set up the correct foreground color and line style
+ */
+	color = color_ndx.pixel;
+	XSetForeground (display, Gcontext, color);
+
+	switch (style)
+	{
+	    case L_solid:
+		line_style = LineSolid;
+		break;
+	    case L_dashed:
+		line_style = LineOnOffDash;
+		dash[0] = 6;
+		dash[1] = 6;
+		break;
+	    case L_dotted:
+		line_style = LineOnOffDash;
+		dash[0] = 2;
+		dash[1] = 4;
+		break;
+	    case L_thick:
+		line_style=LineSolid;
+		line_width=2;
+		break;
+	    default:
+		msg_ELog (EF_PROBLEM, "Unknown line style %d in sk_Polyline\n",
+			style);
+		line_style = LineSolid;
+	}
+
+	XSetLineAttributes (display, Gcontext, line_width, line_style, 
+		CapButt, JoinMiter);
+	if (line_style != LineSolid)
+		XSetDashes (display, Gcontext, 0, dash, 2);
+/*
+ * Draw the line
+ */
+	XDrawLines (display, dispWin, Gcontext, pts, 
+		npts, CoordModeOrigin);
+/*
+ * Make the GC use LineSolid again
+ */
+	if (line_style != LineSolid)
+		XSetLineAttributes (display, Gcontext, 0, 
+			LineSolid, CapButt, JoinMiter);
+/*
+ * Free the allocated points
+ */
+	free (pts);
+}
+
+
+sk_Polypoint (x, y, npts, style, color_ndx)
+float		*x, *y;
+int		npts;
+LineStyle	style;
+XColor		color_ndx;
+/*
+ * ENTRY:
+ *	x,y	location arrays (the lower left corner of the skew-t box
+ *		is at (0.0,0.0) and the upper right corner is at (1.0,1.0))
+ *	npts	the number of points
+ *	style	line type (solid, dashed, or dotted)
+ *	color_ndx	index of the color to use
+ * EXIT:
+ *	The polyline has been drawn
+ */
+{
+	int	i, line_style;
+	XPoint	*pts;
+	char	dash[2];
+	Pixel	color;
+
+	if (npts == 0)
+		return;
+/*
+ * Allocate the XPoint array
+ */
+	pts = (XPoint*) malloc (4*npts * sizeof (XPoint));
+/*
+ * Fill the pixel location arrays
+ */
+	for (i = 0; i < npts; i++)
+	    {
+	    pts[i*4].x = XPIX (x[i]);
+	    pts[i*4].y = YPIX (y[i]);
+	    pts[(i*4)+1].x = XPIX (x[i])+1;
+	    pts[(i*4)+1].y = YPIX (y[i]);
+	    pts[(i*4)+2].x = XPIX (x[i]);
+	    pts[(i*4)+2].y = YPIX (y[i])+1;
+	    pts[(i*4)+3].x = XPIX (x[i])+1;
+	    pts[(i*4)+3].y = YPIX (y[i])+1;
+	    }
+/*
+ * Set up the correct foreground color and line style
+ */
+	color = color_ndx.pixel;
+	XSetForeground (display, Gcontext, color);
+
+/*	XSetLineAttributes (display, Gcontext, 3, LineSolid,
+		CapButt, JoinMiter);
+/*	if (line_style != LineSolid)
+		XSetDashes (display, Gcontext, 0, dash, 2); */
+/*
+ * Draw the line
+ */
+	XDrawPoints (display, dispWin, Gcontext, pts, 
+		4*npts, CoordModeOrigin);
+/*
+ * Make the GC use LineSolid again
+ */
+/*	XSetLineAttributes (display, Gcontext, 0, 
+			    LineSolid, CapButt, JoinMiter);
+/*
+ * Free the allocated points
+ */
+	free (pts);
+}
+
+
+
+
+void
+sk_Surface (t_sfc, p_sfc, dp_sfc)
+float	*t_sfc, *p_sfc, *dp_sfc;
+/*
+ * Find the surface values.  If the MLI flag is set (i.e., we're using
+ * the modified lifted index), the surface dewpoint returned is actually
+ * the dewpoint corresponding to the surface pressure and the mean mixing
+ * ratio for the lowest 50 mb of the sounding; the surface temperature
+ * returned is the temperature corresponding to the surface pressure and
+ * the mean potential temperature for the lowest 50 mb of the sounding.
+ */
+{
+	int	i = 0, mr_count = 0, theta_count = 0;
+	float	mr_sum = 0.0, mr, theta_sum = 0.0, theta, p_top;
+/*
+ * Sanity check
+ */
+	if (numlines <= 0)
+		ui_error ("%d points in sounding!", numlines);
+/*
+ * Find the lowest point with good values in all three fields; this
+ * will be our surface point.
+ */
+	while (d[i].t == BADVAL || d[i].pres == BADVAL || d[i].dp == BADVAL)
+		if (++i == numlines)
+			ui_error ("No surface point for analysis");
+
+	*t_sfc = d[i].t;
+	*p_sfc = d[i].pres;
+	*dp_sfc = d[i].dp;
+# ifdef notdef
+/*
+ * If we're not using the modified lifted index, return now
+ */
+	if (! Flg_mli)
+		return;
+# endif
+/*
+ * Using MLI.  Average the mixing ratio and theta over the lowest 50 mb
+ */
+	p_top = *p_sfc - 50.0;
+
+	for (; (d[i].pres > p_top || d[i].pres == BADVAL) && i < numlines; i++)
+	{
+	/*
+	 * Don't try to use bad values
+	 */
+		if (d[i].pres == BADVAL || d[i].dp == BADVAL ||
+		    d[i].t == BADVAL)
+			continue;
+	/*
+	 * Find the mixing ratio and theta and increment our sums
+	 */
+		if (d[i].dp != BADVAL)
+		{
+			mr_sum += w_sat (d[i].dp + T_K, d[i].pres);
+			mr_count++;
+		}
+		if (d[i].t != BADVAL)
+		{
+			theta_sum += theta_dry (d[i].t + T_K, d[i].pres);
+			theta_count++;
+		}
+	}
+/*
+ * Make sure we spanned 50 mb
+ */
+	if (i == numlines)
+		ui_error ("The sounding does not span 50 mb");
+
+/*
+ * Find the mean mixing ratio, then get the corresponding dewpoint.
+ */
+	mr = mr_sum / mr_count;
+	*dp_sfc = t_mr (*p_sfc, mr) - T_K;
+/*
+ * Find the mean theta and the corresponding surface temperature
+ */
+	theta = theta_sum / theta_count;
+	*t_sfc = theta_to_t (theta, *p_sfc) - T_K;
+/*
+ * Done
+ */
+	return;
+}
+
+
+
+
+int
+sk_700mb (p_sfc, dp_sfc, temp700, dp700, ndx700)
+float	p_sfc, dp_sfc, *temp700, *dp700;
+int	*ndx700;
+/*
+ * Find the 700 mb temperature, the 700 mb dewpoint corresponding to the
+ * surface mixing ratio, and the index of the last pressure > 700 mb in 
+ * the data arrays.
+ */
+{
+	int	i;
+	float	t_prev, p_prev, w;
+/*
+ * Find the first pressure < 700.0
+ */
+	for (i = 0; i < numlines; i++)
+	{
+		if (d[i].pres == BADVAL || d[i].t == BADVAL)
+			continue;
+
+		if (d[i].pres < 700.0)
+			break;
+
+		p_prev = d[i].pres;
+		t_prev = d[i].t;
+	}
+
+	*ndx700 = i - 1;
+/*
+ * Make sure we have two good points to interpolate between
+ */
+	if (p_prev == BADVAL || i == numlines)
+		return (FALSE);
+/*
+ * Interpolate the 700 mb temperature from the point we just found and the
+ * previous good point
+ */
+	*temp700 = t_prev + (700.0 - p_prev) / (d[i].pres - p_prev) * 
+		(d[i].t - t_prev);
+/*
+ * Find the mixing ratio of our surface dewpoint, then find the
+ * corresponding 700 mb dewpoint
+ */
+	w = w_sat (dp_sfc + T_K, p_sfc);
+	*dp700 = t_mr (700.0, w) - T_K;
+	return (TRUE);
+}
+
+#define YX(y)	(Ylo + ((Yhi-Ylo)/(F_Y0-F_Y1))* \
+		 (((y)-0.5)/(float)(USABLE_HEIGHT) + F_Y0 -1.0))
+
+    double pressure(y)
+    int y;    
+    {
+    double p=PPOS((float)YX(y));
+    if (p > PMAX)
+	p=PMAX;
+    if (p < PMIN)
+	p=PMIN;
+    return p;
+    }
+
+    
+setBad(y1, y2)
+int y1, y2;
+    {
+    int i;
+    double pmin, pmax;
+    double padding=0.0;
+
+    if (y1 < y2)
+	{
+	pmin=PPOS((float)YX(y1));
+	pmax=PPOS((float)YX(y2));
+	}
+    else
+	{
+	pmin=PPOS((float)YX(y2));
+	pmax=PPOS((float)YX(y1));
+	}
+/*    printf("Y1: %d(%f)  Y2: %d(%f)\n", y1, (float)YUSER(y1), y2,
+	   (float)YUSER(y2)); */
+    printf("Min pres: %g  Max pres: %g  Parm: ", pmin, pmax);
+    if (pmin < Pmin)
+	pmin=Pmin;
+    if (pmax > Pmax)
+	pmax=Pmax;
+    if (parameter & PRES)
+	{
+	puts("Pressure");
+	for (i=0; i<numlines; i++)
+	    if (d[i].pres >= (pmin-padding) && d[i].pres <=
+		(pmax+padding) && qc[i].qp!=BAD && qc[i].qp!=MISSING)
+		{
+		qc[i].qp=mark_as;
+		qc[i].qt=mark_as;
+		qc[i].qh=mark_as;
+		qc[i].qu=qc[i].qv=mark_as;
+		}
+	}
+    if (parameter & TEMP)
+	{
+	puts("Temperature");
+	for (i=0; i<numlines; i++)
+	    if (d[i].pres >= (pmin-padding) && d[i].pres <=
+		(pmax+padding) && qc[i].qt != BAD && qc[i].qt != MISSING)
+		qc[i].qt=mark_as;
+	}
+    if (parameter & DP)
+	{
+	puts("Dew Point");
+	for (i=0; i<numlines; i++)
+	    if (d[i].pres >= (pmin-padding) && d[i].pres <=
+		(pmax+padding) && qc[i].qh != BAD && qc[i].qh != MISSING)
+		qc[i].qh=mark_as;
+	}
+    if (parameter & WINDS)
+	{
+	puts("Winds");
+	for (i=0; i<numlines; i++)
+	    if (d[i].pres >= (pmin-padding) && d[i].pres <=
+		(pmax+padding) && qc[i].qu != BAD && qc[i].qv != BAD
+		&& qc[i].qu != MISSING && qc[i].qv != MISSING)
+		if ((mark_as == BAD) || qc[i].qu!=ESTIMATE)
+		    qc[i].qu=qc[i].qv=mark_as;
+	}
+    }
+
+zoomIn(x, y)
+int x, y;
+    {
+    int i;
+    float xf, yf;
+    double pmin, pmax, tmin, tmax;
+
+    pmin=PPOS((float)YX(y-(BOXSIZE/2)));
+    pmax=PPOS((float)YX(y+(BOXSIZE/2)));
+/*    tmin=Tmin - ((float)YPOS(pmax)/SKEWSLOPE)*(Tmax - Tmin);
+    tmax=Tmin + ((1.  - (float)YPOS(pmax)/SKEWSLOPE))*(Tmax - Tmin);
+    */
+    xf=XUSER(x);
+    yf=YUSER(y);
+/*    printf("Xf: %g Yf: %g\n", xf, yf); */
+    tmin=Tmin + ((XUSER(x-(BOXSIZE/2)) - (float)YPOS(pmax)/SKEWSLOPE))*
+	(Tmax - Tmin);
+    tmax=Tmin + ((XUSER(x+(BOXSIZE/2)) - (float)YPOS(pmax)/SKEWSLOPE))*
+	(Tmax - Tmin);
+    Pmin=(pmin < PMIN)?PMIN:pmin;
+    Pmax=(pmax > PMAX)?PMAX:pmax;
+    Tmin=tmin;
+    Tmax=tmax;
+    SKEWSLOPE=1.0;
+/*    printf("Min pres: %g/%g  Max pres: %g/%g \n", pmin, Pmin, pmax, Pmax);
+    printf("Min temp: %g/%g  Max temp: %g/%g \n", tmin, Tmin, tmax, Tmax);
+*/
+    should_clear=1;
+    sk_Skewt();
+    return;
+    }
+
+zoomOut()
+    {
+    Pmin=PMIN;
+    Pmax=PMAX;
+    Tmin=TMIN;
+    Tmax=TMAX;
+    SKEWSLOPE=1.0;
+    }
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d3 3
+a5 1
+ * $Log$
+d7 1
+d13 1
+a13 1
+static char *rcsid = "$Id: Skewt.c,v 1.2 1992/08/04 17:46:11 mark Exp $";
+a64 4
+#define PMIN (100.)
+#define PMAX (1050.)
+#define TMIN (-40.)
+#define TMAX (35.)
+d66 1
+a66 1
+static int	Pstep = 100;
+d233 5
+a237 3
+	static float	alt_pres[] = {1013.2, 898.8, 795.0, 701.2, 616.5,
+				540.3, 471.9, 410.7, 356.1, 307.6, 264.5,
+				226.3, 193.3, 165.1, 141.0, 120.4, 102.9};
+d325 1
+a325 1
+    for (i = 0; i <= 16; i++)
+d1220 12
+d1260 2
+a1261 1
+	    if (d[i].pres >= (pmin-padding) && d[i].pres <= (pmax+padding))
+d1273 2
+a1274 1
+	    if (d[i].pres >= (pmin-padding) && d[i].pres <= (pmax+padding))
+d1281 2
+a1282 1
+	    if (d[i].pres >= (pmin-padding) && d[i].pres <= (pmax+padding))
+d1289 3
+a1291 1
+	    if (d[i].pres >= (pmin-padding) && d[i].pres <= (pmax+padding))
+@

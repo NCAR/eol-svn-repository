@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<identity>
+		<repoName>EOL Data Archive</repoName>
+		<protocolVersion>2.0</protocolVersion>
+		<adminEmail>datahelp@eol.ucar.edu</adminEmail>
+		<earliestDatestamp>2014-08-19T00:00:00Z</earliestDatestamp>
+		<deletedRecord>no</deletedRecord>
+		<granularity>YYYY-MM-DDThh:mm:ssZ</granularity>
+		<scheme>
+			<repositoryIdentifier>edu.ucar.eol</repositoryIdentifier>
+			<sampleIdentifier>oai:edu.ucar.eol:ds106.230</sampleIdentifier>
+		</scheme>
+		<friends>
+			<friend>http://rda.ucar.edu/cgi-bin/oai</friend>
+		</friends>
+	</identity>
+	<driver>
+		<name>files</name>
+	</driver>
+	<database>
+		<host>farskol</host>
+		<user></user>
+		<password></password>
+		<dbname></dbname>
+	</database>
+	<files>
+		<set name="RDA">
+			<file metf="dif" ident="rda277">sample/oai-edu.ucar.rda-ds277.0 metadataPrefix=dif.xml</file>
+			<file metf="fgdc" ident="rda277">sample/oai-edu.ucar.rda-ds277.0 metadataPrefix=fgdc.xml</file>
+			<file metf="oai_dc" ident="rda277">sample/oai-edu.ucar.rda-ds277.0 metadataPrefix=oai_dc.xml</file>
+		</set>
+		<set name="ACADIS">
+			<file metf="dif" ident="106.230">sample/DIF/106.23DIF.xml</file>
+			<file metf="fgdc" ident="106.230">sample/FGDC/106.23FGDC.xml</file>
+			<file metf="iso19139" ident="106.230">sample/ISO/106.23ISO.xml</file>
+			<file metf="oai_dc" ident="106.230">sample/OAI-DC/106.23OAI_DC.xml</file>
+
+			<file metf="dif" ident="106.427">sample/DIF/106.427DIF.xml</file>
+			<file metf="fgdc" ident="106.427">sample/FGDC/106.427FGDC.xml</file>
+			<file metf="iso19139" ident="106.427">sample/ISO/106.427ISO.xml</file>
+			<file metf="oai_dc" ident="106.427">sample/OAI-DC/106.427OAI_DC.xml</file>
+		</set>
+		<set name="ARCSS">
+			<file metf="dif" ident="106.212">sample/DIF/106.212DIF.xml</file>
+			<file metf="fgdc" ident="106.212">sample/FGDC/106.212FGDC.xml</file>
+			<file metf="iso19139" ident="106.212">sample/ISO/106.212ISO.xml</file>
+			<file metf="oai_dc" ident="106.212">sample/OAI-DC/106.212OAI_DC.xml</file>
+
+			<file metf="dif" ident="106.236">sample/DIF/106.236DIF.xml</file>
+			<file metf="fgdc" ident="106.236">sample/FGDC/106.236FGDC.xml</file>
+			<file metf="iso19139" ident="106.236">sample/ISO/106.236ISO.xml</file>
+			<file metf="oai_dc" ident="106.236">sample/OAI-DC/106.236OAI_DC.xml</file>
+
+			<file metf="dif" ident="106.230">sample/DIF/106.23DIF.xml</file>
+			<file metf="fgdc" ident="106.230">sample/FGDC/106.23FGDC.xml</file>
+			<file metf="iso19139" ident="106.230">sample/ISO/106.23ISO.xml</file>
+			<file metf="oai_dc" ident="106.230">sample/OAI-DC/106.23OAI_DC.xml</file>
+
+			<file metf="dif" ident="106.302">sample/DIF/106.302DIF.xml</file>
+			<file metf="fgdc" ident="106.302">sample/FGDC/106.302FGDC.xml</file>
+			<file metf="iso19139" ident="106.302">sample/ISO/106.302ISO.xml</file>
+			<file metf="oai_dc" ident="106.302">sample/OAI-DC/106.302OAI_DC.xml</file>
+
+			<file metf="dif" ident="106.427">sample/DIF/106.427DIF.xml</file>
+			<file metf="fgdc" ident="106.427">sample/FGDC/106.427FGDC.xml</file>
+			<file metf="iso19139" ident="106.427">sample/ISO/106.427ISO.xml</file>
+			<file metf="oai_dc" ident="106.427">sample/OAI-DC/106.427OAI_DC.xml</file>
+		</set>
+		<set name="GCIP-EOP">
+			<file metf="dif" ident="21.093">sample/DIF/21.093DIF.xml</file>
+			<file metf="fgdc" ident="21.093">sample/FGDC/21.093FGDC.xml</file>
+			<file metf="iso19139" ident="21.093">sample/ISO/21.093ISO.xml</file>
+			<file metf="oai_dc" ident="21.093">sample/OAI-DC/21.093OAI_DC.xml</file>
+		</set>
+		<set name="NAME">
+			<file metf="dif" ident="21.093">sample/DIF/21.093DIF.xml</file>
+			<file metf="fgdc" ident="21.093">sample/FGDC/21.093FGDC.xml</file>
+			<file metf="iso19139" ident="21.093">sample/ISO/21.093ISO.xml</file>
+			<file metf="oai_dc" ident="21.093">sample/OAI-DC/21.093OAI_DC.xml</file>
+		</set>
+		<set name="Operational">
+			<file metf="dif" ident="21.093">sample/DIF/21.093DIF.xml</file>
+			<file metf="fgdc" ident="21.093">sample/FGDC/21.093FGDC.xml</file>
+			<file metf="iso19139" ident="21.093">sample/ISO/21.093ISO.xml</file>
+			<file metf="oai_dc" ident="21.093">sample/OAI-DC/21.093OAI_DC.xml</file>
+		</set>
+		<set name="PacMARS">
+			<file metf="dif" ident="255.004">sample/DIF/255.004DIF.xml</file>
+			<file metf="fgdc" ident="255.004">sample/FGDC/255.004FGDC.xml</file>
+			<file metf="iso19139" ident="255.004">sample/ISO/255.004ISO.xml</file>
+			<file metf="oai_dc" ident="255.004">sample/OAI-DC/255.004OAI_DC.xml</file>
+		</set>
+		<set name="OWLeS">
+			<file metf="dif" ident="382.003">sample/DIF/382.003DIF.xml</file>
+			<file metf="fgdc" ident="382.003">sample/FGDC/382.003FGDC.xml</file>
+			<file metf="iso19139" ident="382.003">sample/ISO/382.003ISO.xml</file>
+			<file metf="oai_dc" ident="382.003">sample/OAI-DC/382.003OAI_DC.xml</file>
+		</set>
+		<set name="CONTRAST">
+			<file metf="dif" ident="383.007">sample/DIF/383.007DIF.xml</file>
+			<file metf="fgdc" ident="383.007">sample/FGDC/383.007FGDC.xml</file>
+			<file metf="iso19139" ident="383.007">sample/ISO/383.007ISO.xml</file>
+			<file metf="oai_dc" ident="383.007">sample/OAI-DC/383.007OAI_DC.xml</file>
+		</set>
+		<set name="BAMEX">
+			<file metf="dif" ident="85.118">sample/DIF/85.118DIF.xml</file>
+			<file metf="fgdc" ident="85.118">sample/FGDC/85.118FGDC.xml</file>
+			<file metf="iso19139" ident="85.118">sample/ISO/85.118ISO.xml</file>
+			<file metf="oai_dc" ident="85.118">sample/OAI-DC/85.118OAI_DC.xml</file>
+		</set>
+	</files>
+	<sets>
+		<description for="ACADIS"></description>
+		<description for="ARCSS"></description>
+		<description for="BAMEX"></description>
+		<description for="CONTRAST"></description>
+		<description for="GCIP-EOP"></description>
+		<description for="NAME"></description>
+		<description for="OWLeS"></description>
+		<description for="Operational"></description>
+		<description for="PacMARS"></description>
+		<description for="RDA">
+			Records scraped from the RDA repository for testing purposes.
+		</description>
+	</sets>
+	<metadataFormats>
+		<format>
+			<name>ISO-19139</name>
+			<shortname>iso19139</shortname>
+			<schema>http://www.isotc211.org/2005/gmd/gmd.xsd</schema>
+			<namespace>http://www.isotc211.org/2005/gmd</namespace>
+		</format>
+		<format>
+			<name>OAI Unqualified Dublin Core</name>
+			<shortname>oai_dc</shortname>
+			<schema>http://www.openarchives.org/OAI/2.0/oai_dc.xsd</schema>
+			<namespace>http://www.openarchives.org/OAI/2.0/oai_dc/</namespace>
+		</format>
+		<format>
+			<name>Directory Interchange Format</name>
+			<shortname>dif</shortname>
+			<schema>http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif/dif_v9.7.xsd</schema>
+			<namespace>http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif</namespace>
+		</format>
+		<format>
+			<name>Federal Geographic Data Committee</name>
+			<shortname>fgdc</shortname>
+			<schema>http://www.fgdc.gov/schemas/metadata/fgdc-std-001-1998.xsd</schema>
+			<namespace>http://www.fgdc.gov/schemas/metadata/</namespace>
+		</format>
+	</metadataFormats>
+</config>

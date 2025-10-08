@@ -1,0 +1,163 @@
+NETDI: ClassInstall (0x6 on 0x326e:0x58) on  at Enum\Root\Net\0000
+NETDI: SetupFlags=51B(SUF_INSETUP)(SUF_FIRSTTIME) BootCount= NetSetupFlags=0 (RETAIL)
+NETDI: Examining class Net
+NETDI: dif_FirstTimeSetup
+NETDI: Setting FirstBootUpgrade=1
+NETDI: ChangeLine: No matches found.
+NETDI: File Information for C:\WINDOWS\SYSTEM\wsock32.dll
+NETDI:     File not found
+NETDI: File Information for C:\WINDOWS\WINSOCK.DLL
+NETDI:     File not found
+NETDI: File Information for C:\WINDOWS\SYSTEM\WINSOCK.DLL
+NETDI:     File not found
+NETDI: Vxd\Winsock\IrSockets=wsirda.vxd
+NETDI: File Information for C:\WINDOWS\SYSTEM\wsirda.vxd
+NETDI:     File not found
+NETDI: BackupWSock: Clean install, exiting
+NETDI: DetectWSock=0
+NETDI: Installing WS2 in the standard locations
+NETDI: QueueNdiFileCopy: C:\WININST0.400\wsock32.dll->(LDID 11)wsock32.dll
+NETDI: QueueNdiFileCopy: C:\WININST0.400\winsock.dll->(LDID 25)winsock.dll
+NETDI: SelectMyBestCompatDrv: Found a compatible driver: Adaptador para rede dial-up
+NETDI: ClassInstall(0x6) end
+NETDI: NETDI: lpRegLogConf = 0x0
+NETDI: ClassInstall (0x9 on 0x326e:0x58) on  at Enum\Root\Net\0000
+NETDI: SetupFlags=51B(SUF_INSETUP)(SUF_FIRSTTIME) BootCount= NetSetupFlags=7 (RETAIL)
+NETDI: ClassInstall(0x9) end
+NETDI: ClassInstall (0xa on 0x326e:0x58) on  at Enum\Root\Net\0000
+NETDI: SetupFlags=51B(SUF_INSETUP)(SUF_FIRSTTIME) BootCount= NetSetupFlags=7 (RETAIL)
+NETDI: ProcessNdiFileQueue: C:\WININST0.400\wsock32.dll -> C:\WINDOWS\SYSTEM\wsock32.dll copied file
+NETDI: ProcessNdiFileQueue: C:\WININST0.400\winsock.dll -> C:\WINDOWS\winsock.dll copied file
+NETDI: ChangeLine: No matches found.
+NETDI: AddRemoveSetVer fAdd=1
+NETDI: ChangeLine: Adding line "DEVICE=C:\WINDOWS\setver.exe"
+NETDI: ClassInstall(0xa) end
+NETDI: ClassInstall (0xc on 0x326e:0x58) on  at Enum\Root\Net\0000
+NETDI: SetupFlags=51B(SUF_INSETUP)(SUF_FIRSTTIME) BootCount= NetSetupFlags=7 (RETAIL)
+NETDI: ClassInstall(0xc) end
+
+
+ ****** BEGIN NEW RECORDING ***** 
+
+NETDI: ##################################################
+NETDI: EnumComplete Start
+NETDI: SetupFlags=50B(SUF_FIRSTTIME) BootCount=1 NetSetupFlags=7 (RETAIL)
+NETDI: ExecuteQueuedAPIs
+NETDI: NdiWSCDeinstallProvider(FF017DE1) Result=-1, Errno=10014
+NETDI: NdiWSCInstallProvider(FF017DE1, C:\WINDOWS\SYSTEM\mswsosp.dll) Result=0, Errno=0
+
+
+ ****** BEGIN NEW RECORDING ***** 
+
+NETDI: SetupFlags=50A BootCount=2 NetSetupFlags=7 (RETAIL)
+NETDI: VerifyCabsAvailable: Not network install, no need to verify
+NETDI: ClassInstall (0x18 on 0x23ce:0x58) on  at Enum\ROOT\NET\0000
+NETDI: SetupFlags=50A BootCount=2 NetSetupFlags=7 (RETAIL)
+NETDI: ExecuteQueuedAPIs
+NETDI: ClassInstall(0x18) end
+NETDI: ClassInstall (0x2 on 0x23ce:0x58) on  at Enum\ROOT\NET\0000
+NETDI: SetupFlags=50A BootCount=2 NetSetupFlags=7 (RETAIL)
+NETDI: Examining class Net
+NETDI: Found Enum\Root\Net\0000 in registry
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETPPP.INF,PPPMAC.ndi
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETPPP.INF,PPPMAC.ndi
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETPPP.INF,PPPMAC.ndi
+NETDI: NdiCreate(Adaptador para rede dial-up) OK
+NETDI: Validating Adaptador para rede dial-up at Enum\ROOT\NET\0000, rc = 0x0
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETPPP.INF,PPPMAC.Install
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETPPP.INF,PPPMAC.Install.WSock2
+NETDI: ChangeLine: No matches found.
+NETDI: ConfigureSetVer called
+NETDI: AddRemoveSetVer fAdd=0
+NETDI: RemLine: Deleting "DEVICE=C:\WINDOWS\setver.exe"
+NETDI: ClassInstall(0x2) end
+NETDI: ClassInstall (0xc on 0x23ce:0x58) on Adaptador para rede dial-up at Enum\ROOT\NET\0000
+NETDI: SetupFlags=50A BootCount=2 NetSetupFlags=3 (RETAIL)
+NETDI: ClassInstall(0xc) end
+NETDI: ClassInstall (0x18 on 0x23ce:0x58) on PCI Ethernet Controller at Enum\PCI\VEN_10EC&DEV_8029&SUBSYS_00000000&REV_00\BUS_00&DEV_09&FUNC_00
+NETDI: SetupFlags=50A BootCount=2 NetSetupFlags=3 (RETAIL)
+NETDI: ClassInstall(0x18) end
+NETDI: ClassInstall (0x2 on 0x23ce:0x58) on PCI Ethernet Controller at Enum\PCI\VEN_10EC&DEV_8029&SUBSYS_00000000&REV_00\BUS_00&DEV_09&FUNC_00
+NETDI: SetupFlags=50A BootCount=2 NetSetupFlags=3 (RETAIL)
+NETDI: Examining class Net
+NETDI: Found Enum\Root\Net\0000 in registry
+NETDI: NdiCreate(Adaptador para rede dial-up) OK
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETRT.INF,pcint.ndi
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETRT.INF,pcint.ndi
+NETDI: NdiCreate(Realtek RTL8029(AS) PCI Ethernet NIC) OK
+NETDI: Validating Realtek RTL8029(AS) PCI Ethernet NIC at Enum\PCI\VEN_10EC&DEV_8029&SUBSYS_00000000&REV_00\BUS_00&DEV_09&FUNC_00, rc = 0x0
+NETDI: Validating Adaptador para rede dial-up at Enum\Root\Net\0000, rc = 0x0
+NETDI: Copying files for section rtlrtp.ndis3
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETRT.INF,rtlrtp.ndis3
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETRT.INF,pcint.install
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETRT.INF,pcint.install.WSock2
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETRT.INF,rtlrtp.ndis3
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETRT.INF,rtlrtp.ndis3.WSock2
+NETDI: ChangeLine: No matches found.
+NETDI: ConfigureSetVer called
+NETDI: AddRemoveSetVer fAdd=0
+NETDI: ClassInstall(0x2) end
+NETDI: ClassInstall (0xc on 0x23ce:0x58) on Realtek RTL8029(AS) PCI Ethernet NIC at Enum\PCI\VEN_10EC&DEV_8029&SUBSYS_00000000&REV_00\BUS_00&DEV_09&FUNC_00
+NETDI: SetupFlags=50A BootCount=2 NetSetupFlags=3 (RETAIL)
+NETDI: ClassInstall(0xc) end
+NETDI: ##################################################
+NETDI: EnumComplete Start
+NETDI: SetupFlags=50A BootCount=2 NetSetupFlags=3 (RETAIL)
+NETDI: ExecuteQueuedAPIs
+NETDI: Examining class Net
+NETDI: Found Enum\PCI\VEN_10EC&DEV_8029&SUBSYS_00000000&REV_00\BUS_00&DEV_09&FUNC_00 in registry
+NETDI: NdiCreate(Realtek RTL8029(AS) PCI Ethernet NIC) OK
+NETDI: Found Enum\Root\Net\0000 in registry
+NETDI: NdiCreate(Adaptador para rede dial-up) OK
+NETDI: CreateNetwork, Batch=0
+NETDI: 1Got default MSTCP
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETTRANS.INF,MSTCP.ndi
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETTRANS.INF,MSTCP.ndi
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETTRANS.INF,MSTCP.ndi
+NETDI: NdiCreate(TCP/IP) OK
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETTRANS.INF,MSTCP.ndi
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETTRANS.INF,MSTCP.ndi
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETTRANS.INF,MSTCP.ndi
+NETDI: NdiCreate(TCP/IP) OK
+NETDI: 1Got default VREDIR
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETCLI.INF,VREDIR.ndi
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETCLI.INF,VREDIR.ndi
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETCLI.INF,VREDIR.ndi
+NETDI: NdiCreate(Cliente para redes Microsoft) OK
+NETDI: 1Got default 
+NETDI: Validating Cliente para redes Microsoft at Enum\Network\VREDIR\0000, rc = 0x0
+NETDI: Validating TCP/IP at Enum\Network\MSTCP\0001, rc = 0x0
+NETDI: Validating TCP/IP at Enum\Network\MSTCP\0000, rc = 0x0
+NETDI: Validating Adaptador para rede dial-up at Enum\Root\Net\0000, rc = 0x0
+NETDI: Validating Realtek RTL8029(AS) PCI Ethernet NIC at Enum\PCI\VEN_10EC&DEV_8029&SUBSYS_00000000&REV_00\BUS_00&DEV_09&FUNC_00, rc = 0x0
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETCLI.INF,VREDIR.Install
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETCLI.INF,VREDIR.Install.WSock2
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETTRANS.INF,MSTCP.Install
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETTRANS.INF,MSTCP.Install.WSock2
+NETDI: NdiWSCDeinstallProvider(FF017DE0) Result=-1, Errno=10014
+NETDI: NdiWSCInstallProvider(FF017DE0, C:\WINDOWS\SYSTEM\msafd.dll) Result=0, Errno=0
+NETDI: NdiWSCUnInstallNameSpace(FF017DE2) Result=-1
+NETDI: NdiWSCInstallNameSpace(FF017DE2,C:\WINDOWS\SYSTEM\rnr20.dll) Result=0
+NETDI: NdiWSCDeinstallProvider(E70F1AA0) Result=-1, Errno=10014
+NETDI: NdiWSCDeinstallProvider(ECBDCBA0) Result=-1, Errno=10014
+NETDI: NdiWSCInstallProvider(ECBDCBA0, C:\WINDOWS\SYSTEM\rsvpsp.dll) Result=0, Errno=0
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETTRANS.INF,MSTCP.Install
+NETDI:     GenInstallDriver, C:\WINDOWS\INF\NETTRANS.INF,MSTCP.Install.WSock2
+NETDI: NdiWSCDeinstallProvider(FF017DE0) Result=0, Errno=0
+NETDI: NdiWSCInstallProvider(FF017DE0, C:\WINDOWS\SYSTEM\msafd.dll) Result=0, Errno=0
+NETDI: NdiWSCUnInstallNameSpace(FF017DE2) Result=0
+NETDI: NdiWSCInstallNameSpace(FF017DE2,C:\WINDOWS\SYSTEM\rnr20.dll) Result=0
+NETDI: NdiWSCDeinstallProvider(E70F1AA0) Result=-1, Errno=10014
+NETDI: NdiWSCDeinstallProvider(ECBDCBA0) Result=0, Errno=0
+NETDI: NdiWSCInstallProvider(ECBDCBA0, C:\WINDOWS\SYSTEM\rsvpsp.dll) Result=0, Errno=0
+NETDI: ConfigureSetVer called
+NETDI: AddRemoveSetVer fAdd=0
+NETDI: ====================FirstBootCall==================
+NETDI: ExecuteQueuedAPIs
+NETDI: ClassInstall (0x6 on 0x23ce:0xf898) on  at 
+NETDI: SetupFlags=50A BootCount=2 NetSetupFlags=1 (RETAIL)
+NETDI: dif_FirstTimeSetup
+NETDI: ClassInstall(0x6) end
+NETDI: ClassInstall (0xc on 0x23ce:0xf898) on  at 
+NETDI: SetupFlags=50A BootCount=2 NetSetupFlags=1 (RETAIL)
+NETDI: ClassInstall(0xc) end

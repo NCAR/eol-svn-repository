@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Conversions Module</title>
+  </head>
+
+  <body>
+      <h1>Conversions Module</h1>
+      <p><b>Module:</b> <a href="modules/Conversions.pm">Conversions.pm</a></p>
+      <p><b>Location:</b> /home/jclawson/conversion_modules</p>
+      <p><b>Summary:</b> The Conversions module is a collection of static functions used for calculating and converting values.  It also contains functions for accessing static values such as the QCF missing value and the different QCF flags.</p>
+      <p><b>Use:</b> In a perl script, import the Conversions modules with the following commands:<table align=center><tr><td>use lib "<i>location</i>";</td></tr><tr><td>use Conversions;</td></tr></table></p>
+      <hr>
+      <table border=2>
+	<tr><th colspan=3><font size=+2>Function List</font></th></tr>
+	<tr><td>float</td><td><a href="#calculateDewPoint"><b>calculateDewPoint</b>(float temp, float rel_humidity, int verbose)</a></td><td>Calcute the dew point from the temperature and relative humidity.</td></tr>
+	<tr><td>float</td><td><a href="#calculateSeaLevelPressure"><b>calculateSeaLevelPressure</b>(float pressure, float elevation, float dewpoint, float temperature, int verbose)</a></td><td>Calculates the sea level pressure from the station pressure, elevation, dewpoint and temperature.</td></tr>
+	<tr><td>int</td><td><a href="#compareDates"><b>compareDates</b>(String date1, String date2)</a></td><td>Compare to dates to see if the first date is before, the same, or after the second date.</td></tr>
+	<tr><td>String</td><td><a href="#convertDate"><b>convertDate</b>(String date, String format)</a></td><td>Convert a date from the specified format to the "YYYY/MM/DD" format.  It does handle julian days.</td></tr>
+	<tr><td>(int month, int day)</td><td><a href="#convertJulian"><b>convertJulian</b>(int year, int day)</a></td><td>Find out the month and day from a year and julian day.</td></tr>
+	<tr><td>String</td><td><a href="#convertLatLong"><b>convertLatLong</b>(float reading, String format)</a></td><td>Convert a latitude or longitude in the specified format to a degree decimal format.</td></tr>
+	<tr><td>float</td><td><a href="#convertLength"><b>convertLength</b>(float length, String inUnits, String outUnits)</a></td><td>Convert a length or distance from one unit to another unit.</td></tr>
+	<tr><td>float</td><td><a href="#convertPressure"><b>convertPressure</b>(float pressure, String inUnits, String outUnits)</a></td><td>Convert a pressure value from one unit to another unit.</td></tr>
+	<tr><td>float</td><td><a href="#convertTemperature"><b>convertTemperature</b>(float temp, String inUnits, String outUnits)</a></td><td>Convert a temperature value from one unit to another unit.</td></tr>
+	<tr><td>String</td><td><a href="#convertTime"><b>convertTime</b>(String time, String format)</a></td><td>Convert a time in one format to the "HH:MM" format</td></tr>
+	<tr><td>float</td><td><a href="#convertVelocity"><b>convertVelocity</b>(float velocity, String inUnits, String outUnits)</a></td><td>Convert a velocity value from one unit to another unit.</td></tr>
+	<tr><td>int</td><td><a href="modules/Conversions.pm#days_in_feb"><b>days_in_feb</b>(int year)</td><td>Find the number of days in February for a given year.</td></tr>
+	<tr><td>String</td><td><a href="#getEstimateFlag"><b>getEstimateFlag</b>()</a></td><td>Gets the flag used for an estimated value.</td></tr>
+	<tr><td>String</td><td><a href="#getIncalcuableFlag"><b>getIncalcuableFlag</b>()</td><td>Get the flag used for an incalcuable value.</td></tr>
+	<tr><td>String</td><td><a href="#getMissing"><b>getMissing</b>()</a></td><td>Get the value used for the missing value in QCF records.</a></td></tr>
+	<tr><td>String</td><td><a href="#getMissingFlag"><b>getMissingFlag</b>()</a></td><td>Gets the flag used for missing values.</td></tr>
+	<tr><td>String</td><td><a href="#getNegativePrecipFlag"><b>getNegativePrecipFlag</b>()</td><td>Gets the flag used when a negative precipitation value is reported.</td></tr>
+	<tr><td>String</td><td><a href="#getNextDay"><b>getNextDay</b>(String date)</td><td>Get the day following the specified date.</td></tr>
+	<tr><td>String</td><td><a href="#getNoReadingFlag"><b>getNoReadingFlag</b>()</td><td>Get the flag used when a station never reports a particular measurement.</td></tr>
+	<tr><td>int</td><td><a href="#getStateCode"><b>getStateCode</b>(String abbr)</a></td><td>Get the state code for a state's abbreviation</td></tr>
+	<tr><td>String</td><td><a href="#getTracePrecipFlag"><b>getTracePrecipFlag</b>()</td><td>Get the flag that is used when a trace amount of precipitation is reported.</td></tr>
+	<tr><td>String</td><td><a href="#getValueDoesNotFitFlag"><b>getValueDoesNotFitFlag</b>()</a></td><td>Gets the flag for a value that does not fit in the specified amount of space in a QCF record.</td></tr>
+	<tr><td>String</td><td><a href="#getUncheckedFlag"><b>getUncheckedFlag</b>()</a></td><td>Gets the unchecked flag.</td></tr>
+	<tr><td>float</td><td><a href="#handleZero"><b>handleZero</b>(float value)</a></td><td>Converts -0.0 values so they are no longer negative.</td></tr>
+	<tr><td>%String</td><td><a href="#loadStateCodes"><b>loadStateCodes</b>()</a></td><td>Load a list of state codes from the states.list file.</td></tr>
+      </table>
+      <hr>
+      <h3><a name=convertTemperature>Convert Temperature</a></h3>
+      <p>float convertTemperature(float temp, String inUnits, String outUnits)</p>
+      <p>Convert a temperature value from one unit to another unit.  Acceptable values for the units are: C, F, K</p>
+      <p>Parameters:<br>temp: The temperature value to be converted.<br>inUnits: The unit of the temperature to be converted.<br>outUnits: The unit of temperature to convert the temp parameter.</p>
+      <p>Returns: The temperature in outUnits.
+
+      <hr>
+<!-- Created: Fri Jul 18 09:32:07 MDT 2003 -->
+<!-- hhmts start -->
+Last modified: Mon Jul 21 09:14:39 MDT 
+<!-- hhmts end -->
+  </body>
+</html>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DIF xmlns="http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://gcmd.gsfc.nasa.gov/Aboutus/xml/dif/ http://gcmd.nasa.gov/Aboutus/xml/dif/dif_v9.8.4.xsd">
+    <Entry_ID>255.004</Entry_ID>
+    <Entry_Title>Permanent open surface water areas in Nenets Autonomous Okrug, Russian Federation [Yamin-Pasternak]</Entry_Title>
+    <Data_Set_Citation>
+        <Dataset_Creator>Philippe Amstislavski</Dataset_Creator>
+         
+        <Dataset_Title>Permanent open surface water areas in Nenets Autonomous Okrug, Russian Federation [Yamin-Pasternak]</Dataset_Title>
+
+        <Dataset_Release_Date>2012-12-09</Dataset_Release_Date>
+ 
+        <Dataset_Publisher>Earth Observing Laboratory</Dataset_Publisher>
+
+        <Dataset_DOI><!--doi_demo.id--></Dataset_DOI> 
+        <Online_Resource>http://data.eol.ucar.edu/codiac/dss/id=255.004</Online_Resource>
+    </Data_Set_Citation>
+    <Personnel>
+        <Role>Investigator</Role>
+        <First_Name>Philippe</First_Name>
+      
+        <Last_Name>Amstislavski</Last_Name>
+        <Email>amstislavski at gmail.com</Email>
+       
+    </Personnel>
+    
+
+    <Parameters><!-- repeatable -->
+        <Category><!--gcmd_science_keyword.category goes here--></Category>
+        <Topic><!--gcmd_science_keyword.topic goes here--></Topic>
+        <Term></Term>
+        <Variable_Level_1><!--gcmd_science_keyword.variable_level_1 goes here--></Variable_Level_1>
+        <Variable_Level_2><!--gcmd_science_keyword.variable_level_2 goes here--></Variable_Level_2>
+        <Variable_Level_3><!--gcmd_science_keyword.variable_level_3 goes here--></Variable_Level_3>
+        <Detailed_Variable><!--gcmd_science_keyword.detailed_variable goes here--></Detailed_Variable>
+    </Parameters>
+    <ISO_Topic_Category>geoscientificInformation</ISO_Topic_Category>
+    <Keyword>Arctic</Keyword>
+    <Keyword>Land Character</Keyword>
+    <Sensor_Name>
+        <Short_Name><!--instrument.name--></Short_Name>
+        
+    </Sensor_Name>
+    <Source_Name>
+        <Short_Name><!--platform_gcmd_name this field needs to be populated as dif relies on it for search and retrieval--></Short_Name>
+        <Long_Name><!-- platform.name goes here --></Long_Name>
+    </Source_Name>
+    <Temporal_Coverage>
+        <Start_Date>2004-01-01</Start_Date>
+        <Stop_Date>2009-12-31</Stop_Date>
+    </Temporal_Coverage>
+    
+    <Data_Set_Progress>completed</Data_Set_Progress>
+    <Spatial_Coverage>
+        <Southernmost_Latitude>67.06</Southernmost_Latitude>
+        <Northernmost_Latitude>67.2</Northernmost_Latitude>
+        <Westernmost_Longitude>48.72</Westernmost_Longitude>
+        <Easternmost_Longitude>49.17</Easternmost_Longitude>
+        
+    </Spatial_Coverage>
+   
+    <Data_Resolution>
+     
+        <Temporal_Resolution>other</Temporal_Resolution>
+        <Temporal_Resolution_Range><!-- frequency.gcmd_name This field is currently unpopulated but may be useful --></Temporal_Resolution_Range>
+    </Data_Resolution>
+    <Project>
+        <Short_Name>PacMARS</Short_Name>
+        <Long_Name>Pacific Marine Arctic Regional Synthesis</Long_Name>
+    </Project>
+    
+    <Access_Constraints>PacMARS team members should be contacted before use of their data sets. PacMARS investigators and others are responsible for providing appropriate recognition to data providers in publications. This can include article co-authorship and/or reference to data publications. Citations, and DOIs when available, will be provided for datasets within the EOL data archive.		
+    </Access_Constraints>
+    <Use_Constraints>none</Use_Constraints>
+    <Data_Set_Language>English</Data_Set_Language>
+    
+    <Data_Center>
+        <Data_Center_Name>
+            <Short_Name>EOL</Short_Name>
+            <Long_Name>Earth Observing Laboratory</Long_Name>
+        </Data_Center_Name>
+        <Data_Center_URL>http://data.eol.ucar.edu</Data_Center_URL>
+      
+        <Personnel>
+            <Role>DIF Author</Role>
+            <First_Name>Don</First_Name>
+            
+            <Last_Name>Stott</Last_Name>
+            <Email>stott at ucar.edu</Email>
+            
+        </Personnel>
+        
+    </Data_Center>
+    <Distribution>
+        <Distribution_Media>FTP
+        </Distribution_Media>
+        <Distribution_Size>0.8</Distribution_Size>
+        <Distribution_Format>zip</Distribution_Format>
+        
+    </Distribution>
+
+    <Summary>
+        <Abstract>This dataset consists of annual maps of permanent water body detections for the period January 1, 2004 to December 31, 2009. These maps were produced to identify water surfaces from remotely sensed data and demonstrate the integration of the remotely sensed imagery data acquired by the Moderate Resolution Imaging Spectroradiometer (MODIS) sensors with data on human activity at the local communities level. The GIS mapping data is in shapefile format. The shapefiles are derived from .HDF files of MODIS scenes covering the region. These files represent the mapping of open surface water bodies and the ground.</Abstract>
+        
+    </Summary>
+    <Related_URL>
+        <URL_Content_Type>
+            <Type>GET DATA</Type>
+           
+        </URL_Content_Type>
+        <URL>http://data.eol.ucar.edu/codiac/dss/id=255.004</URL>
+        
+    </Related_URL>
+    <Related_URL>
+        <URL_Content_Type>
+            <Type>VIEW PROJECT HOME PAGE</Type>
+        </URL_Content_Type>
+        <URL>data.eol.ucar.edu/codiac/projs?pacmars</URL>
+        <Description>The Pacific Marine Arctic Regional Synthesis (PacMARS) effort will facilitate new synergies in understanding of the marine ecosystem in the greater Bering Strait region, including the northern Bering, Chukchi and Beaufort seas. The PacMARS research team and collaborators will: 1) identify and synthesize existing data sets that are critical for evaluating the current state of knowledge of this marine ecosystem, including human dimensions and 2) define the high-priority, overarching scientific themes and research needs for the next decade or more of marine ecosystem studies in the Pacific Arctic Region.</Description>
+    </Related_URL>
+    
+   
+    <Metadata_Name>EOL DIF</Metadata_Name>       
+    <Metadata_Version>9.84</Metadata_Version>
+    <DIF_Creation_Date>2014-07-13</DIF_Creation_Date>
+   
+
+</DIF>

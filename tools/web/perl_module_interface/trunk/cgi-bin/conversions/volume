@@ -1,0 +1,133 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------
+# <p>The ConvertVolume script is a CGI script that provides a web
+# interface for the conversion of volumes in the conversion
+# modules.</p>
+#
+# @author Joel Clawson
+# @version 3.0 (Version number used to match conversion version.)
+# <p>Refactored the original web interface into individual conversion
+# scripts and a super WebInterface module that the scripts inherit
+# from.</p>
+# <p>Updated to Version 3 of the conversion modules.</p>
+#
+# @author Joel Clawson
+# @version 1.0 Original Creation.
+##Module-----------------------------------------------------------
+package ConvertVolume;
+use strict;
+use lib "..";
+use lib "/net/work/lib/perl/Utilities";
+use DpgConversions qw(:DEFAULT);
+use WebInterface;
+our @ISA = ("WebInterface");
+
+main();
+
+##------------------------------------------------------------------
+# @signature void main()
+# <p>Run the script that creates the convert volume web 
+# interface.</p>
+##------------------------------------------------------------------
+sub main {
+    my $self = ConvertVolume->new();
+    $self->makePage();    
+}
+
+##------------------------------------------------------------------
+# @signature String createForm()
+# <p>Create the HTML that defines the input form for the calculation.</p>
+# @output $form The HTML code.
+##------------------------------------------------------------------
+sub createForm {
+    my $self = shift;
+    my $form = "<table><tbody>\n";
+
+    # Make the Length row.
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td>","Input:",$self->textfield("volume"),$self->getVolumeUnits("in_unit"));
+    $form .= sprintf("<td class=submit>%s</td></tr>\n",$self->submit("Calculate"));
+    $form .= "</tbody></table>\n";
+
+    # Make the result table.
+    $form .= "<table><tbody>\n";
+
+    $form .= "<tr><td colspan=6>&nbsp;</td></tr>\n";
+    
+    my @values = grep(/option/i,split("\n",$self->getVolumeUnits("null")));
+    my $count = 0;
+    foreach my $line (sort(@values)) {
+	$line =~ /\>(.+)\</;
+	my $unit = $1;
+	$form .= "<tr>" if ($count % 3 == 0);
+	$form .= sprintf("<td class=field>%s</td><td class=unit>%s</td>",
+			 $self->textfield(-default => $self->getValue($unit),
+					  -size => 25),$unit);
+	$count++;
+	$form .= "</tr>\n" if (($count - 1) % 3 == 2 || $count == scalar(@values));
+    }
+
+    $form .= "</tbody></table>\n";
+
+    return $form;
+}
+
+##------------------------------------------------------------------
+# @signature String getCGI()
+# <p>Get the name of the script to call when the form is submitted.</p>
+# @output $cgi The script name.
+##------------------------------------------------------------------
+sub getCGI { return "conversions/volume"; }
+
+##------------------------------------------------------------------
+# @signature String getEquationPage()
+# <p>Get the name of the web page that contains the equations for
+# the calculation.</p>
+# @output $page The equation web page.
+##------------------------------------------------------------------
+sub getEquationPage { "equations_calc.html#volume"; }
+
+##------------------------------------------------------------------
+# @signature String getInstructions()
+# <p>Get the HTML containing the instructions on how to use the 
+# script.</p>
+# @output $instr The HTML instructions.
+##------------------------------------------------------------------
+sub getInstructions {
+    my $self = shift;
+    my $instr = "<p>Insert the volume value along with its units of volume.  Press the <b>Calculate</b> button and the results will be output for each known unit of volume.</p>\n";
+
+    $instr .= "<p>The warnings have been turned off for the calculation.  If no result appears, it is because a value was entered into one of the fields that does not allow the calculation to complete correctly.</p>\n";
+    return $instr;
+}
+
+##------------------------------------------------------------------
+# @signature String getOnSubmit()
+# <p>Get the javascript command to run when the form is submitted.</p>
+# @output $js The javascript command.
+##------------------------------------------------------------------
+sub getOnSubmit { return "javascript: return (checkValue('Volume',volume));"; }
+
+##------------------------------------------------------------------
+# @signature String getTitle()
+# <p>Get the title of the script.</p>
+# @output $title The script title.
+##------------------------------------------------------------------
+sub getTitle { return "Convert Volume"; }
+
+##------------------------------------------------------------------
+# @signature String getValue()
+# <p>Get the calculated value or the &amp;nbsp; character when it
+# cannot be calculated.</p>
+# @output $value The float formated value.
+##------------------------------------------------------------------
+sub getValue {
+    my $self = shift;
+    my $unit = shift;
+    if (defined($self->param("volume"))) {
+	my $value = convertVolume($self->param("volume"),$self->param("in_unit"),$unit);
+	return sprintf("%f",$value) if (defined($value));
+    }
+    return "";
+}
+

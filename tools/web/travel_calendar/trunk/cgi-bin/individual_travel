@@ -1,0 +1,101 @@
+#! /usr/bin/perl -T -w
+
+##Module--------------------------------------------------------------------
+# <p>The <code>IndividualTravel</code> module is a <code>CGI</code> module
+# that generates the list of travel information for an employee.  It needs
+# the CGI parameter <code>id</code> set to display the correct information.</p>
+# <p>The following is a list of CGI parameters that the module recognizes and
+# the values that it can have.<ul>
+#   <li><code>id</code>: (String)  This is the travel id of the employee whos
+# data is to be viewed.</li>
+# </ul></p>
+#
+# @author Joel Clawson
+##Module--------------------------------------------------------------------
+package IndividualTravel;
+use strict;
+use lib ".";
+use EmployeeList;
+use TravelList;
+use CGI qw(:standard :html3);
+our @ISA = ("CGI");
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+&main();
+
+##---------------------------------------------------------------------------
+# @signature void main()
+# <p>Create the web page containing the travel information.</p>
+##---------------------------------------------------------------------------
+sub main() {
+  my $self = IndividualTravel->new();
+
+  print($self->header());
+  print("<html>\n");
+
+  print($self->generateListing($self->param("id")));
+
+  print("</html>\n");
+}
+
+##---------------------------------------------------------------------------
+# @signature String generateListing(String id)
+# <p>Create the HTML list of travel information for the specified travel 
+# id.</p>
+# @input $id The travel id for the employee to be displayed.
+# @output $output The HTML containing the web page.
+##---------------------------------------------------------------------------
+sub generateListing {
+  my $self = shift;
+  my $id = shift;
+
+  my $emp_data = EmployeeList->new();
+  my $trav_data = TravelList->new();
+
+  my $output = "<head>\n<script type=text/javascript src=\"/travel/javascript/travel.js\"></script>\n</head>\n\n";
+
+  # Create the header line of the page
+  $output .= sprintf("<h1>%s %s's (%s) Travel Information</h1>\n\n",
+		     $emp_data->getFirstName($id), $emp_data->getLastName($id),
+		     sprintf("<font color=%s>%s</font>", 
+			     $emp_data->getColor($id), $id));
+
+  # Generate the HTML if the employee has no travel information
+  if (scalar($trav_data->getAllTravelInfo($id)) == 0 ) {
+    $output .= "<p>There is not any travel information for $id.</p>\n";
+    return $output;
+  }
+
+  # Create the HTML table of travel information
+  $output .= "<table border=2 cellpadding=4>\n";
+  $output .= "<tr><th>&nbsp;</th>\n";
+  $output .= "    <th>Dates Gone</th>\n";
+  $output .= "    <th>Reason Gone</th>\n";
+  $output .= "    <th>Where At</th></tr>\n";
+
+  foreach my $info ($trav_data->getAllTravelInfo($id)) {
+    my $params = sprintf("id=%s;s_date=%s;e_date=%s;reason=%s;where=%s", $id,
+                         $trav_data->getBeginDate($id, $info),
+                         $trav_data->getEndDate($id, $info),
+                         $trav_data->getReason($id, $info),
+                         $trav_data->getWhere($id, $info));
+    $output .= "<tr><td><a href=\"javascript:openWin('travel_form?$params');\">Edit/Delete</a></td>\n";
+    $output .= sprintf("    <td>%s - %s</td>\n", 
+		       $trav_data->getBeginDate($id, $info),
+		       $trav_data->getEndDate($id, $info));
+    $output .= sprintf("    <td>%s</td>\n", $trav_data->getReason($id, $info));
+    $output .= sprintf("    <td>%s</td></tr>\n", 
+		       $trav_data->getWhere($id, $info));
+  }
+  $output .= "</table>\n\n";
+
+  return $output;
+}
+
+
+
+
+
+
+

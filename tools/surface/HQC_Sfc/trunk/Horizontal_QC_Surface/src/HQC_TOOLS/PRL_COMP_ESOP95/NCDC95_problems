@@ -1,0 +1,53 @@
+ 
+			NCDC COOP Surface Data
+
+
+Item			Stations affected	   Action
+---------------------------------------------------------------------------------------------
+
+Blank Hours in Time	011725, 142478, 290818,	   Stripped all records for
+			340584, 055507, 056797,	   these stations.
+			256837, 485435, 396552,
+			397418
+
+Days of '00'		011143			   This station also had
+						   duplicate records and so
+                                                   all records were stripped.
+
+Duplicate records	214884, 218450, 153430	   All records for each of
+			153435, 032020, 142478	   these stations were stripped 
+			487115, 235987, 252706,    for complete time period.
+			032810, 340394, 394766,
+			347264, 129300, 011143
+			140441, 236745, 032760,
+			056203
+
+Max, Min temps of	032020  053002  142478	   Changed all to missing.
+absolute zero.		051932  051772 487115
+			481000  146192  117072  
+                        419417  011725  411946
+                        344393  235987  058931  
+			252706  259090  256837  
+                        032810  340394  479062
+			394766  010116  298015  
+                        218450  231383  011143
+			347264  402685  057460
+			397418  129300  057031  
+			032760  299569  116157 
+			116897
+
+Mismatch between	General mismatch           Always used lat/lon/elev
+lat/lon/elev 		noticed periodically.	   from data.
+in data and 
+history-9509 list.
+
+
+Days with very few      950402, 950410, 950418,	   This covers the period
+surface records.        950426, 950502, 950510,	   950401 through 950930.
+			950518, 950526, 950602,
+			950610, 950618, 950626
+			950702, 950710, 950718, 
+			950726, 950810, 950818, 
+			950826, 950918, 950926
+
+Days with NO data.	950802, 950902, 950910     N/A.

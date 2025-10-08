@@ -1,0 +1,23 @@
+#! /bin/tcsh
+
+source /usr/local/lf9562/csh_setup
+
+cd rrs_raw_data
+
+rm *.bufr
+rm *.txt
+rm *.bufr.gz
+rm *.txt.gz
+
+gunzip *.gz
+
+
+foreach file (*)
+	/net/work/bin/extractors/NWS_RRS/grabbufr_linux $file $file.bufr
+	/net/work/bin/extractors/NWS_RRS/decoder_linux $file.bufr
+	gzip $file
+	gzip $file\_[2347]*.txt
+	rm $file.bufr
+end
+
+echo 'Done'

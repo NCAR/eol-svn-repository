@@ -1,0 +1,45 @@
+     Table 3-1   Normalizing factors used for ESOP 1996 Hourly Surface
+     Composite
+     
+     Parameter                 Good      Questionable   Unlikely
+     ---------                 ----      ------------   --------
+ 
+     Station Pressure           0.2               0.2    0.5
+     Sea Level Pressure (SLP)   0.2               0.2    0.5
+     Calculated SLP             0.4               0.4    1.0
+     Dry Bulb Temperature       0.5               0.5    1.0
+     Dew Point Temperature      0.5               0.5    1.0
+     Wind Speed                2.25              2.25    4.0
+     Wind Direction            1.22              1.22    2.2
+     
+     
+     Table 3-2   Ranges of HQC flag limit values for ESOP 1996 Hourly
+     Surface Composite (Program Calculated)
+
+     Parameter                     Good      Questionable   Unlikely
+     ---------                     ----      ------------   --------
+     Station Pressure (mb)         < 1.3     [0.4-3.2]      > 1.0
+     Sea Level Pressure (mb)       < 1.5     [0.5-3.8]      > 1.1
+     Calculated SLP (mb)           < 3.4     [0.9-8.5]      > 2.2
+     Dry Bulb Temperature (deg.C)  < 3.4     [0.7-6.5]      > 1.4
+     Dew Point Temperature (deg.C) < 3.6     [0.7-7.1]      > 1.4
+     Wind Speed (m/s)              < 6.8     [1.0-12.2]     > 1.8
+     Wind Direction(degrees)       < 151.9   [47.3-180.]    > 85.2
+
+
+
+This dataset contains 500 stations from 1 April 1996-30 Sept 1996
+31N to 40N latitude and 91W to 107W longitude.
+
+This dataset contains the following networks:
+
+ASOS
+ARMSFC
+WPN                
+HPCN
+COAGMET
+MOCAWS
+MODOC
+NMSU
+NCDC
+NCDC SAOs

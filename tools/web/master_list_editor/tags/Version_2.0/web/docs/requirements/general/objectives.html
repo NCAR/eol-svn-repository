@@ -1,0 +1,29 @@
+<html>
+<body>
+
+<a name="objective"></a>
+<h1>General Master List Editor Objective</h1>
+<p>The General Master List Editor is to provide an easy to use tool for the Data Management Group to maintain the Master Lists for the non-Arctic projects.  It is to provide a way for a user to add or remove data sets from a project.  It will contain the data set title, URL for the data set, links to documentation files, and the date the data set was available.</p>
+
+<hr>
+
+<a name="problems"></a>
+<h1>Problem Statements / Upgrades</h1>
+
+<h3>Version 3.0</h3>
+<p>Merge the current Master List database into a normalized database definition.  Create a new editor that will make use of the functionality of the new database.  The new editor will regenerate all static HTML files used by the ML and not just the data set list.  The editor will also provide ways of adding and updating new projects and categories that were not available previously.</p>
+
+<h3>Version 2.0</h3>
+<p>Port the General Master List Editor from the old JOSS server (hurricane) to the DMG virtual server at EOL (tsunami).  Merge all of the individual editor scripts into a single script to allow a single change to affect all other Master Lists.</p>
+
+<h3>Version 1.2</h3>
+<p>Add an <code>expected_date</code> field to the database and to the Master List views.  This will allow the user to enter a date the data set is expected to be received where it will soon be available to the public.</p>
+
+<h3>Version 1.1</h3>
+<p>In May, 2004 a 'new' icon feature was implemented such that if a dataset was added to the system within the last 90 days a 'New!' icon is placed above the date. Since the public side of the MLsystem is not dynamic - the public views a static html file as opposed to some CGI script which queries the database - these 'New!' icons can become out-of-date if the master list is not updated for a long period of time. Each time a project's master list is updated the script writes a new static html file for the public. When this file is written it checks each dataset to see if it requires a 'New!' icon. So only one dataset has to be updated to remove any out-of-date 'New!' icons.</p>
+
+<h3>Version 1.0</h3>
+<p>There is not any information available for the original problem statements for the intial version of the General Master List.</p>
+
+</body>
+</html>

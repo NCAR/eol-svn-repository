@@ -1,0 +1,517 @@
+<html>
+<head>
+<title>T-REX University of Leeds Independence Airport Rawinsonde Data [NCAR/EOL]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">T-REX University of Leeds Independence Airport Rawinsonde Data [NCAR/EOL]</h1>
+
+<h2>AUTHORS</h2>
+<p>
+<pre>
+Co-Principal Investigator
+Prof. Stephen Mobbs
+Director, NCAS
+School of Earth & Environment 
+University of Leeds 
+LS2 9JT 
+UK
+Tel: +44 113 3435158  Fax:  +44 113 3436716
+E-mail: stephen@env.leeds.ac.uk
+</pre>
+<p>
+<h2>1.0 General Description</h2>
+<p>This is one of the upper air data sets developed for the Terrain-induced Rotor Experiment (T-REX).  It includes 192 high vertical resolution (2 second) rawinsondes released from the Independence Airport (K2O7), CA.  Soundings were released from 28 Feb to 30 Apr 2006.  The radiosondes used
+were Vaisala RS-80.  See section 3.3 for serial numbers of the released radiosondes.  </p>
+
+<h2>2.0 Detailed Data Description</h2>
+<h3>2.1 Detailed Format Description</h3>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite Format (ESC).  ESC is a version of the National Center for Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, meteorological and wind data processors, and the operator's name and comments.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+<p>The seven non-standard header lines may contain any label and contents.  The labels are padded to 35 characters to match the standard header lines. Records for this dataset include the following three non-standard header lines.</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>6</td><td>Sonde Id:</td><td>Sounding identification number</td></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=1 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL codes:</p>
+
+<table border=1 align="center">
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of Leeds T-REX high resolution dropsonde data in ESC format.   The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  See section 2.1 for an exact format specification
+
+<pre>
+Data Type:                         University of Leeds Sounding/Ascending
+Project ID:                        T-REX
+Release Site Type/Site ID:         Independence Airport, CA
+Release Location (lon,lat,alt):    118 12.00'W, 36 48.60'N, -118.200, 36.810, 1162.0
+UTC Release Time (y,m,d,h,m,s):    2006, 02, 28, 20:14:00
+/
+/
+/
+/
+/
+/
+Nominal Release Time (y,m,d,h,m,s): 2006, 02, 28, 20:14:00
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat    Ele   Azi   Alt    Qp  Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg    deg   deg    m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+   0.0  878.0  14.0  -1.2  35.0    3.5   -3.5   5.0 315.0 999.0 9999.000 999.000 999.0 999.0  1162.0  2.0  2.0  2.0 99.0 99.0  9.0
+   2.0  876.7  11.8  -8.1  24.0    3.7   -3.7   5.3 315.0   6.0 9999.000 999.000 999.0 999.0  1174.0  2.0  2.0  2.0 99.0 99.0 99.0
+   4.0  875.7  11.6 -11.9  18.0    4.0   -4.0   5.7 315.0   5.0 9999.000 999.000 999.0 999.0  1184.0 99.0 99.0 99.0 99.0 99.0 99.0
+   6.0  874.7  11.4 -12.8  17.0    4.2   -4.3   6.0 316.0   4.5 9999.000 999.000 999.0 999.0  1193.0 99.0 99.0 99.0 99.0 99.0 99.0
+   8.0  873.6  11.2 -13.0  17.0    4.4   -4.6   6.4 316.0   5.5 9999.000 999.000 999.0 999.0  1204.0 99.0 99.0 99.0 99.0 99.0 99.0
+</pre>
+
+<h3>2.2 Data Remarks</h3>
+
+<a name="section2.3"></a>
+<h3>2.3 Station List</h3>
+
+<table border=1 align="center">
+<tr><th>ID</th><th>SITE</th><th>STATE</th><th>LONG</th><th>LAT</th><th>ELEV (m)</th></tr>
+<tr><td>K2O7</td><td>University of Leeds at Independence Airport</td><td>CA</td><td>-118.20</td><td>36.81</td><td>1162.0</td></tr>
+</table>
+
+<p>
+The launch site was situated next to the NCAR trailer at Independence
+Airport, 36.81N, 118.20W (WGS84).
+
+<h2>3.0 Quality Control Processing</h2>
+<p>This dataset underwent an automated QC process.  The dataset underwent internal consistency checks which included two types of checks, gross limit checks on all parameters and rate-of-change checks on temperature, pressure and ascension rate. Some further information on the QC processing conducted by EOL can be found in Loehrer et al. (1996) and Loehrer et al. (1998).</p>
+
+<h3>3.1  Gross Limit Checks</h3>
+<p>These checks were conducted on each sounding and data were automatically flagged as appropriate.  Only the data point under examination was flagged.  EOL conducted the following gross limit checks on the T-REX Leeds rawinsonde dataset.  In the table P = pressure, T = temperature, RH = relative humidity, U = U wind component, V = V wind component, B = bad, and Q = questionable.</p>
+
+<table border=1 style="{font-size:10pt;}" align="center">
+<tr><th>Parameter</th><th>Gross Limit Check</th><th>Parameter(s) Flagged</th><th>Flag Applied</th></tr>
+<tr><td>Pressure</td>
+	<td align="center">&lt; 0 mb or &gt; 1050 mb</td>
+	<td align="center">P</td><td align="center">B</td>
+	</tr>
+<tr><td>Altitude</td>
+	<td align="center">&lt; 0 m or &gt; 40000 m</td>
+	<td align="center">P, T, RH</td><td align="center">Q</td>
+	</tr>
+<tr><td>Temperature</td>
+	<td align="center">&lt; -90 &deg;C or &gt; 45 &deg;C</td>
+	<td align="center">T</td><td align="center">T</td>
+	</tr>
+<tr><td>Dew Point</td>
+	<td align="center">&lt; -99.9 &deg;C or &gt; 33 &deg;C<br>&gt; Temperature</td>
+	<td align="center">RH<br>T, RH</td><td align="center">Q<br>Q</td>
+	</tr>
+<tr><td>Relative Humidity</td>
+	<td align="center">&lt; 0% or &gt; 100%</td>
+	<td align="center">RH</td><td align="center">B</td>
+	</tr>
+<tr><td>Wind Speed</td>
+	<td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+	<td align="center">U, V<br>U, V</td><td align="center">Q<br>B</td>
+	</tr>
+<tr><td>U Wind Component</td>
+	<td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+	<td align="center">U<br>U</td><td align="center">Q<br>B</td>
+	</tr>
+<tr><td>V Wind Component</td>
+	<td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+	<td align="center">V<br>V</td><td align="center">Q<br>B</td>
+	</tr>
+<tr><td>Wind Direction</td>
+	<td align="center">&lt; 0&deg; or &gt; 360&deg;</td>
+	<td align="center">U, V</td><td align="center">B</td>
+	</tr>
+<tr><td>Ascent Rate</td>
+	<td align="center">&lt; -10 m/s or &gt; 10 m/s</td>
+	<td align="center">P, T, RH</td><td align="center">Q</td>
+	</tr>
+</table>
+
+<h3>3.2  Vertical Consistency Checks</h3>
+<p>These checks were conducted on each sounding and data were automatically flagged as appropriate.  These checks were started at the lowest level of the sounding and compared neighboring 2-sec data points (except at pressures less than 100 mb where 30-sec average values were used.  In the case of checks ensuring that the values increased/decreased as expected, only the data point under examination was flagged.  However, for the other checks, all of the data points used in the examination were flagged.   All items within the table are as previously defined.</p>
+
+<table border=1 style="{font-size:10pt;}" align="center">
+<tr><th>Parameter</th><th>Vertical Consitency Check</th><th>Parameter(s) Flagged</th><th>Flag Applied</th></tr>
+<tr><td>Time</td>
+	<td align="center">decreasing / equal</td>
+	<td align="center">None</td><td align="center">None</td>
+	</tr>
+<tr><td>Altitude</td>
+	<td align="center">decreasing / equal</td>
+	<td align="center">P, T, RH</td><td align="center">Q</td>
+	</tr>
+<tr><td>Pressure</td>
+	<td align="center">increasing / equal<br>&gt; 1 mb/s or &lt; -1 mb/s<br>&gt; 2 mb/s or &lt; -2 mb/s</td>
+	<td align="center">P, T, RH<br>P, T, RH<br>P, T, RH</td><td align="center">Q<br>Q<br>B</td>
+	</tr>
+<tr><td>Temperature</td>
+	<td align="center">&lt; -15 &deg;C/km<br>&lt; -30 &deg;C/km<br>&gt 50 &deg;C/km (not applied at p &lt; 250 mb)<br>&gt;100 &deg;C/km (not applied at p &lt; 250 mb)</td>
+	<td align="center">P, T, RH<br>P, T, RH<br>P, T, RH<br>P, T, RH</td>
+	<td align="center">Q<br>B<br>Q<br>B</td>
+	</tr>
+<tr><td>Ascent Rate</td>
+	<td align="center">change of &gt; 3 m/s or & lt; -3 m/s<br>change of &gt; 5 m/s or &lt; -5 m/s</td>
+	<td align="center">P<br>P</td><td align="center">Q<br>B</td>
+	</tr>
+</table>
+
+<h3>3.3 Data Quality Issues</h3>
+
+Relative humidity has *not been corrected* in any way. Suggested
+corrections are contained in, e.g.
+<p>
+Fleming, R. J. "A Note on Temperature and Relative Humidity Corrections
+for Humidity Sensors", Journal of Atmospheric and Oceanic Technology,
+Volume 15, 1511-1515 (1998)
+<p>
+Roy, B. and Halverson, J. B. "The influence of Radiosonde 'Age' on TRMM
+Field Campaign Soundings: Humidity Correction", Journal of Atmospheric
+and Oceanic Technology, Volume 21, 470-480 (2004)
+<p>
+It is left to the end user to implement any such correction, if deemed
+fit. Serial numbers of the sondes (from which the age of the sonde may
+be deduced) follow:
+<p>
+Serial numbers of sondes
+<p>
+Caveat: this list of serial numbers (not complete) relies upon the
+operators' listing of the time of launch. Every effort has been made to
+transcribe the operators' notes contained upon the sonde calibration
+tape. Times given below are often approximate and should be related to the
+actual time of sonde launch (as listed on the T-REX catalogue).
+<p>
+Under each day of the field phase of T-REX, described by DD/MM/YY, are
+listed the sonde serial numbers of the sondes launched that day, with
+the (approximate) time of launch following in brackets.
+<p>
+Some tapes are missing/were not filled in correctly and thus the list is
+not complete.
+<p>
+
+R.R. Burton 20/10/06<br>
+ralph@env.leeds.ac.uk
+
+<p>
+
+List of Serial numbers below<br>
+----------------------------
+<p>
+<pre>
+01/03/06
+207150705(2300)
+ 02/03/06
+314609404(1400)
+03/03/06
+945409915(1400)
+04/03/06
+945210201(1400)
+05/03/06
+945100901(1400)
+207253712(2330)
+06/03/06
+207150709(1400)
+07/03/06
+945100612(1400)
+08/03/06
+945101013(1400)
+945103005(2100)
+945107803(2300)
+09/03/06
+945108306(1400)
+207253713(2300)
+10/03/06
+945107802(1400)
+945209707(2300)
+11/03/06
+945108114(1400)
+945101015(2300)gps failed
+12/03/06
+945100502(1400)
+13/03/06
+945103010(1400)
+14/03/06
+945102812(1400)
+207150707(2355)
+945100615(2300)
+15/03/06
+945102802(1400)
+945100503(2300)
+16/03/06
+945100614(2300)
+945210203(2340)
+17/03/06
+9????8301(1400)
+945100613(2300)
+18/03/06
+945210312(0030)
+19/03/06
+207150706(1400)
+945100501(2300)
+20/03/06
+314609613(1400)
+21/03/06
+314609215(2300)
+22/03/06
+23/03/06
+945204801(1400)
+24/03/06
+945204803(1400)
+207253714(2300)
+25/03/06
+945102911(1400)
+26/03/06
+945204804(1400)
+314008700(2300)
+27/03/06
+945102705(1400)
+945209712(1530)
+945204802(2325)
+28/03/06
+207150608(1400)
+945102900(2340)
+29/03/06
+314609211(0030)
+314608807(0200)
+30/03/06
+945209702(0500)
+945101312(0630)
+945103801(0800)
+314608815(0930)
+945102810(1100)
+945209903(1230)
+945209713(1400)
+945209900(1530)
+945210104(1700)
+314609401(1830)
+945209913(2000)
+106304305(2300)
+31/03/06
+945209602(1400)
+207150610(2300)
+01/04/06
+207150601(1400)
+106202410(2300)
+02/04/06
+207150609(1400)
+207150604(2300)
+03/04/06
+106405701(1400)
+106304111(2300)
+04/04/06
+106103810(1418)
+106206501(2300)
+05/04/06
+105705215(1300)
+106508409(2300)
+06/04/06
+106202406(1300)
+106508409(2300)
+07/04/06
+106304107(1300)
+106304212(2300)
+08/04/06
+106306404(1400)
+106305804(2300)
+09/04/06
+106306715(1430)
+106304015(2300)
+10/04/06
+106508306(1400)
+106303908(2300)
+11/04/06
+106304007(1400)
+106203312(2300)
+12/04/06
+106306610(1400)
+207150602(2300)
+13/04/06
+945209908(1300)
+106400500(2300)
+14/04/06
+106206401(1400)
+106100801(2300)
+15/04/06
+106103709(1400)
+106400700(2300)
+16/04/06
+207150606(1400)
+106508413(2300)
+17/04/06
+106303411(1300)
+106310104(2300)
+18/04/06
+106104515(0330)
+106400106(0500)
+106304102(0700)
+106404702(1300)
+106304008(1300)
+106202002(1330)
+106306408(1700)
+106403706(2300)
+19/04/06
+106400808(0030)
+106103313(0200)
+945209914(0315)
+106104412(0900)
+106403803(1100)
+106304011(1300)
+106104500(1330)
+106508406(1500)
+106203300(1600)
+106410211(1700)
+106410210(1830)
+106206512(2000)
+106304413(2100)
+945210115(2330)
+20/04/06
+945209703(0115)
+945210103(0320)
+945209909(0500)
+945409914(0630)
+945206315(0715)
+945210110(0910)
+945206202(1050)
+106508415(1300)
+945102815(1500)
+945206312(1700)
+945206308(1716)
+106101213(2000)
+21/04/06
+10641?207(1400)
+207150704(2311)
+22/04/06
+106303903(1300)
+106202905(2311)
+23/04/06
+945107800(1120)
+945209901(1300)
+24/04/06
+945100600(1300)
+945100602(2325)
+25/04/06
+945210107(1300)
+945108313(2304)
+26/04/06
+207150613(1400)
+106103815(2254)
+27/04/06
+207150702(1400)
+106306115(2300)
+28/04/06
+945100606(1300)
+945103704(2315)
+29/04/06
+106303413(0055)
+945103703(0141)
+106400707(0330)
+106203311(0700)
+106405712(0900)
+945108102(1100)
+945????03(1300)
+106104614(1400)
+106202111(1500)
+106306109(1600)
+106400104(1615)
+106202512(1708)
+105705104(1804)
+945210101(1938)
+945100605(2257)
+30/04/06
+945210100(0035)
+105703708(0200)
+106101212(0330)
+106306306(0500)
+106410213(0700)
+106305403(0900)
+106310105(1100)
+105703712(1300)
+106101205(1400)
+106410205(1500)
+106104506(1600)
+106508408(1700)
+106304308(1734)
+106400715(1830)
+207150703(1950)
+</pre>
+<h2>4.0 Use of the Data</h2>
+
+Please use the following citation as an acknowledgement when
+using this data in any scientific report/paper/presentation:
+<p>
+        "This radiosonde data was gathered as part of the Terrain-induced
+Rotor experiment (T-REX). The primary sponsor of T-REX was the US
+National Science Foundation. The acquisition of this radiosonde data was
+carried out by workers at the Institute for Atmospheric Science,
+University of Leeds, UK and was funded by the Natural Environment
+Research Council (NERC), UK."
+<p>
+If the contribution of this data product is significant to the
+publication/presentation, the Leeds P.I.s should be offered the right to
+joint authorship.
+<p>
+Any redistribution of this data must include this data
+acknowledgement statement.
+<p>
+
+<h2>5.0 References</h2>
+
+<p>Loehrer, S. M., T. A. Edmands, and J. A. Moore, 1996: TOGA COARE upper-air sounding data archive: development and quality control procedures.  Bull. Amer. Meteor. Soc., 77, 2651-2671.</p>
+<p>Loehrer, S. M., S. F. Williams, and J. A. Moore, 1998: Results from UCAR/JOSS quality control of atmospheric soundings from field projects.  Preprints, Tenth Symposium on Meteorological Observations and Instrumentation, Phoenix, AZ, Amer. Meteor. Soc., 1-6.</p>
+
+</body>
+</html>

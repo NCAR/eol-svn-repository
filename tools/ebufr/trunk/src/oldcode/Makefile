@@ -1,0 +1,25 @@
+#
+# $Id$
+#
+#
+# $Log$
+#
+
+SHELL = /bin/sh
+#    Makefile for cvt_coop program
+#
+#LIBS=/data8/gist/ncdc_coop/libs/ebsubs
+LIBS=/raid2/ESOP_95/libs
+
+#FFLAGS = -g -C -u
+FFLAGS = -u -O3
+
+.KEEP_STATE:
+
+cvt_coop: cvt_coop.o gtfils.o dqrset.o wrdqcf.o stninf.o wrstns.o
+	$(LINK.f) -o cvt_coop \
+	cvt_coop.o gtfils.o dqrset.o wrdqcf.o stninf.o wrstns.o \
+	-leblib -lfest -L$(LIBS)
+
+clean:
+	rm *.o

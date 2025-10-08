@@ -1,0 +1,245 @@
+  
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="layout" content="main" />
+        <title>Show Dataset</title>
+    </head>
+    <body>
+        <div class="nav">
+            <span class="menuButton"><a class="home" href="${createLinkTo(dir:'')}">Home</a></span>
+            <span class="menuButton"><g:link class="list" action="list">Dataset List</g:link></span>
+            <span class="menuButton"><g:link class="create" action="create">New Dataset</g:link></span>
+        </div>
+        <div class="body">
+            <h1>Show Dataset</h1>
+            <g:if test="${flash.message}">
+            <div class="message">${flash.message}</div>
+            </g:if>
+            <div class="dialog">
+                <table>
+                    <tbody>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Id:</td>
+                            
+                            <td valign="top" class="value">${dataset.id}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Title:</td>
+                            
+                            <td valign="top" class="value">${dataset.title}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Summary:</td>
+                            
+                            <td valign="top" class="value">${dataset.summary}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Begin Date:</td>
+                            
+                            <td valign="top" class="value">${dataset.beginDate}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">End Date:</td>
+                            
+                            <td valign="top" class="value">${dataset.endDate}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Minimum Latitude:</td>
+                            
+                            <td valign="top" class="value">${dataset.minimumLatitude}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Maximum Latitude:</td>
+                            
+                            <td valign="top" class="value">${dataset.maximumLatitude}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Minimum Longitude:</td>
+                            
+                            <td valign="top" class="value">${dataset.minimumLongitude}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Maximum Longitude:</td>
+                            
+                            <td valign="top" class="value">${dataset.maximumLongitude}</td>
+                            
+                        </tr>
+
+                        <tr class="prop">
+                            <td valign="top" class="name">Metadata Contact:</td>
+                            
+                            <td valign="top" class="value"><g:link controller="contact" action="show" id="${dataset?.metadataContact?.id}">${dataset?.metadataContact}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Datacenter Contact:</td>
+                            
+                            <td valign="top" class="value"><g:link controller="contact" action="show" id="${dataset?.datacenterContact?.id}">${dataset?.datacenterContact}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Progress:</td>
+                            
+                            <td valign="top" class="value">${dataset.progress}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Spatial Type:</td>
+                            
+                            <td valign="top" class="value">${dataset.spatialType}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Access Restrictions:</td>
+                            
+                            <td valign="top" class="value">${dataset.accessRestrictions}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Creation Date:</td>
+                            
+                            <td valign="top" class="value">${dataset.creationDate}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Data Access:</td>
+                            
+                            <td valign="top" class="value">${dataset.dataAccess}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Dataset Language:</td>
+                            
+                            <td valign="top" class="value">${dataset.datasetLanguage}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Discipline:</td>
+                            
+                            <td valign="top" class="value">${dataset.discipline}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Distribution Format:</td>
+                            
+                            <td valign="top" class="value"><g:link controller="format" action="show" id="${dataset?.distributionFormat?.id}">${dataset?.distributionFormat}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Entry ID:</td>
+                            
+                            <td valign="top" class="value">${dataset.entryID}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Instrument Keyword:</td>
+                            
+                            <td valign="top" class="value"><g:link controller="gcmdInstrument" action="show" id="${dataset?.instrumentKeyword?.id}">${dataset?.instrumentKeyword}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Location Keyword:</td>
+                            
+                            <td valign="top" class="value"><g:link controller="gcmdLocation" action="show" id="${dataset?.locationKeyword?.id}">${dataset?.locationKeyword}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Metadata Name:</td>
+                            
+                            <td valign="top" class="value">${dataset.metadataName}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Metadata Version:</td>
+                            
+                            <td valign="top" class="value">${dataset.metadataVersion}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Platform Name:</td>
+                            
+                            <td valign="top" class="value"><g:link controller="gcmdPlatform" action="show" id="${dataset?.platformKeyword?.id}">${dataset?.platformKeyword}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Project:</td>
+                            
+                            <td valign="top" class="value"><g:link controller="project" action="show" id="${dataset?.project?.id}">${dataset?.project}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Revision Date:</td>
+                            
+                            <td valign="top" class="value">${dataset.revisionDate}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Science Keyword:</td>
+                            
+                            <td valign="top" class="value"><g:link controller="gcmdScience" action="show" id="${dataset?.scienceKeyword?.id}">${dataset?.scienceKeyword}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Topic:</td>
+                            
+                            <td valign="top" class="value"><g:link controller="isoTopic" action="show" id="${dataset?.topic?.id}">${dataset?.topic}</g:link></td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name">Use Constraints:</td>
+                            
+                            <td valign="top" class="value">${dataset.useConstraints}</td>
+                            
+                        </tr>
+                    
+                    </tbody>
+                </table>
+            </div>
+            <div class="buttons">
+                <g:form controller="dataset">
+                    <input type="hidden" name="id" value="${dataset?.id}" />
+                    <span class="button"><g:actionSubmit class="edit" value="Edit" /></span>
+                    <span class="button"><g:actionSubmit class="delete" onclick="return confirm('Are you sure?');" value="Delete" /></span>
+                </g:form>
+            </div>
+        </div>
+    </body>
+</html>

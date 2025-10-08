@@ -1,0 +1,123 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <netcdf.h>
+
+void
+check_err(const int stat, const int line, const char *file) {
+    if (stat != NC_NOERR) {
+	   (void) fprintf(stderr, "line %d of %s: %s\n", line, file, nc_strerror(stat));
+        exit(1);
+    }
+}
+
+int
+main() {			/* create domain.nc */
+
+   int  ncid;			/* netCDF id */
+
+   /* dimension ids */
+   int col_dim;
+   int row_dim;
+
+   /* dimension lengths */
+   size_t col_len = 100;
+   size_t row_len = 92;
+
+   /* variable ids */
+   int zsfc_id;
+   int lat_id;
+   int lon_id;
+
+   /* rank (number of dimensions) for each variable */
+#  define RANK_zsfc 2
+#  define RANK_lat 2
+#  define RANK_lon 2
+
+   /* variable shapes */
+   int zsfc_dims[RANK_zsfc];
+   int lat_dims[RANK_lat];
+   int lon_dims[RANK_lon];
+
+   /* attribute vectors */
+   int cdf_start_col[1];
+   int cdf_start_row[1];
+
+   /* enter define mode */
+   int stat = nc_create("domain.nc", NC_CLOBBER, &ncid);
+   check_err(stat,__LINE__,__FILE__);
+
+   /* define dimensions */
+   stat = nc_def_dim(ncid, "col", col_len, &col_dim);
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_def_dim(ncid, "row", row_len, &row_dim);
+   check_err(stat,__LINE__,__FILE__);
+
+   /* define variables */
+
+   zsfc_dims[0] = row_dim;
+   zsfc_dims[1] = col_dim;
+   stat = nc_def_var(ncid, "zsfc", NC_FLOAT, RANK_zsfc, zsfc_dims, &zsfc_id);
+   check_err(stat,__LINE__,__FILE__);
+
+   lat_dims[0] = row_dim;
+   lat_dims[1] = col_dim;
+   stat = nc_def_var(ncid, "lat", NC_FLOAT, RANK_lat, lat_dims, &lat_id);
+   check_err(stat,__LINE__,__FILE__);
+
+   lon_dims[0] = row_dim;
+   lon_dims[1] = col_dim;
+   stat = nc_def_var(ncid, "lon", NC_FLOAT, RANK_lon, lon_dims, &lon_id);
+   check_err(stat,__LINE__,__FILE__);
+
+   /* assign attributes */
+   stat = nc_put_att_text(ncid, zsfc_id, "long_name", 17, "surface elevation");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, zsfc_id, "units", 1, "m");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, lat_id, "long_name", 8, "latitude");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, lat_id, "units", 3, "deg");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, lon_id, "long_name", 9, "longitude");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, lon_id, "units", 3, "deg");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, NC_GLOBAL, "title", 9, "domain.nc");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, NC_GLOBAL, "type", 6, "domain");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, NC_GLOBAL, "modeler", 9, "UCAR/JOSS");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, NC_GLOBAL, "fullname", 28, "ARCMIP 50km EASE-Grid Domain");
+   check_err(stat,__LINE__,__FILE__);
+   cdf_start_col[0] = 113;
+   stat = nc_put_att_int(ncid, NC_GLOBAL, "start_col", NC_INT, 1, cdf_start_col);
+   check_err(stat,__LINE__,__FILE__);
+   cdf_start_row[0] = 101;
+   stat = nc_put_att_int(ncid, NC_GLOBAL, "start_row", NC_INT, 1, cdf_start_row);
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, NC_GLOBAL, "ease_comment", 86, "ARCMIP grid starts at specified row and column of a 50km northern azimuthal EASE-Grid.");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, NC_GLOBAL, "x_index", 41, "col = index of grid points in x direction");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, NC_GLOBAL, "y_index", 41, "row = index of grid points in y direction");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, NC_GLOBAL, "comment", 90, "Prepared by UCAR/JOSS, 2003. http://www.joss.ucar.edu/arcmip/regrid/  codiac@joss.ucar.edu");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, NC_GLOBAL, "zsfc_source", 56, "NGDC GLOBE http://www.ngdc.noaa.gov/seg/topo/globe.shtml");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, NC_GLOBAL, "zsfc_resolution", 70, "30 arc second grid, used GLOBE cell containing EASE cell center latlon");
+   check_err(stat,__LINE__,__FILE__);
+   stat = nc_put_att_text(ncid, NC_GLOBAL, "zsfc_values", 26, "integer values, 0 is ocean");
+   check_err(stat,__LINE__,__FILE__);
+
+   /* leave define mode */
+   stat = nc_enddef (ncid);
+   check_err(stat,__LINE__,__FILE__);
+
+mkncdata(ncid,zsfc_id,lat_id,lon_id);
+
+   stat = nc_close(ncid);
+   check_err(stat,__LINE__,__FILE__);
+   return 0;
+}

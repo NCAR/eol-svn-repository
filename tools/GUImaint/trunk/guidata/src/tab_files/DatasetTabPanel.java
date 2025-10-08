@@ -1,0 +1,472 @@
+package tab_files;
+
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
+
+import com.borland.dbswing.*;
+import com.borland.jbcl.layout.*;
+import java.awt.event.*;
+import java.beans.*;
+
+/**
+ * <p>Title: GUImaint for CODIAC</p>
+ * <p>Description: MySQL db version</p>
+ * <p>Copyright: Copyright (c) 2004, 2005, 2006, 2007</p>
+ * <p>Company: NCAR/EOL</p>
+ * @author Don Stott
+ * @version 2.5- test
+ */
+
+public class DatasetTabPanel extends JPanel {
+  BorderLayout borderLayout1 = new BorderLayout();
+  BorderLayout borderLayout4 = new BorderLayout();
+  VerticalFlowLayout verticalFlowLayout2 = new VerticalFlowLayout();
+  static Color tabBlue = new Color(233, 239, 252);
+  static Color thisTabColor = tabBlue;
+
+  // Data Details
+  JPanel dataDetailsPanel = new JPanel();
+  TitledBorder titledBorder1;
+  JPanel detailsPanel2 = new JPanel();
+  JPanel detailsPanel1 = new JPanel();
+  JLabel freqLabel = new JLabel();
+  JLabel beginDateLabel = new JLabel();
+  JLabel endDateLabel = new JLabel();
+  JLabel rowRevLabel = new JLabel();
+  JLabel piLabel = new JLabel();
+  JLabel srcContactLabel = new JLabel();
+  JLabel intContactLabel = new JLabel();
+  JdbComboBox freqComboBox = new JdbComboBox();
+  JdbTextField beginDateTextField = new JdbTextField();
+  JdbTextField endDateTextField = new JdbTextField();
+
+  // Availability
+  JPanel availPanel = new JPanel();
+  TitledBorder titledBorder2;
+  JPanel availPanel1 = new JPanel();
+  JPanel availPanel2 = new JPanel();
+  JdbCheckBox browseCheckBox = new JdbCheckBox();
+  JLabel summaryLabel = new JLabel();
+  JdbTextPane summaryTextArea = new JdbTextPane();
+  JScrollPane summaryScrollPane = new JScrollPane(summaryTextArea);
+  JLabel dispContactLabel = new JLabel();
+  JdbComboBox dispContactComboBox = new JdbComboBox();
+  JLabel spatialLabel = new JLabel();
+  JdbComboBox spatialComboBox = new JdbComboBox();
+  Border border1;
+  JdbTextField revisionDateField = new JdbTextField();
+
+  // proj/ID link
+  Border border2;
+  TitledBorder titledBorder3;
+  DataModule1 dataModule11;
+  JdbComboBox intContactComboBox = new JdbComboBox();
+  XYLayout xYLayout1 = new XYLayout();
+  JdbComboBox sourceContactComboBox = new JdbComboBox();
+  JdbCheckBox eulaCheckBox = new JdbCheckBox();
+  JdbCheckBox authCheckBox = new JdbCheckBox();
+  XYLayout xYLayout3 = new XYLayout();
+  XYLayout xYLayout4 = new XYLayout();
+  FlowLayout flowLayout1 = new FlowLayout();
+  XYLayout xYLayout5 = new XYLayout();
+  JPanel latlonPanel = new JPanel();
+  XYLayout xYLayout6 = new XYLayout();
+  JLabel wLonLabel = new JLabel();
+  JdbTextField nLatTextField = new JdbTextField();
+  JdbTextField sLatTextField = new JdbTextField();
+  JdbTextField eLonTextField = new JdbTextField();
+  JdbTextField wLonTextField = new JdbTextField();
+  JLabel eLonLabel = new JLabel();
+  JLabel sLatLabel = new JLabel();
+  JLabel nLatLabel = new JLabel();
+  TitledBorder titledBorder4;
+  TitledBorder titledBorder5;
+  TitledBorder titledBorder6;
+  TitledBorder titledBorder7;
+  JdbTextField rowRevTextField = new JdbTextField();
+  JdbTextField piTextField = new JdbTextField();
+  JdbCheckBox hideCheckBox = new JdbCheckBox();
+  JdbCheckBox dodsCheckBox = new JdbCheckBox();
+  JLabel orLabel = new JLabel();
+  JdbRadioButton onlineRadioButton = new JdbRadioButton();
+  JdbRadioButton offlineRadioButton = new JdbRadioButton();
+static  JdbRadioButton linkRadioButton = new JdbRadioButton();
+  ButtonGroup group = new ButtonGroup();
+  JdbLabel blankLabel1 = new JdbLabel();
+  JLabel orLabel1 = new JLabel();
+  JdbCheckBox isEOLCheckBox = new JdbCheckBox();
+
+  public DatasetTabPanel() {
+    try  {
+      jbInit();
+    }
+    catch(Exception ex) {
+      ex.printStackTrace();
+    }
+  }
+
+  private void jbInit() throws Exception {
+    border1 = BorderFactory.createEtchedBorder(Color.white,new java.awt.Color(142, 142, 142));
+    border2 = BorderFactory.createEtchedBorder(Color.white,new Color(148, 145, 140));
+    titledBorder3 = new TitledBorder(BorderFactory.createEtchedBorder(Color.white,new Color(148, 145, 140)),"Projects Linked to Dataset");
+    dataModule11 = tab_files.DataModule1.getDataModule();
+    titledBorder4 = new TitledBorder("");
+    titledBorder5 = new TitledBorder("");
+    titledBorder6 = new TitledBorder("");
+    titledBorder7 = new TitledBorder("");
+    this.setLayout(borderLayout1);
+    titledBorder1 = new TitledBorder("Data Details");
+    titledBorder2 = new TitledBorder("Availability");
+    this.setLayout(xYLayout3);
+    dataDetailsPanel.setLayout(flowLayout1);
+    dataDetailsPanel.setBackground(thisTabColor);
+    dataDetailsPanel.setBorder(titledBorder1);
+    dataDetailsPanel.setMinimumSize(new Dimension(790, 240));
+    dataDetailsPanel.setPreferredSize(new Dimension(790, 240));
+    availPanel.setLayout(borderLayout4);
+    availPanel.setBackground(thisTabColor);
+    availPanel.setBorder(titledBorder2);
+    availPanel.setMinimumSize(new Dimension(790, 270));
+    availPanel.setPreferredSize(new Dimension(790, 280));
+
+    // Data Details
+    detailsPanel2.setLayout(xYLayout5);
+    freqLabel.setBackground(thisTabColor);
+    freqLabel.setForeground(Color.blue);
+    freqLabel.setAlignmentY((float) 0.0);
+    freqLabel.setMaximumSize(new Dimension(55, 17));
+    freqLabel.setMinimumSize(new Dimension(50, 17));
+    freqLabel.setPreferredSize(new Dimension(60, 17));
+    freqLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+    freqLabel.setText("Frequency:");
+    detailsPanel1.setBackground(thisTabColor);
+    detailsPanel1.setMinimumSize(new Dimension(160, 200));
+    detailsPanel1.setPreferredSize(new Dimension(325, 195));
+    detailsPanel1.setLayout(xYLayout4);
+    detailsPanel2.setBackground(thisTabColor);
+    detailsPanel2.setMinimumSize(new Dimension(1360, 220));
+    detailsPanel2.setPreferredSize(new Dimension(405, 195));
+    beginDateLabel.setForeground(Color.blue);
+    beginDateLabel.setPreferredSize(new Dimension(45, 14));
+    beginDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+    beginDateLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+    beginDateLabel.setText("Begin Date:");
+    endDateLabel.setForeground(Color.blue);
+    endDateLabel.setPreferredSize(new Dimension(45, 14));
+    endDateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+    endDateLabel.setText("End Date:");
+    srcContactLabel.setForeground(Color.blue);
+    srcContactLabel.setMaximumSize(new Dimension(55, 17));
+    srcContactLabel.setPreferredSize(new Dimension(60, 17));
+    srcContactLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+    srcContactLabel.setText("Source Contact:");
+    intContactLabel.setForeground(Color.blue);
+    intContactLabel.setMaximumSize(new Dimension(55, 17));
+    intContactLabel.setPreferredSize(new Dimension(60, 17));
+    intContactLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+    intContactLabel.setText("Internal Contact:");
+    beginDateTextField.setBorder(BorderFactory.createLoweredBevelBorder());
+    beginDateTextField.setPreferredSize(new Dimension(129, 20));
+    beginDateTextField.setText("1999/01/01");
+    beginDateTextField.setHorizontalAlignment(SwingConstants.CENTER);
+    beginDateTextField.setColumnName("begin_date");
+    beginDateTextField.setDataSet(dataModule11.getQueryDataset1());
+    endDateTextField.setBorder(BorderFactory.createLoweredBevelBorder());
+    endDateTextField.setText("1999/08/31");
+    endDateTextField.setHorizontalAlignment(SwingConstants.CENTER);
+    endDateTextField.setColumnName("end_date");
+    endDateTextField.setDataSet(dataModule11.getQueryDataset1());
+    freqComboBox.setBackground(Color.white);
+    freqComboBox.setFont(new java.awt.Font("SanSerif", 0, 12));
+    freqComboBox.setMinimumSize(new Dimension(126, 14));
+    freqComboBox.setPreferredSize(new Dimension(130, 14));
+    freqComboBox.setColumnName("frequency_id");
+    freqComboBox.setDataSet(dataModule11.getQueryDataset1());
+    freqComboBox.setItems(null);
+
+    // Availability
+    availPanel1.setBackground(thisTabColor);
+    availPanel1.setMinimumSize(new Dimension(140, 200));
+    availPanel1.setPreferredSize(new Dimension(144, 100));
+    availPanel1.setLayout(verticalFlowLayout2);
+    browseCheckBox.setBackground(thisTabColor);
+    browseCheckBox.setForeground(new java.awt.Color(0, 50, 150));
+    browseCheckBox.setToolTipText("check if can be browsed");
+    browseCheckBox.setSelected(false);
+    browseCheckBox.setText("Browse");
+    browseCheckBox.setColumnName("browseable");
+    browseCheckBox.setDataSet(dataModule11.getQueryDataset1());
+    browseCheckBox.setUnknownDataValueMode(DBDataBinder.CLEAR_VALUE);
+    verticalFlowLayout2.setHgap(10);
+    summaryLabel.setPreferredSize(new Dimension(585, 17));
+    summaryLabel.setToolTipText("This is called the Summary section on CODIAC.");
+    summaryLabel.setText("Description:");
+
+    rowRevLabel.setForeground(new Color(0, 50, 150));
+    rowRevLabel.setMaximumSize(new Dimension(55, 17));
+    rowRevLabel.setPreferredSize(new Dimension(60, 17));
+    rowRevLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+    rowRevLabel.setText("Row Revise Contact:");
+    piLabel.setForeground(new Color(0, 50, 150));
+    piLabel.setMaximumSize(new Dimension(55, 17));
+    piLabel.setPreferredSize(new Dimension(60, 17));
+    piLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+    piLabel.setText("Data set PI:");
+    dispContactLabel.setForeground(Color.blue);
+    dispContactLabel.setMaximumSize(new Dimension(55, 17));
+    dispContactLabel.setPreferredSize(new Dimension(60, 17));
+    dispContactLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+    dispContactLabel.setText("Displayed Contact:");
+    spatialLabel.setForeground(Color.blue);
+    spatialLabel.setMaximumSize(new Dimension(55, 17));
+    spatialLabel.setPreferredSize(new Dimension(60, 17));
+    spatialLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+    spatialLabel.setText("Spatial Type:");
+    spatialComboBox.setBackground(Color.white);
+    spatialComboBox.setFont(new java.awt.Font("SanSerif", 0, 12));
+    spatialComboBox.setPreferredSize(new Dimension(130, 24));
+    spatialComboBox.setEditable(false);
+    spatialComboBox.setColumnName("spatial_type");
+    spatialComboBox.setDataSet(dataModule11.getQueryDataset1());
+    spatialComboBox.setItems(null);
+    this.setBackground(thisTabColor);
+    this.setMinimumSize(new Dimension(800, 700));
+    this.setPreferredSize(new Dimension(800, 700));
+    summaryScrollPane.setAutoscrolls(true);
+    summaryScrollPane.setPreferredSize(new Dimension(585, 150));
+    availPanel2.setBackground(thisTabColor);
+    availPanel2.setMinimumSize(new Dimension(605, 87));
+    availPanel2.setPreferredSize(new Dimension(605, 160));
+    availPanel2.setLayout(xYLayout1);
+    dispContactComboBox.setBackground(Color.white);
+    dispContactComboBox.setFont(new java.awt.Font("SansSerif", 0, 12));
+    dispContactComboBox.setRequestFocusEnabled(false);
+    dispContactComboBox.setEditable(false);
+    dispContactComboBox.setColumnName("displayed_contact_id");
+    dispContactComboBox.setDataSet(dataModule11.getQueryDataset1());
+    dispContactComboBox.setDropDownWidth(400);
+    revisionDateField.setBackground(new Color(255, 230, 222));
+    revisionDateField.setVisible(false);
+    revisionDateField.setDataSet(dataModule11.getQueryDataset1());
+
+    // proj/ID link
+
+    intContactComboBox.setBackground(Color.white);
+    intContactComboBox.setFont(new java.awt.Font("SanSerif", 0, 12));
+    intContactComboBox.setPreferredSize(new Dimension(26, 19));
+    intContactComboBox.setColumnName("internal_contact_id");
+    intContactComboBox.setDataSet(dataModule11.getQueryDataset1());
+    intContactComboBox.setDropDownWidth(190);
+
+    sourceContactComboBox.setBackground(Color.white);
+    sourceContactComboBox.setFont(new java.awt.Font("SanSerif", 0, 12));
+    sourceContactComboBox.setEditable(false);
+    sourceContactComboBox.setColumnName("source_contact_id");
+    sourceContactComboBox.setDataSet(dataModule11.getQueryDataset1());
+    sourceContactComboBox.setDropDownWidth(400);
+    eulaCheckBox.setUnknownDataValueMode(DBDataBinder.CLEAR_VALUE);
+    eulaCheckBox.setDataSet(dataModule11.getQueryDataset1());
+    eulaCheckBox.setColumnName("eula_reqd");
+    eulaCheckBox.setText("Eula required");
+    eulaCheckBox.setToolTipText("check if EULA required");
+    eulaCheckBox.setSelected(false);
+    eulaCheckBox.setBackground(thisTabColor);
+    eulaCheckBox.setForeground(new java.awt.Color(0, 50, 150));
+    authCheckBox.setUnknownDataValueMode(DBDataBinder.CLEAR_VALUE);
+    authCheckBox.setDataSet(dataModule11.getQueryDataset1());
+    authCheckBox.setColumnName("auth_reqd");
+    authCheckBox.setText("Password reqd.");
+    authCheckBox.setToolTipText("check if password protected");
+    authCheckBox.setSelected(false);
+    authCheckBox.setBackground(thisTabColor);
+    authCheckBox.setForeground(new java.awt.Color(0, 50, 150));
+    xYLayout3.setWidth(812);
+    xYLayout3.setHeight(775);
+    xYLayout4.setWidth(300);
+    latlonPanel.setLayout(xYLayout6);
+    wLonLabel.setForeground(Color.blue);
+    wLonLabel.setPreferredSize(new Dimension(45, 14));
+    wLonLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    wLonLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+    wLonLabel.setText("W. Longitude:");
+    nLatTextField.setBorder(BorderFactory.createLoweredBevelBorder());
+    nLatTextField.setText("50.00");
+    nLatTextField.setHorizontalAlignment(SwingConstants.CENTER);
+    nLatTextField.setColumnName("maxlat");
+    nLatTextField.setDataSet(dataModule11.getQueryDataset1());
+    sLatTextField.setBorder(BorderFactory.createLoweredBevelBorder());
+    sLatTextField.setText("28.00");
+    sLatTextField.setHorizontalAlignment(SwingConstants.CENTER);
+    sLatTextField.setColumnName("minlat");
+    sLatTextField.setDataSet(dataModule11.getQueryDataset1());
+    eLonTextField.setBorder(BorderFactory.createLoweredBevelBorder());
+    eLonTextField.setText("-80.00");
+    eLonTextField.setHorizontalAlignment(SwingConstants.CENTER);
+    eLonTextField.setColumnName("maxlon");
+    eLonTextField.setDataSet(dataModule11.getQueryDataset1());
+    wLonTextField.setBorder(BorderFactory.createLoweredBevelBorder());
+    wLonTextField.setPreferredSize(new Dimension(68, 14));
+    wLonTextField.setText("-115.00");
+    wLonTextField.setHorizontalAlignment(SwingConstants.CENTER);
+    wLonTextField.setColumnName("minlon");
+    wLonTextField.setDataSet(dataModule11.getQueryDataset1());
+    eLonLabel.setForeground(Color.blue);
+    eLonLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    eLonLabel.setText("E. Longitude:");
+    sLatLabel.setForeground(Color.blue);
+    sLatLabel.setPreferredSize(new Dimension(45, 14));
+    sLatLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    sLatLabel.setText("S. Latitude:");
+    nLatLabel.setForeground(Color.blue);
+    nLatLabel.setPreferredSize(new Dimension(45, 14));
+    nLatLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    nLatLabel.setText("N. Latitude:");
+    latlonPanel.setBackground(thisTabColor);
+    latlonPanel.setBorder(BorderFactory.createEtchedBorder());
+    rowRevTextField.setBackground(new Color(240, 240, 240));
+    rowRevTextField.setBorder(BorderFactory.createLoweredBevelBorder());
+    rowRevTextField.setToolTipText("Row Revise Contact is set automatically");
+    rowRevTextField.setEditable(false);
+    rowRevTextField.setText("jdbTextField1");
+    rowRevTextField.setHorizontalAlignment(SwingConstants.LEFT);
+    rowRevTextField.setColumnName("row_revise_contact_id");
+    rowRevTextField.setDataSet(dataModule11.getQueryDataset1());
+    summaryTextArea.setBorder(BorderFactory.createLoweredBevelBorder());
+    summaryTextArea.setPreferredSize(new Dimension(500, 450));
+    summaryTextArea.setToolTipText("CODIAC Summary goes here.");
+    summaryTextArea.setCaretColor(Color.blue);
+    summaryTextArea.setEditable(true);
+    summaryTextArea.setText("Description of a dataset goes here...");
+    summaryTextArea.setColumnName("description");
+    summaryTextArea.setDataSet(dataModule11.getQueryDataset1());
+    summaryTextArea.setPostOnFocusLost(true);
+    piTextField.setBackground(new Color(240, 240, 240));
+    piTextField.setToolTipText("Set Dataset PI on Users & PIs tab");
+    piTextField.setEditable(false);
+    piTextField.setText("Set this on PI tab");
+    piTextField.setHorizontalAlignment(SwingConstants.LEFT);
+    piTextField.setColumnName("pi_contact_id");
+    piTextField.setDataSet(dataModule11.getQueryDatasetPI());
+    hideCheckBox.setForeground(new java.awt.Color(0, 50, 150));
+    hideCheckBox.setBackground(thisTabColor);
+    hideCheckBox.setSelected(false);
+    hideCheckBox.setToolTipText("check if dataset is to be hidden");
+    hideCheckBox.setText("Hide dataset");
+    hideCheckBox.setColumnName("hide");
+    hideCheckBox.setDataSet(dataModule11.getQueryDataset1());
+    hideCheckBox.setUnknownDataValueMode(DBDataBinder.CLEAR_VALUE);
+    dodsCheckBox.setUnknownDataValueMode(DBDataBinder.CLEAR_VALUE);
+    dodsCheckBox.setColumnName("dodsable");
+    dodsCheckBox.setDataSet(dataModule11.getQueryDataset1());
+    dodsCheckBox.setText("Link to DODS");
+    dodsCheckBox.setToolTipText("check if dataset is able to link to DODS");
+    dodsCheckBox.setSelected(false);
+    dodsCheckBox.setBackground(thisTabColor);
+    dodsCheckBox.setForeground(new java.awt.Color(0, 50, 150));
+    orLabel.setText("/");
+    orLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+    orLabel.setPreferredSize(new Dimension(57, 17));
+    orLabel.setToolTipText("");
+    orLabel.setForeground(new java.awt.Color(0, 50, 150));
+    orLabel.setFont(new java.awt.Font("SanSerif", 3, 12));
+    onlineRadioButton.setOpaque(false);
+    onlineRadioButton.setHorizontalAlignment(SwingConstants.CENTER);
+    onlineRadioButton.setBackground(thisTabColor);
+    onlineRadioButton.setForeground(new Color(0, 50, 150));
+    onlineRadioButton.setText("Online");
+    onlineRadioButton.setColumnName("onlineorderable");
+    onlineRadioButton.setDataSet(dataModule11.getQueryDataset1());
+    offlineRadioButton.setText("Offline");
+    offlineRadioButton.setColumnName("offlineorderable");
+    offlineRadioButton.setDataSet(dataModule11.getQueryDataset1());
+    offlineRadioButton.setForeground(new Color(0, 50, 150));
+    offlineRadioButton.setBackground(thisTabColor);
+    offlineRadioButton.setOpaque(false);
+    linkRadioButton.setOpaque(false);
+    linkRadioButton.setToolTipText("Examples: an xlink download; a dataset without data");
+    linkRadioButton.setBackground(thisTabColor);
+    linkRadioButton.setForeground(new Color(0, 50, 150));
+    linkRadioButton.setSelectedDataValue("");
+    linkRadioButton.setText("Neither  (with no order link in CODIAC)");
+
+    blankLabel1.setText("     ");
+    blankLabel1.setPreferredSize(new Dimension(15, 22));
+    blankLabel1.setMinimumSize(new Dimension(15, 22));
+    blankLabel1.setVisible(true);
+    blankLabel1.setMaximumSize(new Dimension(15, 22));
+    orLabel1.setFont(new java.awt.Font("SanSerif", 3, 12));
+    orLabel1.setForeground(new java.awt.Color(0, 50, 150));
+    orLabel1.setToolTipText("");
+    orLabel1.setPreferredSize(new Dimension(57, 17));
+    orLabel1.setHorizontalTextPosition(SwingConstants.LEFT);
+    orLabel1.setText("/");
+    isEOLCheckBox.setUnknownDataValueMode(DBDataBinder.CLEAR_VALUE);
+    isEOLCheckBox.setDataSet(dataModule11.getQueryDataset1());
+    isEOLCheckBox.setColumnName("is_eol_data");
+    isEOLCheckBox.setText("Is EOL data");
+    isEOLCheckBox.setToolTipText("check to include in EOL download metrics");
+    isEOLCheckBox.setSelected(false);
+    isEOLCheckBox.setBackground(thisTabColor);
+    isEOLCheckBox.setForeground(new java.awt.Color(0, 50, 150));
+    this.add(dataDetailsPanel, new XYConstraints(5, 5, -1, -1));
+    dataDetailsPanel.add(detailsPanel1, null);
+    dataDetailsPanel.add(detailsPanel2, null);
+    detailsPanel2.add(freqLabel, new XYConstraints(0, 0, 181, 23));
+    detailsPanel2.add(spatialLabel, new XYConstraints(0, 28, 181, 23));
+    detailsPanel2.add(spatialComboBox, new XYConstraints(199, 28, 200, 23));
+    detailsPanel2.add(rowRevLabel, new XYConstraints(0, 56, 181, 23));
+    detailsPanel2.add(piLabel, new XYConstraints(0, 84, 181, 23));
+    detailsPanel2.add(dispContactLabel,   new XYConstraints(0, 112, 181, 23));
+    detailsPanel2.add(dispContactComboBox,      new XYConstraints(199, 112, 200, 23));
+    detailsPanel2.add(srcContactLabel,   new XYConstraints(0, 140, 181, 23));
+    detailsPanel2.add(sourceContactComboBox,      new XYConstraints(199, 140, 200, 23));
+    detailsPanel2.add(intContactLabel,   new XYConstraints(0, 168, 181, 23));
+    detailsPanel2.add(intContactComboBox,    new XYConstraints(199, 168, 200, 23));
+    detailsPanel2.add(rowRevTextField,        new XYConstraints(199, 56, 180, 23));
+    detailsPanel2.add(piTextField, new XYConstraints(199, 84, 180, 23));
+    detailsPanel2.add(freqComboBox, new XYConstraints(199, 0, 200, 23));
+    detailsPanel1.add(endDateTextField, new XYConstraints(169, 32, 152, 22));
+    detailsPanel1.add(beginDateLabel,    new XYConstraints(44, 5, 111, 22));
+    detailsPanel1.add(endDateLabel,  new XYConstraints(44, 31, 111, 22));
+    detailsPanel1.add(beginDateTextField, new XYConstraints(169, 4, 152, 22));
+    detailsPanel1.add(latlonPanel, new XYConstraints(99, 68, 222, 126));
+    latlonPanel.add(wLonLabel, new XYConstraints(0, 63, 92, 22));
+    latlonPanel.add(nLatTextField, new XYConstraints(97, 0, 92, 22));
+    latlonPanel.add(sLatTextField, new XYConstraints(97, 30, 92, 22));
+    latlonPanel.add(eLonTextField, new XYConstraints(97, 90, 92, 22));
+    latlonPanel.add(wLonTextField, new XYConstraints(0, 90, 92, 22));
+    latlonPanel.add(eLonLabel, new XYConstraints(97, 63, 92, 22));
+    latlonPanel.add(sLatLabel, new XYConstraints(0, 30, 89, 22));
+    latlonPanel.add(nLatLabel, new XYConstraints(1, 2, 89, 22));
+
+    this.add(availPanel,  new XYConstraints(5, 250, -1, -1));
+    availPanel.add(availPanel1, BorderLayout.WEST);
+    availPanel1.add(blankLabel1, null);
+    availPanel1.add(browseCheckBox, null);
+    availPanel1.add(revisionDateField, null);
+    availPanel.add(availPanel2, BorderLayout.CENTER);
+
+    availPanel1.add(authCheckBox, null);
+    availPanel1.add(eulaCheckBox, null);
+    availPanel1.add(dodsCheckBox, null);
+    availPanel1.add(hideCheckBox, null);
+    availPanel1.add(isEOLCheckBox, null);
+    availPanel2.add(summaryScrollPane, new XYConstraints(24, 66, -1, -1));
+    availPanel2.add(summaryLabel,        new XYConstraints(23, 40, -1, -1));
+    availPanel2.add(offlineRadioButton,  new XYConstraints(118, 7, 76, 17));
+    availPanel2.add(orLabel1, new XYConstraints(106, 7, 13, -1));
+    availPanel2.add(onlineRadioButton,    new XYConstraints(-11, 4, 110, -1));
+    availPanel2.add(orLabel,  new XYConstraints(203, 6, 13, -1));
+    availPanel2.add(linkRadioButton, new XYConstraints(218, 7, 357, 17));
+    summaryScrollPane.getViewport().add(summaryTextArea, null);
+    group.add(linkRadioButton);
+    group.add(offlineRadioButton);
+    group.add(onlineRadioButton);
+  }
+
+  public static Color getTabColor() {
+    return thisTabColor;
+  }
+
+}

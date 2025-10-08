@@ -1,0 +1,13 @@
+SHELL = /bin/sh
+#    Makefile for compare dir program.
+#
+
+CC=acc
+##CFLAGS = -g
+
+compare_dir: compare_dir.o
+	$(LINK.c) -o compare_dir compare_dir.o
+	chmod 0755 compare_dir
+
+clean:
+	rm *.o

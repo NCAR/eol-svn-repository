@@ -1,0 +1,138 @@
+> groovy authorshipConnect.groovy ICEBRIDGE IDEAS-1 IDEAS-2 IDEAS-3 IDEAS-4_C130 IDEAS-4_GV
+
+Created log file:	logs/log_20131122162842.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NCAR-EOL-RAF
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-1
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 207.001
+Unable to find 1 for data set 207.002
+Unable to find 1 for data set 207.003
+Unable to find 508 for data set 207.004
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '207.001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '207.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '207.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '207.004';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-2
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 206.001
+Unable to find 1 for data set 206.002
+Unable to find 1 for data set 206.003
+Unable to find 508 for data set 206.004
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '206.001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '206.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '206.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '206.004';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-3
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 205.001
+Unable to find 1 for data set 205.002
+Unable to find 1 for data set 205.003
+Unable to find 508 for data set 205.004
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '205.001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '205.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '205.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '205.004';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-4_C130
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 508 for data set 350.004
+Unable to find 508 for data set 350.005
+--------------------------------------------------------------------------------
+  IDEAS-4_C130:  350.007
+		Rogers (NCAR-RAF)
+Which of these contacts matches this author:	Rogers
+
+		723	drogers	Dave Rogers	
+		1085	null	Jeffrey C. Rogers	Department of Geography
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 723
+
+Found 723 for data set 350.007 and has sort_key of 65534 (instead of 1).
+Unable to find 508 for data set 350.007
+Found 723 for data set 350.008 and has sort_key of 65534 (instead of 1).
+Unable to find 508 for data set 350.008
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.004';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.005';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 9315 and contact_id = 723;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.007';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 9316 and contact_id = 723;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.008';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-4_GV
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  IDEAS-4_GV:  378.001
+		Beaton (NCAR-EOL-RAF)
+Which of these contacts matches this author:	Beaton
+
+		721	sbeaton	Stuart Beaton	UCAR/NCAR/RAF
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 721
+
+Unable to find 721 for data set 378.001
+Unable to find 721 for data set 378.002
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 721, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '378.001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 721, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '378.002';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

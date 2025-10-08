@@ -1,0 +1,26 @@
+c---------------------------------------------------------------------
+c ARCSyM atmospheric 2d variables (monthly average)
+      real *4 psfc_mon(ix,jx), tsfc_mon(ix,jx),
+     +        t2m_mon(ix,jx), t2m_min_mon(ix,jx),
+     +        t2m_max_mon(ix,jx), t1m_soil_mon(ix,jx),
+     +        soil_wat_mon(ix,jx), rainc_mon(ix,jx),
+     +        rainnc_mon(ix,jx), precip_mon(ix,jx),
+     +        rain_mon(ix,jx), snow_mon(ix,jx),
+     +        swe_mon(ix,jx), tot_cld_frac_mon(ix,jx),
+     +        cld_base_mon(ix,jx), lhf_mon(ix,jx),
+     +        shf_mon(ix,jx), ust_mon(ix,jx),
+     +        swd_sfc_mon(ix,jx), swu_sfc_mon(ix,jx),
+     +        lwd_sfc_mon(ix,jx), lwu_sfc_mon(ix,jx),
+     +        swd_toa_mon(ix,jx), swu_toa_mon(ix,jx),
+     +        lwu_toa_mon(ix,jx)
+      integer cld_base_cnt(ix,jx)
+      common /arcmip_mon_2d/ psfc_mon, tsfc_mon, t2m_mon,
+     +                       t2m_min_mon, t2m_max_mon, t1m_soil_mon,
+     +                       soil_wat_mon, rainc_mon, rainnc_mon,
+     +                       precip_mon, rain_mon, snow_mon,
+     +                       swe_mon, tot_cld_frac_mon, cld_base_mon,
+     +                       lhf_mon, shf_mon, ust_mon,
+     +                       swd_sfc_mon, swu_sfc_mon, lwd_sfc_mon,
+     +                       lwu_sfc_mon, swd_toa_mon, swu_toa_mon,
+     +                       lwu_toa_mon, cld_base_cnt
+c---------------------------------------------------------------------

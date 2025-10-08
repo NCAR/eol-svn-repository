@@ -1,0 +1,5 @@
+RAINEX:
+	g++ -g -o ../bin/nws_autoqc_RAINEX auto_qc.cpp -lm -I../lib -DRAINEX -DNWS
+	g++ -g -o ../bin/autoqc_RAINEX auto_qc.cpp -lm -I../lib -DRAINEX
+	g++ -g -o ../bin/autoqc_drop_RAINEX auto_qc.cpp -lm -I../lib -DRAINEX -DDROP
+	g++ -g -o ../bin/autoqc_RAINEX_5point_avg auto_qc.cpp -lm -I../lib -DRAINEX -DFIVE

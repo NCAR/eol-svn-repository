@@ -1,0 +1,44 @@
+#! /usr/bin/perl -w
+
+package AddGroupAssociationActionCGI;
+use strict;
+use lib ".";
+use lib "lib";
+use ActionCGI;
+use Dataset;
+our @ISA = ("ActionCGI");
+
+&main();
+
+sub main {
+    my $self = AddGroupAssociationActionCGI->new();
+    $self->buildPage("Add Group Association Action");
+}
+
+sub buildPage {
+    my ($self,$title) = @_;
+
+    $self->processParams();
+
+    print ($self->header());
+    printf("<html>\n");
+    printf("<head>\n");
+    printf("   <title>Iven: %s</title>\n",$title);
+    printf("   <link rel=stylesheet type=text/css href=%s>\n",$self->{"CSS"});
+    printf("   <script language=javascript type=text/javascript src=%s></script>\n",
+	   $self->{"JAVASCRIPT"});
+    printf("</head>\n");
+    printf("<body onLoad=\"javascript: editSourceAfterLink('%s'); \">\n",$self->param("dataset"));
+    $self->buildPageBody();
+    printf("</body>\n");
+    printf("</html>\n");
+
+    $self->{"DB"}->disconnect();
+
+}
+
+sub processParams {
+    my ($self) = @_;
+
+    $self->{"DB"}->addGroupAssociation($self->param("group"),$self->param("dataset"));
+}

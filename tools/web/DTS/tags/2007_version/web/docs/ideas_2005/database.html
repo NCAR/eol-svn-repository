@@ -1,0 +1,382 @@
+<html>
+<head>
+<title>NATTAP 2005 Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="nattap.css">
+</head>
+
+<body>
+<h1>The NATTAP 2005 Database</h1>
+<p>The description for the database is necessary before the description of the tools because what defines the database will define what will need to be changed in the tools.  This will list the different tables and descriptions of the attributes to be included in the table.</p>
+
+<ol>
+	<li><a href="#db_project">The Project Table</a>
+	<li><a href="#db_dataset">The Dataset Table</a>
+	<li><a href="#db_dataset_project">The Database/Project Table</a>
+	<li><a href="#db_product">The Product Table</a>
+	<li><a href="#db_dataset_product">The Dataset/Product Table</a>
+	<li><a href="#db_category">The Category Table</a>
+	<li><a href="#db_status">The Status Table</a>
+	<li><a href="#db_dataset_category">The Dataset/Category Table</a>
+	<li><a href="#db_project_category">The Project/Category Table</a>
+</ol>
+
+<a name="db_project"></a><h3>The Project Table</h3>
+<p>The <i>project</i> table will define a project in NATTAP.  It should contain any information that is needed for our management that is not already in <i>jedi</i>.</p>
+
+<table border=1>
+<tr><th>Attribute<th>Description<th>Discussion</tr>
+<tr><th>project_id
+	<td>The unique id for the project.  Will need to be the same as the id in <i>jedi</i>.
+	<td><p class="joel">The requirement for the id to be the same as in <i>jedi</i> has two purposes.  First, it would get confusing to have two ids that represent the same project.  Second, the tools will use this id for pulling other information (latitude, longitude, dates, etc.) from <i>jedi</i> instead of having to duplicate this information in NATTAP.
+	</tr>
+<tr><th>active
+	<td>A flag to make the project active and show in the project lists.
+	<td><p class="joel">This is a historical attribute from both the DTS and IVEN tools.  It allows a project to be <i>turned off</i> and no longer appear in the lists to be seen or selected.  I am not certain this is necessary anymore as I see all projects being active to a certain degree.
+	</tr>
+<tr><th>dataset_prefix
+	<td>The prefix to be used for all new project datasets.
+	<td><p class="joel">This may not be necessary if we don't want to automate the DPG page.
+	</tr>
+<tr><th>charge_number
+	<td>The charge number for work done on the project.
+	<td><p class="joel">This may not be necessary if we don't want to semi-automate the DPG page.
+	</tr>
+<tr><th>project_notes
+	<td>General project wide notes.
+	<td><p class="joel">This would be read by the DPG page and the IVEN tool for displaying the general project information.  This would include stuff like the tier information on the NAME page.
+	</tr>
+<tr><th>image_link
+	<td>Address to the project image
+	<td><p class="joel">This came from the ML to display the project image.  This could be used by all of the tools to maintain a sense of unity between them.
+	</tr>
+<tr><th>home_page_link
+	<td>Address to the project's home page.
+	<td><p class="joel">This is from the DPG project page.  This could be used by other tools as links to "HOME" something like that.
+	</tr>
+<tr><th>database_link
+	<td>Address to the project's home page on codiac/jedi.
+	<td><p class="joel">This is from the DPG project page.  I could see this also being used by the ML to provide a different view to the datasets.
+	</tr>
+<tr><th>data_mgmt_link
+	<td>Address to the project's data managment page.
+	<td><p class="joel">This is from the DPG project page.
+	</tr>
+<tr><th>field_catalog_link
+	<td>Address to the project's field catalog.
+	<td><p class="joel">This is from the DPG project page.
+	</tr>
+<tr><th>css_link
+	<td>Address to the project's style sheet.
+	<td><p class="joel">This is a combination of the left and body CSS project attributes from the ML.  I think this should at least be combined into a single CSS which could also be used by the other tools.  This would allow all of the coloring and basic design among all of the tools for a project have a consistant look and feel.
+	</tr>
+<tr><th>work_link
+	<td>Address to a symbolic link to our work area.
+	<td><p class="joel">At this point, this is necessary for the links in IVEN to work correctly.  It requires a symbolic link in the project's web directory that points into work.  We could use a single work link, but that would <i>open up</i> our entire work area to the public over the web.  This probably isn't the best way, and I don't like having to create the symbolic links to each project.  This needs more thought...
+	</tr>
+<tr><th>contact_id
+	<td>The contact id from the contact in <i>jedi</i> who is in charge of the project.
+	<td><p class="joel">This is to provide a single point of access for all of the contact data without having to duplicate it.
+	</tr>
+</table>
+
+<a name="db_dataset"></a><h3>The Dataset Table</h3>
+<p>The <i>dataset</i> table will store the basic information on a dataset in NATTAP.  It will contain the information that is currently in the DTS and in the ML.  The IVEN data will be in a seperate table.  It should also be noted that most of the information about a dataset is in the <i>dataset_project</i> table as the information will differ per project.</p>
+
+<table border=1>
+<tr><th>Attribute<th>Description<th>Discussion</tr>
+<tr><th>nattap_ds_id
+	<td>The nattap_ds_id is an internal id for a dataset and is not the dataset_id that is in <i>jedi</i>.
+	<td><p class="joel">The id is needed to differentiate datasets that have not been given a dataset_id.  It will be used for ids for datasets in other tables.
+	</tr>
+<tr><th>dataset_id
+	<td>The dataset_id for the dataset as it is in <i>jedi</i>.
+	<td>
+	</tr>
+<tr><th>dataset_name
+	<td>The name of the dataset as it (will) appear in <i>jedi</i>.
+	<td><p class="joel">The dataset_name must be included here, because this will be the title used to put into <i>jedi</i>.  It is also the title that will be displayed in the ML.
+	</tr>
+<tr><th>source_url
+	<td>The address where the data was retreived from.
+	<td><p class="joel">This is the website where we retreived the data.  This may not be needed, but I think it would be useful considering how many datasets we manually go to the site and download.  This will make it harder to forget to enter this information into the system if it is seperated from the dataset notes.
+<tr><th>remote_url
+	<td>The address to the location for the data if it is offsite.
+	<td><p class="joel">This can be used by the new ML to read the information from this and point to the webpage instead of pointing into CODIAC.
+	</tr>
+<tr><th>ingest_location
+	<td>The path where the data was ingested.
+	<td><p class="joel">This could be used to fill the raw_data line in IVEN instead of having a seperate attribute.
+	</tr>
+<tr><th>archive_location
+	<td>The path where the data is (to be) stored for <i>jedi</i>.
+	<td>
+	</tr>
+<tr><th>dataset_notes
+	<td>The notes about the dataset.
+	<td>
+	</tr>
+</table>
+
+<a name="db_dataset_project"></a><h3>The Dataset/Project Table</h3>
+<p>The dataset/project table has the same function as the dataset_project table in <i>jedi</i>.  It links a dataset to one of more projects.  It is set up this way to allow multiple projects to be associated with the same dataset.
+<p>It is expanded from the <i>jedi</i> version in respect that it also contains all of the information about a dataset for the particular project as well (i.e. loaders, checkers, processors, etc.).  This information needs to be in this table because it could (and probably) will be different for each project.</p>
+
+<table border=1>
+<tr><th>Attribute<th>Description<th>Discussion</tr>
+<tr><th>nattap_ds_id
+	<td>The nattap_ds_id from the <i>dataset</i> table.
+	<td><p class="joel">This is a link to the dataset.  It will be part of the primary key with the project id.
+	</tr>
+<tr><th>project_id
+	<td>The project_id from the <i>project</i> table.
+	<td><p class="joel">This is a link to the project.  It will be part of the primary key with the nattap_ds_id.
+	</tr>
+<tr><th>readme_link
+	<td>The path and file name of the readme file.
+	<td><p class="joel">This will replace the checkbox in the DTS with a field for the full path and file name.  It may also be used by the IVEN tool to automatically fill that field unless we want the IVEN to point to a local work copy instead of the copy in /web/data/.../docs.
+	</tr>
+<tr><th>date_entered
+	<td>The date the dataset was entered into the system.
+	<td><p class="joel">This is the date filed in the DTS.  It should automatically be set by the DTS and hidden to the user.
+	</tr>
+<tr><th>date_expected
+	<td>This is to hold the date that we expect the data source to send us the data.
+	<td><p class="joel">This was brought up by Janine from the RICO meeting.
+		<p class="janine">This was requested by the RICO community as a
+way to keep each other informed as to when datasets will be ready to be shared
+with the community.
+	</tr>
+<tr><th>date_loaded
+	<td>The date the dataset was loaded into the database.
+	<td><p class="joel">This will replace the loaded field.  It could still be a checkbox in the DTS interface, but would set the current date.
+	</tr>
+<tr><th>date_checked
+	<td>The date the dataset was checked in the database.
+	<td><p class="joel">This will replace the checked field and will be the start date for the "new dataset" check in the ML.
+	</tr>
+<tr><th>date_processed
+	<td>The date the dataset was finished being processed.
+	<td><p class="joel">This could automatically be set when the dataset processing status is set to done.
+	</tr>
+<tr><th>external_contact
+	<td>The external contact for the dataset.
+	<td><p class="joel">This will not reference <i>jedi</i> because the contact may not exist yet.
+	</tr>
+<tr><th>internal_contact_id
+	<td>The internal contact for the dataset.
+	<td><p class="joel">The id from the contact table in <i>jedi</i>.
+	</tr>
+<tr><th>loader_id
+	<td>The person who is in charge of loading the dataset.
+	<td><p class="joel">The id from the contact table in <i>jedi</i>.
+	</tr>
+<tr><th>checker_id
+	<td>The person who is in charge of checking the dataset once it has been loaded.
+	<td><p class="joel">The id from the contact table in <i>jedi</i>.
+	</tr>
+<tr><th>processor_id
+	<td>The person who is in charge of processing the dataset if it is to be processed.
+	<td><p class="joel">The id from the contact table in <i>jedi</i>.
+	</tr>
+<tr><th>process_flag
+	<td>A flag if this dataset is to be processed.
+	<td><p class="joel">This will trigger an entry to be displayed in IVEN.
+	</tr>
+<tr><th>mlist_flag
+	<td>A flag if this dataset is to be included in the master list.
+	<td><p class="joel">This will trigger the dataset to be available in the ML.
+	</tr>
+</table>
+
+<a name="db_product"></a><h3>The Product Table</h3>
+<p>The <i>product</i> table is primarily for IVEN.  It defines the different products that will be generated for a project.  This may want to be renamed to composite as to me this makes more sense.</p>
+
+<table border=1>
+<tr><th>Attribute<th>Description<th>Discussion</tr>
+<tr><th>product_id
+	<td>The unique product id for this product that will be autogenerated by the database.
+	<td><p class="joel">We need a unique id that can be a foreign key in other tables.
+	</tr>
+<tr><th>project_id
+	<td>The project_id from the <i>project</i> table.
+	<td><p class="joel">This is to connect a project to the product.  The pair (with the product name) will need to be unique.
+	</tr>
+<tr><th>product_name
+	<td>The name of the product (i.e Hourly Surface Composite).
+	<td><p class="joel">The pair (with the project id) will need to be unique.
+	</tr>
+<tr><th>status_id
+	<td>The id for the status of this product.  This will be a foreign key to the status table.
+	<td><p class="joel">This is now a foreign key reference instead of an enumeration in the database.  This will allow us to create more statuses as we see fit.
+	</tr>
+<tr><th>product_notes
+	<td>The general notes about this particular product.
+	<td>
+	</tr>
+<tr><th>qc_notes
+	<td>Notes about the QC of this product.
+	<td><p class="joel">This was a request by Linda.
+	</tr>
+<tr><th>product_link
+	<td>The name of the link for the product.
+	<td><p class="joel">This is a carry over from IVEN.  The examples are: Network Map and Network Info.  Is this something we still want to keep?  I am not sure at this point.
+	</tr>
+<tr><th>product_link_url
+	<td>The URL for the product link.
+	<td><p class="joel">This is a carry over from IVEN.  This is the address for the map or network info.  This is tightly coupled with the product link and would need to be kept/removed as the product link is kept/removed.
+	</tr>
+</table>
+
+<a name="db_dataset_product"></a><h3>The Dataset/Product Table</h3>
+<p>The <i>dataset_product</i> table is used to link the dataset to a specific product.  It also contains all of the processing notes for that particular product.</p>
+
+<table border=1>
+<tr><th>Attribute<th>Description<th>Discussion</tr>
+<tr><th>nattap_ds_id
+	<td>The unique dataset id in NATTAP.
+	<td><p class="joel">This will be part of the primary key with the product id.
+	</tr>
+<tr><th>product_id
+	<td>The unique product id.
+	<td><p class="joel">This will be part of the primary key with the nattap_ds_id.
+	</tr>
+<tr><th>raw_data_link
+	<td>The link to the raw data that was used for processing.
+	<td><p class="joel">This could possibly go away if we are going to use the <i>ingest_location</i> from the <i>dataset</i> table.
+	</tr>
+<tr><th>final_data_link
+	<td>The link to the final processed data.
+	<td>
+	</tr>
+<tr><th>station_list_link
+	<td>The link to the station list for the processed data.
+	<td>
+	</tr>
+<tr><th>software_link
+	<td>The link to the software used to process the data.
+	<td>
+	</tr>
+<tr><th>plots_link
+	<td>The link to the plots that were generated for the data.
+	<td>
+	</tr>
+<tr><th>howto_link
+	<td>The link to the howto for the processing of the data.
+	<td>
+	</tr>
+<tr><th>processing_notes
+	<td>Any notes on the processing of the data.
+	<td>
+	</tr>
+<tr><th>in_best_software
+	<td>A flag to note if the processing software was put into the best software archive.
+	<td>
+	</tr>
+<tr><th>status_id
+	<td>The status id for the status of this dataset.  It is a foreign key to the <i>status</i> table.
+	<td><p class="joel">This is a foreign key reference instead of an enumeration to allow us to add statuses on the fly as we see fit.
+	</tr>
+<tr><th>id_type
+	<td>A field for the id type for this data.
+	<td><p class="joel">This is a carry over from IVEN.  Since id types are no longer in the database, maybe this should just go away...
+	</tr>
+<tr><th>platform_type
+	<td>A field for the platform id for this data.
+	<td><p class="joel">This is a carry over from IVEN.  Should this still be here?
+	</tr>
+<tr><th>questions
+	<td>A flag for questions.
+	<td><p class="joel">This is a carry over from IVEN.  I am not sure of its purpose as I have never used it.
+	</tr>
+</table>
+
+<a name="db_category"></a><h3>The Category Table</h3>
+<p>The <i>category</i> table is primarily for the master list.  A category is the headings and subheadings for the ML.  This table allows a category to have a single parent like the <i>category</i> table in <i>jedi</i> is intended to be at some point.  This may also become unnecessary if we are able to use <i>jedi's</i> categories for the ML.
+<p class="joel">This could potentially be removed if the categories in CODIAC are going to be sufficient for our needs.  At this point, I do not see CODIAC fitting our needs since the categories are very vague and the platforms are too specific.  There is not a current setup in CODIAC that will allow us to the: R/V Altair is a subcategory of Ship Based Data or the like.</p>
+
+<table border=1>
+<tr><th>Attribute<th>Description<th>Discussion</tr>
+<tr><th>category_id
+	<td>The unique id for the category that is autogenerated by the database.
+	<td><p class="joel">This will be referenced by foreign keys in other tables.
+	</tr>
+<tr><th>category_name
+	<td>The name of the category as it will be displayed.
+	<td>
+	</tr>
+<tr><th>parent_category_id
+	<td>The category_id for the parent category of this one.
+	<td><p class="joel">This will create a heirarchy of the categories, similar to CODIAC.  It will allow the ML to be able to view the subcategories without having seperate HTML files for each subcategory.
+	</tr>
+</table>
+
+<a name="db_status"></a><h3>The Status Table</h3>
+<p>The <i>status</i> table is the table that will contain all of the statuses that a dataset in NATTAP could possibly have.  It used to be enumerations for a field in the individual tables, but this will allow us to add more statuses when they are needed without having to alter the database tables.
+<p class="joel">We may want to stick some restrictions on the creation of statuses.  This could end up becoming a mess like the platform table in <i>jedi</i> with multiple entries for the same thing.  I am not sure what the best way to manage this is, but I am pretty sure it would be a very bad idea just to give free reign to everyone in the creation of statuses.</p>
+
+<table border=1>
+<tr><th>Attribute<th>Description<th>Discussion</tr>
+<tr><th>status_id
+	<td>The unique id for the status.  This will be an autogenerated key by the database.
+	<td><p class="joel">This will be referenced by foreign keys in other tables.
+	</tr>
+<tr><th>status_name
+	<td>The name of the status as it will be displayed.
+	<td>
+	</tr>
+<tr><th>status_color
+	<td>The HTML color to use to display the status.
+	<td>This is new since the old statuses had colors assigned in the tool itself.  Since this will allow new statuses to be generated on the fly, the creator will need to assign it a color to display as well.
+	</tr>
+<tr><th>status_description
+	<td>The text that describes the meaning of the status.
+	<td><p class="joel">I see that this could become a very important field, especially in the future once we have several statuses in the database.  Potentially, there could be statuses that have similar but slightly different meanings.  This could provide a way to define the subtle differences.
+</table>
+
+<a name="db_dataset_category"></a><h3>The Dataset/Category Table</h3>
+<p>The <i>dataset_category</i> table associates a dataset with a category.  It will be used by the ML to search for datasets to include under the category headings.  This will allow a single dataset to be under multiple categories (i.e. ship sounding data can be under the specific ship and under the upper air sounding sections).</p>
+
+<table border=1>
+<tr><th>Attribute<th>Description<th>Discussion</tr>
+<tr><th>nattap_ds_id
+	<td>The unique dataset id in NATTAP.
+	<td>
+	</tr>
+<tr><th>category_id
+	<td>The unique category id.
+	<td>
+	</tr>
+</table>
+
+<a name="db_project_category"></a><h3>The Project/Category Table</h3>
+<p>The <i>project_category</i> table associates categories with projects.  This provides links to other information about the category along with making sure categories will appear in the ML if there currently are not datasets associated with that category for the project.</p>
+
+<table border=1>
+<tr><th>Attribute<th>Description<th>Discussion</tr>
+<tr><th>project_id
+	<td>The unique project id.
+	<td><p class="joel">This will be part of the primary key with the category id.
+	</tr>
+<tr><th>category_id
+	<td>The unique category id.
+	<td><p class="joel">This will be part of the primary key with the project id.
+	</tr>
+<tr><th>map_link
+	<td>An address to a map for the project category.
+	<td><p class="joel">This is a carry over from the ML which was never implemented in the editor.  I believe it was intended to point to a map for the specific category for the project.  (A map of the ship path for the project's cruise?)
+	</tr>
+<tr><th>table_link
+	<td>An address to a table for the project category.
+	<td><p class="joel">This is a carry over from the ML which was never implemented in an editor.  I am not sure what its intended purpose and could only make a vague guess.
+		<p class="joel">Maybe this should be renamed to make its definition more clear to later users?
+	</tr>
+<tr><th>instrument_link
+	<td>An address to an instrument page for the project category.
+	<td><p class="joel">This is a carry over from the ML which was never implemented in an editor.  My best guess is that it would point to a web page for the description of the category.  (Maybe the home page for the aircraft or ship?)
+		<p class="joel">Maybe this should be renamed to make its definition more clear to later users?
+	</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,909 @@
+> groovy authorshipConnect.groovy all
+
+Created log file:	logs/log_20140303133152.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ARCSS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ATLAS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BAMEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BEST
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1295 for data set 102.063
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1295, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.063';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BSIERP
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1298 for data set 245.B71-001
+Unable to find 1255 for data set 245.B71-001
+Unable to find 1254 for data set 245.B72-001
+Unable to find 1317 for data set 245.B74-001
+Unable to find 1322 for data set 245.B75-001
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1298, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B71-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1255, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B71-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1254, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B72-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1317, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B74-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1322, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B75-001';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+CASES-97
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+CuPIDO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+DC3
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	D. Lauritsen
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		D. Lauritsen
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Univ. of New Hampshire
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Univ. of New Hampshire
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+--------------------------------------------------------------------------------
+  DC3:  353.163
+		Froyd, Karl, and Milos Markovic (NOAA-CSD) and Paul Lawson (SPEC Inc.)
+Which of these contacts matches this author:	SPEC Inc.
+
+		22	vidone	Vincent P. Idone	SUNY-A
+		449	mit/ll	null	Massachusetts Institute of Technology/Lincoln Laboratory
+		463	unl	null	University of Nebraska at Lincoln
+		481	qualimet	James Spots	Qualimetrics, Inc.
+		507	aeromet	null	Aeromet Inc.
+		525	null	null	Princeton University
+		1171	null	Alexei I. Pinchuk	null
+		1272	null	null	Exponent, Inc.
+		1291	null	null	LGL Alaska Research Associates Inc.
+		1317	null	Simone Vincenzi	University of California
+		1357	null	null	Weather Modification, Inc. (WMI)
+		1366	null	Mark A. Zondlo	Atmospheric Chemistry Group, Center for Mid-Infrared Technologies for Health and the Environment (MIRTHE), Princeton University
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  DC3:  353.167
+		Langridge, Justin (NOAA)
+Which of these contacts matches this author:	NOAA
+
+		446	null	Ken Hadeen	National Climatic Data Center (NCDC), NOAA
+		454	null	null	National Severe Storms Laboratory (NSSL), NOAA
+		457	null	null	Satellite and Information Service (NESDIS), NOAA
+		460	null	null	Office of Aircraft Operations (OAO), NOAA
+		464	null	Marjorie Mcguirk	Forecast Systems Laboratory (FSL), NOAA
+		477	null	null	Wave Propagation Lab (WPL), NOAA
+		486	null	Frank Marks	Hurricane Research Division (HRD), NOAA
+		492	null	null	Aeronomy Laboratory (AL), NOAA
+		512	null	null	Air Resources Laboratory (ARL), NOAA
+		513	null	null	Pacific Marine Environmental Laboratory (PMEL), NOAA
+		524	null	null	Atlantic Oceanographic and Meteorological Laboratory (AOML), NOAA
+		532	null	null	Environmental Technology Laboratory (ETL), NOAA
+		534	null	null	Climate Diagnostic Center (CDC), NOAA
+		541	null	null	Climate Monitoring and Diagnostic Laboratory (CMDL), NOAA
+		543	null	null	Atmospheric Turbulence and Diffusion Division (ATDD), NOAA
+		551	null	null	Climate Prediction Center (CPC), NOAA
+		567	null	null	National Data Buoy Center (NDBC), NOAA
+		573	null	null	Aircraft Operations Center (AOC), NOAA
+		642	null	null	Comprehensive Large Array-data Stewardship System (CLASS), NOAA
+		751	null	null	Global Historical Climatology Network (GHCN), NOAA
+		785	null	null	World Data Center (WDC) for Paleoclimatology, National Geophysical Data Center, NOAA
+		1210	null	null	Earth System Research Labortory (ESRL), NOAA
+		1304	null	null	National Centers for Environmental Prediction (NCEP), NOAA
+		1340	null	null	Chemical Sciences Division (CSD), Earth System Research Laboratory, NOAA
+		1341	null	null	Global Monitoring Division (GMD), Earth System Research Laboratory, NOAA
+		1342	null	null	Global Forecast System (GFS), National Centers for Environmental Prediction, NOAA
+		1343	null	null	Physical Sciences Division (PSD), Earth System Research Laboratory, NOAA
+		1344	null	null	National Geophysical Data Center (NGDC), NOAA
+		1345	null	null	National Operational Hydrologic Remote Sensing Center (NOHRSC), NOAA
+		1346	null	null	National Hurricane Center (NHC), NOAA
+		1347	null	null	Warning R & D Division (WRDD), National Severe Storms Laboratory, NOAA
+		1348	null	null	Ocean Chemistry Division (OCD), Atlantic Oceanographic and Meteorological Laboratory, NOAA
+		1354	null	null	Storm Prediction Center (SPC), National Centers for Environmental Prediction, NOAA
+		1358	null	null	Global Systems Division (GSD), Earth System Research Laboratory, NOAA
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	D. Futterer
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		D. Futterer
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	K. Heimerl
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		K. Heimerl
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Daniel Sauer
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Daniel Sauer
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+--------------------------------------------------------------------------------
+  DC3:  363.198
+		Lawson, Paul (SPEC, Inc.)
+Which of these contacts matches this author:	Inc.
+
+		22	vidone	Vincent P. Idone	SUNY-A
+		449	mit/ll	null	Massachusetts Institute of Technology/Lincoln Laboratory
+		463	unl	null	University of Nebraska at Lincoln
+		481	qualimet	James Spots	Qualimetrics, Inc.
+		507	aeromet	null	Aeromet Inc.
+		525	null	null	Princeton University
+		1171	null	Alexei I. Pinchuk	null
+		1272	null	null	Exponent, Inc.
+		1291	null	null	LGL Alaska Research Associates Inc.
+		1317	null	Simone Vincenzi	University of California
+		1357	null	null	Weather Modification, Inc. (WMI)
+		1366	null	Mark A. Zondlo	Atmospheric Chemistry Group, Center for Mid-Infrared Technologies for Health and the Environment (MIRTHE), Princeton University
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+Unable to find 806 for data set 363.198
+Unable to find 806 for data set 363.198
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 806, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '363.198';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 806, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '363.198';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+DYNAMO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+EPIC
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  EPIC:  72.113
+		Morley
+Which of these known contacts matches this author:	Morley
+
+		1217	null	Rebecca Morley	Applied Physics Lab/Univ of WA
+		1563	null	Bruce Morley	NCAR-EOL-RSF
+
+Press zero to select none of the above or enter your own contact id.
+--------------------------------------------------------------------------------
+> 1563
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+HIPPO-1
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+HIPPO-2
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+HIPPO-3
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+HIPPO-4
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+HIPPO-5
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ICE-L
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 632 for data set 105.109
+Unable to find 806 for data set 105.109
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 632, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '105.109';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 806, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '105.109';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ICE-T
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ICEBRIDGE
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-1
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-2
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-3
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-4_C130
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IDEAS-4_GV
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+IHOP_2002
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+INDOEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  INDOEX:  22.039
+		Heymsfield, Andy (NCAR)
+Which of these contacts matches this author:	NCAR
+
+		444	ncar/scd	Roy Jenne	National Center for Atmospheric Research
+		448	ncar/rdp	null	National Center for Atmospheric Research
+		490	ncar/mmm	Daniel Breed	NCAR/Mesoscale and Microscale Meteorology Division
+		508	ncar/raf	null	NCAR/EOL Research Aviation Facility
+		511	ncar/iss	null	NCAR Integrated SOunding System
+		520	ncar/atd	null	NCAR Atmospheric Technology Division
+		526	null	null	NCAR Atmospheric Chemistry Division (ACD)
+		572	null	null	Advanced Study Program (ASP), NCAR
+		954	null	null	UCAR/NCAR - Earth Observing Laboratory/Computing, Data, and Software Facility
+		1014	null	null	NCAR Research Applications Laboratory
+		1442	null	null	Earth System Laboratory (ESL), NCAR
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  INDOEX:  22.155
+		Wagner/Schiller/Fischer (Max Planck Institute)
+Which of these known contacts matches this author:	Wagner
+
+		1120	null	Tim Wagner	null
+		1489	null	Nicholas L. Wagner	NOAA
+		1528	null	Volker Wagner	Max Planck Institute for Chemistry
+
+Press zero to select none of the above or enter your own contact id.
+--------------------------------------------------------------------------------
+> 1528
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Schiller
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Schiller
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+--------------------------------------------------------------------------------
+  INDOEX:  22.156
+		Wagner/Schiller/Fischer (Max Planck Institute)
+Which of these known contacts matches this author:	Wagner
+
+		1120	null	Tim Wagner	null
+		1489	null	Nicholas L. Wagner	NOAA
+		1528	null	Volker Wagner	Max Planck Institute for Chemistry
+
+Press zero to select none of the above or enter your own contact id.
+--------------------------------------------------------------------------------
+> 1528
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ITEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ITOP
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+LPB
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+MILAGRO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+MPEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+NAME
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+OWLeS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 382.001
+--------------------------------------------------------------------------------
+  OWLeS:  382.002
+		Korolev, Alexei and M. Dixon (Env. Canada, NCAR-EOL)
+Which of these contacts matches this author:	Alexei Korolev
+
+		1585	null	Alexei Korolev	Environment Canada 
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1585
+
+--------------------------------------------------------------------------------
+  OWLeS:  382.002
+		Korolev, Alexei and M. Dixon (Env. Canada, NCAR-EOL)
+Which of these contacts matches this author:	Env. Canada
+
+		1438	null	null	Environment Canada
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1438
+
+Found 1586 for data set 382.002 and has sort_key of 65534 (instead of 2).
+Found 1438 for data set 382.002 and has sort_key of 2 (instead of 3).
+Unable to find 1 for data set 382.002
+Found 1585 for data set 382.003 and has sort_key of 65534 (instead of 1).
+Unable to find 1438 for data set 382.003
+Found 1586 for data set 382.004 and has sort_key of 65534 (instead of 1).
+Unable to find 1 for data set 382.004
+Found 446 for data set 382.004 and has sort_key of 65534 (instead of 3).
+Found 1586 for data set 382.006 and has sort_key of 65534 (instead of 1).
+Unable to find 1 for data set 382.006
+Found 446 for data set 382.006 and has sort_key of 65534 (instead of 3).
+Found 1586 for data set 382.007 and has sort_key of 65534 (instead of 1).
+Unable to find 1 for data set 382.007
+Found 446 for data set 382.007 and has sort_key of 65534 (instead of 3).
+Found 1586 for data set 382.008 and has sort_key of 65534 (instead of 1).
+Unable to find 1 for data set 382.008
+Found 446 for data set 382.008 and has sort_key of 65534 (instead of 3).
+Found 1586 for data set 382.009 and has sort_key of 65534 (instead of 1).
+Unable to find 1 for data set 382.009
+Found 446 for data set 382.009 and has sort_key of 65534 (instead of 3).
+Found 1586 for data set 382.010 and has sort_key of 65534 (instead of 1).
+Unable to find 1 for data set 382.010
+Found 446 for data set 382.010 and has sort_key of 65534 (instead of 3).
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '382.001';
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 66517 and contact_id = 1586;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 66517 and contact_id = 1438;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '382.002';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 66518 and contact_id = 1585;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1438, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '382.003';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 66519 and contact_id = 1586;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '382.004';
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 66519 and contact_id = 446;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 66521 and contact_id = 1586;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '382.006';
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 66521 and contact_id = 446;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 66522 and contact_id = 1586;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '382.007';
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 66522 and contact_id = 446;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 66523 and contact_id = 1586;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '382.008';
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 66523 and contact_id = 446;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 66524 and contact_id = 1586;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '382.009';
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 66524 and contact_id = 446;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 66526 and contact_id = 1586;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '382.010';
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 66526 and contact_id = 446;
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PACDEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PacMARS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PACS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PASE
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Hiekes
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Hiekes
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PLOWS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+POST
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  POST:  111.050
+		Patrick Chuang
+Which of these contacts matches this author:	Patrick Chuang
+
+		48	pchuang	Patrick Chuang	SDMC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 48
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PREDICT
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+RAINEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+RICO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SAANGRIA-TEST
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SALLJEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SAS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Dean Lauritsen
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Dean Lauritsen
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+--------------------------------------------------------------------------------
+  SAS:  373.020
+		Ambrose, Jesse L., Lynne Gratz, and Dan Jaffe (Univ. of Wash-Bothell)
+Which of these contacts matches this author:	Jesse L. Ambrose
+
+		790	null	William G. Ambrose Jr.	Bates College - Department of Biology
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Lynne Gratz
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Lynne Gratz
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+--------------------------------------------------------------------------------
+  SAS:  373.020
+		Ambrose, Jesse L., Lynne Gratz, and Dan Jaffe (Univ. of Wash-Bothell)
+Which of these contacts matches this author:	Dan Jaffe
+
+		20	bjafferies	Bill Jafferies	NASA/KSC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	CU-ATOC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		CU-ATOC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+--------------------------------------------------------------------------------
+  SAS:  373.025
+		Mauldin, Roy Lee (CU-ATOC)
+Which of these contacts matches this author:	Roy Lee Mauldin
+
+		749	lmauldin	Lee Mauldin	NCAR/ACD
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SBI
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SHEBA
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SPRITES-II
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+START08
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+T-28
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+T-PARC
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	BMRC
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		BMRC
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+Unable to find 1443 for data set 110.90
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1443, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '110.90';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+T-REX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+TIMREX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Scott Ellis
+
+--------------------------------------------------------------------------------
+
+Unable to find a contact ID for author:		Scott Ellis
+Please enter in a contact ID for this author, or press zero if unknown.
+>  0
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+TORERO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+VOCALS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  VOCALS:  89.106
+		Munoz (DGF, U. Chile)
+Which of these known contacts matches this author:	Munoz
+
+		1102	null	Esther Munoz	School of Oceanography
+		1391	null	Ricardo Munoz	Departamento de Geofisica (DGF), Universidad de Chile
+
+Press zero to select none of the above or enter your own contact id.
+--------------------------------------------------------------------------------
+> 1391
+
+--------------------------------------------------------------------------------
+  VOCALS:  89.107
+		Munoz (DGF, U. Chile)
+Which of these known contacts matches this author:	Munoz
+
+		1102	null	Esther Munoz	School of Oceanography
+		1391	null	Ricardo Munoz	Departamento de Geofisica (DGF), Universidad de Chile
+
+Press zero to select none of the above or enter your own contact id.
+--------------------------------------------------------------------------------
+> 1391
+
+--------------------------------------------------------------------------------
+  VOCALS:  89.129
+		Chuang, P. (U. California-Santa Cruz)
+Which of these contacts matches this author:	P. Chuang
+
+		48	pchuang	Patrick Chuang	SDMC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 48
+
+Unable to find 826 for data set 98.113
+Unable to find 575 for data set 98.113
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 826, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '98.113';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 575, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '98.113';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+VORTEX2
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+WAMME
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

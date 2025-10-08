@@ -1,0 +1,64 @@
+#! /usr/bin/perl -w
+
+##Module---------------------------------------------------------------------
+# The deploy script is used for generating the production version of the
+# MySQL Perl library and the scripts that use the library to insert files
+# into the database.  It copies the files to the production locations,
+# changes permissions to prevent them from being editted, changes group
+# ownership to CDS, and updates the library locations in the scripts to
+# point to the production version from the developmental version.
+#
+# @author Joel Clawson
+# @version 1.0 - Original creation of the script.
+##----------------------------------------------------------------------------
+use strict;
+
+# Define the locations for the scripts and library files.
+my $LIB_DIR = '';
+my $ROOT_DIR = '/net/work';
+
+$ROOT_DIR.='/dev' if ($#ARGV == 0 && $ARGV[0] eq 'dev');
+
+if (-d "${ROOT_DIR}/bin" && -d "${ROOT_DIR}/lib") { 
+    # bother, can't easily combine with above test since $_ is uninitialized if -d fails
+    if (-w "${ROOT_DIR}/bin" && -w "${ROOT_DIR}/lib") { 
+    $LIB_DIR = "${ROOT_DIR}/lib/perl/mysql";
+    }
+} else {
+    printf("Unable to find or write to deploy directories ${ROOT_DIR}/bin,lib.\n");
+    exit(1);
+}
+
+&main();
+
+##----------------------------------------------------------------------------
+# @signature void main()
+# <p>Deploy the CODIAC insert scripts and the MySQL library modules to the
+# production locations for everyday use.</p>
+##----------------------------------------------------------------------------
+sub main {
+    deploy_library();
+}
+
+##-----------------------------------------------------------------------------
+# @signature void deploy_library()
+# <p>Copy the library files to the lib directory and change the pemissions
+# so they cannot be changed.</p>
+##-----------------------------------------------------------------------------
+sub deploy_library {
+    # Create the lib directory where the library is located.
+    if (! -e $LIB_DIR) {
+        system("mkdir -p $LIB_DIR");
+        system("chgrp ctm-dmg $LIB_DIR");
+        system("chmod -R 02775 $LIB_DIR");
+    }
+
+    # Copy the library files to the lib directory.
+    printf("Copying library files to $LIB_DIR ...\n");
+    system("cp -r lib/* $LIB_DIR");
+
+    # Change the permissions to prevent anyone from changing the files.
+    printf("Changing library file permissions...\n");
+    #system("chmod 444 $LIB_DIR/*.pm");
+    system("chmod 0664 $LIB_DIR/*.pm");
+}

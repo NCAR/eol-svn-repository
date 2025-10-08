@@ -1,0 +1,132 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------
+# <p>The Statecode script is a CGI script that provides a web
+# interface for the state code calculation in the conversion
+# modules.</p>
+#
+# @author Joel Clawson
+# @version 3.0 (Version number used to match conversion version.)
+# <p>Refactored the original web interface into individual conversion
+# scripts and a super WebInterface module that the scripts inherit
+# from.</p>
+# <p>Updated to Version 3 of the conversion modules.</p>
+#
+# @author Joel Clawson
+# @version 1.0 Original Creation.
+##Module-----------------------------------------------------------
+package Statecode;
+use strict;
+use lib "..";
+use lib "/net/work/lib/perl/Utilities";
+use DpgCalculations qw(:DEFAULT);
+use DpgConversions qw(:DEFAULT);
+use WebInterface;
+our @ISA = ("WebInterface");
+
+main();
+
+##------------------------------------------------------------------
+# @signature void main()
+# <p>Run the script that creates the state code calculations web 
+# interface.</p>
+##------------------------------------------------------------------
+sub main {
+    my $self = Statecode->new();
+    $self->makePage();    
+}
+
+##------------------------------------------------------------------
+# @signature String createForm()
+# <p>Create the HTML that defines the input form for the calculation.</p>
+# @output $form The HTML code.
+##------------------------------------------------------------------
+sub createForm {
+    my $self = shift;
+    my $form = "<table><tbody>\n";
+
+    # Make the entry row.
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td></tr>","State Code/Abbrev.:",$self->textfield("statecode"));
+
+    # Make the result row.
+    $form .= sprintf("<tr class=result_line><td class=param>%s</td><td class=field>%s</td></tr>","Result:",$self->getValue());
+
+    $form .= sprintf("<tr><td class=submit colspan=3>%s</td></tr>\n",$self->submit("Calculate"));
+
+    $form .= "</tbody></table>\n";
+
+    return $form;
+}
+
+##------------------------------------------------------------------
+# @signature String getCGI()
+# <p>Get the name of the script to call when the form is submitted.</p>
+# @output $cgi The script name.
+##------------------------------------------------------------------
+sub getCGI { return "other/statecode"; }
+
+##------------------------------------------------------------------
+# @signature String getEquationPage()
+# <p>Get the name of the web page that contains the equations for
+# the calculation.</p>
+# @output $page The equation web page.
+##------------------------------------------------------------------
+sub getEquationPage { "state_abbreviations.html"; }
+
+##------------------------------------------------------------------
+# @signature String getInstructions()
+# <p>Get the HTML containing the instructions on how to use the 
+# script.</p>
+# @output $instr The HTML instructions.
+##------------------------------------------------------------------
+sub getInstructions {
+    my $self = shift;
+    my $instr = "<p>Insert either the state code or the state abbreviation.  Press the <b>Calculate</b> button to get the associated value from what was entered.</p>\n";
+    return $instr;
+}
+
+##------------------------------------------------------------------
+# @signature String getOnSubmit()
+# <p>Get the javascript command to run when the form is submitted.</p>
+# @output $js The javascript command.
+##------------------------------------------------------------------
+sub getOnSubmit { return "javascript: return (checkValue('Temperature',temperature) && checkRhWindSpd('Relative Humidity',rel_humid));"; }
+
+##------------------------------------------------------------------
+# @signature String getTitle()
+# <p>Get the title of the script.</p>
+# @output $title The script title.
+##------------------------------------------------------------------
+sub getTitle { return "Convert State Code"; }
+
+##------------------------------------------------------------------
+# @signature String getValue()
+# <p>Get the calculated value or the &amp;nbsp; character when it
+# cannot be calculated.</p>
+# @output $value The float formated value.
+##------------------------------------------------------------------
+sub getValue {
+    my $self = shift;
+    if (defined($self->param("statecode"))) {
+	my $value = getStateCodeFromFile($self->param("statecode") =~ /\d+/ ?
+					 sprintf("%02d",$self->param("statecode")) :
+					 $self->param("statecode"));
+	return $value if (defined($value));
+    }
+    return "&nbsp;";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+#
+# $Id: Makefile,v 1.1 1993/02/16 22:44:36 john Exp $
+#
+# 14 Oct 93 lec
+#    Modified so that LIB paths assume directory structure.
+#
+# simple Makefile for p2e
+#
+
+#FFLAGS=-u -g -xld
+FFLAGS=-u -fast -O3
+
+# where to find libs
+LIBPATH="../../libs"
+
+LIBS=-lGER -lGext -lGsun
+
+all:	p2e clean
+
+p2e:	p2e.f
+	f77 $(FFLAGS) -o p2e p2e.f -L$(LIBPATH) $(LIBS)
+
+clean:
+	rm -f p2e.trace
+	rm -f fort.*
+	rm -f core

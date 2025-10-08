@@ -1,0 +1,118 @@
+
+begin;
+
+# add new entries
+insert into classification (name, type_id) VALUES ("Chile", 3);
+insert into classification (name, type_id) VALUES ("Mexico", 3);
+insert into classification (name, type_id) VALUES ("Dropwindsonde", 1);
+
+# check IDs and names
+select * from classification where name="Chile" or name="Mexico";
+select * from classification where name="Dropwindsonde";
+select * from classification where name="Land Characterization";
+select * from classification where class_id=50 or class_id=427;
+
+# insert dropiwindsonde into parent_classification of dropsonde, check IDs are correct from above selects
+insert into classification_parent (class_id, parent_class_id) VALUES (50, 430);
+update classification set name = "Land Character" where class_id=91;
+
+# remove extra parens and spaces in names
+update dataset set name="Meteosat 5" where dataset_id="ML.418";
+update dataset set name="Aircraft Meteorological Data Reports (AMDAR) and Aircraft Communications Addressing and Reporting System (ACARS) Data" where dataset_id="ML.5785";
+update classification set name="NASA Glenn Twin Otter" where name="NASA Glenn's Twin Otter";
+
+# fix transposed numbers in IDs
+update dataset set dataset_id="105.009" where dataset_id="105.109";
+update dataset set dataset_id="89.113" where dataset_id="98.113";
+
+# remove unused classifications and doubled dataset
+delete from classification where name="GV Cloud Physics";
+delete from classification where name="1-hz data";
+delete from classification where name="10-hz data";
+delete from classification where name="100-hz data";
+delete from classification where name="1000-hz data";
+delete from dataset_project where dataset_id="481.084";
+delete from dataset_classification where dataset_id="481.084";
+delete from dataset where dataset_id="481.084";
+
+# remove T-28 datasets events, 43 entries for 40 datasets with IDs like 98.% 
+delete from dataset_classification where class_id=226;
+delete from dataset_classification where class_id=227;
+delete from dataset_classification where class_id=228;
+delete from dataset_classification where class_id=230;
+delete from dataset_classification where class_id=231;
+delete from dataset_classification where class_id=234;
+delete from dataset_classification where class_id=235;
+delete from dataset_classification where class_id=236;
+delete from dataset_classification where class_id=237;
+delete from dataset_classification where class_id=244;
+delete from dataset_classification where class_id=245;
+delete from dataset_classification where class_id=246;
+
+select * from classification where name="Chile" or name="Mexico" or name="Alaska" or name="Canada" or name="Antarctic" or name="Arctic";
+
+# Chile, class_id=428
+
+insert into classification_parent (class_id, parent_class_id) VALUES (253, 428);
+insert into classification_parent (class_id, parent_class_id) VALUES (254, 428);
+insert into classification_parent (class_id, parent_class_id) VALUES (255, 428);
+insert into classification_parent (class_id, parent_class_id) VALUES (256, 428);
+insert into classification_parent (class_id, parent_class_id) VALUES (271, 428);
+insert into classification_parent (class_id, parent_class_id) VALUES (272, 428);
+
+# Mexico, class_id=429
+
+insert into classification_parent (class_id, parent_class_id) VALUES (29, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (129, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (160, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (176, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (177, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (178, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (181, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (189, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (200, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (211, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (212, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (221, 429);
+insert into classification_parent (class_id, parent_class_id) VALUES (222, 429);
+
+# Canada, class_id=31; Antarctic, class_id=415
+insert into classification_parent (class_id, parent_class_id) VALUES (10, 31);
+insert into classification_parent (class_id, parent_class_id) VALUES (417, 415 );
+
+# Alaska, class_id=9
+insert into classification_parent (class_id, parent_class_id) values (14, 9);
+insert into classification_parent (class_id, parent_class_id) values (17, 9);
+insert into classification_parent (class_id, parent_class_id) values (20, 9);
+insert into classification_parent (class_id, parent_class_id) values (41, 9);
+insert into classification_parent (class_id, parent_class_id) values (81, 9);
+insert into classification_parent (class_id, parent_class_id) values (84, 9);
+insert into classification_parent (class_id, parent_class_id) values (88, 9);
+insert into classification_parent (class_id, parent_class_id) values (122, 9);
+insert into classification_parent (class_id, parent_class_id) values (126, 9);
+insert into classification_parent (class_id, parent_class_id) values (165, 9);
+insert into classification_parent (class_id, parent_class_id) values (186, 9);
+insert into classification_parent (class_id, parent_class_id) values (247, 9);
+insert into classification_parent (class_id, parent_class_id) values (340, 9);
+insert into classification_parent (class_id, parent_class_id) values (341, 9);
+
+# Arctic, class_id=12
+insert into classification_parent (class_id, parent_class_id) values (345, 12);
+insert into classification_parent (class_id, parent_class_id) values (346, 12);
+insert into classification_parent (class_id, parent_class_id) values (347, 12);
+insert into classification_parent (class_id, parent_class_id) values (348, 12);
+insert into classification_parent (class_id, parent_class_id) values (349, 12);
+insert into classification_parent (class_id, parent_class_id) values (394, 12);
+insert into classification_parent (class_id, parent_class_id) values (395, 12);
+insert into classification_parent (class_id, parent_class_id) values (396, 12);
+
+UPDATE project SET project_id='ARISTO' WHERE project_id='ARISTO2015';
+UPDATE project SET project_id='HCR-TEST' WHERE project_id='HCRTest';
+UPDATE project SET project_id='HIPPO' WHERE project_id='HIPPO-1';
+UPDATE project SET project_id='HIPPO2' WHERE project_id='HIPPO-2';
+UPDATE project SET project_id='HIPPO3' WHERE project_id='HIPPO-3';
+UPDATE project SET project_id='HIPPO4' WHERE project_id='HIPPO-4';
+UPDATE project SET project_id='HIPPO5' WHERE project_id='HIPPO-5';
+UPDATE project SET project_id='HIWC-RADAR' WHERE project_id='HIWC RADAR';
+UPDATE project SET project_id='HIWC-RADAR-2018' WHERE project_id='HIWC RADAR 2018';
+UPDATE project SET project_id='IFRACS_2014' WHERE project_id='IFRACS';

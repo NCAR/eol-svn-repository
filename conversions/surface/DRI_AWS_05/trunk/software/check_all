@@ -1,0 +1,20 @@
+#! /usr/bin/csh
+
+if (-e ../output/dupes.log) rm ../output/dupes.log
+
+echo "Checking for duplicates..."
+./check_dupes >& ../output/dupes.log
+
+if (-e ../output/checkcomp.log) rm ../output/checkcomp.log
+echo "Running check_comp..."
+./check_comp >& ../output/checkcomp.log
+
+if (-e ../output/checkfile.log) rm ../output/checkfile.log
+echo "Running check_file..."
+./check_file >& ../output/checkfile.log
+
+if (-e ../output/checktightlimits.log) then
+	rm ../output/checktightlimits.log
+endif
+echo "Running check_tightlimits..."
+./check_tightlimits >& ../output/checktightlimits.log

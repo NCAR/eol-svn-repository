@@ -1,0 +1,157 @@
+#!/bin/perl -w
+
+use DBI;
+
+
+my $dbh = connectToDB( "data_loading_notes", "thunder", "suldan", "hithere" );
+
+
+my %new_users = ( "Becky" => "rSmith",
+									"Dan" => "dSullivan",
+ 									"Darren" => "dgallant",
+									"Don" => "dStott",
+									"Drew" => "dWilkinson",
+									"Greg" => "gStoss",
+									"Janine" => "jGoldstein",
+									"Joel" => "jclawson",
+									"Linda" => "lCully",
+									"Other" => "Other",
+									"Pat" => "pSkinner",
+									"Phillip" => "pDressen",
+									"Quinn" => "qDaily",
+									"Richard" => "rBateman",
+									"Scot" => "sloehrer",
+									"SFW" => "swilliams",
+									"unassigned" => "unassigned" );
+
+my %projects = getProjects();
+my %loaders = getUsers( "Loaders" );
+my %checkers = getUsers( "Checkers" );
+my %contacts = getUsers( "Contacts" );
+
+my $project = $ARGV[0];
+
+if( !$project || ! exists( $projects{$project} ) )
+{
+	print( "Invalid project.\n" );
+	exit 0;
+}
+
+my $dss = getDatasets( $project );
+fixDatasets( $dss );
+writeDatasets(  $project, $dss );
+
+print( "done!\n" );
+
+sub getProjects
+{
+	my %projs;
+	my $sql = "SELECT * FROM Projects";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	while( (my $row = $sth->fetchrow_hashref()) )
+	{
+		$projs{$row->{name}} = $row;
+	}
+
+	return %projs;
+}
+
+sub getUsers
+{
+	my %users;
+
+	my $table = shift;
+	my $sql = "SELECT * FROM $table";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	while( (my $row = $sth->fetchrow_hashref()) )
+	{
+		$users{$row->{id}} = $row;		
+	}
+
+	return %users;
+}
+
+sub getDatasets
+{
+	my @dss;
+	my $proj = shift;
+
+	my $sql = "SELECT * FROM Notes WHERE proj_id=$projects{$proj}->{id}";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	while( (my $row = $sth->fetchrow_hashref()) )
+	{
+		$dss[scalar(@dss)] = $row;
+	}
+
+	return \@dss;
+}
+
+sub fixDatasets
+{
+	my $dss = shift;
+
+	foreach my $ds (@$dss)
+	{
+		$ds->{loader} = $new_users{ $loaders{$ds->{loader_id}}->{name} };
+		$ds->{checker} = $new_users{ $checkers{$ds->{checker_id}}->{name} };
+		$ds->{int_contact} = $new_users{ $contacts{$ds->{int_contact_id}}->{name} };
+
+
+		foreach my $field("ext_contact", "ext_email", "ingest", "archive", "notes", "ext_link" )
+		{
+			$ds->{$field} = "" if( !defined( $ds->{$field} ) );
+		}
+	
+		$ds->{ext_email} = "" if( $ds->{ext_email} eq "E-mail" );
+		$ds->{ext_contact} = "" if( $ds->{ext_contact} eq "none" );
+		$ds->{ext_link} = "" if( $ds->{ext_link} eq "none" );
+		$ds->{readme} = ($ds->{readme})? 1: 0; 
+		$ds->{checked} = ($ds->{checked})? 1: 0; 
+	}
+}
+
+sub writeDatasets
+{
+	my $proj = shift;
+	my $dss = shift;
+
+	open( OUT, ">$proj.dln" ) || die( "Unable to open $proj.dln\n" );
+
+	foreach my $ds (@$dss)
+	{
+		my $fsep = "";
+		my $rsep = "";
+
+		print( OUT $ds->{storm_id}, $fsep );
+		print( OUT $ds->{title}, $fsep );
+		print( OUT $ds->{date}, $fsep ); 	
+		print( OUT $ds->{ext_link}, $fsep );
+		print( OUT $ds->{loader}, $fsep );
+		print( OUT $ds->{checker}, $fsep );
+		print( OUT $ds->{int_contact}, $fsep );
+		print( OUT $ds->{ext_contact}, $fsep );
+		print( OUT $ds->{ext_email}, $fsep );
+		print( OUT $ds->{ingest}, $fsep );
+		print( OUT $ds->{archive}, $fsep );
+		print( OUT $ds->{notes}, $fsep );
+		print( OUT $ds->{readme}, $fsep );
+		print( OUT $ds->{checked}, $rsep );
+	}	
+
+	close( OUT );
+}
+
+sub connectToDB
+{
+  my $db = shift;
+  my $host = shift;
+  my $user = shift;
+  my $passw = shift;
+  return DBI->connect( "DBI:mysql:database=$db;host=$host",
+                        $user, $passw, { RaiseError=>1} ) || die( "Unable to connect to database: $db" );
+}

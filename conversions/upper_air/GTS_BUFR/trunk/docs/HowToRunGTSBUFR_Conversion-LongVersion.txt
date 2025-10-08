@@ -1,0 +1,202 @@
+Text from the D7 Internal Web Site:
+-----------------------------------
+NWS GTS BUFR (BINARY) SOUNDING PROCESSING INTO ESC FORMAT
+Submitted by cully on Tue, 05/17/2022 - 16:29
+ 
+
+TABLE OF CONTENTS - FOR NWS GTS BUFR (BINARY) PROCESSING ONLY (**NOT FOR RAW ASCII DATA**)
+Purpose
+Network Information
+Previous Versions
+2023 (TORUS-LItE) - NWS
+2022 (TORUS) - NWS
+2022 (CFACT) - NWS
+2022 (WINTRE-MIX) - NWS
+2018 (RELAMPAGO) - Non-NWS
+2018 (SOCRATES) - first created, non-NWS
+Directory Structure
+Processing the Data
+Initial Processing Setup
+Converting the Data
+Convert GTS BUFR (binary data to ugly ASCII). (Mandatory)
+Convert ugly ASCII to (human readable) Preproc (cleaned ASCII) files. (Mandatory)
+Generate statistics from Preproc files.(Optional)
+If multiple Preproc soundings generated from single BUFR file, see if diffs between output Preproc files. (Optional)
+Convert Preproc (ASCII) to ESC (final) format. (Mandatory)
+Sort ESC data. (May or May not be Mandatory depending on if data are in sort order or not.)
+Auto QC
+Visual QC
+Finalization
+5mb Extraction
+50mb Extraction
+Documentation
+Top
+
+
+PURPOSE
+This document contains instructions for converting GTS BUFR (BINARY - NOT ASCII) high resolution radiosonde data into the EOL Sounding Composite (ESC) format. The raw GTS BUFR binary data can be found in dataset 100.030.  The instructions for processing the RELAMPAGO and SOCRATES data may vary slightly from that for CFACT and WINTRE-MIX and subsequent projects past 2022.  Suggestion is to use the s/w from the latest project.  That would be WINTRE-MIX 2022 as of May 2022.   
+
+For CFACT and WINTRE-MIX, this is where the raw data came from and was processed into the majority of the data in the NWS datasets. Note that for these two projects, we also converted and check data from the NWS NCEI RRS data ingest. See that NWS RCEI RRS data processing doc for those instructions. These instructions ONLY WORK ON THE GTS BUFR data and NOT the RRS data. 
+
+The software for this NWS GTS BUFR data processing can be found in the subversion respository at the following link  http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FGTS_BUFR%2Ftags%2FCFACT_2022%2F&#a3f664cc3787c801d9180082735c6e4b6
+
+NOTE: For real-time data processing (to generate SkewT plots as for the SWEX 2022 field project), that basically the same processing steps are required. That is except, checking the format, autoQC, visualQC and getStats.  Those are not required for real time data processing. 
+
+ 
+
+Top
+
+
+NETWORK INFORMATION
+The ID-Type is 99.
+The Platform varies depending on data received via the GTS.
+Top
+
+
+PREVIOUS VERSIONS
+
+TORUS_LItE NWS GTS BUFR (2023 MidWest/West US)
+Software:	http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FGTS_BUFR%2Ftags%2FTORUS_LItE_2023%2F&#a3f664cc3787c801d9180082735c6e4b6
+Raw Data:	From dataset 100.030
+Final Data:	/net/work/Projects/TORUS/TORUS-LIte/data_processing/upper_air/radiosonde/NWS_GTS_BUFR/final
+TORUS NWS GTS BUFR (2022 MidWest/West US)
+Software:	http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FGTS_BUFR%2Ftags%2FTORUS_2022%2F&#a3f664cc3787c801d9180082735c6e4b6
+Raw Data:	From dataset 100.030
+Final Data:	/net/work/Projects/TORUS/data_processing/upper_air/radiosonde/NWS_GTS_BUFR/final
+WINTRE-MIX NWS GTS BUFR (2022 Upper NY State & Canada)
+Software:	http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FGTS_BUFR%2Ftags%2FWINTRE-MIX_2022%2F&#a3f664cc3787c801d9180082735c6e4b6
+Raw Data:	From dataset 100.030
+Final Data:	/net/work/Projects/WINTRE-MIX/data_processing/upper_air/radiosonde/NWS_GTS_BUFR/final
+CFACT NWS GTS BUFR (2022 Western US)
+Software:	http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FGTS_BUFR%2Ftags%2FCFACT_2022%2F&#a3f664cc3787c801d9180082735c6e4b6
+Raw Data:	From dataset 100.030
+Final Data:	/net/work/Projects/CFACT/data_processing/upper_air/radiosonde/NWS_GTS_BUFR/final
+RELAMPAGO SMN BUFR (2018-2019 Argentina) - not NWS code
+Software:	http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FGTS_BUFR%2Ftags%2F&#ad82ccf191dc4ed00dd98c2384b045cd8
+Raw Data:	/net/work/Projects/RELAMPAGO/data_processing/upper_air/SMN_BUFR
+Final Data:	/net/work/Projects/RELAMPAGO/data_processing/upper_air/SMN_BUFR
+ 
+SOCRATES GTS BUFR (2018 Antarctica, Australia, New Zealand) - not NWS code
+Software:	http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FGTS_BUFR%2Ftags%2F&#ad82ccf191dc4ed00dd98c2384b045cd8
+Raw Data:	/net/work/Projects/SOCRATES/data_processing/GTS_BUFR/raw_gts_bufr_data
+Final Data:	/net/work/Projects/SOCRATES/data_processing/GTS_BUFR/software_esc/final
+Top
+
+
+DIRECTORY STRUCTURE
+RELAMPAGO
+50mb/	The directory where the extracted 50 meter height sounding files are stored. If created. Not always required.
+5mb/	The directory where the extracted 5mb pressure sounding files are stored. If created. Not always required.
+build/	The auto-generated directory for the compiled Java classes.
+dayfiles/	The directory where the generated day files are stored. These files contain the auto and visually QC'd soundings composited into dayfiles. This is the final processed data that will be put online in the data archive provided this network's data is to be a standalone dataset in the archive. Note that we never (haven't ever) put 5mb data files online as a stand alone dataset for each network. Instead they are formed into a separate data composite. 
+docs/	The directory containing documentation about the processing and the data. The readme for the archive should be in the directory. Sample documents can also be found in this directory. The readme files are typically created by the associate scientist staff. 
+final/	The directory where the QC'ed files (*.cls.qc) are placed once they have been created by the associate scientist staff. These are individual sounding files (not dayfiles).
+getStatsWork/	The directory contains the output statistics generated from the *.preproc files. In this directory, create the following dirs: /orig_raw_data, /output_stats, /software. Put a copy of GTSBUFR_GetStats.pl in the software directory, if desired and run that work here.  This stats processing is *not* always done or required. 
+lib/	The directory contains the libeccodes.so file which is REQUIRED for the "black box" bufr dump code to execute. The bufr dump (black box) code is used to dump the GTS BUFR binary data into an ugly, ASCII format. 
+logs/	The directory where the error/check files from the QC are placed. These are generally generated during autoQC and check files processing.
+output_ascii_data/	The directory where the ugly ASCII files are put after they are dumped (using the bufr dump code) from the GTS BUFR input. These files are then converted to the *.preproc files in /output_preproc which are more human readlable.
+output_esc/	The directory where the CLASS/ESC output files (*.cls) are put after they are generated from the *.preproc files from the /output_ascii_data dir.
+output_preproc/	This directory contains the Preproc (*.preproc) more human readable ASCII files. These *.preproc files have the same data/content as found in the output_ascii_data dir, but in a nicer format. These more readable files are then converted to ESC to generate the file *.cls files. The statistics processing softwafe (get stats) also executes on these *.preproc files.
+raw_gts_bufr_data/	The directory where the raw, GTS BUFR (binary) data is stored. These are the files that will be "bufr dumped". Starting in 2022 for the CFACT and WINTRE-MIX projects, raw data are used from dataset 100.030 for the TOI and AOI of the project &/or specific stations. Note that there are two types of (ius, iuk) files in the auto-ingested (cron) data loaded into dataset 100.030. Ask science staff which to files to use. 
+software/	The directory where the software for the conversion is stored. IMPORTANT: This dir must contain the us_plains_autoqc.properties file used during autoQC processing. When processing the NWS data, you must use that updated software and you MUST also have a station list file (e.g., NWS_GTS_BUFR_station.lst).  This may not be required for non-NWS data and you may need to use the code from the RELAMPAGO or SOCRATES projects which is NOT the same as the code used for NWS processing.  USE THE APPROPRIATE VERSION OF THE CODE!
+src/	Unused directory - required for autoqc to run.
+ 
+History of software:  This set of software was originally created to process SOCRATES data. Considerable data examination and tools were created along with code updates. Do not use the SOCRATES /work area as the directory structure is not as expected and has experimental work included.  See RELAMPAGO processing for a cleaner set of directories, software, data/output, etc.   
+ 
+
+IMPORTANT:  In 2022, this s/w was "redeveloped" to process NWS data for CFACT and WINTRE-MIX. Use code from those locations in SVN. The National Weather Service (NWS) processing code is different than the code from RELAMPAGO. Be careful to use the correct form of the code.  If you are taking data from dataset 100.030 for the NWS, then use the code from CFACT or WINTRE-MIX. 
+ 
+
+Top
+
+
+PROCESSING THE DATA
+Initial Processing Setup
+Copy the raw data into the raw data directory at raw_gts_bufr_data.  Beware that in each processing step to search for "HARDCODED" in any script or code. See all Assumptions! This is very important! Note that input file names may be expected in a particular format. IMPORTANT: If instructed to use data from dataset 100.030 for US, then use the code and setup from CFACT or WINTRE-MIX from 2022 or from the latest project where NWS data from 100.030 GTS BUFR Radiosonde Data was done. 
+
+Converting the Data, Generating statistics, Diff' ing duplicate soundings.
+This step runs Perl code and should work on basically any machine. However, to run the autoQC and any other processing/data prep done by the build.xml (Ant) file, you must run on any machine with the proper Ant and Java setup, such as barolo or tikal.
+
+Converting GTS BUFR Radiosonde data into the ESC format consists of the following steps. These steps will convert the data ultimately to ESC (*.cls) form, generate stats on the dumped "raw" data, diff any dup soundings found, etc. Not all steps are required. Ask the associate scientist if getStats is desired and if 5mb and 50mb versions of the ESC data are required. 
+
+Converting the GTS BUFR Data to ESC:
+Convert GTS BUFR (binary data to ugly ASCII). (Mandatory) and Convert ugly ASCII to (human readable) Preproc (cleaned ASCII) files. (Mandatory)
+Move to the /software directory. Run preprocess_GTS_BUFR.pl or preprocess_NWS_GTS_BUFR.pl for NWS data. This software will do mulitple processing steps which are to dump the bufr to ugly ascii and then clean that ascii into more readable *.preproc ascii files. The following must be located in the dir where you run this software from: libeccodes.so and bufr_dump. The more readable (*.preproc) files are the input to the next processing step to convert to ESC.  The *.preproc files are handy for studying exactly what was in the raw binary/bufr files.   Look for a preproc "runit" file in /software or you can find examples of how to run the software in the header of the code. Ensure that you have read all assumptions and searched for the word "HARDCODED" in the software. You may need to update any HARDCODED elements.    Below is an example of how to call this Perl software. Make sure you understand exact the order of the inputs. See the code header.  This software generates messages to the preproc_project.log file or whatever log file you specify. Check those messages once it has completed running.
+preprocess_GTS_BUFR.pl   ../raw_gts_bufr_data    ../output_ugly_ascii_data   ../output_preproc_data  >&  preproc_project.log &
+For NWS run:  preprocess_NWS_GTS_BUFR.pl ../raw_gts_bufr_data ../output_ascii_data ../output_preproc_data >& preproc_project.log &
+Generate statistics from Preproc files.  (Optional)
+Ask the science staff if they want the stats for the raw data. This step will gather stats from the *.preproc GTS BUFR files. These are the more readable ascii files generated in step 1 above. Run the GTSBUFR_GetStats.pl software. Look at the code header and make sure you read all warnings, assumptions, and search for/modify all HARDCODED values.  Be careful about the warnings as this code may delete "old" files in the output directory before generating output. A good suggestion would be to do this work in the provided /getStatsWork top directory. In that directory create /orig_raw_data - copy of *.preproc files output from step 1, /output_stats - tons of output stats files generated by GTSBUFR_GetStats.pl. Stats are generated for each parameter/key in the data, each site, all sites, etc.   To run this software, execute the following command:
+ GTSBUFR_GetStats.pl  ../orig_raw_input  ../output_stats  (Same for NWS)
+Convert Preproc (ASCII) to ESC (final) format. (Mandatory)
+To convert the data from *.preproc files to *.cls (ESC CLASS) files run a command similar to the following command.  Change "RELAMPAGO" to be your current project's name. Be careful to check the warnings, assumptions, and search for HARDCODED in the software.  Note the zero in the command line is the "Keep EVSS Recs Flag", where "Keep EVSS Recs Flag" indicates to keep (1) or drop (0) incoming mandatory level data records. Mandatory level data recs are indicated where the "extendedVerticalSoundingSignificance" has a value of 65536.  That is important and you must set this properly based on the request/input of the science staff. Talk with the science staff (S. Loehrer) to determine if that input value should be zero or one. This WILL cause different results. 
+GTSBUFR_Radiosonde_Converter.pl RELAMPAGO ../output_preproc ../output_esc 0 >& runRELAMPAGO.log &
+For NWS run:   NWS_GTSBUFR_Radiosonde_Converter.pl  CFACT_2022 ../output_preproc_data ../output_esc 0 >& runCFACT.log &
+If multiple soundings generated from single input BUFR file, compare diffs between output Preproc files. (Optional)
+Run the GTSBUFR_DiffClassOutput.pl software to diff the "final" ESC CLASS (*.cls) output files when the conversion software generates "duplicate" output ESC *.cls files.  Duplicate files may not be exact, so science staff may requires to know which files are exact dups, which are not, and what the differences are. Be careful to check this software's header, assumptions, warnings, and search for any HARDCODED values.   To run this software, execute the following command:
+GTSBUFR_DiffClassOutput.pl SOCRATES ../input_dir ../output_dir >& runDiffBufr.log &  (Same for NWS)
+​Sort ESC data. (May or May not be Mandatory depending on if data are in sort order or not. Mandatory for NWS processing!)
+​If you need to sort the records within the soundings (*.cls) files. Run the following command which uses/calls the ESCRecordSorter software as used for the National Weather Service data.  This can be found in the build.xml file used for the RELAMPAGO project. This is MANDATORY for NWS sounding data processing as many soundings will contain records out of time order.
+​ant sort_esc
+Run the format checker using the ant command (Requilred during normal, post field phase data processing):
+ant check-format-ESC  - See the build.xml file on what software will execute during this command. Check the log file (generated by the format checker) in the output directory to determine if any format issues need to be addressed before proceeding with AutoQC.
+Auto QC
+This step works on any machine with the proper Ant and Java setup. Run the AutoQC process as indicated below. 
+
+These steps execute the automatic QC on the processed *.cls files in the output directory, generate log files in the logs directory, and place the QC'ed data files into the final directory or as specified by the build.xml file. The final part of the automated process is to run the format checker on the QC'ed files. To run the sounding Automatic Quality Control Processing:
+
+Stay in/Change to the top level processing directory where the Ant build.xml file is located.
+Check the build.xml file for the autoqc target for the following:
+You MUST updated the Project Name in the build.xml, if included in the build.xml file.
+A command to copy the properties file to the build directory. There must be a copy of the autoqc properties file (e.g., "us_plains_autoqc.properties") in the software directory. Be sure you are using the latest version of the properties file. 
+The java command(s) will be executed on the expected data in the expected locations (i.e., ensure that the directory names in the build.xml file are correct and what you want.)
+Perform the auto QC by executing the ant command:
+ant autoqc
+Check any logs that may have been genereated and then after all issues have been resolved, notify the Scientific Staff (S. Loehrer) that the data is ready for Visual QC. Also inform him of any issues found.
+Visual QC
+Once the auto QC is completed, email the scientific staff (i.e., S. Loehrer) so that they can perform a visual QC on the data and give final approval of the processed data set, as required.  Once done, there should be *.cls.qc files in the /final directory. These are the files are processed into dayfiles that will/should be found in the /dayfiles directory. 
+
+Finalization/Preparation for Data Archive
+After the visual QC is completed, the data set is ready to be finalized (i.e, prep'd for the final data archive - FDA/CODIAC).
+
+Update this "How To" document to indicate the latest project this conversion was executed for and include any notes about upgrades made specifically for that project. The Drupal Software Repository page points to this document, so confirm that the correct link is in place. 
+The dataset description document or readme file (also known as the FDA document) will be created by the scientific staff. A copy of the readme can/should be found in the /docs area.
+The next processing step is to create dayfiles that can/will be loaded into the FDA/CODIAC database, along with the FDA dataset description document. The dayfiles creation step will generate a file for each day in which soundings were collected, sorted by nominal release date followed by station location as required by FDA/CODIAC. It is very important that the output dayfiles be in this expected sort order so that FDA/CODIAC can access all the soundings within a single dayfile. To create the dayfiles, ensure that you are in the same (top) directory as the build.xml file and use the ant command:
+ant dayfiles
+
+This will create a file for each day where at least one sounding exists in the dayfiles directory or whichever directory is specified as the output directory in the build.xml file. If this dataset is to be put online, the dayfiles are the files that are to be loaded into the FDA/CODIAC.
+
+5mb and 50meter Extractions
+If the converted soundings are also going to be placed into a 5mb or 50meter composite, the soundings need to have the proper 5mb pressure or 50meter height level soundings generated. This is done through the following steps:
+
+Generate the 5mb pressure level data files using the ant command (see in the build.xml file):
+ant 5mb-extract
+
+This will generate a 5 mb sounding file for each sounding in the final directory and place it in the 5mb. It will also run some final checks to make sure the format is correct. Beware that the file directories listed in the build.xml file are what you expect and want.
+The generated 5mb data files will then be available when the composite is generated.
+
+ 
+
+2. Generate the 50meter height level data files using the ant command (see in the build.xml file. If not found there, ask about 50m software and ant command.):
+
+ant 50m-extract
+
+This will generate a 50meter sounding file for each sounding in the final directory and place it in the 50m. It will also run some final checks to make sure the format is correct. Beware that the file directories listed in the build.xml file are what you expect and want.
+The generated 50m data files will then be available when the 50 meter composite is generated.
+
+Top
+
+
+DOCUMENTATION
+The following are a list of documents that may help with the conversion or are related to the raw data.
+
+How To: AUTO QC Sounding Data: The instructions for dealing with the AUTO QC program.
+How To: ESC Format Checker: The instructions and API for working with the ESC format checker program.
+How To: Process GTS BUFR Sounding Data: This document.
+Top
+
+Last Updated: 07/10/2023 15:05:29
+ 
+
+Keywords:How to process GTSNWS GTSNWS GTS BUFRGTS binarysounding processingHow Torealtime skewTreal time skewT plots
+‹ How to: Process GTS BUFR (binary) Sounding data into ESC format - *Not ASCII*upSounding Processing (Basics Only) ›
+Printer-friendly version

@@ -1,0 +1,6 @@
+for file in *.cls
+do
+  echo "Fix MPEX to SAS in ${file}"; 
+  sed 's/MPEX/SAS/g' ${file}> ${file}.new
+done
+

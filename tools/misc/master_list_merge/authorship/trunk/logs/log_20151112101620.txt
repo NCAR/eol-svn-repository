@@ -1,0 +1,36 @@
+> groovy authorshipConnect.groovy SBI
+
+Created log file:	logs/log_20151112101620.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+Found contact 442 for data set 106.331 with sort_key 0 (instead of 1). Will update sort_key.
+Found contact 701 for data set 106.331 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 2020 for data set 106.331 with sort_key 2 (instead of 3). Will update sort_key.
+Found contact 1061 for data set 106.331 with sort_key 3 (instead of 4). Will update sort_key.
+Found contact 1063 for data set 106.331 with sort_key 4 (instead of 5). Will update sort_key.
+Found contact 1062 for data set 106.331 with sort_key 5 (instead of 6). Will update sort_key.
+Found contact 2021 for data set 106.331 with sort_key 6 (instead of 7). Will update sort_key.
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 9266 and contact_id = 442;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 9266 and contact_id = 701;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 9266 and contact_id = 2020;
+
+update dataset_contact set sort_key = 4 where iso_citation_role = 'author' and dataset_id = 9266 and contact_id = 1061;
+
+update dataset_contact set sort_key = 5 where iso_citation_role = 'author' and dataset_id = 9266 and contact_id = 1063;
+
+update dataset_contact set sort_key = 6 where iso_citation_role = 'author' and dataset_id = 9266 and contact_id = 1062;
+
+update dataset_contact set sort_key = 7 where iso_citation_role = 'author' and dataset_id = 9266 and contact_id = 2021;
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

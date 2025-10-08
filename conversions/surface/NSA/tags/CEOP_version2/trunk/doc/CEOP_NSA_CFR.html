@@ -1,0 +1,208 @@
+<html>
+<body>
+<pre>
+CEOP/EOP-1 NSA Hourly Surface Meteorology, Flux, and Radiation Data Set
+
+1.0 Contact Information
+
+1.1 UCAR/JOSS Contact
+
+   Steven F Williams
+   Data Specialist
+   UCAR/JOSS
+   P.O. BOX 3000
+   Boulder, CO, USA, 80307-3000
+
+   Telephone: 303-497-8987
+   Facsimile: 303-497-8158
+   E-Mail Address: sfw@ucar.edu
+
+1.2 ARM Contacts
+
+1.2.1 Surface meteorological data
+
+   Michael Ritsche
+   DOE/Argonne National Laboratory
+   9700 S Cass AVE
+   Argonne, IL 60439
+   
+   Telephone: 630-252-1554
+   Facsimile: 630-252-5498
+   E-Mail Address: mtritsche@anl.gov
+
+1.2.2 Radiation data
+
+   Chris Cornwall
+   National Oceanic and Atmospheric Administration
+   Air Resources Lab
+   325 Broadway, R/ARL
+   Boulder, CO 80305
+
+   Telephone: 303-497-7316
+   Facsimile: 303-497-6546
+   E-mail Address: Christopher.R.Cornwall@noaa.gov
+   Web: http://www.srrb.noaa.gov
+
+     
+2.0 General Description
+    
+This data set contains the Coordinated Enhanced Observing Period (CEOP)
+Enhanced Observing Period 1 (EOP-1) Global Energy and Water Cycle Experiment
+(GEWEX) North Slope Alaska (NSA) Hourly Surface Meteorology, Flux, and
+Radiation Data Set. This data set contains hourly data from two stations for
+the CEOP EOP-1 time period (01 July 2001 to 30 September 2001). The University
+Corporation for Atmospheric Research/Joint Office for Science Support
+(UCAR/JOSS) did not perform quality control processing on this data set.
+
+3.0  Detailed Data Description
+
+This data set is also available on-line in 30-minute native format at
+<a href="http://www.joss.ucar.edu/ghp/ceopdm/">http://www.joss.ucar.edu/ghp/ceopdm/</a> under the link "CEOP EOP-1 Reference
+Site Data Sets"
+
+3.1 NSA Algorithms
+
+This hourly data set was formed by extracting the top of the hour observations
+from the native format data. The U and V wind components were computed from
+wind speed and direction.
+
+More information regarding this site can be found under the <a href="http://www.joss.ucar.edu/ghp/ceopdm/rsite.html">CEOP Reference
+Site Station Characteristics</a> link on the UCAR/JOSS CEOP Data Management page
+at http://www.joss.ucar.edu/ghp/ceopdm/.
+
+More information on the ARM algorithms used to process the native format data
+can be found at <a href="http://www.arm.gov/docs/sites/nsa/nsaaao.html">www.arm.gov/docs/sites/nsa/nsaaao.html</a>.
+
+3.2 Station Information
+
+The following is a complete description of the station information provided
+with this CEOP NSA data set. Table 1 details the station list parameters. NSA
+values for each parameter are listed in brackets at the end of each line. The
+beginning and ending dates for the period of coverage are in Universal Time
+Coordinated (UTC). The Identification Type field is network dependent and
+indicates the source of the Identification field. The Occurrence field is an
+integer value used to indicate co-located stations. Note that when a
+particular parameter is unknown for a station, either a blank, a question
+mark, or all 9's will appear in that parameter's position. For a complete list
+of Country, State, and County values, refer to the document in the references
+(Section 5.0). Possible platform types and frequency values are listed in
+Tables 2 and 3, respectively. Note that only those platform types present in
+the CEOP EOP-1 data have been listed. 
+
+Table 1
+
+Parameter                Description
+---------                -----------
+Identification           ID in data.        [NSA]
+Identification Type      Internal ID number type.  [32]
+Latitude                 Station Latitude.  [48.31000]
+Longitude                Station Longitude. [-105.10000]
+Occurrence               Station occurrence. [0]
+Lat/Lon Accuracy         Number of digits accuracy 
+                         in lat/lon values.  [2]
+Name                     Expanded station name. [Other:NSA]
+Commissioned Flag        `(C)' indicates commissioned station,
+                         `(N)' indicates station which is NOT
+                         commissioned. [(N)]
+Begin Period of Coverage Beginning date of period of coverage
+                         (YYYYMMDD). [20010701]
+End Period of Coverage   End date of period of coverage
+                         (YYYYMMDD). [20010930]
+Country                  Country in which station is located. [US]
+State                    State code.  [30]
+County                   County code. [???]
+UTC offset               Hour Offset from UTC time. [0.00]
+DST switch               'y' indicates station does switch to
+                         Daylight Savings Time (DST). 'n' indicates 
+                         station does not switch to DST.   [n]
+Platform type            Collection Platform. See Table 2. [264] 
+Reporting Frequency      Frequency of data collection.  [30min]
+Elevation                Station elevation. [634]
+Fixed/Mobile flag        Flag indicating if station has fixed
+                         location. 'f' indicates a fixed station.
+                         'm' indicates a mobile station. [f]
+
+
+Table 2
+
+Platform Type  Description
+-------------  -----------
+264            CEOP Reference Site Platform
+
+Table 3                                            
+   
+Reporting Frequency
+-------------------
+
+hourly
+
+
+3.3  Detailed Format Description
+     
+The CEOP EOP-1 NSA Hourly Surface Meteorology, Flux, and Radiation Data Set
+contains 10 metadata parameters and 22 data parameters. The metadata
+parameters describe the station location and time at which the data were
+collected. The time of observation is reported both in Universal Time
+Coordinated (UTC) Nominal and UTC actual time. Days begin at UTC 0100 and end
+at UTC 0000 the following day. Note that missing parameter values are
+indicated by "-999.99".  The table below x details the data parameters in each
+record. 
+
+Parameters                   Units 
+----------                   -----
+Date of Observation          UTC Nominal 
+Time of Observation          UTC Nominal 
+Date of Observation          UTC Actual
+Time of Observation          UTC Actual
+CSE Identifier               Abbreviation of CSE name
+Reference Site Identifier    Abbreviation of Site name
+Station Identifier           Reference Site Dependent 
+Latitude                     Decimal degrees, South is negative
+Longitude                    Decimal degrees, West is negative
+Station Elevation            Meters 
+Station Pressure             Hectopascals (mb) 
+Dry Bulb Temperature         Celsius 
+Dew Point                    Celsius 
+Relative Humidity            Percent
+Specific Humidity            g/kg
+Wind Speed                   m/s
+Wind Direction               Degrees 
+U Wind Component             m/s
+V Wind Component             m/s
+Total Precipitation          mm
+Snow Depth                   cm     
+Sensible Heat Flux           W/m2
+Latent Heat Flux             W/m2
+Incoming Shortwave Radiation W/m2
+Outgoing Shortwave Radiation W/m2
+Incoming Longwave Radiation  W/m2
+Outgoing Longwave Radiation  W/m2
+Net Radiation                W/m2
+Skin Temperature             Celsius
+CO2 Flux                     uMoles/m2/s
+Incoming PAR                 uMoles/m2/s
+Outgoing PAR                 uMoles/m2/s
+
+     
+3.4  Data Remarks
+
+This data set contains only the hourly observations for the CEOP EOP-1
+time period. This data set is also available on-line in native format at
+<a href="http://www.joss.ucar.edu/ghp/ceopdm/">http://www.joss.ucar.edu/ghp/ceopdm/</a> under the link "CEOP EOP-1 Reference
+Site Data Sets".
+
+
+4.0  Quality Control Processing
+
+UCAR/JOSS performed limited gross limit and visual checks on this data
+set. No data values have been changed.
+
+5.0  References
+
+none   
+
+
+</pre>
+</body>
+</html>
+

@@ -1,0 +1,180 @@
+#===============================================================================
+# isf_dropsonde_config.yml                                                      
+#                                                                               
+# This file serves as a config file for load_data_proj.py script               
+# NOTES:                                                                        
+# The lines starting with a dash can NOT have a space at the beginning.         
+#      load_a_dataset.pl must be looking for lines starting with a dash.
+# Eventhough the load_data_proj GUI allows you to make changes, it saves this change
+#      only in the cfg folder. This does not get saved in the config/ folder. 
+#      The load_a_dataset.pl only cares what is in the config/ folder and ignores what
+#      is newly saved in the cfg folder. So only make changes and correctiong to the yml file
+#      if you want it to be reflected in the data base. Don't bother making any 
+#      updates in the GUI. 
+#===============================================================================
+# created by Soo Park 2015                                                      
+# updated: 4/24/15                                                              
+# copyright: University Corporation for Atmospheric Research, 2015              
+#===============================================================================
+
+dataset:
+
+####################################
+# Main Edit Area                    
+- title_content: titleSep
+####################################
+# name of the project - NO quotes
+- name: otrec
+# Archive project ID - make sure number does not already exist. Quotes required.
+- archive_ident: '590.019'
+# Official Project title as seen by the public. Quotes NOT required.
+- title: Test Dropsonde Profiles
+# Quotes NOT required.
+- summary: TEST DATASET. Working with yaml files and RAF loaddata scripts.
+# Quotes required. The exact beg/end dates of the data set.
+- begin_date: '2019-08-07 00:00:00'
+- end_date: '2019-08-25 23:59:59'
+# Quotes NOT required. GUI shows a checkbox: 0=No, 1=Yes
+- visible: 0
+# password required: 0=No, 1=Yes
+- auth_reqd: 0
+# EULA required: 0=No, 1=Yes
+- eula_reqd: 0
+# Quote required. Preliminary data is denoted by '0.1'
+- version_number: '1.0'
+# Quote NOT required: preliminary =1 , final = 2
+- quality: 2
+# local location on ISF. Quotes NOT required. Needed for the DTS.
+- ingest_location: /net/dropsonde_archive/2019_otrec/qc/ncdf_v2
+# Either HPSS or /net/archive/ Quotes NOT required.
+- archive_location: /net/archive/data/otrec/dropsonde/test
+# The following lines use the cfg convention. Quotes NOT required.
+- filename_pattern: OTREC_AVAPS_NRD41_v1_(\Y\Y\Y\Y\M\M\y\y)_(\H\H\m\m)\d\d.nc
+- startdate_pattern: YYYY-MM-yy HH:mm:00
+- enddate_pattern: YYYY-MM-yy HH:mm:59
+# Leave blank because we don't need to know how many files there are
+- filelength: ''
+- minimum_latitude: '-90.0'
+- maximum_latitude: '90.0'
+- minimum_longitude: '-180.0'
+- maximum_longitude: '180.0'
+
+####################################
+# Usually left alone below this line
+- CODIAC_specific_fields: titleSep
+####################################
+# A list of categoy ID's can be found in config/comboBox/category_id.yml
+# 204: Dropsonde Products
+- category_id: 204
+# 491: Dropsonde, NSF/NCAR GV
+- platform_id: 491
+# 0=No, 1=Yes
+- is_eol_data: 1
+# A list of format ID's can be found in config/comboBox/format.yml
+# 22: netCDF
+- format: 22
+# posibilities are hpss and localhost
+- host: localhost
+# A list of frequency ID's can be found in config/comboBox/frequency_id.yml
+# 3: < 1 s
+- frequency_id: 3
+# A list of spatial ID's can be found in config/comboBox/spatial_type.yml
+- spatial_type: point
+# 1001: EOL Data Support
+- point_of_contact_id_codiac: 1001
+# 2422: Jacquelyn Witte
+- internal_contact_id_codiac: 2422
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+# 0=no OpenDap, 1=yes OpenDap
+- dodsable: 1
+# time subset = always yes
+- t_subset: 1
+- event_subset: 0
+- file_subset: 0
+- order_allow_compress: 1
+####################################
+- DTS_specific_fields: titleSep
+####################################
+# 160: sncley
+# 190: wbrown 
+# 350: jwitte
+# 327: mpaulus
+# 356: hvoemel
+# status_id: 
+# 1: Do Not Do
+# 2: Done
+# 3: In Progress
+# 4: N/A
+# 5: On Going
+# 6: To Be Done
+# ingest_status_id_dts ID list found in config/comboBox/load_status_id_dts.yml
+# approve_status_id_dts ID list found in config/comboBox/approve_status_id_dts.yml
+- source_contact_id_dts: 356
+- internal_contact_id_dts: 350
+- ingest_contact_id_dts: 350
+- ingest_status_id_dts: 2
+- load_contact_id_dts: 350
+- load_data_location: /net/archive/data/otrec/dropsonde/test
+- load_status_id_dts: 2
+- approve_contact_id_dts: 350
+- approve_status_id_dts: 6
+- author_id_dts: 350
+# note_type_id:
+#  1: Check
+#  2: General
+#  3: Ingest
+#  4: Load
+#  5: Process
+- note_type_id: 5
+- note_text: Loading with new load_data_proj script. This is a test.
+- readme_url: 'default'
+- remote_url: 'default'
+
+####################################
+- optional_fields: titleSep
+####################################
+# Additional dataset
+# Use this part to upload accompanying images
+- archive_location_2: ''
+- filename_pattern_2: ''
+- startdate_pattern_2: ''
+- enddate_pattern_2: ''
+- filelength_2: ''
+- format_2: ''
+- host_2: ''
+# Additional dataset
+- archive_location_3: ''
+- filename_pattern_3: ''
+- startdate_pattern_3: ''
+- enddate_pattern_3: ''
+- filelength_3: ''
+- format_3: ''
+- host_3: ''
+# 2422: Jacquelyn Witte
+# 2466: Holger Voemel
+# 1001: EOL Data Support
+# For some reason this needs to be filled in
+- description: 'default'
+# 7 = pointOfContact
+- iso_citation_role: 7
+#EOL Data Support
+- contact_id_codiac: 1001
+- datacite_contributor_type: ''
+#author
+- iso_citation_role_2: 11
+#NCAR/EOL In-situ Sensing Facility
+- contact_id_codiac_2: 2505
+- datacite_contributor_type_2: ''
+#originator
+- iso_citation_role_3: 6
+#Holger Voemel
+- contact_id_codiac_3: 2466
+- datacite_contributor_type_3: ''
+- iso_citation_role_4: ''
+- contact_id_codiac_4: ''
+- datacite_contributor_type_4: ''
+- iso_citation_role_5: ''
+- contact_id_codiac_5: ''
+- datacite_contributor_type_5: ''

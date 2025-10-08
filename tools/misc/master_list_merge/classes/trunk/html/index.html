@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <!--<meta http-equiv="refresh" content="600" /> auto-refresh every 10 minutes -->
+ <title>Master List Classifications</title>
+
+ <!-- **** STYLES ********************************************************** -->
+  <link rel="stylesheet" type="text/css" id="styler" href="main.css" />
+  <link rel="stylesheet" type="text/css" id="styler" href="tables.css" />
+ <!-- **** END STYLES ****************************************************** -->
+ <!-- **** SCRIPTS ********************************************************* -->
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script type="text/javascript" src="tables.js"></script>
+ <!-- **** END SCRIPTS ***************************************************** -->
+</head>
+
+<body>
+<!--<center>-->
+
+
+<!-- start of content -->
+<div class="main_content" style="padding: 0% 10%;">
+
+
+<div class="left-menu">
+	<div class="left-menu-item" id="menu-classification" onClick="loadClasses('classification');">Classifications</div>
+	<div class="left-menu-item" id="menu-category" onClick="loadClasses('category');">Category</div>
+	<div class="left-menu-item" id="menu-platform" onClick="loadClasses('platform');">Platform</div>
+</div>
+
+
+<div class="full">
+	<div id="status_head" class="full_head toggle">
+		Category/Platform/Classification Viewer
+		<div style="float: right; font-weight: normal; font-style: italic;">Master List Database &rArr; Codiac Database (zith9)</div>
+	</div>
+	<div class="full_box" style="padding-left: 25px;">
+		<br />
+		<span class="left-span">
+			Click on the 
+			<img alt="View Data Set List" title="View Data Set List" src="list.png" />
+			icon to the right to show a list of data sets for that specific topic.
+		</span>
+		<br />
+		<br />
+		<a id="json-link" target="_blank" href="http://dmg.eol.ucar.edu/cgi-bin/ml_merge/ml_class_json.pl">View JSON</a>
+		<br />
+		
+		<div id="classes"></div>
+
+		<br />
+	</div>
+
+</div> <!-- end of main_content -->
+<!-- end of content -->
+
+
+<!-- start of floating content -->
+<div id="ds-zfloat" class="zfloat">
+	<h1>
+		List of Data Sets for <span id="ds-type"></span>
+		<span class="right-span" onClick="hideDsList();">Close</span>
+	</h1>
+	<div id="ds-list"></div>
+</div>
+<!-- end of floating content -->
+
+<div class="clr_foot"></div>
+
+<!--</center>-->
+</body>
+</html>

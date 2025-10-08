@@ -1,0 +1,2 @@
+./ep2pq  ../out/60min_401.dat ../out/60min_401.0pqc
+./ep2pq  ../out/60min_402.dat ../out/60min_402.0pqc

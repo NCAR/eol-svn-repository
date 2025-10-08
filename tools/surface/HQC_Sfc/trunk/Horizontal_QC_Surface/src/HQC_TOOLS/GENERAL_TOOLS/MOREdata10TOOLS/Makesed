@@ -1,0 +1,13 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+
+CC=acc
+##CFLAGS = -g
+
+build_sed: build_sed.o
+	$(LINK.c) -o build_sed build_sed.o
+	chmod 0755 build_sed
+
+clean:
+	rm *.o

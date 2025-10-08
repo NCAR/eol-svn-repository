@@ -1,0 +1,9 @@
+SHELL = /bin/sh
+
+CC=cc
+
+simple: remove_net_from_sigsqfiles.o process_qcfrec.o
+	$(LINK.c) -o remove_net_from_sigsqfiles remove_net_from_sigsqfiles.o process_qcfrec.o
+	chmod 0755 remove_net_from_sigsqfiles
+clean:
+	rm *.o

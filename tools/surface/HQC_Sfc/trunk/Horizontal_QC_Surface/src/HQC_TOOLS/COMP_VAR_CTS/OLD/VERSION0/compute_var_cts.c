@@ -1,0 +1,829 @@
+/*--------------------------------------------------------
+ * compute_var_cts.c -  Reads sigmasq files computed by
+ *   compute_sigmasq() then counts and bins the data
+ *   so that a histogram of the data can be produced. Any
+ *   of the following parameter can be chosen:
+ *    (0)         Station Pressure,
+ *    (1)         Sea Level Pressure,
+ *    (2)         Calculated Sea Level Pressure,
+ *    (3)         Temperature,
+ *    (4)         Dew Point Temperature,
+ *    (5)         Wind speed,
+ *    (6)         Wind Direction.
+ *
+ *   This can be used to determine the range of values
+ *   that will include say 95% of all sigmasq values.
+ *   Run comp_ct_percent.pl to do this summing.
+ *   This range, in turn, can be used to compute the
+ *   values put in Table 3-2 "Ranges of HQC flag Limit
+ *   Values for 'project-name' 'composite-name'.
+ *
+ *   Usage: compute_var_cts
+ *
+ * INPUT : List of files to be processed in a file named :
+ *         'file_list.txt'. This should be a list of files
+ *         with the sigmasq file format.
+ *
+ *  This s/w assumes that the input *.sig files are compressed.
+ * 
+ *  Variance files must have file names of the form:
+ *                   yyyyjjjhhmm.sig
+ *
+ *    where yyyy is year, jjj is julian date, hh is hour, mm is
+ *    minute for which the contained sigmasq (variance) values
+ *    are valid. And will be located in the directory specified
+ *    as the output directory in the QC input control file. 
+ *    The form of all output variance files is:
+ *
+ *          Definition                        (var) (type)
+ *  -----------------------------------------------------------------
+ *  Line 1: Number of stations at this time   (numstns) (int)
+ *  Line 2->xx: Internal ID Network:Stn ID    (i, stn_list[i][27]) (int, string)
+ *  Line xx+1: Comment line                   ("stn_no parm_no  sigma value")
+ *  Line xx+2: InternalID  Parm# Variance     (i, j, sigma_sq[i][j]) (int, int, float)
+ *
+ * (Line xx+2 is repeated for each variance for parameter (0-6 (j)) for each stn.)
+ *
+ *  Example of variance file:
+ *   1
+ *     0 E02
+ *   stn_no parm_no  sigma value
+ *       0     0 33.714584
+ *       0     1 33.271523
+ *       0     2 67.128426
+ *       0     3 29.454615
+ *       0     4 38.043491
+ *       0     5 3.950475
+ *       0     6 13018.718750
+ *  (end example)
+ *
+ * Output:
+ *   Bin (histogram) counts for each parameter into file named
+ *   final_var_ct.out.
+ *
+ * 08 Apr 95 lec
+ *   Created.
+ * 22 May 98 lec
+ *   Added documentation. Fixed output header format.
+ * 27 May 98 lec
+ *   Updated and increased number of bins. Added s/w to 
+ *   attempt to determine the range of sigmasq values
+ *   that contains about 95% of the values.
+ *-------------------------------------------------------*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <errno.h>
+
+#include "local.h"
+#include "process_qcfrec.h"
+
+/*-------------------------------------------------------
+ * Set DEBUG to 1 for debug type output to screen
+ * during any run. Set to 0 to prevent debug output.
+ * NOTE: Some #if statements have been turned on
+ *       permanently by setting #if 1.
+ *
+ *-------------------------------------------------------*/
+#define  DEBUG   0
+#define  ORIG    0
+
+/* Following was only 30 bins. */
+#define  MAX_NUM_BINS  40
+
+/* local functions */
+#ifdef __STDC__
+   int main (int argc, char *argv[]);
+#else /*!__STDC__*/
+   int main ();
+#endif /*__STDC__*/
+
+
+/*---------------------------------------------------------
+ * add_in_low_value() - adds requested value to current
+ *   total.
+ *
+ * 28 May 98 lec
+ *   Created.
+ *--------------------------------------------------------*/
+void add_in_low_value( /*in/out*/ long int  *low_in,
+                       /*in/out*/ int       *low_done_in,
+                       /*in*/     long int  value_to_add,
+                       /*in*/     long int  var_totals,
+                       /*in/out*/ long int  *counts_in_range,
+                       /*in/out*/ long int  *range_low_end)
+   {
+   float temp_total = 0.;
+   float percent = 0.0;
+
+   long int low;
+   long int low_done;
+   long int range_low;
+
+   low = *low_in;
+   low_done = *low_done_in;
+
+   range_low = *range_low_end;
+
+
+#if DEBUG
+   printf ("       Add low(top): low=%ld, low_done=%ld, valToAdd=%ld, var_totals=%ld, ctsInRng=%ld, range[low]: %ld\n",
+   *low_in, *low_done_in, value_to_add, var_totals, *counts_in_range, *range_low_end);
+#endif
+
+   /*--------------------------
+    * Try and add in the value.
+    *--------------------------*/
+   if (low > -1 && low_done!=1 && (value_to_add > 0))
+      {
+      temp_total = *counts_in_range + value_to_add;
+      percent = temp_total/var_totals;
+
+#if DEBUG
+      printf ("       (LOW)  (.95-(temp_total/var_totals) & fabs: %7.4f %7.4f\n",
+              (.95 - (percent)), fabs(.95 - (percent)) );
+
+      printf ("       (int)(100*(percent)) = %d\n", 
+               (int)(100.0*(percent)) );
+#endif
+
+      /*---------------------------------------
+       * Don't add it in if it pushes val > 95%
+       * If we are under 95% always add it in.
+       * Only let the value go slightly over
+       * 95% say to 97%.
+       *--------------------------------------*/
+/*was:      if ( fabs(.95 - percent) >= 0.004  ||
+           (int)(100.0*(percent))== 95 ) */
+
+      if ( ((.95 - percent) >= 0.0) ||
+           ( ((.95 - percent) < 0.0 ) &&
+             ((.95 - percent) >=-0.02) ) )
+         {
+         *counts_in_range = *counts_in_range + value_to_add;
+         range_low = low;
+
+         low--;              /* move down one slot only if value added */
+
+#if DEBUG
+         printf ("       Add LOW value. low=%ld, low_done=%ld\n", low, low_done);
+#endif
+         }
+      else
+         {
+#if DEBUG
+         printf ("       Set low_done = 1.\n");
+#endif
+         low_done=1;
+         }
+      } 
+   else
+      {
+#if DEBUG
+      printf ("Don't add LOW value.\n");
+#endif
+      }
+
+   *low_in = low;
+   *low_done_in = low_done;
+   *range_low_end = range_low;
+
+#if DEBUG
+   printf ("       Add low(end): low=%ld, low_done=%ld, valToAdd=%ld, var_totals=%ld, ctsInRng=%ld, range[low]: %ld\n",
+   *low_in, *low_done_in, value_to_add, var_totals, 
+   *counts_in_range, *range_low_end);
+#endif
+
+   return;
+
+   } /* add_in_low_value()*/
+
+/*---------------------------------------------------------
+ * add_in_high_value() - adds requested value to current
+ *   total.
+ *
+ * 28 May 98 lec
+ *   Created.
+ *--------------------------------------------------------*/
+void add_in_high_value( /*in/out*/ long int  *high_in,
+                        /*in/out*/ int       *high_done_in,
+                        /*in*/     long int  value_to_add,
+                        /*in*/     long int  var_totals,
+                        /*in/out*/ long int  *counts_in_range,
+                        /*in/out*/ long int  *range_high_end)
+   {
+   float temp_total = 0.0;
+   float percent = 0.0;
+   long int high;
+   long int high_done;
+   long int range_high;
+
+   high = *high_in;
+   high_done = *high_done_in;
+   range_high = *range_high_end;
+
+#if DEBUG
+   printf ("       Add high(top): high=%ld, high_done=%ld, valToAdd=%ld, var_totals=%ld, ctsInRng=%ld, range[high]: %ld\n",
+   *high_in, *high_done_in, value_to_add, var_totals, *counts_in_range, *range_high_end);
+#endif
+
+   /*--------------------------------------------
+    * Try to add in the high end value. Don't add
+    * the peak value twice (mm!=0)...dont' think
+    * this can occur anymore.
+    *-------------------------------------------*/
+   if ((high <= MAX_NUM_BINS-1) && (high_done!=1) && (value_to_add > 0))
+      {
+      temp_total = *counts_in_range + value_to_add;
+      percent = temp_total/var_totals;
+
+#if DEBUG 
+      printf ("       (HIGH) (.95-percent & fabs: %7.4f %7.4f\n",
+              .95 - (percent), fabs(.95 - percent) );
+
+      printf ("       (int)(100*(percent)) = %d\n",
+               (int)(100.0*(percent)) );
+#endif
+ 
+      /*---------------------------------------
+       * Don't add it in if it pushes val > 95%
+       *---------------------------------------*/
+/*was:      if ( fabs(.95 - percent) >= 0.004 ||
+           (int)(100.0*percent)== 95 )  */
+
+      if ( ((.95 - percent) >= 0.0) ||
+           ( ((.95 - percent) < 0.0 ) &&
+             ((.95 - percent) >=-0.02) ) )
+         {
+         *counts_in_range = *counts_in_range + value_to_add;
+         range_high = high;
+         high++;     /* move to next slot only if added in value. */
+#if DEBUG
+         printf ("       Add HIGH value.\n");
+#endif
+         }
+      else
+         {
+#if DEBUG
+         printf ("       Set high_done = 1.\n");
+#endif
+         high_done=1;
+         }
+      }
+   else
+      {
+#if DEBUG
+      printf ("Don't add HIGH value.\n"); 
+#endif
+      }
+
+   *high_in = high;
+   *high_done_in = high_done;
+   *range_high_end = range_high;
+
+#if DEBUG
+   printf ("       Add high(end): high=%ld, high_done=%ld, valToAdd=%ld, var_totals=%ld, ctsInRng=%ld, range[high]: %ld\n",
+   *high_in, *high_done_in, value_to_add, var_totals, *counts_in_range, *range_high_end); 
+#endif
+
+    return;
+
+   } /* add_in_high_value() */
+
+
+/*---------------------------------------------------------
+ * main() - controls processing flow.
+ *
+ * 08 Apr 95 lec
+ *   Created.
+ *--------------------------------------------------------*/
+int main( argc, argv)
+int argc;
+char *argv[];
+   {
+   /* local variables */
+   char      sigma_input_file_name[NAMELEN_MAX] = "\0";
+   char      output_file_name[NAMELEN_MAX] = "var_ct.out\0";
+   char      filelist_file_name[NAMELEN_MAX] = "file_list.txt\0";
+
+   FILE      *output_stream;
+   FILE      *sigma_input_stream;
+   FILE      *file_list_stream;
+
+   long int  ii = 0;
+   int       jj = 0;
+   long int  kk = 0;
+   long int  mm = 0;
+   int       low_done = 0;
+   int       high_done = 0;
+
+   long int  numstns_in_file = 0;
+
+   float     sigma_sq;
+
+   long int  var_ct[NUMQCPARMS][MAX_NUM_BINS]; /* Number cts in each bin */
+
+   float     var_totals[NUMQCPARMS]= {0.0,0.0,0.0,0.0,0.0,0.0,0.0}; /* Total counts for each parm. */
+   float     temp_total = 0.0;
+
+   /* position 0=location of max cts; 1= max cts */
+   float     var_max[NUMQCPARMS][2]= {{0.0,0.0},{0.0,0.0},{0.0,0.0},{0.0,0.0},
+                                      {0.0,0.0},{0.0,0.0},{0.0,0.0}};
+   float     peak_pos;
+
+   /* range position 0=bin number of low range end;
+      range position 1=bin number of high range end; */
+   long int    range[NUMQCPARMS][2]= {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
+
+   long int  low = 0;
+   long int  high = 0;
+
+   long int  counts_in_range[NUMQCPARMS] = {0,0,0,0,0,0,0}; /* Total counts in range */
+
+   char      compression_cmd[NAMELEN_MAX] = "\0";
+   long int  offset2, offset3 = 0;
+
+   int       firstfile = 1;
+
+   int       num_limit[NUMQCPARMS] = {30,30,30,30,30,30};
+
+   float     good = 0.0;
+   float     questionable_low = 0.0;
+   float     questionable_hi  = 0.0;
+   float     unlikely = 0.0;
+   float     alpha_G[NUMQCPARMS] = {0.2, 0.2, 0.4, 0.5, 0.5,
+                                    2.25, 1.22};
+
+   float     alpha_B[NUMQCPARMS] = {0.5, 0.5, 1.0, 1.0, 1.0,
+                                    4.0, 2.2};
+
+#if ORIG
+   /* 30 bins */
+   long int  limit[NUMQCPARMS][MAX_NUM_BINS] = 
+   {{5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,
+     90,95,100,105,110,115,120,125,130,135,140,145,1000000}, /* stn press */
+    {5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,
+     90,95,100,105,110,115,120,125,130,135,140,145,1000000}, /* SLP  */
+    {5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,
+     90,95,100,105,110,115,120,125,130,135,140,145,1000000}, /* CSLP */
+    {5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,
+     90,95,100,105,110,115,120,125,130,135,140,145,1000000}, /* temp */
+    {5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,
+     90,95,100,105,110,115,120,125,130,135,140,145,1000000}, /* dewpt */
+    {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
+     21,22,23,24,25,26,27,28,29,1000000}, /* Wind Speed */
+    {5000,5500,6000,6500,7000,7500,8000,8500,9000,9500,10000,
+     10500,11000,11500,12000,12500,13000,13500,14000,14500,
+     15000,15500,16000,16500,17000,17500,18000,18500,19000,1000000}}; /*Wind dir*/
+#endif
+
+/* -------------------------------------------------------------------*
+ * stn press=0, SLP=1, CSLP=2, temp=3, dewpt=4, WindSpeed=5, WindDir=6
+ * -------------------------------------------------------------------*/
+   float  limit[NUMQCPARMS][MAX_NUM_BINS] =
+   {{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,30,35,40,45,
+     50,55,60,65,70,75,80,85,90,95,100,250,500,1000,1000000},
+    {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,30,35,40,45,
+     50,55,60,65,70,75,80,85,90,95,100,250,500,1000,1000000},
+    {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,30,35,40,45,
+     50,55,60,65,70,75,80,85,90,95,100,250,500,1000,1000000},
+
+    {0,.05,.1,.5,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,30,35,40,45,
+     50,55,60,65,70,80,90,100,1000,2000,1000000},
+    {0,.05,.1,.5,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,30,35,40,45,
+     50,55,60,65,70,80,90,100,1000,2000,1000000},
+
+    {0,.05,.1,.25,.5,.75,1,1.25,1.5,1.75,2,2.25,2.5,2.75,3,3.25,3.5,3.75,4,4.5,5,
+     5.5,6,6.5,7,7.5,8,8.5,9,10,11,12,13,14,15,16,20,100,1000,1000000}, 
+    {5,10,15,20,25,30,35,40,45,50,100,250,500,1000,2000,3000,4000,5000,6000,7000,
+     8000,9000,10000,11000,12000,13000,14000,15000,16000,17000,18000,19000,20000,
+     30000,40000,50000,100000,250000,500000,1000000}}; 
+
+#if DEBUG
+   printf ("\n---- Count Sigmas ----\n");
+#endif
+   printf ("Processing began on %-s %-s\n", __DATE__, __TIME__);
+   printf ("Output file is named: var_ct.out\n");
+
+   if (( file_list_stream = fopen("./file_list.txt", "r")) == NULL)
+      perror ("Error: Can't open file_list.txt for reading");
+ 
+   fscanf (file_list_stream, "%s", sigma_input_file_name);
+
+  /*-----------------------------
+   * Open output file and 
+   * Initialize variance counts. 
+   *----------------------------*/
+  if (( output_stream = fopen(output_file_name, "w")) == NULL)
+     perror ("Error: Can't open output_file_name for writing");
+
+#if DEBUG
+     printf ("Open output file: %-s\n", output_file_name);
+#endif
+
+  for (jj = 0; jj< NUMQCPARMS; jj++)
+     {   
+     for (kk = 0; kk< MAX_NUM_BINS; kk++)
+        var_ct[jj][kk] = 0.0;
+     }   
+ 
+   while (!feof(file_list_stream))
+      {  
+      if ( feof(file_list_stream))
+         {
+         if (fclose (sigma_input_stream) == EOF)
+            perror ("Can't close input stream.");
+ 
+         if (fclose (output_stream) == EOF)
+            perror ("Can't close output_stream.");
+         break;
+         }
+
+      printf ("Processing first file: %-s.\n", sigma_input_file_name);
+
+      strncpy(output_file_name, "var_ct.out\0", 11);
+
+     /*------------------------------------------
+      * At this point, sigmasq file needs to be
+      * uncompressed. 
+      *------------------------------------------*/
+     sprintf (compression_cmd, "gunzip %-s.gz\0",
+              sigma_input_file_name);
+#if DEBUG
+     printf ("executing compression_cmd: %-sxxx\n", compression_cmd);
+#endif
+     system (compression_cmd);
+ 
+     /*----------------------------------------------
+      * Open input file.
+      * Read how many stns are currently listed in
+      * this sigma file. 
+      *---------------------------------------------*/
+     if (( sigma_input_stream = fopen(sigma_input_file_name, "r")) == NULL)
+        perror ("Error: Can't open sigma_input_file_name for reading");
+
+     fscanf (sigma_input_stream, "%ld\n", &numstns_in_file);
+
+#if DEBUG
+     printf ("Open output file: %-s\n", output_file_name);
+#endif
+ 
+    /*------------------------------------------------
+     * Determine lengths of records and skip 1st sect.
+     *-----------------------------------------------*/
+    STRIPLINE(sigma_input_stream);
+    offset2 = ftell (sigma_input_stream); /* 2 lines down from top */
+    STRIPLINE(sigma_input_stream);
+    offset3 = ftell (sigma_input_stream); /* 3 lines down from top */
+ 
+#if DEBUG
+    printf ("offset3, offset2, (offset3-offset2): %ld %ld %ld\n",
+             offset3, offset2, (offset3-offset2));
+#endif
+  
+    if (fseek(sigma_input_stream, (numstns_in_file-2)*(offset3-offset2), SEEK_CUR) !=0) /*skip 1st section*/
+       {
+       printf ("Error(1): Problems calling fseek\n");
+       exit(1);
+       }
+
+    STRIPLINE (sigma_input_stream); /* strip comment line */
+
+    /*----------------------------------------------
+     * C requires that an fseek (or ftell, etc)
+     * call be made between switching I/O operations.
+     *----------------------------------------------*/
+#if DEBUG 
+    printf ("call fseek\n");
+#endif  
+    if (fseek(sigma_input_stream, 0, SEEK_CUR) !=0) /*go nowhere!*/
+       {
+       printf ("Error(2): Problems calling fseek in rewrite_sigmasq()\n");
+       exit(1);
+       }
+
+    ii = 0; /* station number */
+    kk = 0; /* parameter number */
+
+    while (!feof(sigma_input_stream))
+      {
+      fscanf (sigma_input_stream, "%ld%d", &ii, &kk);
+      if (feof(sigma_input_stream)) break;
+ 
+      fscanf (sigma_input_stream, "%f", &sigma_sq);
+      if (feof(sigma_input_stream)) break;
+
+#if DEBUG
+      printf ("(read)sigma_sq[%ld][%d] = %f\n", ii, kk, sigma_sq);
+#endif
+
+      for (mm =0; mm< MAX_NUM_BINS; mm++)
+        {
+        if ((sigma_sq > -888.88) && (sigma_sq < limit[kk][mm]))
+           {
+           var_ct[kk][mm]++;
+           break;
+           }
+        } /* for mm */
+
+      } /* while !feof(sigma_input_stream) */
+
+    if (fclose (sigma_input_stream) == EOF)
+      perror ("Can't close input stream.");
+
+    sprintf (compression_cmd, "gzip %-s\0", sigma_input_file_name);
+    system (compression_cmd);
+
+    fscanf (file_list_stream, "%s", sigma_input_file_name);
+ 
+    } /* while feof(file_list_stream) */
+
+  if (fclose (file_list_stream) == EOF)   
+     perror ("Can't close file_list_stream.");
+
+
+  /*-----------------------------------------------
+   * Print out the data. Each parameter in a row.
+   *----------------------------------------------*/
+  fprintf (output_stream, "     Parm   Bin   Upper_limit  Count\n");
+
+  for (jj=0; jj<NUMQCPARMS; jj++) 
+    { 
+    for (mm=0; mm<MAX_NUM_BINS; mm++)
+/*orig: fprintf (output_stream, "%7d %7ld %7ld %8ld\n", jj, mm, limit[jj][mm], var_ct[jj][mm]); */
+       fprintf (output_stream, "%7d %7ld %7.2f %8ld\n", jj, mm, limit[jj][mm], var_ct[jj][mm]); 
+    }
+
+
+  /*---------------------------------------------
+   * Try to determine a range that includes 95%
+   * of the sigmasq values. This could be done
+   * in the loop above, but this seperates the
+   * logic.
+   *---------------------------------------------*/
+  for (jj=0; jj<NUMQCPARMS; jj++)
+    {
+
+    for (mm=0; mm<MAX_NUM_BINS; mm++)
+       {
+       var_totals[jj] = var_totals[jj] + var_ct[jj][mm];
+
+       /*
+        * Locate the bin with the max number of counts.
+        */
+       if (var_ct[jj][mm] > var_max[jj][1])
+          {
+          var_max[jj][1] = var_ct[jj][mm]; /* counts */
+          var_max[jj][0] = mm;             /* bin number */
+          }
+
+       } /*check all Max Num bins*/
+#if DEBUG
+     printf ("Max for %7ld is %7.2f in bin %7d\n", jj, var_max[jj][1], (int)(var_max[jj][0]));
+#endif
+
+    } /* for all parameters (jj) */
+
+
+  /*------------------------------------
+   * Do a quick check to verify that bin
+   * value selections are satisfactory.
+   * If the max counts occurred in the
+   * first or last bins, then the bin
+   * slot values need to be modified/
+   * shifted to see more detail in those
+   * areas.
+   *------------------------------------*/
+  for (jj=0; jj<NUMQCPARMS; jj++)
+    {
+    if (var_max[jj][0] ==0 || var_max[jj][0] ==(MAX_NUM_BINS-1) )
+       {
+       fprintf (output_stream, "MAX num cts occurred in bin# %ld. Redo bin values!\n", var_max[jj][0]);
+
+#if DEBUG
+       printf ("MAX num cts occurred in bin# %ld. Redo bin values!\n", var_max[jj][0]);       
+#endif
+
+       if (fclose (output_stream) == EOF)
+           perror ("Can't close output stream.");
+ 
+       printf ("\nEarly Completion on %-s %-s\n", __DATE__, __TIME__);
+       exit(0);
+       }
+    } /* for all parameters */
+
+
+  /*--------------------------------------------*
+   * Now that we have the bin with the max 
+   * number of counts, try and determine the
+   * range about that peak that contains 95%
+   * of the counts. This may not work well
+   * when there are double peaks in the count
+   * bins that are not close together. The
+   * user must verify the results by looking
+   * at the printout of the list of counts
+   * per bin (printed above). Also we know
+   * how many bins there are (i.e., MAX_NUM_BINS).
+   * The "best" possible case would be if the
+   * peak were exactly in the middle of the
+   * number of bins. Remember that C starts at
+   * zero not one. The worst case would be if
+   * the max occurred in the first or last bin.
+   *---------------------------------------------*/
+  /*-----------------------------*
+   * Add in values until hit about
+   * 95% (about the peak).
+   *-----------------------------*/
+  for (jj=0; jj<NUMQCPARMS; jj++)
+    {
+    low_done = 0;
+    high_done = 0;
+    low = 0;
+    high = 0;
+
+    /*--------------------------
+     * Initialize to peak point.
+     *-------------------------*/
+    peak_pos = var_max[jj][0];
+
+    low = peak_pos;   
+    high = peak_pos; 
+
+    range[jj][0] = peak_pos;
+    range[jj][1] = peak_pos;
+
+
+    for (mm=0; mm<MAX_NUM_BINS; mm++)
+       { 
+       /*----------------------------------------------------------------------
+        * Don't divide by zero. Stop if current percent equals or is just over
+        * 95%. Stop if no more values can be added in on either low or high end
+        * without forcing percent over 95%. Stop if beyond bins on both ends.
+        *----------------------------------------------------------------------*/
+       if ( ((var_totals[jj]!=0) && 
+             (fabs(.95 - (counts_in_range[jj]/var_totals[jj])) < 0.005)) ||
+            (low_done==1 && high_done==1) || 
+            (low<0 && high>MAX_NUM_BINS-1))
+          {
+#if DEBUG
+          printf ("-----Hit ~95 prcnt for %2d, ctInRng= %7d, totCtInRng= %7.0f, ",
+                   jj, counts_in_range[jj], var_totals[jj]);
+          printf ("Percent= %7.4f (RANGE low,hi: %ld %ld)\n\n",
+                  (counts_in_range[jj]/var_totals[jj]), range[jj][0],range[jj][1]);
+#endif
+          break;     /* don't add any more if at 95% or higher */
+          }
+       else
+          {
+          /*-------------------------------------------------
+           * Keep adding bin counts until very close to 95%.
+           *-------------------------------------------------*/
+#if DEBUG
+          printf ("\nBefore add val for %2d, ctInRng= %7d, totCtInRng= %7.0f, ",
+                  jj, counts_in_range[jj], var_totals[jj] );
+          printf ("Percent= %7.4f (low,high: %ld, %ld)\n", 
+                  (counts_in_range[jj]/var_totals[jj]), low, high);
+          printf ("low,  low_done,  var_ct[%d][low]:  %d, %d, %7d\n",
+                  jj, low, low_done, var_ct[jj][low]);
+#endif
+          /*-------------------------------------------------
+           * Add in the bin with the largest number of counts
+           * first, then try and add in the other count.
+           *------------------------------------------------*/
+          if ( (var_ct[jj][low] >= var_ct[jj][high])  || (mm==0))
+             {
+#if DEBUG
+             printf ("       Add LOW first then high.\n");
+#endif
+
+             if (var_ct[jj][low]!=0 && low_done!=1 && low>=0)
+                {             
+                add_in_low_value( &low, &low_done, var_ct[jj][low], var_totals[jj],
+                                  &counts_in_range[jj], &range[jj][0]);
+                }
+             else
+               {
+               low--; /* skip zeroes */
+               if (low <0) low_done = 1;
+               }
+
+             if (mm==0 || var_ct[jj][high]==0)
+                {
+                high++;  /* Skip high=peak_pos. And skip zeros */
+                if (high > MAX_NUM_BINS-1) high_done=1;
+                }
+             else
+                if (high_done !=1 && high <=MAX_NUM_BINS-1)
+                  add_in_high_value( &high, &high_done, var_ct[jj][high], var_totals[jj],
+                                   &counts_in_range[jj], &range[jj][1]);    
+             }
+          else
+             {
+#if DEBUG
+             printf ("Add HIGH first then low.\n");
+#endif
+             if (var_ct[jj][high]!=0 && high_done!=1 && high<=MAX_NUM_BINS-1)
+               add_in_high_value( &high, &high_done, var_ct[jj][high], var_totals[jj],  
+                                   &counts_in_range[jj], &range[jj][1]);     
+             else
+                {
+                high++; /* skip zeroes */
+                if (high > MAX_NUM_BINS-1) high_done=1;
+                }
+
+ 
+             if (var_ct[jj][low]!=0 && low_done!=1 && low >=0) 
+                { 
+                add_in_low_value( &low, &low_done, var_ct[jj][low], var_totals[jj],
+                                  &counts_in_range[jj], &range[jj][0]);
+                } 
+             else 
+                {
+                low--; /* skip zeroes */
+                if (low <0) low_done=1;
+                }
+             } 
+
+#if DEBUG
+          printf ("After  add val for %2d, ctInRng= %7d, totCtInRng= %7.0f, ",
+                  jj, counts_in_range[jj], var_totals[jj]);
+          printf ("Percent= %7.4f (low,high: %ld, %ld)\n", 
+                  (counts_in_range[jj]/var_totals[jj]), low, high);
+          printf ("(End of Loop) low_done, high_done: %d %d. Range loc (low, high): %ld %ld\n", 
+                  low_done, high_done, range[jj][0], range[jj][1]);
+#endif
+
+          } /*add another value */
+
+       } /*for all Max Num bins*/
+    } /* for all parameters */
+
+  /*------------------------------------------------*
+   * Print out the results of best guess ranges.
+   * The user may still need to verify these ranges.
+   *------------------------------------------------*/
+  fprintf (output_stream, "\n\nParmNum  RangeLowEnd(limit) RangeHighEnd(limit) CtsInRange PercentInRange\n");
+
+#if DEBUG
+  printf ("\n\nParmNum  RangeLowEnd(limit) RangeHighEnd(limit) CtsInRange PercentInRange\n");
+#endif
+
+  for (jj=0; jj<NUMQCPARMS; jj++)
+    {
+    fprintf (output_stream, "%7d %7ld (%6.2f)  %7ld (%6.2f)  %7ld      %7.2f\n",
+             jj, range[jj][0], limit[jj][range[jj][0]], 
+             range[jj][1], limit[jj][range[jj][1]], counts_in_range[jj], 
+             (counts_in_range[jj]/var_totals[jj]) );
+
+#if DEBUG
+    printf ("%7d %7ld (%6.2f)  %7ld (%6.2f)  %7ld      %7.2f\n",
+	        jj, range[jj][0], limit[jj][range[jj][0]],
+			range[jj][1], limit[jj][range[jj][1]], counts_in_range[jj],
+			(counts_in_range[jj]/var_totals[jj]) );
+#endif
+
+    }
+
+
+  fprintf (output_stream, "\n\nWARNING: Following values based on hardcoded Normalization Factors. (See the code for alpha.)\n");
+  fprintf (output_stream, "\nTable 3-2 Ranges of HQC flag limit values for Current project.\n");
+  fprintf (output_stream, "\nParmNum  Good   Q_low  Q_high  Unlikely\n");
+
+#if DEBUG
+  printf ("\nParmNum  Good    Q_low   Q_high  Unlikely\n");
+#endif 
+
+  for (jj=0; jj<NUMQCPARMS; jj++)
+    {
+    good = alpha_G[jj]* sqrt(limit[jj][range[jj][1]]); /*Highest Good value*/
+   
+    questionable_low = alpha_G[jj]*sqrt(limit[jj][range[jj][0]]);
+    questionable_hi  = alpha_B[jj]*sqrt(limit[jj][range[jj][1]]);
+
+    unlikely = alpha_B[jj]* sqrt(limit[jj][range[jj][0]]); /*Lowest Bad value*/
+
+
+    fprintf (output_stream,"%5d  %7.2f  %7.2f  %7.2f  %7.2f\n",
+       jj, good, questionable_low, questionable_hi, unlikely);
+
+#if DEBUG
+    printf ("%5d %7.2f %7.2f %7.2f %7.2f\n", 
+       jj, good, questionable_low, questionable_hi, unlikely);
+#endif
+    }
+
+  fprintf (output_stream, "\nIf a wind direction value is > 180 degrees, reset the value to 180.0 degrees.\n");
+
+  fprintf (output_stream, "\nWARNING: The user should verify that the percentage above are acceptable.\nIf not, the user should recalc the upper and lower limit ranges and recal Table 3-2. \nSee the code for the eqns to calc Table 3-2.\n");
+
+#if DEBUG
+  printf ("\nIf a wind direction value is > 180 degrees, reset the value to 180.0 degrees.\n");
+#endif
+
+  if (fclose (output_stream) == EOF)
+     perror ("Can't close output stream.");
+
+  printf ("\nProcessing completed on %-s %-s\n", __DATE__, __TIME__);
+
+  }  /* main() */

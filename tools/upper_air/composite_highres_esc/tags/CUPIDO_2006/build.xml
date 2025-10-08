@@ -1,0 +1,70 @@
+<project name="Upper Air High Resolution Sounding Composite" default="compile" basedir=".">
+
+    <property name="project" value="CUPIDO" />
+    <property name="data.dir" location="data" />
+    <property name="dayfile.dir" location="database" />
+
+    <property name="project.dir" value="/net/work/CUPIDO/upper_air" />
+    <property name="gausm.dayfiles" value="${project.dir}/GAUSM/database" />
+    <property name="gts.dayfiles" value="${project.dir}/GTS/output" />
+    <property name="nws.dayfiles" value="${project.dir}/NWS/codiac" />
+    <property name="smn.dayfiles" value="${project.dir}/SMN/database" />
+
+
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <fileset dir="/net/work/lib/java">
+            <include name="utilities.jar" />
+            <include name="upper_air.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/dayfiles">
+            <include name="upper_air_dayfile.jar" />
+        </fileset>
+    </path>
+
+    <path id="test-classpath">
+        <fileset dir="/net/work/lib/java/vendor">
+            <include name="junit.jar" />
+        </fileset>
+        <pathelement path="${build.classes}" />
+        <pathelement path="${build.tests}" />
+        <path refid="classpath" />
+    </path>
+
+
+    <target name="copy">
+        <mkdir dir="${data.dir}" />
+        <copy todir="${data.dir}/GAUSM">
+            <fileset dir="${gausm.dayfiles}" includes="*.cls,*.cls.gz" />
+        </copy>
+        <copy todir="${data.dir}/GTS">
+            <fileset dir="${gts.dayfiles}" includes="*.cls,*.cls.gz">
+                <exclude name="**/ABQ_*" />
+                <exclude name="**/DRT_*" />
+                <exclude name="**/EPZ_*" />
+                <exclude name="**/NKX_*" />
+                <exclude name="**/TUS_*" />
+                <exclude name="**/AMA_*" />
+                <exclude name="**/FGZ_*" />
+                <exclude name="**/MAF_*" />
+            </fileset>
+        </copy>
+        <copy todir="${data.dir}/NWS">
+            <fileset dir="${nws.dayfiles}" includes="*.cls,*.cls.gz" />
+        </copy>
+        <copy todir="${data.dir}/SMN">
+            <fileset dir="${smn.dayfiles}" includes="*.cls,*.cls.gz" />
+        </copy>
+    </target>
+
+    <target name="dayfiles" depends="copy">
+        <java classname="dmg.ua.sounding.dayfile.ESCDayFileCreator" fork="yes">
+            <arg value="-Z" />
+            <arg value="${project}_HighRes_" />
+            <arg value="${data.dir}" />
+            <arg value="${dayfile.dir}" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+</project>

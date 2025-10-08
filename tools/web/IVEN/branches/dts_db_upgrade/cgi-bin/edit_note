@@ -1,0 +1,42 @@
+#! /usr/bin/perl -w
+
+package NoteEditorCGI;
+use strict;
+use lib "..";
+use EditorCGI;
+our @ISA = ("EditorCGI");
+
+&main();
+
+sub main {
+    my $self = NoteEditorCGI->new();
+    $self->buildPage("Note Editor");
+}
+
+sub buildPageBody {
+    my ($self) = @_;
+    my $note = $self->param("id") == -1 ? "" : $self->getNote($self->param("id"));
+
+    printf("<form action=\"project_action\" method=\"POST\">\n");
+    printf("   <table class=editTable>\n");
+    printf("      <tr class=editHeading><td>Edit a Note</td></tr>\n");
+    printf("      <tr>\n");
+    printf("         <td align=center><textarea name=note_text rows=40 cols=80 wrap=virtual>%s</textarea></td>\n",$note);
+    printf("      </tr>\n");
+    printf("      <tr><td class=editSpacer></td></tr>\n");
+    printf("      <tr>\n");
+    printf("         <td class=buttons>\n");
+    printf("            <input type=submit name=action value=Update />\n");
+    printf("            <input type=button value=Cancel onClick=\"javascript: closeWindow();\" />\n");
+    printf("         </td>\n");
+    printf("     </tr>\n");
+    printf("   </table>\n");
+    printf("   <input type=hidden name=note_id value=\"%s\" />\n",$self->param("id"));
+    printf("   <input type=hidden name=project value=\"%s\" />\n",$self->param("project"));
+    printf("</form>\n");
+}
+
+sub getNote {
+    my ($self,$id) = @_;
+    return $self->{"DB"}->getNote($id);
+}

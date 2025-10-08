@@ -1,0 +1,20 @@
+How To Run the GTS BUFR Conversion Software     D. Choi Updated 04 Sep 2024
+-------------------------------------------
+1. Set up expected directory structure.
+
+2. In the software, read the headers to learn the software. Look
+   for any "HARD-CODED" marks. These indicate places that may need
+   changes. Make changes in the software as needed.
+
+3. Copy raw data to the "raw_data" directory.
+
+4. Run process C130_Dropsonde_NetCDF_Converter.pl
+   Run conversion to convert files to ESC output format.
+
+5. Run autoQC s/w on ESC output data. This will also do check_format on the autoQC'd data files.
+
+6. Have science staff, S.Loehrer, do Visual QC on output from step 5.
+
+7. Make Day files that will be loaded into project archive.
+
+8. Generate 5mb form of QC'd ESC data.

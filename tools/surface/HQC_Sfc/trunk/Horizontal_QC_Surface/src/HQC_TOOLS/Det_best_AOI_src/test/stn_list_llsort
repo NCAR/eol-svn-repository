@@ -1,0 +1,20 @@
+#
+sort		# Action
+0		# Record length (Variable)
+1               # Number of input files
+EAOP99EsfcNoShip.NAM	# input file
+2		# Number of keys
+ascending       # Key 1 direction lat
+fixed           #       location
+19              #       starting column
+9               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 2 direction lon
+fixed           #       location
+30              #       starting column
+10              #       length
+numeric         #       format
+external        #       value interpretation
+file            # Output
+EAOP99EsfcNoShip.NAM.sort   # Output file name

@@ -1,0 +1,460 @@
+#! /usr/bin/perl -T -w
+
+##Module---------------------------------------------------------------------
+# <p>The <code>Calendar</code> module is a <code>CGI</code> module that
+# generates the viewable calendar for the travel page.  It is viewable by
+# month and displays whoever is gone on a given day by the travel id.  Each
+# day is sorted by travel id as is handled by the perl <code>sort</code> 
+# command.  It uses the Unix 'cal' program for getting the calendar format.</p>
+# <p>The travel ids in the calendar are links to edit/delete that travel
+# information.  There is also a tooltip that is displayed for each link that
+# contains its travel information.  The javascript tooltip library overLib (c)
+# was downloaded from the internet and was written by Erik Bosrup.</p>
+#
+# <p>The following is a list of CGI parameters that are recognized along with
+# values that they can be given.<ul>
+#   <li><code>date</code>: ('Previous', 'Next')  This is used to announce to
+# the module to display the previous or next month from the currently displayed
+# month.</li>
+#   <li><code>month</code>: (1 - 12)  This is to notify the module that the
+# specified month should be displayed.  This should be set with the 
+# <code>year</code> parameter.</li>
+#   <li><code>next_mon</code>: (1 - 12)  This is used to notify the module
+# what the next month is from the currently displayed month.  This is needed 
+# by the <code>date</code> parameter.</li>
+#   <li><code>next_year</code>: (4 digit year)  This is used to notify the 
+# module what the next year is from the currently displayed month.  This is
+# needed by the <code>date</code> parameter.</li>
+#   <li><code>prev_mon</code>: (1 - 12)  This is used to notify the module
+# what the previous month is from the currently displayed month.  This is 
+# needed by the <code>date</code> parameter.</li>
+#   <li><code>prev_year</code>: (4 digit year)  This is used to notify the
+# module what the previous year is from the currently displayed month.  This
+# is needed by the <code>date</code> parameter.</li>
+#   <li><code>year</code>: (4 digit year)  This is to notify the module that
+# the specified year should be displayed.  This should be set with the 
+# <code>month</code> parameter.</li>
+# </ul></p>
+#
+# @author Joel Clawson
+##Module---------------------------------------------------------------------
+package Calendar;
+use strict;
+use lib ".";
+use EmployeeList;
+use TravelList;
+use CGI qw(:standard :html3);
+use URI::Escape;
+our @ISA = ("CGI");
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+$ENV{"PATH"} = "";
+
+&main();
+
+##--------------------------------------------------------------------------
+# @signature void main()
+# <p>Create a calendar.</p>
+##--------------------------------------------------------------------------
+sub main() {
+  my $self = Calendar->new();
+
+  print($self->header());
+  print("<html>\n");
+
+  print("<head>\n");
+  print("<script type=\"text/javascript\" src=\"/travel/javascript/overlib.js\">\n");
+  print("<!-- overLIB (c) Erik Bosrup --></script>\n");
+  print("<script type=\"text/javascript\" src=\"/travel/javascript/travel.js\"></script>\n");
+  print("</head>\n");
+
+  # Check to see if the date cgi parameter came in and set the appropriate 
+  # values to display the correct calendar
+  if (defined($self->param("date"))) {
+    if ($self->param("date") eq "Previous") {
+       $self->param("month", $self->param("prev_mon"));
+       if ($self->param("month") == 0) {
+	 $self->param("month", 12);
+         $self->param("year", $self->param("prev_year") - 1);
+       } else {
+         $self->param("year", $self->param("prev_year"));
+       }
+    } elsif ($self->param("date") eq "Next") {
+       $self->param("month", $self->param("next_mon"));
+       if ($self->param("month") == 13) {
+         $self->param("month", 1);
+         $self->param("year", $self->param("next_year") + 1);
+       } else {
+         $self->param("year", $self->param("next_year"));
+       }
+    }
+  }
+
+  # Generate the specified calendar if the year and month cgi params were
+  # given to the module, otherwise generate the current calendar
+  if (defined($self->param("month")) && defined($self->param("year"))) {
+    print($self->generateCalendar(sprintf("%04d%02d", $self->param("year"),
+					  $self->param("month"))));
+  } else {
+    print($self->generateCalendar());
+  }
+
+  print("</html>\n");
+}
+
+##--------------------------------------------------------------------------
+# @signature void buildCalendar(String date)
+# <p>Create the part of the calendar that contains the dates and the travel
+# information to be displayed in each day.</p>
+#
+# @input $date Today's date.
+##--------------------------------------------------------------------------
+sub buildCalendar {
+    my $self = shift;
+    my $date = shift;
+    my $calendar = sprintf("/usr/bin/cal %d %04d",substr($date,4,2),substr($date,0,4));
+    $calendar = `$calendar`;
+    my $month = sprintf("%04d%02d", substr($date, 0, 4), substr($date, 4, 2));
+    
+    my $data = TravelList->new();
+    my $emps = EmployeeList->new();
+    my $today = $self->loadToday();
+    
+    my $output = "";
+    my @weeks = split('\n', $calendar); # get the weeks (each line)
+
+    # Ignore the first two lines of the cal output (only header info)
+    for (my $i = 2; $i < scalar(@weeks); $i++) {
+	$output .= "<tr>\n";
+	
+	my $sun = 1;
+	my $sat = 1;
+	# Define the saturday date.  Used for checking for end of month.
+	if (length($weeks[$i]) < 20) {
+	    $sat = $self->daysInMonth($month);
+	} else {
+	    $sat = substr($weeks[$i], 18, 2);
+	}
+
+	# Defind the sunday date.  Used for checking for start of month.
+	if ($sat < 8) {
+	    $sun = 1;
+	} else {
+	    $sun = substr($weeks[$i], 0, 2);
+	}
+	$sat = sprintf("%s%02d", $month, $sat);
+	$sun = sprintf("%s%02d", $month, $sun);
+	
+	# Get the list of travels ids for employees that will be gone during
+	# the week and put them in order.
+	my @travels = ();
+	foreach my $id ($emps->employee_list()) {
+	    if ($data->doesTravel($id, $sun, $sat)) {
+		push(@travels, $id);
+	    }
+	}    
+	@travels = sort(@travels);
+	if (scalar(@travels) == 0) { push(@travels, "&nbsp;"); }
+	
+	# Create the HTML for each day of the week
+	for (my $j = 0; $j < 7; $j++) {
+	    my $day = "";
+	    
+	    # Only output a date if it exists
+	    if ((3 * $j + 2) <= length($weeks[$i])) {
+		$day = substr($weeks[$i], 3 * $j, 2);
+	    }
+
+	    # Check to see if the date is the same as today to display the
+	    # highlight.
+	    if ($day !~ /^[\s]*$/ && $today eq sprintf("%06d%02d", $month, $day)) {
+               $output .= sprintf("\t<td bgcolor=%s>",
+				  $self->getTodayColor(substr($month, 4, 2)));
+            } else {
+               $output .= "\t<td>";
+            }
+
+	    # Generate the table for the day
+            $output .= "<table width=100%>\n";
+	    if ($day =~ /\d+/) {
+		$output .= sprintf("\t   <tr><th align=right>%d</th></tr>\n", 
+				   $day);
+		my $today = sprintf("%06d%02d", $month, $day);
+		my $fmt_today = sprintf("%04d/%02d/%02d", substr($month, 0, 4),
+					substr($month, 4, 2), $day);
+		
+		# Display the travel id of the employee if they are gone on 
+		# this day
+		foreach my $id (@travels) {
+		    if ($data->doesTravelToday($id, $today)) {
+			my $disp_name = $id;
+			
+			# Bold and add 'start' to id if this is the first
+			# day of travel
+			my $trav_start = $data->getStartOfTravel($id, $today);
+			if ($data->getBeginDate($id,$trav_start) eq 
+			    $fmt_today) {
+			    $disp_name=sprintf("<b>%s begin</b>", $disp_name);
+			} 
+
+			# Bold and add 'end' to id if this is the last
+			# day of travel
+			if ($data->getEndDate($id, $trav_start) eq 
+			    $fmt_today) {
+			    $disp_name=sprintf("<b>%s end</b>", $disp_name);
+			}
+
+			# Create the tooltip that displays the travel info
+                        my $tooltip = $emps->getFirstName($id)." ".$emps->getLastName($id)."<BR>".$data->getBeginDate($id, $trav_start)." - ".$data->getEndDate($id, $trav_start)."<BR>".escapeHTML($data->getReason($id, $trav_start))."<BR>".escapeHTML($data->getWhere($id, $trav_start));
+			$tooltip =~ s/&#39;/\\'/g;
+
+			# Create the cgi params to correctly open the edit box
+			my $params = "id=".$id.";s_date=".$data->getBeginDate($id, $trav_start);
+			$params = escapeHTML($params);			
+
+			# Create the HTML for the travel for this date
+			$output .= sprintf("\t   <tr><td><a href=\"javascript:openWin('travel_form?$params');\" onmouseover=\"return overlib('$tooltip', CENTER);\" onmouseout=\"return nd();\"><font color=%s>%s</font></a></td></tr>\n", $emps->getColor($id) ,$disp_name);
+		    } else {
+			# Create a blank space for travel that does not occur
+			# on this date, but will travel at some other point
+			# during the week.
+			$output .= "\t   <tr><td>&nbsp;</td></tr>\n";
+		    }
+		}
+		
+	    } else {
+		$output .= "\t   <tr><th>&nbsp;</th></tr>\n";
+	    }
+	    $output .= "\t</td></table>\n";
+	}
+	$output .= "</tr>\n";
+
+	# Clear the travel data for the week so it does not affect the
+	# next week.
+	@travels = ();
+    }
+    
+    return $output;
+}
+
+##--------------------------------------------------------------------------
+# @signature String buildHeader(String date)
+# <p>Create the calendar header containing the month/year and days of the
+# week.</p>
+#
+# @input date The year and month of the calendar to be displayed.
+# @output output The String containing the HTML to print to the web page.
+##--------------------------------------------------------------------------
+sub buildHeader {
+  my $self = shift;
+  my $date = shift;
+
+  my $output = "";
+
+  # Create the header that contains the previous/next buttons and the
+  # display of the current month and year.
+  $output .= "<tr><td bgcolor=".$self->getMonthColor(substr($date, 4, 2));
+  $output .= " colspan=7><table width=100%>\n";
+  $output .= "<tr><th><input type=submit name=date value=Previous></td>\n";
+  $output .= sprintf("<th width=%s><font color=%s size=36>%s %04d</font></th>\n", "100%", $self->getMonthText(substr($date, 4, 2)), 
+		     $self->getMonth(substr($date, 4, 2)),
+		     substr($date, 0, 4));
+  $output .= "<th align=right><input type=submit name=date value=Next></td></tr>\n";
+  $output .= "</table></td></tr>\n";
+
+  # Create the header for the days of the week.
+  $output .= sprintf("<tr><th bgcolor=%s><font color=%s>Sunday</font></th>\n",
+		     $self->getDayColor(substr($date, 4, 2)),
+		     $self->getDayText(substr($date, 4, 2)));
+  $output .= sprintf("    <th bgcolor=%s><font color=%s>Monday</font></th>\n",
+		     $self->getDayColor(substr($date, 4, 2)),
+		     $self->getDayText(substr($date, 4, 2)));
+  $output .= sprintf("    <th bgcolor=%s><font color=%s>Tuesday</font></th>\n",
+		     $self->getDayColor(substr($date, 4, 2)),
+		     $self->getDayText(substr($date, 4, 2)));
+  $output .= sprintf("    <th bgcolor=%s><font color=%s>Wednesday</font></th>\n",
+		     $self->getDayColor(substr($date, 4, 2)),
+		     $self->getDayText(substr($date, 4, 2)));
+  $output .= sprintf("    <th bgcolor=%s><font color=%s>Thursday</font></th>\n",
+		     $self->getDayColor(substr($date, 4, 2)),
+		     $self->getDayText(substr($date, 4, 2)));
+  $output .= sprintf("    <th bgcolor=%s><font color=%s>Friday</font></th>\n",
+		     $self->getDayColor(substr($date, 4, 2)),
+		     $self->getDayText(substr($date, 4, 2)));
+  $output .= sprintf("    <th bgcolor=%s><font color=%s>Saturday</font></th></tr>\n",
+		     $self->getDayColor(substr($date, 4, 2)),
+		     $self->getDayText(substr($date, 4, 2)));
+  return $output;
+}
+
+##--------------------------------------------------------------------------
+# @signature String generateCalendar(<i>String date</i>)
+# <p>Create the calendar for the specified date or today's calendar if no
+# date is specified.</p>
+#
+# @input $date <b>Optional</b>  The date of the calendar to be displayed in
+# YYYYMM format.
+# @output $output The HTML of the calendar to print to the web page.
+##--------------------------------------------------------------------------
+sub generateCalendar {
+  my $self = shift;
+  my $date = shift;
+
+  if (!defined($date)) {
+    $date = $self->loadToday();
+  }
+
+  my $output = "";
+
+  $output .= "<body>\n";
+  $output .= "<div id=\"overDiv\" style=\"position:absolute; visibility:hidden; z-index:1000;\"></div>\n";
+
+  $output .= "<form type=POST action=\"calendar\">\n\n";
+
+  # Create hidden tags for the previous and next button to tell the 
+  # calendar script what the next and previous months are.
+  $output .= $self->hidden(-name => "prev_year", 
+                           -default => substr($date, 0, 4),
+                           -override => 1)."\n";
+  $output .= $self->hidden(-name => "prev_mon", 
+                           -default => substr($date, 4, 2) - 1, 
+                           -override => 1)."\n";
+  $output .= $self->hidden(-name => "next_year", 
+                           -default => substr($date, 0, 4), 
+                           -override => 1)."\n";
+  $output .= $self->hidden(-name => "next_mon", 
+                           -default => substr($date, 4, 2) + 1,
+                           -override => 1)."\n\n";
+
+  $output .= "<table border=1 width=100%>\n";
+  $output .= $self->buildHeader($date);
+  $output .= $self->buildCalendar($date);
+  $output .= "</table>\n";
+
+  $output .= "</form>\n</body>\n";
+
+  return $output;
+}
+
+##--------------------------------------------------------------------------
+# @signature int daysInFeb(int year)
+# <p>Determine the number of days in February for the given year.</p>
+# @input $year The year.
+# @output $days The number of days in February for the specified year.
+##--------------------------------------------------------------------------
+sub daysInFeb {
+    if ((($_[0] % 4 == 0) && ($_[0] % 100 != 0)) || ($_[0] % 400 == 0)) {
+	return 29;
+    } else {
+	return 28;
+    }
+}
+
+##--------------------------------------------------------------------------
+# @signature int daysInMonth(String $date)
+# <p>Get the number of days in the specified month.</p>
+# @input $date The month in YYYYMM format.
+# @output $days The number of days in the specified month.
+##--------------------------------------------------------------------------
+sub daysInMonth {
+    my $self = shift;
+    my $month = substr($_[0], 4, 2);
+    my @days = (31,daysInFeb(substr($_[0],0,4)),31,30,31,30,31,31,30,31,30,31);
+    return $days[$month - 1];
+}
+
+##--------------------------------------------------------------------------
+# @signature String getDayColor(int month)
+# <p>Get the background color for the days of the week.</p>
+# @input $month The month of the calendar.
+# @output $color The background color for the days of the week.
+##--------------------------------------------------------------------------
+sub getDayColor {
+    my $self = shift;
+    my $month = shift;
+    my @cols = ("#DDDDFF","#FFFFFF","#FFFFFF","#66CCCC","#F5F3FF","#FFCCFF",
+		"#0000AA","#FFFF00","#FFFF00","#000000","#77CCFF","#00AA00");
+    return $cols[$month - 1];
+}
+
+##--------------------------------------------------------------------------
+# @signature String getDayText(int month)
+# <p>Get the color for the text for the days of the week.</p>
+# @input $month The month of the calendar.
+# @output $color The color of the text for the days of the week.
+##--------------------------------------------------------------------------
+sub getDayText {
+    my $self = shift;
+    my $month = shift;
+    my @cols = ("#000000","#DD0000","#006600","#000000","#000000","#000000",
+		"#FFFFFF","#000000","#000000","#FF9900","#FFFFFF","#FFFFFF");
+    return $cols[$month - 1];
+}
+
+##--------------------------------------------------------------------------
+# @signature String getMonthColor(int month)
+# <p>Get the background color for the month.</p>
+# @input $month The month of the calendar.
+# @output $color The background color for the month.
+##--------------------------------------------------------------------------
+sub getMonthColor {
+    my $self = shift;
+    my $month = shift;
+    my @cols = ("#0000AA","#DD0000","#008800","#00DDDD","lightblue","#770077",
+		"#CC0000","#FFCC00","#990000","#FF9900","#660066","#DD0000");
+    return $cols[$month - 1];
+}
+
+##--------------------------------------------------------------------------
+# @signature String getMonthText(int month)
+# <p>Get the color for the month text.</p>
+# @input $month The month of the calendar.
+# @output $color The color for the month text.
+##--------------------------------------------------------------------------
+sub getMonthText {
+    my $self = shift;
+    my $month = shift;
+    my @cols = ("#FFFFFF","#FFFFFF","#FFFFFF","#000000","#000000","#FFFFFF",
+		"#FFFFFF","#000000","#FFFFFF","#000000","#FFFFFF","#000000");
+    return $cols[$month - 1];
+}
+
+##--------------------------------------------------------------------------
+# @signature String getTodayColor(int month)
+# <p>Get the background color for today.</p>
+# @input $month The month of the calendar.
+# @output $color The background color for today.
+##--------------------------------------------------------------------------
+sub getTodayColor {
+    my $self = shift;
+    my $month = shift;
+    my @cols = ("#DDDDFF","#FFDDDD","#DDFFDD","#CCEEEE","#E0E8FF","#FFEEFF",
+		"#DDDDFF","#FFFFCC","#FFDDAA","#FFDDAA","#FFDDFF","#CCFFCC");
+    return $cols[$month - 1];
+}
+
+##--------------------------------------------------------------------------
+# @signature String getMonth(int index)
+# <p>Get the name of the indexth month.</p>
+# @param index The number of the month (1 - 12).
+# @output $month The name of the specified month.
+##--------------------------------------------------------------------------
+sub getMonth {
+  my $self = shift;
+  my $index = shift;
+  my @months = ("January", "February", "March", "April", "May", "June", "July",
+		"August", "September", "October", "November", "December");
+  return $months[$index - 1];
+}
+
+##--------------------------------------------------------------------------
+# @signature String loadToday()
+# <p>Get today's date.</p>
+# @output $today Today's date in YYYYMMDD format.
+##--------------------------------------------------------------------------
+sub loadToday {
+  my $self = shift;
+  my @date = localtime();
+  return sprintf("%04d%02d%02d", $date[5] + 1900, $date[4] + 1, $date[3]);
+}

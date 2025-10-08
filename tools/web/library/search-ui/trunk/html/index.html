@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+ <!--<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />-->
+ <title>Bering Sea Project Data Archive</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <!-- **** STYLES ********************************************************** -->
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../css/main.css" id="styler" />
+  <link rel="stylesheet" type="text/css" href="../css/customsearch.css" />
+  <!--[if IE]>
+    <link rel="stylesheet" type="text/css" href="../css/main-ie.css" />
+  <![endif]-->
+  <link rel="stylesheet" type="text/css" href="http://data.eol.ucar.edu/master_list/arctic/css/BSIERP.css" />
+ <!-- **** END STYLES ****************************************************** -->
+ <!-- **** SCRIPTS ********************************************************* -->
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/styles.js"></script>
+  <script type="text/javascript" src="../js/main.js"></script>
+  <script type="text/javascript" src="../js/bindable.js"></script>
+  <script type="text/javascript" src="http://www.google.com/jsapi?key=ABQIAAAA3tbucVxlGNFBYLARMRuqahTL2tmjYYlVN2mt_K7dcvt5qRSuIhQA2YAv3guoDXdWwxvpZ5k2fFwMhQ"></script>
+  <script type="text/javascript" src="../js/search.js"></script>
+
+<!--
+  <script type="text/javascript">
+    $('select option:selected').click(function() {
+      $(this).attr('selected', false);
+    });
+
+    $(function(){
+      $("option").bind("dblclick", function(){
+        if ($(this).attr('selected')) { $(this).attr('selected', false); }
+      });
+    });
+  </script>
+-->
+  <script type="text/javascript">
+    function getBrowserHeight() {
+      var theHeight;
+
+      if (window.innerHeight) { theHeight = window.innerHeight; }
+      else if (document.documentElement && document.documentElement.clientHeight) { theHeight = document.documentElement.clientHeight; }
+      else if (document.body) { theHeight = document.body.clientHeight; }
+
+      console.log(theHeight);
+
+      return theHeight;
+    }
+    
+    var inputBox = "inputElement";
+	if ( getWidth() <= 766 ) {
+		inputBox = "inputElement-xs";
+	}
+  </script>
+
+ <!-- **** END SCRIPTS ***************************************************** -->
+</head>
+
+<body>
+
+<center>
+	<div class="navbar-wrapper">
+		<div class="container">
+			<div class="header">
+				  <br /><h1>Bering Sea Project</h1><br /><h3>Incorporating the BEST-BSIERP Data Archives</h3>
+			</div> <!-- end header -->
+			
+			<div class="navbar navbar-inverse navbar-static-top" role="navigation">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<span class="visible-xs navbar-brand">Bering Sea Project</span>
+					</div><!-- end navbar-header -->
+					<div class="navbar-collapse collapse">
+						<ul class="nav navbar-nav">
+							<li><a href="../"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;Home</a></li>
+							<li class="active"><a href="#">Data Access</a></li>
+							<li class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+									Mapservers <span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li><a target="_blank" href="http://mapserver.eol.ucar.edu/bestcruises">Cruise Data</a></li>
+									<li><a target="_blank" href="http://mapserver.eol.ucar.edu/best">LTK Data</a></li>
+								</ul>
+							</li>
+							<li class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="../models/">
+									Model Visualizations <span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="../models/kurapov.html">Eastern Bering Sea Model - Bering Canyon Eddies</a>
+									</li>
+									<li class="dropdown-submenu">
+										<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <!--href="../models/panteleev.html">-->
+											Climatological Oceanographic Atlas of the Bering Sea
+											&nbsp;&nbsp;
+											<!--<span class="glyphicon glyphicon-expand"></span>-->
+										</a>
+										<ul class="dropdown-menu">
+											<li><a href="../models/panteleev-approach.html">Approach</a></li>
+											<li><a href="../models/panteleev-surfheight.html">Reconstructed Sea Surface Height</a></li>
+											<li><a href="../models/panteleev-velocity.html">Velocity Fields</a></li>
+											<li><a href="../models/panteleev-temp.html">Temperature</a></li>
+											<li><a href="../models/panteleev-salinity.html">Salinity</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div><!-- end navbar-collapse -->
+				</div><!-- end container -->
+			</div><!-- end navbar -->
+		</div> <!-- end container -->
+	</div> <!-- end navbar-wrapper -->
+
+	
+	<div class="container">
+
+		<div class="full">
+			<div class="full_head"> Data Access </div>
+			<div class="full_box">
+				<!-- For xs devices, show the Find Data menu -->
+				<nav class="navbar navbar-default visible-xs" role="navigation" id="find-data">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#data-search-nav">
+							<span class="sr-only">Toggle data search navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#" style="font-size: 20px;">Find Data</a>
+					</div>
+			
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="data-search-nav">
+						<form class="navbar-form" role="search">
+							<div class="input-group">
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+										Project <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li class="active"><a href="#" onclick="updateProject(this, '005203271943822719354:e366ozmlrnk');">Bering Sea</a></li>
+										<li><a href="#" onclick="updateProject(this, '005203271943822719354:ox5ehtk9eko');">BEST</a></li>
+										<li><a href="#" onclick="updateProject(this, '005203271943822719354:qb7xuryxoay');">BSIERP</a></li>
+									</ul>
+								</div>
+								<input type="text" class="form-control" placeholder="Type whole keyword(s) to begin searching" id="inputElement-xs" name="searchField" title="Type in your whole keyword(s) to begin your search" />
+								<input type="hidden" class="form-control" id="ProjectSelect-xs" value="005203271943822719354:e366ozmlrnk" />
+							</div>
+						</form>
+						<form class="nav navbar-form" name="dta_form_xs" action="">
+						
+							<div class="row" style="padding: 0px 5px;">
+								<div class="col-xs-3 col-sm-2"><strong>Project</strong></div>
+								<div class="col-xs-4 col-sm-2 checkbox-inline">
+									<input type="checkbox" name="project" value="BEST" onclick="check_opts(document.dta_form_xs);" /> BEST
+								</div>
+								<div class="col-xs-4 col-sm-2 checkbox-inline">
+									<input type="checkbox" name="project" value="BSIERP" onclick="check_opts(document.dta_form_xs);" /> BSIERP
+								</div>
+							</div><!-- /.row -->
+							
+							<div class="row" style="padding: 0px 5px;">
+								<div class="col-xs-6">
+									<div class="row">
+										<label for="cruise" class="col-xs-4"> Cruise </label>
+										<button type="button" class="btn btn-default col-xs-8 btn-pad-row" onclick="clear_list(document.dta_form_xs.cruise);">Clear</button>
+									</div>
+									<div class="row">
+										<select name="cruise" multiple="multiple" class="input-xlarge form-control col-xs-12" size="10" onclick="clear_list(document.dta_form_xs.subject);">
+											<option class="best" value="HLY-06-01">HLY-06-01</option>
+											<option class="best" value="HLY-07-01">HLY-07-01</option>
+											<option class="best" value="HLY-07-02">HLY-07-02</option>
+											<option class="best" value="HLY-08-01">HLY-08-01</option>
+											<option class="best" value="HLY-08-02">HLY-08-02</option>
+											<option class="best bsierp" value="HLY-08-03">HLY-08-03</option>
+											<option class="best" value="HLY-09-01">HLY-09-01</option>
+											<option class="best" value="HLY-09-02">HLY-09-02</option>
+											<option class="best" value="KN195-10">KN195-10</option>
+											<option class="best" value="PSEA-10-01">PSEA-10-01</option>
+											<option class="best" value="TN-249">TN-249</option>
+											<option class="best" value="TN-250">TN-250</option>
+										</select>
+									</div>
+								</div>
+								
+								<div class="col-xs-6">
+									<div class="row">
+										<label for="subject" class="col-xs-4"> Subject </label>
+										<button type="button" class="btn btn-default col-xs-8 btn-pad-row" onclick="clear_list(document.dta_form_xs.subject);">Clear</button>
+									</div>
+									<div class="row">
+										<select name="subject" multiple="multiple" class="input-xlarge form-control col-xs-12" size="10" onclick="clear_list(document.dta_form_xs.cruise);">
+											<option class="bsierp" value="ADCP">ADCP</option>
+											<option class="best bsierp" value="Abundance">Abundance</option>
+											<option class="best" value="Bathymetry">Bathymetry</option>
+											<option class="best" value="Benthos">Benthos</option>
+											<option class="best bsierp" value="Biogeochemical">Biogeochemical</option>
+											<option class="best bsierp" value="Biology">Biology</option>
+											<option class="best bsierp" value="Biomass">Biomass</option>
+											<option class="best bsierp" value="Buoy">Buoy</option>
+											<option class="best bsierp" value="CTD">CTD</option>
+											<option class="best" value="DMSP">DMSP</option>
+											<option class="best bsierp" value="Fish">Fish</option>
+											<option class="best" value="Hydrography">Hydrography</option>
+											<option class="best bsierp" value="Marine Mammals">Marine Mammals</option>
+											<option class="best" value="Meteorology">Meteorology</option>
+											<option class="best" value="Microbiology">Microbiology</option>
+											<option class="best" value="Model">Model</option>
+											<option class="best bsierp" value="Mooring">Mooring</option>
+											<option class="best" value="Navigation">Navigation</option>
+											<option class="best" value="Nutrient">Nutrient</option>
+											<option class="best bsierp" value="Oceanography">Oceanography</option>
+											<option class="best" value="Optics">Optics</option>
+											<option class="best" value="POES">POES</option>
+											<option class="best bsierp" value="Plankton">Plankton</option>
+											<option class="best" value="Production">Productivity</option>
+											<option class="best" value="Radioisotope">Radio Isotope</option>
+											<option class="best" value="Satellite">Satellite</option>
+											<option class="best" value="Sea Ice">Sea Ice</option>
+											<option class="best" value="Sediment">Sediment</option>
+											<option class="bsierp" value="Seabirds">Seabirds</option>
+											<option class="best bsierp" value="Ship Based">Ship Based</option>
+											<option class="best" value="Stable Isotope">Stable Isotope</option>
+											<option class="best bsierp" value="Underway">Underway</option>
+											<option class="best bsierp" value="Water Chemistry">Water Chemistry</option>
+											<option class="best bsierp" value="Water Sampling">Water Sampling</option>
+										</select>
+									</div>
+								</div>
+							</div><!-- /.row -->
+						</form>
+						<div class="row">
+							<div class="col-xs-6">
+								<button type="submit" class="btn btn-default btn-pad-row" onclick="build_results(document.dta_form_xs);">Search</button>
+							</div>
+							<div class="col-xs-6">
+								<button type="button" class="btn btn-default btn-pad-row" onclick="reset_opt(document.dta_form_xs);">Reset</button>
+							</div>
+						</div><!-- /.row -->
+					</div><!-- /.navbar-collapse -->
+				</nav>
+				<!-- end xs device Find Data menu -->
+			
+		  
+			<table id="search_head">
+		<!-- -->
+			  <tr class="hidden-xs">
+				<td align="right">
+				  <span style="font-weight: bold;">Search
+					<select onchange="setProject()" id="ProjectSelect" title="Click here to change which project(s) to search">
+					  <option value="005203271943822719354:e366ozmlrnk">Bering Sea </option>
+					  <option value="005203271943822719354:ox5ehtk9eko">BEST</option>
+					  <option value="005203271943822719354:qb7xuryxoay">BSIERP</option>
+					</select>
+					for
+					<input type="text" id="inputElement" name="searchField" onfocus="clearTextBranding(this.id)" onblur="if(this.value == '') { applyTextBranding(this.id); }" style="background-image:url('../images/google_custom_search_watermark.gif'); background-repeat :no-repeat;" title="Type in your whole keyword(s) to begin your search" />
+				  </span>
+				</td>
+			  </tr>
+			</table>
+		<!-- -->
+			<table id="data_search">
+			  <tr>
+				<td class="hidden-xs" width="140px" valign="top" style="background: #d1eaef;">
+				 <h3 style="font-size: 20px;">Find Data:</h3>
+		<!--
+				  <script type="text/javascript">
+					if (getBrowserHeight() < 750) {
+					  var form_buttons = '<input type="submit" value="Search" onclick="build_results();" />';
+					  form_buttons += '<input type="button" value="Reset" style="float: right;" onclick="reset_opt();" />';
+					  form_buttons += '<br />';
+					  document.write(form_buttons);
+					}
+				  </script>
+		-->
+				 <form name="dta_form" action="">
+						<h4> Project: </h4>
+						<input type="checkbox" name="project" value="BEST" onclick="check_opts(document.dta_form);" /> <!-- checked="checked"/>--> BEST <br />
+						<input type="checkbox" name="project" value="BSIERP" onclick="check_opts(document.dta_form);" /> <!--checked="checked" />--> BSIERP 
+						<h4> Cruise: 
+							<input type="button" value="Clear" style="float: right;" onclick="clear_list(document.dta_form.cruise);" />
+						</h4>
+						<select name="cruise" multiple="multiple" size="10" onclick="clear_list(document.dta_form.subject);">
+							<option class="best" value="HLY-06-01">HLY-06-01</option>
+							<option class="best" value="HLY-07-01">HLY-07-01</option>
+							<option class="best" value="HLY-07-02">HLY-07-02</option>
+							<option class="best" value="HLY-08-01">HLY-08-01</option>
+							<option class="best" value="HLY-08-02">HLY-08-02</option>
+							<option class="best bsierp" value="HLY-08-03">HLY-08-03</option>
+							<option class="best" value="HLY-09-01">HLY-09-01</option>
+							<option class="best" value="HLY-09-02">HLY-09-02</option>
+							<option class="best" value="KN195-10">KN195-10</option>
+							<option class="best" value="PSEA-10-01">PSEA-10-01</option>
+							<option class="best" value="TN-249">TN-249</option>
+							<option class="best" value="TN-250">TN-250</option>
+						</select>
+						<br />
+						<h4> Subject: 
+							<input type="button" value="Clear" style="float: right;" onclick="clear_list(document.dta_form.subject);" />
+						</h4>
+						<select name="subject" multiple="multiple" size="10" onclick="clear_list(document.dta_form.cruise);">
+							<option class="bsierp" value="ADCP">ADCP</option>
+							<option class="best bsierp" value="Abundance">Abundance</option>
+							<option class="best" value="Bathymetry">Bathymetry</option>
+							<option class="best" value="Benthos">Benthos</option>
+							<option class="best bsierp" value="Biogeochemical">Biogeochemical</option>
+							<option class="best bsierp" value="Biology">Biology</option>
+							<option class="best bsierp" value="Biomass">Biomass</option>
+							<option class="best bsierp" value="Buoy">Buoy</option>
+							<option class="best bsierp" value="CTD">CTD</option>
+							<option class="best" value="DMSP">DMSP</option>
+							<option class="best bsierp" value="Fish">Fish</option>
+							<option class="best" value="Hydrography">Hydrography</option>
+							<option class="best bsierp" value="Marine Mammals">Marine Mammals</option>
+							<option class="best" value="Meteorology">Meteorology</option>
+							<option class="best" value="Microbiology">Microbiology</option>
+							<option class="best" value="Model">Model</option>
+							<option class="best bsierp" value="Mooring">Mooring</option>
+							<option class="best" value="Navigation">Navigation</option>
+							<option class="best" value="Nutrient">Nutrient</option>
+							<option class="best bsierp" value="Oceanography">Oceanography</option>
+							<option class="best" value="Optics">Optics</option>
+							<option class="best" value="POES">POES</option>
+							<option class="best bsierp" value="Plankton">Plankton</option>
+							<option class="best" value="Production">Productivity</option>
+							<option class="best" value="Radioisotope">Radio Isotope</option>
+							<option class="best" value="Satellite">Satellite</option>
+							<option class="best" value="Sea Ice">Sea Ice</option>
+							<option class="best" value="Sediment">Sediment</option>
+							<option class="bsierp" value="Seabirds">Seabirds</option>
+							<option class="best bsierp" value="Ship Based">Ship Based</option>
+							<option class="best" value="Stable Isotope">Stable Isotope</option>
+							<option class="best bsierp" value="Underway">Underway</option>
+							<option class="best bsierp" value="Water Chemistry">Water Chemistry</option>
+							<option class="best bsierp" value="Water Sampling">Water Sampling</option>
+						</select>
+				  </form>
+		<!-- -->
+				  <br />
+				  <input type="submit" value="Search" onclick="build_results(document.dta_form);" />
+				  <input type="button" value="Reset" style="float: right;" onclick="reset_opt(document.dta_form);" />
+		<!-- -->
+		<!--
+				  <script type="text/javascript">
+					if (getBrowserHeight() >= 750) {
+					  var form_buttons = '<br />';
+					  form_buttons += '<input type="submit" value="Search" onclick="build_results();" />';
+					  form_buttons += '<input type="button" value="Reset" style="float: right;" onclick="reset_opt();" />';
+					  document.write(form_buttons);
+					}
+				  </script>
+		-->
+				</td>
+				<td width="100%" valign="top" style="background: #fff;">
+
+			  <!-- Search Results -->
+			  <div id="srchRes" style="display:none;">
+				<h3 style="float: left; font-size: 20px;">Search Results:</h3><h3 style="float: right;"><span onclick="$('#srchRes').css('display', 'none'); $(inputBox).attr('value', ''); $('#r_content').css('display', 'block');">
+				  <img class="closeBtn" alt="[ close ]" src="../images/close1.png" border="0" onmousedown="this.src='../images/close2.png';" onmouseup="this.src='../images/close1.png';" />
+				</span></h3> 
+				<div style="clear: both;"></div>
+				<div id="content">
+				  <hr />
+				  <div id="sResults">
+					Loading...
+				  </div>
+				</div>
+			  </div>
+			  <!-- End Search Results -->
+
+				  <div id="r_content">
+					<noscript>
+					 <center style="font-size: 16px; font-weight: bold; margin-top: 50px;">
+					  JavaScript must be enabled in order to view this page.
+					 </center>
+					</noscript>
+					<h3 style="float: left; font-size: 20px;">Search Results:</h3>
+					<span id="r_pop"></span> <!-- This populates a pop-out button dynamically using main.js -->
+					<div class="clr_flt"></div> <!-- Clear the float property -->
+					<div id="r_body"></div> <!-- This populates dynamically using main.js -->
+					<!-- Script: Calls the function fill_r_content below from main.js -->
+					<script type="text/javascript">
+						window.onload=function() {
+							var theForm = document.dta_form;
+							if ( getDeviceWidth() < 768 ) {  theForm = document.dta_form_xs;  }
+							
+							reset_opt(document.dta_form);
+							reset_opt(document.dta_form_xs);
+							
+							/*
+							check_opts(theForm);
+							build_results(theForm);
+							*/
+						};
+					</script>
+					<!-- End script -->
+				   </div> <!-- End r_content -->
+				  <div class="clr_flt"></div> <!-- Clear the float property -->
+				</td>
+			  </tr>
+			</table>
+		  </div>
+		  <br />
+		</div>
+	</div> <!-- end of container -->
+
+	
+	<div class="clr_flt"></div>
+
+	<!-- start of footer -->
+	<div class="container">
+		<div class="footer">
+			<div class="row">
+				<div class="col-lg-2">
+				  <a href="http://www.eol.ucar.edu"><img border="0" style="vertical-align: middle;" width="50" height="50" src="http://www.eol.ucar.edu/projects/logos_and_icons/EOL_logo_trans_bg.gif" alt="EOL Logo" /></a>
+				  <a href="http://www.eol.ucar.edu/cds/"><img border="0" style="vertical-align: middle; padding-left: 20px;" height="25" src="http://www.eol.ucar.edu/projects/logos_and_icons/cds_small.png" alt="CDS Logo" /></a>
+				</div>
+				<div class="col-lg-8">
+					&copy; 
+					<script type="text/javascript">
+						var startYr = 2011;
+						var d = new Date();
+						if (d.getFullYear() > startYr) { document.write(startYr + '&ndash;' + d.getFullYear()); }
+						else { document.write(startYr); }
+					</script>
+					UCAR &nbsp;|&nbsp;
+					<a href="http://www.eol.ucar.edu">About EOL</a> &nbsp;|&nbsp;
+					<a href="mailto:bersea@eol.ucar.edu">Contact Us</a> &nbsp;|&nbsp;
+					<a href="http://www.ucar.edu/legal/privacy_policy.shtml">Privacy Policy</a> &nbsp;|&nbsp;
+					<a href="http://www.ucar.edu/legal/terms_of_use.shtml">Terms of Use</a>&nbsp;|&nbsp;
+					Sponsored by NSF and NPRB
+					<br />
+					<a href="http://www.a2dc.org/"><img border="0" style="vertical-align: middle;" src="../logos/a2dc-logo-split.png" height="25" alt="A2DC Logo" /></a>
+				</div>
+				<div class="col-lg-2">
+					<a href="http://www.nsf.gov/"><img border="0" style="vertical-align: middle;" src="http://www.eol.ucar.edu/projects/logos_and_icons/nsf.gif" width="48" height="48" alt="NSF Logo" /></a>
+					<a href="http://www.nprb.org/"><img border="0" style="vertical-align: middle;" src="../logos/NPRB_logo_small.gif" width="48" height="48" alt="NPRB Logo" /></a>
+				</div>
+			</div> <!-- end row -->
+		</div> <!-- End footer -->
+	</div> <!-- end footer container -->
+
+</center>
+
+
+
+
+
+
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = "http://piwik.eol.ucar.edu/piwik/";
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 5);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://piwik.eol.ucar.edu/piwik/piwik.php?idsite=5" style="border:0" alt="" /></p></noscript>
+<!-- End Piwik Tracking Code -->
+</body>
+</html>

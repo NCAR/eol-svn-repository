@@ -1,0 +1,4 @@
+#!/bin/tcsh
+
+cat combine.sql | mysql -h hurricane -u stormdba -pcodiac mcd
+cat user.dat | mysql -h hurricane -u stormdba -pcodiac mcd

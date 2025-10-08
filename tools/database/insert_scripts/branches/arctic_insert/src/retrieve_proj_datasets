@@ -1,0 +1,1308 @@
+#!/usr/bin/perl -w
+
+################################################################################
+#AUTHOR: Christian Sibo
+#DATE: 06/20/2012
+#DESCRIPTION: Reads in a directory; crawls through the ops, model, and research paths to generate files for use by existing scripts to insert them into CODIAC.
+#
+# Updated 09/14/2012 Janine Aquino
+#	Massive changes and reformatting. Code had errors and was
+#	incomplete.
+# Updated 09/14/2012 Janine Aquino (second update today)
+# 	Add command line options to limit processing to a single category or a 
+# 	single platform within a category.
+# Updated 10/31/2012 Janine Aquino
+# 	Added functionality to handle filenames with YYYYMMDD but missing
+# 	HHmm (assume 0000). Also can handle only YYYYMMDD (no files have HHmm).
+# Updated 1/29/2013 Janine Aquino
+#	Apparently forgot to get dts scripts working for HIPPO-2 thru -5. Fixed.
+################################################################################
+use Date::Parse;
+
+################################################################################
+#CONFIG
+################################################################################
+# This the root dir where the field catalog is deployed
+$ROOTDIR='/net/web/catalog/html/';
+$MODELDIR='model/';
+$OPSDIR='ops/';
+$RESEARCHDIR='research/';
+$RADARDIR='radar/';
+$OUTDIR="output/";
+
+# Eventually change this to a subroutine that pulls this table from zith
+%FORMATS=(
+    'avi'=>119,
+    'gif'=>34,
+    'jpg'=>60,
+    'jpeg'=>60,
+    'txt'=>43,
+    'tiff'=>79,
+    'png'=>82,
+    'bmp'=>126,
+    'html'=>83,
+    );
+
+# Eventually change this to a subroutine that pulls this table from zith
+%FREQ_ID=(
+    'unknown'=>1,
+    '15 minutes'=>18,
+    '1 hours'=>23,
+    '1.5 hours'=>24,
+    '2 hours'=>25,
+    '3 hours'=>26,
+    '4 hours'=>27,
+    '6 hours'=>28,
+    '8 hours'=>29,
+    '12 hours'=>30,
+    '24 hours'=>31,
+    'criteria'=>34,
+    );
+
+# Eventually change this to a subroutine that pulls this table from zith
+%CATEGORY_ID=(
+    'satellite'=>'15',
+    'model'=>'11',
+    'aircraft'=>'2',
+    'radar'=>'14',
+    'upper air'=>'19',
+    'surface'=>'18',
+    'ancillary info'=>'3',
+    'models/analyses'=>'11',
+	);
+
+# Eventually change this to a subroutine that pulls this table from zith
+%PLATFORM_ID=(
+    'gv'=>'350',
+    'goes-11'=>'263',
+    'ncep_forecast'=>'222',
+    'gfs_ncep_halfdegree'=>'222',
+    'naaps'=>'426',
+    'gmao_geos5'=>'427',
+    'goes-15'=>'419',
+    'poes_composite'=>'229',
+	'noaa_poes'=>'229',
+    'mtsat-1r'=>'428',
+    'mtsat'=>'428',
+    'mtsat-2'=>'428',
+    'airs'=>'420',
+    'opc_surface_analysis'=>'429',
+    'hnl_surface_analysis'=>'36',
+    'cosmic'=>'',
+    'skewt_anchorage'=>'430',
+    'skewt_albequerque'=>'470',
+    'skewt_barrow'=>'431',
+    'skewt_darwin'=>'454',
+    'skewt_corozal_panama'=>'432',
+    'skewt_denver'=>'433',
+    'skewt_hilo'=>'434',
+    'skewt_hobart'=>'455',
+    'skewt_hokitika'=>'456',
+    'skewt_lihue'=>'435',
+    'skewt_macquarie_island'=>'436',
+    'skewt_pago_pago'=>'437',
+    'skewt_paraparaumu'=>'457',
+    'skewt_sydney'=>'458',
+    'skewt_tahiti'=>'438',
+    'macc_ecmwf_125km_fcst_only'=>'221',
+    'macc_ecmwf_125km_assim'=>'221',
+    'meteosat7'=>'421',
+	'metop_avhrr'=>'425',
+	'goes-13'=>'405',
+	'goes13'=>'405',
+	'tmi'=>'220',
+	'ascat'=>'425',
+    'amsre'=>'420',
+	'meteosat7_amv'=>'421',
+	'um_cloud_tracking'=>'421',
+	'gome2'=>'425',
+	'iasi_acresp'=>'425',
+	'imd_kalpana-1'=>'442',
+	'aviso'=>'444',
+	'omi'=>'443',
+	'cpc_qmorph'=>'420',
+	'csu_sstwind'=>'425',
+	'cimss_mimic'=>'7',
+	'csu_irwind'=>'425',
+	'cpc_cmorph'=>'420',
+	'gts_station_plot'=>'200',
+	'ltng_uspln'=>'396',
+	'ncep_precipitation'=>'147',
+	'ok_mesonet'=>'109',
+	'arm_meteogram'=>'126',
+	'ltng_nldn'=>'417',
+	'arm_solar_radiation'=>'226',
+	'madis_mesonet'=>'319',
+	'weekly_time_series'=>'446',
+	'monthly_time_series'=>'448',
+	'awc_pirep'=>'201',
+	'awc_sigmet'=>'201',
+	'spc_outlook'=>'142',
+	'spc_product'=>'142',
+	'vaac'=>'464',
+	'nexrad'=>'79',
+	'nam'=>'471',
+	'ncep_nam'=>'471',
+	);
+
+# The next three tables have to be created/updated by hand for each platform 
+# designation used in a field catalog.
+%ops=(
+    'omi'=>'satellite',
+    'goes'=>'satellite',
+    'goes-11'=>'satellite',
+    'goes-15'=>'satellite',
+    'mtsat'=>'satellite',
+    'mtsat-2'=>'satellite',
+    'mtsat-1r'=>'satellite',
+    'airs'=>'satellite',
+    'poes'=>'satellite',
+    'poes_composite'=>'satellite',
+	'noaa_poes'=>'satellite',
+	'meteosat7'=>'satellite',
+	'metop_avhrr'=>'satellite',
+	'goes-13'=>'satellite',
+	'goes13'=>'satellite',
+	'tmi'=>'satellite',
+	'ascat'=>'satellite',
+    'amsre'=>'satellite',
+	'meteosat7_amv'=>'satellite',
+	'um_cloud_tracking'=>'satellite',
+	'gome2'=>'satellite',
+	'iasi_acresp'=>'satellite',
+	'imd_kalpana-1'=>'satellite',
+	'aviso'=>'satellite',
+	'omi'=>'satellite',
+	'cpc_qmorph'=>'satellite',
+	'csu_sstwind'=>'satellite',
+	'cimss_mimic'=>'satellite',
+	'csu_irwind'=>'satellite',
+	'cpc_cmorph'=>'satellite', 
+    'skewt'=>'upper air',
+    'skewt_anchorage'=>'upper air',
+    'skewt_barrow'=>'upper air',
+    'skewt_darwin'=>'upper air',
+    'skewt_corozal_panama'=>'upper air',
+    'skewt_denver'=>'upper air',
+    'skewt_hilo'=>'upper air',
+    'skewt_hobart'=>'upper air',
+    'skewt_hokitika'=>'upper air',
+    'skewt_lihue'=>'upper air',
+    'skewt_macquarie_island'=>'upper air',
+    'skewt_pago_pago'=>'upper air',
+    'skewt_paraparaumu'=>'upper air',
+    'skewt_sydney'=>'upper air',
+    'skewt_tahiti'=>'upper air',
+    'ncep_forecast'=>'upper air',
+    'opc_surface_analysis'=>'surface',
+    'hnl_surface_analysis'=>'surface',
+    'vaac'=>'ancillary info',
+    'cosmic'=>'upper air',
+	'gts_station_plot'=>'surface',
+	'ltng_uspln'=>'surface',
+	'ncep_precipitation'=>'surface',
+	'ok_mesonet'=>'surface',
+	'arm_meteogram'=>'surface',
+	'ltng_nldn'=>'surface',
+	'arm_solar_radiation'=>'surface',
+	'madis_mesonet'=>'surface',
+	'weekly_time_series'=>'upper air',
+	'monthly_time_series'=>'upper air',
+	'awc_pirep'=>'aviation',
+	'awc_sigmet'=>'aviation',
+	'spc_outlook'=>'models/analyses',
+	'spc_product'=>'models/analyses',
+	);
+%MODEL_TYPES=(
+    'naaps'=>'naaps forecast',
+    'macc_ecmwf_125km_fcst_only'=>'ecmwf macc forecast',
+    'macc_ecmwf_125km_assim'=>'ecmwf macc forecast',
+    'gfs_ncep_halfdegree'=>'ncep gfs forecast',
+    'gmao_geos5'=>'gmao geos5 forecast'
+    );
+%research=(
+    'gv'=>'aircraft',
+    'goes-15'=>'satellite',
+    );
+################################################################################
+#END CONFIG
+################################################################################
+
+# Usage
+if (scalar(@ARGV) < 2) {
+    print("\nUsage: retrieve_proj_datasets <project> <initial_archive_ident> <category>  <platform> <-b begin_date> <-e end_date>\n");
+    print("e.g. retrieve_proj_datasets hippo 112.034 ops GOES-11 -b 2011-10-10 -e 2012-01-01\n");
+    print("where:\n");
+    print("\thippo is the name of the project directory in the field catalog dir\n");
+    print("\t112.034 is the next available archive identifier from zith\n");
+    print("\tcategory is an option category [model|ops|research|radar] to which\n");
+    print("\t\tto limit processing.\n");
+    print("\tplatform is an optional platform to which to limit processing. Category\n");
+    print("\t\tmust be defined to use this option.\n");
+    print("\tbegin_date is an optional earliest date for which to processing imagery\n");
+    print("\tend_date is an optional latest date for which to processing imagery\n");
+    exit(1);
+}
+
+$inDir = $ARGV[0];
+chomp($inDir);
+$inDir=~s/\///;
+shift @ARGV; #Remove project from command-line argument array
+
+$project=uc($inDir);
+
+my $ident = $ARGV[0];
+shift @ARGV; #Remove archive identifier from command-line argument array
+push (@params,$ident);
+
+if (scalar(@ARGV) >= 1) {
+    $category = $ARGV[0];
+    chomp($category);
+    if ($category!~m/[model|ops|research|radar]/) {
+	print "category must be one of model, ops, research, radar\n";
+	exit(1);
+    }
+    shift @ARGV; #Remove category from command-line argument array
+}
+
+if (scalar(@ARGV) >= 1) {
+    $platform = $ARGV[0];
+    chomp($platform);
+    shift @ARGV; #Remove platform from command-line argument array
+}
+
+if (scalar(@ARGV) >= 2) {
+    if ($ARGV[0] eq '-b') {
+        $begin_date = $ARGV[1];
+	if ($begin_date!~m/(\d{4})-(\d{2})-(\d{2})/) {
+	    print "begin date must be of the format YYYY-MM-dd\n";
+	    exit(1);
+	}
+        push (@params,$begin_date);
+        shift @ARGV; #Remove start date from command-line argument array
+        shift @ARGV; #Remove start date from command-line argument array
+    } else {
+        push (@params,undef);
+    }
+    if ($ARGV[0] eq '-e') {
+        $end_date = $ARGV[1];
+	if ($end_date!~m/(\d{4})-(\d{2})-(\d{2})/) {
+	    print "end date must be of the format YYYY-MM-dd\n";
+	    exit(1);
+	}
+        push (@params,$end_date);
+        shift @ARGV; #Remove end date from command-line argument array
+        shift @ARGV; #Remove end date from command-line argument array
+    } else {
+        push (@params,undef);
+    }
+}
+
+# Output is written to a subdir of the dir you are in called $OUTDIR/$inDir
+if(!-e $OUTDIR) {
+    `mkdir $OUTDIR`;
+}
+if(!-e $OUTDIR.$inDir) {
+    `mkdir $OUTDIR$inDir`;
+}
+$inDir=$ROOTDIR.$inDir;
+
+if(-e $inDir)
+{  
+    if ($category) {
+	# Just process the category requested
+	main_loop($category,@params);
+    } else {
+	# Process all categories
+        main_loop($MODELDIR,@params);
+        main_loop($OPSDIR,@params);
+        main_loop($RESEARCHDIR,@params);
+        if($inDir=~/dc3/)
+        {
+	    # This has not been implemented
+	    main_loop($RADARDIR,@params);
+        }
+    }
+}
+
+################################################################################
+sub main_loop
+{
+    $first=0;
+    #$count=0;
+    my $category=$_[0];
+    $category =~ s/\///;
+    shift @_;
+    my ($ident,$begin_date,$end_date) = @_;
+
+    if ($category eq "radar") {
+	print "Processing of the radar category has not been implemented yet\n";
+	exit(1);
+    }
+
+    # Documentation for user...
+    if ($platform) {
+        print "Possible platforms are:\n";
+    }
+
+    #EACH DIR IN .../<category>/, Usually platforms
+    foreach $inDir2(queue_files($inDir."/".$category))
+    {
+
+	# If the user requested processing of a single platform only, compare 
+	# their request to current platform. If it exists, process just that 
+	# platform. If it does not exist, list options for user.
+	if ($platform) {
+	    if (lc($platform) ne lc($inDir2)) {
+	        print "\t".$inDir2."\n";
+	        next;
+            } else {
+		print "Found $platform... processing\n";
+	    }
+        }
+
+	%imagesHash=();
+	%typeHash=();
+	#EACH DIR IN .../<category>/*/, Should be dates
+	foreach $inDir3(queue_files($inDir."/".$category."/".$inDir2))
+	{
+	    # Loop through the image dir and put all files into the imageHash
+	    @images=();
+	    print "reading images from dir $inDir/$category/$inDir2/$inDir3\n";
+	    opendir(IMAGESDIR,$inDir."/".$category."/".$inDir2."/".$inDir3) 
+		or warn "Could not open $inDir/$category/$inDir2/$inDir3\n";
+	    @images=grep(/$category\..*\.\w{3,4}/,readdir(IMAGESDIR));
+	    closedir(IMAGESDIR);
+
+	    foreach $image(@images)
+	    {
+		# Parse the metadata from the filename
+		parse_filename($image,$category,\%imageHash);
+		$imagesHash{$image}{"directory"}=$inDir."/".$category."/".$inDir2;
+
+	        # Populate the platform type hash with the different platform
+		# types (determined by their titles). Just for the heck of it,
+		# count the number of files of this platform type (not currently
+		# used for anything).
+	        if (exists $typeHash{$imagesHash{$image}{"title"}}) { 
+	            $typeHash{$imagesHash{$image}{"title"}}++;
+	        } else {
+	            $typeHash{$imagesHash{$image}{"title"}} = 1;
+	        }
+		#print "$imagesHash{$image}{'title'} = $typeHash{$imagesHash{$image}{'title'}}\n";
+	    }
+	}
+
+	# Loop through the product types found in this image dir
+	# For each product type...
+	foreach my $type(sort keys %typeHash)
+	{
+            my $no_HHmm_in_filename = 0;
+            my $yes_HHmm_in_filename = 0;
+
+	    # Create a list of images of this type
+	    @queue=();
+	    foreach $image(keys %imagesHash)
+	    {
+		if($imagesHash{$image}{"title"} eq $type)
+		{
+                    # DATETIME EXCEPTION: If datetime only contains YYYYMMDD 
+                    # assume 0000 for HHMM (but don't change name of file!)
+		    if ($imagesHash{$image}{"datetime"} =~ 
+			         m/^(\d{4})(\d{2})(\d{2})$/) {
+			$imagesHash{$image}{"datetime"} = 
+			    $imagesHash{$image}{"datetime"}."0000";
+		        push(@queue,$image);
+			$no_HHmm_in_filename = 1;
+		    } elsif ($image !~ m/^.*(\d{4})(\d{2})(\d{2})(\d{2})(\d{2}).*/) {
+		        print "Found item that is not an image: $image ... skipping\n";
+		        next;
+		    } else {
+		        push(@queue,$image);
+			$yes_HHmm_in_filename = 1;
+		    }
+		}
+	    }
+	    
+	    $previous_time=0;
+	    $start=999999999999;
+	    $print_start='';
+	    $end=0;
+	    $print_end='';
+
+	    # Find the most common time difference between images
+	    $diff=get_diff(@queue);
+
+	    # Convert this difference to a string giving a number and interval,
+	    # i.e. 1 minute, 6 hour, etc.
+	    $frequency=convert_diff_to_string($diff);
+
+	    $print_dir='';
+	    $print_plat='';
+	    $print_fileType='';
+	    # Loop through the list of images of this type
+	    foreach $image(@queue)
+	    {
+		# First time through, determine the directory, platform, title 
+		# summary, and file format for a dataset to hold this product type.
+		if($previous_time==0)
+		{
+		 ($print_dir,$print_plat,$print_fileType,$print_title,$print_summary)
+		    = parse_dataset_metadata($image,$category,\%imageHash);
+
+		    # Not first time through anymore...
+		    $previous_time = 1;
+
+		}
+
+		# Determine the dataset start and end dates from the earliest
+		# and latest image file times (given in the filename).
+		$this_time=get_epoch($imagesHash{$image}{"datetime"});
+
+		if($this_time<$start)
+		{
+		    $start=$this_time;
+		    $print_start=$imagesHash{$image}{"datetime"};
+		    $print_start=~m/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/;
+		    $print_start="$1-$2-$3 $4:$5:00";
+		}
+		if($this_time>$end)
+		{
+		    $end=$this_time;
+		    $print_end=$imagesHash{$image}{"datetime"};
+		    $print_end=~m/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/;
+		    $print_end="$1-$2-$3 $4:$5:00";
+		}
+
+		# If this is a forecast product, change the pattern matching in
+		# the cfg file to parse that out. This is a stub at the moment
+		# since insert_multiple_files cannot currently handle
+		# forecast_hour.
+		if (exists $imagesHash{$image}{"forecast_hour"})
+		{
+		    #$print_forecast_hour = $imagesHash{$image}{"forecast_hour"};
+		    $print_filename = "$category.".$imagesHash{$image}{"platform"}.".[\\Y\\Y\\Y\\Y\\M\\M\\y\\y\\H\\H\\m\\m].\\d\\d\\d_$type.$print_fileType";
+		} else {
+		    $print_filename = "$category.".$imagesHash{$image}{"platform"}.".[\\Y\\Y\\Y\\Y\\M\\M\\y\\y\\H\\H\\m\\m].$type.$print_fileType"
+		}
+                $print_startdate = "YYYY-MM-yy HH:mm:00";
+                if ($no_HHmm_in_filename) {
+		    $print_no_HHmm_filename = $print_filename;
+		    $print_no_HHmm_filename =~ s/\\H\\H\\m\\m//;
+                    $print_no_HHmm_startdate = "YYYY-MM-yy 00:00:00";
+		}
+
+	    } # End loop through images
+
+	    # If begin_date and/or end_date defined on command line, use those dates
+	    # instead so scripts will limit loading to those dates.
+	    if (defined $begin_date || defined $end_date) {
+	        if (defined $begin_date) {
+		    $print_start = "$begin_date 00:00:00";
+		} else {
+		    $begin_date=substr($print_start,0,10);
+		}
+	        if (defined $end_date) {
+		    $print_end = "$end_date 23:59:59";
+		} else {
+		    $end_date=substr($print_end,0,10);
+		}
+		$insertrange = "$begin_date:$end_date";
+	    }
+
+	    # Flush out the dataset summary.
+	    $print_summary.=" The imagery are in ".uc($print_fileType)." format. The imagery cover the time span from $print_start to $print_end.";
+
+	    # Determine the dataset frequency
+	    # $freq_id is the dataset frequency displayed on the dataset page.
+	    # Frequency is the filelength of each file.
+	    ($freq_id,$frequency) =determine_dataset_freq($frequency,$print_plat);
+
+	    #$count++;
+	    # If set to nonzero, forces a flush after every write or print on
+	    # the currently selected output channel.
+	    local $|=1;
+	    #print "\r$category: ".$count."\n";
+	    local $|=0;
+
+	    # Confirm have all params to put in output file before try to write
+	    # file.
+	    if (not exists $FORMATS{lc($print_fileType)}) {
+		print "Please add ".lc($print_fileType)." to FORMATS hash\n";
+		exit(1);
+	    }
+	    if (not exists $PLATFORM_ID{lc($print_plat)}) {
+		print "Please add ".lc($print_plat)." to PLATFORM_ID hash\n";
+	        $PLATFORM_ID{lc($print_plat)} = '';
+		exit(1);
+	    }
+            if (not exists $CATEGORY_ID{lc($category)}) {
+		if (exists $$category{lc($print_plat)}) {
+		    $print_cat = $CATEGORY_ID{$$category{lc($print_plat)}};
+		} else {
+		    print "Please add ".lc($print_plat)." to $category hash\n";
+		    print "$category $print_plat\n";
+		    exit(1);
+		}
+	    } else {
+		$print_cat = $CATEGORY_ID{lc($category)};
+	    }
+
+	    # DATASET TYPE EXCEPTIONS: Do not load interactive sounding images
+	    # or preliminary aircraft timeseries plots.
+	    if ($type eq "interactive_soundings") {
+	       print "\n\nFound cosmic interactive sounding data in field catalog dir:\n";
+	       print "$print_dir\n";
+	       print "Do not put into codiac. Instead link master list:\n".
+	       " COSMIC Interactive Map Product Imagery [NCAR/EOL] -> field catalog\n".
+	       " (i.e. http://catalog.eol.ucar.edu/cgi-bin/hippo/ops/prod_browse?platform=cosmic&prod=interactive_soundings&howmany=All&start=Start+Date&end=End+Date&submit=retrieve+products)\n".
+	       " COSMIC Interactive Map Product Data [UCAR] -> http://cosmic-io.cosmic.ucar.edu/cdaac/index.html\n";
+	    } elsif ($category eq "research" && lc($print_plat) eq "gv") {
+	       if (!$first) {
+	           $first = 1;
+	           print "\n\nFound GV aircraft products in field";
+		   print " catalog dir:\n$print_dir\n";
+	           print "You will need to manually confirm whether or not these ".
+		   "should be put into codiac: e.g. instead of putting preliminary ".
+		   "timeseries into codiac, upgrade codiac to do interactive plotting ".
+		   "from LRT files and link ML to that; do not load camera imagery ".
+		   "- they are handled separately.\n";
+	       }
+	    } else {
+
+	    # EXCEPTION: Fix project name discrepancies between DTS and codiac.
+	    if ($project eq "HIPPO") { $dtsProject = $project."-1"; }
+	    elsif ($project =~m/^(HIPPO)(\d)/) { $dtsProject = $1."-".$2; }
+	    else {
+	       $dtsProject = $project;
+	    }
+
+	    # EVERYTHING LOOKS GOOD... CREATE OUTPUT FILES.
+            chomp($ident);
+            if ($ident=~m/(\d+)\.(\d+)/) {
+                $prefix=$1;
+                $datasetID=$2;
+	    } else {
+		print "archive identifier must be of form ###.###, i.e. 112.034\n";
+		exit(1);
+            }
+
+	    # Create cfg file
+open(OUTFILE,">$OUTDIR".lc($project)."/"."cfg-".$ident);
+if ($yes_HHmm_in_filename) {
+    print OUTFILE 
+"{
+\tdirectory: $print_dir
+\tfilename: $print_filename
+\tstartdate: $print_startdate
+\tfilelength: $frequency
+\tformat: ".$FORMATS{lc $print_fileType };
+    if (defined $insertrange) {
+        print OUTFILE
+"
+\tinsertrange: ".$insertrange;
+}
+    print OUTFILE
+"
+}
+";
+}
+if ($no_HHmm_in_filename) {
+    print OUTFILE 
+"{
+\tdirectory: $print_dir
+\tfilename: $print_no_HHmm_filename
+\tstartdate: $print_no_HHmm_startdate
+\tfilelength: $frequency
+\tformat: ".$FORMATS{lc $print_fileType };
+    if (defined $insertrange) {
+        print OUTFILE
+"
+\tinsertrange: ".$insertrange;
+    }
+    print OUTFILE
+"
+}
+";
+}
+close(OUTFILE);
+	    # Create dts file
+open(OUTFILE,">$OUTDIR".lc($project)."/"."dts".$datasetID);
+print OUTFILE 
+"#CHANGE THESE
+dataset_id=\"$ident\"
+project_id=\"".$dtsProject."\"
+name=\"".$print_title."\"
+ingest_location=\"".$print_dir."\"
+archive_location=\"".$print_dir."\"
+internal_contact_id=203
+load_data_location=\"".$print_filename."\"
+load_contact_id=203
+approve_contact_id=203
+
+#USUALLY LEFT ALONE
+ingest_contact_id=201
+ingest_status_id=2
+load_status_id=6
+approve_status_id=6
+
+author_id=203
+note_type_id=4
+note_text=\"Loaded with new catalog_insert and insert_proj_dataset scripts\"
+";
+close(OUTFILE);
+	    # Create dataset file
+open(OUTFILE,">$OUTDIR".lc($project)."/"."dataset".$datasetID);
+print OUTFILE
+"#CHANGE THESE
+archive_ident=\"$ident\"
+title=\"".$print_title."\"
+summary=\"".$print_summary."\"
+platform_id=\"".$PLATFORM_ID{lc $print_plat }."\"
+visible=0
+category_id=".$print_cat."
+frequency_id=".$freq_id."
+begin_date=\"".$print_start."\"
+end_date=\"".$print_end."\"
+
+#USUALLY LEFT ALONE
+spatial_type=\"raster\"
+point_of_contact_id=1
+internal_contact_id=179
+eula_reqd=0
+online_orderable=1
+offline_orderable=0
+browseable=1
+codiac_plot_type_id=10
+time_sel_level=\"dy\"
+stn_select=\"no\"
+browse_extract_prog=\"/usr/local/codiac/bin/svcrs/extract/sti\"
+dodsable=0
+auth_reqd=0
+is_eol_data=1
+t_subset=1
+event_subset=0
+order_allow_compress=1
+
+#INHERITED
+#begin_date=->proj
+#end_date=->proj
+minimum_latitude=->proj
+maximum_latitude=->proj
+minimum_longitude=->proj
+maximum_longitude=->proj
+name=->proj
+#add_xlink_where=->proj
+";
+close(OUTFILE);
+
+	    # Create doit wrapper script
+open(OUTFILE,">$OUTDIR".lc($project)."/"."doit".$datasetID);
+print OUTFILE
+"#! /bin/csh -f
+# Before run this script, create dataset### input file,
+# and hand-generate cfg file.
+
+set archid = $ident
+
+set projid = `echo \$archid |cut -d'.' -f1`
+set datasetid = `echo \$archid |cut -d'.' -f2`
+
+/net/work/bin/scripts/insert/insert_proj_dataset add_dataset=dataset\$datasetid
+/net/work/bin/scripts/insert/insert_multiple_files cfg-\$archid
+/usr/local/codiac/bin/lsdsfiles -lv \$archid
+
+# Still check and test order by hand!!!
+# Create DTS entry and add to ML.
+";
+close(OUTFILE);
+
+	    $sub_ident=sprintf("%03d",$datasetID+1);
+	    $ident=sprintf("%03d.%03d",$prefix,$sub_ident);
+
+	    } # DONE CREATING OUTPUT FILES
+	} # Done looping through product types for this platform
+	%typeHash=();
+    } # Done looping through platforms
+}
+################################################################################
+# Read all the files in a dir and put them into an array for processing.
+sub queue_files
+{
+    my $readDir=$_[0];
+    my @fileQueue=();
+
+    opendir(INDIR,$readDir) or die "Could not open $readDir\n";
+    my @inFiles=readdir(INDIR);
+    foreach $inFile(@inFiles)
+    {
+	if($inFile ne '.' && $inFile ne '..'  && -d $readDir."/".$inFile)
+	{
+	    push(@fileQueue,$inFile);
+	}
+    }
+    close(INDIR);
+    
+    return @fileQueue;
+}
+################################################################################
+# Convert YYYYMMDDHHMM to seconds since epoch so time differences can be 
+# calculated
+sub get_epoch
+{
+    my $time=$_[0];
+    $time=~m/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/;
+    my $AM='AM';
+    my $hour=$4;
+    if($hour>=12)
+    {
+	if($hour>12)
+	{
+	    $hour-=12;
+	}
+	$AM='PM';
+    }
+    $time=str2time("$2/$3/$1 $hour:$5$AM");
+    return $time;
+}
+################################################################################
+# Calculate the average difference between time-adjacent files from an array of 
+# file times.
+sub get_diff
+{
+    my @my_queue=@_;
+
+    my @sorted_queue=();
+    my %sorted_hash=();
+    # Loop through all the files in an array of filenames
+    foreach $image(@my_queue)
+    {
+	# Get the epoch time for each file.
+	#print "Image time: ".$imagesHash{$image}{"datetime"}."\n";
+	$this_time=get_epoch($imagesHash{$image}{"datetime"});
+	$sorted_hash{$this_time}=$image;
+    }
+
+    # Sort the files by epoch time.
+    @my_queue=();
+    foreach $time(sort keys %sorted_hash)
+    {
+	#print "Sorted hash: ".$time." ".$sorted_hash{$time}."\n";
+	# Put one image for each time into an array.
+	push(@sorted_queue,$sorted_hash{$time});
+    }
+    %sorted_hash=();
+
+    my $this_time=0;
+    my $last_time=0;
+    my %freq=();
+    # Loop through the sorted images (one image per time).
+    foreach $image(@sorted_queue)
+    {
+	#print "Sorted image time: ".$imagesHash{$image}{"datetime"}."\n";
+	$this_time=get_epoch($imagesHash{$image}{"datetime"});
+	if($last_time==0)
+	{
+	    $last_time=$this_time;
+	} else {
+	    # Calculate the difference since the previous image and put into
+	    # an array.
+	    #print "$this_time $last_time ".($this_time-$last_time)."\n";
+	    if (exists $freq{abs($this_time-$last_time)}) {
+	        $freq{abs($this_time-$last_time)} += 1;
+	    } else {
+	        $freq{abs($this_time-$last_time)} = 1;
+	    }
+	    $last_time=$this_time;
+        }
+    }
+
+
+    my $diff=0;
+    # Calculate the mode of diffs found.
+    # Don't want the average diff, want the most common diff (mode).
+    foreach $key (sort {$freq{$a} <=> $freq{$b}} keys %freq) {
+	#print "$key count: ".$freq{$key}."\n";
+        if ($freq{$key} ne 1) {$diff = $key;}
+    }
+    
+    @sorted_queue=();
+    #print "DIFF IS $diff\n";
+    return int($diff);
+}
+################################################################################
+# Convert time in seconds to a number and the string 'minutes', 'hours', or 
+# 'days', i.e. 5 minutes, 12 hours, 3 days.
+# Ignore remainder, so 12 hours 10 minutes will just return 12 hours.
+# (Rename this subroutine? Name is misleading.)
+sub convert_diff_to_string
+{
+    my $diff=$_[0]/60; # convert to minutes
+    my %rel_times=(
+	'hours'=>60,
+	'days'=>24
+	);
+    
+    my $span='minutes';
+    foreach $time(keys %rel_times)
+    {
+	$testDiff=$diff/$rel_times{$time};
+	if($testDiff>=1)
+	{
+	    $diff=$testDiff;
+	    $span=$time;
+	} else {
+	    # If diff < first conversion time, skip testing all higher
+	    # conversions.
+	    last;
+	}
+    }
+    my $frequency = int($diff)." ".$span;
+    #print "Frequency is $frequency\n";
+    return ($frequency);
+}
+################################################################################
+# If filename has airport id's squished together, break up for easier
+# redability, i.e. kbhcntaa -> KBJC-NTAA
+sub format_flight_legs {
+    my $title=shift;
+    #print $title."\n";
+    $title =~ s/([Ll]eg[0-9]+) ([a-zA-Z]+) /$1 \U$2 /;
+    $legs=$2;
+    $n=length($legs);
+    #print "Found string $legs of length $n\n";
+    while ($n-4 > 3) {
+	$n=$n-4;
+	substr($legs,$n,0)='-';
+	#print $legs."\n";
+    }
+    $title =~ s/([Ll]eg[0-9]+) ([a-zA-Z]+) /$1 \U$legs /;
+    #print $title."\n";
+    return($title);
+}
+################################################################################
+# Create a dataset title from the filename components
+sub get_title
+{
+    my $category=$_[0];    
+    my $platform=$_[1];
+    my $datetime=$_[2];
+    my $title=$_[3];
+    my $fileType=$_[4];
+    my $directory=$_[5];
+    
+    # Do not put project at beginning of dataset title. It's redundant with
+    # other zith database fields and can be added to views on the fly if needed.
+    my $print_title="";
+    #my $print_title="$project ";
+
+    if($category eq 'ops')
+    {
+	$title=~s/_/ /g;
+	$title=~s/([\w']+)/\u\L$1/g;
+	$title=~s/pac/Pacific/gi;
+	$title=~s/nor(th)?/North/gi;
+	$title=~s/sou(th)?/South/gi;
+	$title=~s/vis/Visible/gi;
+	$title=~s/sfc/Surface/gi;
+	$title=~s/anal/Analysis/gi;
+	$title=~s/(\-?|\s)ir/$1IR/gi;
+	$title=~s/so2/SO2/gi;
+	$title=~s/wv/WV/gi;
+	# Capitalize first letter of each word in title
+        $title =~ s/((^\w)|(\s\w))/\U$1/xg;
+	if($$category{lc($platform)} ne '')
+	{
+	    $type=$$category{lc($platform)};
+	}
+	else
+	{
+	}
+	
+	if($type eq 'satellite')
+	{
+	    if (lc($title) =~ m/leg[0-9]/) {
+	        $title=format_flight_legs($title);
+	    }
+	    $platform=~s/_composite//i;
+	    $print_title.=uc($platform);
+	    $print_title.=" ".$title." Satellite Imagery";
+	}
+	elsif($type eq 'surface')
+	{
+	    $platform=~m/^(.+)_Surface/i;
+	    $plat2=$1;
+	    $print_title.=uc($plat2);
+	    $print_title.=" ".$title." Imagery";
+	}
+	elsif($type eq 'upper air')
+	{
+	    if($platform eq 'cosmic')
+	    {
+	        $print_title.=uc($platform);
+	        $print_title.=" Interactive Map Product Imagery";
+	    } else {
+	        $platform=~s/_forecast//ig;
+	        $print_title.=uc($platform);
+	        $print_title.=" ".$title." Imagery";
+	        $print_title=~s/SKEWT/Skew-T/ig;
+	    }
+	}
+	elsif($type eq 'ancilliary info')
+	{
+	    $print_title.=uc($platform);
+	    $print_title.=" $title Text Product";
+	}
+    }
+    elsif($category eq 'model')
+    {
+	$title=~s/NTH/NORTH/gi;
+	$title=~s/_pv$/ Potential Vorticity/;
+	$title=~s/_/ /g;
+	if($MODEL_TYPES{lc($platform)} ne '')
+	{
+	    $type=$MODEL_TYPES{lc($platform)};
+	}
+	else
+	{
+	}
+
+	if($type eq 'naaps forecast')
+	{
+	    $print_title.=uc($platform)." Forecast Products Imagery";
+	}
+	elsif($type eq 'ecmwf macc forecast')
+	{
+	    $print_title=$platform;
+	    $print_title=~s/macc//g;
+	    $print_title=~s/ecmwf/ECMWF/g;
+	    $print_title=~s/fcst_only/Forecast Products Imagery - /g;
+	    $print_title=~s/_/ /g;
+	    $print_title.=" $title";
+	    $print_title=~s/BB/NRT Biomass-Burning/g;
+	    $print_title=~s/AOD/Aerosol Optical Depth/g;
+	    $print_title.=" (MACC)";
+	    # Capitalize first letter of each word in title
+            $print_title =~ s/((^\w)|(\s\w))/\U$1/xg;
+	}
+	elsif($type eq 'ncep gfs forecast')
+	{
+	    # Capitalize first letter of each word in title
+            $title =~ s/((^\w)|(\s\w))/\U$1/xg;
+	    $print_title.="NCEP GFS Forecast Products Imagery - ".$title;
+	}
+	elsif($type eq 'gmao geos5 forecast')
+	{
+	    $title=~s/anim/Animation/gi;
+	    # Capitalize first letter of each word in title
+            $title =~ s/((^\w)|(\s\w))/\U$1/xg;
+	    $print_title.="GMAO GEOS-5 Forecast Products Imagery - ".$title;
+	}
+    }
+    elsif($category eq 'research')
+    {
+	if($title=~m/movie/i)
+	{
+	    $print_title.=uc($platform)." Research Products Movie";
+	}
+	else
+	{
+	    $print_title.=uc($platform)." Research Products Imagery";	
+	}
+    }
+    else
+    {
+	print "Unknown category: $category\n";
+	exit(1);
+    }
+
+    $print_title=~s/HIPPO(\d+)/HIPPO-$1/g;
+
+    return $print_title;
+}
+################################################################################
+# Create a dataset summary from the filename components
+sub get_summary
+{
+    my $category=$_[0];    
+    my $platform=$_[1];
+    my $datetime=$_[2];
+    my $title=$_[3];
+    my $fileType=$_[4];
+    my $directory=$_[5];
+    
+    my $print_summary='This dataset contains ';
+    my $type='';
+   
+    if($category eq 'ops')
+    {
+	$title=~s/_/ /g;
+	$title=~s/pac/Pacific/gi;
+	$title=~s/nor(th)?/North/gi;
+	$title=~s/sou(th)?/South/gi;
+	$title=~s/vis/Visible/gi;
+	$title=~s/sfc/Surface/gi;
+	$title=~s/anal/Analysis/gi;
+	$title=~s/(\-|\s*)ir/$1IR/gi;
+	$title=~s/so2/SO2/gi;;
+	$title=~s/wv/WV/gi;
+	$title=~s/h2o/H2O/gi;;
+	$title=~s/o3/O3/gi;;
+	$title=~s/CH4/CHE4/gi;;
+	$title=~s/ co / CO /gi;
+	$title=~s/ch(\d+)/Channel $1/gi;;
+	$title=~s/CHE4/CH4/gi;
+	if($$category{lc($platform)} ne '')
+	{
+	    $type=$$category{lc($platform)};
+	}
+	else
+	{
+	}
+
+	if($type eq 'satellite')
+	{
+	    my $direction='';
+	    my $location='';
+	    if (lc($title) =~ m/leg[0-9]/) {
+		$title=format_flight_legs($title);
+	    }
+	    if($title=~m/(Pacific)(\s*)/i)
+	    {
+		$location="$1 ";
+		$title=~s/$1$2//;
+	    }
+	    if($title=~m/(north|south)(\s*)/i)
+	    {
+		$direction="$1 ";
+		$title=~s/$1$2//;
+	    }
+	    $title=~s/^\s*//;
+	    $title=~s/\s*$//;
+	    $print_summary.="$direction$location$title imagery from the ".uc($platform)." satellite taken during the $project project.";
+	}
+	elsif($type eq 'surface')
+	{
+	    $platform=~m/^(.+)_Surface/i;
+	    $plat2=$1;
+	    my $direction='';
+	    my $location='';
+	    if($title=~m/(Pacific)(\s*)/i)
+	    {
+		$location="$1 ";
+		$title=~s/$1$2//;
+	    }
+	    if($title=~m/(north|south)(\s*)/i)
+	    {
+		$direction="$1 ";
+		$title=~s/$1$2//;
+	    }
+	    $print_summary.="$direction$location$title imagery by ".uc($plat2)." produced during the $project project.";
+	}
+	elsif($type eq 'upper air')
+	{
+	    my $direction='';
+	    my $location='';
+	    if(lc($platform) eq 'skewt' || lc($platform eq 'cosmic'))
+	    {
+		$location=$title;
+		$title=' upper air';
+		$print_summary.="$direction$location$title Skew-T Log-P charts taken during the $project project.";
+	    }
+	    elsif(lc($platform) eq 'ncep_forecast')
+	    {
+		$platform=~s/_forecast//ig;
+		if($title=~m/(Pacific)(\s*)/i)
+		{
+		    $location="$1 ";
+		    $title=~s/$1$2//;
+		}
+		if($title=~m/(north|south)(\s*)/i)
+		{
+		    $direction="$1 ";
+		    $title=~s/$1$2//;
+		}
+		$print_summary.="$direction$location$title forecasts by ".uc($platform)." taken during the $project project.";
+	    } else {
+	        $print_summary.=uc($platform)." $title imagery taken during the $project project.";
+	    }
+	}
+	elsif($type eq 'ancillary info')
+	{
+	    $print_summary.="$title text products by ".uc($platform)." during the $project project.";
+	}
+    }
+    elsif($category eq 'model')
+    {	
+	$title=~s/NTH/NORTH/gi;
+	$title=~s/_pv$/ Potential Vorticity/;
+	$title=~s/_/ /g;
+
+	if($MODEL_TYPES{lc($platform)} ne '')
+	{
+	    $type=$MODEL_TYPES{lc($platform)};
+	}
+	else
+	{
+	}
+
+	if($type eq 'naaps forecast')
+	{
+	    $print_summary.=uc($platform)." forecast imagery taken during the $project project.";
+	}
+	elsif($type eq 'ecmwf macc forecast')
+	{
+	    
+
+	    $platform=~m/macc_ecmwf_(\d+km)_(.+)_?/i;
+	    $scope=$1;
+	    $print_summary.="$scope $title ECMWF MACC forecast imagery taken during the $project project.";
+	}
+	elsif($type eq 'ncep gfs forecast')
+	{
+	    $print_summary.="$title NCEP GFS forecast imagery taken during the $project project.";
+	}
+	elsif($type eq 'gmao geos5 forecast')
+	{
+	    $title=~s/anim/animated/gi;
+	    $print_summary.="$title GMAO GEOS-5 forecast imagery taken during the $project project.";
+	}
+    }
+    elsif($category eq 'research')
+    {
+	if ( exists $$category{lc($platform)})
+	    { $type=$$category{lc($platform)}; }
+	else
+	{
+	    print "Unknown research type for platform $platform\n";
+	    $type = '';
+	}
+
+	$title=~s/_/ /g;
+	if($title=~m/movie/i) {$filetype = '';} else {$filetype = "imagery";}
+	$print_summary.="$title $filetype from the $platform $type during the $project project.";
+    }
+    else
+    {
+	print "Unknown category: $category\n";
+	exit(1);
+    }
+
+    $print_summary=~s/HIPPO(\d+)/HIPPO-$1/g;
+
+    return $print_summary;
+}
+################################################################################
+# Parse the metadata from the filename
+sub parse_filename {
+    my $image=shift;
+    my $category=shift;
+    my $imageHash=shift;
+
+    if ($image=~m/$category\.([0-9a-zA-Z_-]+)\.(\d+)\.(.*)\.(\w{3,4})/) {
+	$imagesHash{$image}{"platform"}=$1;
+	$imagesHash{$image}{"datetime"}=$2;
+	$imagesHash{$image}{"title"}=$3;
+	$imagesHash{$image}{"fileType"}=$4;
+	# For model files, the beginning of the title is ###_ which 
+	# is actually the forecast time. We don't want a separate 
+	# dataset for each forecast time, so remove these from the 
+	# title. But keep them so we can add them to the cfg- script 
+	# to be insert as the forecast hour for each file.
+	if ($imagesHash{$image}{"title"}=~m/^([0-9]{3})_/) {
+	    $imagesHash{$image}{"forecast_hour"}=$1;
+	    $imagesHash{$image}{"title"}=~s/^[0-9]{3}_//;
+	}
+
+    } else {
+	print "Filename parsing failed:\n";
+	print "$image\n";
+	print "$category\n";
+	print $imagesHash{$image}{"platform"}."\n";
+	print $imagesHash{$image}{"datetime"}."\n";
+	print $imagesHash{$image}{"title"}."\n";
+	print $imagesHash{$image}{"fileType"}."\n";
+    }
+}
+################################################################################
+# From the filename metadata in the imageHash, create the directory, platform, 
+# title summary, and file format for a dataset to hold this product type.
+sub parse_dataset_metadata {
+    my $image=shift;
+    my $category=shift;
+    my $imageHash=shift;
+
+    # Dataset directory:
+    $dir=$imagesHash{$image}{"directory"};
+
+    # Dataset platform:
+    $plat=$imagesHash{$image}{"platform"};
+    # PLATFORM EXCEPTION: The GOES satellite was GOES-11 until 
+    # 2011-12-06 when it was decommissioned and GOES0-15 took
+    # over.
+    if ($imagesHash{$image}{"platform"} eq "GOES") {
+        if ($imagesHash{$image}{"datetime"} < 201112060000) {
+            $plat = "GOES-11";
+        } else {
+            $plat = "GOES-15";
+        }
+    }
+
+    # PLATFORM EXCEPTION: Skew-T platforms have a different
+    # platform id in codiac for each location. Append the
+    # location from the title to the platform.
+    if (lc($imagesHash{$image}{"platform"}) eq "skewt") {
+        $plat = $plat."_".$imagesHash{$image}{"title"};
+    }
+
+    # Dataset file format:
+    $fileType=$imagesHash{$image}{"fileType"};
+
+    # Dataset title:
+    $title=get_title($category,$imagesHash{$image}{"platform"},$imagesHash{$image}{"datetime"},$imagesHash{$image}{"title"},$imagesHash{$image}{"fileType"},$imagesHash{$image}{"directory"});
+
+    # Dataset summary:
+    $summary=get_summary($category,$imagesHash{$image}{"platform"},$imagesHash{$image}{"datetime"},$imagesHash{$image}{"title"},$imagesHash{$image}{"fileType"},$imagesHash{$image}{"directory"});
+
+    return($dir,$plat,$fileType,$title,$summary);
+}
+################################################################################
+# Determine the dataset frequency
+# $freq_id is the dataset frequency displayed on the dataset page.
+# Frequency is the filelength of each file.
+sub determine_dataset_freq {
+    my $frequency = shift; 
+    my $platform = shift;
+
+    if (exists $FREQ_ID{$frequency})
+    {
+	$freq_id=$FREQ_ID{$frequency};
+    }
+    else
+    {
+	# If there is only a single time in the dataset, then the file freq will be
+	# zero minutes. Make a better guess.... and set dataset freq to
+	# criteria.
+	if ($frequency eq "0 minutes") {
+	    # FREQUENCY EXCEPTION: For forecast products, set the filelength to one
+	    # hour regardless of the space between files. This needs to be revisited
+	    # at a later date to determine if this is truly the best option, but for
+	    # now use this as it is the historical precedent in zith.
+	    if (lc($platform) eq "gfs_ncep_halfdegree") {
+		$frequency = '1 hour';
+	    } elsif (lc($platform) eq "gmao_geos5") {
+		$frequency = '1 hour';
+	    }
+        }
+
+    # If freq_id does not exist, defaults to criteria.
+    $freq_id=$FREQ_ID{'criteria'};
+    }
+
+    # FREQUENCY EXCEPTION: Skewt's historically have a filelength of zero. This
+    # also should be revisited.
+    if (lc($platform) =~ m/skewt/) {
+	$frequency = '0 minutes';
+    }
+    return ($freq_id, $frequency);
+}

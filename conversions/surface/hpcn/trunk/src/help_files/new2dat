@@ -1,0 +1,1 @@
+ls -d *.new | sed 's/\(.*\)\.new$/mv & \..\/..\/inp\/\1.dat/' | sh

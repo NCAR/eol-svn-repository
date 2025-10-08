@@ -1,0 +1,354 @@
+<html>
+<head>
+<title>How To: Process PISA FP3 Real-time Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Process PISA FP3 Real-time Upper Air Sounding Data</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#network">Network Information</a></li>
+        <li><a href="#version">Previous Versions</a>
+            <ol>
+			    <li><a href="#version:PECAN_2015">2015 (PECAN)</a> - first created.</li>
+            </ol>
+        </li>
+        <li><a href="#directory">Directory Structure</a></li>
+        <li><a href="#process">Processing the Data</a>
+            <ol> 
+			<li><a href="#setup">Initial Processing Setup</a></li>     		
+            <li><a href="#convert">Converting the Data</a></li>
+            <li><a href="#autoqc">Auto QC</a></li>
+ 			<li><a href="#visual_qc">Visual QC</a></li>
+            <li><a href="#finalize">Finalization</a></li>   
+			<li><a href="#5mb-extract">5mb Extraction</a></li>      		
+            </ol>
+        </li>
+        <li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+	<p>This document contains instructions for converting PISA FP3 real-time radiosonde data from Ellis, Kansas from ASCII text format into the CLASS format for delivery to the GTS. The converter is capable of running in "test_mode" and in real-time. For development and test, use the "test_mode" option described below to run the converter, check the output, and send test emails. For real-time processing, the converter is run every 10 minutes (on the 10mins) by a (JOSS user) cron script. The converter checks for raw data that has been received in the FTP area within the last 10 minutes (that is, since the s/w was last executed by the cron script), processes that data into CLASS format, generates an error log file, sends notification emails, and copies the generated CLASS file to a specified "GTS" directory.  Note that copies of all input, output, and error logs are written to the /archive directory. The /archive directory contains a complete set of all the data processing. Another script created by the CDS S/W Engineering group takes the generated CLASS from from the "GTS" directory, runs the ASPEN software on the file and then places that output onto the GTS for immediate use by modelers.</p>
+
+<p>To learn more about cron jobs, search for "cron" on the internal Drupal web site, see the Documentation section at the bottom of this How To, or go to <i>https://internal.eol.ucar.edu/content/pecan-sounding-processing-gts</i> . For reference, the line in the crontab that runs this software in real-time (production) is:
+
+<br /><br /><font color="green">*/10 * * * * /net/work/Projects/PECAN/upper_air/FP3_Ellis/production/software/PISA_FP3_ELLIS_sounding_converter.pl &gt;&amp; /dev/null </font></p>
+
+</div>
+<a href="#">Top</a><hr />
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+    <li>The ID-Type is 999.</li>
+	<li>The Platform is Radiosonde, Vaisala RS41-SGP.</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions</h2>
+<div class="block">
+
+    <a name="version:PECAN_2015"></a><h3>PECAN (2015)</h3>
+    <table class="version">
+	<tr><th>Software:</th><td><a
+	href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FPISA_FP3_ELLIS%2F&#a1c1c7a5b5381f0ef2b107976293f0042">http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FPISA_FP3_ELLIS%2F&#a1c1c7a5b5381f0ef2b107976293f0042</a></td></tr>
+    <tr><th>Raw Data (during Real-time):</th><td>/net/iftp2/pub/incoming/pecan/FP3_Ellis</td></tr>
+    <tr><th>Final Data:</th><td>/h/eol/iss/project/pecan/data/fp3/cls</td></tr>
+    </table> 
+
+
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">FP3_ELLIS/</h3>
+    <table class="directories">
+	    <tr><td colspan="2"><b><font color="blue">PROCESSING</font>: DEVELOPMENT AND TEST</b></td></tr>
+		<tr><th>processing/</th><td>The directory where development and testing
+		takes place.</td></tr>
+		<tr><th>processing/archive/</th><td>The directory where copies of the raw
+		data, error log, and class file for each sounding are stored.</td></tr>
+		<tr><th>processing/fake_FTP/</th><td>This directory simulates the FTP 
+		directory during the development and test phases.</td></tr>
+		<tr><th>processing/fake_gts/</th><td>This directory simulates the final
+		data directory and is where the class files are stored.</td></tr>
+	    <tr><th>processing/output/</th><td>The directory where the CLASS files
+		are placed after they are generated.
+	    <tr><th>processing/software/</th><td>The directory where the software for the
+	    conversion is stored.</td></tr>
+	    <tr><th>processing/raw_data/</th><td>The converter moves sounding data to be 
+		processed from the FTP area to the raw_data directory for processing.</td></tr>
+
+	    <tr><td colspan="2"><b><font color="red">PRODUCTION</font>: REAL-TIME PROCESSING</b></td></tr>
+		<tr><th>production/</th><td>The directory where real-time processing 
+		takes place.</td></tr>
+		<tr><th>production/archive/</th><td>The directory where copies of the raw
+		data, error log, and class file for each sounding are stored.</td></tr>
+	    <tr><th>production/software/</th><td>The directory where the software for the
+	    conversion is stored.</td></tr>
+		<tr><th>production/raw_data/</th><td>The converter moves sounding data to be 
+		processed from the FTP area to the raw_data directory for processing.</td></tr>
+	    <tr><th>production/output/</th><td>The directory where the CLASS files
+		are placed after they are generated.
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+
+<a name="process"></a><h2>Processing the Data</h2>
+<div class="block"> 
+    <a name="setup"></a><h3>Initial Processing Setup and Raw Data</h3>
+	<ol>
+	<li>During the production phase when real-time data is to be processed,
+	the converter is run every 10 minutes by a cron script. For more information
+	on cron scripts, see the "Documentation" section below. The converter 
+	software calls the ReadDataFiles function which checks the IFTP area
+	<span class="directoryName">(/net/iftp2/pub/incoming/pecan/FP3_Ellis)</span> 
+	for	raw data received since the last converter run. For each file in the 
+	IFTP area, the <code>stat</code> command is run and the times on the 
+	files are compared to the current time. If the file is as least 1 minute 
+	old and less than or equal to 11 minutes old, the file is copied to the 
+	<span class="directoryName">raw_data</span> directory for processing.
+
+	</li>
+	<li>During the development/test phase, the raw data must be placed in 
+	the <span class="directoryName">fake_FTP</span> directory. During the 
+	production phase, the script will check for raw data in the IFTP area  
+	<span class="directoryName">(/net/iftp2/pub/incoming/pecan/FP3_Ellis)</span> 
+	location so no initial setup is required. In each case, data must be 
+	less than 10 minutes old, so for testing purposes, be sure to "touch" the 
+	files in the <span class="directoryName">fake_FTP</span> directory; 
+	otherwise, they may be too "old" to be processed.</li>
+	<li>Check the assumptions made in the script regarding things such 
+	as file names and locations.</li>
+
+	<p><i>Assumptions for PECAN 2015 PISA FP3 in Ellis, KS:</i>
+    	<ul>
+			<li>Raw data files were ascii text files.</li>
+			<li>The converter expects filenames in the following format: 
+			millersville_pecan3_YYYYMMDD_HHmm.txt (e.g.,
+			millersville_pecan3_20150516_1900.txt). The converter checks the
+			FTP area for recent files (less than 10 minutes old) and copies 
+			them to the <span class="directoryName">raw_data</span> 
+			directory for processing. Since the cron script runs every
+			10 minutes, the converter assumes that any files older than 
+			10 minutes have already been processed.</li>
+			<li> That the outgoing CLASS soundings created by this software
+			should be placed in the <span class="directoryName">
+			/h/eol/iss/project/pecan/data/fp3/cls</span> directory.</li>
+			<li> That the following directories exist: <span class="directoryName">
+			../output</span>, <span class="directoryName">../archive</span>. </li>
+    	</ul>
+    </p>
+
+	</li>         
+    </ol>  
+
+    <a name="convert"></a><h3>Converting the Data</h3>
+ 	<p class="note">During the production phase, the converter is run every
+	10 minutes by cron script, so this section applies to the development and 
+	testing phase only.</p>
+	<p class="note">This step runs Perl code and should work on basically any
+	machine. However, to run the autoQC and any other processing/data prep done
+	by the build.xml (Ant) file, you must run on any machine with the proper
+	Ant and Java setup, such as tikal. Note that during real-time production execution autoQC was NOT done. In fact, no checking of any of the converted CLASS data was done during real-time production. The data were simply converted to CLASS and sent to the "GTS" directory where ASPEN was executed to check and create the GTS message.</p>       
+	<p>Converting PISA FP3 Ellis High Resolution Radiosonde data from ASCII text 
+	format into	the CLASS format consists of the following steps.</p>
+
+	<ol>	
+	<li>Change to the <span class="directoryName">software</span> directory.</li>
+	<li>Edit the <span
+	class="softwareName">PISA_FP3_ELLIS_sounding_converter.pl</span>
+	script.
+	<ul>
+		<li>Search for "PRODUCTION CODE" and "HARD-CODED" to find and 
+		change the hard-coded project-specific values in the script to 
+		be correct for your project. For example, change the function: 
+		<code>getProjectName</code> to the current project.</li>
+
+        <li><i>For PECAN 2015 PISA FP3 in Ellis, KS:</i>
+		<ul>
+		    <li>A command line option (--test_mode) was added to allow the 
+			user to run the program in the test (/processing) directories 
+			with test emails. The default (if no command line option is 
+			used) is to run the live production version.</li>
+			<li><span class="beware">BEWARE: </span>The converter expects
+			the actual data to begin on line 12 of the raw data file. The
+			file contains header information on lines 1-10.</li>
+			<li>The radiosonde ID is obtained from the raw data header information.</li>
+			<li>The radsiosonde type is HARD-CODED although it is available 
+			in the raw data header if needed.</li>
+			<li>There is no altitude value in the header so the surface 
+			record (t=0) altitude is used.</li>
+			<li>Missing values are represented by "/////" in the raw data.</li>
+			<li>The release date and time are obtained from the raw data header.</li>
+       </ul></li>  
+	   
+	   <li>Numerous checks are included in the converter code since real-time
+	   data processing must assume that the raw data files conform to clearly
+	   defined expectations. This converter checks for the following discrepancies 
+	   in the raw data and if found, generates output to the error log. If the 
+	   error log file has any size other than zero, then the sounding is NOT sent 
+	   to the GTS. Conditions that will generate output to the error log are:
+	   <ul>
+	       <li>The raw data file is "empty" (i.e., no header or records).</li>
+		   <li>The surface lat or lon (from first record) values do NOT match 
+		   HARD-CODED values for Ellis, KS.</li>
+		   <li>The elevation/altitude (from first record) value does NOT match 
+		   HARD-CODED values for Ellis, KS.</li>
+           <li>There are NO DATA records in raw file.</li>
+		   <li>No valid data on any records. Possibly no header lines.</li>
+		   <li>If either of the lat/lon values on the first record are missing. 
+		   NOTE that the raw data does not contain lat/lon data so the header 
+		   values are used for the surface record and the remaining value are 
+		   set to missing.</li>
+           <li>The "Release point latitude" line is not found in the header.</li>
+		   <li>The "Release point longitude" line is not found in the header.</li>
+		   <li>The "Sonde serial number" line is not found in the header.</li>
+		   <li>The "Balloon release date and time" line is not found in the header.</li>
+		   <li>The code can not create a output sounding header for any reason.</li>
+		   <li>All Pressure values are MISSING.</li>
+		   <li>All Altitudes/Heights are MISSING in all data records.</li>
+		   <li>Pressure is never less than 850.00 mb.</li>
+		   <li>Any error generated by the Perl Library code.  An example of 
+		   an error of this type is: "Ascension Rate value -281.115 is too big 
+		   for the field at time 2.00.  Setting to missing."</li>
+
+	   </ul>
+	   Note that even if the file cannot be processed, a header only CLASS file 
+	   will be generated if possible. If the raw data file is empty or 
+	   if there is no header information, The release date and time will be
+	   set from information obtained from the file name. This is required in
+	   order to create an output CLASS file with the appropriate file name.</li>
+
+	</ul>
+	</li>
+	<li>If there are no lines in the error file (empty file), then the code will
+	perform the following actions:
+	    <ul>
+		    <li>copy the CLASS file from the <span class="directoryName">output </span> 
+			directory to the Final Data location 
+			<span class="directoryName">(/h/eol/iss/project/pecan/data/fp3/cls)</span>.</li>
+	        <li>move the raw data input file from the <span class="directoryName">
+			raw_data</span> directory to the <span class="directoryName">archive </span>
+			directory. </li>
+			<li>move the CLASS file from the <span class="directoryName">output </span> 
+			directory to the <span class="directoryName">archive</span> directory.</li>
+			<li>move the error log file from the <span class="directoryName">output </span> 
+			directory to the <span class="directoryName">archive</span> directory.</li>
+			<li>send an email with detailed processing information and results.</li>
+		</ul>
+	</li>
+	<li>Run the <span class="softwareName">PISA_FP3_ELLIS_sounding_converter.pl</span> 
+	script. This will convert data to the CLASS format.</li> 
+	<li>NOTE: The following steps are optional but can be helpful in testing. Run the format checker using the ant command:
+    <p class="code">ant check-format-ESC</p></li>
+	<li>Check the log file (generated by the format checker) in the <span
+	class="directoryName">output</span> directory to determine if any format
+	issues need to be addressed.</li>
+	</ol>
+
+
+<a name="autoqc"></a><h3>Auto QC</h3>
+	<p class="note">No autoqc is required for the real-time processing of this data.</p>
+
+
+<a name="finalize"></a><h3>Finalization</h3>
+<p class="note">It has not yet been determined if these data will be loaded into
+CODIAC, so the following is for informational purposes only.</p>
+	<p>After the visual QC is completed, the data set is ready to be finalized
+	(i.e, prep'd for CODIAC).  
+       <ol>
+		 <li>Update this "How To" document to indicate the latest project
+		 this conversion was executed for and include any notes about upgrades
+		 made specifically for that project, as required. A copy of this
+		 document is generally found in the <span
+		 class="directoryName">docs</span> directory. Place a copy of the
+		 updated doc in <span
+		 class="directoryName">/net/web/dmg/html/software/conversions/upper_air/PISA_FP3_Ellis</span>
+		 directory. The s/w repository page points to this doc in that web
+		 location, so this must be updated.  The s/w repository page is located
+		 <a
+		 href="https://internal.eol.ucar.edu/node/519"
+		 target='_top'><b>here</b></a>.</li>
+
+		 <li>Update the dataset description (or EMDAC) document for this
+		 conversion. Work with the scientific staff to create an EMDAC
+		 document. Generally, start with an existing "similar" document and
+		 simply update it for this project and dataset.  Generally, a copy of
+		 the EMDAC doc can be found in the <span
+		 class="directoryName">docs</span> area.</li>
+
+		<li>The next processing step is to create day files that can/will be
+		loaded into the EMDAC/CODIAC database, along with the EMDAC dataset
+		description document.  The dayfiles creation step will generate day
+		files sorted by nominal release date followed by station location as
+		required by CODIAC. It's very important that the output dayfiles be in
+		this expected sort order so that CODIAC can access all the soundings
+		within a single dayfile. Do the following steps to create the day
+		files.</li>
+    <ul>
+	   <li>Ensure that you are in the same (top) directory as the build.xml
+	   file. Create the day files using the ant command:</p>
+	   <p class="code">ant dayfiles</p> <p>This will create a file for each day
+	   where at least one sounding exists in the <span
+	   class="directoryName">dayfiles</span> directory or whichever directory
+	   is specified as the output directory in the build.xml file. If this
+	   dataset is to be put online "as is," these are the dayfiles to load into
+	   CODIAC.</li>
+       </li>
+    </ul>
+    </ol>
+
+
+<a name="5mb-extract"></a><h3>5mb Extraction</h3>
+	<p>If the converted soundings are also going to be placed into a 5mb
+	composite, the soundings need to have the proper 5mb pressure level
+	soundings generated.  This is done through the following steps:</p>
+    <ol>
+        <li>Generate the 5mb pressure level data files using the ant command:
+            <p class="code">ant 5mb-extract</p>
+			This will generate a 5 mb sounding file for each sounding in the
+			<span class="directoryName">final</span> directory and place
+			it in the <span class="directoryName">5mb</span>.  It will also run
+			some final checks to make sure the format is correct. Beware that
+			the file directories listed in the build.xml file are what you
+			expect and want.   	        
+        </li>
+    </ol>
+	<p>The generated 5mb data files will then be available when the composite
+	is generated.</p>
+
+</div>
+<a href="#">Top</a><hr>
+
+<a name="documents"></a><h2>Documentation</h2>
+<p>The following are a list of documents that may help with the conversion or
+are related to the raw data.</p>
+<ul>
+    <li><a href="https://internal.eol.ucar.edu/content/cron-jobs-crontab-joss-user-and-cron-scripts-relating-hpcn-and-npn-data-ingest">Cron Jobs, Crontab, joss user, and cron scripts relating to HPCN and NPN Data ingest</a>: Information on Executing, Location, etc. for Joss User Cron Scripts.</li>
+	<li><a href="/software/tools/upper_air/autoqc">How To: AUTO QC Sounding Data</a>:  The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/software/tools/upper_air/esc_format_checker">How To: ESC Format Checker</a>:  The instructions and API for working with the ESC format checker program.</li>
+    <li><a href="#">How To: Process PISA FP3 Real-time Sounding Data</a>:  This document.</li>
+
+</ul>
+<a href="#">Top</a><hr>
+
+<!-- NOTE: Mozilla gives local time; Chrome gives UTC time -->
+<script type="text/javascript">
+    document.write("Last Updated: " + document.lastModified);
+</script>
+<hr />
+<br />
+
+</body>
+</html>

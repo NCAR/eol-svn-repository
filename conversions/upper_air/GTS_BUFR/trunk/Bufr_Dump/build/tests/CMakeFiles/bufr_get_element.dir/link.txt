@@ -1,0 +1,1 @@
+/bin/cc  -pipe -pedantic -O2 -g -DNDEBUG      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined CMakeFiles/bufr_get_element.dir/bufr_get_element.c.o  -o bufr_get_element -Wl,-rpath,/opt/local/bufr/build/lib ../lib/libeccodes.so /usr/lib64/libm.so /usr/lib64/libjasper.so /usr/lib64/libjpeg.so -lpthread 

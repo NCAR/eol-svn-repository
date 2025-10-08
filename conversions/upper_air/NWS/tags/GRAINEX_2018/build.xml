@@ -1,0 +1,264 @@
+<project name="NWS Sounding Conversion" default="compile" basedir=".">
+
+    <property name="project" value="GRAINEX_2018" />     
+
+    <property name="build" location="build" />
+    <property name="build.classes" location="build/classes" />
+    <property name="build.tests" location="build/tests" />
+    <property name="docs" location="docs" />
+    <property name="docs.api" location="${docs}/api" />
+    <property name="reports" location="reports" />
+    <property name="src" location="src" />
+    <property name="tests" location="tests" />
+
+
+    <property name="database" location="database" />
+    <property name="final_merged" location="final_merged" />
+    <property name="rrs_final" location="rrs_final" />
+    <property name="rrs_output" location="rrs_output" />
+    <property name="micro_final" location="final" />
+    <property name="micro_output" location="output" />
+    <property name="autoqc_props" location="software" />
+    <property name="qc_logs" location="logs" />
+    <property name="5mb_extract" location="5mb" />
+    <property name="5mb_dayfiles" location="5mb_dayfiles" />
+
+    <presetdef name="javac">      <!-- prevent runtime warning -->
+       <javac includeantruntime="false" />
+    </presetdef>
+
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <pathelement path="${build.classes}" />
+        <fileset dir="/net/work/lib/java">
+            <include name="utilities.jar" />
+            <include name="station.jar" />
+            <include name="upper_air.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/dayfiles">
+            <include name="upper_air_dayfile.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/autoqc">
+            <include name="autoqc.jar" />
+            <include name="esc_sounding_cleaner.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/checkers">
+            <include name="esc_format_checker.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/sorters">
+            <include name="esc_record_sorter.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/extractors">
+            <include name="esc_extractor.jar" />
+        </fileset>
+    </path>
+
+    <path id="test-classpath">
+        <fileset dir="/net/work/lib/java/vendor">
+            <include name="junit.jar" />
+        </fileset>
+        <pathelement path="${build.tests}" />
+        <path refid="classpath" />
+    </path>
+
+    <target name="5mb-extract">
+        <java classname="dmg.ua.sounding.extract.ESC5mbExtractor" fork="yes">
+            <arg value="-Z" />
+            <arg value="${final_merged}" />
+            <arg value="${5mb_extract}" />
+            <arg value="${5mb_extract}/extract.log" />
+            <arg value="\.cls.qc(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+<!--
+        <java classname="dmg.ua.sounding.extract.ESC5mbExtractor" fork="yes">
+            <arg value="-Z" />
+            <arg value="cleaned" />
+            <arg value="${5mb_extract}" />
+            <arg value="${5mb_extract}/extract_cleaned.log" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+-->
+        <java classname="dmg.ua.sounding.check.ESCCheckFile" fork="yes">
+            <arg value="${5mb_extract}" />
+            <arg value="${5mb_extract}/check_format_5mb.log" />
+            <arg value="\.05mb(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="autoqc" depends="compile"> <!-- The name of the target to be called on the command line when running Ant -->
+        <copy todir="${build.classes}">
+            <fileset dir="${autoqc_props}">
+                <include name="*.properties" />
+            </fileset>
+        </copy>
+        <java classname="dmg.ua.sounding.autoqc.NWSESCAutoQC" fork="yes"> <!-- The class to be run to create the day files -->
+            <arg value="us_plains_autoqc" />
+            <arg value="${micro_output}" />            <!-- The directory where the source files used to create the day files can be found -->
+            <arg value="${micro_final}" />             <!-- The directory where the QC files will be stored after they are created -->
+            <arg value="${qc_logs}" />
+            <arg value="\.cls(\.gz)?$" />      <!-- The pattern to match against the file names to include in the QC -->
+            <classpath refid="classpath" />   <!-- The classpath containing the classes needed for the day file creator to run -->
+        </java>
+        <java classname="dmg.ua.sounding.autoqc.UpsondeESCAutoQC" fork="yes">
+            <arg value="us_plains_autoqc" />
+            <arg value="${rrs_output}" />
+            <arg value="${rrs_final}" />
+            <arg value="${qc_logs}" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+        <antcall target="-check-format">
+            <param name="directory" value="${micro_final}" />
+            <param name="logfile" value="${micro_output}/check_format_qc.log" />
+        </antcall>
+        <antcall target="-check-format">
+            <param name="directory" value="${rrs_final}" />
+            <param name="logfile" value="${rrs_output}/check_format_qc.log" />
+        </antcall>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build}" />
+        <delete dir="${dist}" />
+        <delete dir="${docs.api}" />
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build.classes}">
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+
+    <target name="compileTests" depends="compile">
+        <mkdir dir="${build.tests}" />
+        <javac srcdir="${tests}" destdir="${build.tests}">
+            <classpath refid="test-classpath" />
+        </javac>
+    </target>
+
+    <target name="-check-format">
+        <java classname="dmg.ua.sounding.check.ESCCheckFile" fork="yes">
+            <arg value="${directory}" />
+            <arg value="${logfile}" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="convert" depends="compile">
+        <java classname="dmg.ua.sounding.convert.nws.RRSSoundingConverter" fork="yes">
+            <classpath refid="classpath" />
+        </java>
+        <antcall target="-check-format">
+            <param name="directory" value="${rrs_output}" />
+            <param name="logfile" value="${rrs_output}/check_format_unsorted.log" />
+        </antcall>
+        <java classname="dmg.ua.sounding.sorter.ESCRecordSorter" fork="yes">
+            <arg value="-T" />
+            <arg value="ASC" />
+            <arg value="${rrs_output}" />
+            <arg value="${rrs_output}/record_sorter.log" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+        <antcall target="-check-format">
+            <param name="directory" value="${rrs_output}" />
+            <param name="logfile" value="${rrs_output}/check_format_sorted.log" />
+        </antcall>
+    </target>
+
+    <target name="SORT" depends="compile">
+        <antcall target="-check-format">
+            <param name="directory" value="${rrs_output}" />
+            <param name="logfile" value="${rrs_output}/check_format_unsorted.log" />
+        </antcall>
+        <java classname="dmg.ua.sounding.sorter.ESCRecordSorter" fork="yes">
+            <arg value="-T" />
+            <arg value="ASC" />
+            <arg value="${rrs_output}" />
+            <arg value="${rrs_output}/record_sorter.log" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+        <antcall target="-check-format">
+            <param name="directory" value="${rrs_output}" />
+            <param name="logfile" value="${rrs_output}/check_format_sorted.log" />
+        </antcall>
+    </target>
+
+    <target name="dayfiles">
+        <java classname="dmg.ua.sounding.dayfile.ESCDayFileCreator" fork="yes">
+            <arg value="-Z" />
+            <arg value="NWS_GRAINEX_2018_" />
+            <arg value="${final_merged}" />
+            <arg value="${database}" />
+            <arg value="\.cls\.qc(\.gz)?" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="5mb_dayfiles">
+        <java classname="dmg.ua.sounding.dayfile.ESCDayFileCreator" fork="yes">
+            <arg value="-Z" />
+            <arg value="NWS_GRAINEX_2018_5mb_" />
+            <arg value="${5mb_extract}" />
+            <arg value="${5mb_dayfiles}" />
+            <arg value="\.05mb(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build.classes}" />
+    </target>
+
+    <target name="merge">
+        <copy todir="${final_merged}">
+            <fileset dir="${micro_final}">
+                <include name="*.cls" />
+            </fileset>
+            <fileset dir="${rrs_final}">
+                <include name="*.cls" />
+            </fileset>
+        </copy>
+        <concat destfile="${final_merged}/NWS_${project}_sounding_stationCD.out">
+            <fileset dir="${micro_final}">
+                <include name="NWS_${project}_sounding_stationCD.out" />
+            </fileset>
+            <fileset dir="${rrs_final}">
+                <include name="NWS_${project}_sounding_stationCD.out" />
+            </fileset>
+        </concat>
+    </target>
+
+    <target name="javadoc">
+        <mkdir dir="${docs.api}" />
+        <javadoc destdir="${docs.api}" author="true" version="true" use="true" 
+                 windowtitle="DMG NWS Sounding API" doctitle="Data Managment Group NWS Sounding API"
+                 stylesheetfile="/net/web/dmg/html/css/javadocs.css"
+                 header="DMG NWS Sounding API" overview="${docs}/overview.html">
+            <classpath refid="classpath" />
+            <fileset dir="${src}" defaultexcludes="yes" />
+            <link href="http://java.sun.com/j2se/1.5.0/docs/api" />
+            <link href="http://dmg.eol.ucar.edu/software/library/java/utilties" offline="true" packagelistLoc="/net/web/dmg/html/software/library/java/utilities" />
+            <link href="http://dmg.eol.ucar.edu/software/library/java//stations" offline="true" packagelistLoc="/net/web/dmg/html/software/library/java/stations" />
+            <link href="http://dmg.eol.ucar.edu/software/library/java/upper_air" offline="true" packagelistLoc="/net/web/dmg/html/software/library/java/upper_air" />
+        </javadoc>
+    </target>
+
+<!--
+    <target name="test" depends="compileTests">
+        <java classname="dmg.UtilTests" fork="yes">
+            <classpath refid="test-classpath" />
+        </java>
+    </target>
+-->
+
+    <target name="unbufr">
+        <exec executable="software/unbufr_rrs" />
+    </target>
+</project>

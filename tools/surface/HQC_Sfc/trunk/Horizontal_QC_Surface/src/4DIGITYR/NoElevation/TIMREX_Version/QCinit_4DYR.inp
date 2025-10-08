@@ -1,0 +1,20 @@
+TIMREX                     Project Name. (25 characters only.)
+1                          pmethod.                  (Determines computation of WEIGHT in QC processing.)
+300.0                      Area of Influence in km.  (Depends on pmethod above) (1/# = min_weight)
+1                          Data frequency (minutes). (Set to highest freq in input) (data_freq)
+2008                       Century/Year data was collected. (Integer YYYY) (current_year)
+20080514                   Date Project Began YYYYMMDD. (Sigmas computed based on this date)(proj_begin_date)
+20080627                   Date Project Ended YYYYMMDD. (Used when searching for sigmas)(proj_end_date)
+20080514                   Date to BEGIN processing. YYYYMMDD (begin_date)Actual Begin = 950401
+20080627                   Date to END processing.   YYYYMMDD (end_date) Actual End =950930
+/net/work/Projects/TIMREX/surface/HQC_1min/SOLAR/solar_   Path name (and general name prefix) of 0qc files to QC.
+/net/work/Projects/TIMREX/surface/HQC_1min/SIGMASQ_FILES/ Path name of variance files computed by compute_sigmasq.
+20.00                       Precip Maximum `bad` limit. Millimeters per "data_freq" amt of time. (bmax)
+50.00                       Precip Minimum `dubious` limit. Millimeters per "data_freq" amt of time. (dmin)
+0.5   0.2                  Station Pressure      `bad & dubious` alpha values. (ALL ALPHAS WILL BE SQUARED!)
+0.5   0.2                  Sea Level Pressure    `bad & dubious` alpha values. 
+1.0   0.4                  Calc Sea Lvl Pressure `bad & dubious` alpha values.
+1.0   0.5                  Dry Bulb Temperature  `bad & dubious` alpha values. (Dbled from orig)
+1.0   0.5                  Dew Point Temperature `bad & dubious` alpha values. (Dbled from orig)
+4.0   2.25                 Wind Speed            `bad & dubious` alpha values.
+2.2   1.22                 Wind Direction        `bad & dubious` alpha values.

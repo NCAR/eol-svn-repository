@@ -1,0 +1,63 @@
+> groovy authorshipConnect.groovy CASES-97 CuPIDO
+
+Created log file:	logs/log_20140108143822.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+--------------------------------------------------------------------------------
+  CASES-97:  20.001
+		LeMone, M. (NCAR)
+Which of these contacts matches this author:	NCAR
+
+		444	ncar/scd	Roy Jenne	National Center for Atmospheric Research
+		448	ncar/rdp	null	National Center for Atmospheric Research
+		490	ncar/mmm	Daniel Breed	NCAR/Mesoscale and Microscale Meteorology Division
+		508	ncar/raf	null	NCAR/EOL Research Aviation Facility
+		511	ncar/iss	null	NCAR Integrated SOunding System
+		520	ncar/atd	null	NCAR Atmospheric Technology Division
+		526	ncar/acd	null	NCAR Atmospheric Chemistry Division
+		572	ncar/asp	null	NCAR/Advanced Study Program
+		954	null	null	UCAR/NCAR - Earth Observing Laboratory/Computing, Data, and Software Facility
+		1014	null	null	NCAR Research Applications Laboratory
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+Unable to find 1326 for data set 20.05
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ATDD
+
+--------------------------------------------------------------------------------
+
+Unable to find 529 for data set 20.09
+Unable to find 529 for data set 20.10
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1326, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '20.05';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 529, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '20.09';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 529, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '20.10';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+CuPIDO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	
+
+--------------------------------------------------------------------------------
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

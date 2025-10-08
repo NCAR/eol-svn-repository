@@ -1,0 +1,112 @@
+#!/bin/perl -wT
+
+# --------------------------------------------------------------
+# ftp_url: Displays the External FTP Site message.  When a 
+#  remote_link pointing to an ftp site is added to the ML
+#  system, the public view sends the end user (PIs outside of
+#  JOSS) to this page notifiying them of a possible IE problem.
+#  If the user is not using IE they are forwarded to the ftp
+#  page, else they are given instructions on how to fix the IE
+#  problem.   
+#
+# Expected Params:
+#   "dataset" - the dataset id number in ML the user wants to 
+#     access. 
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use lib "../lib";
+use MLDB;
+use CGI;
+use Dataset;
+use Project;
+use Utils;
+require( "./show_error" );
+
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+my $cgi = CGI->new();
+my $id = $cgi->param( "dataset" );
+
+check_valid( $id );
+
+my $dataset = Dataset->new();
+$dataset->setFromDB( $id );
+
+my $project = Project->new();
+$project->setFromDB( $dataset->{project} );
+
+println( $cgi->header() );
+println( "<html><head><title>External FTP Site</title>" );
+println( &body_css( $project->{body_css_src} ) );
+println( $jscript );
+println( "<script language=javascript>" );
+	println( "if( navigator.appName == \"Netscape\" )" );
+		println( "window.location = \'$dataset->{url}\'" );
+println( "</script>" );
+println( "</head>" );
+
+println( "<body>" );
+	println( "<center><table border=0 cellpadding=4 cellspacing=0 width=75% #dcdcdc class=titleTable>" );
+		println( "<tr>" );
+			println( "<td width=15% align=center>" );
+				println( "&nbsp;" );
+			println( "</td>" );
+			println( "<td width=30% align=center valign=top>" );
+				println( "$project->{name}<br>" );
+				println( "<font size=-1><i>$project->{long_name}</font></i>" );
+			println( "</td>" );
+			println( "<td width=15% align=center valign=center>" );
+				println( "<img src=$image_src/joss.gif>" );
+			println( "</td>" );
+		println( "</tr>" );
+	println( "</table></center>" );
+	println( "<font size=+2 face=Verdana>External FTP Site</font>" );
+	println( "<br>" );
+	println( "<p>" );
+		println( "You have selected a dataset outside JOSS's computer system to download via FTP.  If you are behind a firewall or " . 
+							"using a DSL connection and using Internet Explorer you must be in &quot;Passive FTP&quot; mode.  If you are already " . 
+							"in passive mode click the dataset name below to continue.  If not or unsure follow the instructions " . 
+							"below.</p> " ); 
+
+println( "<dd><font size=+1 face=\"Verdana\">");
+	println( "<a href=$dataset->{url}>$dataset->{title}</a>" );
+println( "</font>" );
+println( "<br><br><br>" );
+
+println( "<font size=+1><u>How to use passive mode in IE: </u>" );
+println( "<font size=+1>" );
+println( "<ul>" );
+	println( "<li>Select <b>Tools</b> from the menu." );
+	println( "<li>Select <b>Internet Options...</b>" );
+	println( "<li>Click on the <b>Advanced</b> tab." );
+	println( "<li>Be sure the <b>Use Passive FTP...</b> option is selected." );
+	println( "<li>Click <b>OK</b> and proceed to the FTP site by clicking on the link above." );
+
+println( "</ul>" );
+
+println( "Screen shot of Internet Options:<br>" );
+println( "<img src=$image_src/ftp_screen_shot.gif>" );
+println( "<br>" );
+println( "Questions and Comments to: <a href=\"mailto:$project->{contact_email}\">$project->{contact_name}</a>" );
+println( "<br>" );
+
+println( "</body></html>" );
+
+sub check_valid
+{
+	my $id = shift;
+
+	if( !defined( $id ) ) 
+	{
+		show_error( "ftp_url: undefined dataset id." );
+	}
+	elsif( $id =~ /\D/ )
+	{
+		show_error( "ftp_url: dataset id not valid: $id" );
+	} 
+}

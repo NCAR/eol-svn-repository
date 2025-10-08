@@ -1,0 +1,75 @@
+== Database Config ==
+
+Unfortunately, database config is hardcoded in the source,
+and in two places. It is now set to a dev database.
+Deployment for production will require editing.
+Verify that these settings are to a dev database!!!
+(or whatever is appropriate)
+Search for "dts-full" in:
+  src/dln/beans/DefaultBean.java
+  web/META-INF/context.xml
+Search for "zith9" in:
+  src/dts/stat/ProjectStat.java
+
+November 2023 - JJA updated the mysql database to a newer version and then the DTS
+did not work.  The error was "Could not create connection to database server." and
+appeared in the left pane where the projects are listed.  JJA put a different version
+of the mysql-connector library (mysql-connector-java-5.1.49-bin.jar) in the following 
+directory: /net/web/dmg/webapps/dts/WEB-INF/lib.  This seems to have fixed the issue 
+with connecting to the database.
+
+== Local testing steps ==
+
+You can run tomcat and dts on any Linux or Unix-ish box
+(e.g. barolo, tikal, etc) as a regular user,
+using a high port like 8080 (the default) or 6789 or
+whatever port nobody else is using.
+
+Get tomcat:
+ wget http://apache.spinellicreations.com/tomcat/tomcat-7/v7.0.90/bin/apache-tomcat-7.0.90.zip
+   (if this link goes away, go to http://tomcat.apache.org/ and download latest tomcat 7.0)
+
+ unzip apache-tomcat-7.0.90.zip
+ cd apache-tomcat-7.0.90
+ more RUNNING.txt
+  => aka http://tomcat.apache.org/tomcat-7.0-doc/RUNNING.txt
+
+not in the docs:
+ chmod +x bin/startup.sh bin/shutdown.sh bin/catalina.sh
+
+Then go to:
+  http://localhost:8080/
+
+The basic tomcat is there, with docs and a few standard apps, like:
+  http://localhost:8080/examples/
+
+Try that first. If you have trouble with finding Java, etc,
+you may have to get Java 1.8 installed, and you may have to
+set some environment variables. See RUNNING.txt for details.
+
+Then, a quick test of DTS does not work, it turns out because
+of one library and two VERY BAD database specs. What to do:
+
+add latest mysql Connector/J 5.1 to tomcat's lib/ dir
+  https://dev.mysql.com/downloads/connector/j/
+  https://dev.mysql.com/downloads/connector/j/5.1.html
+  https://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-5.1.47.zip
+
+  cp ~jja/jars/mysql-connector-java-5.1.47-bin.jar lib
+
+Also make a place for dts:
+  mkdir webapps/dts
+
+Double-check the database settings (see note at top of this file).
+
+Now deploy the DTS app:
+  cd /path/to/dts-src
+  ant -Ddeploy.test=/path/to/apache-tomcat-7.0.90/webapps/dts deploy-test
+
+Start tomcat if it's not already/still running:
+  cd /path/to/apache-tomcat-7.0.90
+  ./bin/startup.sh
+
+Go to the app:
+  http://localhost:8080/dts/
+

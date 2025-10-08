@@ -1,0 +1,149 @@
+****  Purify instrumented main_qc (pid 21281 at Fri Dec  1 15:55:13 1995)
+  * Purify 3.0 Solaris 2, Copyright 1992-1994 Pure Software Inc.
+  * For contact information type: "purify -help"
+  * Command-line: main_qc QCinit.inp 
+  * Options settings: -explicit-version=no -purify \
+    -purify-home=/opt/pure/purify-3.0-solaris2 
+  * Purify licensed to UCAR/NCAR
+  * Purify checking enabled.
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21284 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21287 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21289 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21291 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21293 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21295 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21297 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21299 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21301 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21303 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21305 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21307 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21309 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21311 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21313 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21315 about to exec /bin/sh as "sh".
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Process 21317 about to exec /bin/sh as "sh".
+
+---- Horizontal Quality Control (HQC) ----
+Processing began on Dec  1 1995 15:55:01
+QC Initialization file name (e.g., QCinit.inp): QCinit.inp
+
+PARAMETER INITIALIZATION:: 
+
+Project Name (proj_name): Micro Fronts- test New Cp
+Distance fn method (pmethod): 1
+Area of Influence in km (1/min_weight):  500.000
+Data Frequency (data_freq): 60
+Current year of data: 1995
+First day of Project (proj_begin_date): 950221
+Last day of Project  (proj_end_date): 950331
+First day to QC (begin_date) : 950221
+Last day to QC (end_date)    : 950221
+Input file pathname: /data10/cully/QCF/
+Sigma file pathname: /data10/cully/sigmas/
+
+Precipitation Gross Limits (Unlikely, Dubious): 75.000000 25.000000
+
+Alpha_sq Indices: 0=stn pres, 1=slp, 2=cslp, 3=temp, 4=dw pt, 5=wnd sp, 6=wnd dir
+alpha_sq[ 0][0] = 0.25 alpha_sq[ 0][1] = 0.04
+alpha_sq[ 1][0] = 0.25 alpha_sq[ 1][1] = 0.04
+alpha_sq[ 2][0] = 1.00 alpha_sq[ 2][1] = 0.16
+alpha_sq[ 3][0] = 0.25 alpha_sq[ 3][1] = 0.06
+alpha_sq[ 4][0] = 0.25 alpha_sq[ 4][1] = 0.06
+alpha_sq[ 5][0] = 16.00 alpha_sq[ 5][1] = 5.06
+alpha_sq[ 6][0] = 4.84 alpha_sq[ 6][1] = 1.49
+proj_begin_date, proj_end_date, begin_date, end_date: 950221 950331 950221 950221
+proj_begin_YYYYJJJ, proj_end_YYYYJJJ, begin_YYYYJJJ, end_YYYYJJJ: 1995052 1995090 1995052 1995052
+
+Current julian date is: 1995052 950221
+Processing file: /data10/cully/QCF/950221.0qc
+
+HQC - main_qc() completed with 0 searches for sigmasq values.
+NOTE: Each search may have required searching forward through up to 30 files.
+
+Processing completed on Dec  1 1995 15:55:01
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Current file descriptors in use: 6
+FIU: file descriptor 0: <stdin>
+FIU: file descriptor 1: <unnamed pipe[1]>, O_RDWR
+   * Duplication of file descriptor 7.
+   * File position: 2055
+   * This file descriptor was allocated from:
+	fcntl          [libc.so.1]
+	popen          [libc.so.1]
+	open_file      [process_qcfrec.c:408]
+	main           [main_qc.c:645]
+	_start         [crt1.o]
+FIU: file descriptor 2: <stderr>
+FIU: file descriptor 3: <inherited from parent>
+FIU: file descriptor 26: <reserved for Purify internal use>
+FIU: file descriptor 27: <reserved for Purify internal use>
+
+****  Purify instrumented main_qc (pid 21281)  ****
+Purify: Searching for all memory leaks...
+
+Memory leaked: 0 bytes (0%); potentially leaked: 0 bytes (0%)
+
+Purify Heap Analysis (combining suppressed and unsuppressed chunks)
+                         Chunks      Bytes
+              Leaked          0          0
+  Potentially Leaked          1       8200
+              In-Use          1       1024
+  ----------------------------------------
+     Total Allocated          2       9224
+
+****  Purify instrumented main_qc (pid 21281)  ****
+  * Program exited with status code 2.
+  * 0 access errors, 0 total occurrences.
+  * 0 bytes leaked.
+  * 0 bytes potentially leaked.
+  * Basic memory usage (including Purify overhead):
+      327983 code
+       47976 data/bss
+      344064 heap (peak use)
+        1456 stack
+  * Shared library memory usage (including Purify overhead):
+      151404 libm_pure_p1_c0_300_54.so.1 (shared code)
+        5944 libm_pure_p1_c0_300_54.so.1 (private data)
+      667247 libc_pure_p1_c0_300_54.so.1 (shared code)
+       37336 libc_pure_p1_c0_300_54.so.1 (private data)
+        1444 libdl_pure_p1_c0_300_54.so.1 (shared code)
+           0 libdl_pure_p1_c0_300_54.so.1 (private data)
+        1812 libinternal_stubs.so (shared code)
+         208 libinternal_stubs.so (private data)
+

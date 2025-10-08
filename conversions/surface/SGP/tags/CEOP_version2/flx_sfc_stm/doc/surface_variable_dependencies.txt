@@ -1,0 +1,26 @@
+
+When implementing the DQR flagging from the DQR reports, 
+remember that any parameters derived using these flagged
+values should have that same flag applied to them, as well.
+
+dewpoint relies on:
+	rel_hum
+	temp_air
+
+specific_humidity relies on:
+	dewpoint
+		rel_hum
+		temp_air
+	stn_pres
+
+UV winds relies on:
+	wind_spd
+	wind_dir
+
+net_rad relies on:
+	short_in
+	long_in
+	short_out
+	long_out
+
+

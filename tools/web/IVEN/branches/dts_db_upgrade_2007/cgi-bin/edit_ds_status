@@ -1,0 +1,226 @@
+#! /usr/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>Displays the html form to edit the status information of a dataset.
+#  The status information includes the location of the raw data, code, 
+#  final data, readme files, etc.  Dataset information can only be editted 
+#  using this form, not added or deleted.  A dataset must be added to the
+#  system via the edit_ds_admin form.</p>
+#
+# <p>
+# <b>Expected Params:</b>
+#	   <dd>mode - mandatory, 'update' or 'add'
+#	   <dd>project - mandatory, the project being viewed
+#	   <dd>edataset - mandatory, the dataset to edit 
+#	   <dd>eproduct - mandatory, the product the dataset is in to edit
+# </p>
+#
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Utils;
+use State;
+use DatasetDBA;
+use ProductDBA;
+use UserDBA;
+use CGI;
+
+require "common";
+
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+edit_ds_status( $state, $cgi );
+
+# Expected params:
+#  project - mandatory, part of state
+#  edataset - mandatory
+#  eproduct - mandatory
+
+sub edit_ds_status
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $mode = $cgi->param( "mode" );
+	$mode = "add" if( !$mode );
+	my $project = $state->{project};
+	my $edataset = $cgi->param( "edataset" );
+	my $eproduct = $cgi->param( "eproduct" );
+
+	my $ds = DatasetDBA::getFromDB( $edataset, $eproduct, $project );
+
+	my $status_box = getStatusDropDown( $ds->{status} );
+
+	my $title = "Edit Dataset Status";
+
+	println( $cgi->header( -expires=>"-1d" ) );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>Iven Edit: Dataset Status</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+
+	my $ncols = 2;	
+	println( "<table cellpadding=5 cellspacing=0 width=100% class=editTable>" );
+	println( "<form action=proc_ds_status method=\"POST\">" );
+		println( "<tr class=editHeading><td colspan=$ncols>$title</td></tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Project:</b></td>" );
+			println( "<td>$project</td>" );
+		println( "</tr>" );
+		
+		println( "<tr>" );	
+			println( "<td align=right><b>Product:</b></td>" );
+			println( "<td>$ds->{pdname}</td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Dataset Name:</b></td>" );
+			println( "<td><input type=input size=80 maxlength=100 value=\"$ds->{dsname}\" name=dsname></td>" );
+		println( "</tr>" );
+
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( "<tr>" );
+			println( "<td align=right><b>Raw Data:</b></td>" );
+			println( "<td><input type=input size=80 maxlength=255 value=\"$ds->{raw_data}\" name=raw_data></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Readme:</b></td>" );
+			println( "<td><input type=input size=80 maxlength=255 value=\"$ds->{readme}\" name=readme></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Final Data:</b></td>" );
+			println( "<td><input type=input size=80 maxlength=255 value=\"$ds->{final_data}\" name=final_data></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Station List:</b></td>" );
+			println( "<td><input type=input size=80 maxlength=255 value=\"$ds->{station_info}\" name=station_info></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Software:</b></td>" );
+			println( "<td><input type=input size=80 maxlength=255 value=\"$ds->{software}\" name=software></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>How To:</b></td>" );
+			println( "<td><input type=input size=80 maxlength=255 value=\"$ds->{how_to}\" name=how_to></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Plots:</b></td>" );
+			println( "<td><input type=input size=80 maxlength=255 value=\"$ds->{plots}\" name=plots></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Id Type:</b></td>" );
+			my $id_type = "";
+			$id_type = $ds->{id_type} if( defined( $ds->{id_type} ) );
+			println( "<td>" );
+				println( "<input type=input size=10 value=\"$id_type\" name=id_type>" );
+				println( &nbsp(3) );
+				println( "<b>Platform Type:</b>", &nbsp(2) );
+				my $platform_type = "";
+				$platform_type = $ds->{platform_type} if( defined( $ds->{platform_type} ) );
+				println( "<input type=input size=10 value=\"$platform_type\" name=platform_type>" );
+			println( "</td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td colspan=$ncols>" );
+				println( "<b>Code in BEST_SW:</b>" );
+				my $checked = "";
+				$checked = "checked" if( $ds->{best_sw} );
+				println( "<input type=checkbox name=best_sw $checked>" );
+			println( "</td>" );
+		println( "</tr>" );
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( "<tr><td colspan=$ncols><b>Processing Notes: </b></td></tr>" );	
+
+		println( "<tr><td colspan=$ncols>" );
+			println( "<textarea name=status_notes rows=15 cols=75>" );
+				println( html_encode( $ds->{status_notes} ) );
+			println( "</textarea>" );
+		println( "</td</tr>" );
+
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( getButtons( $ncols ) );
+	
+		my $hidden = $state->getHiddenFieldString( "proc_edit"=>$EDATASET_STATUS );
+
+		println( "<input type=hidden name=source_dsname value=\"$ds->{dsname}\">" );
+		println( "<input type=hidden name=pdname value=\"$ds->{pdname}\">" );
+
+		println( $hidden );
+
+	println( "</table>" );
+	println( "</form>" );
+	println( "</html>" );
+	
+}
+
+sub getProductsDropDown
+{
+	my $pjname = shift;
+	my $pd_select = shift;
+	my $select = "<select name=pdname>";
+
+	my $prods = ProductDBA::getByProject( $pjname );
+
+	foreach my $pd (@$prods)
+	{
+		my $selected = "";
+		$selected = "selected" if( $pd_select && $pd->{pdname} eq $pd_select );
+		$select = $select . "<option value=\"$pd->{pdname}\" $selected>$pd->{pdname}</option>";
+	}
+	$select = $select . "</select>";
+
+	return $select;
+}
+
+sub getUserDropDown
+{
+	my $sel_user = shift;
+	$sel_user = "unassigned" if( !$sel_user || $sel_user eq ""  );
+
+	my $users = UserDBA::getAllUsers( "fname" );
+
+	my $select = "<select name=user_processing>";
+
+	foreach my $us (@$users)
+	{
+		my $selected = "";
+		$selected = "selected" if( $sel_user && $sel_user eq $us->{uid} );
+		$select = $select . "<option value=\"$us->{uid}\" $selected>$us->{fname}</option>";		
+	}
+	$select = $select . "</select>";
+
+	return $select;
+}
+
+sub getButtons
+{
+	my $ncols = shift;
+	my $btns;
+
+	$btns = "<tr class=editHeading><td colspan=$ncols align=right>" . 
+							"<input type=submit name=action value=\"Update Dataset\">" . &nbsp(2) .  
+							"<input type=submit name=action value=\"Cancel\">" . 
+					"</td></tr>";
+
+	return $btns;
+}
+
+1;

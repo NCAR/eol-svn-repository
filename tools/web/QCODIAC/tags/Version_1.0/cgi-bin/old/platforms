@@ -1,0 +1,93 @@
+#!/bin/perl
+
+#-----------------------------------------------------
+# platforms: a simple cgi script to display all of the
+#  entries in the platforms table in the data_dict_db
+#  database.
+#
+# Author: Dan Sullivan
+# Date: April 24, 2003
+#-----------------------------------------------------
+
+use CGI qw(:standard :html3 );
+
+getPlatforms();
+
+sub getPlatforms
+{
+	my $db_path = "/storm/codiac/codiac_db";
+	my $empcmd = "/usr/empress8.20/rdbms/bin/empcmd";
+	$ENV{MSPATH} = "/usr/empress8.20/rdbms";
+	$ENV{MSQLSELCOLSEP} = "";
+
+	my $sort = param( "sort" );
+	my $sql = "";
+
+	if( defined( $sort ) )
+	{
+		$sql = "\"SELECT * FROM platforms ORDER BY '$sort'\"";
+	}
+	else
+	{
+		$sql = "\"SELECT * FROM platforms\"";
+	}
+
+	@records = `$empcmd $db_path/data_dict_db $sql`;
+
+	println( header() );
+	println( "<html><head><title>QUERY CODIAC: Platforms</title></head><body bgcolor=white>" );
+	println( "<center><h3>QUERY CODIAC: Platforms</h3>" );
+
+	println( "<table border=1 cellpadding=1 cellspacing=1 width=85%>" );
+	println( "<tr>" );
+		println( "<th><a href=platforms?sort=id>Id</a></th>" );
+		println( "<th><a href=platforms?sort=name>Name</a></th>" );
+		println( "<th><a href=platforms?sort=abbrev>Abbrev</a></th>" );
+		println( "<th><a href=platforms?sort=desc>Description</a></th>" );
+	println( "</tr>" );
+
+	for( my $x = 2; $x < @records; $x++ )
+	{
+		my @plat = split( //, $records[$x] );
+		my $id = trim( $plat[0] );
+		my $name = trim( $plat[1] );
+		my $desc = trim( $plat[2] );
+		my $abbrev = trim( $plat[3] );
+
+		$id = "&nbsp;" if( $id eq "" );
+		$name = "&nbsp;" if( $name eq "" );
+		$desc = "&nbsp;" if( $desc eq "" );
+		$abbrev = "&nbsp;" if( $abbrev eq "" );
+
+		my @plat = split( //, $records[$x+1] );
+		while( defined( $records[$x+1] ) && trim( $plat[0] ) eq "" )
+		{
+			$desc = $desc . $plat[2];
+			$x++;
+			@plat = split( //, $records[$x+1] );
+		}
+
+		println( "<tr>" );
+			println( "<td>$id</td>" );
+			println( "<td nowrap>$name</td>" );
+			println( "<td>$abbrev</td>" );
+			println( "<td>$desc</td>" );
+		println( "</tr>" );
+	}
+	println( "</table>" );
+
+	println( "</body></html>" );	
+}
+
+sub println
+{
+	print( @_, "\n" );
+}
+
+sub trim
+{
+	local $str = $_[0];
+	$str =~ s/^\s+//;
+	$str =~ s/\s+$//;
+	return $str;
+}

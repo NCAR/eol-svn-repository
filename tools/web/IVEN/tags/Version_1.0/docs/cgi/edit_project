@@ -1,0 +1,159 @@
+#!/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>edit_project - displays the form to edit or add a project to IVEN.
+# </p>
+#
+# <p>
+# <b>Expected Params:</b>
+#	   <dd>mode - mandatory, 'update' or 'add'
+#	   <dd>eproject - the project to edit if mode is 'update'
+# </p>
+#
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Utils;
+use State;
+use ProjectDBA;
+use Project;
+use CGI;
+
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+edit_project( $state, $cgi );
+
+sub edit_project
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $mode = $cgi->param( "mode" );
+	$mode = "add" if( !$mode );
+
+	my $eproject = $cgi->param( "eproject" );
+
+	my $pj;
+
+	if( $mode eq "update" )
+	{
+		$pj = ProjectDBA::getFromDB( $eproject );
+	}
+	else # add
+	{
+		$pj = Project->new();
+	}
+
+	my $title = "Edit Project";
+
+	println( $cgi->header( -expires=>"-1d" ) );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>Iven Edit: Project</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+
+	my $ncols = 4;	
+	my $ncols_1 = $ncols - 1;
+	my $ncols_2 = $ncols - 2;
+	println( "<br><br>" );
+	println( "<table cellpadding=5 cellspacing=0 width=100% class=editTable>" );
+	println( "<form action=proc_project method=\"POST\">" );
+		println( "<tr class=editHeading><td colspan=$ncols>$title</td></tr>" );
+
+		println( "<tr>" );
+			println( "<td nowrap align=right><b>Project Name:</b></td>" );
+			println( "<td><input type=text value=\"$pj->{pjname}\" size=15 maxlength=16 name=pjname></td>" );
+			println( "<td nowrap align=right><b>Storm Id Prefix:</b></td>" );
+			println( "<td><input type=text value=\"$pj->{storm_id_prefix}\" size=15 maxlength=16 name=storm_id_prefix></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td nowrap align=right><b>Full Name:</b></td>" );
+			println( "<td colspan=$ncols_1><input type=text value=\"$pj->{full_name}\" size=80 maxlength=255 name=full_name></td>" );
+		println( "</tr>" );
+	
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( "<tr>" );	
+			println( "<td nowrap align=right><b>Begin Date:</b></td>" );
+			println( "<td><input type=text value=\"$pj->{begin_date}\" size=10 maxlength=10 name=begin_date></td>" );
+			println( "<td nowrap align=right><b>End Date:</b></td>" );
+			println( "<td><input type=text value=\"$pj->{end_date}\" size=10 maxlength=10 name=end_date></td>" );
+		println( "</tr>" );	
+
+		println( "<tr>" );	
+			println( "<td nowrap align=right><b>Min. Lat:</b></td>" );
+			println( "<td><input type=text value=\"$pj->{minlat}\" size=10 maxlength=10 name=minlat></td>" );
+			println( "<td nowrap align=right><b>Max Lat:</b></td>" );
+			println( "<td><input type=text value=\"$pj->{maxlat}\" size=10 maxlength=10 name=maxlat></td>" );
+		println( "</tr>" );	
+
+		println( "<tr>" );	
+			println( "<td nowrap align=right><b>Min. Lon:</b></td>" );
+			println( "<td><input type=text value=\"$pj->{minlon}\" size=10 maxlength=10 name=minlon></td>" );
+			println( "<td nowrap align=right><b>Max Lon:</b></td>" );
+			println( "<td><input type=text value=\"$pj->{maxlon}\" size=10 maxlength=10 name=maxlon></td>" );
+		println( "</tr>" );	
+
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( "<tr>" );
+			println( "<td nowrap align=right><b>Charge Number:</b></td>" );
+			println( "<td colspan=$ncols_1><input type=text value=\"$pj->{charge_num}\" size=6 maxlength=6 name=charge_num></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td nowrap align=right><b>Link Source:</b></td>" );
+			println( "<td colspan=$ncols_1><input type=text value=\"$pj->{link_source}\" size=80 maxlength=255 name=link_source></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td nowrap align=right><b>Link Target:</b></td>" );
+			println( "<td colspan=$ncols_1><input type=text value=\"$pj->{link_target}\" size=80 maxlength=255 name=link_target></td>" );
+		println( "</tr>" );
+
+		println( getButtons( $mode, $ncols ) );
+	
+		my $hidden = $state->getHiddenFieldString( "proc_edit"=>$EDATASET_STATUS );
+
+		println( "<input type=hidden name=source_pjname value=\"$pj->{pjname}\">" );
+
+		println( $hidden );
+
+	println( "</table>" );
+	println( "</form>" );
+	println( "</html>" );
+	
+}
+
+sub getButtons
+{
+	my $mode = shift;
+	my $ncols = shift;
+	my $btns;
+
+	if( $mode eq "add" )
+	{
+		$btns = "<tr class=editHeading><td colspan=$ncols align=right>" . 
+							"<input type=submit name=action value=\"Add Project\">" . &nbsp(2) .  
+							"<input type=submit name=action value=\"Cancel\">" . 
+					"</td></tr>";
+	}
+	else
+	{
+		$btns = "<tr class=editHeading><td colspan=$ncols align=right>" . 
+							"<input type=submit name=action value=\"Update Project\">" . &nbsp(2) .  
+							"<input type=submit name=action value=\"Cancel\">" . 
+					"</td></tr>";
+	}
+
+	return $btns;
+}
+
+1;

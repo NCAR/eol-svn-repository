@@ -1,0 +1,41 @@
+body {
+  /* For IE 5.5 - 7 */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#f9f8f3, endColorstr=#206687) !important;
+  /* For IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f9f8f3, endColorstr=#206687)" !important;
+  /* For Others */
+  background-color:     #267999; /*#437e99;*/
+  margin:               0px;
+  max-height:           none;
+}
+
+div.header h1 {
+  font-size:            40px !important;
+  color:                #7e592f !important; /*#bf9a70;*/
+  text-shadow:          none !important; /*3px 2px 4px #000;*/
+  filter:               none !important; /*dropshadow(color=#000, offx=3, offy=2);*/
+}
+
+div.header h3 {
+  margin-top:           47px !important;
+  color:                #7e592f !important; /*#bf9a70;*/
+  text-shadow:          none !important; /*3px 2px 4px #000;*/
+  filter:               none !important; /*dropshadow(color=#000, offx=3, offy=2);*/
+}
+
+/* TOP BOXES */
+#wel_title {
+  padding:              0px 10px 0px 0px !important; /* top-right-bottom-left */
+}
+
+#about_title {
+  padding:              0px 10px 0px 0px !important; /* top-right-bottom-left */
+}
+/* END TOP BOXES */
+
+/* Metadata Error List */
+#metadata_list .tbl_head, #template_list .tbl_head {
+  text-shadow: none !important; /*2px 2px 3px #333;*/
+  filter: none !important; /*dropshadow(color=#333, offx=2, offy=2);*/
+}
+/* ------------------- */

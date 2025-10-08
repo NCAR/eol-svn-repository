@@ -1,0 +1,73 @@
+################################################################################
+# Version 6.0
+# Added choice of static or dynamic yrange in plot_ceop.pl. yrange line
+# is now passed to this template.  PROJECT was hardcoded, now is determined
+# by the plot_ceop.pl script. Added varying line thickness to script, which
+# is only supported by more recent version of gnuplot called via "gnuplot.new".
+# New and old versions have different default colors - these are noted below.
+#
+# Version 5.2
+# Changed all plotting to be with solid lines via "solid" rather than 
+# "dashed" in set terminal line.  Since we are using color, we 
+# don't want varying line types.
+#
+# Version 5.1
+# CSEID and begin and end dates are now determined via the script and
+# passed here rather than being hardcoded here. Also monochrome or color
+# plotting is decided by the script. - JAG 1/21/04
+#
+# Template for plotting CEOP data with plot command generated within script
+# and passed here complete. This allows us to plot either single or multiple
+# heights per plot - JAG 1/14/04
+#
+# Template for plotting CEOP data with AWK command moved to script to increase
+# efficiency. Old version of code was taking too long. - JAG 1/12/04
+################################################################################
+# For *old* gnuplot called via "gnuplot"
+# Possible colors:  0 = grey, 1 = green, 2 = blue, 3 = red, 4 = pink, 
+#                   5 = light blue, 6 = yellow, 7 = black, 8 = orange
+#	Colors repeat for numbers greater than 8.
+#
+# Possible symbols: 0 = period, 1 = star, 2 = plus, 3 = asterisk,
+#                   4 -> 15 rotate thru various shapes with a dot in the middle,
+#                   then the shape solid filled.
+#                   16 -> are various shapes with one, two, or three quadrants
+#                   solid filled.
+#
+# For *new* gnuplot called via "gnuplot.new"
+# Possible colors:  -1 = black, 1 = red, 2 = green, 3 = blue, 4 = purple, 
+#                   5 = aqua, 6 = yellow, 7 = black, 8 = orange
+################################################################################
+set terminal postscript landscape XCOLORX solid "Helvetica" 14
+
+#-------------------------------------------------------------------------------
+# graph title
+#-------------------------------------------------------------------------------
+set title "XPROJECTX XCSEIDX XPARAMETERX Station XSTATION XHEIGHTX"
+
+#-------------------------------------------------------------------------------
+# other
+#-------------------------------------------------------------------------------
+set missing "-999.99"
+set nokey
+
+#-------------------------------------------------------------------------------
+# x-axis stuff
+#-------------------------------------------------------------------------------
+set timefmt "%Y/%m/%d"
+set xdata time
+set xlabel "Date" 0,0
+set xrange ["XBEGINDATEX":"XENDDATEX"]
+set format x "%Y/%m/%d"
+set timefmt "%Y/%m/%d %H:%M"
+
+#-------------------------------------------------------------------------------
+# y-axis
+#-------------------------------------------------------------------------------
+set ylabel "XPARAMETERX (XUNITSX)" 0,0
+XYRANGEX
+
+#-------------------------------------------------------------------------------
+set output 'XOUTFILEX'
+#-------------------------------------------------------------------------------
+XPLOTSPECX

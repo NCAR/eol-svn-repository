@@ -1,0 +1,120 @@
+a:link,a:visited { color: #3300CC; text-decoration: none; }
+a:hover { color: #0000FF; text-decoration: underline; }
+body { background-color: #FFFFFF; color: black; font-family: Arial,sans-serif; margin: 0; padding: 0; }
+center { margin-top: 1em; }
+div.expander { float: right; position: static; }
+img { border: 0; }
+
+span.title { font-weight: bold; }
+
+table.datasetHeader { margin: 0; padding: .5em; width: 100%; }
+table.datasetHeader td { width: 33%; }
+table.datasetHeader td.processor { text-align: right; }
+table.datasetHeader td.status { text-align: left; }
+table.datasetHeader td.title { font-size: 14pt; font-weight: bold; text-align: center; text-decoration: underline; }
+
+table.editTable { background-color: #FFFFFF; border: 2px solid black; margin: 5px auto; width: 100%; }
+table.editTable td.buttons { text-align: right; }
+table.editTable th { padding: 1px 3px; text-align: right; white-space: nowrap; vertical-align: top; width: 20%; }
+tr.editHeading { background-color: #E9E9E9; font-size: 14pt; font-weight: bold; }
+td.editSpacer { background-color: #E9E9E9; height: 3px; }
+
+table.indexHead { background-color: #EBEBEB; border: 0; margin: 20px auto; padding: 20px; width: 75%; }
+table.indexHead td.welcome { color: #3300CC; font-size: 36pt; font-weight: bold; text-align: center; }
+table.indexHead td.title { text-align: center; }
+
+table.menu { background-color: #E9E9E9; color: black; padding: 20px; width: 100%; }
+table.menu span.data { text-indent: 15px; }
+table.menu table { width: 100%; }
+table.menu td.menuText { font-size: 10pt; width: 20%; }
+table.menu td.menuTitle { font-size: 20pt; font-weight: bold; text-align: center; }
+table.menu tr.menuOptions { font-size: 14pt; font-weight: bold; text-align: center; }
+table.menu tr.menuOptions td { text-align: center; }
+
+table.noteTable { background-color: #A8A8A8; border: 0; margin-top: 15px; width: 100%; }
+table.noteTable tr.noteHeading { background-color: #E9E9E9; }
+table.noteTable tr.noteHeading table { width: 100%; }
+table.noteTable tr.noteHeading td.end { text-align: right; white-space: nowrap; width: 10%; }
+table.noteTable tr.noteHeading td.title { font-size: 16pt; font-weight: bold; text-align: center; }
+table.noteTable tr.noteRow { background-color: #FFFFFF; }
+
+table.productSummary { width: 80%; }
+tr.productHead { background-color: #E9E9E9; font-size: 14pt; font-weight: bold; text-align: center; }
+tr.productRow td { text-align: center; white-space: nowrap; }
+tr.productRow td.name { text-align: left; white-space: normal; }
+
+table.productTable { border: 0; margin-top: 5px; width: 98%; }
+table.productTable table { width: 100%; }
+table.productTable tr.productHead { background-color: #FFFFFF; }
+tr.productTitle { background-color: #EBEBF5; font-size: 14pt; font-weight: bold; }
+tr.productTitle th.title { text-align: left; width: 75%; }
+tr.productTitle th.option { text-align: right; width: 25%; }
+
+
+table.projectListTable { color: black; margin: 1em auto; width: 60%; }
+table.projectListTable td { background-color: #FFFFFF; padding: 5px; }
+table.projectListTable td div.title { font-size: 12pt; font-weight: bold; }
+table.projectListTable td div.name { text-indent: 2em;  }
+table.projectListTable th { background-color: #E9E9E9; font-size: 14pt; font-weight: bold; margin: 0; padding: 5px; text-align: center; }
+table.projectListTable td, table.projectListTable th { border: thin solid #A8A8A8; }
+
+table.statusBar { vertical-align: middle; width: 100%; }
+table.statusBar td.background { background-color: #C4D4EC; height: 12px; width: 200px; }
+table.statusBar td.background div.foreground { background-color: #04994C; font-size: 3px; height: 8px; }
+
+table.statusTable { background-color: A8A8A8; width: 90%; }
+table.statusTable tr.statusHeading { background-color: #E9E9E9; };
+table.statusTable tr.statusHeading td { width: 100%; }
+table.statusTable tr.statusHeading td table { margin: 0; padding: 0; width: 100%; }
+table.statusTable tr.statusHeading td table td.center { font-size: 14pt; font-weight: bold; text-align: center; width: 80%; }
+table.statusTable tr.statusHeading td table td.left { width: 10%; }
+table.statusTable tr.statusHeading td table td.right { text-align: right; width: 10%; }
+table.statusTable tr.statusRow { background-color: #FFFFFF; }
+table.statusTable tr.statusRow table.statusLinkTable { background-color: #E9E9E9; width: 100%; }
+table.statusTable tr.statusRow table.statusLinkTable tr { background-color: #FFFFFF; }
+table.statusTable tr.statusRow table.statusLinkTable tr td { text-align: left; width: 100%; }
+table.statusTable tr.statusRow table.statusLinkTable tr td.edit { text-align: left; width: 2%; }
+table.statusTable tr.statusRow table.statusLinkTable tr td.name { text-align: left; width: auto; }
+table.statusTable tr.statusRow table.statusLinkTable tr td.note { text-align: left; width: 65%; }
+table.statusTable tr.statusRow table.statusLinkTable tr th { text-align: right; vertical-align: top; white-space: nowrap; }
+
+table.statusTable tr.statusRow table.statusLinkTable tr td.srcInfo div.srcInfo { height: 100px; overflow: auto; vertical-align: top; }
+table.statusTable tr.statusRow table.statusLinkTable tr td.srcInfo div.srcInfoExpanded { height: auto; vertical-align: top; }
+table.statusTable tr.statusRow table.statusLinkTable tr td.srcInfo table { border: 1px solid black; width: 100%; }
+table.statusTable tr.statusRow table.statusLinkTable tr td.srcInfo table td { border: 1px solid black; width: auto; }
+table.statusTable tr.statusRow table.statusLinkTable tr td.srcInfo table th { border: 1px solid black; text-align: center; width: auto; }
+
+table.toolbar { padding: 5px; width: 98%; }
+table.toolbar td { text-align: right; width: 100%; }
+
+td.statusBarContainer { vertical-align: middle; width: 200px; }
+td.summary { font-size: 10pt; font-weight: bold; text-align: left; white-space: nowrap; }
+
+tr.dsRow { font-size: 12pt; }
+tr.excludeRow { font-size: 12pt; text-decoration: line-through; }
+
+tr.dsRow td,tr.excludeRow td { text-align: center; white-space: nowrap; }
+tr.dsRow td.name, tr.excludeRow td.name { text-align: left; white-space: normal; }
+tr.excludeRow td.edit div { text-align: center; text-decoration: none; }
+
+td.note div.shortNote { height: 100px; overflow: auto; white-space: normal; }
+td.note div.shortNoteExpanded { height: auto; white-space: normal; }
+
+
+.done { color: #009900; font-weight: bold; }
+.inprogress { color: orange; font-weight: bold; }
+.na { color: gray; font-weight: bold; }
+.skip { color: black; font-weight: bold; }
+.tbd { color: red; font-style: italic; font-weight: bold; }
+
+.yes { color: blue; }
+.no { color: blue; }
+.unknown { color: red; font-weight: bold; }
+
+.projectNote { height: 200px; overflow: auto; position: relative; }
+.projectNoteExpanded { height: auto; }
+
+
+
+
+

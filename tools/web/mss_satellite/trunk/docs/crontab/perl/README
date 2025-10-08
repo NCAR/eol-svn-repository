@@ -1,0 +1,15 @@
+
+This directory contains various scripts written for the Mass Store Satellite Data Query
+application.  The query_daily script is the most important, it should be set up to run
+daily on hurricane as a cronjob.  It sees what new files were added to the mass store
+on the previous day and adds them to the database.
+
+query_daily - cronjob script, uses the modules in the lib/ directory
+query_tmp - similar to query_daily, allows you to specify the dates to 
+   query, this is helpful if for some reason a day is missed
+query_mass - example of querying mass store
+
+query_daily_08 - when we switched from GOES08 to GOES12 some updates
+  had to be made, this is the original script and is obsolete.
+
+-Dan 2004-04-22

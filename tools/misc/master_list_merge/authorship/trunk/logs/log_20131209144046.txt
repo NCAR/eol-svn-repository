@@ -1,0 +1,1070 @@
+> groovy authorshipConnect.groovy POST PREDICT RAINEX RICO
+
+Created log file:	logs/log_20131209144046.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+--------------------------------------------------------------------------------
+  POST:  111.001
+		Haf Jonsson
+Which of these contacts matches this author:	Haf Jonsson
+
+		387	hjonsson	Haflidi H. Jonsson	CIRPAS (NPS)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 387
+
+Unable to find 387 for data set 111.001
+Unable to find 1 for data set 111.002
+Unable to find 1 for data set 111.003
+--------------------------------------------------------------------------------
+  POST:  111.004
+		Herman Gerber
+Which of these contacts matches this author:	Herman Gerber
+
+		797	hgerber	Hermann Gerber	null
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 797
+
+Unable to find 797 for data set 111.004
+Unable to find 797 for data set 111.005
+Unable to find 797 for data set 111.006
+Unable to find 1 for data set 111.007
+Unable to find 1 for data set 111.008
+Unable to find 1 for data set 111.009
+Unable to find 1 for data set 111.010
+Unable to find 1 for data set 111.011
+Unable to find 1 for data set 111.012
+Found 797 for data set 111.013 and has sort_key of 65534 (instead of 1).
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Szymon Malinowski
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 111.018
+Unable to find 1 for data set 111.019
+Found 155 for data set 111.020 and has sort_key of 65534 (instead of 1).
+Found 155 for data set 111.021 and has sort_key of 65534 (instead of 1).
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Krueger
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  POST:  111.023
+		Stuart Beaton
+Which of these contacts matches this author:	Stuart Beaton
+
+		721	sbeaton	Stuart Beaton	UCAR/NCAR/RAF
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 721
+
+Found 721 for data set 111.023 and has sort_key of 65534 (instead of 1).
+--------------------------------------------------------------------------------
+  POST:  111.024
+		Djamal Khelif
+Which of these contacts matches this author:	Djamal Khelif
+
+		807	dkhelif	Djamal Khelif	University of California, Irvine
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 807
+
+Unable to find 807 for data set 111.024
+--------------------------------------------------------------------------------
+  POST:  111.025
+		Roy Woods
+Which of these contacts matches this author:	Roy Woods
+
+		183	rkrishfield	Rick Krishfield	Woods Hole Oceanographic Inst.
+		290	aplueddemann	Albert Plueddemann	Woods Hole Oceanographic Inst.
+		372	rweller	Robert A. Weller	Woods Hole Oceanographic Inst
+		442	null	Carin J. Ashjian	Woods Hole Oceanographic Inst.
+		537	whoi	null	Woods Hole Oceanographic Institute
+		612	rpickart	Robert S. Pickart	Woods Hole Oceanographic Institute
+		656	bpickart	Bob Pickart	Woods Hole Oceanographic Institution
+		849	aproshutinsky	Andrey Proshutinsky	Woods Hole Oceanographic Inst.
+		984	null	Scott J. Goetz	Woods Hole Research Center
+		1266	null	Daniel J. Torres	Woods Hole Oceanographic Institution (WHOI)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+Unable to find 1 for data set 111.026
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Szymon Malinowsk
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 111.031
+Unable to find 1 for data set 111.032
+Unable to find 1 for data set 111.033
+Unable to find 721 for data set 111.034
+Unable to find 387 for data set 111.035
+Unable to find 1 for data set 111.036
+Unable to find 1 for data set 111.037
+Unable to find 387 for data set 111.038
+Unable to find 387 for data set 111.039
+Unable to find 387 for data set 111.040
+Unable to find 387 for data set 111.041
+Unable to find 387 for data set 111.042
+Unable to find 387 for data set 111.043
+Unable to find 387 for data set 111.044
+Unable to find 387 for data set 111.045
+Unable to find 387 for data set 111.046
+Unable to find 387 for data set 111.047
+Unable to find 387 for data set 111.048
+Unable to find 387 for data set 111.049
+--------------------------------------------------------------------------------
+  POST:  111.050
+		Patrick Chuang
+Which of these contacts matches this author:	Patrick Chuang
+
+		48	pchuang	Patrick Chuang	SDMC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 48
+
+Unable to find 48 for data set 111.050
+Unable to find 48 for data set 111.051
+Unable to find 48 for data set 111.052
+Unable to find 830 for data set 111.053
+Unable to find 830 for data set 111.054
+Unable to find 830 for data set 111.055
+Unable to find 830 for data set 111.056
+Unable to find 48 for data set 111.057
+Unable to find 48 for data set 111.058
+Unable to find 48 for data set 111.059
+Unable to find 48 for data set 111.060
+Unable to find 1 for data set 111.063
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 797, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.004';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 797, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.005';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 797, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.006';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.007';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.008';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.009';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.010';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.011';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.012';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 7120 and contact_id = 797;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.018';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.019';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 7127 and contact_id = 155;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 7128 and contact_id = 155;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 7130 and contact_id = 721;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 807, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.024';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.026';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.031';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.032';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.033';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 721, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.034';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.035';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.036';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.037';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.038';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.039';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.040';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.041';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.042';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.043';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.044';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.045';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.046';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.047';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.048';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 387, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.049';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 48, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.050';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 48, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.051';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 48, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.052';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 830, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.053';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 830, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.054';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 830, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.055';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 830, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.056';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 48, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.057';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 48, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.058';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 48, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.059';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 48, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.060';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '111.063';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PREDICT
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 508 for data set 126.002
+Unable to find 508 for data set 126.003
+Unable to find 508 for data set 126.004
+Unable to find 508 for data set 126.005
+Unable to find 508 for data set 126.006
+Unable to find 508 for data set 126.007
+Unable to find 1 for data set 126.008
+Unable to find 1 for data set 126.009
+Unable to find 1 for data set 126.010
+Unable to find 1 for data set 126.011
+Unable to find 1 for data set 126.012
+Unable to find 508 for data set 126.013
+Unable to find 1 for data set 126.015
+Unable to find 1 for data set 126.016
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	WSI
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  PREDICT:  126.021
+		Mahoney, Michael J. and Julie Haggerty (JPL, NCAR/RAF)
+Which of these contacts matches this author:	Michael J. Mahoney
+
+		1147	null	M. J. Mahoney	Jet Propulsion Laboratory
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1147
+
+--------------------------------------------------------------------------------
+  PREDICT:  126.021
+		Mahoney, Michael J. and Julie Haggerty (JPL, NCAR/RAF)
+Which of these contacts matches this author:	Julie Haggerty
+
+		822	jhaggerty	Julie Haggerty	National Center for Atmospheric Research
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 822
+
+Found 1147 for data set 126.021 and has sort_key of 65534 (instead of 1).
+Found 822 for data set 126.021 and has sort_key of 65534 (instead of 2).
+Unable to find 552 for data set 126.021
+Unable to find 508 for data set 126.021
+--------------------------------------------------------------------------------
+  PREDICT:  126.022
+		Barve (NPS)
+Which of these contacts matches this author:	Barve
+
+		892	sbarve	Saurabh Barve	Digital Consulting Services (DCS), Supporting the Dept. of Meteorology, NPS
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 892
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NPS
+
+--------------------------------------------------------------------------------
+
+Found 892 for data set 126.022 and has sort_key of 65534 (instead of 1).
+Unable to find 1 for data set 126.023
+Unable to find 1 for data set 126.024
+Unable to find 1 for data set 126.025
+Unable to find 1 for data set 126.026
+Unable to find 1 for data set 126.027
+Unable to find 1 for data set 126.028
+Unable to find 1 for data set 126.029
+Unable to find 1 for data set 126.030
+Unable to find 1 for data set 126.031
+Unable to find 1 for data set 126.032
+Unable to find 1 for data set 126.033
+Unable to find 1 for data set 126.034
+Unable to find 1 for data set 126.035
+Unable to find 1 for data set 126.036
+Unable to find 1 for data set 126.037
+Unable to find 1 for data set 126.038
+Unable to find 1 for data set 126.039
+Unable to find 1 for data set 126.040
+Unable to find 1 for data set 126.041
+Unable to find 1 for data set 126.042
+Unable to find 1 for data set 126.043
+Unable to find 1 for data set 126.044
+Unable to find 1 for data set 126.045
+Unable to find 1 for data set 126.046
+Unable to find 1 for data set 126.047
+Unable to find 1 for data set 126.048
+Unable to find 1 for data set 126.049
+Unable to find 1 for data set 126.050
+Unable to find 1 for data set 126.051
+Unable to find 1 for data set 126.052
+Unable to find 1 for data set 126.053
+Unable to find 1 for data set 126.054
+--------------------------------------------------------------------------------
+  PREDICT:  126.055
+		Rogers, David C. (NCAR-RAF)
+Which of these contacts matches this author:	David C. Rogers
+
+		723	drogers	Dave Rogers	
+		1085	null	Jeffrey C. Rogers	Department of Geography
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 723
+
+Found 723 for data set 126.055 and has sort_key of 65534 (instead of 1).
+Unable to find 508 for data set 126.055
+Found 723 for data set 126.056 and has sort_key of 65534 (instead of 1).
+Unable to find 508 for data set 126.056
+Found 723 for data set 126.057 and has sort_key of 65534 (instead of 1).
+Unable to find 508 for data set 126.057
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Maggert-
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	UNAVCO
+
+--------------------------------------------------------------------------------
+
+Found 238 for data set 126.059 and has sort_key of 65534 (instead of 1).
+Unable to find 508 for data set 126.059
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.004';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.005';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.006';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.007';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.008';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.009';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.010';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.011';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.012';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.013';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.015';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.016';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 8911 and contact_id = 1147;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8911 and contact_id = 822;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 552, 'author', 3, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.021';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.021';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 8609 and contact_id = 892;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.023';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.024';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.025';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.026';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.027';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.028';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.029';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.030';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.031';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.032';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.033';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.034';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.035';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.036';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.037';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.038';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.039';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.040';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.041';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.042';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.043';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.044';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.045';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.046';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.047';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.048';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.049';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.050';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.051';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.052';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.053';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.054';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 9642 and contact_id = 723;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.055';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 9646 and contact_id = 723;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.056';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 9647 and contact_id = 723;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.057';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 10372 and contact_id = 238;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '126.059';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+RAINEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Found 1 for data set 100.002 and has sort_key of 65534 (instead of 1).
+Unable to find 1 for data set 88.001
+Unable to find 1 for data set 88.002
+Unable to find 1 for data set 88.003
+Unable to find 1 for data set 88.004
+Unable to find 1 for data set 88.005
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 88.007
+Unable to find 1 for data set 88.008
+Unable to find 1 for data set 88.009
+Unable to find 1 for data set 88.010
+Unable to find 1 for data set 88.011
+Unable to find 1 for data set 88.012
+Unable to find 1 for data set 88.013
+Unable to find 1 for data set 88.014
+Unable to find 1 for data set 88.015
+Unable to find 1 for data set 88.016
+Unable to find 1 for data set 88.017
+Unable to find 1 for data set 88.018
+Unable to find 1 for data set 88.019
+Unable to find 1 for data set 88.020
+Unable to find 1 for data set 88.021
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-AOC
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 88.023
+Unable to find 1 for data set 88.024
+Unable to find 1 for data set 88.025
+Unable to find 1 for data set 88.026
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-AOML
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 88.028
+Unable to find 1 for data set 88.029
+Unable to find 1 for data set 88.030
+Unable to find 1 for data set 88.031
+Unable to find 1 for data set 88.032
+Unable to find 1 for data set 88.033
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	UW-CIMSS
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-HRD
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 88.040
+Unable to find 1 for data set 88.041
+Unable to find 1 for data set 88.044
+Unable to find 1 for data set 88.047
+Unable to find 1 for data set 88.051
+Unable to find 1 for data set 88.056
+Unable to find 1 for data set 88.057
+Unable to find 1 for data set 88.058
+Unable to find 1 for data set 88.059
+--------------------------------------------------------------------------------
+  RAINEX:  88.060
+		(University of South Florida)
+Which of these contacts matches this author:	University of South Florida
+
+		453	fsu	null	Florida State University
+		462	uf	null	University of Florida
+		483	sfwmd	Robb Startzman	South Florida Water Management District
+		484	swfwmd	Granville Kinsman	South West Florida Water Management District
+		485	fdf	James Brenner	Florida Division of Forestry
+		1274	null	null	Florida Institute of Technology
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NDBC
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 88.063
+Unable to find 1 for data set 88.065
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	TAMU-Corpus
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	TAMU
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 88.074
+--------------------------------------------------------------------------------
+  RAINEX:  88.081
+		(NOAA-AOML, HRD)
+Which of these contacts matches this author:	HRD
+
+		486	noaa/hrd	Frank Marks	NOAA/Hurricane Research Division
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 486
+
+Unable to find 486 for data set 88.081
+Unable to find 486 for data set 88.082
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	McNoldy
+
+--------------------------------------------------------------------------------
+
+Unable to find 473 for data set 88.089
+Unable to find 473 for data set 88.090
+Unable to find 486 for data set 88.091
+Unable to find 486 for data set 88.092
+Unable to find 486 for data set 88.098
+Unable to find 486 for data set 88.100
+Unable to find 486 for data set 88.102
+Unable to find 486 for data set 88.104
+Unable to find 486 for data set 88.106
+Unable to find 486 for data set 88.123
+Unable to find 486 for data set 88.131
+Unable to find 486 for data set 88.139
+Unable to find 486 for data set 88.141
+Unable to find 473 for data set 88.177
+Unable to find 486 for data set 88.184
+Unable to find 486 for data set 88.187
+Unable to find 486 for data set 88.191
+Unable to find 486 for data set 88.192
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NHC
+
+--------------------------------------------------------------------------------
+
+Unable to find 486 for data set 88.195
+Unable to find 486 for data set 88.198
+Unable to find 1 for data set 88.201
+Unable to find 1 for data set 88.202
+Unable to find 1 for data set 88.203
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	[NCAR-EOL]
+
+--------------------------------------------------------------------------------
+
+Unable to find 490 for data set 88.208
+Unable to find 490 for data set 88.209
+Unable to find 1 for data set 88.210
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 7739 and contact_id = 1;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.004';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.005';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.007';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.008';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.009';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.010';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.011';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.012';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.013';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.014';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.015';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.017';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.018';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.019';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.020';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.021';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.023';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.024';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.025';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.026';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.028';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.029';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.030';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.031';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.032';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.033';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.040';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.041';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.044';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.047';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.051';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.056';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.057';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.058';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.059';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.063';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.065';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.074';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.081';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.082';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 473, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.089';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 473, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.090';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.091';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.092';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.098';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.100';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.102';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.104';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.106';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.123';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.131';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.139';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.141';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 473, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.177';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.184';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.187';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.191';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.192';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.195';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 486, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.198';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.201';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.202';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.203';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 490, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.208';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 490, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.209';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '88.210';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+RICO
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ESRL
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 87.002
+Unable to find 1 for data set 87.003
+Unable to find 1 for data set 87.004
+--------------------------------------------------------------------------------
+  RICO:  87.005
+		Mayol-Bracero, Olga L.
+Which of these contacts matches this author:	Olga L. Mayol-Bracero
+
+		595	omayol	Olga L. Mayol-Bracero	Institute for Tropical Ecosystem Studies (ITES)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 595
+
+Unable to find 595 for data set 87.005
+--------------------------------------------------------------------------------
+  RICO:  87.006
+		(SPEC)
+Which of these contacts matches this author:	SPEC
+
+		806	plawson	Paul Lawson	SPEC, Inc.
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 806
+
+Unable to find 806 for data set 87.006
+--------------------------------------------------------------------------------
+  RICO:  87.007
+		Heikes, Brian
+Which of these contacts matches this author:	Brian Heikes
+
+		633	bheikes	Brian Heikes	University of Rhode Island
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 633
+
+Unable to find 633 for data set 87.007
+Unable to find 1 for data set 87.008
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	CNRM
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	UKMO
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 87.013
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	UNOLS
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 87.015
+--------------------------------------------------------------------------------
+  RICO:  87.016
+		(U. Wyoming)
+Which of these contacts matches this author:	U. Wyoming
+
+		560	uwyo	null	University of Wyoming
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 560
+
+Unable to find 560 for data set 87.016
+Unable to find 1 for data set 87.018
+Unable to find 1 for data set 87.019
+Unable to find 1 for data set 87.020
+Unable to find 1 for data set 87.021
+--------------------------------------------------------------------------------
+  RICO:  87.025
+		Bandy, Alan R.
+Which of these contacts matches this author:	Alan R. Bandy
+
+		160	abandy	Alan Bandy	null
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 160
+
+Unable to find 160 for data set 87.025
+Unable to find 1 for data set 87.030
+Unable to find 1 for data set 87.031
+Unable to find 1 for data set 87.032
+Unable to find 1 for data set 87.033
+Unable to find 964 for data set 87.037
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-NSIDC
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 87.039
+Unable to find 1 for data set 87.040
+Unable to find 1 for data set 87.041
+Unable to find 1 for data set 87.042
+Unable to find 1 for data set 87.043
+Unable to find 1 for data set 87.044
+Unable to find 1 for data set 87.046
+Unable to find 1 for data set 87.047
+Unable to find 806 for data set 87.048
+Unable to find 1 for data set 87.049
+Unable to find 1 for data set 87.050
+--------------------------------------------------------------------------------
+  RICO:  87.051
+		Hudson, James
+Which of these contacts matches this author:	James Hudson
+
+		155	jhudson	Jim Hudson	Desert Research Institute
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 155
+
+Unable to find 155 for data set 87.051
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ETL
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	UMiami
+
+--------------------------------------------------------------------------------
+
+Unable to find 560 for data set 87.057
+Unable to find 1 for data set 87.058
+Unable to find 1 for data set 87.059
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.004';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 595, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.005';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 806, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.006';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 633, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.007';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.008';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.013';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.015';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 560, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.018';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.019';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.020';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.021';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 160, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.025';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.030';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.031';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.032';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.033';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 964, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.037';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.039';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.040';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.041';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.042';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.043';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.044';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.046';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.047';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 806, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.048';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.049';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.050';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 155, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.051';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 560, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.057';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.058';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '87.059';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

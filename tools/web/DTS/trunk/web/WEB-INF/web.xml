@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	      http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"	
+        version="2.5">
+
+  <display-name>EOL/DMG Data Tracking System</display-name>
+  <description>EOL Data Management Group:  Data Tracking System</description>
+
+    <listener>
+      <listener-class>
+        com.sun.faces.config.ConfigureListener
+      </listener-class>
+    </listener>
+
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>Data Tracking System Application</realm-name>
+	</login-config>	
+
+	<security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Data Tracking System Restrictions</web-resource-name>
+            <url-pattern>/dln/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>basic</role-name>
+            <role-name>super</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-role><role-name>basic</role-name></security-role>
+    <security-role><role-name>super</role-name></security-role>
+</web-app>

@@ -1,0 +1,49 @@
+#! /usr/bin/perl -w
+
+package GroupEditorCGI;
+use strict;
+use lib "..";
+use EditorCGI;
+our @ISA = ("EditorCGI");
+
+&main();
+
+sub main {
+    my $self = GroupEditorCGI->new();
+    $self->buildPage("Group Editor");
+}
+
+sub buildPageBody {
+    my ($self) = @_;
+    my $project = $self->getProject();
+    my $group = $self->getGroup();
+
+    printf("<form action=\"group_action\" method=\"POST\" onSubmit=\"javascript: return validateGroup(this);\">\n");
+    printf("   <table class=editTable>\n");
+    printf("      <tr class=editHeading><td colspan=2>Edit a Dataset Group: %s</td></tr>\n",$project->getId());
+    printf("      <tr>\n");
+    printf("         <th>Group Name:</th>\n");
+    printf("         <td><input type=text name=group_name size=72 maxlength=255 value=\"%s\" /></td>\n",$group->getName());
+    printf("      </tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Status:</th>\n");
+    printf("         <td>\n");
+    printf("            <select name=status>\n");
+    $self->printStatusOptions($group->getStatusId());
+    printf("            </select>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("      <tr><td class=editSpacer colspan=2></td></tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Group Notes:</th>\n");
+    printf("         <td><textarea name=note_text rows=20 cols=70 wrap=virtual>%s</textarea></td>\n",$group->getNote());
+    printf("      </tr>\n");
+    printf("      <tr><td class=editSpacer colspan=2></td></tr>\n");
+    $self->printButtonRow("Update",2);
+    printf("   </table>\n");
+    printf("   <input type=hidden name=group_id value=\"%s\" />\n",$group->getId());
+    printf("   <input type=hidden name=note_id value=\"%s\" />\n",$group->getNoteId());
+    printf("   <input type=hidden name=project value=\"%s\" />\n",$project->getId());
+    printf("</form>\n");
+}
+

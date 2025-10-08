@@ -1,0 +1,44 @@
+The notes below the dashed line are VERY OLD
+and basically should be ignored. In September
+2002, I updated this F77 s/w to handle 4 digit
+year and corrected the leap year check. This
+new s/w has the "_4DYR" on the end of the file
+names to indicate 4 digit year changes were made.
+The new 4 Digit Yr s/w is now called:
+runstnstat_4DYR, stnstat_4DYR.sc, and stnstat_4DYR.
+See the 4DigitYear directory for the latest s/w.
+LEC
+12 September 2002
+
+------------------------------------------
+------------------------------------------
+This is an old note - but parts are
+probably still important - especially
+the location of the best src.
+
+This s/w must be updated when the begin
+and end dates of a project change. Update
+the FIRSTDAY and LASTDAY variables in the
+qcglobal.h file. Then update the NUMDAYS
+var (if required). NUMDAYS is located in
+stnstatcom.h.
+
+stnstat must be recompiled in the data8 area
+listed below by issuing the following command:
+
+make -f Makeqc stnstat
+
+LEC 9 May 96
+---------------------------------------------
+
+This dir contains the best stnstats program
+executable. It was formed by updating the
+stnstat.f s/w in /data8/vortex/QC/1995_QC_WORK/src to
+show HQC instead of MAPS as the processing
+method. The s/w was recompiled over there.
+Only the executable is located here.
+
+LEC 4 Oct 1995 (Updated lec 15 Oct 1998)
+
+Note that a copy of the src is now located
+in the SRC subdirectory here.

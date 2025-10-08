@@ -1,0 +1,84 @@
+#!/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>Displays the html form to edit a Project's 'General Notes'.  This form
+#  does not allow the user to add or delete a project.  Currently there is no
+#  such form within IVEN to do so.  A project must be added or delete using
+#  SQL - sorry.</p>
+#
+# <b>Expected Params: </b>
+#  <dd>project - the name of the project to edit (part of State).
+#
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Utils;
+use State;
+use ProjectDBA;
+use CGI;
+
+# Expected params:
+#  project - mandatory, part of state
+
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+edit_proj_notes( $state, $cgi );
+
+sub edit_proj_notes
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $pjname = $state->{project};
+	my $project = ProjectDBA::getFromDB( $pjname );
+
+	my $title = "Edit Project Notes";
+
+	println( $cgi->header( -expires=>"-1d" ) );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>Iven Edit: Project Notes</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+
+	my $ncols = 1;	
+	println( "<table cellpadding=5 cellspacing=0 width=100% class=editTable>" );
+	println( "<form action=proc_proj_notes method=\"POST\">" );
+		println( "<tr class=editHeading><td colspan=$ncols>$title</td></tr>" );
+
+		println( "<tr>" );
+			println( "<td><b>Project: </b> $pjname</td>" );
+		println( "</tr>" );
+		
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( "<tr>" );
+			println( "<td align=center>" );
+				println( "<textarea rows=33 cols=75 name=\"admin_notes\">" );
+					println( html_encode( $project->{admin_notes} ) );
+				println( "</textarea>" );
+			println( "</td>" );
+		println( "</tr>" );
+
+
+	  println( "<tr class=editHeading><td colspan=$ncols align=right>"  );
+			println( "<input type=submit name=action value=\"Update Notes\">" . &nbsp(2) );
+			println( "<input type=submit name=action value=\"Cancel\">" );
+		println( "</td></tr>" );
+	
+		my $hidden = $state->getHiddenFieldString( "proc_edit"=>$EPROJECT_NOTES );
+
+		println( $hidden );
+
+	println( "</table>" );
+	println( "</form>" );
+	println( "</html>" );
+	
+}
+
+1;

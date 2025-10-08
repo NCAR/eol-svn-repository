@@ -1,0 +1,31 @@
+#! /usr/bin/perl -w
+
+package ExcludeDatasetActionCGI;
+use strict;
+use lib ".";
+use lib "lib";
+use ActionCGI;
+use Dataset;
+our @ISA = ("ActionCGI");
+
+&main();
+
+sub main {
+    my $self = ExcludeDatasetActionCGI->new();
+    $self->buildPage("Exclude Dataset Action");
+}
+
+sub excludeDataset {
+    my ($self,$dataset,$source,$flag) = @_;
+    $self->{"DB"}->excludeFromDataset($dataset,$source,$flag);
+}
+
+sub processParams {
+    my ($self) = @_;
+
+    if ($self->param("mode") =~ /exclude/i) {
+	$self->excludeDataset($self->param("dataset"),$self->param("source"),1);
+    } else {
+	$self->excludeDataset($self->param("dataset"),$self->param("source"),0);
+    }
+}

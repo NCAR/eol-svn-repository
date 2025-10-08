@@ -1,0 +1,33 @@
+> groovy authorshipConnect.groovy ATLAS
+
+Created log file:	logs/log_20160331114722.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+Unable to find contact 344 for data set 46.758. Will insert contact.
+Unable to find contact 344 for data set 46.759. Will insert contact.
+Unable to find contact 344 for data set 46.760. Will insert contact.
+Unable to find contact 344 for data set 46.761. Will insert contact.
+Unable to find contact 344 for data set 46.763. Will insert contact.
+Unable to find contact 344 for data set 46.764. Will insert contact.
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 344, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '46.758';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 344, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '46.759';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 344, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '46.760';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 344, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '46.761';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 344, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '46.763';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 344, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '46.764';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

@@ -1,0 +1,18 @@
+#!/bin/perl -w
+
+my $file = $ARGV[0];
+
+open( IN, "<$file" ) or die( "unable to open file\n" );
+
+my $ln = 1;
+while( !eof( IN ) )
+{
+	my $str = <IN>;
+	my $len = length( $str );
+	if( $len > 80 )
+	{
+		print( "$ln: $len\n" );
+	}
+	$ln++;
+}
+close( IN );

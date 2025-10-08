@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>How To: Create the High Resolution Sounding Composite</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/dpg/GENERAL/dpg_howto.css">
+</head>
+
+<body>
+<h1>How To: Create the High Resolution Sounding Composite</h1>
+<h2>Table of Contents</h2>
+<ol>
+	<li><a href="#purpose">Purpose</a></li>
+	<li>Previous Versions<ol>
+		<li><a href="#version_rico">RICO_2004-2005</a></li>
+		</ol></li>
+	<li><a href="#directory">Directory Structure</a></li>
+	<li>Processing the Data<ol>
+	        <li><a href="#copy">Copy the CLASS Files</a></li>
+		<li><a href="#day">Creating the Day Files</a></li>
+		<li><a href="#codiac">Inserting into the Database</a></li>
+		</ol></li>
+	<li><a href="#software">Software</a></li>
+	<li><a href="#documents">Documentation</a></li>
+</ol>
+<hr>
+
+<a name="purpose"></a>
+<h3>Purpose</h3>
+<p>This document contains the instructions on how to generate the High Resolution Sounding Composite.</p>
+<hr>
+
+<h3>Previous Versions</h3>
+
+<a name="version_rico"></a>
+<h4>RICO (2004-2005)</h4>
+<table>
+	<tr><th>Software:</th><td>/work/RICO/upperair/composite/highres/software</td></tr>
+	<tr><th>Raw Data:</th><td>Comes from the final processed soundings</td></tr>
+	<tr><th>Final Data:</th><td>/archive/codiac/rico/upper_air/composite/highres</td></tr>
+</table>
+<hr>
+
+<a name="directory"></a>
+<h3>Directory Structure</h3>
+<table>
+	<tr><th>composite/highres/</th><td>The main directory for the processing.</td></tr>
+	<tr><td>codiac</td><td>The directory where the final day files are placed once they habe been created.</td></tr>
+	<tr><td>data</td><td>The directory where the files are copied to so the software can find it.</td></tr>
+	<tr><td>docs</td><td>The directory containing documentation about the processing and the data.</td></tr>
+	<tr><td>software</td><td>The directory where the software for the conversion is stored.</td></tr>
+</table>
+<hr>
+
+<h3>Processing the Data</h3>
+
+<a name="copy"></a>
+<h4>Copying the CLASS Files</h4>
+<p>Before the EBUFR files can be created, the CLASS files that are going to be included in the composite needed to be copied into the <b>data</b> directory.  This is done by using the <a href="../software/copy_class_files.pl">copy_class_files.pl</a> script.  This script needs to be edited to change the project's time of interest along with the names and locations of the CLASS files for each network.  The script fully prepares the data (aligning it into directories by network, making sure only the files in the time of interest are included, and gzipping the data).</p>
+<p class="code">./copy_class_files.pl</p>
+
+<a name="day"></a>
+<h4>Creating the Day Files</h4>
+<p>Once the data has been copied to the <b>data</b> directory, they need to be combined to form day files.  This is done using the <a href="../software/make_highres_dayfiles.pl">make_highres_dayfiles.pl</a> script.  This will read all of the files in the <b>data</b> directory and combine all the files with a nominal time in the same day together in their natural sort order.  The created day files will be placed in the <b>codiac</b> directory.</p>
+<p class="code">./make_highres_dayfiles.pl</p>
+
+<a name="codiac"></a>
+<h4>Inserting into the Database</h4>
+<p>With all of the day files created, they need to be inserted into the database.  This is a general process and is explained in the document: <a href="/dpg/GENERAL/soundings/howto_insert_text_class_soundings.html">How To: Insert Text CLASS Sounding Data</a>.</p>
+<hr>
+
+<a name="software"></a>
+<h3>Software</h3>
+<p>The following is a list of the contents of the <b>software</b> directory with a brief explanation of the file.</p>
+	<li><b><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/RICO/upperair/composite/highres/software/copy_class_files.pl">copy_class_files.pl</a></b>- Copy all of the final CLASS formated sounding data and prepare it to be converted into EBUFR.</li>
+	<li><b><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/RICO/upperair/composite/highres/software/make_highres_dayfiles.pl">make_highres_dayfiles.pl</a></b>- Combine the QC'ed CLASS files into day files.</li>
+</ul>
+<hr>
+
+<a name="documents"></a>
+<h3>Documentation</h3>
+<p>The following are a list of documents that may help with the conversion or are related to the raw data.</p>
+<ul>
+	<li><a href="/dpg/GENERAL/soundings/howto_insert_text_class_soundings.html">How To: Insert Text CLASS Sounding Data into the Database</a>- The instructions on how insert the EBUFR'ed sounding data into the database.</li>
+	<li><a href="#">How To: Create a High Resolution Sounding Composite</a>- This document.</li>
+	<li><a href="README_RICO_HighRes_sounding.html">README_RICO_HighRes_sounding.html</a>- The database readme for the RICO project.</li>
+</ul>
+<hr>
+
+<p class="foot">Last Updated: February 10, 2006 - Joel Clawson</p>
+</body>
+</html>

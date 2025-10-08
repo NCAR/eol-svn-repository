@@ -1,0 +1,60 @@
+26 August 2019
+
+None of those elements are of use for the skewt, so they can all be ignored. - Scot
+
+---------
+On Mon, Aug 26, 2019 at 12:53 PM Linda Cully <cully@ucar.edu> wrote:
+
+Scot - I've "successfully" run both the preproc software and the conversion to *.cls
+files.  I must mods to the conversion s/w to run automatically if called for Nairobi and
+will work on that so when Janet comes in Wed she will have code she should just be
+able to call.   I'm looking through the output and below is a list of UNKNOWN input
+element types. Let me know if I need to translate any of these and what to do with them.
+I will continue to work on the code and look at the output
+FYI,
+LEC
+P.S. Looks the output must be sorted (recs out of order) before it can be plotted. I will
+work on sorting and sample plotting soon.
+
+WARNING:  UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+WARNING:  UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 1.3, "units" : "kg" },
+WARNING:  UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+WARNING:  UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+WARNING:  UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+WARNING:  UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 30, "units" : "CODE TABLE" },
+WARNING:  UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+WARNING:  UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+WARNING:  UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+WARNING:  UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+WARNING:  UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 1, "units" : "FLAG TABLE" },
+WARNING:  UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+WARNING:  UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+WARNING:  UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 3, "units" : "Numeric" },
+WARNING:  UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+WARNING:  UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 0, "units" : "CODE TABLE" }
+WARNING:  UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+WARNING:  UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 3, "units" : "CODE TABLE" }
+WARNING:  UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+WARNING:  UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+------end of email------
+
+On Mon, Aug 26, 2019 at 8:23 AM Scot Loehrer <loehrer@ucar.edu> wrote:
+Linda,
+
+If possible, we would like to start up plotting skewts of high resolution BUFR data for the HIGHWAY Field Catalog as soon as possible.
+
+The files seem to be very similar to other international GTS BUFR data we've worked with and they work fine with bufr_dump.
+
+The station is: 63741 Nairobi, Kenya. The files are coming in here:
+/net/work/Projects/HIGHWAY/data_ingest/upperair/radiosonde/GTS/HKNC/BUFR
+
+There can be up to two soundings per day at 00 and 12 UTC, although they are not currently sending the high resolution BUFR data for every sounding.
+
+I'm thinking maybe trying your conversion process and seeing if it looks like a "simple" process or more involved process to generate the skewts and what amount of time might be needed to get a skewt cron process going. Also would need to know who would do the work so I can pass along to RAL so they know.
+
+Let me know if you have any questions.
+
+Thanks.
+Scot
+

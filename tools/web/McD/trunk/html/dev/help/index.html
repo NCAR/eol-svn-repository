@@ -1,0 +1,347 @@
+<html>
+<head>
+	<title>JOSS ML/DLN: Help Doc</title>
+	<link rel="STYLESHEET" type="text/css" href="help.css">
+</head>	
+<body>
+
+<center>
+<table border=0 width=100%>
+	<tr>
+		<td width=50%><img src=help.gif></td>
+		<td width=50% align=right><img src=help.gif></td>
+	</tr>
+</table>
+
+<table class=titleTable border=0 cellpading=20 cellspacing=1 width=60%>
+	<tr>
+		<td align=center>JOSS ML/DLN: Help Doc</td>
+	</tr>
+</table>
+<br>
+<table class=contentsTable border=0 cellpadin=5 cellspacing=5 width=90%>
+	<tr class=titleBar><td colspan=2>Contents:</td>
+	<tr>
+		<td width=50% align=center><font size=+1><b>Data Loading Notes</b></td>
+		<td width=50% align=center><font size=+1><b>Master Data Set List</b></td>
+	</tr>
+	<tr>
+
+		<!-- DLN contents -->
+		<td width=50% valign=top>
+			<table border=0 cellpadding=1 cellspacing=1 width=100%>
+
+				<tr class=contentsRow>
+					<td class=topic1><a href=#dln_v>Viewing Dataset Information</a></td>
+				</tr>
+					<tr class=contentsRow>
+						<td class=topic2><a href=#dln_v_list>'Listing' View</a></td>
+					</tr>
+						<tr class=contentsRow> <td class=topic3><a href=#dln_v_list_edit>Editing</a></td> </tr>
+						<tr class=contentsRow> <td class=topic3><a href=#dln_v_list_hide>Hide/Show</a></td> </tr>
+						<tr class=contentsRow> <td class=topic3><a href=#dln_v_list_sort>Sorting</a></td> </tr>
+						<tr class=contentsRow> <td class=topic3><a href=#dln_v_list_status>Status Icons</a></td> </tr>
+
+					<tr class=contentsRow>
+						<td class=topic2><a href=#dln_v_detail>'Detailed' View</a></td>
+					</tr>
+						<tr class=contentsRow> <td class=topic3><a href=#dln_v_detail_nav>Navigation</a></td> </tr>
+						<tr class=contentsRow> <td class=topic3><a href=#dln_v_detail_qcodiac>QCODIAC</a></td> </tr>
+
+				<tr class=contentsRow>
+					<td class=topic1><a href=#dln_a>Add/Edit Dataset Information</td>
+						<tr class=contentsRow> <td class=topic2><a href=#dln_a_id>Storm Id/Next Id</a></td> </tr>
+						<tr class=contentsRow> <td class=topic2><a href=#dln_a_ing>Ingest/Archive Location</a></td> </tr>
+						<tr class=contentsRow> <td class=topic2><a href=#dln_a_ext>External Contact</a></td> </tr>
+						<tr class=contentsRow> <td class=topic2><a href=#dln_a_rl>Remote URL</a></td> </tr>
+				</tr>
+			</table>
+		</td>
+
+		<!-- Master List contents -->
+		<td width=50% valign=top>
+			<table border=0 cellpadding=1 cellspacing=1 width=100%>
+				<tr class=contentsRow><td class=topic1><a href=#ml_v>Viewing Dataset Information</a></td>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_v_t>Datasets By Title</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_v_c>Datasets By Category</a></td> </tr>
+
+				<tr class=contentsRow> <td class=topic1><a href=#ml_a>Add/Edit Dataset Information</a></td>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_a_date>Date Posted</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_a_id>Storm Id</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_a_doc>Doc URL</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_a_rmt>Remote URL</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_a_status>Dataset Status</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_a_hide>Hide Dataset</a></td> </tr>
+
+				<tr class=contentsRow> <td class=topic1><a href=#ml_pa>Add/Edit Project Information</a></td>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_pa_name>Project Name</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_pa_fname>Full Name</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_pa_id>Storm Id Prefix</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_pa_logo>Logo Source</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_pa_lcss>Left CSS Source</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_pa_bcss>Body CSS Source</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_pa_active>Active</a></td> </tr>
+					<tr class=contentsRow> <td class=topic2><a href=#ml_pa_links>Edit Links</a></td> </tr>
+				<tr class=contentsRow> <td class=topic1><a href=#ml_ca>Add/Edit Categories</a></td>
+				<tr class=contentsRow> <td class=topic1><a href=#ml_la>Add/Edit Links</a></td>
+			</table>
+		</td>
+	</tr>
+	<tr class=titleBar><td colspan=2>&nbsp;</td>
+</table>
+
+<br><br>
+
+
+<!-- Data Loading Notes help table -->
+<table id=helpTable border=0 cellpading=4 cellspacing=4 width=95%>
+	<tr class=titleBar><td>Data Loading Notes</td></tr>
+	<tr class=helpTopic1><td><a name=dln_v>Viewing Dataset Information</td></tr>
+
+	<tr class=helpTopic2><td width=100%><a name=dln_v_list>'Listing' View</a></td></tr>
+		<tr><td width=100% align=center>
+			<table border=0 cellpadding=5 cellspacing=3 width=85% class=helpTable>
+				<tr>
+					<td class=helpInfo colspan=2>
+						The 'Listing' View of the Data Loading Notes displays basic information about the
+						datasets associated with a particular Project, Loader or Checker.
+					</td>
+				</tr>
+				<tr>
+					<td class=helpItem><a name=dln_v_list_edit><b>Editing</b></td>
+					<td class=helpInfo>
+						Clicking the <img src=../dln/images/edit.gif> icon will pull up the edit window to edit
+						the corresponding dataset. 
+					</td>
+				</tr>
+				<tr>
+					<td class=helpItem><a name=dln_v_list_hide><b>Hide/Show</b></td>
+					<td class=helpInfo>
+						<img src=dln_v_list_hide.gif><br>
+						Selecting an item from the <b>Hide</b> drop down box will hide all datasets with the 
+						corresponding attribute (Documented, Checked, Loaded etc.) from view.  To bring the hidden datasets
+						back into view select the same attribute from the <b>Show</b> drop down box.  Multiple
+						attributes can be hidden, selecting <i>Show All</i> from <b>Show</b> will bring all datasets
+						back into view.  
+					</td>
+				</tr>
+				<tr>
+					<td class=helpItem><a name=dln_v_list_sort><b>Sorting</b></td>
+					<td class=helpInfo>
+						<img src=dln_v_list_sort.gif><br>
+						Click the name of the column to sort by <b>Date, Title, Storm_id</b> etc.
+					</td>
+				</tr>
+				<tr>
+					<td class=helpItem><a name=dln_v_list_status><b>Status Icons</b></td>
+					<td class=helpInfo>
+						<ul style="list-style: none">
+							<li><img src=../dln/images/rl.gif> - Dataset is a link to a remote website, or page outside
+								of CODIAC.
+							<li><img src=../dln/images/doc.gif> - Dataset has a completed 'Readme' file.
+							<li><img src=../dln/images/loaded.gif> - Dataset has been loaded into CODIAC
+							<li><img src=../dln/images/checked.gif> - The entry in CODIAC has been checked by the dataset
+								checker.
+					</td>
+				</tr>
+			</table>
+		</td></tr>
+	
+	<tr class=helpTopic2><td width=100%><a name=dln_v_detail>'Detailed' View</a></td></tr>
+		<tr><td width=100% align=center>
+			<table border=0 cellpadding=5 cellspacing=3 width=85% class=helpTable>
+				<tr>
+					<td class=helpInfo colspan=2>The 'Detailed' View displays all Data Loading information for a particular
+						dataset.  This view is obtained by clicking on the dataset title in the <a href=#dln_v_list>
+						'Listing' View'</a>.
+				</tr>
+				<tr>
+					<td class=helpItem><a name=dln_v_detail_nav>Navigation</td>
+					<td class=helpInfo>
+						The <img src=../dln/images/prev.gif>&nbsp;&nbsp;<img src=../dln/images/next.gif> icons allow
+						you to navigate back and forth between datasets in the Project, Loader or Checker list.
+					</td>
+				</tr>
+				<tr>
+					<td class=helpItem><a name=dln_v_detail_qcodiac>QCODIAC</td>
+					<td class=helpInfo>
+						Clicking on the <font size=-1 color=blue face=Verdana>QCODIAC</font> link opens a new window with the 
+						QCODIAC results for the current dataset.  Displays the dataset description, on line physical 
+						directory listing, and off line physical directory listing in CODIAC.   
+						<a href=/dpg/TOOLS/qcodiac>QCODIAC Home</a>
+					</td>
+				</tr>
+
+			</table>
+		</td></tr>
+
+	<tr class=helpTopic1><td><a name=dln_a>Add/Edit Dataset Information</td></tr>
+	<tr><td width=100% align=center>
+		<table border=0 cellpadding=5 cellspacing=3 width=85%>
+			<tr>
+				<td class=helpItem><a name=dln_a_id>Storm Id/Next Id</td>
+				<td class=helpInfo>
+					In the <b>Storm Id</b> text field enter the CODIAC storm_id for the dataset.  If the dataset
+					does not have storm_id simply leave the field blank, do NOT enter <b>99.999</b>, doing so may 
+					cause problems when viewing the public side of the Master Data Set List.  Clicking on the
+					<font color=blue face=Verdana size=-1>Next Id</font> link will change the value in the text
+					field to the next available storm_id.  This is merely a suggestion of what should be used,
+					not mandatory.  <b>Note: </b> The Next Id link does not allows choose an available id, this
+					is a known bug that will be fixed in the near future.
+				</td>
+			</tr>
+			<tr>
+				<td class=helpItem><a name=dln_a_ing>Ingest/Archive Location</td>
+				<td class=helpInfo>
+					<b>Ingest Locaction</b> - the path where the person loading the dataset can find the data.<br>
+					<b>Archive Location</b> - the path the dataset should be archived in.
+				</td>
+			</tr>
+			<tr>
+				<td class=helpItem><a name=dln_a_ext>External Contact</td>
+				<td class=helpInfo>
+					Should contain the name and e-mail address of the person to contact when the data loading has been
+					completed, this is not necessarily the contact loaded in CODIAC.
+				</td>
+			</tr>
+			<tr>
+				<td class=helpItem><a name=dln_a_rl>Remote URL</td>
+				<td class=helpInfo>
+					If the dataset is linked to a remote website or a non-CODIAC webpage that URL should be entered here.
+					If the dataset is loaded into CODIAC leave this field blank. This URL is used by the Master Data Set List.
+					<img src=../dln/images/rl.gif>
+				</td>
+			</tr>
+		</table>
+	</td></tr>
+	<tr class=titleBar><td colspan=2>&nbsp;</td>
+</table>
+
+<br><br>
+<!-- Master List help table -->
+<table id=helpTable border=0 cellpading=2 cellspacing=2 width=95%>
+	<tr class=titleBar><td>Master Data Set List</td></tr>
+	<tr class=helpTopic1><td><a name=ml_v>Viewing Dataset Information</td></tr>
+		<tr class=helpTopic2><td width=100%><a name=ml_v_t>Datasets By Title</a></td></tr>
+			<tr><td width=100% align=center>
+				<table border=0 cellpadding=5 cellspacing=3 width=85%>
+					<tr><td class=helpInfo>Clicking <i>All Datasets By Title</i> in the left frame displays all the
+             datasets in the project.  To sort the list click the heading titles (Dataset Title, Date etc.).
+             This view is helpful because it is possible a dataset is not linked to a category and will therefore
+             not show up when viewing datasets by category.</td>
+				</table>
+			</tr><td>
+		<tr class=helpTopic2><td width=100%><a name=ml_v_c>Datasets By Category</a></td></tr>
+			<tr><td width=100% align=center>
+				<table border=0 cellpadding=5 cellspacing=3 width=85%>
+					<tr><td class=helpInfo>Clicking <i>All Data Categories</i> in the left frame displays all the
+             datasets sorted by project.  To view datasets in just one category click the cateogy names on 
+             the left, this will also show any sub-categories.
+				</table>
+			</tr><td>
+	<tr class=helpTopic1><td><a name=ml_a>Add/Edit Dataset Information</td></tr>
+		<tr><td class=helpInfo>Clicking the <img src=../ml/images/edit.gif> next to a dataset in the <i>By Title</i> view or the 
+          <i>By Category</i> view will produce a new window to edit the corresponding dataset.
+		</td></tr>
+
+	<tr><td width=100% align=center>
+		<table border=0 cellpadding=5 cellspacing=3 width=85%>
+			<tr>
+				<td class=helpItem><a name=ml_a_date>Date Posted</a></td>
+				<td class=helpInfo>This date should correspond to the date JOSS posted the dataset to the master list but can
+          be editted freely.  The <font color=blue size=-1><u>today</u></font> link places today's date in the Date Posted
+          field.  The <font color=blue size=-1><u>blank</u></font> link places 0000-00-00 in the Date Posted field and will
+          show up blank in the public view.	</td>
+			</tr>
+			<tr>
+				<td class=helpItem><a name=ml_a_id>Storm Id</a></td>
+				<td class=helpInfo>The CODIAC storm_id for the dataset.  If the dataset does not have a storm_id simply leave the
+          field blank, do NOT enter 99.999, doing so may cause problems in the public view.</td>
+			</tr>
+			<tr>
+				<td class=helpItem><a name=ml_a_doc>Doc URL</a></td>
+				<td class=helpInfo>The URL of the dataset's readme file or documentation. </td>
+			</tr>
+			<tr>
+				<td class=helpItem><a name=ml_a_rmt>Remote URL</a></td>
+				<td class=helpInfo>If the dataset is a remote website enter the URL here.  If the link in the ML should point to
+           the CODIAC dss? page leave this blank and be sure the Storm Id is correct.
+			</tr>
+			<tr>
+				<td class=helpItem><a name=ml_a_status>Dataset Status</a></td>
+				<td class=helpInfo><img src=status_drop_down.gif><br>
+           Select New, Updated, or In Progress to reflect the <i>status</i> of the dataset.  The associated icon
+           or text will then replace the date in the dataset list. </td>
+			</tr>
+			<tr>
+				<td class=helpItem><a name=ml_a_hide>Hide Dataset</a></td>
+				<td class=helpInfo>Clicking this checkbox hides the dataset from the public Master List and will by hilighted with a
+           dark gray in the editor.
+			</tr>
+		</table>
+	</td></tr>
+
+	<tr class=helpTopic1><td><a name=ml_pa>Add/Edit Project Information</td></tr>
+	<tr><td width=100% class=helpInfo>
+		Currently, the only way to add a dataset to the ML/DLN system is through the Master List.  
+		Click <i>Master Data Set List</i> at the top and then click <i>Add New Project</i> on the left.
+    This will bring up a new window which will allow you to add a new project.
+	</td></tr>
+	<tr><td width=100% align=center>
+		<table border=0 cellpadding=5 cellspacing=3 width=85%>
+		<tr>
+			<td class=helpItem><a name=ml_pa_name>Project Name</a></td>
+			<td class=helpInfo>The Project Name used in CODIAC (e.g. IHOP_2002).</td>
+		</tr>
+		<tr>
+			<td class=helpItem><a name=ml_pa_fname>Full Name</a></td>
+			<td class=helpInfo>The Full Project Name (e.g. Internatial H20 Project 2002).</td>
+		</tr>
+		<tr>
+			<td class=helpItem><a name=ml_pa_id>Storm Id Prefix</a></td>
+			<td class=helpInfo>The storm_id prefix used for the project's datasets (e.g. 77).  Used to
+         determine the next storm_id when adding new datasets.</td>
+		</tr>
+		<tr>
+			<td class=helpItem><a name=ml_pa_logo>Logo Source</a></td>
+			<td class=helpInfo>The source of the logo to place in the public view.  Refer to the footnotes of the
+				<i>Add/Edit Project</i> form for more details.  This field can be left blank.
+		</tr>
+		<tr>
+			<td class=helpItem><a name=ml_pa_lcss>Left CSS Source</a></td>
+			<td class=helpInfo>The source of the cascading style sheet to use in the left frame of the public view. 
+				Refer to the footnotes of the <i>Add/Edit Project</i> form for more details.  This field <u>cannot</u>
+        be blank, if unsure the default css file is left_def.css. </td>
+		</tr>
+		<tr>
+			<td class=helpItem><a name=ml_pa_bcss>Body CSS Source</a></td>
+			<td class=helpInfo>The source of the cascading style sheet to use in the body frame of the public view. 
+				Refer to the footnotes of the <i>Add/Edit Project</i> form for more details.  This field <u>cannot</u>
+        be blank, if unsure the default css file is body_def.css. 
+		</tr>
+		<tr>
+			<td class=helpItem><a name=ml_pa_active>Active</a></td>
+			<td class=helpInfo>This checkbox should <i>probably</i> always be checked.  If the project is flagged <i>inactive</i>
+  			(the checkbox is un-checked) the project will be hidden from the system.  The database will have to be
+        updated using SQL to reset the project to active. This could be considered a bug.</td>
+		</tr>
+		<tr>
+			<td class=helpItem><a name=ml_pa_links><img src=edit_links.gif></a></td>
+			<td class=helpInfo>Links to other webpages can be associated with a dataset to be placed under the <b>Related Links</b>
+        section of the publi view.  Refer to the <i>Add/Edit Links</i> portion of this help file.
+		</tr>
+		</table>
+	</td></tr>
+	
+	<tr class=titleBar><td colspan=2>&nbsp;</td>
+</table>
+
+
+<table border=0 width=100%>
+	<tr>
+		<td width=50%><img src=help.gif></td>
+		<td width=50% align=right><img src=help.gif></td>
+	</tr>
+</table>
+</body>
+</html>

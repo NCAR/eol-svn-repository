@@ -1,0 +1,131 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------
+# <p>The LatLong script is a CGI script that provides a web
+# interface for the lat/long conversion in the conversion
+# modules.</p>
+#
+# @author Joel Clawson
+# @version 3.0 (Version number used to match conversion version.)
+# <p>Refactored the original web interface into individual conversion
+# scripts and a super WebInterface module that the scripts inherit
+# from.</p>
+# <p>Updated to Version 3 of the conversion modules.</p>
+#
+# @author Joel Clawson
+# @version 1.0 Original Creation.
+##Module-----------------------------------------------------------
+package LatLong;
+use strict;
+use lib "..";
+use lib "/net/work/lib/perl/Utilities";
+use DpgConversions qw(:DEFAULT);
+use WebInterface;
+our @ISA = ("WebInterface");
+
+main();
+
+##------------------------------------------------------------------
+# @signature void main()
+# <p>Run the script that creates the lat/long conversion web 
+# interface.</p>
+##------------------------------------------------------------------
+sub main {
+    my $self = LatLong->new();
+    $self->makePage();    
+}
+
+##------------------------------------------------------------------
+# @signature String createForm()
+# <p>Create the HTML that defines the input form for the calculation.</p>
+# @output $form The HTML code.
+##------------------------------------------------------------------
+sub createForm {
+    my $self = shift;
+    my $form = "<table><tbody>\n";
+
+    # Make the entry row.
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Value:",$self->textfield("in_value"),$self->textfield(-name => "in_format",-default => "DD MM SS"));
+
+    # Make the result row.
+    $form .= sprintf("<tr class=result_line><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Result:",$self->getValue(),$self->popup_menu(-name => "out_format",-values => ["D","DM","DMS"]));
+
+    $form .= sprintf("<tr><td class=submit colspan=3>%s</td></tr>\n",$self->submit("Calculate"));
+
+    $form .= "</tbody></table>\n";
+
+    return $form;
+}
+
+##------------------------------------------------------------------
+# @signature String getCGI()
+# <p>Get the name of the script to call when the form is submitted.</p>
+# @output $cgi The script name.
+##------------------------------------------------------------------
+sub getCGI { return "other/latlong"; }
+
+##------------------------------------------------------------------
+# @signature String getEquationPage()
+# <p>Get the name of the web page that contains the equations for
+# the calculation.</p>
+# @output $page The equation web page.
+##------------------------------------------------------------------
+sub getEquationPage { "equations_calc.html#latlong"; }
+
+##------------------------------------------------------------------
+# @signature String getInstructions()
+# <p>Get the HTML containing the instructions on how to use the 
+# script.</p>
+# @output $instr The HTML instructions.
+##------------------------------------------------------------------
+sub getInstructions {
+    my $self = shift;
+    my $instr = "<p>Insert a date into the first field and its format in the second field.  Select the output format on the result line for the desired output format for the value.  The format recognizes the following characters as part of the format:<ul><li><b>D</b> - Degrees</li><li><b>M</b> - Minutes</li><li><b>S</b> - Seconds</li><li><b>-</b> - Negative Value</li></ul></p>\n";
+    return $instr;
+}
+
+##------------------------------------------------------------------
+# @signature String getOnSubmit()
+# <p>Get the javascript command to run when the form is submitted.</p>
+# @output $js The javascript command.
+##------------------------------------------------------------------
+sub getOnSubmit { return "javascript: return true;"; }
+
+##------------------------------------------------------------------
+# @signature String getTitle()
+# <p>Get the title of the script.</p>
+# @output $title The script title.
+##------------------------------------------------------------------
+sub getTitle { return "Convert Latitude/Longitude Value"; }
+
+##------------------------------------------------------------------
+# @signature String getValue()
+# <p>Get the calculated value or the &amp;nbsp; character when it
+# cannot be calculated.</p>
+# @output $value The float formated value.
+##------------------------------------------------------------------
+sub getValue {
+    my $self = shift;
+    if (defined($self->param("in_value"))) {
+	my @values = convertLatLong($self->param("in_value"),$self->param("in_format"),$self->param("out_format"));
+	return sprintf("%f&deg;",$values[0]) if ($self->param("out_format") eq "D");
+	return sprintf("%d&deg; %f'",$values[0],$values[1]) if ($self->param("out_format") eq "DM");
+	return sprintf("%d&deg; %d' %d\"",@values) if ($self->param("out_format") eq "DMS");
+    }
+    return "&nbsp;";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

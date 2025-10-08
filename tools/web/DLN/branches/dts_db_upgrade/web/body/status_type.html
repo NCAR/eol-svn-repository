@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Status and Type Description</title>
+  </head>
+
+  <body>
+      <h1>Status and Type Description</h1>
+
+      <h2>Statuses</h2>
+      <p>There are currently 6 different statuses defined in the DTS.  They each have a name, css style, and is_resolved flag.  The name is the display name for the status, the css style is the style used to display (usually an all lowercase name of the status that is defined in the stylesheets for the tools).  The is_resolved flag defines the status as resolved or not (whether someone needs to go back and look at the task).  This list is dynamic and can be added to quickly (while this page will not change).</p>
+
+      <h3 class="tbd">TBD</h3>
+      <p>TBD is to be done.  This status means that the marked task is ready to be done, but has not been started.</p>
+
+      <h3 class="done">Done</h3>
+      <p>Done is finished.  Everything that needs to be done to complete the task has been done and all issues resolved.</p>
+
+      <h3 class="skip">Skip</h3>
+      <p>Skip is not going to be done.  A skipped task was considered, but decided that it was not going to be done.</p>
+
+      <h3 class="na">N/A</h3>
+      <p>N/A is not applicable.  This is for tasks that don't apply for a dataset.  They were never considered because they did not make sense.</p>
+
+      <h3 class="inprogress">In Progress</h3>
+      <p>In Progress is currently being worked on.  This should be set on a task that has been started, but not completed.</p>
+
+      <h3 class="ongoing">On Going</h3>
+      <p>On Going is a resolved task that is continuous.  This should only be set for tasks that are operational and never quit once the task has been checked to ensure that the task is working properly.</p>
+
+      <h2>Types</h2>
+      <p>There are 5 different dataset types for the DTS.  This list is static, but can be expanded as needed.</p>
+
+      <h3>Source</h3>
+      <p>A source dataset is a dataset that is received directly from the source.  This may be a truly raw dataset or had some processing done by the source.  The data is untouched by us in whatever form it comes in.  It is often referred to as raw.</p>
+
+      <h3>Processed</h3>
+      <p>A processed dataset is a dataset that we processed (often into a different format).  These are the datasets that are typically in IVEN.</p>
+
+      <h3>Composite</h3>
+      <p>A composite is a specialized processed dataset that is a composite of processed datasets.  These dataset have previously been referred to as products (primarily in IVEN).</p>
+
+      <h3>Imagery</h3>
+      <p>An imagery dataset is a dataset consisting primarily of images.  These often are the datasets that have been included from the Field Catalog.</p>
+
+      <h3>Link</h3>
+      <p>A link dataset is a dataset that has its data located somewhere other than the archive and require a link from CODIAC to the data.</p>
+
+  </body>
+</html>

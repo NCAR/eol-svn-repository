@@ -1,0 +1,156 @@
+> groovy authorshipConnect.groovy SBI
+
+Created log file:	logs/log_20160413101258.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+Found contact 1001 for data set 62.034 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.035 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 171 for data set 62.064 with sort_key 0 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.064 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 1299 for data set 62.064 with sort_key 2 (instead of 3). Will update sort_key.
+Found contact 171 for data set 62.065 with sort_key 0 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.065 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 171 for data set 62.066 with sort_key 0 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.066 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 171 for data set 62.067 with sort_key 0 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.067 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 1001 for data set 62.075 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.079 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.080 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.081 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.082 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.083 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.084 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.085 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.086 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.087 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.088 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.089 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.090 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.091 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.092 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.093 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.094 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.095 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.096 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.097 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.098 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.099 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.100 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.101 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.102 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.103 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.104 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.105 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.106 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.109 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.110 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.111 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.112 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.113 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.159 with sort_key 65534 (instead of 1). Will update sort_key.
+Found contact 1001 for data set 62.165 with sort_key 65534 (instead of 1). Will update sort_key.
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6134 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6135 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6136 and contact_id = 171;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 6136 and contact_id = 1001;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 6136 and contact_id = 1299;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6137 and contact_id = 171;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 6137 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6138 and contact_id = 171;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 6138 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6139 and contact_id = 171;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 6139 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6140 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6141 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6142 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6143 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6144 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6145 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6146 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6147 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6148 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6149 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6150 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6151 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6152 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6153 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6154 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6155 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6156 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6157 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6158 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6159 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6160 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6161 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6162 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6163 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6164 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6165 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6166 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6167 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6168 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6169 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6170 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6171 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6172 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 6173 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 7227 and contact_id = 1001;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 7228 and contact_id = 1001;
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

@@ -1,0 +1,97 @@
+<html>
+<head>
+	<title>Docs: Master List (IHOP, BAMEX etc.)</title>
+</head>
+
+<body>
+
+<center><h1>Master List (IHOP, BAMEX etc.)</h1></center>
+<b>Status Description: </b> In Use by BAMEX, IHOP, NAME, PLATIN, SALLJEX and VOCALS
+<br><br>
+
+<hr>
+<br>
+	<ul>
+		<li><a href=#howto>How To: Create a New Project Master List</a>
+		<li><a href=#cgi>CGI Scripts</a>
+		<li><a href=#database>Database</a>
+		<li><a href=#problems>Problems/Issues</a>
+		<li><a href=#other>Other</a>
+	</ul>
+
+<hr>
+<br>
+<a name=howto><font size=+1><b><u>How To: Create a New Project Master List</u></b></font></a><br>
+<br>
+<b>Directory: </b><a href=howto>howto</a><br>
+<b>Actual Location: </b>/web/docs/dpg/master_list/howto
+<p>
+This directory contains an explaination of how to create a new master list for a new project, and the
+needed files.
+</p>
+
+<hr>
+<br>
+<a name=cgi><font size=+1><b><u>CGI Scripts</u></b></font></a><br>
+<br>
+<b>Actual Location: </b>/web/cgi-bin/master
+<p>
+This directory contains a sub-directory for each project using the master list.  Within each project 
+directory is a copy of the master_list script which allows users to edit the project's master list.
+The script is essentially the same for each project with a few changes to constant variables at the 
+top.	
+</p>
+
+<hr>
+<br>
+<a name=database><font size=+1><b><u>Database</u></b></font></a><br>
+<p>
+The <i>How To</i> above explains how to add projects to the database.  Each project has it's
+own set of tables (i.e. when a new project is added a new set of tables have to be created).  
+These files explain only one set of these tables.
+</p>
+To access the database:
+	<dd>mysql -h hurricane -u stormdba -p ml
+	<dd>See John or Don for the password <br>
+
+<br>
+<b>Database Architecture Description: <a href=database/dbinfo.txt>database/dbinfo.txt</a></b><br>
+<b>SQL 'CREATE' Statements: <a href=database/create.sql>database/create.sql</a></b><br>
+<br>
+
+<br>
+<hr>
+<br>
+<a name=problems><font size=+1><b><u>Problems/Issues</u></b></font></a><br>
+<p>
+<b>'New!' Icon:</b><br>
+In May, 2004 a 'new' icon feature was implemented such that if a dataset was added to the system
+within the last 90 days a 'New!' icon is placed above the date.  Since the public side of the ML
+system is not dynamic - the public views a static html file as opposed to some CGI script which
+queries the database - these 'New!' icons can become out-of-date if the master list is not
+updated for a long period of time.  Each time a project's master list is updated the script writes a new static
+html file for the public.  When this file is written it checks each dataset to see if it requires
+a 'New!' icon.  So only one dataset has to be updated to remove any out-of-date 'New!' icons.
+</p>
+
+<p>
+<b>Does not support multiple projects</b><br>
+This system was originally written for IHOP_2002 and not for use by multiple projects.  Therefore
+each time a new project is added a new set of tables has to be created and a new version of the
+script has to be set up.  The Improved Master List was developed to get rid of all the down-falls 
+of this system but was never put into use.
+<br>
+<hr>
+<br>
+<a name=other><font size=+1><b><u>Other</u></b></font></a><br>
+<p>
+</p>
+<br>
+<hr>
+<b>Author: </b>Dan Sullivan<br>
+<b>Created: </b>May, 2004
+<br>
+<br>
+
+</body>
+</html>

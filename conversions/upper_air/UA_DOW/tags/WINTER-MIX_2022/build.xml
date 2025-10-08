@@ -1,0 +1,183 @@
+<!-- This is the ant build.xml file for the UA DOW US sounding processing. -->
+<project name="WINTRE-MIX_2022" default="compile" basedir=".">
+
+    <!-- Constants used in the build file. -->
+    <!-- User must ensure these dirs are created before executing ant commands. -->
+    <property name="build" location="build" />
+    <property name="build.classes" location="build/classes" />
+    <property name="src" location="src" />
+    <property name="fieldproject" location="WINTRE-MIX_2022" />
+    <property name="input" location="/net/work/Projects/WINTRE-MIX/data_processing/upper_air/radiosonde/UA_DOW_US/raw_data" />
+    <property name="output" location="/net/work/Projects/WINTRE-MIX/data_processing/upper_air/radiosonde/UA_DOW_US/output_esc" />
+    <property name="autoQC_logs" location="logs" />
+    <property name="autoqc_props" location="software" />  <!-- Loc of file named us_plains_autoqc.properties -->
+    <property name="dayfiles" value="dayfiles" />
+    <property name="final" value="final" />
+    <property name="5mb" value="5mb" />
+    <property name="50m" value="50m" />
+
+    <!-- Define the class path containing necessary jar files for processing. -->
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <pathelement path="${build.classes}" /> 
+
+        <fileset dir="/net/work/lib/java">
+            <include name="utilities.jar" />
+            <include name="upper_air.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/extractors">
+            <include name="esc_extractor.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/checkers">
+            <include name="esc_format_checker.jar" />
+        </fileset>
+
+        <fileset dir="/net/work/bin/dayfiles">
+            <include name="upper_air_dayfile.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/autoqc">
+            <include name="autoqc.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/sorters">
+            <include name="esc_record_sorter.jar" />
+        </fileset>
+    </path>
+
+    <!-- Extract the 50m level data from the final QC'ed high res soundings. -->
+    <!-- Add in calls to 50m software here. -->
+    <target name="50m-extract">
+        <!-- Execute the 50m extraction. -->
+        <java classname="????????" fork="yes">
+            <arg value="-Z" />
+            <arg value="${dayfiles}" />
+            <arg value="${50m}" />
+            <arg value="${50m}/50m_extract.log" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+        <!-- Check the file format of the 50m data files. -->
+        <java classname="dmg.ua.sounding.check.ESCCheckFile" fork="yes">
+            <arg value="${50m}" />
+            <arg value="${50m}/check_format_50m.log" />
+            <arg value="\.50m(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+
+    <!-- Extract the 5mb pressure level data from the final QC'ed high res soundings. -->
+    <target name="5mb-extract">
+        <!-- Execute the pressure extraction. -->
+        <java classname="dmg.ua.sounding.extract.ESC5mbExtractor" fork="yes">
+            <arg value="-Z" />
+            <arg value="${dayfiles}" />
+            <arg value="${5mb}" />
+            <arg value="${5mb}/extract.log" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+        <!-- Check the file format of the 5mb data files. -->
+        <java classname="dmg.ua.sounding.check.ESCCheckFile" fork="yes">
+            <arg value="${5mb}" />
+            <arg value="${5mb}/check_format_5mb.log" />
+            <arg value="\.05mb(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <!-- Perform autoQC checking. Run "ant autoqc"  -->
+    <target name="autoqc" depends="compile">
+        <copy todir="${build.classes}">
+            <fileset dir="${autoqc_props}">
+                <include name="*.properties" />     <!-- ENSURE USING CORRECT AUTOQC FILE. -->
+            </fileset>
+        </copy>
+        <java classname="dmg.ua.sounding.autoqc.UpsondeESCAutoQC" fork="yes"> <!-- The class to be run to autoqc the upsondes -->  <!-- ENSURE USING CORRECT TYPE/subclass of autoqc.  See http://dmg.eol.ucar.edu/software/tools/upper_air/autoqc/-->
+            <arg value="us_plains_autoqc" />
+            <arg value="${output}" />        <!-- The directory where the source files are located -->
+            <arg value="${final}" />         <!-- The directory where the QC files will be stored after they are created -->
+            <arg value="${autoQC_logs}" />
+            <arg value="\.cls(\.gz)?$" />    <!-- The pattern to match against the file names to include in the QC -->
+            <classpath refid="classpath" />  <!-- The classpath containing the classes needed for the autoqc to run -->
+        </java>
+        <antcall target="-check-format">     <!-- ***After autoqc, check the format of the ESC files.***  -->
+            <param name="directory" value="${final}" />
+            <param name="logfile" value="${final}/check_format_qc.log" />
+        </antcall>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build.classes}" includeantruntime="false">
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build.classes}" />
+    </target>
+
+    <!-- Check format. This is an internal call to this Ant Build file. Note the preceeding dash to the name.  -->
+    <target name="-check-format"> 
+        <java classname="dmg.ua.sounding.check.ESCCheckFile" fork="yes">
+            <arg value="${directory}" />
+            <arg value="${logfile}" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="check-format-ESC" > <!-- *** Check converted ESC formatted files.  Run "ant check-format-ESC"*** -->
+        <antcall target="-check-format"> 
+            <param name="directory" value="${output}" />
+            <param name="logfile" value="${output}/check_format_cnvESC.log" />
+        </antcall>
+    </target>
+
+    <target name="dayfiles">
+        <java classname="dmg.ua.sounding.dayfile.ESCDayFileCreator" fork="yes"> 
+            <arg value="-Z" />        <!-- Don't gzip the created day files  -->
+            <arg value="WINTRE-MIX_2022_UA_DOW_US_" />  <!-- Prefix before the date in the output file names -->
+            <arg value="final" />     <!-- The directory where the source files used to create the day files can be found -->
+            <arg value="dayfiles" />  <!-- The directory where the dayfiles will be stored after they are created -->
+            <arg value="\.cls.qc(\.gz)?" /> <!-- The pattern to match against the file names to include in the day files -->
+            <classpath refid="classpath" /> <!-- The classpath containing the classes needed for the day file creator to run -->
+        </java>
+    </target>
+
+    <!-- Convert GTS BUFR Processed (*.preproc) files to ESC cls files  -->
+    <!-- Not used for  UA DOW US processing -->
+    <target name="convert_GTSBUF_preproc">
+        <echo> Execute GTSBUFR_Radiosonde_Converter.pl  - YES ARGS</echo>
+        <exec executable="/bin/tcsh">
+            <arg value="runGTSBUFRargs" />
+        </exec>
+
+        <echo> Execute GTSBUFR_Radiosonde_Converter.pl   - NO ARGS</echo>
+        <exec executable="/bin/tcsh">
+            <arg value="runGTSBUFRnoargs" />
+            <arg value="${fieldproject}" />
+            <arg value="${input}" />
+            <arg value="${output}" />
+        </exec>
+
+    </target>
+
+
+    <!-- Sort ESC cls files. This is the same sort as used by the NWS sounding processing. -->
+    <target name="sort_esc" depends="compile">
+        <java classname="dmg.ua.sounding.sorter.ESCRecordSorter" fork="yes">
+            <arg value="-T" />
+            <arg value="ASC" />
+            <arg value="${output}" />
+            <arg value="${output}/record_sorter.log" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+        <antcall target="-check-format">
+            <param name="directory" value="${output}" />
+            <param name="logfile" value="${output}/check_format_sorted.log" />
+        </antcall>
+    </target>
+
+</project>

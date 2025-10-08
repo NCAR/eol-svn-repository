@@ -1,0 +1,109 @@
+
+##Module-----------------------------------------------------------------------
+# <p>Displays the drop down box of products for which a dataset can 
+#  be declared as an 'extraction from.'  These extractions determine the 
+#  dependencies amongst products.  This form is displayed after someone has
+#  entered information into the edit_ds_admin form.  Hence, this file
+#  is 'required' by the proc_ds_admin script and the edit_extraction is
+#  called by it.  Just some details that may help.</p>
+#
+# @author Dan Sullivan  
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Utils;
+use State;
+use ProductDBA;
+use ExtractionDBA;
+use CGI;
+
+# params:
+#  state, cgi, ds to edit
+sub edit_extraction
+{
+	my $state = shift;
+	my $cgi = shift;
+	my $ds = shift;
+	my $mode = shift;
+
+	println( $cgi->header( -expires=>"-1d" ) );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>Iven Edit: Dataset Admin</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+
+	my $pdsource = getPdSource( $ds );
+
+	my $ncols = 2;	
+	println( "<table cellpadding=5 cellspacing=0 width=100% class=editTable>" );
+	println( "<form action=proc_extraction>" );
+		println( "<tr class=editHeading><td colspan=$ncols>Edit Extraction</td></tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Project:</b></td>" );
+			println( "<td>$ds->{pjname}</td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Product:</b></td>" );
+			println( "<td>$ds->{pdname}</td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Dataset:</b></td>" );
+			println( "<td>$ds->{dsname}</td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Select Source Product:</b></td>" );
+			println( "<td>$pdsource</td>" );
+		println( "</tr>" );
+
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( "<tr class=editHeading>" );
+			println( "<td colspan=$ncols align=right>" );
+				println( "<input type=submit name=action value=\"Set Extraction\">" );
+				println( &nbsp(2) );
+				println( "<input type=submit name=action value=\"Cancel\">" );
+				$state->{edit} = undef();
+				my $hidden = $state->getHiddenFieldString( proc_edit=>$EEXTRACTION, source_dsname=>$ds->{dsname}, source_pdname=>$ds->{pdname} );
+				println( $hidden );
+			println( "</td>" );
+		println( "</tr>" );
+
+	println( "</table>" );
+	println( "</form>" );
+	println( "</html>" );
+}
+
+sub getPdSource
+{
+	my $ds = shift;
+
+	my $pds = ProductDBA::getByProject( $ds->{pjname}, "pdname" ); 
+	my $ex = ExtractionDBA::getFromDB( $ds->{dsname}, $ds->{pdname}, $ds->{pjname} );
+	my $pdsource = undef();
+	$pdsource = $ex->{pdsource} if( defined( $ex ) );
+
+	my $select = "<select name=pdsource>";
+	$select = $select . "<option value=none>--NONE--</option>";
+
+	foreach my $pd (@$pds)
+	{
+		my $selected = "";
+		if( $pd->{pdname} ne $ds->{pdname} )
+		{
+			$selected = "selected" if( $pdsource && $pdsource eq $pd->{pdname} );
+			$select = $select . "<option value=\"$pd->{pdname}\" $selected>$pd->{pdname}</option>";
+		}
+	}	
+
+	$select = $select . "</select>";
+
+	return $select;
+}
+1;

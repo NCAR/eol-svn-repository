@@ -1,0 +1,85 @@
+#!/usr/bin/perl
+
+#$Log: okmesoftp,v $
+#Revision 1.2  2006/09/26 22:59:16  joss
+#Initial revision
+#Revision 1.3  2008/04/01 11:43:37  cds
+#added soil moisture data
+#Revision 1.4  2008/08/28 11:41:03  cds
+#added back chmod and changed die to warn
+#
+
+use FindBin qw($Script $Bin);
+
+# $monitor="stott mark";
+$monitor="stott";
+open STDOUT, "|/bin/mailx -s '$Script output' $monitor" or die
+    "Couldn't redirect stdout, $!";
+open STDERR, ">&STDOUT" or die "Couldn't dup stdout, $!";
+select STDERR; $|=1;
+select STDOUT; $|=1;
+
+print "I am $Bin/$Script running on ",`/bin/hostname`;
+print "\n";
+
+chdir $Bin or die "Couldn't cd to $Bin: $!";
+$LOG="$Script.log";
+
+sub log_msg {
+    my ($msg)=@_;
+    my ($sec,$min,$hour,$mday,$mon,$year) = localtime(time);
+    my $timestamp=sprintf("%04d%02d%02d %02d%02d%02d", $year+1900, $mon+1,
+        $mday, $hour, $min, $sec);
+    open(LOG, ">>$LOG") or die "couldn't open $LOG, $!";
+    print LOG "$timestamp $msg";
+    close(LOG);
+}
+
+($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+$year += 1900;
+# We want two months ago, and month is 0-based, so subtract one month and
+# compensate for year boundary.
+$mon--;
+if ($mon < 1) { $mon+=12; $year--; }
+
+$date=sprintf("%04d%02d",$year, $mon);
+
+log_msg("Retrieving OKMESO mwq data for $date\n");
+
+$FTP="/usr/local/bin/ncftpget -F -V -f okmeso.cfg . 'partners/mesonet/mwq/${date}*'";
+
+$result=system($FTP);
+die("ncftpget failed, $result") if $result;
+#log_msg("Compressing retrieved data\n");
+#$result=system("/opt/bin/gzip ${date}*.mwq");
+#die("gzip failed, $result") if $result;
+
+$archive="/export/archive/data/eop/OKMESO/OCS_mwq/$year";
+
+system("/bin/mkdir -p $archive") unless -d $archive;
+log_msg("Moving data to archive\n");
+$result=system("/bin/mv ${date}*.mwq $archive");
+warn("mv failed, $result") if $result;
+$result=system("/bin/chmod -R g+w ${archive}/${date}*.mwq");
+warn("chmod failed, $result") if $result;
+
+log_msg("Retrieving OKMESO som data for $date\n");
+
+$FTP="/usr/local/bin/ncftpget -F -V -f okmeso.cfg . 'partners/mesonet/som/${date}*'";
+
+$result=system($FTP);
+die("ncftpget failed, $result") if $result;
+#log_msg("Compressing retrieved data\n");
+#$result=system("/opt/bin/gzip ${date}*.mwq");
+#die("gzip failed, $result") if $result;
+
+$archive="/export/archive/data/eop/OKMESO/OCS_som/$year";
+
+system("/bin/mkdir -p $archive") unless -d $archive;
+log_msg("Moving data to archive\n");
+$result=system("/bin/mv ${date}*.som $archive");
+die("mv failed, $result") if $result;
+$result=system("/bin/chmod -R g+w ${archive}/${date}*.som");
+warn("chmod failed, $result") if $result;
+
+print "Completed with no errors.\n";

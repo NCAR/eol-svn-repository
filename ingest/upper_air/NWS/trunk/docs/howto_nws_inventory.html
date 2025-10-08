@@ -1,0 +1,285 @@
+<html>
+<head>
+	<title>How To: NWS Sounding Inventory</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" href="/css/howto.css" type="text/css">
+</head>
+
+<body>
+<h1>How To: National Weather Service (NWS) Sounding Inventory</h1>
+<h2 class="header">From NCDC</h2>
+
+<a name="toc"></a><h2>Table of Contents</h2>
+<ul>
+	<li><a href="#quick">Quick Run</a> (Commands to Run)</li>
+        <li><a href="#error">Error Correction</a></li>
+	<li><a href="#setup">Setup and Background</a><ul>
+		<li><a href="#files">File Patterns</a></li>
+		<li><a href="#directory">Directory Structure</a></li>
+		</ul></li>
+	<li><a href="#software">Software</a><ul>
+		<li><a href="#repos">Repository</a></li>
+		<li><a href="#ascii">Inventorying MicroArt ASCII Files</a></li>
+		<li><a href="#binary">Inventorying MicroArt Binary Files</a></li>
+		<li><a href="#rrs">Inventorying RRS Buffer Files</a></li>
+		<li><a href="#mss">Archive to the MSS</a></li>
+		</ul></li>
+	<li><a href="#docs">Documentation</a></li>
+</ul>
+
+<a name="quick"></a><h2>Quick Run</h2>
+<p>To run the inventory of the NWS soundings, run the following commands from <span class="machineName">tsunami</span>.  (They should also run on <span class="machineName">tornado</span>, but only as a last resort.)  Replace the <b>MM</b> with the month (does not need a leading 0 for one digit months) to be processed and the <b>YYYY</b> with the four digit year to be processed.</p>
+<p>Both the MicroArt ASCII and RRS inventory scripts use the <span class="softwareName">merlot:/net/work/operational/sounding/NWS/docs/NWS_station.list</span> file for creating the inventory.  The station list contains station IDs, descriptions, start and end dates for the MicroArt data and the RRS start date.  These values are used for comparisons and determining which stations should appear in the final inventory file.</p>
+
+<p class="code">cd /net/work/operational/sounding/NWS/bin</p>
+<p class="code">./NWS_binary_archive.pl MM YYYY</p>
+<p class="code">./NWS_ascii_archive.pl MM YYYY</p>
+
+<br><br>
+<p><b><i>BEWARE::</i> In Feb 2008, the RRS script named <b>"/NWS_rrs_archive.pl"</b> was converted to run as a cron job.</b> <br><br>
+
+<b><font color=red>
+To prevent multiple instances of the cron script from running at the same time, the script now 
+generates a <em>lock file</em> which is deleted at the end of a clean execution.
+This lock file, <span class="softwareName">/net/work/operational/sounding/NWS/RRS_inventory.lock</span>,
+will remain if the script quits unexpectedly, and the cron script will not be able to restart 
+until the lock file is manually deleted. An error will be generated every hour until the file is removed!</p>
+</font></b>
+
+<p>If it is time to run the final year inventory (not when the December data is received, but when Scot feels confident that we will not receive any more back data for that year), then the mass store script will need to be run to archive all of the data for the year. Call the  Mass Store script with the following form:</p>
+<p class="code">./NWS_MSS_archive.pl YYYY</p>
+<p class="note">If you have just processed the March or April data and the previous year has yet to be archived, you may want to check with Scot to see if the year should be archived on the MSS.  (This tends to be forgotten since it is not done often.)</p>
+
+<a name="error"></a><h2>Error Correction</h2>
+
+<p><b>Joel's verbage::</b></p>
+<p>While stations are still switching from MicroArt to RRS, errors will arrive by email of the form:</p>
+<p class="code">Station XXX not found as a RRS station in the station list for <i>filename</i></p>
+<p>This is caused by a new station being changed to an RRS station and the station list not yet knowing that this particular station is not RRS.  The station list document <code>merlot:/net/work/operational/sounding/NWS/docs/NWS_station.list</code> must have the final column of the row containing the new station updated with the first month the data is received for the station.</p>
+
+<p><b>LEC's verbage::</b></p>
+<p>NCDC is gradually changing stations from MicroArt format to RRS format. When this happens for a 
+particular station, the RRS cron script will fail for that station. 
+The user will receive an email error message that appears to come from loehrer@ucar.edu and is entitled
+"NCDC NWS RRS Inventory Script". Each line in the email will be of the form:</p>
+
+<p class="code">Station XXX not found as a RRS station in the station list for <i>filename</i></p>
+
+<p> This email error will be issued every time the RRS cron script runs (10 minutes after every hour) until a correction is made to
+the NWS_station.list file. Update file <code>merlot:/net/work/operational/sounding/NWS/docs/NWS_station.list</code> . Find the new RRS station (XXX) in the file and update the last column in that row to show the 
+first year and month this station's data is received as RRS. Here's an example for station 23050 which is ABQ.
+<p class="code">Line in NWS_station.list file before update: KABQ;23050;72365;Albuquerque, NM;000001;;</p>
+<p class="code"> Line in NWS_station.list file after update: KABQ;23050;72365;Albuquerque, NM;000001;;200805</p>
+<p> See the header in file NWS_station.list for a description of each column.</p>
+
+<a name="setup"></a><h2>Setup and Background</h2>
+<p>The National Weather Service (NWS) archives upper air data for each site (<a href="http://www.ua.nws.noaa.gov/nws_upper.htm">Map</a>) every month at the National Climate Data Center (NCDC).  NCDC sends us the data every month.  More information can be found on the <a href="http://www.ua.nws.noaa.gov/">NWS Upper Air Web Site</a>.</p>
+<p class="note">There is generally a lag of two months by the time that NCDC sends the MicroArt files to us.  As of Dec. 2005, NCDC is planning to send the RRS files real time.  There are occassionally replacements files that are received and the archives need to be updated by replacing the RRS files in our archive.</p>
+
+<p>The Radiosonde Replacement System (RRS) files will eventually replace the MicroArt files.  As the NWS changes their sites to use the RRS, the MicroArt files will stop and the RRS files will begin with a small gap in the data.  The change over process is going to take several years and began in the fall of 2005.  More information on the RRS can be found on the <a href="http://www.ua.nws.noaa.gov/RRS.htm">NWS RRS Web Site</a>.</p>
+
+<p>The inventory begins when Scot Loehrer receives and email from NCDC saying that all of the data has been sent to the <em>INGEST</em> directory and the data is ready to begin.  He will send an email to you, saying that you are to begin the data processing.</p>
+
+<a name="files"></a><h3>File Patterns</h3>
+<p>The file patterns follow a modified Perl regular expression syntax.  The descriptions are:</p><ul>
+	<li><b>()</b> - Anything in parentheses is grouping a set of characters into an entity.</li>
+	<li><b>\d{1}</b> - A sequence of numbers where the number in the bracket is the number of digits in the sequence.</li>
+	<li><b>\l{1}</b> - A sequence of letters where the number in the bracket is the number of letters in the sequence.</li>
+	<li><b>abc123</b> - Specific characters.</li>
+</ul>
+
+<a name="files_ascii"></a><h4>MicroArt ASCII Files</h4>
+<p>The MicroArt ASCII files are typically compressed (though they occassionally are not) files that contain all of the soundings for a month.</p>
+<p class="code">File Pattern: (\d{5})(\d{2}).(\d{2})(.gz) Example: 2406105.10.gz</p>
+<p>The first entity is a five digit WBAN number for the site.  The second entity is the last two digits of the year the data were collected.  The third entity is the month the data were collected in a zero filled two digit number.  The fourth entity (.gz) is an optional ending showing that the data file has been compressed.  If the file was not compressed the (.gz) will not exist.</p>
+<p>In the example, the file is the data for station 24061 during October 2005.</p>
+<p>You may also find other files similarly named but with an extra number before the .gz (i.e. 2406105.10.1.gz).  This occurs when another file for the same year and month for a station arrives that is not exactly the same as the other file(s).  The script (or someone else who manually checked) added the value and archived it.  This is done to keep all of the information since there is usually not time to go and figure out what is the best data.</p>
+
+<a name="files_binary"></a><h4>MicroArt Binary Files</h4>
+<p>The MicroArt Binary files are the binary files that contain the same data as the ASCII files.  These files are very very rarely used and are just archived.  Each file contains a single sounding.</p>
+<p class="code">File Pattern: (\l{3})(\d{1})(\d{3}).S(\d{2}) Example: MPX2455.S05.</p>
+<p> The first entity is the three character site identifier given to the site.  The second entity is the number for the release at that ascension number.  The third entity is the three digit ascension number for the sounding.  The forth entity is the last two digits of the year that the sounding was released.</p>
+<p>In the example, the file is the second release of ascension number 455 in 2005 for station MPX (Chanhassen/Minneapolis, MN).</p>
+<p class="note">The <em>S</em> in the file name is there for all of the binary data files and may either be uppercase or lowercase, depending on the station.</p>
+<p class="note">The <em>pgac</em> site files do not have the entire year in their file names.  The last digit is cut off, presumably because of a maximum character limit on file names on the machines at the site.</p>
+<p>You may also find other files similarly named but with an extra number before the .gz (i.e. MPX2455.S05.1.gz).  This occurs when another file for the same year and ascension for a station arrives that is not exactly the same as the other file(s).  The script (or someone else who manually checked) added the value and archived it.  This is done to keep all of the information since there is usually not time to go and figure out what is the best data.</p>
+
+<a name="files_rrs"></a><h4>RRS Buffer Files</h4>
+<p>The RRS Buffer Files are in the buffer binary format.  NCDC has provides us with the software to decode the buffer files into text files.  See the <a href="/projects/operational/sounding/NWS/RRS/docs/howto_rrs_software.html">How To: RRS Software</a> page for more information.</p>
+<p class="code">File Pattern: (\d{5})_(\d{4})(\d{2})(\d{2})(\d{2}) Example: 94983_2005112600</p>
+<p>The first entity is the five digit WBAN number for the site.  The second entity is the four digit year of the sounding.  The third entity is the two digit month of the sounding.  The fourth entity is the two digit day of the sounding.  The fourth entity is the two digit hour of the sounding.</p>
+<p>The date and time for the soundings are the nominal release, not the actual release.</p>
+
+<a name="directory"></a><h3>Directory Structure</h3>
+<p>The following table is the list of directories in the <em>HOME</em> directory for the NWS soundings.  The <em>HOME</em> directory is <b><code>/net/work/operational/sounding/NWS</code></b>.</p>
+<table border=1>
+	<tr><th class="dir">archive</th>
+		<td>The local archive for all of the NWS data.  It contains separate directories for the ASCII, binary, and RRS files.</td>
+		</tr>
+	<tr><th class="dir">archive/ascii_files</th>
+		<td>The local archive for the MicroArt ASCII files before they are put onto the mass store.  This directory is divided into year directories which are further divided into station directories.</td>
+		</tr>
+	<tr><th class="dir">archive/binary_files</th>
+		<td>The local archive for the MicroArt Binary files before they are put onto the mass store.  This directory is divided into year directories which are divided by station directories.</td>
+		</tr>
+	<tr><th class="dir">archive/rrs_files</th>
+		<td>The local archive for the RRS buffer files before they are put onto the mass store.  This directory is divided into year directories which are further divided into station directories then by month directories.</td>
+		</tr>
+        <tr><th class="dir">archive/rrs_text</th>
+                <td>The local archive for the RRS ASCII files extracted from the buffer files.  This directory is divided into year directories which are further divided inot station directories then by month directories.</td>
+                </tr>
+	<tr><th class="dir">bin</th>
+		<td>The directory where the executable scripts are located.  These should be the best working version while the files in src may be being worked on.</td>
+		</tr>
+	<tr><th class="dir">docs</th>
+		<td>The directory for storing the documentation on the NWS soundings.  This includes readmes, howtos, station lists, etc.  The RRS documentation will be with the RRS software under the RRS directory.</td>
+		</tr>
+	<tr><th class="dir">docs/inventory</th>
+		<td>The directory that holds the inventory files for the three file types.  The files are stored in directories by year.</td>
+		</tr>
+	<tr><th class="dir">logs</th>
+		<td>The directory that holds the logging files generated by the inventory software.  The files are stored in directories by year.  <font class="note">The scripts no longer generate log files (1/2006).  This directory may no longer exist if these logs are no longer going to be kept.</font></td>
+		</tr>
+	<tr><th class="dir">mss_stage</th>
+		<td>The directory used by the MSS script for creating and holding the tar files before they have been successfully copied to the mass store.  <em class="note">This directory will be created when needed and deleted after the script has run and if everything ran correctly.  Otherwise, there will be tar balls that were not copied to the mass store remaining in the directory.</em></td>
+		</tr>
+	<tr><th class="dir">rrs_work</th>
+		<td>The directory that the scripts use for uncompressing the buffer files to extract the metadata out while performing the inventory.  <em class="note">This directory will be created when needed and deleted after the script has run if everything ran smoothly.  Otherwise, there will remain files for the problematic RRS files after execution.</em></td>
+		</tr>
+</table>
+<p>The following table contains other directories used by the scripts that are not under the <em>HOME</em> directory.  This includes directories like that mass store locations and the ingest directory.</p>
+<a name="dir_other"></a>
+<table border=1>
+	<tr><th class="dir">/ingest/ncdc</th><td>The directory where NCDC puts the files on our system.</td></tr>
+	<tr><th class="dir">http://svn.eol.ucar.edu/svn/dmg/ingest/upper_air/NWS</th><td>The directory that contains the subversion repository for the scripts and documentation.  Should be checked out into the <em>HOME</em> directory</td></tr>
+	<tr><th class="dir">mss:/JOSS/DATA/RAW/SOUNDING/NWS/ASCII</th><td>The mass store directory for storing the MicroArt ASCII files.</td></tr>
+	<tr><th class="dir">mss:/JOSS/DATA/RAW/SOUNDING/NWS/BINARY</th><td>The mass store directory for storing the MicroArt binary files.</td></tr>
+	<tr><th class="dir">mss:/JOSS/DATA/RAW/SOUNDING/NWS/RRS</th><td>The mass store directory for storing the RRS buffer files.</td></tr>
+        <tr><th class="dir">mss:/JOSS/DATA/RAW/SOUNDING/NWS/RRS_ASCII</th><td>The mass store directory for stroign the RRS ASCII station tar files.</td></tr>
+</table>
+
+<a name="software"></a><h2>Software</h2>
+<p>This software section describes the operations done by the scripts that archive and inventory the NWS soundings.  This listing is here to make sure that the scripts are doing what is expected and to be able to do part of the process manually if it would become necessary.</p>
+
+<a name="repos"></a><h3>The Repository</h3>
+<p>The inventory scripts and documentation are under version control using subversion.  The repository directory, <em><a href="#dir_other">REPOS</a></em>, should be checked out into the <em>HOME</em> directory.  It only controls the scripts and documents for the inventory.  It does not control the RRS software, the archived files, or the files that are generated by the scripts.  For help with subversion see: <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/how-to-use-subversion">How To Use Subversion</a>.</p>
+
+<a name="ascii"></a><h3>Inventorying MicroArt ASCII Files</h3>
+<p>The ASCII files are archived and inventoried using the <a class="softwareName" href="http://dmg.eol.ucar.edu/cgi-bin/docperl/docperl?file=/net/work/operational/sounding/NWS/bin/NWS_ascii_archive.pl">NWS_ascii_archive.pl</a> script.  See the <a href="#quick">Quick Run</a> section on it usage.</p>
+<p>The script does the following operations:</p>
+<ol>
+	<li><p><b>Copy the ASCII File to the Local Archive.</b></p>
+		<p>The archive directory is organized by station for each year.  The files have the file pattern described <a href="#files_ascii">above</a>.  This will gather all of the files for the station together.   The archive directory will be created by the script if it does not already exist.</p>
+		<p>If the file already exists in the archive (could be more than one) it compares the file with all other files for the station and time using <em>diff</em>.  If the file exactly matches one of the files, the file is removed and continues along.  If they are different, the file is renamed by adding an incremental count to the end of the file name and it is archived as if it were a new file.</p>
+		</li>
+	<li><p><b>Remove the ASCII Files</b></p>
+		<p>Files used to be kept for 3 months in the <em>INGEST</em> directory.  As of 1/2006, we are no longer doing this (though the capability is still within the software if necessary).  Now, as soon as a file is archived, it is removed from <em>INGEST</em>.</p>
+		</li>
+	<li><p><b>Create the Log/Update Files</b></p>
+		<p>As of 1/2006, the scripts no longer generate log files.  No one ever looked at them.  So, all of the important messages have been changed to print to STDOUT so the user can see the issues that came up when running the script.</p>
+		<p>The original log files, as of 1/2006, still exist on the system but may go away since no one looked at them and they are taking up space on the disk.</p>
+		<p>The log file is the action steps taken by the script.  It is a record that should be checked after the run to see if an error occurred (file wasn't copied, couldn't create a directory, etc).  The log file is specified by the month of the processing and follows the pattern:</p>
+		<p class="code">NCDC_ascii_YYYYMM_script.log</p>
+		<p>The update log file is the list of files from the ingest directory that did not match the files in the archive and need to be check manually.  This file should be checked after each run as well.  The update file is specified by the month of the processing and follows the pattern:</p>
+		<p class="code">NCDC_ascii_YYYYMM_update.log</p>
+		</li>
+	<li><p><b>Create the Inventory File</b></p>
+		<p>The inventory file contains a table of all of the stations along with which hour they have soundings released.  It is an HTML file that uses embedded stylesheets for helping to seperate hour lines and stations.  It uses the file <span class="softwareName">docs/NWS_station.list</span> to specify which files should be included in the inventory.</p>
+		<p>The script reads in the header data for each sounding and finds the ascension number, looking for missing numbers.  The sounding following a missing ascension number shows up differently (originally bold red) from the other numbers to show that there was at least one ascension number missing before the current sounding.  There are a couple of other problems with non-matching ascension numbers and dates as well that are generated.  See the legend in the inventory file for the complete description.</p>
+		<p>The update file is specified by the month of the processing and follows the pattern:</p>
+		<p class="code">NWS_ascii_inventory_YYYYMM.html</p>
+		</li>
+</ol>
+
+<a name="binary"></a><h3>Inventorying MicroArt Binary Files</h3>
+<p>The binary files are archived and inventoried using the <a class="softwareName" href="http://dmg.eol.ucar.edu/cgi-bin/docperl/docperl?file=/net/work/operational/sounding/NWS/bin/NWS_binary_archive.pl">NWS_binary_archive.pl</a> script.  See the <a href="#quick">Quick Run</a> section on it usage.</p>
+<p>The script does the following operations:</p>
+<ol>
+	<li><p><b>Rename the PGAC Site Files</b></p>
+		<p>The PGAC site files do not match the naming convention as the other stations, from a computer that has a file name lenght limit.  This results in the last digit of the year being dropped.  The manual command to rename the files is:</p>
+		<p class="code">ren "pgac*.S0" "pgac#1.S0Y"</p>
+		<p>The <b>Y</b> in the second argument to <b>ren</b> should be last digit of the year.</p>
+		<p class="warn">When the December data is being processed, the data needs to be checked to ensure that the files match the year that is being processed.</p>
+		<p>The script should handle the year change problem, but needs to be checked to make sure that it is doing what it is expected to be doing.</p>
+		</li>
+	<li><p><b>Compress the Files</b></p>
+		<p>The binary files are sent to us uncompressed and need to be compressed to help save space.  The command to do this from the <em>INGEST</em> directory manually is:</p>
+		<p class="code">gzip *.SYY *.sYY</p>
+		<p>The <b>YY</b> needs be replaced by the last two digits of the year.  The two patterns are necessary because some stations use lowercase while most use uppercase for the <b>S</b> before the year.</p>
+		</li>
+	<li><p><b>Archive the Binary Files</b></p>
+		<p>Copy all of the unarchived files into the local archive directory.  The directory is organized by each station for each year.  The files have the station id as the first three or four letters of the file name.  The script uses the first 3 characters to archive to the correct directory.</p>
+		<p>As of 1/2006, the script no longer generates log files.  No one looked at them.  All of the important messages have been redirected to print to STDOUT instead so the user can see the problems.</p>
+		<p>The script will create log file stating the actions it took during the archiving of the files.  The log file is specified by month of the processing and follows the pattern:</p>
+		<p class="code">NCDC_binary_YYYYMM.log</p>
+		<p class="note"><b>NOTE:</b>  If you read through Darren's original README document for this processing and are using his scripts, make sure that you <b>read the entire document</b> before processing.  He has all of the steps, but they are not in the order they should be used.  (This was very confusing the first time running his scripts!)  The big issue is the <code>create_dir.pl</code> script needs to be run before the <code>organize_binary.pl</code> script.</p>
+		</li>
+	<li><p><b>Clean Up the Ingest Directory</b></p>
+		<p>As of 1/2006, the script no longer saves data in <em>INGEST</em>.  After each file is copied to the local archive directory, it is removed from <em>INGEST</em>.  (The capability still exists in the script if necessary to revert back to saving the data.)</p>
+		<p>Remove all of the binary files in the ingest directory that are over 100 days old.  Scot determined to keep the last three months of data in <em>INGEST</em> for a record for the people at NCDC to be able to see what they have sent us.  100 days was chosen becuase it is slighly over three months and it is hard to know exactly when an ascension number was released.</p>
+		</li>
+	<li><p><b>Create the Inventory File</b></p>
+		<p>The inventory file contains a list of the missing ascension numbers, duplicate ascension number, and files that have 0 size for each site.  The log also contains the list of expected stations that do not have any sounding information.  The inventory file follows the format:</p>
+		<p class="code">NWS_binary_inventory_YYYYMM.txt</p>
+		</li>
+</ol>
+
+<a name="rrs"></a><h3>Inventorying RRS Buffer Files</h3>
+<p>The RRS files are archived and inventoried using the <a class="softwareName" href="http://dmg.eol.ucar.edu/cgi-bin/docperl/docperl?file=/net/work/operational/sounding/NWS/bin/NWS_RRS_archive.pl">NWS_RRS_archive.pl</a> script. 
+This script is now a cron script and it runs automatically as the JOSS user on Tsunami. 
+It executes 10 minutes after the hour, every hour of the day.  
+See the <a href="#quick">Quick Run</a> section on it usage.</p>
+
+<p>The script performs the following operations:</p>
+<ol>
+	<li><p><b>Copy the RRS Files from to the Local Archive.</b></p>
+		<p>This script copies the RRS files from /ingest/ncdc to the local archive at
+merlot:/net/work/operational/sounding/NWS/archive/.  The /archive directory is organized by station for each year and each station directory is further divided by month.  The script uses the <a href="NWS_station.list">merlot:/net/work/operational/sounding/NWS/docs/NWS_station.list</a> file for converting 
+the WBAN number in the filename to the 4 character station id and then uses this to define the station directory.  
+If the data file does not exist in the archive, the file is copied and removed from <em>INGEST</em> after it has been compressed using <em>gzip</em>.</p>
+		<p>If a file(s) already exist in the archive, the script will replace the existing file with the new one.  This was changed from comparing differences and adding a count number in the filename after we received an email from NCDC specifying that all files coming from NCDC should replace older versions of the same file.</p>
+		</li>
+        <li><p><b>Extract The ASCII Data.</b></p>
+            <p>We also archive the RRS data in its ASCII text files from the the original buffer files.  A complete RRS buffer file will generate seven ASCII files (_1Meta.txt, 2rPTU.txt, 3GPSu.txt, 4GPSs.txt, 5pPTU.txt, 6pGPS.txt, 7Lvls.txt).  There are two programs needed to extract the ASCII files.  The documentation for the RRS </p>
+	    <p class="code">/net/work/bin/extractors/NWS_RRS/grabbufr_linux <file> <outfile></p>
+            <p class="code">/net/work/bin/extractors/NWS_RRS/decoder_linux <outfile></p>
+            <p>The first program converts the original RRS file into a new buffer file in a more readable format.  The second one extracts the ASCII files from the output file generated from the first program.</p>
+            <p class="note">The programs specified are for linux.  There are also solaris version (unixbufr_solaris and decoder_solaris).</p>
+            <p>To be able to run the programs on linux, you will need to set up your environment to use the proper Fortran libraries.  This is only available on <span class="machineName">tsunami</span> or <span class="machineName">merlot</span>:</p>
+            <p class="code">source /usr/local/lf9562/csh_setup</p>
+	<li><p><b>Create the Inventory File</b></p>
+		<p>The script uses the RRS software to read the unbuffer files and generated the text files that can then be parsed for the sounding release information.  This data is then used to inventory each station for the month.  It searches for missing ascension number, multiple ascensions at the same time, and multiple times for the same ascesnion number.  It displays only the stations that are known to be RRS stations in that month.  It uses the <span class="softwareName">docs/NWS_station.list</span> file for determining which stations to include in the inventory.</p>
+		<p class="note"><b>NOTE:</b> This is a very slow process since it has to unbuffer all of the soundings for the month plus the previous sounding from a previous month to search for the last known ascension number.  Once all of the file reading is finished, the generating of the file is fast.</p>
+		<p>The script will create an inventory file for each month/year that it found data for in <em>INGEST</em>.  If a month/year is specified as parameters to the script, that inventory file will be created at a minimum.</p>
+		<p>The inventory file is specified by the month and year of the data and follows the following pattern:</p>
+		<p class="code">NWS_rrs_inventory_YYYYMM.html</p>
+		</li>
+</ol>
+
+<a name="mss"></a><h2>Archiving to the MSS</h2>
+<p>Once we are reasonably sure that were are not going to get any more data for a year, we generate tar files for the data and move them to the mass store.  This is done with the <a class="softwareName" href="http://dmg.eol.ucar.edu/cgi-bin/docperl/docperl?file=/net/work/operational/sounding/NWS/bin/NWS_MSS_archive.pl">NWS_MSS_archive.pl</a>.  See the <a href="#quick">Quick Run</a> section on it usage.</p>
+<p>The script does the following operations:</p>
+<ol>
+	<li><p><b>Create the Tar Files</b></p>
+		<p>The script is aware of the individual locations of the archives for the ASCII, binary, RRS, and RRS ASCII files.  It reads each directory for the data for the year and creates a tar ball for each type of data by station and puts it into the staging directory.  (There could be up to four tar balls for each station, one for each type of data.)</p>
+		<p>After each tar ball is successfully created in the staging area, the files that went into the tar ball are removed from the local system.  (This is the reason for the MSS archive; to remove it from the local system.)  Any data left in the station directory for the year is because of a problem creating the tar file.</p>
+		</li>
+	<li><p><b>Copy the Tar Files to the MSS</b></p>
+		<p>With all of the tar files created and waiting in the staging area, it is time to copy them to the mass store.  Each type of data is stored in its own subdirectory on the mass store.  See the <a href="#dir_other">Other Directories</a> in this document for the exact locations.  Each tar file is copied to the mass store under a subdirectory by year.</p>
+		<p>After each tar file has successfully been copied to the mass store, it will be removed from the staging area and if all of the files were copied successfully, the staging area will be removed as well.  If the staging area still exists, there are files that need to be manually copied to the mass store.</p>
+		</li>
+</ol>
+
+<a name="docs"></a><h2>Documentation</h2>
+<ul>
+	<li><a href="howto_nws_inventory.html">How To: NWS Sounding Inventory</a> - This document.
+	<li><a href="/software/tools/upper_air/NWS_RRS_bufr_extractor/howto_rrs_software.html">How To: RRS Software</a> - How to use and create the RRS decoding software.</li>
+	<li><a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/how-to-use-subversion">How To: Subversion</a> - How to use subversion.</li>
+	<li><a href="NWS_station.list">NWS_station.list</a>- The station list used by the scripts.</li>
+	<li><a href="http://www.ua.nws.noaa.gov/RRS.htm">NWS RRS Web Site</a> - http://www.ua.nws.noaa.gov/RRS.htm</li>
+	<li><a href="http://www.ua.nws.noaa.gov/nws_upper.htm">NWS Station Map</a> - http://www.ua.nws.noaa.gov/nws_upper.htm</li>
+	<li><a href="http://www.ua.nws.noaa.gov/">NWS Upper Air Web Site</a> - http://www.ua.nws.noaa.gov/</li>
+</ul>
+
+</body>
+</html>

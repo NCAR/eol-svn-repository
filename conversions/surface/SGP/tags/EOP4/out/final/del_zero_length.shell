@@ -1,0 +1,12 @@
+# del_zero_length.sh
+#
+# Run this is the directory where the zero length files
+# are.  It will list them and delete them.
+#
+# 24 May 96, ds
+
+
+find sfc -size 0c -print -exec rm {} \;
+find stm -size 0c -print -exec rm {} \;
+find flx -size 0c -print -exec rm {} \;
+

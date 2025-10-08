@@ -1,0 +1,85 @@
+#!/bin/bash
+#
+# Filename:       file_count
+#
+# Version:        1.0
+#
+# Purpose:        Counts the number of files in a directory given a single
+#                 key search word or an array of search words that are found 
+#                 in that directory's filenames (or filenames in its 
+#                 subdirectories).
+#
+# Author:         Amanda Orin
+#
+# First Created:  02/18/2011 10:00 MST 
+#
+# Last Modified:  02/23/2011 13:30 MST
+#
+
+
+# Variable Declarations -------------------------------------------------------
+
+# Example of DIRECTORY: -------------------------
+# DIRECTORY="/net/web/catalog/html/itop_2010/model/comngu_1deg"
+# -----------------------------------------------
+
+# Examples of WORD: -----------------------------
+# WORD="_Ens-Quart"
+# WORD=( "_0Isotach" "_PotT" "_Precip" )
+# -----------------------------------------------
+
+DIRECTORY=""  # Insert Directory name here
+
+FILES=`ls $DIRECTORY`  # Do not modify this
+
+WORD="" # Insert word search (single value or array) here.
+
+total=0 # Do not modify this
+# -----------------------------------------------------------------------------
+
+
+# This is the main function - no modification necessary. ----------------------
+cd $DIRECTORY
+
+# For each file or subdirectory in file...
+for f in ${FILES[@]}
+do
+  echo "Processing $f..."
+
+  # Set the current directory total to 0.
+  dirtot=0
+
+  # For each element in the WORD array...
+  for i in ${WORD[@]}
+  do
+    # Set the retrieved word count to 0.
+    w=0
+    # Set the word count ($w) using the piped command.
+    w=`ls $f | grep $i | wc -l` # Grep for $i in $WORD array and store in $w.
+
+    # Display how many files were found (as stored in $w).
+    echo "   Checking for $i... $w found."
+
+    # Uncomment this section to see what you found. ---------------------------
+   # s=`ls $f | grep $WORD`
+   # echo ""
+   # echo "       Found"
+   # echo "   --"
+   # echo "$s"
+   # echo "   --"
+   # echo ""
+    # -------------------------------------------------------------------------
+
+    dirtot=$(($dirtot+$w)) # dirtot = How many were found in that directory.
+    total=$(($total+$w))   # total =  How many have been found overall.
+  done # End of WORD array for-loop.
+
+  # Display $dirtot and $total, and a new line for easy reading.
+  echo " Current directory total is:         $dirtot"
+  echo " Current total is:                   $total"
+  echo ""
+done # End of file/subdirectory for-loop.
+
+# Display the total number of files found overall.
+echo -e "\nTotal number of files found:        $total \n"
+# -----------------------------------------------------------------------------

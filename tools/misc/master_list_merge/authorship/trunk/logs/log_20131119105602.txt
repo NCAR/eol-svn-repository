@@ -1,0 +1,467 @@
+> groovy authorshipConnect.groovy ARCSS ATLAS BEST BSIERP ITEX PacMARS SBI SHEBA
+
+Created log file:	logs/log_20131119105602.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+--------------------------------------------------------------------------------
+  ARCSS:  106.ARCSS013
+		King, Jennifer, William S. Reeburgh, and Shannon Regli
+Which of these contacts matches this author:	William S. Reeburgh
+
+		1324	null	William S. Reeburgh	University of California at Irvine
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1324
+
+Unable to find 1324 for data set 106.ARCSS013
+--------------------------------------------------------------------------------
+  ARCSS:  106.ARCSS078
+		Zhang, Tingjun, Roger Barry, and David Gilichinsky (U. Colorado, Russian Academy of Sciences)
+Which of these contacts matches this author:	U. Colorado
+
+		1122	null	Roger G. Barry	U. Colorado, NSIDC, World Data Center for Glaciology
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1324, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '106.ARCSS013';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ATLAS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BEST
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1295 for data set 102.063
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1295, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.063';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BSIERP
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1298 for data set 245.B71-001
+Unable to find 1255 for data set 245.B71-001
+Unable to find 1254 for data set 245.B72-001
+--------------------------------------------------------------------------------
+  BSIERP:  245.B74-001
+		Vincenzi, Simone
+Which of these contacts matches this author:	Simone Vincenzi
+
+		1317	null	Simone Vincenzi	University of California
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1317
+
+Unable to find 1317 for data set 245.B74-001
+--------------------------------------------------------------------------------
+  BSIERP:  245.B75-001
+		Uchiyama, Tadayasu
+Which of these contacts matches this author:	Tadayasu Uchiyama
+
+		1322	null	Tadayasu Uchiyama	University of Alaska
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1322
+
+Unable to find 1322 for data set 245.B75-001
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1298, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B71-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1255, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B71-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1254, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B72-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1317, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B74-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1322, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B75-001';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ITEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  ITEX:  56.650
+		Totland
+Which of these contacts matches this author:	Totland
+
+		1323	null	Orjan Totland	Norwegian University of Life Sciences
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1323
+
+Unable to find 1323 for data set 56.650
+Unable to find 1323 for data set 56.651
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Robinson-Wookey
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	
+
+--------------------------------------------------------------------------------
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1323, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.650';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1323, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.651';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PacMARS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.009
+		Blanchard, Arny L., Samuel W. Stoker
+Which of these contacts matches this author:	Samuel W. Stoker
+
+		1316	null	Samuel W. Stoker	null
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1316
+
+Unable to find 1316 for data set 255.009
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1316, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.009';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SBI
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SBI:  62.118
+		(Service Group)
+Which of these contacts matches this author:	Service Group
+
+		342	null	Joseph G. Verfaillie	Global Change Research Group
+		553	cua	null	University of Colorado - ARCSyM group
+		752	swhitlow	Sallie Whitlow	University of New Hampshire - Glacier Research Group
+		804	rlammers	Richard B. Lammers	Institute for the Study of Earth, Oceans, and Space (Water Systems Analysis Group)
+		866	dzona	Donatella Zona	Department of Biology and Global Change Research Group, San Diego State University
+		1197	null	Cove S. Sturtevant	Global Change Research Group
+		1327	null	null	University of Washington - Cloud and Aerosol Research Group (CARG)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  SBI:  62.187
+		Moore, Kent (University of Toronto)
+Which of these contacts matches this author:	University of Toronto
+
+		1287	null	G. W. Kent Moore	University of Toronto
+		1330	null	null	University of Toronto
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1330
+
+Unable to find 1330 for data set 62.187
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1330, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.187';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SHEBA
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.401
+		(Univ. of Alaska - Geophysical Institute)
+Which of these contacts matches this author:	Univ. of Alaska - Geophysical Institute
+
+		40	mwetzel	Melanie Wetzel	Desert Research Institute
+		119	nbates	Nick R. Bates	Bermuda Institute of Ocean Sciences
+		155	jhudson	Jim Hudson	Desert Research Institute
+		221	rstorvold	Rune Storvold	Geophysical Institute, UAF
+		239	vromanovsky	Vladimir E. Romanovsky	Geophysical Institute UAF
+		242	jlobert	Jurgen Lobert	Scripps Institute
+		264	ijnsdttir	Ingibjorg S. Jonsdottir	Botanical Institute
+		266	sbret-harte	Syndonia Bret-Harte	Institute of Arctic Biology
+		279	ccopass	Catharine D. Copass	Institute of Arctic Biology
+		303	null	Donald A. (Skip) Walker	Institute of Arctic Biology
+		318	rweber	Rodney J. Weber	Georgia Institute of Tech
+		427	hyabuki	Hironori Yabuki	Institute Observat. Research
+		449	mit/ll	null	Massachusetts Institute of Technology/Lincoln Laboratory
+		455	nmimt	null	New Mexico Institute of Mines and Technology
+		489	mit	Phil Rosenkranz	Massachussets Institute of Technology
+		504	ori/tokyo	null	Ocean Research Institute, Univ. of Tokyo
+		505	mpi	null	Max Plaank Institute
+		509	sio	null	Scripps Institute of Oceanography
+		523	dri	null	Desert Research Institute
+		537	whoi	null	Woods Hole Oceanographic Institute
+		561	gatech	null	Georgia Institute of Technology
+		563	caltec	null	California Institute of Technology
+		569	metri	null	Meteorological Research Institute
+		570	k-jist	null	Kwanji Institute of Science and Engineering
+		577	nier	null	National Institute of Environmental Research
+		578	kist	null	Korean Institute of Science and Technology
+		579	null	null	Institute of Low Temperature Science, Hokkaido University
+		595	omayol	Olga L. Mayol-Bracero	Institute for Tropical Ecosystem Studies (ITES)
+		600	sschonberg	Susan Schonberg	University of Texas at Austin Marine Science Institute
+		612	rpickart	Robert S. Pickart	Woods Hole Oceanographic Institute
+		646	heicken	Hajo Eicken	Geophysical Institute/University of Alaska
+		665	tsavunen	Tarja Savunen	Finnish Meteorological Institute
+		681	vgrubisic	Vanda Grubisic	Desert Research Institute
+		694	gmayr	Georg Mayr	Institute for Meteorology and Geophysics
+		703	akitoh	Akio Kitoh	Meteorological Research Institute - Japan Meteorological Agency
+		734	ehunter	Eli Hunter	Institute for Marine and Coastal Sciences, Rutgers University
+		758	null	Thomas J. Weingartner	University of Alaska - Institute of Marine Science
+		775	null	James T. Randerson	California Institute of Technology
+		776	abalser	Andrew W. Balser	U. of Alaska Fairbanks - Institute of Arctic Biology
+		788	dhelmig	Detlev Helmig	Institute of Alpine and Arctic Research (INSTAAR)
+		804	rlammers	Richard B. Lammers	Institute for the Study of Earth, Oceans, and Space (Water Systems Analysis Group)
+		828	mlomas	Michael Lomas	Bermuda Institute of Ocean Sciences
+		901	agadian	Alan Gadian	Institute of Atmospheric Sciences
+		931	jfochesatto	Javier Fochesatto	Geophysical Institute and College of Natural Sciences and Mathematics
+		935	ewelty	Ethan Welty	Institute of Arctic and Alpine Research
+		939	null	Astrid E. J. Ogilvie	Institute of Arctic and Alpine Research
+		941	gspreen	Gunnar Spreen	Jet Propulsion Laboratory, California Institute of Technology
+		952	jfrancis	Jennifer Francis	Institute of Marine and Coastal Sciences, Rutgers University
+		963	cimss	null	Cooperative Institute for Meteorological Satellite Studies
+		1001	ablanchard	Arnold Blanchard	Institute of Marine Science
+		1006	bbluhm	Bodil A. Bluhm	Institute of Marine Science
+		1012	jtrefry	John H. Trefry	Florida Institute of Technology, Department of Marine and Environmental Systems
+		1068	null	Kenichi Matsuoka	Norwegian Polar Institute
+		1079	null	W. Tad Pfeffer	Institute of Arctic and Alpine Research
+		1103	null	Steven V. Muller	Institute of Arctic and Alpine Research 
+		1105	null	Paul A. Mayewski	Institute for the Study of Earth,  Oceans and Space
+		1124	null	William A. Gould	International Institute of Tropical Forestry
+		1131	null	Nan D. Lederer	Institute of Arctic and Alpine Research
+		1142	null	Hiroshi Furutani	Atmosphere and Ocean Research Institute (AORI)
+		1165	null	Katrin Iken 	Institute of Marine Science
+		1199	null	Robert P Trocine	Florida Institute of Technology
+		1223	null	Walker O. Smith	Virginia Institute of Marine Science
+		1225	null	Erika J. Edwards	U. Alaska-Fairbanks, Institute of Arctic Biology
+		1226	null	Amber Moody	U. Alaska-Fairbanks, Institute of Arctic Biology
+		1237	null	Dmitry Nicolsky	University of Alaska Fairbanks - Geophysical Institute
+		1238	null	Dmitri Sergueev	University of Alaska Fairbanks - Geophysical Institute
+		1239	null	Gennady Tipenko	University of Alaska Fairbanks - Geophysical Institute
+		1261	null	null	Bermuda Institute of Ocean Sciences (BIOS)
+		1262	null	null	Battelle Memorial Institute
+		1274	null	null	Florida Institute of Technology
+		1276	null	Gregory Durell	Battelle Memorial Institute
+		1278	null	Humfrey Melling	Institute of Ocean Sciences
+		1284	null	John S. Brown	Battelle Memorial Institute
+		1285	null	Knut Stamnes	Stevens Institute of Technology
+		1286	null	Kazutake Tateyama	Kitami Institute of Technology
+		1315	null	Stephan R. de Roode	Institute for Marine and Atmospheric Research
+		1320	null	Timothy D. Siferd	Freshwater Institute
+		1328	null	null	University of Alaska - Geophysical Institute
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1328
+
+Unable to find 1328 for data set 13.401
+Unable to find 1328 for data set 13.402
+Unable to find 1328 for data set 13.403
+--------------------------------------------------------------------------------
+  SHEBA:  13.404
+		(Univ. of Wisconsin - SSEC)
+Which of these contacts matches this author:	Univ. of Wisconsin - SSEC
+
+		32	wfeltz	Wayne Feltz	CIMSS/SSEC
+		1329	null	null	University of Wisconsin - Space Science & Engineering Center (SSEC)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1329
+
+Unable to find 1329 for data set 13.404
+Unable to find 1329 for data set 13.405
+Unable to find 1329 for data set 13.406
+Unable to find 1329 for data set 13.408
+Unable to find 1329 for data set 13.409
+Unable to find 1329 for data set 13.410
+--------------------------------------------------------------------------------
+  SHEBA:  13.460
+		Cota, G., T. Siferd, and L. Pomeroy
+Which of these contacts matches this author:	T. Siferd
+
+		1320	null	Timothy D. Siferd	Freshwater Institute
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1320
+
+Unable to find 1320 for data set 13.460
+--------------------------------------------------------------------------------
+  SHEBA:  13.605
+		(U. Washington - CARG)
+Which of these contacts matches this author:	U. Washington - CARG
+
+		1327	null	null	University of Washington - Cloud and Aerosol Research Group (CARG)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1327
+
+Unable to find 1327 for data set 13.605
+--------------------------------------------------------------------------------
+  SHEBA:  13.805
+		Fowler, C., T. Arbetter, J. Key, J. Maslanik, S. Drobot, R. Kwok
+Which of these contacts matches this author:	T. Arbetter
+
+		1318	null	Todd E. Arbetter	University of Colorado at Boulder
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1318
+
+Unable to find 1318 for data set 13.805
+Unable to find 1318 for data set 13.806
+Unable to find 1318 for data set 13.807
+Unable to find 1318 for data set 13.808
+Unable to find 1318 for data set 13.809
+Unable to find 1318 for data set 13.810
+Unable to find 1318 for data set 13.811
+--------------------------------------------------------------------------------
+  SHEBA:  13.815
+		Yu, Y.
+Which of these contacts matches this author:	Y. Yu
+
+		184	rshirooka	Ryuichi Shirooka	IORGC
+		335	tmurayama	Toshiyuki Murayama	Tokyo Univ Mercantile Marine
+		348	kkim	Ki-Hyun Kim	Sejong University
+		364	jschemm	Jae-Kyung E. Schemm	CPC/NCEP/NWS/NOAA
+		367	syuter	Sandra E. Yuter	Department of Atmos. Science
+		403	jyu	Jian Zhen Yu	Hong Kong University of Science and Technology
+		562	null	Toshiyuki Murayama	Tokyo University of Mercantile Marine
+		683	ihiroyuki	Iwasaki Hiroyuki	Gunma University
+		840	hkim	Hyun Mee Kim	Yonsei University
+		1052	null	Yuri Shur	Dept. of Civil and Environmental Engineering
+		1069	null	Yu-Ping Chin	School of Earth Sciences
+		1140	null	Hideyuki Honda	null
+		1233	null	Yuan Sui	EOL
+		1325	null	Yanling Yu	University of Washington - Applied Physics Laboratory (APL)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1325
+
+Unable to find 1325 for data set 13.815
+--------------------------------------------------------------------------------
+  SHEBA:  13.817
+		Horst, T.
+Which of these contacts matches this author:	T. Horst
+
+		1319	null	Thomas W. Horst	NCAR - ATD
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1319
+
+Unable to find 1319 for data set 13.817
+--------------------------------------------------------------------------------
+  SHEBA:  13.818
+		Roode, S. and C. Bretherton
+Which of these contacts matches this author:	S. Roode
+
+		1315	null	Stephan R. de Roode	Institute for Marine and Atmospheric Research
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1315
+
+Unable to find 1315 for data set 13.818
+--------------------------------------------------------------------------------
+  SHEBA:  13.823
+		Perovich, D., T. Grenfell, B. Light, J. Richter-Menge, T. Tucker, H. Eicken
+Which of these contacts matches this author:	T. Tucker
+
+		1303	null	W. B. Tucker III	Cold Regions Research and Engineering Laboratory (CRREL)
+		1321	null	Terry Tucker	Cold Regions Research and Engineering Laboratory (CRREL)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1321
+
+Unable to find 1321 for data set 13.823
+Unable to find 1321 for data set 13.826
+Unable to find 1321 for data set 13.828
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1328, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.401';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1328, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.402';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1328, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.403';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1329, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.404';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1329, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.405';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1329, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.406';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1329, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.408';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1329, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.409';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1329, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.410';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1320, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.460';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1327, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.605';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1318, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.805';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1318, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.806';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1318, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.807';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1318, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.808';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1318, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.809';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1318, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.810';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1318, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.811';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1325, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.815';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1319, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.817';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1315, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.818';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1321, 'author', 5, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.823';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1321, 'author', 5, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.826';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1321, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.828';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

@@ -1,0 +1,17 @@
+# $Id$
+# $Log$
+#
+SHELL = /bin/sh
+#    Makefile for process NCDC precip s/w.
+#
+
+CC=acc
+##CFLAGS = -g
+
+procprecip: process_precip.o
+	$(LINK.c) -o process_precip.exe process_precip.o 
+	cp process_precip.exe process_precip
+	chmod 0755 process_precip
+
+clean:
+	rm *.o

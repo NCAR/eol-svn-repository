@@ -1,0 +1,25 @@
+c---------------------------------------------------------------------
+c ARCSyM atmospheric 2d variables
+      real *4 psfc_may(ix,jx,mt), tsfc_may(ix,jx,mt),
+     +        t2m_may(ix,jx,mt), t2m_min_may(ix,jx,mt),
+     +        t2m_max_may(ix,jx,mt), t1m_soil_may(ix,jx,mt),
+     +        soil_wat_may(ix,jx,mt), rainc_may(ix,jx,mt),
+     +        rainnc_may(ix,jx,mt), precip_may(ix,jx,mt),
+     +        rain_may(ix,jx,mt), snow_may(ix,jx,mt),
+     +        swe_may(ix,jx,mt), tot_cld_frac_may(ix,jx,mt),
+     +        cld_base_may(ix,jx,mt), lhf_may(ix,jx,mt),
+     +        shf_may(ix,jx,mt), ust_may(ix,jx,mt),
+     +        swd_sfc_may(ix,jx,mt), swu_sfc_may(ix,jx,mt),
+     +        lwd_sfc_may(ix,jx,mt), lwu_sfc_may(ix,jx,mt),
+     +        swd_toa_may(ix,jx,mt), swu_toa_may(ix,jx,mt),
+     +        lwu_toa_may(ix,jx,mt)
+      common /arcmip_may_2d/ psfc_may, tsfc_may, t2m_may,
+     +                   t2m_min_may, t2m_max_may, t1m_soil_may,
+     +                   soil_wat_may, rainc_may, rainnc_may,
+     +                   precip_may, rain_may, snow_may,
+     +                   swe_may, tot_cld_frac_may, cld_base_may,
+     +                   lhf_may, shf_may, ust_may,
+     +                   swd_sfc_may, swu_sfc_may, lwd_sfc_may,
+     +                   lwu_sfc_may, swd_toa_may, swu_toa_may,
+     +                   lwu_toa_may
+c---------------------------------------------------------------------

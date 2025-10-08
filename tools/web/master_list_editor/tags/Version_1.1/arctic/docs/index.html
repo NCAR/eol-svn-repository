@@ -1,0 +1,124 @@
+<html>
+<head>
+	<title>Docs: Arctic Master List</title>
+</head>
+
+<body>
+
+<center><h1>Arctic Master List</h1></center>
+<b>Project Overseer: </b>Greg Stossmeister<br>
+<b>Status Description: </b> In Use
+<hr>
+<br>
+	<ul>
+		<li><a href=#cgi>CGI Code - Editor and Query</a>
+		<li><a href=#html>HTML Code - Editor</a>
+		<li><a href=#database>Database</a>
+		<li><a href=#problems>Problems/Issues</a>
+		<li><a href=#other>Other</a>
+	</ul>
+
+<hr>
+<br>
+<a name=cgi><font size=+1><b><u>CGI Code - Editor and Query</u></b></font></a><br>
+<br>
+<b>Directory: </b><a href=cgi>cgi</a><br>
+<b>Actual Location: </b>/web/cgi-bin/dpg/arctic_ml<br>
+<p>
+This directory contains the CGI code, written in Perl, to display the editor and to
+query the database for view by the public.
+</p>
+<p>
+<b>Editor: </b><br>
+	<dd><b>master_maint</b> - displays all aspects of the editor.
+	<dd><b>lib/</b> - contains various modules used by both editor and query scripts.  
+	<dd><b>mysql_codiac/</b> - contains new scripts for when CODIAC goes to MySQL see <a href=#other>other</a>
+</p>
+<p>
+<b>Query: </b><br>
+The master_query script was set up to give Greg flexability in how the project master 
+lists are displayed. The script takes several arguments including what parameters to
+display, what to sort by, what title to give the list, etc.  The usage of this script is
+outlined in the <a href=html/query_howto.html>Query How To</a>.
+	<dd><b>master_query</b> - queries the database and displays the master list
+	<dd><b>ml_summary</b> - simple script to display a summary of all the datasets in a 
+    particular project. usage: ml_summary?project=ATLAS  
+	<dd><b>codiac_readme</b> - if no 'Documentation' link is entered into the master list,
+    the master_query script displays a link to the codiac_readme script which redirects the user to the
+    dataset's readme file in CODIAC. usage: codiac_readme?storm_id=46.001 
+	<dd><b>lib/</b> - contains various modules used by master_query
+
+</p>
+<hr>
+<br>
+<a name=html><font size=+1><b><u>HTML Code - Editor</u></b></font></a><br>
+<br>
+<b>Directory: </b><a href=html>html</a><br>
+<b>Actual Location: </b>/web/docs/dpg/arctic_ml
+<p>
+This directory contains the needed html files to display the master list Editor and the Query How To
+page.
+</p>
+<p>
+	<dd><b>index.html</b> - Displays the needed frameset.  Renamed to index_.html for this documentation.
+	<dd><b>introFrame.html </b> - Simple welcome message.
+	<dd><b>master.js </b> - various javascript functions used by the editor
+	<dd><b>overview.html </b> - this was put together before the application was written, probably not
+    of much interest.
+	<dd><b>query_howto.html </b> - documentation on how to use the master_query script.
+</p>
+<hr>
+<br>
+<a name=database><font size=+1><b><u>Database</u></b></font></a><br>
+<p>
+The Arctic Master List uses the <b>master_list</b> database located on thunder.  The CGI scripts use the
+suldan username/password to access the database (talk to Greg or Mark to get the suldan password).  Other
+users <i>may</i> be able to access the database (I think Don has the permissions) but talk to Mark about
+those kinds of details.  The version of MySQL on thunder is rather old and lacks Foreign Key Constraints,
+which are used by the database.   These constraints are maintained by the application, so should not be 
+a problem, but watch out when adding new records manually.
+</p>
+
+To access the database:
+	<dd>mysql -h thunder -u suldan -p master_list<br>
+<br>
+<b>Database Architecture Description: <a href=database/dbinfo.txt>database/dbinfo.txt</a></b><br>
+<b>SQL 'CREATE' Statements: <a href=database/create.sql>database/create.sql</a></b><br>
+<br>
+
+<br>
+<hr>
+<br>
+<a name=problems><font size=+1><b><u>Problems/Issues</u></b></font></a><br>
+<p>
+</p>
+<br>
+<hr>
+<br>
+<a name=other><font size=+1><b><u>Other</u></b></font></a><br>
+<p>
+<b>CODIAC to MySQL</b>
+The directory <code>/web/cgi-bin/dpg/arctic_ml/mysql_codiac</code> contains new scripts which can be used
+when CODIAC moves over to MySQL.  Currently it queries the injedi3 database on gale.  The name and host
+of the database will probably change so the scripts will have to be updated slightly.  See the scripts
+themselves to see how to change the database and host names.  The only
+scripts which are affected is the master_query script and codiac_readme script.  Just copies those
+over to the <code>/web/cgi-bin/dpg/arctic_ml</code> directory.
+</p>
+<p>
+<b>Cascading Style Sheets (CSS): </b><br>
+The master_query script uses a simple cascading sheet to display the master lists.
+Each project has its own style sheet to match Greg's main project page.  
+The css files are located here: /web/docs/atlas/css.  ALL css files are located in
+this directory, including SBI and SHEBA.  At one point they were located somewhere
+under /web/docs/dpg which caused the dpg username/password to pop up.  Placing them
+in the atlas area was the quick fix, they should probably be moved to a more logical
+place.  The file names follow the convention - PROJECT.css - where project is the 
+project name entered into the master list database.     
+
+</p>
+
+<br>
+
+</body>
+</html>

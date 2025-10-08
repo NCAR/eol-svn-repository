@@ -1,0 +1,122 @@
+a { font-size: inherit; color: blue; text-decoration: none; }
+a:hover { color: red; text-decoration: underline; }
+
+body { 
+   font-family: Arial, Helvetica, sans-serif;
+   font-size: 12pt;
+   background-color: #EEEEEE;
+   color: #660066;
+   text-align: justify;
+}
+
+h1 { text-align: center; font-size: 26pt;}
+
+p.notes { font-size: 10pt; }
+sub { font-size: 8pt; }
+sup { font-size: 8pt; }
+tr.separator { border-bottom: 1px solid black; border-top: 1px solid black; }
+
+div#instructions p.footnote {
+   font-size: 8pt;
+   font-style: italic;
+}
+
+div#instructions p.warning {
+   color: #FF0000;
+   font-weight: bold;
+}
+
+div#header { }
+
+div#instructions {
+   float: right;
+   width: 25%;
+   position: relative;
+}
+
+div#directory {
+   float: left;
+   width: 20%;
+   position: relative;
+}
+div#directory table { font-size: 10pt; }
+
+div#dataform {
+   margin 0 25% 0 20%;
+   width: 100%
+   align: center;
+}
+
+div#dataform td.param {
+   font-weight: bold;
+   white-space: nowrap;
+}
+
+	div#dataform td.submit { text-align: center; width: 100%; }
+
+div#dataform tr.result_line {
+   font-size: 14pt;
+}
+
+div#dataform tr.result_line td.field {
+   background-color: white;
+   border: 1px solid #999999;
+}
+
+div#datatable {
+   padding: .5em .5em;
+   width: 50%;
+}
+
+div#datatable table {
+   font-size: 10pt;
+   padding 1em 1em;
+   text-align: left;
+   width: 500px;
+}
+
+div#datatable th {
+   background-color: #660066;
+   color: white;
+   font-size: 16pt;
+   text-align: center;
+}
+
+div#datatable td.equation iframe {
+   height: 250px; width: 100%;
+}
+
+div#directory td {
+   padding: 0 1em;
+}
+
+div#directory th {
+   font-size: 14pt;
+   text-align: left;
+}
+
+div#equation { margin: 0 0 0 2em; border-bottom: 4px solid black; }
+div#equation table { text-align: center; border: 2px outset black; }
+div#equation td { white-space: nowrap; }
+div#equation td.result { vertical-align: middle; text-align: right; white-space: nowrap; }
+div#equation td.eqn { vertical-align: middle; text-align: left; white-space: nowrap}
+div#equation td.eqn table { border: 0px; }
+div#equation td.fraction { text-align: center; font-size: 10pt; } 
+div#equation td.fraction div.numerator { vertical-align: top; border-bottom: 1px solid black; }
+div#equation td.fraction div.denominator { vertical-align: bottom; }
+
+div#equation table.conversions { border: 0; }
+div#equation table.conversions td.block { vertical-align: top; }
+div#equation td.unit { text-align: right; }
+div#equation td.name { text-align: left; }
+
+
+div#tablelist { width: 100%; }
+div#tablelist table { font-size: 10pt; padding 1em 1em; text-align: left; }
+div#tablelist th { background-color: #660066; color: white; font-size: 16pt; text-align: center; white-space: nowrap; }
+div#tablelist td { vertical-align: top; }
+div#tablelist a { white-space: nowrap; }
+
+
+
+

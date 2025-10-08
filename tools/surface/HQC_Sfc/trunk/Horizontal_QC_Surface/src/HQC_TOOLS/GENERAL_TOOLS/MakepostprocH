@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for postproc_hplains s/w.
+#
+
+CC=acc
+CFLAGS = 
+
+procncdc: postproc_hplains.o
+	$(LINK.c) -o postproc_hplains postproc_hplains.o 
+	chmod 0755 postproc_hplains
+
+clean:
+	rm *.o

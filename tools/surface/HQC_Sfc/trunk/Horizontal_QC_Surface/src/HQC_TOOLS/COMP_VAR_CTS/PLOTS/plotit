@@ -1,0 +1,41 @@
+set terminal postscript landscape monochrome dashed "Helvetica" 14
+set output 'wdir_BBOW.ps'
+set title "Wind Direction Observations for BBOW"
+set xlabel "Times for 15 May 1995" 0,0
+set ylabel "Degrees"
+set nokey
+set timefmt "%H:%M"
+set xdata time
+set format x "%H:%M"
+set xrange ["04:00":"10:00"]
+set yrange [0:370]
+set ytics (0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360)
+plot "BBOW.part" using 1:2 with linespoints
+
+---------------------------------------------
+set terminal postscript landscape monochrome dashed "Helvetica" 14
+set output 'wdirVAR_BBOW.ps'
+set title "Wind Direction SIGMA for OKMESO - BBOW"
+set xlabel "Times for 15 May 1995" 0,0
+set ylabel "Degrees"
+set nokey
+set timefmt "%H:%M"
+set xdata time
+set format x "%H:%M"
+set xrange ["04:00":"10:00"]
+set yrange [0:370]
+set ytics (0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300,320,340,360)
+plot "bbow_winddir_vals.part" using 1:7 with linespoints
+---------------------------------------------
+Examples:
+set term postscript default       # old postscript
+         set term postscript enhanced      # old enhpost
+         set term postscript landscape 22  # old psbig
+         set term postscript eps 14   # old epsf1
+         set term postscript eps 22   # old epsf2
+         set size 0.7,1.4
+         set term post portrait color "Times-Roman" 142 enhanced postscript
+
+FAILS:
+set ytics ("4:00","4:30","5:00","5:30","6:00","6:30","7:00","7:30","8:00","8:30","9:00","9:30","10:00")
+

@@ -1,0 +1,303 @@
+CREATE TABLE dts_status (
+  status_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  status_name VARCHAR(45) NOT NULL,
+  status_style VARCHAR(45) NOT NULL,
+  status_description TEXT NULL,
+  PRIMARY KEY(status_id),
+  INDEX status_name_index(status_name)
+)
+TYPE=InnoDB;
+
+CREATE TABLE dts_group (
+  dts_group_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  group_name VARCHAR(45) NOT NULL,
+  group_type ENUM('Category','Data Type','Disipline','Platform','Site') NOT NULL DEFAULT 'Category',
+  parent_group_id_fk INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY(dts_group_id),
+  UNIQUE INDEX group_unique_index(group_name, group_type),
+  INDEX group_FKIndex1(parent_group_id_fk),
+  FOREIGN KEY(parent_group_id_fk)
+    REFERENCES dts_group(dts_group_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE project (
+  project_id VARCHAR(20) NOT NULL,
+  parent_project_id_fk VARCHAR(20) NOT NULL,
+  active TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
+  dataset_prefix VARCHAR(20) NULL,
+  charge_number INT(10) NULL,
+  image_url VARCHAR(255) NULL,
+  home_page_url VARCHAR(255) NULL,
+  database_url VARCHAR(255) NULL,
+  data_mgmt_url VARCHAR(255) NULL,
+  field_catalog_url VARCHAR(255) NULL,
+  css_url VARCHAR(255) NULL,
+  work_link VARCHAR(255) NULL,
+  PRIMARY KEY(project_id),
+  INDEX parent_project_fk_index(parent_project_id_fk),
+  FOREIGN KEY(parent_project_id_fk)
+    REFERENCES project(project_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE notes (
+  notes_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  date_entered DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  author_id INTEGER UNSIGNED NOT NULL,
+  note_text TEXT NULL,
+  PRIMARY KEY(notes_id)
+)
+TYPE=InnoDB;
+
+CREATE TABLE dataset (
+  dts_dataset_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  dataset_id VARCHAR(25) NULL DEFAULT '99.999',
+  dataset_name VARCHAR(255) NULL,
+  source_url VARCHAR(255) NULL,
+  remote_url VARCHAR(255) NULL,
+  ingest_location VARCHAR(255) NULL,
+  archive_location VARCHAR(255) NULL,
+  PRIMARY KEY(dts_dataset_id),
+  INDEX dataset_id_index(dataset_id)
+)
+TYPE=InnoDB;
+
+CREATE TABLE project_contact (
+  project_id_fk VARCHAR(20) NOT NULL,
+  contact_id_fk INTEGER UNSIGNED NOT NULL,
+  contact_type ENUM('Scientist','Engineer') NULL DEFAULT 'Scientist',
+  is_primary_contact TINYINT(1) UNSIGNED NULL DEFAULT '1',
+  PRIMARY KEY(project_id_fk, contact_id_fk),
+  INDEX project_contact_FKIndex1(project_id_fk),
+  FOREIGN KEY(project_id_fk)
+    REFERENCES project(project_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE product (
+  product_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  project_id_fk VARCHAR(20) NOT NULL,
+  product_name VARCHAR(45) NOT NULL,
+  status_id_fk INTEGER UNSIGNED NULL,
+  product_link_text VARCHAR(255) NULL,
+  product_link_url VARCHAR(255) NULL,
+  PRIMARY KEY(product_id),
+  INDEX product_unique_index(product_name, project_id_fk),
+  INDEX product_FKIndex1(project_id_fk),
+  INDEX product_FKIndex2(status_id_fk),
+  FOREIGN KEY(project_id_fk)
+    REFERENCES project(project_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(status_id_fk)
+    REFERENCES dts_status(status_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE project_group (
+  project_id_fk VARCHAR(20) NOT NULL,
+  dts_group_id_fk INTEGER UNSIGNED NOT NULL,
+  map_url VARCHAR(255) NULL,
+  table_url VARCHAR(255) NULL,
+  instrument_url VARCHAR(255) NULL,
+  PRIMARY KEY(project_id_fk, dts_group_id_fk),
+  INDEX project_group_FKIndex1(project_id_fk),
+  INDEX project_group_FKIndex2(dts_group_id_fk),
+  FOREIGN KEY(project_id_fk)
+    REFERENCES project(project_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(dts_group_id_fk)
+    REFERENCES dts_group(dts_group_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE project_notes (
+  project_id_fk VARCHAR(20) NOT NULL,
+  notes_id_fk INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY(project_id_fk, notes_id_fk),
+  INDEX project_notes_FKIndex1(project_id_fk),
+  INDEX project_notes_FKIndex2(notes_id_fk),
+  FOREIGN KEY(project_id_fk)
+    REFERENCES project(project_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(notes_id_fk)
+    REFERENCES notes(notes_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE dataset_notes (
+  dts_dataset_id_fk INTEGER UNSIGNED NOT NULL,
+  notes_id_fk INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY(dts_dataset_id_fk, notes_id_fk),
+  INDEX notes_has_dataset_FKIndex1(notes_id_fk),
+  INDEX notes_has_dataset_FKIndex2(dts_dataset_id_fk),
+  FOREIGN KEY(notes_id_fk)
+    REFERENCES notes(notes_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(dts_dataset_id_fk)
+    REFERENCES dataset(dts_dataset_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE dataset_group (
+  dts_dataset_id_fk INTEGER UNSIGNED NOT NULL,
+  group_id_fk INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY(dts_dataset_id_fk, group_id_fk),
+  INDEX dataset_has_dts_group_FKIndex1(dts_dataset_id_fk),
+  INDEX dataset_has_dts_group_FKIndex2(group_id_fk),
+  FOREIGN KEY(dts_dataset_id_fk)
+    REFERENCES dataset(dts_dataset_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(group_id_fk)
+    REFERENCES dts_group(dts_group_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE dataset_project (
+  dts_dataset_id_fk INTEGER UNSIGNED NOT NULL,
+  project_id_fk VARCHAR(20) NOT NULL,
+  readme_files TEXT NULL,
+  date_entered DATE NULL,
+  date_expected DATE NULL,
+  date_loaded DATE NULL,
+  date_checked DATE NULL,
+  date_processed DATE NULL,
+  external_contact VARCHAR(45) NULL,
+  internal_contact_id INTEGER UNSIGNED NULL,
+  loader_id INTEGER UNSIGNED NULL,
+  checker_id INTEGER UNSIGNED NULL,
+  processor_id INTEGER UNSIGNED NULL,
+  status_id_fk INTEGER UNSIGNED NOT NULL,
+  process_flag TINYINT(1) UNSIGNED NULL DEFAULT '0',
+  mlist_flag TINYINT(1) UNSIGNED NULL DEFAULT '0',
+  in_progress_flag TINYINT(1) UNSIGNED NULL DEFAULT '0',
+  PRIMARY KEY(dts_dataset_id_fk, project_id_fk),
+  INDEX dataset_project_FKIndex1(status_id_fk),
+  INDEX dataset_project_FKIndex2(project_id_fk),
+  INDEX dataset_project_FKIndex3(dts_dataset_id_fk),
+  FOREIGN KEY(status_id_fk)
+    REFERENCES dts_status(status_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(project_id_fk)
+    REFERENCES project(project_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(dts_dataset_id_fk)
+    REFERENCES dataset(dts_dataset_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE dataset_processing (
+  dataset_processing_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  dts_dataset_id_fk INTEGER UNSIGNED NOT NULL,
+  product_id_fk INTEGER UNSIGNED NOT NULL,
+  conversion_location VARCHAR(255) NULL,
+  howto_url VARCHAR(255) NULL,
+  in_best_software TINYINT(1) UNSIGNED NULL DEFAULT '0',
+  status_id_fk INTEGER UNSIGNED NOT NULL,
+  id_type INTEGER UNSIGNED NULL DEFAULT '99',
+  platform_type INTEGER UNSIGNED NULL DEFAULT '999',
+  questions TINYINT(1) UNSIGNED NULL DEFAULT '0',
+  extraction_product_id_fk INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY(dataset_processing_id),
+  INDEX dataset_product_FKIndex1(product_id_fk),
+  INDEX dataset_product_FKIndex2(dts_dataset_id_fk),
+  INDEX dataset_product_unique(dts_dataset_id_fk, product_id_fk),
+  INDEX dataset_product_FKIndex3(status_id_fk),
+  INDEX dataset_processing_FKIndex4(extraction_product_id_fk),
+  FOREIGN KEY(product_id_fk)
+    REFERENCES product(product_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(dts_dataset_id_fk)
+    REFERENCES dataset(dts_dataset_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(status_id_fk)
+    REFERENCES dts_status(status_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(extraction_product_id_fk)
+    REFERENCES product(product_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE product_notes (
+  product_id_fk INTEGER UNSIGNED NOT NULL,
+  notes_id_fk INTEGER UNSIGNED NOT NULL,
+  is_qc TINYINT(1) UNSIGNED NULL DEFAULT '0',
+  PRIMARY KEY(product_id_fk, notes_id_fk),
+  INDEX product_has_notes_FKIndex1(product_id_fk),
+  INDEX product_has_notes_FKIndex2(notes_id_fk),
+  FOREIGN KEY(product_id_fk)
+    REFERENCES product(product_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(notes_id_fk)
+    REFERENCES notes(notes_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE dataset_processing_notes (
+  dataset_processing_id INTEGER UNSIGNED NOT NULL,
+  notes_id_fk INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY(dataset_processing_id, notes_id_fk),
+  INDEX dataset_product_has_notes_FKIndex1(dataset_processing_id),
+  INDEX dataset_product_has_notes_FKIndex2(notes_id_fk),
+  FOREIGN KEY(dataset_processing_id)
+    REFERENCES dataset_processing(dataset_processing_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(notes_id_fk)
+    REFERENCES notes(notes_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+CREATE TABLE dataset_loading_notes (
+  dataset_project_project_id_fk VARCHAR(20) NOT NULL,
+  dataset_project_dts_dataset_id_fk INTEGER UNSIGNED NOT NULL,
+  notes_id_fk INTEGER UNSIGNED NOT NULL,
+  INDEX dataset_loading_notes_FKIndex1(notes_id_fk),
+  INDEX dataset_loading_notes_FKIndex2(dataset_project_dts_dataset_id_fk, dataset_project_project_id_fk),
+  FOREIGN KEY(notes_id_fk)
+    REFERENCES notes(notes_id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE,
+  FOREIGN KEY(dataset_project_dts_dataset_id_fk, dataset_project_project_id_fk)
+    REFERENCES dataset_project(dts_dataset_id_fk, project_id_fk)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+)
+TYPE=InnoDB;
+
+

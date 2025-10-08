@@ -1,0 +1,74 @@
+dataset:
+- title_content: titleSep
+- name: <PROJECT>
+- archive_ident: '999.999'
+- title: PRELIMINARY PILS-IC Aerosol Fast anions and cations
+- summary: This dataset contains anion and cation data collected by a particles-into-liquid-sampler (PILS) instrument aboard the NSF/NCAR C-130 aircraft (Tail Number N130AR) during the <PROJECT> project. Please see the header portion of the data files for a list of parameters measured.  These are PRELIMINARY FIELD-PHASE data and are not for publication.
+- begin_date: '1000-01-01 00:00:00'
+- end_date: '7999-12-31 23:59:59'
+- visible: 0
+- auth_reqd: 1
+- eula_reqd: 1
+- version_number: '0.1'
+- quality: 1
+- ingest_location: /scr/raf/Raw_Data/<PROJECT>/field_phase/PILS-IC
+- archive_location: /FS/EOL/<year>/<project>/aircraft/c130_n130ar/FIELD_INTERNAL_ONLY/PILS-IC
+- filename_pattern: PILS-IC-Anion_<PROJECT>_(\Y\Y\Y\Y\M\M\y\y)_R\d.ict
+- startdate_pattern: YYYY-MM-yy 00:00:00
+- enddate_pattern: YYYY-MM-yy 23:59:59
+- filelength: ''
+- minimum_latitude: '32'
+- maximum_latitude: '48'
+- minimum_longitude: '-86'
+- maximum_longitude: '-65'
+- CODIAC_specific_fields: titleSep
+- category_id: 2
+- platform_id: 130
+- is_eol_data: 1
+- format: 152
+- host: hpss
+- frequency_id: 34
+- spatial_type: point
+- point_of_contact_id_codiac: 1
+- internal_contact_id_codiac: 179
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+- dodsable: 0
+- t_subset: 0
+- event_subset: 0
+- file_subset: 1
+- order_allow_compress: 1
+- DTS_specific_fields: titleSep
+- source_contact_id_dts: 
+- internal_contact_id_dts: 
+- ingest_contact_id_dts: 
+- ingest_status_id_dts: 6
+- load_contact_id_dts: 
+- load_data_location: '*ict'
+- load_status_id_dts: 6
+- approve_contact_id_dts: 
+- approve_status_id_dts: 6
+- author_id_dts: 
+- note_type_id: 4
+- note_text: Loaded with new load_data_proj script
+- optional_fields: titleSep
+- archive_location_2: /FS/EOL/<year>/<project>/aircraft/c130_n130ar/FIELD_INTERNAL_ONLY/PILS-IC
+- filename_pattern_2: PILS-IC-Cation_<PROJECT>_(\Y\Y\Y\Y\M\M\y\y)_R\d.ict
+- startdate_pattern_2: YYYY-MM-yy 00:00:00
+- enddate_pattern_2: YYYY-MM-yy 23:59:59
+- format_2: 152
+- host_2: hpss
+- archive_location_3: /FS/EOL/<year>/<project>/aircraft/c130_n130ar/FIELD_INTERNAL_ONLY/PILS-IC
+- filename_pattern_3: PILS-IC_<PROJECT>_(/Y/Y/Y/Y/M/M/y/y)_R\d.ict
+- startdate_pattern_3: YYYY-MM-yy 00:00:00
+- enddate_pattern_3: YYYY-MM-yy 23:59:59
+- format_3: 152
+- host_3: hpss
+- description: ''
+- iso_citation_role: 2
+- contact_id_codiac: 179
+- datacite_contributor_type: 4
+- iso_citation_role_2: 9
+- contact_id_codiac_2: 318
+- datacite_contributor_type_2: 2

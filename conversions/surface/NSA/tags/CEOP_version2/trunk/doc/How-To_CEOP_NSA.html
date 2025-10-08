@@ -1,0 +1,150 @@
+<html>
+
+<body>
+
+<h3 align="center">How To Process the CEOP ARM NSA Data</h3>
+
+<h4>Notes from email</h4>
+<ul>
+<b>On naming:</b>
+<pre>
+In the new CEOP what used to be Continental Scale Experiment (CSE)
+has become Regional Hydroclimate Project (RHP).  It's all rather
+confusing.
+
+There is a place in the data files for CSE/RHP.  It used to be GAPP,
+it should be CPPA starting with the 2005 SGP data.
+
+Scot
+-------------------
+
+There never really was a name given for the RHP/CSE that includes the
+ARM TWP or NSA sites.  Thus it was given "Other".  Nothing has changed
+on that front that I'm aware of.  It can't really be called ARM since
+SGP is part of another RHP.
+
+When it comes to SGP that is now part of CPPA rather than GAPP.
+
+Scot
+</pre>
+<b>Note on charging</b>:
+<pre>
+Beware that if you do any "CEOP" ARM/Tilden (Mt Bigelow) work (processing, plotting, checking, etc.)
+you should charge that the CPPA DM account.....not the CEOP account.  This is because this work is
+listed in the CPPA statement of work.
+...
+LEC
+</pre>
+
+<b>Data location and notes</b>:
+<pre>
+The ARM NSA data sets for inclusion in the SFC and TWR data sets
+are ready for conversion.
+
+The new 2005-2007 data locations are given below.
+
+Linda, for the plotting the EOP-3/4 data are archived here:
+/export/archive/data/ceop/eop3and4/ARM/NSA/surface
+
+Note that there are two stations (C1 and C2) for ARM NSA.
+
+The following data sets and flagging files are here for the SFC data
+set:
+
+/ingest/CEOP/v2/ARM/NSA/METTWR
+/ingest/CEOP/v2/ARM/NSA/GNDRAD
+/ingest/CEOP/v2/ARM/NSA/SKYRAD
+/ingest/CEOP/v2/ARM/NSA/METTWR/NSA_METTWR_flagging.txt
+/ingest/CEOP/v2/ARM/NSA/GNDRAD/NSA_GNDRAD_flagging.txt
+/ingest/CEOP/v2/ARM/NSA/SKYRAD/NSA_SKYRAD_flagging.txt
+
+The TWR data set uses only the METTWR files.
+
+One thing to note is that the AtmPress (barometric pressure) data
+changed from hPa to kPa sometime in this period at both stations.
+Unfortunately, the time of changeover doesn't match what they say in the
+DQR, so I'm not sure when the change happened.
+
+The flagging files are in the new format that I'll keep to in the
+future.
+
+Scot
+</pre>
+
+<p>
+----------------------------------------------------------------------------
+<p>
+   
+<b>The formats for the output files</b>:<br>
+<table>
+    <tr>
+	<td>
+	Surface: <a href="http://www.eol.ucar.edu/projects/ceop/dm/documents/refdata_report/ceop_sfc_met_format.html">Surface Meteorological and Radiation Format</a><br>
+	</td>
+    </tr>
+
+    <tr>
+	<td>
+	Tower:   <a href="http://www.eol.ucar.edu/projects/ceop/dm/documents/refdata_report/ceop_met_tower_format.html">Meteorological Tower Format</a>
+	</td>
+    </tr>
+</table>
+
+<p>
+</ul>
+
+<p>
+<hr>
+<p>
+
+<h2 align="center">To prepare to convert the ARM NSA data</h2>
+<ul>
+	<li>cd to the <b>raw</b> directory
+	<li>Update the <i><b>file.location</b></i> file with the location of the raw data
+	<li>Update the <i><b>copy_raw.sh</b></i> file with the locations and names of the files to be copied
+	<ul>
+		<li>each type of data (e.g. "gndrad") collected from a specific network, should get put into its own directory under "raw"
+		<li>all years data of a single network get put together into the same directory
+		<li>all station's data of a single network get put together into the same directory
+	</ul>
+	<li>The last line of the copy_raw.sh script gunzips the compressed netCDF files
+	<li>Edit the <i><b>run_getvars.sh</b></i> script so the first line has only the networks, or data types, being used for this conversion in the <b>foreach</b>
+	<li>Before running the <i><b>run_getvars.sh</b></i> script, check the names of the parameters being selected
+	<ul>
+		<li>The parameters for each network are listed in the <i><b>get_vars.sh</b></i> script in the network's directory, e.g. <b>raw/gndrad/<i>get_vars.sh</b></i>
+		<li>All the parameters are also listed by network in the <i><b>all_variables.txt</b></i> in the <b>doc</b> directory. Update as needed to match these data, when changing the <i>get_vars.sh</i> files.
+	</ul>
+	<li>Run the script named <i><b>run_getvars.sh</b></i>
+	<li>The parameters desired will be extracted from the netCDF data files and written to files for that data type beneath the <b>raw</b> directory. The files will have a line for each parameter, and the values in a comma separated row. These preliminary output files will have a <i><b>dat</b></i> extension.
+	<li>Create a directory for the netCDF files which were just read, and move them to it. When the conversion is complete, and everything checks out, these netCDF files which were copied over to the conversion area and had the parameters we wanted extracted from them, may be deleted. The originals should still be in the ingest area, untouched.
+</ul>
+
+<h2 align="center">To prepare the flagging files</h2>
+<ul>
+	<li>Check that the filenames in the <i><b>run_convert.sh</b></i> script match the flagging files copied
+	<li>Run the <i><b>run_convert.sh</b></i> script to fix the dates in the flagging files
+	<ul>
+		<li>the output is put into new files created in the <b>../code_frag</b> directory
+		<li>these files will be used as the input to the <i><b>make_flag_code.pl</b></i> script, later
+	</ul>
+	<li>Edit the <b>bin/<i>make_flag_code.pl</i></b> script, as needed, to match the parameter names in the data, and the input file names
+	<p>
+	<li> ************ <b>To Do</b> **************
+	<ul>
+		<li>Write a new version of the <b>bin/<i>make_flag_code.pl</i></b> script to work with Scot's new format for his flagging files
+		<li>Examples of Scot's previous version of flagging files are at <b>raw/not_needed/prev_flagging_files</b>; compare these to his new ones copied over from ingest.
+		<li>The present version of the <i><b>make_flag_code.pl</i></b> script works with the output of the <i><b>convert_datetime.pl</b></i> script, which re-formatted Scot's flagging file. 
+			Examples of that previous output can be found in the <b>code_frag/prev</b> directory.
+		<li>The 2 re-formatting scripts can be combined into one, if that works out.
+	</ul>
+</ul>
+
+<h2>To add to this How-To, and to do later:</h2>
+<ul>
+	<li> Prepare and run the conversion software
+	<li>Plot the data.
+
+</ul>
+
+</body>
+</html>

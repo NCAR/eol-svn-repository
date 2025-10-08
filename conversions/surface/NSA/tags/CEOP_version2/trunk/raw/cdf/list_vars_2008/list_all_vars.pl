@@ -1,0 +1,1 @@
+../../bin/list_all_vars.pl

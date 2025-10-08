@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>How to Document Perl Using DocPerl.cgi</title>
+    <link ref=stylesheet type=text/css href="./docperl.css">
+  </head>
+
+  <body>
+      <h1>How to Document Perl Using DocPerl.cgi</h1>
+      <p>DocPerl is a tool to create HTML pages for Perl code.  It is intended
+	 to give the author a nice way to view what a program does without 
+	 having to view the code directly while keeping all of the 
+	 documentation in one place, with the code.  If done well, the DocPerl 
+	 HTML pages should make it possible for another user to use the program
+         without ever having to look at the code!</p>
+      <p>There are three main steps to creating DocPerl pages for a Perl 
+	 program: <ol>
+         <li><a href="#module">Documenting the Program</a></li>
+         <li><a href="#function">Documenting the Functions</a></li>
+         <li><a href="#docperl">Calling DocPerl and Viewing the Documentation
+	    </a></li>
+         <li><a href="#other">Other Notes of Interest</a></li></ol></p>
+
+      <hr><a name="module"></a>
+      <h1>Documenting the Program</h1>
+      <p>Documenting a program is the single most important part of the 
+         documentation process.  That is why it is <em>mandatory</em> for the 
+         program to have this general documentation for the DocPerl tool to 
+         work correctly.  The documentation should be the first thing in the
+	 program file after the <code>#! /usr/bin/perl -w</code> or whatever 
+	 the location and command call to the perl program is to be.</p>
+      <p>DocPerl looks for the program documentation between lines that begin
+         with ##Module.  Anything can follow in the line to help visually
+         in the code, but the DocPerl tool ignores everything after <code>
+	 ##Module</code>.</p>
+      <p>The first part of the program documentation can be anything.  Good
+         documentation should explain what the program does and any important
+         information that would be useful for a user of the program.  The 
+         documentation itself can be styled in any manner, but it is strongly
+         suggested that it be written in HTML.  Documentation written in HTML
+         is read in by DocPerl and used accordingly.  Other documentation 
+         styles will be concatenated together and will probably display in a 
+         giant paragraph.</p>
+      <p>The following is an example of the general documentation.</p>
+      <pre>
+   ##Module------------------------------------------------------------------
+   # &lt;p>The &lt;code>Conversions.pm&lt;/code> module is is a collection of functions 
+   # that  do conversions to be used with converting QCF data.  It performs
+   # a number of different calculations and conversions for different
+   # measurements that are typically seen in data.  It also contains a
+   # number of constants used by the QCF data format.&lt;/p>
+   ##Module------------------------------------------------------------------
+         </pre>
+      <p>There are a set of special tokens that begin with the @ symbol.  These
+         are used for special formating by DocPerl.  The @tokens must be the
+         last section of the documentation.  DocPerl assumes that all 
+         documenation after the @token is associated with the @token until
+         it reaches another @token or the ##Module end line.</p>
+      <p>DocPerl recognizes three @tokens in the program documentation section.
+         The @tokens are @use, @author, and @version.  DocPerl reads the 
+         @tokens in order they are in the file and outputs them in that order.
+         </p>
+      <p>The @use token is to be used as instructions to give the user on how
+         to use the program.  It could either be how to include a module in
+         another program or how to call the program from the command line.</p>
+      <p>The following is an example of the @use token.  It tells the user how
+         to call the Conversions.pm module from another program and also how 
+         to call a function in the module.</p>
+      <pre>
+   # @use  use lib "work/DPG_HTML/BEST_SW/conversion_modules/Version1";
+   #       use Conversions;
+   # @use  $return_value = Conversions::functionName(params);
+      </pre>
+      <p>The @author token is to set aside the author of the program and
+         show it in the documentation.  It is not mandatory but highly 
+         recomended to include the @author token.</p>
+      <p>The following is an example of how the @author token is used.</p>
+      <pre>
+   # @author Joel Clawson
+      </pre>
+      <p>The @version token is to be used to keep track of the changes made
+         to the program over time.  Ideally, the @version tag should be 
+         followed by a version number/name and a description of the changes 
+	 made.  It is recommended to include an @author token with each 
+         @version token to identify who made which changes.</p>
+      <p>The following is an example of the @version token's use.</p>
+      <pre>
+   # @version 0.01 Creation
+      </pre>
+      <p>To conclude this section of the DocPerl How To, a full program
+         documentation will be given to see how it works together.</p>
+      <pre>
+   ##Module------------------------------------------------------------------
+   # &lt;p>The &lt;code>Conversions.pm&lt;/code> module is is a collection of functions 
+   # that  do conversions to be used with converting QCF data.  It performs
+   # a number of different calculations and conversions for different
+   # measurements that are typically seen in data.  It also contains a
+   # number of constants used by the QCF data format.&lt;/p>
+   #
+   # @use  use lib "work/DPG_HTML/BEST_SW/conversion_modules/Version1";
+   #       use Conversions;
+   # @use  $return_value = Conversions::functionName(params);
+   #
+   # @author Joel Clawson
+   # @version 0.01 Creation
+   #
+   # @author Joel Clawson
+   # @version 1.00 Original Version<br>
+   # &lt;p>The original version is the fully documented version of the module
+   # with all of the requested functionallity.&lt;/p>
+   ##Module------------------------------------------------------------------
+      </pre>
+
+      <hr><a name="function"></a>
+      <h1>Documenting the Functions</h1>
+      <p>DocPerl sweeps through the Perl file and finds all of the functions in
+	 the file that have DocPerl documentation and displays them in a table
+	 with a full description of each function following the table.  The
+	 DocPerl documentation is very similar to the program description.  The
+         first line of the documentation must begin and end with <code>##
+	 </code> at the beginning of the lines.  As with the program 
+	 description, everything after the <code>##</code> is ignored by 
+	 DocPerl.</p>
+      <p>The first line following the <code>##</code> is the signature line.
+         The signature line defines the function.  It provides the function's
+         name, parameters, and return type.  The line starts with the 
+	 @signature token to mark the line as a signature line.  If the 
+	 @signature token is missing, DocPerl will quit.  Following the 
+	 @signature token is the return type.  The return type can be either
+         a scalar value, a list, a hash, or a void value if nothing is 
+	 returned.  After the return type is the function name and a list of 
+         parameters passed to the function enclosed in parenthesis.  
+         <em>The signature must be on one line only.</em></p>
+      <p>The following is a set of examples that show different forms of 
+         signatures.  The addRecord function takes in a Record and does not 
+         return any value.  The getMissing function returns a String.  The
+         convertJulian function returns two integers, a month followed by a
+         day when it is given an year and a julian day.  A more general return
+         of a list is shown with getAllRecords which returns a list of Record 
+         instances.  The loadStateCodes returns a hash that contains String 
+         values.</p>
+      <pre>
+   # @signature void addRecord(Record record)
+   # @signature String getMissing()
+   # @signature (int month, int day) convertJulian(int year, int julian)
+   # @signature @Record getAllRecords()
+   # @signature %String loadStateCodes()
+      </pre>
+      <p>The next section of the function documentation is the function 
+         description.  The function description should contain what the 
+         function does and any other information about the function that will
+         make it easier for someone to understand the function.  The 
+         description can be written however the author wants, but it is again
+         recommended to use HTML which will appear in the DocPerl HTML file.
+         All blank lines are ignored by DocPerl.</p>
+      <p>The following is an example of a function description.</p>
+      <pre>
+   # &lt;p>Convert a temperature value from one unit of temperature to 
+   # another.&lt;/p>
+   # &lt;p>This function converts every input temperature to &amp;deg;C then 
+   # converts it to the output units.&lt;/p>
+      </pre>
+      <p>The @token section is the last section of the function documentation.
+         There are five @tokens recognized for the functions: @input, @output
+         @warning, @limitation, and @link.  The @tokens can appear in any order
+         but it is recommended that each @token be grouped with the others of 
+         the same token type to make the documentation easier to read.  The 
+         @tokens are displayed in the HTML in a specified order, but the order
+         of a group of the same @tokens are displayed in the order given in the
+         documentation.</p>
+      <p>The @input token is used to expand descriptions for parameters.
+         There should be an @input token for each parameter passed in.  The
+         format of the @input line is:</p>
+      <p>@input variable_name description</p>
+      <p>where the variable_name is the name of the parameter passed in to
+         the function and the description is the description of the parameter.
+         The description can be written in HTML format.</p>
+      <p>The following is an example of an @input token group.</p>
+      <pre>
+   # @input $temperature The temperature value to be converted.
+   # @input $in The units of temperature to be converted from.
+   # @input $out The units of temperature to be converted to.
+      </pre>
+      <p>The @output token is used to expand descriptions for return values.
+         There should be an @output token for each return value the function
+         specifically returns.  The tokens should be displayed in the order
+         they are returned.  The format for the @output line is:</p>
+      <p>@output return_value description</p>
+      <p>where the return_value is a name for the value returned and the 
+         description is the description of the return value.</p>
+      <p>The following is an example of an @output token group.</p>
+      <pre>
+   # @output $month The month of the year of the julian date.
+   # @output $day The day of the month for the julian date.
+      </pre>
+      <p>The @warning token is to be used to provide important information to
+         a user about the function.  It could be anything from known problems
+         with the function to if the function terminates in certain instances.
+         The format of the warning line is:</p>
+      <p>@warning warning_text</p>
+      <p>where warning_text is a description of the warning.</p>
+      <p>The following is an example of an @warning token group.</p>
+      <pre>
+   # @warning If the converted wind speed does not fit in the space allocated,
+   #          the function will terminate.
+   # @warning If the flag given for the wind speed is not one character or if
+   #          the flag is not a recognized flag, the function will terminate.
+      </pre>
+      <p>The @limitation token is a notice to the user that the function is 
+         only able to handle certain instances or not able to handle a specific
+         case.  The format for the @limitation token is:</p>
+      <p>@limitation limitation_text</p>
+      <p>where limitation_text is the description of the limitation.</p>
+      <p>The following is an example of an @limitation token.</p>
+      <pre>
+   # @limitation This function only recognizes the units of:&lt;ul>
+   #     &lt;li>"C" degrees Celsius&lt;/li>
+   #     &lt;li>"F" degrees Fahrenheit&lt;/li>
+   #     &lt;li>"K" Kelvin&lt;/li>&lt/ul>
+      </pre>
+      <p>The @link token is used to group together hyperlinks that are related
+         to the function.  The format for the @link token is:</p>
+      <p>@link html_link</p>
+      <p>where html_link is text that will create an HTML hyperlink to the
+         site the link wished to link.</p>
+      <p>The following is an example of the @link token.</p>
+      <pre>
+   # @link &lt;a href=http://dmg.eol.ucar.edu/software/tools/web/docperl/docperl_howto.html>Link to this Page&lt;/a>
+      </pre>
+      <p>To conclude the DocPerl How To for the function documentation, a full
+         example will be provided.</p>
+      <pre>
+   ##-------------------------------------------------------------------------
+   # @signature float convertTemperature(float temperature, String in, String out)
+   # &lt;p>Convert a temperature value from one unit of temperature to 
+   # another.&lt;/p>
+   # &lt;p>This function converts every input temperature to &amp;deg;C then 
+   # converts it to the output units.&lt;/p>
+   #
+   # @input $temperature The temperature value to be converted.
+   # @input $in The units of temperature to be converted from.
+   # @input $out The units of temperature to be converted to.
+   # @output $val The temperature converted to the output units.
+   # @warning The function will &lt;code>die&lt;/code> if it receives an unknown
+   #          unit of measurement in either &lt;code>$in&lt;/code> or &lt;code>$out
+   #          &lt;/code>.
+   # @limitation This function only recognizes the units of:&lt;ul>
+   #     &lt;li>"C" degrees Celsius&lt;/li>
+   #     &lt;li>"F" degrees Fahrenheit&lt;/li>
+   #     &lt;li>"K" Kelvin&lt;/li>&lt/ul>
+   ##--------------------------------------------------------------------------
+      </pre>
+
+      <hr><a name="docperl"></a>
+      <h1>Calling DocPerl and Viewing the Documentation</h1>
+      <p>With a documented Perl file, DocPerl is ready to be called.  DocPerl 
+         is located at:</p>
+      <p><code>/net/web/dmg/cgi-bin/docperl/docperl</code></p>
+      <p>and can be found on the web at:</p>
+      <p><code>http://dmg.eol.ucar.edu/cgi-bin/docperl/docperl</code></p>
+      <p>To call DocPerl with the file, the file needs to be passed to DocPerl
+         using the <code>file</code> parameter.  Using file_name as the name
+         of the file to be documented call:</p>
+      <p><code>http://dmg.eol.ucar.edu/cgi-bin/docperl/docperl?file=file_name</code></p>
+      <p>The documentation for the file should now be viewable in a browser.
+         </p>
+      <hr><a name="other"></a>
+      <h1>Other Notes of Interest</h1>
+      <p>The DocPerl tool uses the cascading style sheet <code>docperl.css
+         </code>.  It can be found in <code>/net/web/dmg/html/software/tools/web/docperl</code>.
+
+      <hr>
+      <address><a href="mailto:jclawson@ucar.edu">Joel Clawson</a></address>
+<!-- Created: Tue Jul 29 15:35:30 MDT 2003 -->
+<!-- hhmts start -->
+Last modified: Mon Aug 18 09:17:59 MDT 
+<!-- hhmts end -->
+  </body>
+</html>

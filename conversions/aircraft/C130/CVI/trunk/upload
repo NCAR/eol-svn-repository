@@ -1,0 +1,5 @@
+#!/bin/csh
+
+foreach file (*txt)
+  asc2cdf -a $file /scr/raf/Prod_Data/VOCALS/cvi_`basename $file .txt`.nc
+end

@@ -1,0 +1,40 @@
+//****************************************************************************
+// nws_check_file
+// Darren R. Gallant
+// UCAR-JOSS March 1997
+//****************************************************************************
+// January 22 ,1998
+// Changed Dewpt field width check
+// changed minimum from -99.9 to DEWPTMIN constant in *.h files
+// kept maximum at 999.9, also changed flag from 4.0(estimated) to 
+// 2.0(questionable)
+// Changed MAX and MIN DewPt check to only check for MAXDEWPT since MIN check 
+// occurs during field width check, changed press to pressure for consistency
+// changes made to prevent double actual DewPt error occurences during 
+// grepcheck
+// September 23,1998
+// added physically impossible parameters in checklimits*.h files for
+// relative humidity,temperature, dew point,pressure, and total wind speed
+// and direction. 
+// rh: if rh < 0, rh and dewpt set missing and qrh set to missing
+// temperature: if temp > TEMPMISSMAX set temp and Qt flag to missing
+// pressure: if press > PRESSMISSMAX or press < PRESSMISSMIN set press and Qp 
+// to missing
+// dew point: if dewpt > DEWPTMISSMAX set dewpt to missing
+// total wind direction: if dir > 360 or dir < 0 set U and V wind components,
+// total wind speed and direction, and Qu and Qv flags to missing
+// total wind speed: if spd >= SPDMISSMAX, set set U and V wind components,
+// total wind speed and direction, and Qu and Qv flags to missing
+// October 20,1998
+// added rapid temperature checks for pressures below P_LIMIT
+// using parameters STRAT_RAPID_TEMP and BAD_STRAT_RT
+// If temperature increases 100 deg/km - below P_LIMIT - QUESTIONABLE
+// if temperature increases 200 deg/km or more - BAD
+// September 10,1999
+// for rapid temperature checks for pressures below P_LIMIT
+// prevented check if pressures are equal
+// December 3rd, 2001
+// Prevented missing pressures during pressure increasing check when 
+// next > 1
+// Added ATLAS specfic logic: If pressures less than 300 mb, check for
+// increasing pressures only. Otherwise this level is 100 mb 

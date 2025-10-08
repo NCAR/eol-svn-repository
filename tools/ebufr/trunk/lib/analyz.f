@@ -1,0 +1,106 @@
+      SUBROUTINE ANALYZ(IOS,LISNUM)
+
+C     THIS SUBROUTINE WILL ANALYZE SOME OF THE ERROR MESSAGES
+C     RETURNED FROM FORTRAN I/O OPERATIONS
+C
+C     IT IS NOT COMPLETE
+C
+      INTEGER IOS            !ERROR NUMBER TO CHECK
+      INTEGER LISNUM         !OUTPUT LOG UNIT NUMBER
+      INTEGER ERRNUM(100)    !ARRAY OF ERROR NUMBERS TO CHECK AGAINST
+      INTEGER I
+      CHARACTER*50 MSG1(100) !FIRST LINE OF TEXT MESSAGE
+      CHARACTER*50 MSG2(100) !SECOND LINE OF TEXT MESSAGE
+      CHARACTER*50 MSG3(100) !THIRD LINE OF TEXT MESSAGE
+      CHARACTER*50 MSG4(100) !FOURTH LINE - PLAIN ENGLISH SUGGESTION
+C                             ON WHAT TO DO
+
+
+C
+C     INITIALIZE THE ERROR CODE AND CORRESPONDING MESSAGES ARRAYS
+      DO 1000 I = 1, 100
+         ERRNUM (I) = 0
+C23456!89012345678901234567890123456789012345678901234567890123456789012
+         MSG1(I) = '                                                  '
+         MSG2(I) = '                                                  '
+         MSG3(I) = '                                                  '
+         MSG4(I) = '                                                  '
+1000  CONTINUE
+
+
+C
+C     DEFINE THE ERROR CODES AND MESSAGES
+C
+      ERRNUM (  1) = 13
+        MSG1 (  1) = 'PERMISSION DENIED'
+        MSG2 (  1) = 'AN ATTEMPT WAS MADE TO ACCESS A FILE IN A WAY'
+        MSG3 (  1) = 'FORBIDDEN BY THE PROTECTION SYSTEM'
+        MSG4 (  1) = 'CHECK YOUR FILE PROTECTIONS AND/OR OWNERSHIP'
+
+
+      ERRNUM (  2) = 118
+        MSG1 (  2) = 'CAN NOT FIND OLD FILE'
+        MSG2 (  2) = 'YOU TRIED TO OPEN A NONEXISTENT FILE WITH'
+        MSG3 (  2) = 'STATUS = OLD'
+        MSG4 (  2) = 'FILE DOES NOT EXIST - CHECK YOUR FILE NAME'
+
+C23456!89012345678901234567890123456789012345678901234567890123456789012
+
+C
+C     CAN WE MATCH THE ERROR CODE?
+C
+
+      DO 2000 I = 1, 100
+         IF ( IOS .EQ. ERRNUM(I) ) THEN
+C
+C           WRITE MESSAGE TO STANDARD OUTPUT DEVICE
+C
+            WRITE(      6, '(/, ''ERROR CODE: '',I3)' ) IOS
+            WRITE(      6, '(A50)' ) MSG1(I)
+            WRITE(      6, '(A50)' ) MSG2(I)
+            WRITE(      6, '(A50)' ) MSG3(I)
+            WRITE(      6, '(/,A50,/)' ) MSG4(I)
+
+C
+C           WRITE MESSAGE TO LOG UNIT
+C
+            WRITE( LISNUM, '(/, ''ERROR CODE: '',I3)' ) IOS
+            WRITE( LISNUM, '(A50)' ) MSG1(I)
+            WRITE( LISNUM, '(A50)' ) MSG2(I)
+            WRITE( LISNUM, '(A50)' ) MSG3(I)
+            WRITE( LISNUM, '(/,A50,/)' ) MSG4(I)
+
+            GOTO 9000
+
+         ELSE
+            CONTINUE
+         END IF
+2000  CONTINUE
+
+C
+C        COULD NOT MATCH ERROR CODE
+C        SEND MESSAGE TO USER
+C
+C
+C        WRITE MESSAGE TO STANDARD OUTPUT DEVICE
+C
+         WRITE(      6, '(/, ''ERROR CODE: '',I3)' ) IOS
+         WRITE(      6, '(''ERROR CODE NOT FOUND'')' )
+         WRITE(      6, '(''EXAMINE LOG FILE FOR CLUES'')' )
+         WRITE(      6, '(/,''CAN NOT SUGGEST CORRECTIVE ACTION'',/)' )
+
+C
+C        WRITE MESSAGE TO LOG UNIT
+C
+         WRITE( LISNUM, '(/, ''ERROR CODE: '',I3)' ) IOS
+         WRITE( LISNUM, '(''ERROR CODE NOT FOUND'')' )
+         WRITE( LISNUM, '(''EXAMINE LOG FILE FOR CLUES'')' )
+         WRITE( LISNUM, '(/,''CAN NOT SUGGEST CORRECTIVE ACTION'',/)' )
+
+
+9000  CONTINUE
+ 
+C     RETURN TO CALLING PROGRAM
+
+      RETURN
+      END

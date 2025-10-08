@@ -1,0 +1,29 @@
+
+ *    (0)         Station Pressure,
+ *    (1)         Sea Level Pressure,
+ *    (2)         Calculated Sea Level Pressure,
+ *    (3)         Temperature,
+ *    (4)         Dew Point Temperature,
+ *    (5)         Wind speed,
+ *    (6)         Wind Direction.
+  
+   float     alpha_G[NUMQCPARMS] = {0.2, 0.2, 0.4, 0.5, 0.5,
+                                    2.25, 1.22};
+
+   float     alpha_B[NUMQCPARMS] = {0.5, 0.5, 1.0, 1.0, 1.0,
+                                    4.0, 2.2};
+
+
+  for (jj=0; jj<NUMQCPARMS; jj++)
+    {
+
+    good = alpha_G[jj]* sqrt(limit[jj][range[jj][1]]); /*Highest Good value*/
+
+    questionable_low = alpha_G[jj]*sqrt(limit[jj][range[jj][0]]);
+    questionable_hi  = alpha_B[jj]*sqrt(limit[jj][range[jj][1]]);
+ 
+    unlikely = alpha_B[jj]* sqrt(limit[jj][range[jj][0]]); /*Lowest Bad value*/
+
+ 
+    } /* for jj - all parms */
+

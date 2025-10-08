@@ -1,0 +1,173 @@
+<html>
+<body>
+<pre>
+TITLE: CEOP EOP-3 ARM NSA Surface Meteorological and Radiation Data Set
+
+
+CONTACT:
+
+
+Raymond McCord
+Building 1507
+PO Box 2008, MS 6407
+Oak Ridge, TN 37831-6407
+
+Telephone: (865) 574-7827
+Fax: (865) 574-4665
+
+E-Mail: <a href="mailto:mccordra@ornl.gov">mccordra@ornl.gov</a>
+
+
+1.0  DATA SET OVERVIEW
+
+
+This data set contains 30-minute resolution surface meteorological and
+radiation data from the Coordinated Enhanced Observing Period (CEOP) Reference 
+Site operated by the Atmospheric Radiation Measurement (ARM) Program at its 
+North Slope of Alaska (NSA) facility in Alaska.  This data set 
+includes observations from two locations.  This data set covers the 
+time period 1 October 2002 through 30 September 2003.  Further information 
+about the ARM NSA site is available at the 
+following URL: <a href="http://www.arm.gov">http://www.arm.gov</a>
+
+1.1  Station Locations
+
+Site                Elev (m)  Latitude  Longitude
+-------------------------------------------------
+Barrow, AK     C1     8.0     71.323 N  156.609 W
+Atqasuk, AK    C2    20.0     70.4718N  157.4066W
+
+Both stations have observations of air temperature, relative humidity,
+dew point, specific humidity, wind speed, wind direction, U wind 
+component, V wind component, station pressure, precipitation, skin
+temperature, incoming longwave, incoming shortwave, outgoing longwave,
+outgoing shortwave and net radiation.
+
+The C2 station also provides observations of snow depth.
+
+Neither station provides observations of incoming or outgoing PAR.
+
+
+2.0  INSTRUMENTATION DESCRIPTION
+
+The ARM NSA meteorological tower measurements at the Barrow site are 
+from their Barrow Meteorology (BMET) tower.  At the Atqasuk site the 
+meteorological tower measurements are from their 10-m tower.
+
+2.1  BMET Sensors (Barrow site)
+
+Full descriptions of the instruments used at the Barrow site are
+available in the file ARM_NSA_BMET.stm.html included as part of the data set.
+They are also available on the web at:
+http://www.arm.gov/instruments/static/bmet.stm
+
+2.2  SMET (Atqasuk) Sensors
+
+Thermometer
+	Temperature, 2m and 6m level on tip tower, Vaisala HMP35D
+        PRTD (Platinum resistance thermal detector)
+Humicap
+	Humidity, 2m and 6m level on tip tower, Vaisala model HMP45D 	 
+Barometer, digital
+	Pressure, Vaisala model PTB201A 	 
+
+
+3.0  DATA COLLECTION AND PROCESSING
+
+
+3.1  ARM Data Collection and Processing
+
+Information on ARM Processing can be found at the instrument
+web pages:
+
+Barrow Meteorology: http://www.arm.gov/instruments/static/bmet.stm
+SMET: No web page
+
+3.2  UCAR/JOSS Data Processing
+
+The University Corporation for Atmospheric Research/Joint Offfice for
+Science Support (UCAR/JOSS) converted the data from the raw format
+provided by ARM into the CEOP EOP-3 data format agreed to by
+the CEOP Scientific Steering Committee.  This format is described
+in detail as part of the CEOP Reference Site Data Set Procedures
+Report which is available at the following URL:
+<a href="http://www.joss.ucar.edu/ghp/ceopdm/refdata_report/ceop_met_tower_format.html">
+http://www.joss.ucar.edu/ghp/ceopdm/refdata_report/ceop_met_tower_format.html</a>
+
+
+4.0  QUALITY CONTROL PROCEDURES
+
+
+4.1  ARM Quality Control Procedures
+
+For futher information on ARM QC Procudures see the instrument
+web pages:
+
+Barrow Meteorology: http://www.arm.gov/instruments/static/bmet.stm
+SMET: No web page
+
+4.2  UCAR/JOSS Quality Control Procedures
+
+UCAR/JOSS converted the ARM QC flags into the CEOP QC flags in the 
+following manner.  If a parameter failed one of the ARM QC checks it was 
+flagged as Questionable/Dubious ("D") and if it failed two or more ARM 
+QC checks it was flagged as Bad ("B").
+
+Additionally, UCAR/JOSS conducted two primary quality assurrance/control
+procedures on the reference site data.  First the data has 
+been evaluated by a detailed QA algorithm that verifies the format is 
+correct, examines any QC flags, and conducts basic checks on data 
+values.  Second, JOSS conducts a manual inspection of time series 
+plots of each parameter.
+
+
+5.0  GAP FILLING PROCEDURES
+
+
+No gap filling procedures were applied to these data by either
+ARM or UCAR/JOSS.
+
+
+6.0  DATA REMARKS
+
+
+6.1 ARM Data Quality Report for station C2 (Atqasuk) All Parameters
+
+Missing data from 0029 UTC on 22 September 2002 to 1935 UTC on
+21 November 2002:
+
+Due to unknown wiring differences and pin changes by Vaisala to their
+Wind Speed and Direction sensors, a power feedback into the QLI data
+collector occurred.  This caused an overload which shut the QLI data
+collector down.  Once trouble shooting pinpointed the power feedback,
+wiring diagrams were created and the differences were found.  Wiring
+was changed to prevent and remove the power feedback.
+
+6.2 ARM Data Quality Report for station C2 (Atqasuk) All parameters
+
+From 1430 UTC on 25 November 2002 to 2229 UTC on 26 March 2003:
+
+Missing met, present weather, and snow depth data due to comm error
+
+An error in the communication sub-routine of the Bridgeview collection
+software occurred resulting in data loss from the Snow Depth sensor,
+Present Weather Sensor and the Barometer.
+
+
+7.0  REFERENCE REQUIREMENTS
+
+
+To support the continuation of this program, please include the
+following 'credit line' in the acknowledgments of your
+publication:
+
+"Data were obtained from the Atmospheric Radiation Measurement
+(ARM) Program sponsored by the U.S. Department of Energy, Office
+of Science, Office of Biological and Environmental Research,
+Environmental Sciences Division."
+
+
+8.0  REFERENCES
+
+Barrow Meteorology: http://www.arm.gov/instruments/static/bmet.stm
+SMET: No web page

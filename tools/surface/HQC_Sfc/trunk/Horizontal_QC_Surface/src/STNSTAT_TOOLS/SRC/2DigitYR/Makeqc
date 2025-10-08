@@ -1,0 +1,185 @@
+#
+#
+# Makefile for qc programs
+#
+#
+
+SHELL = /bin/csh
+
+# where you want the libqc.a library to end up
+LIBDIR=.
+
+# The NetCDF library
+#WAS:  LIBNET=/usr/local/lib
+LIBNET=/opt/lib
+
+# debug
+#FFLAGS = -u -g -C
+#FFLAGS = -g
+#CFLAGS = -u -g -C
+#CFLAGS = -g
+
+# optimized (on Sun)
+#was: FLAGS = -u -fast -O3
+#was: FFLAGS = -fast -O3
+
+FLAGS = -u -O3
+FFLAGS = -O3
+
+OBJECTS=getbtime.o getntime.o getmin.o getplatform.o getstncode.o \
+        getconfig.o getqcftime2.o getqcftime.o getstns.o getqcfrec.o getqcfrec2.o \
+        getdays.o ll2xy.o
+INCLUDES=configcom.h debug.h gridcom.h ioerr.h parmnames.h platform.h \
+	   qc_config.h qccom.h qcfcom.h qcglobal.h stncom.h stnstatcom.h \
+	   stntosscom.h tosscom.h varcom.h
+COBJECTS=getstring.o getstnid.o loadstns.o
+CINCLUDES=stnrec.h
+
+.KEEP_STATE:
+
+all:	qc prtstn stnbuddy stnstat stnstat2 stntoss toss var stripqc \
+	stnlst stnqc stnrep
+
+qc:	qc.o $(LIBDIR)/libqc.a $(LIBNET)/libnetcdf.a
+	$(LINK.f) -o qc qc.o $(LIBDIR)/libqc.a $(LIBNET)/libnetcdf.a
+
+qc_2times:	qc_2times.o $(LIBDIR)/libqc.a $(LIBNET)/libnetcdf.a
+	$(LINK.f) -o qc_2times qc_2times.o $(LIBDIR)/libqc.a $(LIBNET)/libnetcdf.a
+
+prtstn:	prtstn.o $(LIBDIR)/libqc.a
+	$(LINK.f) -o prtstn prtstn.o $(LIBDIR)/libqc.a
+
+stnbuddy:	stnbuddy.o $(LIBDIR)/libqc.a
+	$(LINK.f) -o stnbuddy stnbuddy.o $(LIBDIR)/libqc.a
+
+stnstat:	stnstat.o $(LIBDIR)/libqc.a
+	$(LINK.f) -o stnstat stnstat.o $(LIBDIR)/libqc.a
+
+stnstat2:	stnstat2.o $(LIBDIR)/libqc.a
+	$(LINK.f) -o stnstat2 stnstat2.o $(LIBDIR)/libqc.a
+
+stntoss:	stntoss.o $(LIBDIR)/libqc.a
+	$(LINK.f) -o stntoss stntoss.o $(LIBDIR)/libqc.a
+
+toss:	toss.o $(LIBDIR)/libqc.a
+	$(LINK.f) -o toss toss.o $(LIBDIR)/libqc.a
+
+var:	var.o $(LIBDIR)/libqc.a
+	$(LINK.f) -o var var.o $(LIBDIR)/libqc.a
+
+stripqc:	stripqc.o $(LIBDIR)/libqc.a
+	$(LINK.f) -o stripqc stripqc.o $(LIBDIR)/libqc.a
+
+stnlst:	stnlst.o $(LIBDIR)/libcfest.a
+	$(LINK.c) -o stnlst stnlst.o $(LIBDIR)/libcfest.a
+
+stnqc:	stnqc.o $(LIBDIR)/libcfest.a
+	$(LINK.c) -o stnqc stnqc.o $(LIBDIR)/libcfest.a
+
+stnrep:	stnrep.o $(LIBDIR)/libcfest.a
+	$(LINK.c) -o stnrep stnrep.o $(LIBDIR)/libcfest.a
+
+qc.o:	qc.f $(INCLUDES)
+	$(COMPILE.f) qc.f
+
+stripqc.o:	stripqc.f ioerr.h
+	$(COMPILE.f) stripqc.f
+
+llxyc:	llxyc.o ll2xyc.o xy2llc.o
+	$(LINK.c) -o llxyc llxyc.o ll2xyc.o xy2llc.o -lm $(LIBDIR)/libcfest.a
+
+ll2xyc.o:	ll2xyc.c
+	$(COMPILE.c) ll2xyc.c
+
+xy2llc.o:	xy2llc.c
+	$(COMPILE.c) xy2llc.c
+
+gettosst:	gettosst.o gettoss.o
+	$(LINK.c) -o gettosst gettosst.o gettoss.o $(LIBDIR)/libcfest.a
+
+gettoss.o:	gettoss.c stnrec.h
+	$(COMPILE.c) $(CFLAGS) gettoss.c
+
+gettosst.o:	gettosst.c stnrec.h
+	$(COMPILE.c) $(CFLAGS) gettosst.c
+
+getbtime:	getbtime.o
+	ar ruv $(LIBDIR)/libqc.a getbtime.o
+
+getntime:	getntime.o
+	ar ruv $(LIBDIR)/libqc.a getntime.o
+
+getmin:	getmin.o
+	ar ruv $(LIBDIR)/libqc.a getmin.o
+
+getplatform:	getplatform.o
+	ar ruv $(LIBDIR)/libqc.a getplatform.o
+
+getstncode:	getstncode.o
+	ar ruv $(LIBDIR)/libqc.a getstncode.o
+
+getconfig:	getconfig.o
+	ar ruv $(LIBDIR)/libqc.a getconfig.o
+
+getqcftime2:     getqcftime2.o
+	ar ruv $(LIBDIR)/libqc.a getqcftime2.o	
+	
+getqcftime:	getqcftime.o
+	ar ruv $(LIBDIR)/libqc.a getqcftime.o
+
+getstns:	getstns.o
+	ar ruv $(LIBDIR)/libqc.a getstns.o
+
+getqcfrec:	getqcfrec.o
+	ar ruv $(LIBDIR)/libqc.a getqcfrec.o
+
+getqcfrec2:	getqcfrec2.o
+	ar ruv $(LIBDIR)/libqc.a getqcfrec2.o
+
+getdays:	getdays.o
+	ar ruv $(LIBDIR)/libqc.a getdays.o
+
+ll2xy:	ll2xy.o
+	ar ruv $(LIBDIR)/libqc.a ll2xy.o
+
+$(LIBDIR)/libqc.a:	$(LIBDIR)/libqc.a($(OBJECTS))
+	ar ruv $@ $?
+
+$(LIBDIR)/libqc.a(%.o):	%.o
+
+$(OBJECTS):	$(INCLUDES)
+
+$(INCLUDES):
+
+$(LIBDIR)/libcfest.a:	$(LIBDIR)/libcfest.a($(COBJECTS))
+	ar ruv $@ $?
+
+$(LIBDIR)/libcfest.a(%.o):	%.o
+
+getstring:	getstring.o	
+	ar ruv $(LIBDIR)/libcfest.a getstring.o
+
+getstnid:	getstnid.o	
+	ar ruv $(LIBDIR)/libcfest.a getstnid.o
+
+loadstns:	loadstns.o	
+	ar ruv $(LIBDIR)/libcfest.a loadstns.o
+
+$(COBJECTS):	$(CINCLUDES)
+
+$(CINCLUDES):
+
+gridswap:	gridswap.f
+	$(LINK.f) $@.f -o $@ -lm
+
+gridswap_dp:	gridswap_dp.f
+	$(LINK.f) $@.f -o $@ -lm
+
+readmaps:	readmaps.f
+	$(LINK.f) $@.f -o $@ -lm
+
+llxy:	llxy.f
+	$(LINK.f) $@.f -o $@ -lm
+
+clean:
+	-rm *.o core a.out

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta name="robots" content="noindex, nofollow">
+	<title>NCAR | Earth Observing Laboratory - Projects</title>
+	<link rel="stylesheet" type="text/css" href="index.css" />
+	<style type="text/css">
+		<!--
+		@import url(http://data.eol.ucar.edu/codiac_docs/ncarstyle/eolkludges.css);
+		//-->
+	</style>
+	
+	<!-- msie -->
+	<!--
+	<link rel="shortcut icon" type="image/x-icon" href="http://data.eol.ucar.edu/codiac_docs/ncarstyle/favicon.ico" />-->
+	
+	<!-- everybody else -->
+	<!--
+	<link rel="icon" type="image/vnd.microsoft.icon" href="http://data.eol.ucar.edu/codiac_docs/ncarstyle/favicon.ico" />-->
+
+	<link rel="shortcut icon" href="https://www.eol.ucar.edu/sites/all/themes/eol_external/favicon.ico" type="image/vnd.microsoft.icon" />
+
+</head>
+
+<body>
+
+<div class="visualClear"></div>
+<div id="mainwrap">
+	<div id="eolheaderwrap">
+	
+		<div id="eolheader" class="clear-block>">
+		
+			<div id="logo-floater">
+			  <a href="http://www.eol.ucar.edu/" title="EOL" rel="home" id="logo">
+				<img src="http://data.eol.ucar.edu/codiac_docs/ncarstyle/logo.png" alt="EOL" />
+			  </a>
+			</div>
+		
+			<div id="name-and-slogan">
+			  <h1 id="site-name" class="element-invisible">
+				<a href="http://www.eol.ucar.edu/" title="EOL" rel="home"><span>Earth Observing Laboratory</span></a>
+			  </h1>
+			  <div class="slogan"><img alt="Development, Deployment, Data, Discovery" src="http://data.eol.ucar.edu/codiac_docs/ncarstyle/slogan.png"/></div><!-- .slogan -->
+			</div> <!-- /#name-and-slogan -->
+		
+		  <div class="region-header"></div>
+		
+		</div> <!-- /#eolheader -->
+	</div> <!-- /#eolheaderwrap -->
+</div> <!-- /#mainwrap -->
+
+<br />
+<div id='container'>
+
+<!--===============-->
+<!--    TOP Bar    -->
+<!--===============-->
+<div id='topbar'>
+	<div id='listhead'> Data Management Project Listings </div>
+<div id='listbox'>
+
+<p style='font-style: italic;'>
+  Please note that not all EOL projects are listed on this page.  For a full list of projects, please visit the
+  <br />
+  <a href='https://www.eol.ucar.edu/all-field-projects-and-deployments'>EOL Field Project &amp; Deployment page</a>.
+</p>
+
+
+<div id='result' style='background: transparent; text-align: left; font-size: 14px;'>
+</div>
+<script src="http://code.jquery.com/jquery-1.5.js"></script>
+<script>
+  $('#result').load('http://www.eol.ucar.edu/cgi-bin/proj_list/proj_dir_list.pl #tablelist',
+    function(response, status, xhr) {
+      if (status == "error") {
+        var msg = "Error: ";
+        $("#result").html(msg + xhr.status + " " + xhr.statusText);
+      }
+    }
+  );
+</script>
+
+
+</div> <!-- end listbox -->
+</div> <!-- end topbar -->
+
+<!--================-->
+<!--    Footer      -->
+<!--================-->
+<div id="eolfooterwrap">
+		
+	<div id="eolOrgfooterwrap">
+		<!-- OrgNavFooter Script -->
+		<script>
+		
+		// CUSTOM VARIABLES
+		var contactLink = "mailto:codiacATucar.edu";     // enter your Contact/Feedback link or mailto: link
+		var hideOrgNav = false;        // hide the entire OrgNav from view
+		var hideFooter = false;          // hide the entire OrgFooter from view
+		var hideNSF = false;               // hide the NSF disclaimer
+		var footerColor = '#fff';       // hex color of the footer font including the #
+		
+		// DO NOT EDIT BELOW THIS POINT
+		var jsHost = (("https:" == document.location.protocol) ? "https://" : "http://");
+		if(typeof jQuery === "undefined"){
+		  // document.write("<scr"+"ipt src='"+jsHost+"ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' type='text/javascript'></scr"+"ipt>");  // old buggy way
+		  document.write("<scr"+"ipt src='"+jsHost+"ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' type='text/javascript'><"+"/scr"+"ipt>");
+		}
+		// document.write("<scr"+"ipt src='"+jsHost+"www2.ucar.edu/js/orgnav' type='text/javascript'></scr"+"ipt>");  // old buggy way
+		document.write("<scr"+"ipt src='"+jsHost+"www2.ucar.edu/js/orgnav' type='text/javascript'><"+"/scr"+"ipt>");
+		</script>
+		<noscript><iframe frameborder="0" width="100%" src="http://www2.ucar.edu/sites/default/modules/custom/ucar_comm_site/includes/noscript.php"></iframe></noscript>
+		<!-- END OrgNavFooter Script -->
+	</div><!-- eolOrgfooterwrap -->
+
+</div><!-- eolfooterwrap -->
+
+</div><!-- end container -->
+
+</body>
+</html>
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+/*---  universal_orgnav.css ---*/
+
+/*---  Blue bar at top (optional) ---*/
+#top_colorbar {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: url(../images/ncar/top_colorbar.jpg) repeat-x;
+	width: 100%;
+	height: 10px;
+	margin: 0px;
+	padding: 0px;
+}
+
+/*---  Organization Nav - Should Remain Same on All Sites ---*/
+/* except that I had to change top to 10px to make room for top_colorbar -jja */
+#nav_org_wrap {
+	position: absolute;
+	top: 0px; /* 10px; */
+	left: 0px;
+	background: #454445;
+	width: 100%;
+	height: 18px;
+	margin: 0px;
+	padding: 0px;
+	z-index: 100000001;
+}
+
+#nav_org_wrap a {
+	font-size: 8pt;
+	color: #d2aa2f;
+	font-family: verdana, arial, sans-serif;
+}
+
+#nav_org a {
+	font-size: 8pt;
+	color: #d2aa2f;
+	font-family: verdana, arial, sans-serif;
+}
+
+#nav_org {
+	width: auto;
+	margin: 2px 0px 0px 0px;
+	padding: 0px;
+	float: left;
+	text-align: left;
+}
+
+#nav_org ul li {
+	margin: 0px;
+	padding: 0px;
+}
+
+#nav_org ul li ul li a {
+	width: 100%;
+	color: #000;
+	line-height: 10pt;
+	margin: 0px 0px 0px 2px;
+}
+
+#search {
+	width: auto;
+	height: 18px;
+	margin: 0px 10px 0px 0px;
+	padding: 0px;
+	float: right;
+	border-left: 1px solid #333;
+}
+
+#search ul li {
+	margin: 0px;
+	padding: 0px;
+}
+
+#search ul li ul li a {
+	width: 100%;
+	color: #000;
+	line-height: 10pt;
+	margin: 0px 0px 5px 2px;
+}
+
+/*---  drop lists ---*/
+
+.menubar, .menubar ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.menubar a {
+	display: block;
+	text-decoration: none;
+	padding: 0px 10px 0px 10px;
+	border-right: 1px solid #333;
+	height: auto;
+}
+
+.menubar a.trigger {
+	padding: 1px 16px 0 10px;
+	background-image: url(../images/ncar/menu_downarrow.png);
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.menubar li {
+	float: left;
+}
+
+.menubar li ul li {
+	font-size: 8pt;
+	width: 95%;
+}
+
+.menubar li {position: relative;}
+
+/* hide from IE mac \*/
+.menubar li {position: static; width: auto;}
+/* end hiding from IE5 mac */
+
+.menubar li ul, .menubar ul li  {
+	width: 26em;
+}
+
+.menubar ul li a  {
+	color: #565656;
+	border-right: 0;
+	padding: 0px 3px 10px 10px;
+}
+
+.menubar li ul {
+	position: absolute;
+	display: none;
+	background-color: #FFFFFF;
+	border-right: 1px solid #333333;
+	border-bottom: 1px solid #333333;
+	background-image: url(../images/ncar/menu_gradient.jpg);
+	background-repeat: repeat-x;
+}
+
+.menubar li:hover a, #menubar a:focus,
+.menubar a:active, #menubar li.p7hvr a {
+	color: #000000;
+	background-color: #000;
+}
+
+.menubar li:hover ul, #menubar li.p7hvr ul {
+	display: block;
+}
+
+.menubar li:hover ul a, #menubar li.p7hvr ul a {
+	color: #000000;
+	background-color: transparent;
+}
+
+.menubar ul a:hover {
+	background-color: #606060!important;
+	color: #FFFFFF !important;
+}
+
+/*---  drop lists align right ---*/
+
+.menubar_r, .menubar_r ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.menubar_r a {
+	display: block;
+	text-decoration: none;
+	padding: 0px 10px 0px 10px;
+	border-right: 1px solid #333;
+	height: auto;
+	text-align: left;
+}
+
+.menubar_r a.trigger2 {
+	padding: 3px 16px 0 13px;
+	background-image: url(../images/ncar/menu_downarrow.png);
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+
+.menubar_r li {
+	float: left;
+}
+
+.menubar_r li ul li {
+	font-size: 8pt;
+	width: 270px;
+}
+
+.menubar_r li {position: relative;}
+
+/* hide from IE mac \*/
+.menubar_r li {position: static; width: auto;}
+/* end hiding from IE5 mac */
+
+.menubar_r li ul, .menubar ul li  {
+	width: 288px;
+}
+
+.menubar_r ul li a  {
+	color: #565656;
+	border-right: 0;
+	padding: 0px 3px 10px 10px;
+}
+
+.menubar_r li ul {
+	position: absolute;
+	display: none;
+	background-color: #FFFFFF;
+	border-right: 1px solid #333333;
+	border-bottom: 1px solid #333333;
+	background-image: url(../images/ncar/menu_gradient.jpg);
+	background-repeat: repeat-x;
+}
+
+.menubar_r li:hover a, #menubar_r a:focus,
+.menubar_r a:active, #menubar_r li.p7hvr a {
+	color: #000000;
+	background-color: #000;
+}
+
+.menubar_r li:hover ul, #menubar_r li.p7hvr ul {
+	display: block;
+	margin-left: -201px;
+}
+
+.menubar_r li:hover ul a, #menubar_r li.p7hvr ul a {
+	color: #000000;
+	background-color: transparent;
+}
+
+.menubar_r ul a:hover {
+	background-color: #606060!important;
+	color: #FFFFFF !important;
+}

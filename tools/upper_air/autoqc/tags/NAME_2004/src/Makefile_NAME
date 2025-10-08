@@ -1,0 +1,6 @@
+NAME:
+	g++ -g -o ../bin/nws_autoqc_NAME auto_qc.cpp -lm -I../lib -DNAME -DNWS
+	g++ -g -o ../bin/autoqc_NAME auto_qc.cpp -lm -I../lib -DNAME
+	g++ -g -o ../bin/autoqc_NAME_5point_avg auto_qc.cpp -lm -I../lib -DNAME -DFIVE
+	g++ -g -o ../bin/autoqc_NAME_5point_avg_ISS auto_qc.cpp -lm -I../lib -DNAME -DFIVE -DISS
+

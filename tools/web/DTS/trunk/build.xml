@@ -1,0 +1,122 @@
+<project name="Data Tracking System" default="compile" basedir=".">
+
+  <property name="app.name" value="dts"/>
+  <property name="src" value="src" />
+  <property name="build" value="build"/>
+  <property name="build.classes" value="${build}/classes"/>
+  <property name="deploy.test" value="/net/www_dev/dmg-dev/webapps/${app.name}" />
+  <property name="deploy.production" value="/net/web/dmg/webapps/${app.name}" />
+  <property name="lib"  value="web/WEB-INF/lib"/>
+  <property name="dist" value ="dist" />
+  <property name="web" value="web" />
+  <property name="docs" value="docs" />
+  <property name="docs.api" value="${docs}/api" />
+
+   <path id="theclasspath">
+
+     <!-- get the old classpath, if available -->
+       <pathelement path="${classpath}"/>
+	   
+    <fileset dir="${lib}">
+       <include name="**/*.jar"/>
+    </fileset>
+
+   </path>
+
+  <property name="classpath" refid="theclasspath"/>
+
+  <target name="all" depends="compile" />
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <target name="compile" depends="init">
+  <!-- <echo message="the classpath is ${classpath}"/> -->
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" classpath="${classpath}" destdir="${build.classes}"
+     debug="on"
+     deprecation="on"
+     verbose="yes"
+     />
+  </target>
+
+  <target name="deploy" depends="deploy-prod"/>
+
+  <target name="deploy-prod" depends="dist">
+     <copy todir="${deploy.production}">
+         <fileset dir="${dist}" />
+     </copy>
+  </target>
+
+  <target name="deploy-test" depends="dist">
+     <copy todir="${deploy.test}">
+         <fileset dir="${dist}" />
+     </copy>
+  </target>
+
+  <target name="dist" depends="compile, javadoc">
+     <mkdir dir="${dist}" />
+     <copy todir="${dist}">
+         <fileset dir="${web}">
+             <exclude name="**/*~" />
+             <exclude name="**/*.swp" />
+         </fileset>
+     </copy>
+     <copy todir="${dist}/docs">
+         <fileset dir="${docs}">
+             <exclude name="**/*~" />
+             <exclude name="**/*.swp" />
+         </fileset>
+     </copy>
+     <copy todir="${dist}/WEB-INF/classes">
+         <fileset dir="${build.classes}">
+         	 <exclude name="dts/port/**" />
+         </fileset>
+     </copy>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${dist}" />
+    <delete dir="${docs.api}" />
+  </target>
+
+  <target name="clean-deploy-test">
+     <delete includeemptydirs="true">
+         <fileset dir="${deploy.test}" includes="**/*" defaultexcludes="false" />
+     </delete>
+  </target>
+
+  <target name="clean-deploy-prod">
+     <delete includeemptydirs="true">
+         <fileset dir="${deploy.production}" includes="**/*" defaultexcludes="false" />
+     </delete>
+  </target>
+
+    <target name="javadoc">
+        <mkdir dir="${docs.api}" />
+        <javadoc destdir="${docs.api}" author="true" version="true" use="true" 
+                 windowtitle="Data Tracking System API" doctitle="Data Tracking System API"
+                 header="DMG DTS API" overview="${docs}/overview.html">
+            <classpath refid="theclasspath" />
+            <fileset dir="${src}" defaultexcludes="yes">
+               <include name="**/*.java" />
+            </fileset>
+            <link href="http://java.sun.com/javaee/javaserverfaces/1.1_01/docs/api" />
+            <link href="http://java.sun.com/j2se/1.5.0/docs/api" />
+        </javadoc>
+        <copy todir="${docs.api}">
+            <fileset dir="${docs}" includes="howto_*.html" />
+        </copy>
+    </target>
+
+    <target name="port-to-dmg_dts" depends="compile">
+        <java classname="dts.port.ToDmgDts" fork="yes">
+            <classpath refid="theclasspath" />
+        </java>
+    </target>
+</project>

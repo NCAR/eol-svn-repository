@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Perl Conversion Module Interface</title>
+    <link rel="stylesheet" type="text/css" href="conv.css">
+  </head>
+  
+  <body>
+      <h1>Perl Conversion Module Interface</h1>
+      <p>There are a number of utilities functions defined as part of the Perl conversion module library.  These are independent of the different format conversions.  This lists many of these functions and provides a web based interface to them.</p>
+
+      <div id="tablelist">
+	<table border=1>
+	  <tr>
+	    <th>Web Scripts</th>
+	  </tr>
+	  <tr>
+	    <td>
+	      <table>
+		<tr>
+		  <td>&nbsp;</td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/WebInterface.pm">WebInterface</a></td>
+		  <td>The super class for the web scripts.  It defines the output format and all the common links and documentation for the scripts.</td>
+		</tr>
+		
+		<tr class="separator">
+		  <td colspan=3>&nbsp;</td>
+		</tr>
+
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/airdensity">Air Density</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/airdensity">(doc)</a></td>
+		  <td>Calculate the air density from the pressure and temperature.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/altitude">Altitude</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/altitude">(doc)</a></td>
+		  <td>Calculate the altitude from the previous pressure, temperature, dew point, and altitude and the current pressure, temperautre and dew point.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/dewpoint">Dew Point</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/dewpoint">(doc)</a></td>
+		  <td>Calculate the dew point from the temperature and relative humidity.</a></td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/mixingratio">Mixing Ratio</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/mixingratio">(doc)</a></td>
+		  <td>Calculate the mixing ratio from the pressure and vapor pressure.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/relativehumidity">Relative Humidity</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/relativehumidity">(doc)</a></td>
+		  <td>Calculate the relative humidity from the temperature and dew point.</a></td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/sealevelpressure">Sea Level Pressure</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/sealevelpressure">(doc)</a></td>
+		  <td>Calculate the sea level pressure from the pressure, elevation, temperature, and dew point.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/specifichumidity">Specific Humidity</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/specifichumidity">(doc)</a></td>
+		  <td>Calculate the specific humidity from the pressure and dew point.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/stationpressure">Station Pressure</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/stationpressure">(doc)</a></td>
+		  <td>Calculate the station pressure from the altimeter and elevation.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/uvwinds">UV Winds</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/uvwinds">(doc)</a></td>
+		  <td>Calculate the u and v wind components from the wind speed and direction.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/vaporpressure">Vapor Pressure</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/vaporpressure">(doc)</a></td>
+		  <td>Calculate the [saturated] vapor pressure from the [temperature] dew point.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/virtualtemperature">Virtual Temperature</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/virtualtemperature">(doc)</a></td>
+		  <td>Calculate the virtual temperature from the temperature and the mixing ratio.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/calculations/windvalues">Wind Speed/Direction</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/calculations/windvalues">(doc)</a></td>
+		  <td>Calculate the wind speed and direction from the u and v wind components.</td>
+		</tr>
+
+		<tr class="separator">
+		  <td colspan=3>&nbsp;</td>
+		</tr>
+
+		<tr>
+		  <td><a href="/cgi-bin/conversions/conversions/angles">Angles</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/conversions/angles">(doc)</a></td>
+		  <td>Convert an angle value to a different unit</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/conversions/area">Area</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/conversions/area">(doc)</a></td>
+		  <td>Convert an area value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/conversions/flow">Flow</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/conversions/flow">(doc)</a></td>
+		  <td>Convert a flow value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/conversions/length">Length</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/conversions/length">(doc)</a></td>
+		  <td>Convert a length value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/conversions/pressure">Pressure</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/conversions/pressure">(doc)</a></td>
+		  <td>Convert a pressure value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/conversions/radiations">Radiation</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/conversions/radiation">(doc)</a></td>
+		  <td>Convert a radiation value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/conversions/temperature">Temperature</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/conversions/temperature">(doc)</a></td>
+		  <td>Convert a temperature value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/conversions/time">Time</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/conversions/time">(doc)</a></td>
+		  <td>Convert a time value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/conversions/velocity">Velocity</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/conversions/velocity">(doc)</a></td>
+		  <td>Convert a velocity value to a different unit.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/conversions/volume">Volume</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/conversions/volume">(doc)</a></td>
+		  <td>Convert a velocity value to a different unit.</td>
+		</tr>
+
+		<tr class="separator">
+		  <td colspan=3>&nbsp;</td>
+		</tr>
+
+		<tr>
+		  <td><a href="/cgi-bin/conversions/other/julian">[Julian] Date</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/other/julian">(doc)</a></td>
+		  <td>Convert a date value to a different format.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/other/latlong">Latitude/Longitude</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/other/latlong">(doc)</a></td>
+		  <td>Convert a latitude/longitude value to a different format.</td>
+		</tr>
+		<tr>
+		  <td><a href="/cgi-bin/conversions/other/statecode">State Code</a></td>
+		  <td><a href="/cgi-bin/docperl/docperl?file=/net/web/dmg/cgi-bin/conversions/other/statecode">(doc)</a></td>
+		  <td>Convert a state code to its abbreviation or vice versa.</td>
+		</tr>		
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+
+      
+      <hr>
+<!-- Created: Mon Feb 28 08:06:59 MST 2005 -->
+<!-- hhmts start -->
+Last modified: Wed Mar 23 08:20:42 MST 
+<!-- hhmts end -->
+  </body>
+</html>

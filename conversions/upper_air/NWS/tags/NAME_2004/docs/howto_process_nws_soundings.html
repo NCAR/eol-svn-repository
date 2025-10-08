@@ -1,0 +1,175 @@
+<html>
+<head>
+<title>How To: Process NWS Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/dpg/GENERAL/dpg_howto.css">
+</head>
+
+<body>
+<h1>How To: Process National Weather Service (NWS) Upper Air Sounding Data</h1>
+<h2>Table of Contents</h2>
+<ol>
+	<li><a href="#purpose">Purpose</a></li>
+	<li><a href="#network">Network Information</a></li>
+	<li>Previous Versions<ol>
+		<li><a href="#version_name">2004 (NAME)</a></li>
+		</ol></li>
+	<li><a href="directory">Directory Structure</a></li>
+	<li>Processing the Data<ol>
+		<li><a href="#mat_library">Creating the Matrix Library</a></li>
+		<li><a href="#programs">Creating the Conversion Programs</a></li>
+		<li><a href="#converting">Converting the Data</a></li>
+		<li><a href="#autoqc">QC'ing the Data</a></li>
+		<li><a href="#ebufr">Converting to EBUFR</a></li>
+		<li><a href="#codiac">Inserting into the Database</a></li>
+		</ol></li>
+	<li><a href="#software">Software</a></li>
+	<li><a href="#documents">Documentation</a></li>
+</ol>
+<hr>
+
+<a name="purpose"></a>
+<h3>Purpose</h3>
+<p>This document contains the process of how to convert the National Weather Service (NWS) upper air sounding data JOSS receives from NCDC from their ASCII file format to the CLASS format.</p>
+<hr>
+
+<a name="network"></a>
+<h3>Network Information</h3>
+<ul>
+	<li>The ID-Type is 15.</li>
+	<li>The Platform is 53.</li>
+</ul>
+<hr>
+
+<h3>Previous Versions</h3>
+
+<a name="version_name"></a>
+<h4>NAME (2004)</h4>
+<table>
+	<tr><th>Software:</th><td>/work/NAME/upper_air/NWS/software</td></tr>
+	<tr><th>Raw Data:</th><td>/work/ncdc/ascii_files</td></tr>
+	<tr><th>Final Data:</th><td>/archive/codiac/name/upper_air/soundings/NWS</td></tr>
+</table>
+<hr>
+
+<a name="directory"></a>
+<h3>Directory Structure</h3>
+<table>
+	<tr><th>NWS/</th><td>The main directory for the processing.</td></tr>
+	<tr><td>docs</td><td>The directory containing documentation about the processing and the data.</td></tr>
+	<tr><td>ebufr</td><td>The directory where the EBUFR files are placed once they have been created.</td></tr>
+	<tr><td>final</td><td>The directory where the QC'ed files are placed once they have been created.</td></tr>
+	<tr><td>lib</td><td>The directory containing libraries for the conversion.</td></tr>
+	<tr><td>logs</td><td>The directory where the error/check files from the QC are placed.</td></tr>
+	<tr><td>matlib</td><td>The directory that contains the source code and header files for the matrix library used by the NWS conversion programs.</td></tr>
+	<tr><td>nws_src</td><td>The directory that contains the source code for the NWS conversion programs.</td></tr>
+	<tr><td>output</td><td>The directory where the CLASS files are put after they are generated.</td></tr>
+	<tr><td>raw_data</td><td>The directory where the raw data is stored.</td></tr>
+	<tr><td>software</td><td>The directory where the software for the conversion is stored.</td></tr>
+</table>
+<hr>
+
+<h3>Processing the Data</h3>
+
+<a name="mat_library"></a>
+<h4>Creating the Matrix Library</h4>
+<p>The matrix library is a download from the internet that is dated from 1992-1995.  As of April 2005, the online version is the same as the JOSS version and has not been updated.  The JOSS version has been updated to work with the current version of g++, which the online version does not.  The change was to add the <b>const</b> keyword to the matrix::matrix(matrix &y) function so now the function prototype looks like: matrix::matrix(const matrix &y).</p>
+<p>The following steps are how to generate the matrix library, <b>libmat.a</b>:</p>
+<ol>
+	<li>Change to the <b>libmat</b> directory.  This contains all of the header and code files for the library, along with the makefile: libmat.mak to generate the library.</li>
+	<li>Create the library:
+		<p>This will create the library <b>matrix_lib.a</b> in the <b>lib</b> directory and copy the needed <b>matrix.hpp</b> file to the <b>lib</b> directory as well.  To make the library issue the command:</p>
+		<p class="code">make -f libmat.mak</p>
+		</li>
+	<li>Change to the <b>lib</b> directory to make sure that the <b>matrix_lib.a</b> library and the <b>matrix.hpp</b> header file both are in the directory.</li>
+</ol>
+
+<a name="programs"></a>
+<h4>Creating the Conversion Programs</h4>
+<p>The following steps will create the binaries for converting the raw data into the class format.</p>
+<ol>
+	<li>Change to the <b>nws_src</b> directory.</li>
+	<li>Run the command to make the binaries and put them into the <b>software</b> directory.
+		<p class="code">make all</p>
+		</li>
+</ol>
+
+<a name="convert"></a>
+<h4>Converting the Data</h4>
+<p>The following is how to convert the raw ASCII data into the CLASS format ready to be QC'ed.</p>
+<ol>
+	<li>Copy the raw data into the <b>raw_data</b> directory.</li>
+	<li>Change to the <b>software</b> directory.</li>
+	<li>Check to see if the <b>nwsVIZ</b> and <b>nwsVaisala</b> executables are in the <b>software</b> directory.  (They are what actually converts the raw data into the CLASS format.)  See the <a href="programs">Creating the Conversion Programs</a> section for more information.</li>
+	<li>Run the <b>NWS_Converter.pl</b> script.  This will convert the raw data to CLASS format and run a wind correction algorithm on the CLASS files.
+		<p class="note">This is a slow process.  (A month file takes about 20-30 minutes to convert.)  It should be run with <b>/usr/bin/nice -5</b> or so to prevent it from taking over the system.</p>
+		</li>
+</ol>
+
+<a name="autoqc"></a>
+<h4>QC'ing the Data</h4>
+<p>The following explains how to QC the CLASS formatted sounding data.  This assumes that the auto qc binary is already created.  For more information on the auto qc, see <a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>.</p>
+<ol>
+	<li>Change to the software directory (if you are not already there).</li>
+	<li>Edit the <b>autoqc.pl</b> script.
+		<p>The variable <b>$AUTOQC</b> needs to be changed to point to the correct autoqc program for the current project.</p>
+		</li>
+	<li>Run the <b>autoqc.pl</b> script.
+		<p>This script takes each file in the <b>output</b> directory, runs the auto qc program on it, and creates a new CLASS file that is placed in the <b>final</b> directory and a check/error log file that is placed in the <b>log</b> directory.</p>
+</ol>
+
+<a name="ebufr"></a>
+<h4>Converting to EBUFR</h4>
+<p>The following explains how to EBUFR the QC'ed CLASS files.  This assumes that the class2ebufr binary file has been generated.  For more information on the EBUFR process, see <a href="/dpg/GENERAL/soundings/howto_ebufr_class_soundings.html">How To: EBUFR CLASS Sounding Data</a>.</p>
+<ol>
+	<li>Change to the software directory (if you are not already there).
+	<li>Make sure the EBUFR configuration files are in the directory.  There should be five (class_file, code_08_021, code_33_254, control_scf.txt, desc_file).  The program will crash without these files.</li>
+	<li>Make sure there is a copy of the executable (or a symbolic link to it) in the directory.</li>
+	<li>Edit the <b>control_scf.txt</b> file.
+		<p>On the 12th line, (two lines above the "END FILE" line) the project name needs to be edited to match the current project.  The rest of the files should remain untouched.</p>
+	<li>Edit the <b>create_ebufr_files.pl</b> script.<ol>
+		<li>Change the variable: <b>$PROJECT</b> to the name of the current project.</li>
+		<li>Change the variable: <b>$PROGRAM</b> to the path of where the class2ebufr program for the current project is located.</li>
+		</ol></li>
+	<li>Run the <b>create_ebufr_files.pl</b> script.  This will concatonate the CLASS files into day CLASS file which will be used to generate the EBUFR day files.
+		<p class="note">Near the end of the file is a pattern for generating the names of the outputed ebufr files.  Make sure the network name is changed to NWS.</p>
+		<p class="note">The script copies the five aforementioned files to the <b>ebufr</b> directory and removes them once the processing is finished.  This is to force all of the intermediate and final files to be saved in the <b>ebufr</b> directory.</p>
+</ol>
+
+<a name="codiac"></a>
+<h4>Inserting into the Database</h4>
+<p>With all of the EBUFR files created, they need to be inserted into the database.  This is a general process and is explained in the document: <a href="/dpg/GENERAL/soundings/howto_insert_ebufred_class_soundings.html">How To: Insert EBUFRed CLASS Sounding Data</a>.</p>
+<hr>
+
+<a name="software"></a>
+<h3>Software</h3>
+<p>The following is a list of the contents of the <b>software</b> directory with a brief explanation of the file.</p>
+<ul>
+	<li><b><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/NAME/upper_air/NWS/software/NWS_Converter.pl">NWS_Converter.pl</a></b>- Convert the raw data into the CLASS format.</li>
+	<li><b><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/NAME/upper_air/NWS/software/autoqc.pl">autoqc.pl</a></b>- QC the CLASS files.</li>
+	<li><b>class_file</b>- A configuration file for the <b>class2ebufr</b> program.</li>
+	<li><b>code_08_021</b>- A configuration file for the <b>class2ebufr</b> program.</li>
+	<li><b>code_33_254</b>- A configuration file for the <b>class2ebufr</b> program.</li>
+	<li><b>control_scf.txt</b>- A configuration file for the <b>class2ebufr</b> program.</li>
+	<li><b><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/NAME/upper_air/NWS/software/create_ebufr_files.pl">create_ebufr_files.pl</a></b>- Convert the QC'ed CLASS files into daily EBUFR files.</li>
+	<li><b>desc_file</b>- A configuration file for the <b>class2ebufr</b> program.</li>
+	<li><b>nwsVaisala</b>- A conversion program for Vaisala formatted data to CLASS format.</li>
+	<li><b>nwsVIZ</b>- A conversion program for VIZ formated data to CLASS format.</li>
+</ul>
+<hr>
+
+<a name="documents"></a>
+<h3>Documentation</h3>
+<p>The following are a list of documents that may help with the conversion or are related to the raw data.</p>
+<ul>
+	<li><a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>- The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/dpg/GENERAL/soundings/howto_ebufr_class_soundings.html">How To: EBUFR CLASS Sounding Data</a>- The instructions for dealing with the EBUFR software that relate to CLASS Soundings.</li>
+	<li><a href="/dpg/GENERAL/soundings/howto_insert_ebufred_class_soundings.html">How To: Insert EBUFR'ed CLASS Sounding Data into the Database</a>- The instructions on how insert the EBUFR'ed sounding data into the database.</li>
+	<li><a href="#">How To: Process NWS Sounding Data</a>- This document.</li>
+	<li><a href="README_NAME_NWS_SOUNDING.txt">README_NAME_NWS_SOUNDING.txt</a>- The CODIAC readme file for NAME.</li>
+</ul>
+<hr>
+
+<p class="foot">Last Updated: April 7, 2005 - Joel Clawson</p>
+</body>
+</html>

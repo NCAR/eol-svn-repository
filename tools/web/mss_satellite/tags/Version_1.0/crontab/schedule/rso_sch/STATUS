@@ -1,0 +1,9 @@
+Adding the Rapid Scan sectors has been completed.  The add_rso_sch script finds matches to the files
+we have on mass store to the scheduled scans during periods of rapid scan.
+
+This should be done similarly for the Super Rapid Scan!!  Having some issues with the goes-8 schedule.
+
+The ext_sch2.pl script pulls the scans from the goes08_srso.htm and goes10_srso.htm files and will
+place them into the database.  This needs to be updated to deal with the 1-minute scans.
+
+UPDATE: the Super raid scan was added, but I'm not sure how - some things are just magic. :)

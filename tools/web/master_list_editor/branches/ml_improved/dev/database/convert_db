@@ -1,0 +1,280 @@
+#!/bin/perl -w
+
+# Converts all of the individual project tables to
+# a single schema in the hurricane::ml database.
+#
+# Note: be sure to add the projects before running 
+#  this script:
+#  > cat project.dat | mysql -h hurricane -u stormdba -p ml
+#
+
+use DBI;
+
+my $dbh = connectToDB( "ml", "hurricane", "stormdba", "codiac" );
+
+my %projects = ( "BAMEX" => 1, "IHOP"=>2, "NAME"=>3, "SALLJEX"=>4, "VOCALS"=>5 );
+
+my $cat_cnt = 1;
+
+my ($trIHOP, $mapIHOP) = getCategoryTree( "IHOP" );
+my ($trBAMEX, $mapBAMEX) = getCategoryTree( "BAMEX" );
+my ($trNAME, $mapNAME) = getCategoryTree( "NAME" );
+my ($trSALLJEX, $mapSALLJEX) = getCategoryTree( "SALLJEX" );
+my ($trVOCALS, $mapVOCALS) = getCategoryTree( "VOCALS" );
+
+storeCategories( $trIHOP );
+storeCategories( $trBAMEX );
+storeCategories( $trNAME );
+storeCategories( $trSALLJEX );
+storeCategories( $trVOCALS );
+
+my @dsIHOP = getDatasets( "IHOP", $mapIHOP );
+my @dsBAMEX = getDatasets( "BAMEX", $mapBAMEX );
+my @dsNAME = getDatasets( "NAME", $mapNAME );
+my @dsSALLJEX = getDatasets( "SALLJEX", $mapSALLJEX );
+my @dsVOCALS = getDatasets( "VOCALS", $mapVOCALS );
+
+storeDatasets( @dsIHOP, @dsBAMEX, @dsNAME, @dsSALLJEX, @dsVOCALS  );
+
+storeDsCatLinks( @dsIHOP, @dsBAMEX, @dsNAME, @dsSALLJEX, @dsVOCALS );
+
+print( "done!\n" );
+
+sub show
+{
+	my %tr = %{ $_[0] };
+	foreach $id (keys %tr)
+	{
+		my %cat = %{$tr{$id}};
+		if( $cat{parent} )
+		{
+			print( "\t$cat{id} - $cat{name} - $cat{abrv} - $cat{project} - $cat{parent}->{id}\n" );
+		}	
+		else
+		{
+			print( "$cat{id} -  $cat{name} - $cat{abrv} - $cat{project}\n" );
+		}
+	}
+}
+
+sub storeCategories
+{
+	my %tree = %{ $_[0] };
+
+	foreach $id (sort keys %tree)
+	{
+		my %cat = %{$tree{$id}};
+
+		my $sql = "INSERT INTO category VALUES ( $id, " . 
+							$dbh->quote( $cat{name} ) . ", "; 
+		if( $cat{parent} )
+		{ $sql = $sql . $cat{parent}->{id}; }
+		else
+		{ $sql = $sql . "NULL"; }
+
+		$sql = $sql . ", " . $projects{ $cat{project} } . ")";
+
+		$dbh->do( $sql ) || die( "doing: " . $dbh->errstr );
+	}
+}
+
+sub storeDatasets
+{
+	my @datasets = @_;
+
+
+	foreach $ds (@datasets)
+	{
+		my $storm_id = "NULL";
+		if( $ds->{url} && $ds->{url} =~ /^http:\/\/www.joss.ucar.edu\/cgi-bin\/codiac\/dss/ )
+		{
+			my $len = length( "http://www.joss.ucar.edu/cgi-bin/codiac/dss?" );
+			my $len2 = length( $ds->{url} ) - $len;	
+			$storm_id = $dbh->quote( substr( $ds->{url}, $len, $len2 ) );
+		}
+
+		my $sql = "INSERT INTO dataset VALUES ( $ds->{id}, " .
+							$dbh->quote( $ds->{title} ) . ", $storm_id, " .
+							$dbh->quote( $ds->{date} ) . ", " .
+							$dbh->quote( $ds->{url} ) . ", " .
+							$dbh->quote( $ds->{doc_url} ) . ", " .
+							$ds->{in_progress} . ", 0, " .
+							$projects{ $ds->{project} } . ")";
+
+		$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+
+		$ds->{id} = $dbh->{'mysql_insertid'};
+
+		#print( $sql, "\n" ); 
+	}
+}
+
+
+sub storeDsCatLinks
+{
+	my @datasets = @_;
+
+	foreach $ds (@datasets)
+	{
+		my $sql = "INSERT INTO dscatlink VALUES ( $ds->{category}, $ds->{id} )";
+
+		$dbh->do( $sql ) || die( "doing: " , $dbh->errstr );
+	}
+}
+sub getDatasets
+{
+	my $proj = $_[0];
+	my %map = %{ $_[1] };
+	my @ds;
+	my $count = 0;
+
+	my $sql = "SELECT * FROM ds$proj";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	while( (my @row = $sth->fetchrow() ) )
+	{
+		my %dataset = getDataset( @row );
+		$dataset{category} = $map{$dataset{category}};
+		$dataset{project} = $proj;
+
+		$ds[$count++] = \%dataset;
+	} 
+
+	return @ds;
+}
+
+sub getDataset
+{
+	my @row = @_;
+	my %ds;
+
+	$ds{id} = "0";
+	$ds{title} = $row[1];
+	$ds{url} = $row[2];
+	$ds{date} = $row[3];
+	$ds{doc_url} = $row[4];
+	$ds{category} = $row[5];
+	$ds{in_progress} = $row[6];
+
+	return %ds;	
+}
+sub getCategoryTree
+{
+	my $proj = shift;
+	my %cats;
+	my %heads;
+	my %tree;
+ 
+	my $sql = "SELECT * FROM cat$proj";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	while( (my @row = $sth->fetchrow() ) )
+	{
+		my $c = getCategory( @row );
+		my %c = %$c;
+		$cats{$c->{id}} = $c;
+	}
+
+	$sth->finish();
+
+	$sql = "SELECT * FROM head$proj";
+	$sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	while( (my @row = $sth->fetchrow() ) )
+	{
+		my $h = getHeading( @row );
+		$heads{$h->{id}} = $h;
+	}
+
+	$sth->finish();
+
+	foreach $id (sort keys %heads)
+	{
+		my %new_cat;
+		$new_cat{name} = $heads{$id}->{name};
+		$new_cat{abrv} = $heads{$id}->{abrv};
+		$new_cat{parent} = undef();
+		$new_cat{project} = $proj;
+		$new_cat{id} = $cat_cnt++;
+		$tree{$new_cat{id}} = \%new_cat;
+
+		if( $heads{$id}->{is_category} == 1 )
+		{
+			foreach $id2 (sort keys %cats)
+			{
+				if( $cats{$id2}->{heading_id} == $id )
+				{
+					$new_cat{old_id} = $id2;
+					last;
+				}
+			}
+		}
+		else
+		{
+			foreach $id2 (sort keys %cats)
+			{
+				if( $cats{$id2}->{heading_id} == $id )
+				{
+					my %new_cat2;
+					$new_cat2{name} = $cats{$id2}->{name};
+					$new_cat2{abrv} = $cats{$id2}->{abrv};
+					$new_cat2{parent} = \%new_cat; 
+					$new_cat2{project} = $proj;
+					$new_cat2{old_id} = $id2;
+					$new_cat2{id} = $cat_cnt++;
+					$tree{$cat_cnt - 1} = \%new_cat2;
+				}
+				$new_cat{old_id} = -1;
+			}
+		}
+	}
+
+	# Create the category map (from old to new)
+	my %cat_map;
+	foreach $id (keys %tree)
+	{
+		$cat_map{$tree{$id}->{old_id}} = $id;
+	}
+	return (\%tree, \%cat_map);
+} 
+
+sub getCategory
+{
+	my @row = @_;
+	my %cat;
+
+	$cat{id} = $row[0];
+	$cat{name} = $row[1];
+	$cat{abrv} = $row[2];
+	$cat{heading_id} = $row[3];
+
+	return \%cat;	
+}
+
+sub getHeading
+{
+	my @row = @_;
+	my %head;
+
+	$head{id} = $row[0];
+	$head{name} = $row[1];
+	$head{abrv} = $row[2];
+	$head{is_category} = $row[3];
+
+	return \%head;
+}
+
+
+sub connectToDB
+{
+  my $db = shift;
+  my $host = shift;
+  my $user = shift;
+  my $passw = shift;
+  return DBI->connect( "DBI:mysql:database=$db;host=$host",
+                        $user, $passw, { RaiseError=>1} ) || die( "Unable to connect to database: $db" );
+}
+

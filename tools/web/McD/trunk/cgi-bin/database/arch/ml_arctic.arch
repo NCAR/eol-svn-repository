@@ -1,0 +1,104 @@
+Application: Arctic Master List
+
+Host: thunder  Database: master_list
+
++-----------------------+
+| Tables_in_master_list |
++-----------------------+
+| ColorScheme           |
+| DataType              |
+| Discipline            |
+| List                  |
+| ListProjects          |
+| Platform              |
+| Site                  |
++-----------------------+
+
+ListProjects:
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     |      | PRI | NULL    | auto_increment |
+| name  | varchar(20) | YES  |     | NULL    |                |
+| notes | text        | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+
+List:
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| id            | int(11)      |      | PRI | NULL    | auto_increment |
+| storm_id      | varchar(15)  | YES  |     | NULL    |                |
+| title         | varchar(150) | YES  |     | NULL    |                |
+| date          | date         | YES  |     | NULL    |                |
+| author        | varchar(100) | YES  |     | NULL    |                |
+| doc_url       | varchar(200) | YES  |     | NULL    |                |
+| data_type_id  | int(11)      | YES  |     | NULL    |                |
+| discipline_id | int(11)      | YES  |     | NULL    |                |
+| platform_id   | int(11)      | YES  |     | NULL    |                |
+| site_id       | int(11)      | YES  |     | NULL    |                |
+| proj_id       | int(11)      |      | MUL | 0       |                |
+| comments      | varchar(255) | YES  |     | NULL    |                |
+| url           | varchar(200) | YES  |     | NULL    |                |
+| phase         | varchar(50)  | YES  |     | NULL    |                |
+| start_year    | int(11)      | YES  |     | NULL    |                |
+| end_year      | int(11)      | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+
+DataType:
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      |      | PRI | NULL    | auto_increment |
+| name        | varchar(100) | YES  |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
+| proj_id     | int(11)      | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
+Platform:
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      |      | PRI | NULL    | auto_increment |
+| name        | varchar(100) | YES  |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
+| proj_id     | int(11)      | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
+Site:
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      |      | PRI | NULL    | auto_increment |
+| name        | varchar(100) | YES  |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
+| proj_id     | int(11)      | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
+Discipline:
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      |      | PRI | NULL    | auto_increment |
+| name        | varchar(100) | YES  |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
+| proj_id     | int(11)      | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
+ColorScheme:
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int(11)     |      | PRI | NULL    | auto_increment |
+| proj_id    | int(11)     |      |     | 0       |                |
+| title      | varchar(15) | YES  |     | NULL    |                |
+| text       | varchar(15) | YES  |     | NULL    |                |
+| link       | varchar(15) | YES  |     | NULL    |                |
+| alink      | varchar(15) | YES  |     | NULL    |                |
+| vlink      | varchar(15) | YES  |     | NULL    |                |
+| headers    | varchar(15) | YES  |     | NULL    |                |
+| title_bg   | varchar(15) | YES  |     | NULL    |                |
+| head_bg    | varchar(15) | YES  |     | NULL    |                |
+| background | varchar(15) | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+

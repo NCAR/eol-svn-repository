@@ -1,0 +1,76 @@
+Software locations for rest of ESOP95/SW Tasks
+----------------------------------------------
+
+1. NCDC COOP data conversion.
+
+	/data8/gist/ncdc_coop/src - RIS has recompiled s/w.
+				Believe that RIS created a tool
+				to check this daily sfc output.
+	Done in GIST by RIS.
+
+2. Extract 15 minute precip from 5 min sfc Composite.
+
+	Checkout from CVS the module precip_cvts
+	(Precip_cvts points to /raid3/spare/john/precip_cvts
+	See qpq5 program. Read the Readme.precip file.
+	Done in GIST by JA.
+
+3. Extract hrly precip from hrly sfc Composite.
+
+        Checkout from CVS the module precip_cvts
+        (Precip_cvts points to /raid3/spare/john/precip_cvts
+        See qpq60 program. Read the Readme.precip file.
+	Done in GIST by JA.
+
+4. Form Daily Precip from hrly precip Composite.
+
+	/data10/cully/PRECIP/src/hrly2daily.c, also check
+	/data8/gids/dailyprecip/PRECOMP/hrly2daily.c. Diff
+	the s/w in these areas. LEC fixed 3 simple warnings
+	in the /data8 area. To run the s/w do:
+	   hrly2daily -i infile -o outfile -d DMIN -b BMAX
+
+	where DMIN = 101.6mm and BMAX = 127.0 mm for ESOP95 Daily precip.
+	Done in GIST by djr and LEC.
+
+5. ARS sfc extract 15min precip?? Never done before???
+	See /data6/ocs.
+
+6. ARS hrly precip conversion - last used in STORMFEST.
+
+        Checkout from CVS the module precip_cvts
+        (Precip_cvts points to /raid3/spare/john/precip_cvts
+        See ars.c program. Read the Readme.precip and
+        the readme.txt files.
+	Done in STORMFEST by JA.
+ 
+7. NCDC Wind Profiler conversion. This is not the sfc data.
+
+	See /spare1/john/profplot. See eb2prof.c to convert 
+        (verify with J.Allison) and wp915.c to plot on terminal.
+
+	The ESOP95 data is located: /raid2/ES*/wpdn_w60/src_data.
+	This dataset must first be subset to our AOI (and timeframe?).
+	Done in GIST by JA.
+
+8. Convert 5min QCF to hrly QCF.
+
+	/data10/iowa_1min/FIVEtoHOUR/updated_fivm2hrly.f
+
+9. Convert 1min QCF to 5min QCF.
+
+	/data10/iowa_1min/ONEtoFIVE/convert_OnetToFive.c
+
+10. Divide QCF, PQCF, NCDC COOP, etc files into day/mo files.
+
+	/data10/cully/PRECIP/src
+
+11. Note that many tools for stnlists, qcf, postprocs, etc are
+    located in /data10/cully/TOOLS/ and /raid/NE*/src/GENERAL_*/.
+
+	The s/w to remove_okmeso.c is located here.
+
+
+
+
+

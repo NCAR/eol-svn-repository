@@ -1,0 +1,64 @@
+# This file contains a couple of functions that are used by multiple scripts.
+#  Probably could be moved to the lib/Utils.pm module
+
+# Returns a string containing the needed html to display the possible
+#  status options for products and datasets.  TBD, DONE and N/A.
+# Can be given a status value to be selected in the drop down
+#  box.
+sub getStatusDropDown
+{
+	my $st = shift;
+	$st = undef() if( $st && $st eq "" );
+	
+	my %shash = ( "tbd"=>"TBD", "done"=>"DONE", "na"=>"N/A", "in_progress"=>"In Progress", "dnd"=>"NoProc" );
+	my @arr = ( "tbd", "in_progress", "done", "dnd", "na" );
+
+	my $select = "<select name=status>";
+
+	foreach my $s (@arr)
+	{
+		my $selected = "";
+		$selected = "selected" if( $st && $s eq $st );
+		$select = $select . "<option value=$s $selected>$shash{$s}</option>";
+	}	
+	$select = $select . "</select>";
+
+	return $select;
+}
+
+# Returns a count of the number of DONE datasets, TBD datasets, NA datasets, 
+#  excluded datasets, and a total count.
+sub getDatasetStats
+{
+	my $datasets = shift;
+	my $done = 0;
+	my $tbd = 0;
+	my $na = 0;
+	my $exclude = 0;
+	my $total = 0;
+
+	foreach my $ds (@{$datasets})
+	{
+		$total++;
+		if( $ds->{status} eq "done" )
+		{
+			$done++;
+		}
+		elsif( $ds->{status} eq "tbd" || $ds->{status} eq "in_progress" )
+		{
+			$tbd++;
+		}
+		elsif( $ds->{status} eq "na" || $ds->{status} eq "dnd" )
+		{
+			$na++;
+		}
+
+		if( $ds->{exclude} )
+		{
+			$exclude++;
+		}
+	}
+
+	return ($done, $tbd, $na, $exclude, $total );
+}
+1;

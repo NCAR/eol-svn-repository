@@ -1,0 +1,46 @@
+  
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="layout" content="main" />
+        <title>Create GcmdInstrument</title>         
+    </head>
+    <body>
+        <div class="nav" align="center">
+            <span class="menuButton"><g:link class="list" action="list">GcmdInstrument List</g:link></span>
+            <g:render template="return_nav" />
+        </div>
+        <div class="body">
+            <h1>Create GcmdInstrument</h1>
+            <g:if test="${flash.message}">
+            <div class="message">${flash.message}</div>
+            </g:if>
+            <g:hasErrors bean="${gcmdInstrument}">
+            <div class="errors">
+                <g:renderErrors bean="${gcmdInstrument}" as="list" />
+            </div>
+            </g:hasErrors>
+            <g:form action="save" method="post" >
+                <div class="dialog">
+                    <table>
+                        <tbody>
+                        
+                            <tr class='prop'>
+                                <td valign='top' class='name'>
+                                    <label for='keyword'>Keyword:</label>
+                                </td>
+                                <td valign='top' class='value ${hasErrors(bean:gcmdInstrument,field:'keyword','errors')}'>
+                                    <input type="text" id='keyword' name='keyword' value="${fieldValue(bean:gcmdInstrument,field:'keyword')}"/>
+                                </td>
+                            </tr> 
+                        
+                        </tbody>
+                    </table>
+                </div>
+                <div class="buttons">
+                    <span class="button"><input class="save" type="submit" value="Create"></input></span>
+                </div>
+            </g:form>
+        </div>
+    </body>
+</html>

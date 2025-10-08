@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# LRT #
+asc2cdf -m -d 2008-10-18 gv_081018.CO.prelim.dat VOCALSrf02.co.nc
+asc2cdf -m -d 2008-10-21 gv_081021.CO.prelim.dat VOCALSrf03.co.nc
+asc2cdf -m -d 2008-10-23 gv_081023.CO.prelim.dat VOCALSrf04.co.nc
+asc2cdf -m -d 2008-10-25 gv_081025.CO.prelim.dat VOCALSrf05.co.nc
+asc2cdf -m -d 2008-10-28 gv_081028.CO.prelim.dat VOCALSrf06.co.nc
+asc2cdf -m -d 2008-10-31 gv_081031.CO.prelim.dat VOCALSrf07.co.nc
+asc2cdf -m -d 2008-11-02 gv_081102.CO.prelim.dat VOCALSrf08.co.nc
+asc2cdf -m -d 2008-11-04 gv_081104.CO.prelim.dat VOCALSrf09.co.nc
+asc2cdf -m -d 2008-11-06 gv_081106.CO.prelim.dat VOCALSrf10.co.nc
+asc2cdf -m -d 2008-11-09 gv_081109.CO.prelim.dat VOCALSrf11.co.nc
+asc2cdf -m -d 2008-11-11 gv_081111.CO.prelim.dat VOCALSrf12.co.nc
+asc2cdf -m -d 2008-11-13 gv_081113.CO.prelim.dat VOCALSrf13.co.nc
+asc2cdf -m -d 2008-11-15 gv_081115.CO.prelim.dat VOCALSrf14.co.nc
+
+for filename in `ls -1 ./VOCALSrf*.nc`
+do
+    echo $filename
+    ncatted -a long_name,COMR_AL,m,c,"Carbon Monoxide Mixing Ratio" $filename
+    ncatted -a units,COMR_AL,m,c,"ppbv" $filename
+    ncatted -a DataQuality,COMR_AL,c,c,"Final" $filename
+    ncatted -a history,global,m,c," " $filename
+done
+
+./reorder

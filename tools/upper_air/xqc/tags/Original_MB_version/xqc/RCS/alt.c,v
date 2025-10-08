@@ -1,0 +1,136 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	94.07.19.20.48.41;	author mark;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/*
+Return-Path: burghart@@stout.atd.ucar.EDU 
+Delivery-Date: Mon, 24 Jan 1994 14:04:52 -0700
+Return-Path: burghart@@stout.atd.ucar.EDU
+Received: from stout.atd.ucar.edu by thunder.ofps.ucar.EDU (5.65/ NCAR Mail Server 04/10/90)
+	id AA08678; Mon, 24 Jan 94 14:04:51 MST
+Message-Id: <199401242104.OAA08445@@stout.atd.ucar.EDU>
+Received: from trenco.atd.ucar.edu by stout.atd.ucar.EDU (8.6.4/ NCAR Mail Server 04/10/90)
+	id OAA08445; Mon, 24 Jan 1994 14:04:50 -0700
+To: mark@@ofps.ucar.edu
+Subject: Re: Pressure/height mappings in zeb skew-T] 
+Date: Mon, 24 Jan 1994 14:04:48 -0700
+From: Chris Burghart <burghart@@stout.atd.ucar.EDU>
+
+Mark,
+
+Jon forwarded me your message, since I was the originator of the numbers in
+question.  I couldn't find the original formulas I used to generate the
+numbers, but I've found another source with the definition of the U.S.
+Standard Atmosphere (1976), which I believe is the same as the ICAO standard
+atmosphere.  Note that the definition only goes up to 20 km (54.75 mb).  I've
+included a program below which will spit out altitude (given pressure) or
+pressure (given altitude) based on the U.S. Standard Atmosphere.  It generates
+numbers that agree to within about 0.1 mb with the old ones.
+
+Chris
+
+*/
+
+/*
+ * U.S. Standard Atmosphere (1976) calculations.
+ *
+ * Formulae from "Fundamentals of Atmospheric Dynamics and Thermodynamics" by
+ * C.A. Riegel, World Scientific, 1992, pp. 334-335
+ *
+ * U.S. Standard Atmosphere (1976) below 20 gpkm (54.747 mb):
+ *
+ *	a) surface temperature = 288.15 K
+ *	b) surface pressure = 1013.25 mb
+ *	c) g = 9.80665 m/s/s (constant)
+ *	d) lapse rate in the troposphere = 6.5 K/gpkm (0.0065 K/m)
+ *	e) tropopause at 11 gpkm  (226.317 mb)
+ *	f) the lower stratosphere is isothermal at a temperature of 216.56 K
+ *
+ * Chris Burghart 1/24/94
+ */
+# include <math.h>
+
+double	R_d = 287.05;	/* Gas constant for dry air */
+double	G = 9.80665;	/* gravitational acceleration */
+
+
+main ()
+{
+	double	val, pres, alt, temp, exponent;
+
+	while (1)
+	{
+		printf ("Altitude in km (<= 20) or pressure in mb (>= 55): ");
+		if (scanf ("%lf", &val) != 1)
+			break;
+
+		if (val <= 20.0)
+		{
+		/*
+		 * We have altitude, so calculate pressure.  Troposphere
+		 * calculations apply to 11 gpkm, stratosphere calculations
+		 * above that.
+		 */
+			alt = val;
+			
+			if (alt <= 11.0)
+			{
+				exponent = G / (0.0065 * R_d);
+				pres = 1013.25 * 
+					pow ((288.15 - 6.5 * alt) / 288.15, 
+					     exponent);
+			}
+			else
+			{
+				exponent = -G / (216.65 * R_d) * 1000 * 
+					(alt - 11.0);
+				pres = 226.317 * exp (exponent);
+			}
+		}
+		else if (val >= 55.0)
+		{
+		/*
+		 * We have pressure, so calculate altitude.  Troposphere
+		 * calculations apply to 226.317 mb, stratosphere calculations
+		 * for lower pressures.
+		 */
+			pres = val;
+
+			if (pres >= 226.317)
+			{
+				exponent = 0.0065 * R_d / G;
+				alt = 0.001 * 288.15 / 0.0065 * 
+					(1 - pow (pres / 1013.25, exponent));
+			}
+			else
+				alt = 11 + 0.001 * R_d * 216.65 / G * 
+					log (226.317 / pres);
+		}
+		else
+		{
+			printf ("No formula above 20 km (below 54.75 mb)!\n");
+			continue;
+		}
+
+		printf ("pres: %.3f mb, alt: %.3f km\n", pres, alt);
+	}
+}
+@

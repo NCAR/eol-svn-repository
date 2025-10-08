@@ -1,0 +1,106 @@
+#! /usr/bin/perl
+#
+# ./CirpasRename
+# There are no commandline inputs for this script, nor output.
+#
+# This Script renames files in the current directory matching a certain filename pattern.
+#
+# Version 0.1 November 2009 Luke Przygocki
+#
+# Full Description:
+# Use this script to rename files in the current directory to the following filename pattern:
+#
+# research.CIRPAS_Otter.yyyymmddhhmm.flt_track.png
+#
+# The script targets (and converts to) the following filenames:
+#             current file name            product name                   
+#file 1 -       yymmdd_sel 1.png    =   flt_track
+#file  2-       yymmdd_sel 2.png    =   3D_track
+#file  4 -      yymmdd_sel 4.png    =   ac_attitude
+#file  5 -      yymmdd_sel 5.png    =   ac_velocity
+#file  6 -      yymmdd_sel 6.png    =   diff_pressure
+#file  7 -      yymmdd_sel 7.png    =   dyn_pressure
+#file  8 -      yymmdd_sel 8.png    =   static_pressure
+#file  9 -      yymmdd_sel 9.png    =   Temp_Td
+#file 10 -     yymmdd_sel 10.png   =  humidity_CO2
+#file 11 -     yymmdd_sel 11.png   =  Temp_TAS
+#file 12 -     yymmdd_sel 12.png   =  winds  
+
+#Here are the times for each day (for the output of the new name):
+#Date              Takeoff 
+#		      hhmm
+#Oct 16		1420
+#Oct 18		1102
+#Oct 19		1101
+#Oct 21		1108
+
+use strict;
+
+my @files;
+opendir(DIR,"./") || die "can't open current directory";
+while(my $file = readdir(DIR)){
+    push( @files, $file);
+}
+closedir(DIR);
+
+foreach (@files){
+    if( $_ =~ /(\d+?)\_sel\s(\d{1,2})\.png/i){
+	my ($date, $num,$name) = ($1, $2, $&);
+	print "renaming $_ \n";
+	rename_files($date,$num, $name)
+    }
+    else{
+#correct form of the file, otherwise skip it
+	print "skipping $_ \n";
+	next;
+	    
+	}
+}
+
+
+sub rename_files{
+    my $date = shift; 
+    my $filenum = shift;
+    my $filename = shift;
+    print "$date, $filenum, $filename \n";
+    my $newname = "research.CIRPAS_Otter"."."."20".$date.translate_hours($date).".".translate_name($filenum).".png";
+    print "$newname \n";
+    rename($filename, $newname);
+    
+    
+}
+sub translate_name{
+use Switch;
+    my ($num) = shift;
+    
+    switch ($num){
+	case 1 {return "flt_track"}
+	case 2 {return "3D_track"}
+	case 4 {return "ac_attitude"}
+	case 5 {return "ac_velocity"}
+	case 6 {return "diff_pressure"}
+	case 7 {return "dyn_pressure"}
+	case 8 {return "static pressure"}
+	case 9 {return "Temp_Td"}
+	case 10 {return "humidity_CO2"}
+	case 11 {return "Temp_TAS"}
+	case 12 {return "winds"}
+	default {return ''}
+    }
+}
+sub translate_hours{
+    #the launch time (hours and minutes) is based on what day it was launched
+    my ($date) = shift;
+    if ($date =~ /1016/){
+	return "1420";
+    }
+    if ($date =~ /1018/){
+	return "1102";
+    }
+    if ($date =~ /1019/){
+	return "1101";
+    }
+    if ($date =~ /1021/){
+	return "1108";
+    }
+}

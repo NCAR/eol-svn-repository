@@ -1,0 +1,1199 @@
+<html>
+  <head>
+    <title>Equations for Calculations</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" type="text/css" href="http://www.joss.ucar.edu/dpg/TOOLS/conversions/conv.css">
+  </head>
+
+  <body>
+      <h1>Equations for Calculations</h1>
+
+      <a name="airdensity"></a><h2>Air Density</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">air_density = </td>
+	    <td class="fraction">
+	      <div class="numerator">pressure</div>
+	      <div class="denominator"><a href="#constants">R<sub>dry</sub></a> * temperature</div>
+	    </td>
+	  </tr>
+	</table>
+	
+	<p>The air density equation assumes the pressure is given in millibars and the temperature in K.  The resulting air density value will be in mbar/J/kg.</p>
+      </div>
+
+      <a name="angles"></a><h2>Angles</h2>
+      <div id="equation">
+	<table class="conversions">
+	  <tr>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="result">rad = </td>
+		  <td class="eqn"><table><tr>
+			<td class="fraction">
+			  <div class="numerator"><a href="#constants">PI</a></div>
+			  <div class="denominator">180</div
+			</td>
+			<td> * deg</td>
+		      </tr></table>
+		  </td>
+		</tr>
+		<tr>
+		  <td class="result">deg = </td>
+		  <td class="eqn"><table><tr>
+			<td class="fraction">
+			  <div class="numerator">180</div>
+			  <div class="denominator"><a href="#constants">PI</a></div>
+			</td>
+			<td> * rad</td>
+		      </tr></table>
+		  </td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="unit">deg = </td>
+		  <td class="name">Degress</td>
+		</tr>
+		<tr>
+		  <td class="unit">rad = </td>
+		  <td lcass="name">Radians</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+
+      <a name="altitude"></a><h2>Altitude</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">virtual_temperature<sub>avg</sub> = </td>
+	    <td class="fraction">
+	      <div class="numerator">(density<sub>1</sub> * temperature<sub>1</sub>) +
+		(density<sub>0</sub> * temperature<sub>0</sub>)</div>
+	      <div class="denominator">density<sub>1</sub> + density<sub>0</sub></div>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td class="result">altitude<sub>1</sub> = </td>
+	    <td class="eqn"><table><tr>
+		  <td>altitude<sub>0</sub> + (<a href="#constants">R<sub>dry</sub></a> * </td>
+		  <td class="fraction">
+		    <div class="numerator">virtual_temperature<sub>avg</sub></div>
+		    <div class="denominator">GRAVITY</div>
+		  </td>
+		  <td> * log(</td>
+		  <td class="fraction">
+		    <div class="numerator">pressure<sub>0</sub></div>
+		    <div class="denominator">pressure<sub>1</sub></div>
+		  </td>
+		  <td>))</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	</table>
+
+	<p>The following is how the density values are detemined based on the dew point value.</p>
+	<table>
+	  <tr>
+	    <td class="result">density<sub>0</sub> = </td>
+	    <td class="eqn">
+	      <table>
+		<tr>
+		  <td rowspan=2>{</td>
+		  <td><a href="#airdensity">air_density</a>(pressure<sub>0</sub>,<a href="#virtualtemperature">virtual_temperature<sub>0</sub></a>)</td>
+		  <td>if (dew_point<sub>0</sub> is a real value)</td>
+		</tr>
+		<tr>
+		  <td><a href="#airdensity">air_density</a>(pressure<sub>0</sub>,temperature<sub>0</sub>)</td>
+		  <td>if (dew_point<sub>0</sub> is not a real value)</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td class="result">density<sub>1</sub> = </td>
+	    <td class="eqn">
+	      <table>
+		<tr>
+		  <td rowspan=2>{</td>
+		  <td><a href="#airdensity">air_density</a>(pressure<sub>1</sub>,<a href="#virtualtemperature">virtual_temperature<sub>1</sub></a>)</td>
+		  <td>if (dew_point<sub>1</sub> is a real value)</td>
+		</tr>
+		<tr>
+		  <td><a href="#airdensity">air_density</a>(pressure<sub>1</sub>,temperature<sub>1</sub>)</td>
+		  <td>if (dew_point<sub>1</sub> is not a real value)</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+	
+	<p>The altitude equation assumes the pressure values are given in millibars, the temperature and dew point values in &deg;C, and the altitude values in meters.  The calculation converts the temperatures from &deg;C to K (not shown) before any of the equations are evaluated.  The resulting altitude is in meters.</p>
+      </div>
+
+      <a name="area"></a><h2>Area</h2>
+      <div id="equation">
+	<table class="conversions">
+	  <tr>
+	    <td class="block">
+	      <table>
+		<tr>
+		  <td class="result">cm<sup>2</sup> = </td>
+		  <td class="eqn">100 * mm<sup>2</sup></td>
+		</tr>
+		<tr>
+		  <td class="result">m<sup>2</sup> = </td>
+		  <td class="eqn">10000 * cm<sup>2</sup></td>
+		</tr>
+		<tr>
+		  <td class="result">km<sup>2</sup> = </td>
+		  <td class="eqn">1000000 * m<sup>2</sup></td>
+		</tr>
+		<tr>
+		  <td class="result">ft<sup>2</sup> = </td>
+		  <td class="eqn">144 * in<sup>2</sup></td>
+		</tr>
+		<tr>
+		  <td class="result">yd<sup>2</sup> = </td>
+		  <td class="eqn">9 * ft<sup>2</sup></td>
+		</tr>
+		<tr>
+		  <td class="result">mile<sup>2</sup> = </td>
+		  <td class="eqn">640 * acre</td>
+		</tr>
+		<tr>
+		  <td class="result">ft<sup>2</sup> = </td>
+		  <td class="eqn">(.3048)<sup>2</sup> * m<sup>2</sup></td>
+		</tr>
+		<tr>
+		  <td class="result">miles<sup>2</sup> = </td>
+		  <td class="eqn">(1.609344)<sup>2</sup> * km<sup>2</sup></td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class="block">
+	      <table>
+		<tr>
+		  <td class="unit">acres = </td>
+		  <td class="name">Acres</td>
+		</tr>
+		<tr>
+		  <td class="unit">cm<sup>2</sup> = </td>
+		  <td class="name">Square Centimeters</td>
+		</tr>
+		<tr>
+		  <td class="unit">ft<sup>2</sup> = </td>
+		  <td class="name">Square Feet</td>
+		</tr>
+		<tr>
+		  <td class="unit">in<sup>2</sup> = </td>
+		  <td class="name">Square Inches</td>
+		</tr>
+		<tr>
+		  <td class="unit">km<sup>2</sup> = </td>
+		  <td class="name">Square Kilometers</td>
+		</tr>
+		<tr>
+		  <td class="unit">m<sup>2</sup> = </td>
+		  <td class="name">Square Meters</td>
+		</tr>
+		<tr>
+		  <td class="unit">mile<sup>2</sup> = </td>
+		  <td class="name">Square Miles</td>
+		</tr>
+		<tr>
+		  <td class="unit">mm<sup>2</sup> = </td>
+		  <td class="name">Square Millimeters</td>
+		</tr>
+		<tr>
+		  <td class="unit">yd<sup>2</sup> = </td>
+		  <td class="name">Square Yards</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+
+      <a name="constants"></a><h2>Constants</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">EPS = </td>
+	    <td class="eqn">.62197</td>
+	    <td class="eqn">???? Used with mixing ratio, specific humidity, and virtual temperature</td>
+	  </tr>
+	  <tr>
+	    <td class="result">ES<sub>0</sub> = </td>
+	    <td class="eqn">6.1121</td>
+	    <td class="eqn">???? Used with vapor pressure
+	  </tr>
+	  <tr>
+	    <td class="result">GRAVITY = </td>
+	    <td class="eqn">9.80616</td>
+	    <td class="eqn">Acceleration Due to Gravity</td>
+	  </tr>
+	  <tr>
+	    <td class="result">PI = </td>
+	    <td class="eqn">4 * atan2(1,1)</td>
+	    <td class="eqn">&nbsp;</td>
+	  </tr>
+	  <tr>
+	    <td class="result">R<sub>dry</sub> = </td>
+	    <td class="eqn">287.04</td>
+	    <td class="eqn">Gas Constant for Dry Air</td>
+	  </tr>
+	  <tr>
+	    <td class="result">R<sub>vapor</sub> = </td>
+	    <td class="eqn">461.5</td>
+	    <td class="eqn">Gas Constant for Water Vapor</td>
+	  </tr>
+	  <tr>
+	    <td class="result">StdSLPress = </td>
+	    <td class="eqn">1013.25 mbar</td>
+	    <td class="eqn">Standard Pressure at Sea Level</td>
+	  </tr>
+	  <tr>
+	    <td class="result">StdSLTemp = </td>
+	    <td class="eqn">15 &deg;C</td>
+	    <td class="eqn">Standard Temperature at Sea Level</td>
+	  </tr>
+	  <tr>
+	    <td class="result">PRESS_RATE = </td>
+	    <td class="eqn">.0065 &deg;C/m</td>
+	    <td class="eqn">Pressure lapse rate</td>
+	  </tr>
+	</table>
+      </div>
+
+      <a name="dates"></a><h2>Dates</h2>
+      <p>There are 365 days in a year, except on leap year when there are 366 days.  A year is a leap year if the follwing conditions are true:<ul>
+	<li>The year is divisible by 4</li>
+	<li>The year is not divisible by 100 unless it is divisible by 400</li>
+	</ul></p>
+      
+      <a name="dewpoint"></a><h2>Dew Point</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">vapor_pressure = </td>
+	    <td class="eqn"><table><tr>
+		  <td><a href="#vaporpressure">saturated_vapor_pressure</a> * (</td>
+		  <td class="fraction">
+		    <div class="numerator">relative_humidity</div>
+		    <div class="denominator">100.0</div>
+		  </td>
+		  <td>)</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td class="result">log_value = </td>
+	    <td class="eqn"><table><tr>
+		  <td>log(</td>
+		  <td class="fraction">
+		    <div class="numerator">vapor_pressure</div>
+		    <div class="denominator"><a href="#constants">ES<sub>0</sub></a></div>
+		  </td>
+		  <td>)</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td class="result">dew_point = </td>
+	    <td class="eqn"><table><tr>
+		  <td>(</td>
+		  <td class="fraction">
+		    <div class="numerator">log_value * 243.5</div>
+		    <div class="denominator">17.67 - log_value</div>
+		  </td>
+		  <td>)</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	</table>
+	      
+	<p>The dew point calculation assumes the temperature is in &deg;C and the relative humidity is in percent.  The temperature is used for calculating the saturated vapor pressure.  The resulting dew point is also in &deg;C.</p>
+      </div>
+
+      <a name="flow"></a><h2>Flow</h2>
+      <div id="equation">
+	<table class="conversions">
+	  <tr>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="result">ft<sup>3</sup>/s = </td>
+		  <td class="eqn">(.3048)<sup>3</sup> * m<sup>3</sup>/s</td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="unit">ft<sup>3</sup>/s = </td>
+		  <td class="name">Cubic Feet per Second</td>
+		</tr>
+		<tr>
+		  <td class="unit">m<sup>3</sup>/s = </td>
+		  <td class="name">Cubic Meters per Second</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>	    
+
+      <a name="latlong"></a><h2>Latitude/Longitude</h2>
+      <div id="equation">
+	<table class="conversions">
+	  <tr>
+	    <td class="block">
+	      <table>
+		<tr>
+		  <td class="result">deg = </td>
+		  <td class="eqn">60 * min</td>
+		</tr>
+		<tr>
+		  <td class="result">min = </td>
+		  <td class="eqn">60 * sec</td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class="block">
+	      <table>
+		<tr>
+		  <td class="unit">deg = </td>
+		  <td class="name">Degrees</td>
+		</tr>
+		<tr>
+		  <td class="unit">min = </td>
+		  <td class="name">Minutes</td>
+		</tr>
+		<tr>
+		  <td class="unit">sec = </td>
+		  <td class="name">Seconds</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+
+      <a name="length"></a><h2>Length</h2>
+      <div id="equation">
+	<table class="conversions">
+	  <tr>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="result">cm = </td>
+		  <td class="eqn">10 * mm</td>
+		</tr>
+		<tr>
+		  <td class="result">dm = </td>
+		  <td class="eqn">10 * cm</td>
+		</tr>
+		<tr>
+		  <td class="result">m = </td>
+		  <td class="eqn">100 * cm</td>
+		</tr>
+		<tr>
+		  <td class="result">km = </td>
+		  <td class="eqn">1000 * m</td>
+		</tr>
+		<tr>
+		  <td class="result">in = </td>
+		  <td class="eqn">10 * ti</td>
+		</tr>
+		<tr>
+		  <td class="result">in = </td>
+		  <td class="eqn">100 * hi</td>
+		</tr>
+		<tr>
+		  <td class="result">ft = </td>
+		  <td class="eqn">12 * in</td>
+		</tr>
+		<tr>
+		  <td class="result">yd = </td>
+		  <td class="eqn">3 * ft</td>
+		</tr>
+		<tr>
+		  <td class="result">Hft = </td>
+		  <td class="eqn">100 * ft</td>
+		</tr>
+		<tr>
+		  <td class="result">mile = </td>
+		  <td class="eqn">5280 * ft</td>
+		</tr>
+		<tr>
+		  <td class="result">mile = </td>
+		  <td class="eqn">1760 * yd</td>
+		</tr>
+		<tr>
+		  <td class="result">nmile = </td>
+		  <td class="eqn">1.150779 * mile</td>
+		</tr>
+		<tr>
+		  <td class="result">in = </td>
+		  <td class="eqn">2.54 * cm</td>
+		</tr>
+		<tr>
+		  <td class="result">m = </td>
+		  <td class="eqn">.3048 * ft</td>
+		</tr>
+		<tr>
+		  <td class="result">mile = </td>
+		  <td class="eqn">1.609344 * km</td>
+		</tr>
+		<tr>
+		  <td class="result">nmile = </td>
+		  <td class="eqn">1.852 * km</td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="unit">cm = </td>
+		  <td class="name">Centimeters</td>
+		</tr>
+		<tr>
+		  <td class="unit">dm = </td>
+		  <td class="name">Decimeters</td>
+		</tr>
+		<tr>
+		  <td class="unit">ft = </td>
+		  <td class="name">Feet</td>
+		</tr>
+		<tr>
+		  <td class="unit">Hft = </td>
+		  <td class="name">Hundereds of Feet</td>
+		</tr>
+		<tr>
+		  <td class="unit">hi = </td>
+		  <td class="name">Hundredths of Inches</td>
+		</tr>
+		<tr>
+		  <td class="unit">in = </td>
+		  <td class="name">Inches</td>
+		</tr>
+		<tr>
+		  <td class="unit">km = </td>
+		  <td class="name">Kilometers</td>
+		</tr>
+		<tr>
+		  <td class="unit">m = </td>
+		  <td class="name">Meters</td>
+		</tr>
+		<tr>
+		  <td class="unit">mile = </td>
+		  <td class="name">Miles</td>
+		</tr>
+		<tr>
+		  <td class="unit">mm = </td>
+		  <td class="name">Millimeters</td>
+		</tr>
+		<tr>
+		  <td class="unit">nmile = </td>
+		  <td class="name">Nautical Miles</td>
+		</tr>
+		<tr>
+		  <td class="unit">ti = </td>
+		  <td class="name">Tenths of an Inch</td>
+		</tr>
+		<tr>
+		  <td class="unit">yd = </td>
+		  <td class="name">Yards</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+
+      <a name="mixingratio"></a><h2>Mixing Ratio</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">e = </td>
+	    <td class="eqn"><table><tr>
+		  <td>vapor_pressure * (1.001 + (</td>
+		  <td class="fraction">
+		    <div class="numerator">pressure - 100.0</div>
+		    <div class="denominator">900.0</div>
+		  </td>
+		  <td> * .0034))</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td class="result">mixing_ratio = </td>
+	    <td class="eqn"><table><tr>
+		  <td><a href="#constants">EPS</a> * (</td>
+		  <td class="fraction">
+		    <div class="numerator">e</div>
+		    <div class="denominator">pressure - e</div>
+		  </td>
+		  <td>)</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	</table>
+
+	<p>The mixing ratio assumes the pressure and the vapor pressure are both in millibars.  The resulting mixing ratio value is in kg/kg.</p>
+      </div>
+
+      <a name="pressure"></a><h2>Pressure</h2>
+      <div id="equation">
+	<table class="conversions">
+	  <tr>
+	    <td class="block">
+	      <table>
+		<tr>
+		  <td class="result">hPa = </td>
+		  <td class="eqn">mbar</td>
+		</tr>
+		<tr>
+		  <td class="result">atm = </td>
+		  <td class="eqn">1013.25 * mbar</td>
+		</tr>
+		<tr>
+		  <td class="result">atm = </td>
+		  <td class="eqn">760 * mmHg</td>
+		</tr>
+		<tr>
+		  <td class="result">Pa = </td>
+		  <td class="eqn">100 * hPa</td>
+		</tr>
+		<tr>
+		  <td class="result">Pa = </td>
+		  <td class="eqn">10 * dyne/cm<sup>2</sup></td>
+		</tr>
+		<tr>
+		  <td class="result">kPa = </td>
+		  <td class="eqn">1000 * Pa</td>
+		</tr>
+		<tr>
+		  <td class="result">bar = </td>
+		  <td class="eqn">1000 * mbar</td>
+		</tr>
+		<tr>
+		  <td class="result">inHg = </td>
+		  <td class="eqn">25.4 * mmHg</td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="unit">atm = </td>
+		  <td class="name">Standard Atmosphere</td>
+		</tr>
+		<tr>
+		  <td class="unit">bar = </td>
+		  <td class="name">Bar</td>
+		</tr>
+		<tr>
+		  <td class="unit">dyne/cm<sup>2</sup> = </td>
+		  <td class="name">Dyne per Square Centimeter</td>
+		</tr>
+		<tr>
+		  <td class="unit">hPa = </td>
+		  <td class="name">Hectopascals</td>
+		</tr>
+		<tr>
+		  <td class="unit">inHg = </td>
+		  <td class="name">Inches of Mercury</td>
+		</tr>
+		<tr>
+		  <td class="unit">kPa = </td>
+		  <td class="name">Kilopascals</td>
+		</tr>
+		<tr>
+		  <td class="unit">mbar = </td>
+		  <td class="name">Millibars</td>
+		</tr>
+		<tr>
+		  <td class="unit">mmHg = </td>
+		  <td class="name">Millimeters of Mercury</td>
+		</tr>
+		<tr>
+		  <td class="unit">Pa = </td>
+		  <td class="name">Pascals</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+
+      <a name="radiation"></a><h2>Radiation</h2>
+      <div id="equation">
+	<table class="conversions">
+	  <tr>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="result">langly = </td>
+		  <td class="eqn">10 * w/m<sup>2</sup></td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="unit">langly = </td>
+		  <td class="name">Langly</td>
+		</tr>
+		<tr>
+		  <td class="unit">w/m<sup>2</sup> = </td>
+		  <td class="name">??? per Square Meter</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+
+      <a name="relativehumidity"></a><h2>Relative Humidity</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">relative_humidity = </td>
+	    <td class="eqn"><table><tr>
+		  <td>100 * (</td>
+		  <td class="fraction">
+		    <div class="numerator"><a href="#vaporpressure">vapor_pressure</a></div>
+		    <div class="denominator"><a href="#vaporpressure">saturated_vapor_pressure</a></div>
+		  </td>
+		  <td>)</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	</table>
+	
+	<p>The relative humidity calculation assumes a temperature and dew point value that are given in &deg;C.  These values are used to calculate the saturated vapor pressure and the vapor pressure that are used in the calculation.  The relative humidity is in percent (%).</p>
+      </div>
+
+      <a name="stationpressure"></a><h2>Station Pressure from Altimeter</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">n = </td>
+	    <td class="eqn"><table><tr>
+		  <td class="fraction">
+		    <div class="numerator"><a href="#constants">PressLapseRate</a> * <a href="#constants">R<sub>dry</sub></a></div>
+		    <div class="denominator"><a href="#constants">GRAVITY</a></div>
+		  </td>
+		</tr></table>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td class="result">pressure = </td>
+	    <td class="eqn"><table><tr>
+		  <td>(altimeter<sup>n</sup> - (</td>
+		  <td class="fraction">
+		    <div class="numerator"><a href="#constants">SLPress<sub>Std</sub></a><sup>n</sup> * <a href="#constants">PressLapseRate</a></div>
+		    <div class="denominator"><a href="#constants">SLTemp<sub>Std</sub></a></div>
+		  </td>
+		  <td> * elevation))<sup>n<sup>-1</sup></sup></td>
+		</tr></table>
+	</table>
+
+	<p>The station pressure calculation assumes the altimeter is in millibars and the elevation is in meters.  The resulting pressure value is in millibars.
+      </div>
+
+      <a name="sealevelpressure"></a><h2>Sea Level Pressure</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">virtual_temperature<sub>avg</sub> = </td>
+	    <td class="eqn"><table><tr>
+		  <td><a href="#virtualtemperature">virtual_temperature</a> - </td>
+		  <td class="fraction">
+		    <div class="numerator"><a href="#constants">PressLapseRate</a> * elevation</div>
+		    <div class="denominator">2.0</div>
+		  </td>
+		</tr></table>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td class="result">sea_level_pressure = </td>
+	    <td class="eqn"><table><tr>
+		  <td>pressure * exp(</td>
+		  <td class="fraction">
+		    <div class="numerator"><a href="#constants">GRAVITY</a> * elevation</div>
+		    <div class="denominator"><a href="#constants">R<sub>dry</sub></a> * virtual_temperature<sub>avg</sub></div>
+		  </td>
+		  <td>)</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	</table>
+
+	<p>The sea level pressure calculation assumes the pressure is in millibars, the dew point and temperature are in &deg;C and the elevation is in meters.  It utilizes the <a href="#vaporpressure">Vapor Pressure</a> calculation with the dew point, the <a href="#mixing_ratio">Mixing Ratio</a> calculation with the vapor pressure and pressure, and the <a href="#virtualtemperature">Virtual Temperature</a> calculation with the temperature converted to Kelvin and the mixing ratio.  The resulting sea level pressure is in millibars.</p>
+      </div>
+
+      <a name="specifichumidity"></a><h2>Specific Humidity</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">specific_humidity = </td>
+	    <td class="eqn"><table><tr>
+		  <td class="fraction">
+		    <div class="numerator"><a href="#constants">EPS</a> * <a href="#vaporpressure">vapor_pressure</a></div>
+		    <div class="denominator">pressure - (.378 * <a href="#vaporpressure">vapor_pressure</a>)</div>
+		  </td>
+		</tr></table>
+	    </td>
+	  </tr>
+	</table>
+
+	<p>The specific humidity calculation assumes the pressure is in millibars and the dew point is in &deg;C.  The resulting specific humidity value is in percent.</p>
+      </div>
+
+      <a name="temperature"></a><h2>Temperature</h2>
+      <div id="equation">
+	<table class="conversions">
+	  <tr>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="result">T<sub>C</sub> = </td>
+		  <td class="eqn"><table><tr>
+			<td class="fraction">
+			  <div class="numerator">5</div>
+			  <div class="denominator">9</div>
+			</td>
+			<td> * (T<sub>F</sub> - 32)</td>
+		      </tr></table>
+		  </td>
+		</tr>
+		<tr>
+		  <td class="result">T<sub>C</sub> = </td>
+		  <td class="eqn">T<sub>K</sub> - 273.15</td>
+		</tr>
+		<tr>
+		  <td class="result">T<sub>F</sub> = </td>
+		  <td class="eqn"><table><tr>
+			<td class="fraction">
+			  <div class="numerator">9</div>
+			  <div class="denominator">5</div>
+			</td>
+			<td> * T<sub>C</sub> + 32</td>
+		      </tr></table>
+		  </td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="unit">&deg;C = </td>
+		  <td class="name">degrees Celcius</td>
+		</tr>
+		<tr>
+		  <td class="unit">&deg;F = </td>
+		  <td class="name">degrees Farenheit</td>
+		</tr>
+		<tr>
+		  <td class="unit">K = </td>
+		  <td class="name">Kelvin</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+	
+	<p>The variables T<sub>C</sub>, T<sub>F</sub>, and T<sub>K</sub> are temperature in &deg;C, temperature in &deg;F, and temperature in Kelvin.</p>
+      </div>
+      
+      <a name="time"></a><h2>Time</h2>
+      <div id="equation">
+	<table class="conversions">
+	  <tr>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="result">min = </td>
+		  <td class="eqn">60 * sec</td>
+		</tr>
+		<tr>
+		  <td class="result">hr = </td>
+		  <td class="eqn">60 * min</td>
+		</tr>
+		<tr>
+		  <td class="result">day = </td>
+		  <td class="eqn">24 * hr</td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="unit">sec = </td>
+		  <td class="name">Seconds</td>
+		</tr>
+		<tr>
+		  <td class="unit">min = </td>
+		  <td class="name">Minutes</td>
+		</tr>
+		<tr>
+		  <td class="unit">hr = </td>
+		  <td class="name">Hours</td>
+		</tr>
+		<tr>
+		  <td class="unit">day = </td>
+		  <td class="name">Days</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+
+      <a name="vaporpressure"></a><h2>(Saturated) Vapor Pressure</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">vapor_pressure = </td>
+	    <td class="eqn"><table><tr>
+		  <td><a href="#constants">ES<sub>0</sub></a> * exp(</td>
+		  <td><table><tr>
+			<td class="fraction">
+			  <div class="numerator">17.67 * temperature</div>
+			  <div class="denominator">temperature + 243.5</div>
+			</td>
+		      </tr></table></td>
+		  <td>)</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	</table>
+
+	<p>The vapor pressure/saturated vapor pressure calculation assumes the temperature value that is given is in &deg;C.  The vapor pressure is calculated in millibars.</p>
+      </div>
+
+      <a name="velocity"></a><h2>Velocity</h2>
+      <div id="equation">
+	<table class="conversions">
+	  <tr>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="result">ft/sec = </td>
+		  <td class="eqn">.3048 * m/s</td>
+		</tr>
+		<tr>
+		  <td class="result">mph = </td>
+		  <td class="eqn">1.609344 * km/hr</td>
+		</tr>
+		<tr>
+		  <td class="result">m/s = </td>
+		  <td class="eqn">3.6 * km/hr</td>
+		</tr>
+		<tr>
+		  <td class="result">ft/sec = </td>
+		  <td class="eqn"><table><tr>
+			<td class="fraction">
+			  <div class="numerator">5280</div>
+			  <div class="denominator">3600</div>
+			</td>
+			<td> * mph</td>
+		      </tr></table>
+		  </td>
+		</tr>
+		<tr>
+		  <td class="result">mph = </td>
+		  <td class="eqn"><table><tr>
+			<td class="fraction">
+			  <div class="numerator">1609.344</div>
+			  <div class="denominator">3600</div>
+			</td>
+			<td> * m/s</td>
+		      </tr></table>
+		  </td>
+		</tr>
+		<tr>
+		  <td class="result">knot = </td>
+		  <td class="eqn"><table><tr>
+			<td class="fraction">
+			  <div class="numerator">463</div>
+			  <div class="denominator">900</div>
+			</td>
+			<td> * m/s</td>
+		      </tr></table>
+		  </td>
+		</tr>
+		<tr>
+		  <td class="result">knot = </td>
+		  <td class="eqn"><table><tr>
+			<td class="fraction">
+			  <div class="numerator">1852</div>
+			  <div class="denominator">1609.344</div>
+			</td>
+			<td> * mph</td>
+		      </tr></table>
+		  </td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class=block>
+	      <table>
+		<tr>
+		  <td class="unit">ft/s = </td>
+		  <td class="name">Feet per Second</td>
+		</tr>
+		<tr>
+		  <td class="unit">km/hr = </td>
+		  <td class="name">Kilometers per Hour</td>
+		</tr>
+		<tr>
+		  <td class="unit">knot = </td>
+		  <td class="name">Nautical Miles per Hour</td>
+		</tr>
+		<tr>
+		  <td class="unit">m/s = </td>
+		  <td class="name">Meters per Second</td>
+		</tr>
+		<tr>
+		  <td class="unit">mph = </td>
+		  <td class="name">Miles per Hour</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+
+      <a name="virtualtemperature"></a><h2>Virtual Temperature</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">virt_temp = </td>
+	    <td class="eqn"><table><tr>
+		  <td>temperature * (</td>
+		  <td class="fraction">
+		    <div class="numerator"><table><tr>
+			  <td class="fraction">1.0 + (</td>
+			  <td class="fraction">
+			    <div class="numerator"><a href="#mixingratio">mixing_ratio</a></div>
+			    <div class="denominator"><a href="#constants">EPS</a></div>
+			  </td>
+			  <td>)</td>
+			</tr></table>
+		    </div>
+		    <div class="denominator">1.0 + <a href="#mixingratio">mixing_ratio</a></div>
+		  </td>
+		  <td>)</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	</table>
+
+	<p>The virtual temperature calculation assumes the temperature is in K and the mixing ratio is in kg/kg.  The virtual temperature will be returned in K.</p>
+      </div>
+
+      <a name="volume"></a><h2>Volume</h2>
+      <div id="equation">
+	<table class="conversions">
+	  <tr>
+	    <td class="block">
+	      <table>
+		<tr>
+		  <td class="result">m<sup>3</sup> = </td>
+		  <td class="eqn">1000000 * cm<sup>3</sup></td></tr>
+		<tr>
+		  <td class="result">cm<sup>3</sup> = </td>
+		  <td class="eqn">ml</td>
+		</tr>
+		<tr>
+		  <td class="result">liter = </td>
+		  <td class="eqn">1000 * ml</td>
+		</tr>
+		<tr>
+		  <td class="result">ft<sup>3</sup> = </td>
+		  <td class="eqn">1728 * in<sup>3</sup></td>
+		</tr>
+		<tr>
+		  <td class="result">af = </td>
+		  <td class="eqn">43560 * ft<sup>3</sup></td>
+		</tr>
+		<tr>
+		  <td class="result">pt = </td>
+		  <td class="eqn">16 * oz</td>
+		</tr>
+		<tr>
+		  <td class="result">qt = </td>
+		  <td class="eqn">2 * pt</td>
+		</tr>
+		<tr>
+		  <td class="result">gal = </td>
+		  <td class="eqn">4 * qt</td>
+		</tr>
+		<tr>
+		  <td class="result">in<sup>3</sup> = </td>
+		  <td class="eqn">(2.54)<sup>3</sup> * cm<sup>3</sup></td>
+		</tr>
+		<tr>
+		  <td class="result">ft<sup>3</sup> = </td>
+		  <td class="eqn">(.3048)<sup>3</sup> * m<sup>3</sup></td>
+		</tr>
+		<tr>
+		  <td class="result">gal = </td>
+		  <td class="eqn"><table><tr>
+			<td class="fraction">
+			  <div class="numerator">34628947</div>
+			  <div class="denominator">9148000</div>
+			</td>
+			<td> * liter</td>
+		      </tr></table>
+		  </td>
+		</tr>
+		<tr>
+		  <td class="result">oz = </td>
+		  <td class="eqn"><table><tr>
+			<td class="fraction">
+			  <div class="numerator">34628947</div>
+			  <div class="denominator">1170944</div>
+			</td>
+			<td> * ml</td>
+		      </tr></table>
+		  </td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class="block">
+	      <table>
+		<tr>
+		  <td class="unit">af = </td>
+		  <td class="name">Acre-Feet</td>
+		</tr>
+		<tr>
+		  <td class="unit">cm<sup>3</sup> = </td>
+		  <td class="name">Cubic Centimeters</td>
+		</tr>
+		<tr>
+		  <td class="unit">ft<sup>3</sup> = </td>
+		  <td class="name">Cubic Feet</td>
+		</tr>
+		<tr>
+		  <td class="unit">gal = </td>
+		  <td class="name">Gallons</td>
+		</tr>
+		<tr>
+		  <td class="unit">in<sup>3</sup> = </td>
+		  <td class="name">Cubic Inches</td>
+		</tr>
+		<tr>
+		  <td class="unit">liter = </td>
+		  <td class="name">Liters</td>
+		</tr>
+		<tr>
+		  <td class="unit">m<sup>3</sup> = </td>
+		  <td class="name">Cubic Meters</td>
+		</tr>
+		<tr>
+		  <td class="unit">ml = </td>
+		  <td class="name">Milliliters</td>
+		</tr>
+		<tr>
+		  <td class="unit">oz = </td>
+		  <td class="name">Ounces</td>
+		</tr>
+		<tr>
+		  <td class="unit">pt = </td>
+		  <td class="name">Pints</td>
+		</tr>
+		<tr>
+		  <td class="unit">qt = </td>
+		  <td class="name">Quarts</td>
+		</tr>
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </div>
+
+      <a name="winds"></a><h2>Wind Values</h2>
+      <div id="equation">
+	<table>
+	  <tr>
+	    <td class="result">u_wind = </td>
+	    <td class="eqn">wind_spd * -1 * sin(wind_dir)</td>
+	  </tr>
+	  <tr>
+	    <td class="result">v_wind = </td>
+	    <td class="eqn">wind_spd * -1 * cos(wind_dir)</td>
+	  </tr>
+	  <tr>
+	    <td class="result">wind_spd = </td>
+	    <td class="eqn">&radic;(u_wind<sup>2</sup> + v_wind<sup>2</sup>)</td>
+	  </tr>
+	  <tr>
+	    <td class="result">wind_dir = </td>
+	    <td class="eqn"><table><tr>
+		  <td>atan(</td>
+		  <td><table><tr>
+			<td class="fraction">
+			  <div class="numerator">u_wind</div>
+			  <div class="denominator">v_wind</div>
+			</td>
+		      </tr></table></td>
+		  <td>)</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	</table>
+
+	<p>Special Cases for <code>atan</code> when v_wind == 0</p>
+	<table>
+	  <tr>
+	    <td class="result">wind_spd = </td>
+	    <td class="eqn">abs(u_wind)</td>
+	  </tr>
+	  <tr>
+	    <td class="result">wind_dir = </td>
+	    <td class="eqn">0 when u_wind == 0</td>
+	  </tr>
+	  <tr>
+	    <td class="result">wind_dir = </td>
+	    <td class="eqn"><table><tr>
+		  <td><table><tr>
+			<td class="fraction">
+			  <div class="numerator">&pi;</div>
+			  <div class="denominator">2</div>
+			</td>
+		      </tr></table></td>
+		  <td> when u_wind < 0</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td class="result">wind_dir = </td>
+	    <td class="eqn"><table><tr>
+		  <td><table><tr>
+			<td class="fraction">
+			  <div class="numerator">3 * &pi;</div>
+			  <div class="denominator">2</div>
+			</td>
+		      </tr></table></td>
+		  <td> when u_wind > 0</td>
+		</tr></table>
+	    </td>
+	  </tr>
+	</table>
+
+	<p>The wind calculations assume the wind speed and components are in meters/second and the wind direction in radians for both parameters in the calculation and in the return values.</p>
+      </div>
+
+  </body>
+</html>

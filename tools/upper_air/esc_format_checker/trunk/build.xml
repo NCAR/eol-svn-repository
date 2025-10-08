@@ -1,0 +1,93 @@
+<project name="Upper Air ESC Format Checker" default="compile" basedir=".">
+
+    <property name="build" location="build" />
+    <property name="build.classes" location="build/classes" />
+    <property name="build.tests" location="build/tests" />
+    <property name="deploy.doc" location="/net/web/dmg/html/software/tools/upper_air/esc_format_checker" />
+    <property name="deploy.jar" location="/net/work/bin/checkers" />
+    <property name="dist" location="dist" />
+    <property name="docs" location="docs" />
+    <property name="docs.api" location="${docs}/api" />
+    <property name="jarfile" value="esc_format_checker.jar" />
+    <property name="reports" location="reports" />
+    <property name="src" location="src" />
+    <property name="tests" location="tests" />
+
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <fileset dir="/net/work/lib/java">
+            <include name="utilities.jar" />
+        </fileset>
+    </path>
+
+    <path id="test-classpath">
+        <fileset dir="/net/work/lib/java/vendor">
+            <include name="junit.jar" />
+        </fileset>
+        <pathelement path="${build.classes}" />
+        <pathelement path="${build.tests}" />
+        <path refid="classpath" />
+    </path>
+
+    <target name="clean">
+        <delete dir="${build}" />
+        <delete dir="${dist}" />
+        <delete dir="${docs.api}" />
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build.classes}">
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+
+    <target name="compileTests" depends="compile">
+        <mkdir dir="${build.tests}" />
+        <javac srcdir="${tests}" destdir="${build.tests}">
+            <classpath refid="test-classpath" />
+        </javac>
+    </target>
+
+    <target name="deploy" depends="dist, javadoc">
+        <delete dir="${deploy.doc}" />
+        <mkdir dir="${deploy.doc}" />
+        <copy file="${dist}/${jarfile}" todir="${deploy.jar}" />
+        <copy todir="${deploy.doc}">
+           <fileset dir="${docs.api}" />
+        </copy>
+        <chmod file="${deploy.jar}/${jarfile}" perm="0554" />
+    </target>
+
+    <target name="dist" depends="compile">
+        <mkdir dir="${dist}" />
+        <jar destfile="${dist}/${jarfile}" basedir="${build.classes}" />
+    </target>
+
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build.classes}" />
+    </target>
+
+    <target name="javadoc">
+        <mkdir dir="${docs.api}" />
+        <javadoc destdir="${docs.api}" author="true" version="true" use="true" 
+                 windowtitle="DMG ESC Format Checker API" doctitle="Data Managment Group ESC Format Checker API"
+                 header="DMG ESC Format Checker API" overview="${docs}/overview.html">
+            <classpath refid="classpath" />
+            <fileset dir="${src}" defaultexcludes="yes" />
+            <link href="http://java.sun.com/j2se/1.5.0/docs/api" />
+            <link href="http://dmg.eol.ucar.edu/software/library/java/utilities" offline="true" packageListLoc="/net/web/dmg/html/software/library/java/utilities" />
+            <link href="http://dmg.eol.ucar.edu/software/library/java/upper_air" offline="true" packageListLoc="/net/web/dmg/html/software/library/java/upper_air" />
+        </javadoc>
+        <copy todir="${docs.api}">
+            <fileset dir="${docs}" includes="howto*.html" />
+        </copy>
+    </target>
+
+    <target name="test" depends="compileTests">
+        <java classname="dmg.ua.sounding.check.ESCCheckFormatTests" fork="yes">
+            <classpath refid="test-classpath" />
+        </java>
+    </target>
+
+</project>

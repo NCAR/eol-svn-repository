@@ -1,0 +1,121 @@
+CEOP EOP-4 GAPP ARM SGP SMOS DQR-Based Flags
+
+"wspd", "wdir", "temp", "rh", "bar_pres", "precip "
+
+E1
+all parameters except precip (B)
+           if ($datetime >= 20031021.1745 && $datetime <= 20031021.1945) ||
+           if ($datetime >= 20040420.1955 && $datetime <= 20040420.2020) ||
+           if ($datetime >= 20041019.1920 && $datetime <= 20041019.1950) ||
+
+E3
+all parameters except precip (B)
+           if ($datetime >= 20031105.1733 && $datetime <= 20031105.1815) ||
+           if ($datetime >= 20040407.1645 && $datetime <= 20040407.1730) ||
+           if ($datetime >= 20041006.1534 && $datetime <= 20041006.1620) ||
+
+E4
+
+all parameters except precip (B)
+           if ($datetime >= 20031022.1455 && $datetime <= 20031022.1655) ||
+           if ($datetime >= 20040421.1529 && $datetime <= 20040421.1550) ||
+           if ($datetime >= 20041020.1515 && $datetime <= 20041020.1535) ||
+
+rh (D)
+           if ($datetime >= 20030922.0447 && $datetime <= 20031027.1655) ||
+           if ($datetime >= 20031002.1136 && $datetime <= 20031022.1648) ||
+
+rh (B)
+           if ($datetime >= 20040117.1545 && $datetime <= 20040119.1730) ||
+           if ($datetime >= 20040422.1631 && $datetime <= 20040506.1531) ||
+
+E5
+all parameters except precip (B)
+           if ($datetime >= 20031021.1915 && $datetime <= 20031021.1942) ||
+           if ($datetime >= 20040421.1830 && $datetime <= 20040421.1900) ||
+           if ($datetime >= 20041020.1906 && $datetime <= 20041020.1918) ||
+
+E6
+all parameters except precip (B)
+           if ($datetime >= 20031106.1525 && $datetime <= 20031106.1600) ||
+           if ($datetime >= 20040408.1511 && $datetime <= 20040408.1600) ||
+           if ($datetime >= 20041007.1407 && $datetime <= 20041007.1500) ||
+ 
+E7
+all parameters except precip (B)
+           if ($datetime >= 20031104.2144 && $datetime <= 20031104.2230) ||
+           if ($datetime >= 20040406.1958 && $datetime <= 20040406.2040) ||
+           if ($datetime >= 20041005.1939 && $datetime <= 20041005.2020) ||
+
+E8
+all parameters except precip (B)
+           if ($datetime >= 20031021.1700 && $datetime <= 20031021.1735) ||
+           if ($datetime >= 20040420.1740 && $datetime <= 20040420.1820) ||
+           if ($datetime >= 20041019.1730 && $datetime <= 20041019.1800) ||
+
+E9
+all parameters except precip (B)
+           if ($datetime >= 20031104.1654 && $datetime <= 20031104.1735) ||
+           if ($datetime >= 20040406.1553 && $datetime <= 20040406.1640) ||
+           if ($datetime >= 20041005.1616 && $datetime <= 20041005.1650) ||
+
+E11
+all parameters except precip (B)
+           if ($datetime >= 20031014.1930 && $datetime <= 20031014.1941) ||
+           if ($datetime >= 20040413.2011 && $datetime <= 20040413.2035) ||
+           if ($datetime >= 20041026.1840 && $datetime <= 20041026.1900) ||
+
+rh (D)
+           if ($datetime >= 20040414.0055 && $datetime <= 20040713.1525) ||
+                                                                                                conditions)
+
+E13
+all parameters except precip (B)
+           if ($datetime >= 20031016.1827 && $datetime <= 20031016.1855) ||
+           if ($datetime >= 20040415.1958 && $datetime <= 20040415.2020) ||
+           if ($datetime >= 20041028.1835 && $datetime <= 20041028.1855) ||
+
+E15
+
+all parameters except precip (B)
+           if ($datetime >= 20031014.1700 && $datetime <= 20031014.1730) ||
+           if ($datetime >= 20040413.1615 && $datetime <= 20040413.1700) ||
+           if ($datetime >= 20041026.1640 && $datetime <= 20041026.1750) ||
+
+rh (B)
+           if ($datetime >= 20031007.1425 && $datetime <= 20031007.1428) ||
+           if ($datetime >= 20031009.0105 && $datetime <= 20031009.0159) ||
+
+E20
+all parameters except precip (B)
+           if ($datetime >= 20031029.2149 && $datetime <= 20031029.2230) ||
+           if ($datetime >= 20040428.2027 && $datetime <= 20040428.2105) ||
+           if ($datetime >= 20040929.1607 && $datetime <= 20040929.1655) ||
+
+wspd (B)
+           if ($datetime >= 20040930.1900 && $datetime <= 20041013.1737) ||
+E21
+all parameters except precip (B)
+           if ($datetime >= 20031029.1519 && $datetime <= 20031029.1615) ||
+           if ($datetime >= 20040428.1430 && $datetime <= 20040428.1530) ||
+           if ($datetime >= 20041108.2200 && $datetime <= 20041108.2220) ||
+
+bar_pres (B)
+           if ($datetime >= 20040512.1532 && $datetime <= 20040628.1520) ||
+
+E24
+
+all parameters except precip (B)
+           if ($datetime >= 20031030.1641 && $datetime <= 20031030.1730) ||
+           if ($datetime >= 20040429.1631 && $datetime <= 20040429.1715) ||
+           if ($datetime >= 20040930.1634 && $datetime <= 20040930.1715) ||
+
+precip (D)
+           if ($datetime >= 20040229.0000 && $datetime <= 20040318.2359) ||
+
+E27
+all parameters except precip (B)
+           if ($datetime >= 20031029.1808 && $datetime <= 20031029.1855) ||
+           if ($datetime >= 20040428.1712 && $datetime <= 20040428.1755) ||
+           if ($datetime >= 20040929.2012 && $datetime <= 20040929.2045) ||
+

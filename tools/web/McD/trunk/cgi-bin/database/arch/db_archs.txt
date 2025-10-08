@@ -1,0 +1,802 @@
+
+                           Database Architectures of Interest
+
+Summary:
+  This document contains the database architectures of several databases 
+currently being used at JOSS.  Each architecture will be useful in defining a 
+single comprehensive database for the Data Loading Notes and Master List 
+applications.
+
+Contents:
+  -Proposed combined DLN/ML database
+  -Master List
+    -SQL dump is also included to demonstrate the usage of InnoDB tables
+  -Data Loading Notes
+  -JEDI
+  -ZINC (a single 'user' table)
+  -NATTAP v2.0 testing DB
+  -Arctic Master List
+
+--------------------------------------------------------------------------
+
+Proposed combined dln/ml database:
+
+
+CREATE TABLE user(
+  id varchar(31) primary key,
+  display_name varchar(100) NOT NULL,
+  email varchar(100) NOT NULL,
+  active tinyint(1) default 1,
+  loader tinyint(1) default 1, 
+  checker tinyint(1) default 1, 
+  contact tinyint(1) default 1
+) TYPE=InnoDB;
+
+CREATE TABLE project (
+  id int(11) NOT NULL auto_increment,
+  name varchar(16) default NULL,
+  long_name varchar(255) default NULL,
+  active int(11) default NULL,
+  logo_src varchar(255) default NULL,
+  left_css_src varchar(255) NOT NULL default 'left_def.css',
+  body_css_src varchar(255) NOT NULL default 'body_def.css',
+  internal_contact varchar(31),
+  PRIMARY KEY  (id),
+  UNIQUE KEY name (name),
+  INDEX (internal_contact),
+  FOREIGN KEY (internal_contact) REFERENCES user (id) ON DELETE RESTRICT
+) TYPE=InnoDB;
+
+
+CREATE TABLE dataset (
+  id int(11) NOT NULL auto_increment,
+  storm_id varchar(16) default NULL,
+  title varchar(255) default NULL,
+  project int(11) NOT NULL,
+  date date default NULL,
+  remote_url varchar(255) default NULL,
+  doc_url varchar(255) default NULL,
+  loader varchar(31),
+  checker varchar(31),
+  int_contact varchar(31),
+  ext_contact varchar(100),
+  ext_email varchar(100),
+  ingest varchar(255),
+  archive varchar(255),
+  loading_notes text,
+  documented tinyint(1) default 0,
+  checked tinyint(1) default 0,
+  loaded tinyint(1) default 0,
+  in_progress int(11) default '0',
+  ml_date date default NULL,
+  ml_post tinyint(1) default 0,
+  ml_in_progress tinyint(1) default 0,
+  PRIMARY KEY  (id),
+  INDEX (project),
+  INDEX (loader),
+  INDEX (checker),
+  INDEX (int_contact),
+  FOREIGN KEY (project) REFERENCES project (id) ON DELETE RESTRICT,
+  FOREIGN KEY (loader) REFERENCES user (id) ON DELETE RESTRICT,
+  FOREIGN KEY (checker) REFERENCES user (id) ON DELETE RESTRICT,
+  FOREIGN KEY (int_contact) REFERENCES user (id) ON DELETE RESTRICT
+) TYPE=InnoDB;
+
+
+CREATE TABLE link (
+  id int(11) NOT NULL auto_increment,
+  name varchar(200) NOT NULL default '',
+  url varchar(255) NOT NULL default '',
+  target varchar(20) default '_self',
+  PRIMARY KEY  (id)
+) TYPE=InnoDB;
+
+
+CREATE TABLE category (
+  id int(11) NOT NULL auto_increment,
+  name varchar(50) NOT NULL default '',
+  parent int(11) default NULL,
+  project int(11) NOT NULL default '0',
+  PRIMARY KEY  (id),
+  INDEX (project),
+  FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE RESTRICT
+) TYPE=InnoDB;
+
+
+CREATE TABLE dscatlink (
+  category int(11) default NULL,
+  dataset int(11) default NULL,
+  INDEX (category),
+  INDEX (dataset),
+  FOREIGN KEY (`category`) REFERENCES `category` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`dataset`) REFERENCES `dataset` (`id`) ON DELETE CASCADE
+) TYPE=InnoDB;
+
+
+CREATE TABLE linkcatlink (
+  link int(11) default NULL,
+  category int(11) default NULL,
+  INDEX (link),
+  INDEX (category),
+  FOREIGN KEY (`link`) REFERENCES `link` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`category`) REFERENCES `category` (`id`) ON DELETE CASCADE
+) TYPE=InnoDB;
+
+
+CREATE TABLE linkprojlink (
+  link int(11) default NULL,
+  project int(11) default NULL,
+  INDEX (link),
+  INDEX (project),
+  FOREIGN KEY (`link`) REFERENCES `link` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE
+) TYPE=InnoDB;
+
+--------------------------------------------------------------------------
+
+Application: new JOSS Master Data Set List
+
+Host: hurricane    Database: ml
+
++--------------+
+| Tables_in_ml |
++--------------+
+| category     |
+| dataset      |
+| dscatlink    |
+| link         |
+| linkcatlink  |
+| linkprojlink |
+| project      |
++--------------+
+
+project:
++---------------+--------------+------+-----+--------------+----------------+
+| Field         | Type         | Null | Key | Default      | Extra          |
++---------------+--------------+------+-----+--------------+----------------+
+| id            | int(11)      |      | PRI | NULL         | auto_increment |
+| name          | varchar(16)  | YES  | MUL | NULL         |                |
+| long_name     | varchar(255) | YES  |     | NULL         |                |
+| active        | int(11)      | YES  |     | NULL         |                |
+| logo_src      | varchar(255) | YES  |     | NULL         |                |
+| left_css_src  | varchar(255) |      |     | left_def.css |                |
+| body_css_src  | varchar(255) |      |     | body_def.css |                |
+| contact_name  | varchar(100) | YES  |     | NULL         |                |
+| contact_email | varchar(100) | YES  |     | NULL         |                |
++---------------+--------------+------+-----+--------------+----------------+
+
+link:
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int(11)      |      | PRI | NULL    | auto_increment |
+| name   | varchar(200) |      |     |         |                |
+| url    | varchar(255) |      |     |         |                |
+| target | varchar(20)  | YES  |     | _self   |                |
++--------+--------------+------+-----+---------+----------------+
+
+dataset:
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      |      | PRI | NULL    | auto_increment |
+| title       | varchar(200) | YES  |     | NULL    |                |
+| storm_id    | varchar(15)  | YES  |     | NULL    |                |
+| date        | date         | YES  |     | NULL    |                |
+| url         | varchar(200) | YES  |     | NULL    |                |
+| doc_url     | varchar(200) | YES  |     | NULL    |                |
+| in_progress | int(11)      | YES  |     | 0       |                |
+| hide        | int(11)      | YES  |     | 0       |                |
+| project     | int(11)      |      | MUL | 0       |                |
++-------------+--------------+------+-----+---------+----------------+
+
+category:
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int(11)     |      | PRI | NULL    | auto_increment |
+| name    | varchar(50) |      |     |         |                |
+| parent  | int(11)     | YES  |     | NULL    |                |
+| project | int(11)     |      | MUL | 0       |                |
++---------+-------------+------+-----+---------+----------------+
+
+dscatlink:
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| category | int(11) | YES  | MUL | NULL    |       |
+| dataset  | int(11) | YES  | MUL | NULL    |       |
++----------+---------+------+-----+---------+-------+
+
+linkcatlink:
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| link     | int(11) | YES  | MUL | NULL    |       |
+| category | int(11) | YES  | MUL | NULL    |       |
++----------+---------+------+-----+---------+-------+
+
+linkprojlink:
+---------+---------+------+-----+---------+-------+
+| Field   | Type    | Null | Key | Default | Extra |
++---------+---------+------+-----+---------+-------+
+| link    | int(11) | YES  | MUL | NULL    |       |
+| project | int(11) | YES  | MUL | NULL    |       |
++---------+---------+------+-----+---------+-------+
+
+-- MySQL dump 8.22
+--
+-- Host: hurricane    Database: ml
+---------------------------------------------------------
+-- Server version	4.0.10-gamma-log
+
+--
+-- Table structure for table 'project'
+--
+
+CREATE TABLE project (
+  id int(11) NOT NULL auto_increment,
+  name varchar(16) default NULL,
+  long_name varchar(255) default NULL,
+  active int(11) default NULL,
+  logo_src varchar(255) default NULL,
+  left_css_src varchar(255) NOT NULL default 'left_def.css',
+  body_css_src varchar(255) NOT NULL default 'body_def.css',
+  contact_name varchar(100) default NULL,
+  contact_email varchar(100) default NULL,
+  PRIMARY KEY  (id),
+  UNIQUE KEY name (name)
+) TYPE=InnoDB;
+
+--
+-- Table structure for table 'link'
+--
+
+CREATE TABLE link (
+  id int(11) NOT NULL auto_increment,
+  name varchar(200) NOT NULL default '',
+  url varchar(255) NOT NULL default '',
+  target varchar(20) default '_self',
+  PRIMARY KEY  (id)
+) TYPE=InnoDB;
+
+--
+-- Table structure for table 'dataset'
+--
+
+CREATE TABLE dataset (
+  id int(11) NOT NULL auto_increment,
+  title varchar(200) default NULL,
+  storm_id varchar(15) default NULL,
+  date date default NULL,
+  url varchar(200) default NULL,
+  doc_url varchar(200) default NULL,
+  in_progress int(11) default '0',
+  hide int(11) default '0',
+  project int(11) NOT NULL default '0',
+  PRIMARY KEY  (id),
+  KEY project_ind (project),
+  FOREIGN KEY (`project`) REFERENCES `project` (`id`)
+) TYPE=InnoDB;
+
+--
+-- Table structure for table 'category'
+--
+
+CREATE TABLE category (
+  id int(11) NOT NULL auto_increment,
+  name varchar(50) NOT NULL default '',
+  parent int(11) default NULL,
+  project int(11) NOT NULL default '0',
+  PRIMARY KEY  (id),
+  KEY project_ind (project),
+  FOREIGN KEY (`project`) REFERENCES `project` (`id`)
+) TYPE=InnoDB;
+
+--
+-- Table structure for table 'dscatlink'
+--
+
+CREATE TABLE dscatlink (
+  category int(11) default NULL,
+  dataset int(11) default NULL,
+  KEY category_ind (category),
+  KEY dataset_ind (dataset),
+  FOREIGN KEY (`category`) REFERENCES `category` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`dataset`) REFERENCES `dataset` (`id`) ON DELETE CASCADE
+) TYPE=InnoDB;
+
+--
+-- Table structure for table 'linkcatlink'
+--
+
+CREATE TABLE linkcatlink (
+  link int(11) default NULL,
+  category int(11) default NULL,
+  KEY link_ind (link),
+  KEY category_ind (category),
+  FOREIGN KEY (`link`) REFERENCES `link` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`category`) REFERENCES `category` (`id`) ON DELETE CASCADE
+) TYPE=InnoDB;
+
+--
+-- Table structure for table 'linkprojlink'
+--
+
+CREATE TABLE linkprojlink (
+  link int(11) default NULL,
+  project int(11) default NULL,
+  KEY link_ind (link),
+  KEY project_ind (project),
+  FOREIGN KEY (`link`) REFERENCES `link` (`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE
+) TYPE=InnoDB;
+
+--------------------------------------------------------------------------
+
+Application: current Data Loading Notes 
+
+Host: thunder   Database: data_loading_notes
+
++------------------------------+
+| Tables_in_data_loading_notes |
++------------------------------+
+| Checkers                     |
+| Contacts                     |
+| Links                        |
+| Loaders                      |
+| Notes                        |
+| Projects                     |
++------------------------------+
+
+Projects:
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int(11)     |      | PRI | NULL    | auto_increment |
+| name      | varchar(25) | YES  |     | NULL    |                |
+| notes     | text        | YES  |     | NULL    |                |
+| id_prefix | varchar(10) | YES  |     |         |                |
++-----------+-------------+------+-----+---------+----------------+
+
+Notes:
++----------------+--------------+------+-----+------------+----------------+
+| Field          | Type         | Null | Key | Default    | Extra          |
++----------------+--------------+------+-----+------------+----------------+
+| id             | int(11)      |      | PRI | NULL       | auto_increment |
+| storm_id       | varchar(15)  | YES  |     | NULL       |                |
+| loader_id      | int(11)      | YES  |     | NULL       |                |
+| title          | varchar(200) | YES  |     | NULL       |                |
+| readme         | int(11)      | YES  |     | NULL       |                |
+| master         | int(11)      | YES  |     | NULL       |                |
+| checked        | int(11)      | YES  |     | NULL       |                |
+| date           | date         | YES  |     | 0000-00-00 |                |
+| notes          | text         | YES  |     | NULL       |                |
+| proj_id        | int(11)      | YES  |     | NULL       |                |
+| checker_id     | int(11)      | YES  |     | NULL       |                |
+| int_contact_id | int(11)      | YES  |     | NULL       |                |
+| ext_contact    | varchar(25)  | YES  |     | NULL       |                |
+| ext_email      | varchar(25)  | YES  |     | NULL       |                |
+| ingest         | varchar(100) | YES  |     | NULL       |                |
+| archive        | varchar(100) | YES  |     | NULL       |                |
+| ext_link       | varchar(150) | YES  |     | NULL       |                |
++----------------+--------------+------+-----+------------+----------------+
+
+Loaders:
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(11)     |      | PRI | NULL    | auto_increment |
+| name   | varchar(25) | YES  |     | NULL    |                |
+| email  | varchar(25) | YES  |     | NULL    |                |
+| active | int(11)     | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+
+Checkers:
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(11)     |      | PRI | NULL    | auto_increment |
+| name   | varchar(25) | YES  |     | NULL    |                |
+| email  | varchar(25) | YES  |     | NULL    |                |
+| active | int(11)     | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+
+Contacts:
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(11)     |      | PRI | NULL    | auto_increment |
+| name   | varchar(25) | YES  |     | NULL    |                |
+| email  | varchar(25) | YES  |     | NULL    |                |
+| active | int(11)     | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+
+Links:
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int(11)      |      | PRI | NULL    | auto_increment |
+| proj_id | int(11)      | YES  |     | NULL    |                |
+| name    | varchar(100) | YES  |     | NULL    |                |
+| url     | varchar(200) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+
+--------------------------------------------------------------------------
+
+Application: John Allison's JEDI
+
+Host: wind       Database: jedi
+
++--------------------+
+| Tables_in_jedi     |
++--------------------+
+| contact            |
+| data_format        |
+| dataset            |
+| dataset_project    |
+| files              |
+| format_conversions |
+| oldfiles           |
+| project            |
++--------------------+
+
+contact:
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id          | varchar(32)  |      | PRI |         |       |
+| last_name   | varchar(255) | YES  |     | NULL    |       |
+| first_name  | varchar(255) | YES  |     | NULL    |       |
+| middle_name | varchar(255) | YES  |     | NULL    |       |
+| title       | varchar(255) | YES  |     | NULL    |       |
+| affiliation | varchar(255) | YES  |     | NULL    |       |
+| address     | text         | YES  |     | NULL    |       |
+| city        | varchar(255) | YES  |     | NULL    |       |
+| state       | char(2)      | YES  |     | NULL    |       |
+| country     | varchar(255) | YES  |     | NULL    |       |
+| zip         | varchar(32)  | YES  |     | NULL    |       |
+| phone       | varchar(255) | YES  |     | NULL    |       |
+| email       | varchar(255) | YES  |     | NULL    |       |
+| fax         | varchar(255) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+
+data_format:
++--------------------+---------------+------+-----+---------+-------+
+| Field              | Type          | Null | Key | Default | Extra |
++--------------------+---------------+------+-----+---------+-------+
+| id                 | int(11)       |      | PRI | 0       |       |
+| name               | varchar(255)  |      |     |         |       |
+| record_revise_date | timestamp(14) | YES  |     | NULL    |       |
++--------------------+---------------+------+-----+---------+-------+
+
+dataset:
++--------------------+---------------+------+-----+---------------------+-------+
+| Field              | Type          | Null | Key | Default             | Extra |
++--------------------+---------------+------+-----+---------------------+-------+
+| id                 | varchar(16)   |      | PRI |                     |       |
+| name               | varchar(255)  |      | MUL |                     |       |
+| keywords           | text          | YES  |     | NULL                |       |
+| description        | text          | YES  |     | NULL                |       |
+| begin_date         | datetime      |      |     | 0000-00-00 00:00:00 |       |
+| end_date           | datetime      |      |     | 0000-00-00 00:00:00 |       |
+| minlat             | decimal(10,4) |      |     | -99.9000            |       |
+| minlon             | decimal(11,5) |      |     | -181.00000          |       |
+| maxlat             | decimal(10,4) |      |     | 99.9000             |       |
+| maxlon             | decimal(11,5) |      |     | 181.00000           |       |
+| source_agency      | varchar(16)   |      |     |                     |       |
+| displayed_contact  | varchar(16)   |      |     |                     |       |
+| source_contact     | varchar(16)   | YES  |     | NULL                |       |
+| internal_contact   | varchar(16)   |      |     |                     |       |
+| record_creator     | varchar(16)   |      |     |                     |       |
+| readme             | varchar(255)  | YES  |     | NULL                |       |
+| map                | varchar(255)  | YES  |     | NULL                |       |
+| remote_url         | varchar(255)  | YES  |     | NULL                |       |
+| user               | varchar(16)   | YES  |     | NULL                |       |
+| password           | varchar(16)   | YES  |     | NULL                |       |
+| onlineorder        | tinyint(1)    |      |     | 0                   |       |
+| offlineorder       | tinyint(1)    |      |     | 0                   |       |
+| browseable         | tinyint(1)    |      |     | 0                   |       |
+| hide               | tinyint(1)    |      |     | 0                   |       |
+| status             | varchar(16)   |      |     | unknown             |       |
+| order_module       | varchar(255)  | YES  |     | NULL                |       |
+| browse_module      | varchar(255)  | YES  |     | NULL                |       |
+| data_revise_date   | datetime      | YES  |     | NULL                |       |
+| record_revise_date | timestamp(14) | YES  |     | NULL                |       |
++--------------------+---------------+------+-----+---------------------+-------+
+
+dataset_project:
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| dataset_id | varchar(16) |      | PRI |         |       |
+| project_id | varchar(16) |      | PRI |         |       |
++------------+-------------+------+-----+---------+-------+
+
+files:
++--------------------+----------------------+------+-----+---------+----------------+
+| Field              | Type                 | Null | Key | Default | Extra          |
++--------------------+----------------------+------+-----+---------+----------------+
+| id                 | varchar(16)          |      | PRI |         |                |
+| directory          | blob                 |      | PRI |         |                |
+| filename           | blob                 |      | PRI |         |                |
+| begin              | datetime             | YES  |     | NULL    |                |
+| end                | datetime             | YES  |     | NULL    |                |
+| data_format        | int(11)              |      |     | 0       |                |
+| data_amount_kb     | int(11)              |      |     | 0       |                |
+| location           | varchar(255)         |      |     |         |                |
+| hide               | tinyint(4)           |      |     | 0       |                |
+| filekey            | bigint(20) unsigned  |      | UNI | NULL    | auto_increment |
+| data_archive_date  | timestamp(14)        | YES  |     | NULL    |                |
+| record_revise_date | timestamp(14)        | YES  |     | NULL    |                |
++--------------------+----------------------+------+-----+---------+----------------+
+
+format_conversions:
++--------------------+------------------------+------+-----+---------+-------+
+| Field              | Type                   | Null | Key | Default | Extra |
++--------------------+------------------------+------+-----+---------+-------+
+| id                 | varchar(16)            |      | MUL |         |       |
+| source_format      | int(11)                |      |     | 0       |       |
+| target_format      | int(11)                |      |     | 0       |       |
+| expansion_factor   | decimal(4,1)           |      |     | 1.0     |       |
+| command            | varchar(255)           |      |     |         |       |
+| ftp_mode           | enum('binary','ascii') |      |     | binary  |       |
+| record_revise_date | timestamp(14)          | YES  |     | NULL    |       |
++--------------------+------------------------+------+-----+---------+-------+
+
+project:
++--------------------+---------------+------+-----+---------------------+-------+
+| Field              | Type          | Null | Key | Default             | Extra |
++--------------------+---------------+------+-----+---------------------+-------+
+| id                 | varchar(16)   |      | PRI |                     |       |
+| name               | varchar(255)  |      |     |                     |       |
+| description        | text          | YES  |     | NULL                |       |
+| begin_date         | datetime      |      |     | 0000-00-00 00:00:00 |       |
+| end_date           | datetime      |      |     | 0000-00-00 00:00:00 |       |
+| minlat             | decimal(10,4) |      |     | -99.9000            |       |
+| minlon             | decimal(11,5) |      |     | -181.00000          |       |
+| maxlat             | decimal(10,4) |      |     | 99.9000             |       |
+| maxlon             | decimal(11,5) |      |     | 181.00000           |       |
+| map                | varchar(255)  | YES  |     | NULL                |       |
+| url                | varchar(255)  | YES  |     | NULL                |       |
+| internal_contact   | varchar(16)   |      |     |                     |       |
+| parent             | varchar(16)   | YES  |     | NULL                |       |
+| hide               | tinyint(1)    |      |     | 0                   |       |
+| record_revise_date | timestamp(14) | YES  |     | NULL                |       |
++--------------------+---------------+------+-----+---------------------+-------+
+
+--------------------------------------------------------------------------
+
+Application: Zinc (future CODIAC)
+
+Host: hurricane   Database: zinc
+
++----------------+
+| Tables_in_zinc |
++----------------+
+| user           |
++----------------+
+
+user:
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| id           | varchar(31)  |      | PRI |         |       |
+| display_name | varchar(31)  |      | MUL |         |       |
+| email        | varchar(255) |      |     |         |       |
+| active       | tinyint(1)   |      |     | 1       |       |
+| first_name   | varchar(255) | YES  |     | NULL    |       |
+| middle_name  | varchar(255) | YES  |     | NULL    |       |
+| last_name    | varchar(255) | YES  |     | NULL    |       |
+| mr_mrs_etc   | varchar(7)   | YES  |     | NULL    |       |
+| job_title    | varchar(255) | YES  |     | NULL    |       |
+| affiliation  | varchar(255) | YES  |     | NULL    |       |
+| address      | text         | YES  |     | NULL    |       |
+| city         | varchar(255) | YES  |     | NULL    |       |
+| state        | char(2)      | YES  |     | NULL    |       |
+| zip          | varchar(31)  | YES  |     | NULL    |       |
+| country      | varchar(255) | YES  |     | NULL    |       |
+| phone        | varchar(63)  | YES  |     | NULL    |       |
+| fax          | varchar(63)  | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+
+--------------------------------------------------------------------------
+
+Application: NATTAP v2.0 testing DB
+
+Host: hurricane  Database: nattap
+
++------------------+
+| Tables_in_nattap |
++------------------+
+| category         |
+| dataset          |
+| dscatlink        |
+| project          |
+| user             |
++------------------+
+
+project:
++------------+--------------+------+-----+------------+-------+
+| Field      | Type         | Null | Key | Default    | Extra |
++------------+--------------+------+-----+------------+-------+
+| name       | varchar(15)  |      | PRI |            |       |
+| begin_date | date         | YES  |     | 0000-00-00 |       |
+| end_date   | date         | YES  |     | 0000-00-00 |       |
+| minlat     | float(10,2)  | YES  |     | NULL       |       |
+| maxlat     | float(10,2)  | YES  |     | NULL       |       |
+| minlon     | float(10,2)  | YES  |     | NULL       |       |
+| maxlon     | float(10,2)  | YES  |     | NULL       |       |
+| prefix     | varchar(10)  | YES  |     | NULL       |       |
+| charge_num | varchar(100) | YES  |     | NULL       |       |
+| notes      | text         | YES  |     | NULL       |       |
+| active     | int(11)      | YES  |     | NULL       |       |
++------------+--------------+------+-----+------------+-------+
+
+dataset:
++----------------+--------------+------+-----+------------+-------+
+| Field          | Type         | Null | Key | Default    | Extra |
++----------------+--------------+------+-----+------------+-------+
+| storm_id       | varchar(15)  |      | PRI |            |       |
+| title          | varchar(200) | YES  |     | NULL       |       |
+| project        | varchar(15)  |      |     |            |       |
+| date           | date         | YES  |     | 0000-00-00 |       |
+| loader         | varchar(15)  |      |     |            |       |
+| checker        | varchar(15)  |      |     |            |       |
+| int_contact    | varchar(15)  |      |     |            |       |
+| ext_contact    | varchar(25)  | YES  |     | NULL       |       |
+| ext_email      | varchar(25)  | YES  |     | NULL       |       |
+| readme         | int(11)      | YES  |     | 0          |       |
+| checked        | int(11)      | YES  |     | 0          |       |
+| loaded         | int(11)      | YES  |     | 0          |       |
+| ingest         | varchar(100) | YES  |     | NULL       |       |
+| archive        | varchar(100) | YES  |     | NULL       |       |
+| notes          | text         | YES  |     | NULL       |       |
+| dln_date       | date         | YES  |     | 0000-00-00 |       |
+| remote_url     | varchar(150) | YES  |     | NULL       |       |
+| author         | varchar(100) | YES  |     | NULL       |       |
+| comments       | varchar(255) | YES  |     | NULL       |       |
+| doc_url        | varchar(150) | YES  |     | NULL       |       |
+| ml_date        | date         | YES  |     | 0000-00-00 |       |
+| ml_post        | int(11)      | YES  |     | 0          |       |
+| ml_active      | int(11)      | YES  |     | 0          |       |
+| ml_in_progress | int(11)      | YES  |     | 0          |       |
++----------------+--------------+------+-----+------------+-------+
+
+category:
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int(11)     |      | PRI | NULL    | auto_increment |
+| name    | varchar(50) | YES  |     | NULL    |                |
+| abrv    | varchar(20) | YES  |     | NULL    |                |
+| parent  | int(11)     | YES  |     | NULL    |                |
+| project | varchar(15) |      |     |         |                |
++---------+-------------+------+-----+---------+----------------+
+
+dscatlink:
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| category | int(11)     |      |     | 0       |       |
+| storm_id | varchar(15) |      |     |         |       |
++----------+-------------+------+-----+---------+-------+
+
+user:
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| name    | varchar(32)  |      | PRI |         |       |
+| email   | varchar(100) | YES  |     | NULL    |       |
+| active  | int(11)      | YES  |     | 1       |       |
+| loader  | int(11)      | YES  |     | 1       |       |
+| checker | int(11)      | YES  |     | 1       |       |
+| contact | int(11)      | YES  |     | 1       |       |
++---------+--------------+------+-----+---------+-------+
+
+--------------------------------------------------------------------------
+
+Application: Arctic Master List
+
+Host: thunder  Database: master_list
+
++-----------------------+
+| Tables_in_master_list |
++-----------------------+
+| ColorScheme           |
+| DataType              |
+| Discipline            |
+| List                  |
+| ListProjects          |
+| Platform              |
+| Site                  |
++-----------------------+
+
+ListProjects:
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     |      | PRI | NULL    | auto_increment |
+| name  | varchar(20) | YES  |     | NULL    |                |
+| notes | text        | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+
+List:
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| id            | int(11)      |      | PRI | NULL    | auto_increment |
+| storm_id      | varchar(15)  | YES  |     | NULL    |                |
+| title         | varchar(150) | YES  |     | NULL    |                |
+| date          | date         | YES  |     | NULL    |                |
+| author        | varchar(100) | YES  |     | NULL    |                |
+| doc_url       | varchar(200) | YES  |     | NULL    |                |
+| data_type_id  | int(11)      | YES  |     | NULL    |                |
+| discipline_id | int(11)      | YES  |     | NULL    |                |
+| platform_id   | int(11)      | YES  |     | NULL    |                |
+| site_id       | int(11)      | YES  |     | NULL    |                |
+| proj_id       | int(11)      |      | MUL | 0       |                |
+| comments      | varchar(255) | YES  |     | NULL    |                |
+| url           | varchar(200) | YES  |     | NULL    |                |
+| phase         | varchar(50)  | YES  |     | NULL    |                |
+| start_year    | int(11)      | YES  |     | NULL    |                |
+| end_year      | int(11)      | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+
+DataType:
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      |      | PRI | NULL    | auto_increment |
+| name        | varchar(100) | YES  |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
+| proj_id     | int(11)      | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
+Platform:
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      |      | PRI | NULL    | auto_increment |
+| name        | varchar(100) | YES  |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
+| proj_id     | int(11)      | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
+Site:
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      |      | PRI | NULL    | auto_increment |
+| name        | varchar(100) | YES  |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
+| proj_id     | int(11)      | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
+Discipline:
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      |      | PRI | NULL    | auto_increment |
+| name        | varchar(100) | YES  |     | NULL    |                |
+| description | text         | YES  |     | NULL    |                |
+| proj_id     | int(11)      | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
+ColorScheme:
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | int(11)     |      | PRI | NULL    | auto_increment |
+| proj_id    | int(11)     |      |     | 0       |                |
+| title      | varchar(15) | YES  |     | NULL    |                |
+| text       | varchar(15) | YES  |     | NULL    |                |
+| link       | varchar(15) | YES  |     | NULL    |                |
+| alink      | varchar(15) | YES  |     | NULL    |                |
+| vlink      | varchar(15) | YES  |     | NULL    |                |
+| headers    | varchar(15) | YES  |     | NULL    |                |
+| title_bg   | varchar(15) | YES  |     | NULL    |                |
+| head_bg    | varchar(15) | YES  |     | NULL    |                |
+| background | varchar(15) | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+

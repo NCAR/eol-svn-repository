@@ -1,0 +1,38 @@
+#Maby Change These... :-)
+
+#Use dataset:dataset_id but replace .001 with .002
+dataset_id=->dataset2;/.\.009->.010
+#Use name from dataset but replace NetCDF with GENPROII
+name=->dataset2;/.NetCDF->GENPROII
+description=->dataset2;/.NetCDF->GENPROII
+referenced_dataset_id=->dataset:dataset_id
+hide=1
+
+#STATIC
+reference_type="superceded_by"
+
+#INHERITED (Everything from the other dataset..)
+begin_date=->dataset2
+end_date=->dataset2
+minlat=->dataset2
+maxlat=->dataset2
+minlon=->dataset2
+maxlon=->dataset2
+spatial_type=->dataset2
+displayed_contact_id=->dataset2
+source_contact_id=->dataset2
+internal_contact_id=->dataset2
+auth_reqd=->dataset2
+eula_reqd=->dataset2
+onlineorderable=->dataset2
+offlineorderable=->dataset2
+browseable=->dataset2
+dodsable=->dataset2
+is_eol_data=->dataset2
+category_id=->dataset2
+platform_id=->dataset2
+project_id=->dataset2
+t_subset=->dataset2
+event_subset=->dataset2
+order_allow_compress=->dataset2
+#add_xlink_where=->dataset2

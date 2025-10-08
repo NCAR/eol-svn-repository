@@ -1,0 +1,20 @@
+#plot_converted_data.pl qcf -P BAMEX -t 2003/05/20 2003/07/06 -o LDM -d /work/BAMEX_PROCESSING/LDMSFCMETR/ASOScode/final-0qc/hrly/nominals/LDM*0qc* -s 11R 11J 11A
+#plot_converted_data.pl qcf -P BAMEX -t 2003/05/20 2003/07/06 -o LDM -d /work/BAMEX_PROCESSING/LDMSFCMETR/ASOScode/final-0qc/hrly/nominals/LDM*0qc* -s 11R 11J -c
+#plot_converted_data.pl qcf -P BAMEX -t 2003/05/20 2003/07/06 -o LDM -d /work/BAMEX_PROCESSING/LDMSFCMETR/ASOScode/final-0qc/hrly/nominals/LDM*0qc* -s 11R 11J -m
+#plot_converted_data.pl qcf -P BAMEX -t 2003/05/20 2003/07/06  -d /work/BAMEX_PROCESSING/IA_SCHOOLNET/hourly/output/dayfiles/IA_SCHOOLNET60*0qc -k
+plot_converted_data.pl qcf -P BAMEX -t 2003/05/20 2003/07/06  -d /work/BAMEX_PROCESSING/IA_SCHOOLNET/hourly/output/dayfiles/IA_SCHOOLNET60*0qc -k -c -s SWAI4 -l-o plots
+#
+#plot_converted_data.pl sfc -P CEOP -t 2002/10/01 2003/03/31 -o sfc/BALTEX/first_half -d /ingest/CEOP/EOP3/BALTEX/cabauw/BALTEX_Cabauw_Cabauw_20021001_20030331.sfc
+#plot_converted_data.pl sfc -P CEOP -t 2002/10/01 2003/03/31 -o sfc/BALTEX/first_half -s Cabauw -c
+#
+#plot_converted_data.pl flx -P CEOP -t 2002/10/01 2003/03/31 -o flx/BALTEX/first_half -d /ingest/CEOP/EOP3/BALTEX/cabauw/BALTEX_Cabauw_Cabauw_20021001_20030331.flx
+#plot_converted_data.pl flx -P CEOP -t 2002/10/01 2003/03/31 -o flx/BALTEX/first_half -s Cabauw -c
+#plot_converted_data.pl flx -P CEOP -t 2002/10/01 2003/03/31 -o flx/BALTEX/first_half -s Cabauw -m
+#
+#plot_converted_data.pl stm -P CEOP -t 2002/10/01 2003/03/31 -o stm/BALTEX/first_half -d /ingest/CEOP/EOP3/BALTEX/cabauw/BALTEX_Cabauw_Cabauw_20021001_20030331.stm
+#plot_converted_data.pl stm -P CEOP -t 2002/10/01 2003/03/31 -o stm/BALTEX/first_half -s Cabauw -c
+#plot_converted_data.pl stm -P CEOP -t 2002/10/01 2003/03/31 -o stm/BALTEX/first_half -s Cabauw -m
+#
+#plot_converted_data.pl twr -P CEOP -t 2002/10/01 2003/03/31 -o twr/BALTEX/first_half -d /ingest/CEOP/EOP3/BALTEX/cabauw/BALTEX_Cabauw_Cabauw_20021001_20030331.twr
+#plot_converted_data.pl twr -P CEOP -t 2002/10/01 2003/03/31 -o twr/BALTEX/first_half -s Cabauw -c
+#plot_converted_data.pl twr -P CEOP -t 2002/10/01 2003/03/31 -o twr/BALTEX/first_half -s Cabauw -m

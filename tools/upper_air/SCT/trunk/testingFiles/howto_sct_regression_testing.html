@@ -1,0 +1,185 @@
+<html>
+<head>
+<title>How To: Test SCT</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: SCT Regression Test</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+	<li><a href="#desc">Description</a></li>
+        <li><a href="#files">Files Included in this Directory</a></li>
+        <li><a href="#test">Testing SCT</a>
+            <ol> 
+			<li><a href="#before">Before Testing</a></li>     		
+           	 	<li><a href="#single">Single File</a></li>
+ 			<li><a href="#five">Five Files</a></li>
+			<li><a href="#drop">Dropsondes Plotted Against Time</a></li>
+			<li><a href="#sameMult">Same File Multiple Times</a></li>
+			<li><a href="#sameName">Two Files with the Same Name</a></li>
+			<li><a href="#difNames">Same Data in Files with Different Names</a></li>
+			<li><a href="#uncont">Multiple-Sounding File with Separate Single-Sounding File</a></li>
+			<li><a href="#cont">Single-Sounding File and Multiple-Sounding File containing the Same Data</a></li>
+			<li><a href="#empty">An Empty File</a></li>
+			<li><a href="#incomplete">An Incomplete File</a></li>
+			<li><a href="#after">After Testing</a></li>
+            </ol>
+      </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+	<p>This document contains instructions for testing the Sounding Comparison Tool (SCT). For more information on the software itself, see howto_sounding_comparison.html or SCT_report.pdf. All code and documentation can be found in the DMG SVN repository at <a class="external-link" href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Ftools%2Fupper_air%2FSCT%2Ftrunk%2FtestingFiles%2F#_tools_upper_air_SCT_trunk_testingFiles_">dmg/tools/upper_air/SCT/testingFiles</a>.</p>
+</div>
+
+<a href="#">Top</a><hr />
+<a name = "desc"></a><h2>Description</h2>
+<div class = "block">
+	<p>The purpose of the Sounding Comparison Software is to allow a user to compare the data from up to five soundings which must be formatted in the NCAR EOL Sounding Composite (ESC) format. The data from these five soundings is plotted in the following colors (in order): red, green, blue, purple, and cyan. It would be used by scientific staff to view plots of temperature, relative humidity, wind speed, wind direction, ascension rate, longitude, latitude, U wind and V wind vs. pressure, time, and altitude. This allows for improved sounding quality control processing. The software displays five small plots, but also allows the user to pick one plot to view larger. See SCT_report.pdf for a more detailed write-up. </p>
+
+</div>
+
+<a href="#">Top</a><hr />
+<a name="files"></a><h2>Files Contained in this Directory</h2>
+<p> This directory, testingFiles, contains a number of files necessary in order to adequately test the SCT. These files (plus the SCT code) can be found in the DMG SVN repository here:  <a class="external-link" href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Ftools%2Fupper_air%2FSCT%2Ftrunk%2FtestingFiles%2F#_tools_upper_air_SCT_trunk_testingFiles_">dmg/tools/upper_air/SCT/testingFiles</a>
+<div class = "block">
+	<p>This file (howto_sct_regression_testing.html)-An explanation on how to test the software</p>
+	<p><span class="softwareName">data.txt</span>-A single-sounding file with the wrong suffix</p>
+	<p><span class="softwareName">emptyFile.cls</span>-An empty file</p>
+	<p><span class="softwareName">incompleteFile.cls</span>- A single-sounding data file which ends mid-line</p>
+	<p><span class="softwareName">sgp_C1_ARM_20100518.cls</span>-A data file containing multiple soundings<p>
+	<p><span class="softwareName">sgp_C1_ARM_20100518-05.31.00.cls</span>- A single-sounding data file</p>
+	<p><span class="softwareName">sgp_C1_ARM_20100518-11.26.00.cls</span>- A single-sounding data file</p>
+	<p><span class="softwareName">sgp_C1_ARM_20100518-17.29.00.cls</span>- A single sounding data file containing the same data as <span class="softwareName">sgp_C1_ARM_20100518-05.31.00.cls</span></p>
+	<p><span class="softwareName">sgp_C1_ARM_20100518-23.32.00.cls</span>- A single-sounding data file</p>
+	<p><span class="softwareName">WEST_TEXAS_MESONET_20100518.cls</span>- A single-sounding data file missing wind speed and wind direction data</p>
+	<p><span class="softwareName">WEST_TEXAS_MESONET_20100606.cls</span>- A single-sounding data file missing wind speed and wind direction data</p>
+	<p><span class="softwareName">WEST_TEXAS_MESONET_20100614.cls</span>- A single-sounding data file</p>
+	<p><span class="softwareName">USAF_C130_AF307_20100922022717.cls</span>- A single-dropsonde data file</p>
+	<p><span class="softwareName">USAF_C130_AF307_20100922023411.cls</span>- A single-dropsonde data file</p>
+	<p><span class="softwareName">USAF_C130_AF307_20100922024427.cls</span>- A single-dropsonde data file</p>
+	<p>additionalData/<span class="softwareName">sgp_C1_ARM_20100518-11.26.00.cls</span>- A single sounding data file with the same name as another file, but containing different data</p>
+	<p><span class="softwareName">images</span> directory- Contains all the images displayed in this document
+</div>
+
+<a href="#">Top</a><hr />
+
+<a name="test"></a><h2>Testing SCT</h2>
+<div class="block">
+<a name="before"></a><h3>Before Starting the Software</h3>
+	<ol>
+	<p>Type "ls" in the command line (without the quotes). Note the names of the files which appear. These should match the names of the files listed above. To test the functionality of the SCT, run each of the following test cases and note the expected outcome of each test.</p>
+	</ol>
+<a name="single"></a><h3>Test Case 1: A Single File</h3>
+	<ol>
+	<li><p>Start SCT. An explanation of this is given in howto_sct.html</p></li>
+	<img src="images/tc1-0.png" alt="There should be a picture here" />
+	<li><p>Click the "Open" button and try to open <span class="softwareName">data.txt</span>. If <span class="softwareName">SCT_DataFilter.java</span> is working properly, it should not appear in the JFileChooser. This is because it filters the data so only .cls and .qc files are immediately visible.</p></li>
+	<li><p>Open <span class="softwareName">WEST_TEXAS_MESONET_20100614.cls</span>. This file is a typical data file without too many missing data values. The filepath, name, data type and project ID should appear in red in the left side of the header. The "Clear" button, "Y variable" dropdown menu and "Plot" button should have appeared on the right side of the header.</p></li>
+	<img src="images/tc1-1.png" alt="There should be a picture here" />
+	<li><p> "Y variable" dropdown menu and "Plot" button should have appeared on the right side of the header. Make sure the drop down menu on the right side says "Pressure", then select the "Plot" button. The "Open" button should disappear, and the zoom menu and button should show up on the right side of the header (where the plot button and y-variable menu had been). Five plots should appear each with a red plot, labeled axes, and a title. These plots should be of temperature, relative humidity, wind speed, wind direction and ascension rate vs. pressure. Notice that the y-axes are all reversed, with the greatest value closest to the x-axis.</p></li>
+	<img src="images/tc1-2.png" alt"There should be a picture here" />
+	<li><p>Press the "More Plots" button. Four different plots (of longitude, latitude, U wind and V wind) should replace the other five plots. Note that these four options are the only options visible in the zoom menu. Press "More Plots" again and return to the original plot view. The zoom menu should now contain temperature, relative humidity, wind speed, wind direction, and ascension rate.</p></li>
+	<li><p>Use the zoom menu and button.<br/><img src="images/tc1-3.png" alt="" /><br/> A full screen graph should appear. Press the "Exit" button in the top center of the zoom view, then press the "Clear" button in the upper right to move on to the next set of datafiles. The interface should reset to as it was when the program was initialized.</p></li>
+</ol>
+<a name="five"></a><h3>Test Case 2: Five Files</h3>
+	<ol>
+	<li><p>Open the following files (in order): <span class="softwareName">sgp_C1_ARM_20100518-05.31.00.cls</span>,<span class="softwareName"> sgp_C1_ARM_20100518-11.26.00.cls</span>, <span class="softwareName">sgp_C1_ARM_20100518-23.32.00.cls</span>, <span class="softwareName">WEST_TEXAS_MESONET_20100606.cls</span>, <span class="softwareName">WEST_TEXAS_MESONET_20100614.cls</span>. These are just ordinary single-sounding .cls files. Once the fifth dataset is chosen, the "Open" button should disappear.</p></li>
+	<img src="images/tc2-1.png" alt="The should be a picture here" />
+	<li><p>Plot with Time (upsonde) on the y-axis. Note that the colors of the datafile names in the header are red, green, blue, purple and cyan. These should correspond with the colors on the plots. Notice that the file information neatly fits into the header. Each file's information has wrapped text. This should fit properly no matter what the screen resolution is. Also note that there are no purple data points in the Wind Speed or Wind Direction plots. This indicates that the program is properly handling missing data, since <span class="softwareName">WEST_TEXAS_MESONET_20100606.cls</span> is missing all wind speed and wind direction data.</p></li>
+	<img src="images/tc2-2.png" alt=" There should be a picture here" />
+	<li><p>In the zoom view, the colors should stand out less. This is because the full screen plot are actually separately generated files. The data markers are the same size as on the small plots, so the colors are less concentrated on the larger graph. </p></li>
+	<img src="images/tc2-3.png" alt="There should be a picture here" />
+	<li><p>Clear the plot and proceed to the next set of files.</p></li>
+	</ol>
+<a name="drop"></a><h3>Test Case 3: Dropsondes Plotted Against Time</h3>
+	<ol>
+	<li><p>Open<span class="softwareName"> USAF_C130_AF307_20100922022717.cls</span>, <span class="softwareName">USAF_C130_AF307_20100922023411.cls</span>, and <span class="softwareName">USAF_C130_AF307_20100922024427.cls</span>. These are dropsonde files.</p></li>
+	<li><p>Select "Time (Dropsonde)" from the plot menu and plot. The plots should appear with the y-axis inverted, with 0 at the top. These graphs, as well as those generated in the other test cases, should all be scaled properly to the data. If there is a scaling issue, this most likely indicates that missing data values are not being handled properly.</p></li>
+	<img src="images/tc3-1" alt="There should be a picture here" />
+	<li><p>Clear the plot and continue testing</p></li>
+	</ol>
+<a name="sameMult"></a><h3>Test Case 4: Same File Entered Multiple Times</h3>
+	<ol>
+	<li><p>Open <span class="softwareName">sgp_C1_ARM_20100518-05.31.00.cls</span></p></li>
+	<li><p>Open a second file and select the same file again.</p></li>
+	<li><p>Plot the data against altitude. Though both files are visible in the header, the red data should mostly not be visible on the plots.</p></li>
+	<img src="images/tc4-1.png" alt="There should be a picture here" />
+	<li><p>Zoom in on one of them. In the legend in the upper right corner, the red data point should be labeled <span class="softwareName">sgp_C1_ARM_20100510-05.31.00.sct</span> and the green data point should be labeled <span class="softwareName">sgp_C1_ARM_20100510-05.31.001.sct</span>. The addition of the integer at the end of the repeated file's name is there because two different new datasets were written by the program, and they need different names. The integer system is imperfect, though, as demonstrated below.</p></li>	
+	<img src="images/tc4-2.png" alt="There should be a picture here" />
+	<li><p>Clear the plots and open, in this order,  <span class="softwareName">sgp_C1_ARM_20100518-05.31.00.cls</span>, <span class="softwareName"> sgp_C1_ARM_20100518-05.31.00.cls</span>, <span class="softwareName">sgp_C1_ARM_20100518-05.31.00.cls</span>, <span class="softwareName">sgp_C1_ARM_20100518-11.26.00.cls</span>, <span class="softwareName">sgp_C1_ARM_20100518-11.26.00.cls</span>. The resulting plots should only have blue and cyan data visible. This is because the same files will plot on top of itself, so only the last instance of each file is visible.</p></li>
+	<img src="images/tc4-3.png" alt="There should be a picture here" />
+	<li><p>Still, when zooming in, the red data is <span class="softwareName">sgp_C1_ARM_20100518-05.31.00.cls</span>, the green data is <span class="softwareName">sgp_C1_ARM_20100518-05.31.001.cls</span>, the blue data is <span class="softwareName">sgp_C1_ARM_20100518-05.31.002.cls</span>, the purple data is <span class="softwareName">sgp_C1_ARM_20100518-11.26.00.cls</span>, and the cyan data is <span class="softwareName">sgp_C1_ARM_20100518-11.26.003.cls</span>. The numbers increase for any repeated file, even if it is not always the same file which is being repeated (multiple files could be repeated). The number values added to make unique file names increase for any repeated file. This system of renaming a file with the same name was implemented so that two files with the same name could both be plotted. 
+<br/><img src="images/tc4-4.png" alt="There should be a picture here" />
+</p></li>
+	</ol>
+<a name="sameName"></a><h3>Test Case 5: Two Files with the Same Name</h3>
+	<ol>
+	<li><p>Open <span class="softwareName">sgp_C1_ARM_20100518-11.26.00.cls</span>, and then open the file with the same name contained within the additionalData folder within the same directory.</p></li>
+	<li><p>Plot these files. Both red and green data should be visible</p></li>
+	<img src="images/tc5-1.png" alt="There should be a picture here" />
+	<li><p>Zoom in on one of the plots. The legend in the zoom view should have a 1 appended to the filename for the green data. This is done so that the intermediate data file for the second data file does not overwrite that of the first data file (which would be bad, especially if they contain different data).</p></li>
+	<img src="images/tc5-2.png" alt="There should be a picture here" />
+	<li><p>Clear the plot</p></li>
+	</ol>
+<a name="difNames"></a><h3>Test Case 6: Same Data in Files with Different Names</h3>
+	<ol>
+	<li><p>Open <span class="softwareName">sgp_C1_ARM_20100518-05.31.00.cls</span> and <span class="softwareName">sgp_C1_ARM_20100518-17.29.00.cls</span>. These two files contain the same data.</p></li>
+	<li><p>Plot these files. Since they contain the file, only a green plot should appear. Since both files contain the same data, the data will be plotted on top of each other and only the second plot (green) will be visible.</p></li>
+	<img src="images/tc6-1.png" alt="There should be a picture here" />
+	<li><p>Zoom in on one of the plots. Both full file names should appear in the legend</p></li>
+	<img src="images/tc6-2.png" alt="There  should be a picture here" />
+	<li><p>Exit and clear</p></li>
+	</ol>
+<a name="uncont"></a><h3>Test Case 7: Multiple-Sounding File with a Separate Single-Sounding File</h3>
+	<ol>
+	<li><p>Open and plot <span class="softwareName">sgp_C1_ARM_20100518.cls</span> along with <span class="softwareName">WEST_TEXAS_MESONET_20100614.cls</span>. The former is a file containing data from multiple soundings. The latter is an ordinary data file, the data from which is not included in <span class="softwareName">sgp_C1_ARM_20100518.cls</span>.</p></li>
+	<li><p>Plot the files. They should plot just like any two unrelated single-sounding datafiles, except the file with multiple soundings contains more data than normal (which is all plotted in the same color).</p></li>
+	<img src="images/tc7-1.png" alt="There should be a picture here" />
+	<li><p>Clear the plot</p></li>
+	</ol>
+<a name="cont"></a><h3>Test Case 8: Single-Sounding File and Multiple-Sounding File Containing the Same Data</h3>
+	<ol>
+	<li><p>Open and plot <span class="softwareName">sgp_C1_ARM_20100518.cls</span> and <span class="softwareName">sgp_C1_ARM_20100518-11.26.00.cls</span>, the data from which is included in the former. Both red and green data should appear because the green data is being plotted on top of the red data. </p></li>
+	<img src="images/tc8-1.png" alt="There should be a picture here" />
+	<li><p>Clear the plot and open the same two data files in the opposite order. The generated plots will only contain green data because the <span class="softwareName">sgp_C1_ARM_20100518.cls</span> data will cover the <span class="softwareName">sgp_C1_ARM_20100518-11.26.00.cls</span> data. Clear the plots.</p></li>
+	<img src="images/tc8-2.png" alt="There should be a picture here" />
+	</ol>
+<a name="empty"></a><h3>Test Case 9: An Empty File</h3>
+	<ol>
+	<li><p>Open <span class="softwareName">emptyFile.cls</span>, along with any four other files from this directory that have been used in previous tests. </p></li>
+	<li><p>Press the "Plot" button. This should cause a pop-up window to appear, which says that a valid file must be selected</p></li>
+	<img src="images/tc9-1.png" alt="There should be a picture here" />
+	<li><p> Press the "Clear" button on the pop-up, and the interface should return to the same state it was in immediately after start-up.</p></li>
+	</ol>
+<a name="incomplete"></a><h3>Test Case 10: An Incomplete File</h3>
+	<ol>
+	<li><p>Open <span class="softwareName">incompleteFile.cls</span> either by itself or with other files.</p></li>
+	<li><p>Press the "Plot" button. The same pop-up should appear as when opening an empty file.</p></li>
+	<img src="images/tc10-1.png" alt="There should be a picture here" />
+	<li><p>Select the "Quit" button and the program should exit
+	</ol>
+<a name="after"></a><h3>After Testing</h3>
+	<p>Type 'ls' in the command line while in the directory where the code is being run. The user should see the exact same list of files as displayed prior to beginning testing. </p>
+
+
+<a href="#">Top</a><hr />
+
+<hr>
+
+<p class="foot">Revision History:</p>
+<table class="revhistory">
+	<tr>
+	    <td>22-25 July 2011</th>
+		<td>Monica Jacobs</td>
+	</tr>
+</table>  
+
+
+</body>
+</html>

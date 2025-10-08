@@ -1,0 +1,43 @@
+The files in this directory are used to generate
+plots comparing the raw data with the output
+data from the conversion script. 
+------------------------------------
+create_plot.pl creates a column of data from both the raw and 
+converted data files, creates and runs a gnuplot script
+which puts the output png files in the directory specified
+by the -i option
+USAGE: create_plot.pl
+	-n: name of network (gndrad, mettwr2h, mettwr4h..etc)
+	-p: parameter name (as found in raw data file)
+	-d: directory where the raw (.dat) files reside
+	-o: name of output file (converted data)
+	-t: time interval (minutes)
+	-i: image directory (where the png files will reside)
+------------------------------------
+create_html.pl generates thumbnail images and creates
+the html page (as specified by the -o option) that
+contains the thumbnail images
+USAGE: create_html.pl
+	-s: station id (ie: C1, C2..etc) 
+	-p: plot directory (where the plots reside)
+	-b: date begin (YYYYMMDD)
+	-e: date end (YYYYMMDD)
+	-o: output html filename
+------------------------------------
+To run separately:
+
+Run create_plot.pl on each parameter name for the specified station.
+Once, create_plot.pl has been run on all the parameters,
+then run create_html.pl
+------------------------------------
+To run once, use the wrapper script that runs create_plots.pl for
+each parameter and then runs create_html.pl to create the html
+USAGE: create_plots.pl
+	-n: name of network (gndrad, mettwr2h, mettwr4h..etc)
+	-d: directory where the raw (.dat) files reside
+	-o: name of output file (converted data)
+	-t: time interval (minutes)
+	-i: image directory (where the png files will reside)
+NOTE: this script has not yet been tested so use at your own risk!!
+------------------------------------
+see *.runit for examples of how to run these scripts

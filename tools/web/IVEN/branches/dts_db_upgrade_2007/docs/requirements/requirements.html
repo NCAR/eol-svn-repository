@@ -1,0 +1,183 @@
+<html>
+<body>
+<h1>IVEN Requirements<h1>
+
+<h2>Required Information</h2>
+<h3>Project</h3>
+<ul>
+   <li>Project ID</li>
+   <li>Title</li>
+   <li>Active Flag</li>
+   <li>Dataset Prefix</li>
+   <li>Lat/Lon Box</li>
+   <li>Start & End dates</li>
+   <li>Charge Number</li>
+   <li>Set of Notes</li>
+</ul>
+
+<h3>Products</h3>
+<p>A product can be either a <i>Composite</i> dataset or a Group.</p>
+<ul>
+   <li>Product Id</li>
+   <li>Title</li>
+   <li>Status</li>
+   <li>Set of Datasets<ul>
+      <li>Excluded Flag</li>
+      </ul></li>
+   <li>Set of Notes</li>
+</ul>
+
+<h3>Dataset</h3>
+<ul>
+   <li>Dataset Id</li>
+   <li>Title</li>
+   <li>Process Contact</li>
+   <li>Status</li>
+   <li>Work Directory</li>
+   <li>Final Data Directory</li>
+   <li>Plot Link</li>
+   <li>Repository Directory</li>
+   <li>Station List</li>
+   <li>How To Link</li>
+   <li>Set of Docs for the Dataset</li>
+   <li>Set of Source Datasets<ul>
+      <li>Source Dataset Id</li>
+      <li>Source Title</li>
+      <li>Set of Source Docs</li>
+      <li>UTC Offset of Source Data</li>
+      <li>DST Flag for Source Data</li>
+      <li>Collection Time of Source Data</li>
+      <li>Source of Time Info for Source Data</li>
+      <li>Set of Source Notes</li>
+      </ul></li>
+   <li>Set of Processing Notes</li>
+   <li>Set of Associated Products</li>
+</ul>
+
+<h3>Notes</h3>
+<ul>
+   <li>Note Id</li>
+   <li>Author</li>
+   <li>Timestamp</li>
+   <li>Text</li>
+</ul>
+
+<h3>Other Needs</h3>
+<ul>
+   <li>List of Users that can be assigned a task (must be able to handle users that are no longer active)</li>
+   <li>List of Statuses that can be assigned to a task</li>
+</ul>
+
+<h2>Required Views</h2>
+<ul>
+   <li>List of Active Projects<ul>
+      <li>Displays all active projects with the project id, and full name of the project.</li>
+      </ul></li>
+   <li>Project Summary<ul>
+      <li>Displays general project information including: start/end dates, lat/lon box, charge number, dataset prefix, etc.</li>
+      <li>Displays a table of the products displaying the name, status, progress bar of product datasets, excluded dataset count, and total dataset count.</li>
+      <li>Displays an expanded list of products with the title, status, and all associated datasets with their name, process contact, and status.</li>
+      </ul></li>
+   <li>Group Summary<ul>
+      <li>Displays general project information for the group including: start/end dates, lat/lon box, charge number, dataset prefix, etc.</li>
+      <li>Displays the group title, status, and the list of notes.</li>
+      <li>Displays the list of datasets in the group including the title and dataset notes.</li>
+      </ul></li>
+   <li>Dataset Summary (Includes Composite)<ul>
+      <li>Displays general project information for the dataset including: start/end dates, lat/lon box, charge number, dataset prefix, etc.</li>
+      <li>Displays the dataset title, status, processing contact, work directory, final data directory, plot link, repository directory, station list, how to link, list of dataset readmes, list of source information (title, readmes, UTC offset, DST Flag, collection time, and source of time information), and the set of notes.</li>
+      <li>Displays the list of source dataset used for creating the dataset.</li>
+      <li>Displays the list of associated products.</li>
+      </ul></li>
+</ul>
+
+<h2>Required Functionality</h2>
+<ul>
+   <li>General Functionality<ul>
+      <li>Dataset ids must be unique as defined by the data archive system.</li>
+      <li>All changes to a dataset must be applied to all projects and products associated with the dataset.</li>
+      </ul></li>
+   <li>Updating Project Notes<ul>
+
+      </ul></li>
+   <li>Creating a new Group<ul>
+      <li>Defines the following fields for the Group<ul>
+         <li>Group Name (Must be unique for the project set by tool using the currently selected project)</li>
+         <li>Status</li>
+         <li>Set of Notes for the group</li>
+         </ul></li>
+      <li>Inserts values into the DTS database:<ul>
+         <li>Database auto generates a new group id for the entry.</li>
+         <li>Assigns the group name,status, and project to the entry.</li>
+         <li>Creates new note(s) and associates it(them) to the dataset.</li>
+      </ul></li>
+   <li>Edit a Group<ul>
+      <li>Defines the same fields as in <i>Create a new Group</i></li>
+      <li>Cannot change the group id or project.</li>
+      <li>Updates the values in the DTS database.</li>
+      <li>Create/Update the notes as needed.</li>
+      </ul></li>
+   <li>Create a new Composite<ul>
+      <li>Defines the following fields for the Dataset<ul>
+         <li>Dataset Id - Must not yet exist in the data archive system</li>
+         <li>Title</li>
+         <li>Status</li>
+         <li>Set of Notes</li>
+         </ul></li>
+      <li>Inserts values into the data archive system database:<ul>
+         <li>Defaults the lat/lon box to the lat/lon box for the project</li>
+         <li>Defaults the start/end dates to the start/end dates for the project</li>
+         <li>Defaults the hidden flag to true</li>
+         <li>Assigns the dataset id and name from the form</li>
+         <li>Associated the dataset to the project</li>
+         </ul></li>
+      <li>Inserts values into the DTS database:<ul>
+         <li>Assigns the status to the dataset</li>
+         <li>Creates and assigns the notes to the dataset.</li>
+         </ul></li>
+      </ul></li>
+   <li>Associate a Dataset/Group and a Source Dataset<ul>
+      <li>Requires the Source Dataset to already exist</li>
+      <li>Defines the following fields for the Source Dataset (will need to use existing information for source dataset if it already exists)<ul>
+         <li>UTC offset</li>
+         <li>Daylight Saving Switch Flag</li>
+         <li>Note for Collection Time of Data</li>
+         <li>Note for the Source of the Time Information</li>
+         </ul></li>
+      <li>Inserts the source dataset information and associates the source dataset with the dataset/group in the DTS database.</li>
+      </ul></li>
+   <li>Remove a Dataset/Group and Source Dataset Association<ul>
+      <li>Removes the association between the source dataset and the dataset/group.  (It does not remove any other information)</li>
+      </ul></li>
+   <li>Exclude/Re-include a Source Dataset<ul>
+      <li>Mark the exclude flag for the source dataset and dataset/group in the DTS database.</li>
+      </ul></li>
+   <li>Edit a Dataset (includes Composites)<ul>
+      <li>Defines the following fields for the Dataset:<ul>
+         <li>Work Directory</li>
+         <li>Final Data Directory</li>
+         <li>Plot Link</li>
+         <li>Repository Directory</li>
+         <li>Station List</li>
+         <li>How To Link</li>
+         <li>Status</li>
+         <li>Processing Contact</li>
+         <li>Questions Flag</li>
+         <li>Processing Notes</li>
+         </ul></li>
+      </ul></li>
+      <li>Updates all of the values in the fields into the DTS database.</li>
+      <li>Create/Update notes as necessary.</li>
+   </ul></li>
+</ul>
+
+<h2>Purposely Omitted Functionality</h2>
+<ul>
+   <li>Adding/Updating/Deleting a Project or any information (done in other tools)</li>
+   <li>Creating/Deleing a new non-Composite dataset (done in other tools)</li>
+   <li>Editing dataset information that is not related to processing (done in other tools)</li>
+   <li>Deleting a Composite/Group that has associated source dataset</li>
+</ul>
+
+</body>
+</html>

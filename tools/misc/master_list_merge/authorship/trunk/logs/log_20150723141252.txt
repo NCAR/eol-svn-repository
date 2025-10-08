@@ -1,0 +1,152 @@
+> groovy authorshipConnect.groovy SBI
+
+Created log file:	logs/log_20150723141252.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+--------------------------------------------------------------------------------
+  SBI:  62.010
+		Woodgate, R., K. Aagaard, R. Muench, J. T. Gunn, G. Bjork, B. Rudels, A. T. Roach, U. Schauer
+Which of these contacts matches this author:	R. Muench
+
+		691	amuenchow	Andreas Muenchow	University of Delaware
+		761	rmuench	Robin Muench	Earth and Space Research
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 761
+
+--------------------------------------------------------------------------------
+  SBI:  62.010
+		Woodgate, R., K. Aagaard, R. Muench, J. T. Gunn, G. Bjork, B. Rudels, A. T. Roach, U. Schauer
+Which of these contacts matches this author:	J. T. Gunn
+
+		1116	null	John T. Gunn 	Earth & Space Research
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1116
+
+--------------------------------------------------------------------------------
+  SBI:  62.010
+		Woodgate, R., K. Aagaard, R. Muench, J. T. Gunn, G. Bjork, B. Rudels, A. T. Roach, U. Schauer
+Which of these contacts matches this author:	G. Bjork
+
+		1848	null	Goran Bjork	null
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1848
+
+--------------------------------------------------------------------------------
+  SBI:  62.010
+		Woodgate, R., K. Aagaard, R. Muench, J. T. Gunn, G. Bjork, B. Rudels, A. T. Roach, U. Schauer
+Which of these contacts matches this author:	B. Rudels
+
+		1849	null	Bert Rudels	null
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1849
+
+--------------------------------------------------------------------------------
+  SBI:  62.010
+		Woodgate, R., K. Aagaard, R. Muench, J. T. Gunn, G. Bjork, B. Rudels, A. T. Roach, U. Schauer
+Which of these contacts matches this author:	A. T. Roach
+
+		1869	null	A. T. Roach	Polar Science Center, Applied Physics Laboratory, University of Washington
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1869
+
+--------------------------------------------------------------------------------
+  SBI:  62.010
+		Woodgate, R., K. Aagaard, R. Muench, J. T. Gunn, G. Bjork, B. Rudels, A. T. Roach, U. Schauer
+Which of these contacts matches this author:	U. Schauer
+
+		1850	null	Ursula Schauer	null
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1850
+
+Found contact 845 for data set 62.010 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 761 for data set 62.010 with sort_key 2 (instead of 3). Will update sort_key.
+Found contact 1116 for data set 62.010 with sort_key 3 (instead of 4). Will update sort_key.
+Found contact 1848 for data set 62.010 with sort_key 4 (instead of 5). Will update sort_key.
+Found contact 1849 for data set 62.010 with sort_key 5 (instead of 6). Will update sort_key.
+Found contact 1869 for data set 62.010 with sort_key 6 (instead of 7). Will update sort_key.
+Found contact 1850 for data set 62.010 with sort_key 7 (instead of 8). Will update sort_key.
+--------------------------------------------------------------------------------
+  SBI:  62.197
+		Woodgate, R., K. Aagaard, T. Weingartner, T. Whitledge, I. Lavrenov
+Which of these contacts matches this author:	T. Whitledge
+
+		1164	null	 Terry E. Whitledge 	School of Fisheries and Ocean Sciences (SFOS)
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1164
+
+--------------------------------------------------------------------------------
+  SBI:  62.197
+		Woodgate, R., K. Aagaard, T. Weingartner, T. Whitledge, I. Lavrenov
+Which of these contacts matches this author:	I. Lavrenov
+
+		1930	null	Igor Lavrenov	Arctic and Antarctic Research Institute
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1930
+
+Found contact 286 for data set 62.197 with sort_key 0 (instead of 1). Will update sort_key.
+Found contact 845 for data set 62.197 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 758 for data set 62.197 with sort_key 2 (instead of 3). Will update sort_key.
+Found contact 1164 for data set 62.197 with sort_key 3 (instead of 4). Will update sort_key.
+Found contact 1930 for data set 62.197 with sort_key 4 (instead of 5). Will update sort_key.
+Found contact 845 for data set 62.238 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 758 for data set 62.238 with sort_key 2 (instead of 3). Will update sort_key.
+Found contact 1164 for data set 62.238 with sort_key 3 (instead of 4). Will update sort_key.
+Found contact 1930 for data set 62.238 with sort_key 4 (instead of 5). Will update sort_key.
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 5533 and contact_id = 845;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 5533 and contact_id = 761;
+
+update dataset_contact set sort_key = 4 where iso_citation_role = 'author' and dataset_id = 5533 and contact_id = 1116;
+
+update dataset_contact set sort_key = 5 where iso_citation_role = 'author' and dataset_id = 5533 and contact_id = 1848;
+
+update dataset_contact set sort_key = 6 where iso_citation_role = 'author' and dataset_id = 5533 and contact_id = 1849;
+
+update dataset_contact set sort_key = 7 where iso_citation_role = 'author' and dataset_id = 5533 and contact_id = 1869;
+
+update dataset_contact set sort_key = 8 where iso_citation_role = 'author' and dataset_id = 5533 and contact_id = 1850;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 5676 and contact_id = 286;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 5676 and contact_id = 845;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 5676 and contact_id = 758;
+
+update dataset_contact set sort_key = 4 where iso_citation_role = 'author' and dataset_id = 5676 and contact_id = 1164;
+
+update dataset_contact set sort_key = 5 where iso_citation_role = 'author' and dataset_id = 5676 and contact_id = 1930;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 5716 and contact_id = 845;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 5716 and contact_id = 758;
+
+update dataset_contact set sort_key = 4 where iso_citation_role = 'author' and dataset_id = 5716 and contact_id = 1164;
+
+update dataset_contact set sort_key = 5 where iso_citation_role = 'author' and dataset_id = 5716 and contact_id = 1930;
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

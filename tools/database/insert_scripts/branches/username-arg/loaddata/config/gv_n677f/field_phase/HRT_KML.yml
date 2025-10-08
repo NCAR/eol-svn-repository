@@ -1,0 +1,78 @@
+dataset:
+- title_content: titleSep
+- name: <PROJECT>
+- archive_ident: '999.999'
+- title: PRELIMINARY High-rate (HRT - 25 sps) Flight Tracks - Google Earth .kml files
+- summary: KML is a file format used to display geographic data in an Earth browser such as Google Earth. This dataset contains KML files used to display the NSF/NCAR HIAPER GV flight track in real-time during the <PROJECT> project.  These are PRELIMINARY FIELD-PHASE data and are not for publication. Final, production data (with calibrated values in engineering units) having the highest-quality that RAF can provide will be available within 6 months of the end of the project.
+- begin_date: '1001-01-01 00:00:00'
+- end_date: '7998-12-31 23:59:59'
+- visible: 0
+- auth_reqd: 1
+- eula_reqd: 1
+- version_number: '0.1'
+- quality: 1
+- ingest_location: /scr/raf/Raw_Data/<PROJECT>/field_phase/GVnc
+- archive_location: /FS/EOL/<year>/<project>/aircraft/gv_n677f/FIELD_INTERNAL_ONLY/KML
+- filename_pattern: (\E\E\E\E)H.(\Y\Y\Y\Y\M\M\y\y).[\H\H\m\m\S\S]_{\H\H\m\m\S\S}.kml
+- startdate_pattern: YYYY-MM-yy HH:mm:SS
+- enddate_pattern: YYYY-MM-yy HH:mm:SS
+- filelength: ''
+- minimum_latitude: '-90.0'
+- maximum_latitude: '90.0'
+- minimum_longitude: '-180.0'
+- maximum_longitude: '180.0'
+- CODIAC_specific_fields: titleSep
+- category_id: 2
+- platform_id: 350
+- is_eol_data: 1
+- format: 113
+- host: hpss
+- frequency_id: 3
+- spatial_type: point
+- point_of_contact_id_codiac: 1
+- internal_contact_id_codiac: 179
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+- dodsable: 0
+- t_subset: 0
+- event_subset: 1
+- order_allow_compress: 1
+- DTS_specific_fields: titleSep
+- source_contact_id_dts: 203
+- internal_contact_id_dts: 203
+- ingest_contact_id_dts: 203
+- ingest_status_id_dts: 2
+- load_contact_id_dts: 345
+- load_data_location: '*kml'
+- load_status_id_dts: 6
+- approve_contact_id_dts: 345
+- approve_status_id_dts: 6
+- author_id_dts: 203
+- note_type_id: 4
+- note_text: Loaded with new load_data_proj script
+- optional_fields: titleSep
+- archive_location_2: ''
+- filename_pattern_2: ''
+- startdate_pattern_2: ''
+- enddate_pattern_2: ''
+- format_2: null
+- host_2: null
+- description: 'default'
+- iso_citation_role: 11
+- contact_id_codiac: 1001
+- datacite_contributor_type: null
+- iso_citation_role_2: 10
+- contact_id_codiac_2: 1001
+- datacite_contributor_type_2: null
+- iso_citation_role_3: 1
+- contact_id_codiac_3: ''
+- datacite_contributor_type_3: ''
+- iso_citation_role_4: ''
+- contact_id_codiac_4: ''
+- datacite_contributor_type_4: ''
+- iso_citation_role_5: ''
+- contact_id_codiac_5: ''
+- datacite_contributor_type_5: ''
+- readme_url: 'default'
+- remote_url: 'default'

@@ -1,0 +1,28 @@
+<!-- $Id: context.xml,v 1.6 2006/02/17 17:24:04 john Exp $ -->
+<!-- JOSS Catalina Auto-deploy Context file -->
+
+<!-- For Context element options, see:
+ http://{SERVER}/tomcat-docs/config/context.html
+-->
+
+<!--
+
+this not needed- we are now symlinking the directory in tomcat's webapps
+<Context path="/jedi_demos" docBase="/dmsdev/web/java/webapps/jedi_demos"
+
+this *should* be enough
+<Context>
+
+-->
+
+<!-- all this is in the DefaultContext but doesn't seem to get picked up -->
+<Context
+	cookies="true" reloadable="true" crossContext="true"
+	override="true" swallowOutput="true" useNaming="true"
+	debug="9" 
+	>
+
+   <Resource name="connection" auth="Container" type="javax.sql.DataSource"
+             maxActive="100" maxIdle="30" maxWait="10000" username="dts-full" password="l@micbc"
+             driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://tsunami.eol.ucar.edu/dmg_general_ml" />
+</Context>

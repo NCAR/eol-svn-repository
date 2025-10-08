@@ -1,0 +1,175 @@
+> groovy authorshipConnect.groovy SBI
+
+Created log file:	logs/log_20150723113204.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NCAR-EOL-CDS
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SBI:  62.034
+		(NCAR-EOL-CDS)
+Unable to find a contact ID for author:		NCAR-EOL-CDS
+Please enter in a contact ID for this author, or enter zero if unknown.
+>  1643
+
+		1643	null	null	NCAR/EOL Computing, Data and Software Facility (CDS)	(null)
+
+Is this the author? (y/n)  > y
+Unable to find contact 1643 for data set 62.034. Will insert contact.
+Unable to find contact 1643 for data set 62.035. Will insert contact.
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NCAR-EOL
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SBI:  62.064
+		(NCAR-EOL)
+Unable to find a contact ID for author:		NCAR-EOL
+Please enter in a contact ID for this author, or enter zero if unknown.
+>  1643
+
+		1643	null	null	NCAR/EOL Computing, Data and Software Facility (CDS)	(null)
+
+Is this the author? (y/n)  > y
+Unable to find contact 1643 for data set 62.064. Will insert contact.
+Unable to find contact 1643 for data set 62.065. Will insert contact.
+Unable to find contact 1643 for data set 62.066. Will insert contact.
+Unable to find contact 1643 for data set 62.067. Will insert contact.
+Unable to find contact 1643 for data set 62.075. Will insert contact.
+Unable to find contact 1643 for data set 62.079. Will insert contact.
+Unable to find contact 1643 for data set 62.080. Will insert contact.
+Unable to find contact 1643 for data set 62.081. Will insert contact.
+Unable to find contact 1643 for data set 62.082. Will insert contact.
+Unable to find contact 1643 for data set 62.083. Will insert contact.
+Unable to find contact 1643 for data set 62.084. Will insert contact.
+Unable to find contact 1643 for data set 62.085. Will insert contact.
+Unable to find contact 1643 for data set 62.086. Will insert contact.
+Unable to find contact 1643 for data set 62.087. Will insert contact.
+Unable to find contact 1643 for data set 62.088. Will insert contact.
+Unable to find contact 1643 for data set 62.089. Will insert contact.
+Unable to find contact 1643 for data set 62.090. Will insert contact.
+Unable to find contact 1643 for data set 62.091. Will insert contact.
+Unable to find contact 1643 for data set 62.092. Will insert contact.
+Unable to find contact 1643 for data set 62.093. Will insert contact.
+Unable to find contact 1643 for data set 62.094. Will insert contact.
+Unable to find contact 1643 for data set 62.095. Will insert contact.
+Unable to find contact 1643 for data set 62.096. Will insert contact.
+Unable to find contact 1643 for data set 62.097. Will insert contact.
+Unable to find contact 1643 for data set 62.098. Will insert contact.
+Unable to find contact 1643 for data set 62.099. Will insert contact.
+Unable to find contact 1643 for data set 62.100. Will insert contact.
+Unable to find contact 1643 for data set 62.101. Will insert contact.
+Unable to find contact 1643 for data set 62.102. Will insert contact.
+Unable to find contact 1643 for data set 62.103. Will insert contact.
+Unable to find contact 1643 for data set 62.104. Will insert contact.
+Unable to find contact 1643 for data set 62.105. Will insert contact.
+Unable to find contact 1643 for data set 62.106. Will insert contact.
+Unable to find contact 1643 for data set 62.109. Will insert contact.
+Unable to find contact 1643 for data set 62.110. Will insert contact.
+Unable to find contact 1643 for data set 62.111. Will insert contact.
+Unable to find contact 1643 for data set 62.112. Will insert contact.
+Unable to find contact 1643 for data set 62.113. Will insert contact.
+Unable to find contact 1643 for data set 62.159. Will insert contact.
+Unable to find contact 1643 for data set 62.165. Will insert contact.
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.034';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.035';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.064';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.065';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.066';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.067';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.075';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.079';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.080';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.081';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.082';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.083';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.084';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.085';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.086';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.087';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.088';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.089';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.090';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.091';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.092';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.093';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.094';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.095';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.096';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.097';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.098';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.099';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.100';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.101';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.102';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.103';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.104';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.105';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.106';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.109';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.110';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.111';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.112';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.113';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.159';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1643, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.165';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# LRT #
+for filename in `ls -1 ./VOCALS*txt`
+do
+    sed 's/,/ /' $filename > $filename.2
+done
+asc2cdf -m -d 2008-10-18 VOCALSrf02.fo3_cl.txt.2 VOCALSrf02.fo3_cl.nc
+asc2cdf -m -d 2008-10-21 VOCALSrf03.fo3_cl.txt.2 VOCALSrf03.fo3_cl.nc
+asc2cdf -m -d 2008-10-23 VOCALSrf04.fo3_cl.txt.2 VOCALSrf04.fo3_cl.nc
+asc2cdf -m -d 2008-10-25 VOCALSrf05.fo3_cl.txt.2 VOCALSrf05.fo3_cl.nc
+asc2cdf -m -d 2008-10-28 VOCALSrf06.fo3_cl.txt.2 VOCALSrf06.fo3_cl.nc
+asc2cdf -m -d 2008-10-31 VOCALSrf07.fo3_cl.txt.2 VOCALSrf07.fo3_cl.nc
+asc2cdf -m -d 2008-11-02 VOCALSrf08.fo3_cl.txt.2 VOCALSrf08.fo3_cl.nc
+asc2cdf -m -d 2008-11-04 VOCALSrf09.fo3_cl.txt.2 VOCALSrf09.fo3_cl.nc
+asc2cdf -m -d 2008-11-06 VOCALSrf10.fo3_cl.txt.2 VOCALSrf10.fo3_cl.nc
+asc2cdf -m -d 2008-11-09 VOCALSrf11.fo3_cl.txt.2 VOCALSrf11.fo3_cl.nc
+asc2cdf -m -d 2008-11-11 VOCALSrf12.fo3_cl.txt.2 VOCALSrf12.fo3_cl.nc
+asc2cdf -m -d 2008-11-13 VOCALSrf13.fo3_cl.txt.2 VOCALSrf13.fo3_cl.nc
+asc2cdf -m -d 2008-11-15 VOCALSrf14.fo3_cl.txt.2 VOCALSrf14.fo3_cl.nc
+
+for filename in `ls -1 ./VOCALS*.nc`
+do
+    ncatted -a long_name,FO3_CL,m,c,"Fast Ozone Mixing Ratio" $filename
+    ncatted -a units,FO3_CL,m,c,"ppbv" $filename
+    ncatted -a DataQuality,FO3_CL,c,c,"Final" $filename
+done
+
+reorder

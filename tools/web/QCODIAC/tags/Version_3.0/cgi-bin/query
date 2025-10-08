@@ -1,0 +1,196 @@
+#! /usr/bin/perl
+
+#
+# Query
+#  Displays the list of tools and needed form elements to 
+#   perform a query.  This shows up in the left hand frame
+#   of QCODIAC.
+#  Date: (6/26/03)
+#
+
+# CGI Module to output header information
+use CGI;
+$cgi = new CGI;
+print $cgi->header();
+
+use lib "lib";
+
+# Gets the listing for all of the current tools
+use Tools;
+@tools = Tools::toolListing();
+
+# Gets some utilities that are generally used throughout these programs
+use Utils;
+
+# SQL Query Tool
+use EQuery;
+
+# SQL statement to grab appropriate Project Names from Codiac
+#$sql = "SELECT id FROM project WHERE id NOT LIKE \'COMET_CASE%\' ORDER BY id";
+#$sql = "SELECT project_id FROM project ORDER BY project_id";
+$sql = "SELECT name as project_id FROM project ORDER BY project_id";
+
+# Get Project ID listing
+my $query = EQuery->new();
+$query->query( $sql );
+
+#---------------#
+# Starting HTML #
+#---------------#
+
+print cr( 
+	"<html>",
+	"<head>",
+		"<title> QCODIAC Tools </title>",
+		$css,
+		$jscript,
+	"</head>",
+	"<body bgcolor=#e9e9e9 alink=black vlink=black link=black>",
+	"<center><br>",
+	"<table border=0 width=100% cellpadding=1 cellspacing=8>",
+		"<tr bgcolor=#336699>",
+			"<td width=100% align=center><font color=white size=+1><b>QCODIAC Tools</b></td>",
+		"</tr>",
+	);
+
+#-----------------#
+#  Dataset Tools  #
+#-----------------#
+
+println( "<tr><td>&nbsp;</td></td>" );
+
+print cr(
+	"<form onSubmit=\"submitDs( this, parent ); return false;\">",
+	"<tr>",
+		"<td><font size=+1><b>Dataset Tools:</b></td>",
+		"</tr>",
+	);
+
+foreach $tool ( @tools ) 
+{
+	if( $tool->{group} eq "dataset" ) 
+	{
+	print cr(
+		"<tr>",
+			"<td id=\"tool_link\">", &nbsp(3), 
+			"<input type=checkbox name=results value=$tool->{identifier}>", &nbsp(3), 
+			"<b><a href=supervisor?qform=$tool->{identifier} target=display>" . $tool->linkTitle() . "</a>",
+			"</td>",
+		"</tr>",
+		);
+	}
+}
+
+print cr(
+	"<tr>",
+		"<td id=\"tool_link\">", &nbsp(3), 
+			"<b>Dataset Id:</b>", &nbsp(4), "<input type=text size=7 name=\"dataset_id\">", &nbsp(4),
+			"<input type=submit value=\"Query\">",
+		"</td>",
+	"</tr></form>"
+	 );
+
+#-----------------#
+#  Project Tools  #
+#-----------------#
+
+println( "<tr><td>&nbsp;</td></td>" );
+
+print cr(
+	"<form onSubmit=\"submitProj( this, parent ); return false;\">",
+	"<tr>",
+		"<td><font size=+1><b>Project Tools:</b></td>",
+	"</tr>",
+	);
+
+foreach $tool ( @tools ) 
+{
+	if( $tool->{group} eq "project" ) 
+	{
+		print cr(
+			"<tr>",
+				"<td id=\"tool_link\">", &nbsp(3), "<input type=checkbox name=results value=$tool->{identifier}>", &nbsp(3),
+					"<b><a href=supervisor?qform=$tool->{identifier} target=display>" . $tool->linkTitle() . "</a>",
+				"</td>",
+			"</tr>"
+			);
+	}
+}
+
+print cr(
+	"<tr>",
+		"<td id=tool_link>", &nbsp(3), "<b>Select:</b>", &nbsp(3),
+	"<select onChange=\"submitProj( this.form, parent )\" name=project>" 
+	);
+print( cr( "<option value=select>---Select---</option>" ) );			
+
+while( (my %row = $query->getRow() ) ) 
+{
+	if( $row{project_id} !~ /^COMET_CASE/ )
+	{
+		print cr( "<option value=\"$row{project_id}\">" . $row{project_id} . "</option>" );
+	}
+}
+
+print cr(
+	"</select></form>",
+	"</td>",
+	"</tr>" 
+	);
+
+#---------------#
+#  Other Tools  #
+#---------------#
+
+println( "<tr><td>&nbsp;</td></td>" );
+
+print cr(
+		"<tr>",
+			"<td><font size=+1><b>General Tools:</b></td>",
+		"</tr>",
+ 		);
+
+foreach $tool ( @tools ) 
+{
+	if( $tool->{group} eq "general" ) 
+	{
+		print cr(
+			"<tr>",
+				"<td id=\"tool_link\">", &nbsp(3), 
+					"<b><a href=supervisor?qform=$tool->{identifier} target=display>" . $tool->linkTitle() . "</a>",
+				"</td>",
+			"</tr>",
+ 		);     
+	}
+}
+
+println( "<tr><td>&nbsp;</td></td>" );
+
+print( cr( 
+"		<tr>",
+"			<td align=center id=\"tool_link\"><b><a href=details target=display>Tool Descriptions</a></td>",
+"		</tr>" ) );
+
+println( "<tr><td>&nbsp;</td></td>" );
+
+print( cr(
+"		<tr>",
+#"			<td id=\"tool_link\">Comments/Suggestions to:<br>",
+#"			<a href=mailto:drphil@ucar.edu>Phil Dressen</a> or ",
+#"			<a href=mailto:suldan@ucar.edu>Dan Sullivan</a> ",
+#	  "<a href=mailto:jclawson\@joss.ucar.edu>Joel Clawson</a> ",
+"			<td id=\"tool_link\">",
+"			  <a href=\"mailto:orin\@ucar.edu?cc=stott\@ucar.edu&subject=QCodiac Web Site\">",
+"			    <img alt=\"Mail\" valign=\"middle\" style=\"width: 30px; border: 1px solid #b4b4b4;\" src=\"http://dmg.eol.ucar.edu/software/tools/web/qcodiac-test/mail.png\" />",
+"			    Comments/Suggestions",
+"			  </a>",
+"			</td>",
+"		</tr>" ) );
+
+#### Display closing HTML
+print cr(
+"</table>",
+"</center>",
+"</html>" );
+
+

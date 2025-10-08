@@ -1,0 +1,15 @@
+SHELL = /bin/sh
+#    Makefile for QCF rec s/w.
+#
+
+#CC=purify acc -g
+#CC=acc -p
+CC=cc
+##CFLAGS = -g
+
+compute_sigmasq: compute_sigmasq.o gQC.o process_qcfrec.o date.o
+	$(LINK.c) -o compute_sigmasq compute_sigmasq.o gQC.o process_qcfrec.o date.o -l m
+	chmod 0755 compute_sigmasq
+
+clean:
+	rm *.o

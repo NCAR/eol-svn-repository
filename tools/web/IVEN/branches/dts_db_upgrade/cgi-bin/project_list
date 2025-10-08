@@ -1,0 +1,40 @@
+#! /usr/bin/perl -w
+
+package ProjectListCGI;
+use strict;
+use IvenCGI;
+our @ISA = ("IvenCGI");
+
+&main();
+
+sub main {
+    my $self = ProjectListCGI->new();
+    $self->buildPage("Project Listing");
+}
+
+sub buildPageBody {
+    my ($self) = @_;
+
+    printf("<center>\n");
+    printf("   <table class=indexHead>");
+    printf("      <tr><td class=welcome>Welcome to Iven</b></td></tr>\n");
+    printf("      <tr>\n");
+    printf("         <td class=title>The NCAR/EOL/CDS/DMG Inventory and Status Application</td>\n");
+    printf("      </tr>\n");
+    printf("   </table>\n");
+
+    printf("   <h1 align=center><a href=\"/dpg/iven/dev/changes.html\">Changes in 2.0</a></h1>");
+    printf("   <h2 align=center><a href=\"/dpgapps/dln/body/status_type.html\">Status and Type Description</a></h2>\n");
+
+    printf("   <table class=projectListTable>\n");
+    printf("      <tr><th>Available Projects</th></tr>\n");
+    foreach my $project ($self->getProjectList()) {
+	printf("      <tr><td>\n");
+	printf("         <div class=title><a href=\"project_view?project=%s\">%s</a></div>\n",
+	       $self->uriEscape($project->getId()),$project->getId());
+	printf("         <div class=name>%s</div>\n",$project->getName());
+	printf("      </td></tr>\n");
+    }
+    printf("   </table>\n");
+    printf("</center>\n");
+}

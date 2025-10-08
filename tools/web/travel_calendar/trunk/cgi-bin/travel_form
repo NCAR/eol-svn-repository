@@ -1,0 +1,150 @@
+#! /usr/bin/perl -T -w
+
+##Module--------------------------------------------------------------------
+# <p>The <code>TravelForm</code> module is a <code>CGI</code> module that
+# generates the form for adding/editing/deleting travel information from the
+# <code>TravelList</code>.</p>
+# <p>The following is a list of CGI parameters that are recognized ty the
+# module ant their values.<ul>
+#   <li><code>id</code>: (String) The travel id of the employee.</li>
+#   <li><code>s_date</code>: (YYYY/MM/DD String) The start date of the
+# travel information.</li>
+#   <li><code>e_date</code>: (YYYY/MM/DD String) The end date of the
+# travel information.</li>
+#   <li><code>reason</code>: (String) The reason for the travel.</li>
+#   <li><code>where</code>: (String) Where the employee will be when gone.</li>
+# </ul></p>
+#
+# @author Joel Clawson
+##Module--------------------------------------------------------------------
+package TravelForm;
+use strict;
+use lib ".";
+use EmployeeList;
+use CGI qw(:standard :html3);
+our @ISA = ("CGI");
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+&main();
+
+##--------------------------------------------------------------------------
+# @signature void main()
+# <p>Create the travel form.</p>
+##--------------------------------------------------------------------------
+sub main() {
+  my $self = TravelForm->new();
+
+  print($self->header());
+  print("<html>\n");
+
+  print($self->generateForm());
+
+  print("</html>\n");
+}
+
+##--------------------------------------------------------------------------
+# @signature String generateForm()
+# <p>Create the HTML that is the travel form.</p>
+# @output The HTML containing the travel form.</p>
+##--------------------------------------------------------------------------
+sub generateForm {
+  my $self = shift;
+  my $output = "";
+
+  $output .= "<head>\n<title>Travel Information</title>\n";
+  $output .= "<script type=text/javascript src=\"/travel/javascript/travel.js\"></script>\n";
+  $output .= "</head>\n";
+
+  $output .= "<body>\n";
+
+  my @known = EmployeeList->new()->employee_list();
+
+  # Check to see if there are employees to add travel for.
+  if (scalar(@known) == 0) {
+    $output .= "<p>There are no known employees in the database.</p>\n";
+    $output .= "<input type=\"button\" value=\"New Employee\" onclick=\"javascript:window.open('employee_form', '_self');\">\n";
+    $output .= "<input type=\"button\" value=\"Cancel\" onclick=\"javascript:window.close();\">\n";
+  } else {
+     $output .= "<form method=POST name=\"trav_form\" ";
+     $output .= "action=\"broker\"";
+     $output .= ">\n";
+
+     # Set the original id and start date for the edit/delete travel
+     if (defined($self->param("id"))) {
+        $output .= $self->hidden("orig_id", $self->param("id"));
+        $output .= $self->hidden("orig_sdate", $self->param("s_date"));
+
+	my $travel = TravelList->new();
+	$self->param("e_date", $travel->getEndDate($self->param("id"),
+						   $self->param("s_date")));
+	$self->param("reason", $travel->getReason($self->param("id"),
+						  $self->param("s_date")));
+	$self->param("where", $travel->getWhere($self->param("id"),
+						$self->param("s_date")));
+     }
+
+     $output .= "<h1>Travel Information</h1>\n";
+
+     # Build the form.
+     $output .= "<table>\n";
+     $output .= "<tr><th>Name:</th>\n   <td>";
+     $output .= "<select name=\"id\">\n";
+     $output .= $self->getPeople($self->param("id"));
+     $output .= "</select></td></tr>\n";
+     $output .= "<tr><th>Start Date</th>\n   <td>";
+     $output .= $self->textfield("s_date","",10,10)."YYYY/MM/DD</td></tr>\n";
+     $output .= "<tr><th>End Date</th>\n   <td>";
+     $output .= $self->textfield("e_date","",10,10)."YYYY/MM/DD</td></tr>\n";
+     $output .= "<tr><th>Reason</th>\n   <td>";
+     $output .= $self->textfield("reason","Unspecified",40,150)."</td></tr>\n";
+     $output .= "<tr><th>Where</th>\n   <td>";
+     $output .= $self->textfield("where","Unspecified",40,100)."</td></tr>\n";
+     $output .= "</table>\n";
+
+     # Create the buttons
+     $output .= "<input type=\"submit\" name=\"travel\" value=\"Submit\" onclick=\"javascript: return checkTravelForm(this.form);\">\n";
+     if ($self->param("id")) {
+        $output .= "<input type=\"submit\" name=\"travel\" value=\"Delete\" onclick=\"javascript: deleteTravel(trav_form);\">\n";
+     }
+     $output .= "<input type=\"button\" value=\"Cancel\" onclick=\"javascript:window.close();\">\n";
+
+     $output .= "</form>\n";
+  }
+  $output .= "</body>\n";
+  return $output;
+}
+
+##--------------------------------------------------------------------------
+# @signature String getPeople()
+# <p>Get the list of employees who could have travel data created for them.</p>
+# @output $list The list of HTML option tags that are the employees for the
+# drop down box.
+##--------------------------------------------------------------------------
+sub getPeople {
+  my $self = shift;
+  my $id = shift;
+  my $list = "";
+  my $data = EmployeeList->new();
+
+  my @people = ();
+
+  # Get the list of people
+  foreach my $person ($data->employee_list()) {
+    push(@people, sprintf("%s, %s (%s)", $data->getLastName($person),
+                          $data->getFirstName($person), $person));
+  }
+
+  # Create the option tags for the drop down box.
+  foreach my $person (sort @people) {
+    my $pid = substr((split(' ', $person))[2], 1);
+    $pid = substr($pid, 0, length($pid) - 1);
+    if (defined($id) && $pid eq $id) {
+       $list .= "\t<option selected value=\"".$pid."\">".$person."</option>\n";
+    } else {
+       $list .= "\t<option value=\"".$pid."\">".$person."</option>\n";
+    }
+  }
+
+  return $list;
+}

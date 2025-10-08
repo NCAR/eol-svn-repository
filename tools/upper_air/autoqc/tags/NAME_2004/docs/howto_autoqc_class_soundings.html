@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>How To: Auto QC CLASS Soundings</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/dpg/GENERAL/soundings/howto.css">
+</head>
+
+<body>
+<h1>How To: Auto QC CLASS Soundings</h1>
+<h2>Table of Contents</h2>
+<ol>
+	<li><a href="#background">Background</a></li>
+	<li><a href="#repos">Repository</a></li>
+	<li><a href="#generate">Generating the Binaries</a></li>
+	<li><a href="#executing">Auto QC'ing CLASS Files</a></li>
+	<li><a href="#limit_file">Limit File Description</a></li>
+</ol>
+
+<hr>
+<a name="background"></a>
+<h2>Background</h2>
+<p>This document contains the instructions on how to quality control sounding files in the CLASS format.  This will outline the steps needed to QC the data and what the different files mean.</p>
+<table border=1>
+<tr><th>Directory</th><th>Description</th></tr>
+<tr><th class="dir">bin</th><td>This directory contains the binary executable files that will actually perform the QC.</td></tr>
+<tr><th class="dir">docs</th><td>This directory contains documentation files about the AUTO QC software.</td></tr>
+<tr><th class="dir">lib</th><td>This directory contains the header files for the C++ code that will generate the binaries.</td></tr>
+<tr><th class="dir">src</th><td>This directory contains the C++ source code and the Makefile for generating the binary files.</td></tr>
+</table>
+<hr>
+
+<a name="repos"></a>
+<h2>Repository</h2>
+<p>The auto QC software is under revision control through subversion.  (More information on subversion can be found in the <a href="/dpg/GENERAL/repository/howto_subversion.html">How To: Subversion</a>.)  It is in the repository:</p>
+<p class="code">/net/work/repos/tools/upper_air/autoqc</p>
+
+<a name="generate"></a>
+<h2>Generating the Binaries</h2>
+<ol>
+	<li><b>Creating the Limit Header:</b>
+		<p>The first step for generating the executable is to define the limits for the current project.  The limits should be defined in a header file named for the project.  One of the header files in the header repository should be copied and the values changed.  <font class="note">The values may not be known at the time the auto QC is first generated, but a new file header should be created for the project to make it easy to determine which files were used for the project.</font></p>
+		<p>The header file is a collection of <code>#define</code> statements for variables that will be used in the quality control algorithms.</p>
+		<p>For more information about the limit header file, see the <a href="#limit_file">Limit File Description</a>.</p>
+		</li>
+		
+	<li><b>Modifying the Source Files:</b>
+		<p>Near the top of the source file (<b>quality_control_class_file.cpp</b>) is a preprocessor <code>iinclude</code> statement.  This is used to define which header file for the project should be used from a parameter passed to the compiler.  It is often named <code>qc_<b>PROJ</b>_limits.h</code> where <b>PROJ</b> is the name of the current project, but should be the name of whatever you named it in the previous step.  It should be in the <b>lib</b> directory where the <b>autoqc.h</b> header file is located.</p>
+		</li>
+		
+	<li><b>Generating the Makefile:</b>
+		<p>The Makefile needs to be created (or edited from a previous version) to handle the current project.  A new target needs to be created for the project.  The new target should contain at least two different commands.  One of them should be for the NWS conversion.  The other should be the generic.  Other commands may be needed to make other binaries depending on the project.</p>
+		<p>There are several parameters that can be passed to the compiler to define which binary should be made.  They include:<ul>
+		   <li><b>-DDROP</b> - for auto QC'ing drop sonde data</li>
+		   <li><b>-DNUMBER</b> - where <b>NUMBER</b> is the text name of a number ONE - TWELVE taht is used for averaging.  (FIVE is five point averaging)</li>
+		   <li><b>-DNWS</b> - for auto QC'ing NWS data</li>
+		</ul>
+		<p>Other settings can be defined in the limits file as well for specific projects using the <code>#define</code> constructs.</p>
+		<p class="note">The current version of the software is written in C++.  On the Unix machines the <code><b>g++</b></code> needs to be used instead of the <code><b>gcc</b></code> compiler.</p>
+</ol>
+<hr>
+
+<a name="executing"></a>
+<h2>Auto QC'ing CLASS Files</h2>
+<p>To QC the data, the binary created in the previous step needs to be run on each individual CLASS file.  The program will generates two files.  The first is the name of the file that you give the program to use for the output for the data.  The second is an error file that will be placed in the same directory as the input file and have the same name with the extension <code>.err</code> added at the end.</p>
+<p>To run the auto QC program use:</p>
+<p class="code">prog_name input_file output_file</p>
+<p><code><b>prog_name</b></code> is the name of the executable binary file that you defined in the Makefile.  <code><b>input_file</b></code> is the name of the input file to be QC'ed.  <code><b>output_file</b></code> is the name of the output file that holds the QC'ed data.</p>
+<hr>
+
+<a name="limit_file"></a>
+<h2>Limit File Description</h2>
+<p>The following is the list of variables defined in the limit file and their descriptions.  These limits are used to define what values are questionable and what values are bad.</p>
+<table border=1 align="center">
+<tr><th class="header">Variable</th><th class="header">Description</th></tr>
+
+<tr><th>LAT_TYPE</th><td>A value that defines if the sounding took place in HOT or COLD weather.  Tropical latitudes and warm middle latitudes use HOT.  High latitudes and cold middle latitudes use COLD.</td></tr>
+
+<tr><td colspan=2>&nbsp;</td></tr>
+<tr><th>DEC_PRESS_CHECK</th><td>The pressure value where the following pressure may be equal to the current pressure without it being questionable.</td></tr>
+<tr><th>MISS_MAX_PRESS</th><td>Set pressure values equal or over MISS_MAX_PRESS to missing.</td></tr>
+<tr><th>QUEST_MAX_PRESS</th><td>Set pressure values over QUEST_MAX_PRESS to questionable.</td></tr>
+<tr><th>QUEST_MIN_PRESS</th><td>Set pressure values under QUEST_MIN_PRESS to questionable.</td></tr>
+
+<tr><td colspan=2>&nbsp;</td></tr>
+<tr><th>MISS_MAX_TEMP</th><td>Set temperature values equal or over MISS_MAX_TEMP to missing.</td></tr>
+<tr><th>QUEST_MAX_TEMP</th><td>Set temperature values over QUEST_MAX_TEMP to questionable.</td></tr>
+<tr><th>QUEST_MIN_TEMP</th><td>Set temperature values under QUEST_MIN_TEMP to questionable.</td></tr>
+
+<tr><td colspan=2>&nbsp;</td></tr>
+<tr><th>MISS_MAX_DEWPT</th><td>Set dew point values equal or over MISS_MAX_DEWPT to missing.</td></tr>
+<tr><th>QUEST_MAX_DEWPT</th><td>Set dew point values over QUEST_MAX_DEWPT to questionable.</td></tr>
+<tr><th>QUEST_MIN_DEWPT</th><td>Set dew point values under QUEST_MIN_DEWPT to questionable.</td></tr>
+
+<tr><td colspan=2>&nbsp;</td></tr>
+<tr><th>QUEST_MAX_ALT</th><td>Set pressure, temperature, and relative humidity to questionable for altitude values over QUEST_MAX_ALT.</td></tr>
+<tr><th>QUEST_MIN_ALT</th><td>Set pressure, temperature, and relative humidity to questionable for altitude values under QUEST_MIN_ALT.</td></tr>
+
+<tr><td colspan=2>&nbsp;</td></tr>
+<tr><th>BAD_ASC_RATE_CHANGE</th><td>Set pressure values between data points to bad for changes in teh ascension rate that are equal to or over BAD_ASC_RATE_CHANGE between the data points.</td></tr>
+<tr><th>QUEST_ASC_RATE_CHANGE</th><td>Set pressure values between data points to questionable for changes in the ascension rate that are equal to or over QUEST_ASC_RATE_CHANGE between the data points.</td></tr>
+<tr><th>QUEST_MAX_ASC_RATE</th><td>Set pressure to questionable for ascension rates over QUEST_MAX_ASC_RATE.</td></tr>
+
+<tr><td colspan=2>&nbsp;</td></tr>
+<tr><th>BAD_MAX_WIND_SPD</th><td>Set U/V wind components to BAD for wind speed, u wind component, or, v wind component values eqaul to or over BAD_MAX_WIND_SPD.</td></tr>
+<tr><th>MISS_MAX_WIND_SPD</th><td>Set wind speed, wind direction, u wind component, and v wind component to missing for wind speed values equal to or over MISS_MAX_WIND_SPD.</td></tr>
+<tr><th>QUEST_MAX_WIND_SPD</th><td>Set U/V wind components to QUESTIONABLE for wind speed, u wind component, or v wind component values equal to or over QUEST_MAX_WIND_SPD.</td></tr>
+<tr><th>QUEST_MIN_WIND_SPD</th><td>Set U/V wind components to QUESTIONABLE for wind speed values under QUEST_MIN_WIND_SPD.</td></tr>
+
+<tr><td colspan=2>&nbsp;</td></tr>
+<tr><th>BAD_RAPID_TEMP_INC</th><td>The limit for bad rapid temperature increases over the pressure limit.</td></tr>
+<tr><th>BAD_STRAT_RAPID_TEMP_INC</th><td>The limit for bad rapid temperature increases under the pressure limit.</td></tr>
+<tr><th>PRESS_LIMIT</th><td>The pressure limit to use to separate the strat area and the regular area of the atmosphere.</td></tr>
+<tr><th>RAPID_TEMP_INC</th><td>The value that defines a rapid temperature increase over the pressure limit.</td></tr>
+<tr><th>STRAT_RAPID_TEMP_INC</th><td>The value that defines a rapid temperature increase under the pressure limit.</td></tr>
+
+<tr><td colspan=2>&nbsp;</td></tr>
+<tr><th>BAD_SFC_RAPID_TEMP_INC</th><td>The limit for bad rapid temperature increases in COLD latitudes over the pressure limit.</td></tr>
+<tr><th>SFC_PRESS_LIMIT</th><td>The pressure limit over the regular pressure limit to check for rapid temperature changes in COLD latitudes.</td></tr>
+<tr><th>SFC_RAPID_TEMP_INC</th><td>The value taht defines a rapid temperature increase over the SFC_PRESS_LIMIT in COLD latitudes.</td></tr>
+
+<tr><td colspan=2>&nbsp;</td></tr>
+<tr><th>ADIABATIC_LAPSE_RATE</th><td>The value to use for checking super adiabatic lapse rates.</td></tr>
+<tr><th>BAD_LAPSE_RATE</th><td>The value that defines a bad super adiabatic lapse rate.</td></tr>
+<tr><th>LAPSE_RATE_LIMIT</th><td>The limit for the adiabatic lapse rate.</td></tr>
+<tr><th>QUEST_LAPSE_RATE</th><td>The value that defines a questionable super adiabatic lapse rate.</td></tr>
+
+</table>
+
+<hr>
+
+</body>
+</html>

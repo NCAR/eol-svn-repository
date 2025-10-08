@@ -1,0 +1,28 @@
+
+This directory contain the EBUFR code, executables, and
+supporting files for EBUFRing surface QCF files. There 
+are 2 versions of the code: nh2e for data with 2 digit
+years, and nh2e_4dyr for data with 4 digit years.
+
+  11 Oct 02, ds
+
+You can get the "best" versions of this and other code related to ebuffering in
+/usr/local/RCS. This is the area where John Allison checks in any changes he 
+makes to this code. The nh2e code is in /usr/local/RCS/fest_cvts/qcf2eb/hrly.
+control_hrly.txt also lives here.
+
+  15 Oct 02, jag
+
+The code tables are pulled from the codiac database.  To get the latest, go
+to /storm/encoder_tables and run build_encoder_files.sh.  Answer "y" to the 
+three questions.
+
+  17 Oct 02, jag
+
+John and I added a new code for horizontal visibility - 20 251.  The old one 
+was 20 001.  This new flag has a scale of 0, a reference of 0, and is 17 bites
+long, so it holds values beyond the max 9999.99 that we can have in our QC
+format.  It also now stores down to 1 meter (the old value rounded to 10
+meters).  This was agreed with by Scot and Steve.
+
+  17 Oct 02, jag

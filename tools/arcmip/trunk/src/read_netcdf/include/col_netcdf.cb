@@ -1,0 +1,59 @@
+c------------------------------------------------------------
+c
+c 2d variables
+c
+      real psfc_col(ic,jc,nt),     ! surface pressure (hPa)
+     +     tsfc_col(ic,jc,nt),     ! surface temperature (K)
+     +     t2m_col(ic,jc,nt),      ! 2m air temperature (K)
+     +     t2m_min_col(ic,jc,nt),  ! minimum 2m air temperature (K)
+     +     t2m_max_col(ic,jc,nt),  ! maximum 2m air temperature (K)
+     +     t1m_soil_col(ic,jc,nt), ! 1m soil temperature (K)
+     +     soil_wat_col(ic,jc,nt), ! volumetric soil water content
+                                   ! from surface to depth of 1 m _col(fraction)
+     +     precip_col(ic,jc,nt),   ! accumulated precipitation (mm)
+     +     rain_col(ic,jc,nt),     ! accumulated rain (mm)
+     +     snow_col(ic,jc,nt),     ! accumulated snow (mm)
+     +     swe_col(ic,jc,nt),      ! snow water equivalent (mm)
+     +     tot_cld_frac_col(ic,jc,nt), ! cloud fraction (fraction)
+     +     cld_base_col(ic,jc,nt), ! cloud base (m)
+     +     lhf_col(ic,jc,nt),      ! surface latent heat flux (W/m^2)
+     +     shf_col(ic,jc,nt),      ! surface sensible heat flux (W/m^2)
+     +     ust_col(ic,jc,nt),      ! friction velocity (m/s)
+     +     swd_sfc_col(ic,jc,nt),  ! surface downward shortwave radiation (W/m^2)
+     +     swu_sfc_col(ic,jc,nt),  ! surface upward shortwave radiation (W/m^2)
+     +     lwd_sfc_col(ic,jc,nt),  ! surface downward longwave radiation (W/m^2)
+     +     lwu_sfc_col(ic,jc,nt),  ! surface upward longwave radiation (W/m^2)
+     +     swd_toa_col(ic,jc,nt),  ! top of atmosphere downward shortwave radiation (W/m^2)
+     +     swu_toa_col(ic,jc,nt),  ! top of atmosphere upward shortwave radiation (W/m^2)
+     +     lwu_toa_col(ic,jc,nt),  ! top of atmosphere upward longwave radiation (W/m^2)
+     +     lat_col(ic,jc,nt),      ! latitude of model grid point (deg)
+     +     lon_col(ic,jc,nt)       ! longitude of model grid point (deg)
+c
+c 3d variables
+c
+      real u_col(ic,jc,nprs,nt),       ! zonal component of wind (m/s)
+     +     v_col(ic,jc,nprs,nt),       ! meridional component of wind (m/s)
+     +     w_col(ic,jc,nprs,nt),       ! vertical velocitiy (m/s)
+     +     t_col(ic,jc,nprs,nt),       ! air temperature (K)
+     +     z_col(ic,jc,nprs,nt),       ! height (m)
+     +     rh_col(ic,jc,nprs,nt),      ! relative humidity (%)
+     +     spechum_col(ic,jc,nprs,nt), ! specific humidity (kg/kg)
+     +     cld_col(ic,jc,nprs,nt),     ! cloud water mixing ratio (kg/kg)
+     +     ice_col(ic,jc,nprs,nt),     ! ice water mixing ratio (kg/kg)
+     +     cld_frac_col(ic,jc,nprs,nt),! cloud fraction (fraction)
+     +     adv_t_col(ic,jc,nprs,nt),   ! advective tendency of temperature (K/h)
+     +     adv_spechum_col(ic,jc,nprs,nt),! advective tendency of specific humidity ((kg/kg)/h)
+     +     adv_cld_col(ic,jc,nprs,nt), ! advective tendency of cloud water ((kg/kg)/h)
+     +     adv_ice_col(ic,jc,nprs,nt)  ! advective tendency of ice water ((kg/kg)/h)
+c
+c define common block for variables to be read from netCDF file
+c
+      common /col_netcdf/ lat_col, lon_col, psfc_col, tsfc_col,
+     +   t2m_col,t2m_min_col, t2m_max_col, t1m_soil_col, soil_wat_col,
+     +   precip_col, rain_col, snow_col, swe_col, tot_cld_frac_col,
+     +   cld_base_col, lhf_col, shf_col, ust_col, swd_sfc_col,
+     +   swu_sfc_col, lwd_sfc_col, lwu_sfc_col, swd_toa_col,
+     +   swu_toa_col, lwu_toa_col, u_col, v_col, w_col, t_col, z_col,
+     +   rh_col, spechum_col, cld_col, ice_col, cld_frac_col,
+     +   adv_t_col, adv_spechum_col, adv_cld_col, adv_ice_col
+c------------------------------------------------------------

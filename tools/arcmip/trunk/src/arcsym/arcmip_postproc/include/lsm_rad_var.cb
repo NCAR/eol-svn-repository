@@ -1,0 +1,9 @@
+c---------------------------------------------------------------------
+c ARCSyM LSM and radiation variables
+      real *4 t1m_soil_lsm(ix,jx,mt), soil_wat_lsm(ix,jx,mt),
+     +        tot_cld_frac_rad(ix,jx,mt), cld_base_rad(ix,jx,mt),
+     +        cld_frac_rad(ix,jx,kx,mt)
+      common /lsm_rad_var/ t1m_soil_lsm, soil_wat_lsm,
+     +                     tot_cld_frac_rad, cld_base_rad,
+     +                     cld_frac_rad
+c---------------------------------------------------------------------

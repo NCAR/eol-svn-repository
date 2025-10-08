@@ -1,0 +1,33 @@
+#! /usr/bin/perl -w
+
+my $libdir;
+BEGIN
+{
+    $libdir = $ENV{"MYSQL_DIR"};
+    if (!defined($libdir)) {
+       $libdir = "/net/work/lib/perl/mysql";
+    }
+}
+use strict;
+use Getopt::Std;
+use lib $libdir;
+use MySqlInserter;
+
+&main();
+
+sub main {
+    my %option = ();
+    getopts("u:", \%option);
+    if (scalar(@ARGV) != 1) {
+	printf("Usage: insert_multiple_files [-u username] cfg-file\n");
+	printf("       cfg-file or alternatively file.yml\n");
+    printf("       -u to optionally specify contact username\n");
+	exit(1);
+    }
+    my ($cfg_file) = @ARGV;
+    if ($option{u}) {
+        $ENV{'DMG_SCRIPT_USER'} = $option{u};
+    }
+    my $inserter = MySqlInserter->new();
+    $inserter->insert($cfg_file);
+}

@@ -1,0 +1,44 @@
+> groovy authorshipConnect.groovy ADELE_SPRITE AMMA
+
+Created log file:	logs/log_20131120130534.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NCAR-EOL-RAF
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 116.002
+Unable to find 1 for data set 116.003
+Unable to find 1 for data set 116.004
+Unable to find 1 for data set 116.005
+Unable to find 1 for data set 116.006
+Unable to find 1 for data set 116.007
+Found 508 for data set 116.008 and has sort_key of 65534 (instead of 1).
+Found 508 for data set 116.009 and has sort_key of 65534 (instead of 1).
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '116.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '116.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '116.004';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '116.005';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '116.006';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '116.007';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 7850 and contact_id = 508;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 7229 and contact_id = 508;
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

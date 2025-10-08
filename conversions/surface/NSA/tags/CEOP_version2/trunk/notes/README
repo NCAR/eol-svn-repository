@@ -1,0 +1,111 @@
+This directory contains general notes that are necessary to process the CEOP NSA data
+
+-------------------------------------------------------------
+The following is a list of fields that changed names and when the change occurred
+1. Atmospheric Pressure
+  a. C1
+    1. mettwr4h: 20050101.000000 to 20080911.000000 = AtmPress
+    2. met: 20080918.010000 to 20091231.000000 = atmos_pressure
+  b. C2
+    1. mettwr2h: 20050101.000000 to 20080908.000000 = AtmPress
+    2. met: 20080909.0000 to 20091231.000000 = atmos_pressure
+    
+2. Dew Point
+  a. C1
+    1. mettwr4h: 20050101.000000 to 20080911.000000 = DP2M_AVG
+    2. mettwr4h: 20050101.000000 to 20080911.000000 = DP10M_AVG
+    3. mettwr4h: 20050101.000000 to 20080911.000000 = DP20M_AVG
+    4. mettwr4h: 20050101.000000 to 20080911.000000 = DP40M_AVG
+    5. met: 20080918.010000 to 20091231.000000 = dew_point_mean
+    6. twr: 20080918.010000 to 20091231.000000 = dew_point_mean
+  b. C2
+    1. mettwr2h: 20050101.000000 to 20080908.000000 = DP2m_AVG
+    2. mettwr2h: 20050101.000000 to 20080908.000000 = D52m_AVG
+    3. met: 20080909.020000 to 20091231.000000 = dew_point_mean 
+    4. twr: 20080909.020000 to 20091231.000000 = dew_point_mean 
+
+3. Relative Humidity 
+  a. C1
+    1. mettwr4h: 20050101.000000 to 20080911.000000 = RH2M_AVG 
+    2. mettwr4h: 20050101.000000 to 20080911.000000 = RH10M_AVG 
+    3. mettwr4h: 20050101.000000 to 20080911.000000 = RH20M_AVG 
+    4. mettwr4h: 20050101.000000 to 20080911.000000 = RH40M_AVG 
+    5. met: 20080918.010000 to 20091231.000000 = rh_mean 
+    6. twr: 20080918.010000 to 20091231.000000 = rh_mean 
+  b. C2
+    1. mettwr2h: 20050101.000000 to 20080908.000000 = RH2m_AVG 
+    2. mettwr2h 20050101.000000 to 20080908.000000 = RH5m_AVG 
+    3. met: 20080909.020000 to 20091231.000000 = rh_mean 
+    4. twr: 20080909.020000 to 20091231.000000 = rh_mean 
+
+4. Temperature 
+  a. C1
+    1. mettwr4h: 20050101.000000 to 20080911.000000 = T2M_AVG 
+    2. mettwr4h: 20050101.000000 to 20080911.000000 = T10M_AVG 
+    3. mettwr4h: 20050101.000000 to 20080911.000000 = T20M_AVG 
+    4. mettwr4h: 20050101.000000 to 20080911.000000 = T40M_AVG 
+    5. met: 20080918.010000 to 20091231.000000 = temp_mean 
+  b. C2
+    1. mettwr2h: 20050101.000000 to 20080908.000000 = T2m_AVG 
+    2. mettwr2h: 20050101.000000 to 20080908.000000 = T5m_AVG 
+    3. met: 20080909.020000 to 20091231.000000 = temp_mean 
+    4. twr: 20080909.020000 to 20091231.000000 = temp_mean 
+
+5. Precip
+  a. C1
+    1. mettwr4h: 20050101.000000 to 20080911.000000 = PcpRate 
+    2. met: 20080918.010000 to 20091231.000000 = pws_precip_rate_mean_1min 
+  b. C2
+    1. mettwr2h: 20050101.000000 to 20080908.000000 = PCPRate 
+    2. met: 20080909.020000 to 20091231.000000 = pws_precip_rate_mean_1min 
+
+6. Wind Direction 
+  a. C1
+    1. mettwr4h: 20050101.000000 to 20080911.000000 = WD2M_DU_WVT 
+    2. mettwr4h: 20050101.000000 to 20080911.000000 = WD10M_DU_WVT 
+    3. mettwr4h: 20050101.000000 to 20080911.000000 = WD20M_DU_WVT 
+    4. mettwr4h: 20050101.000000 to 20080911.000000 = WD40M_DU_WVT 
+    5. met: 20080918.010000 to 20091231.000000 = wdir_vec_mean 
+    6. twr: 20080918.010000 to 20091231.000000 = wdir_vec_mean 
+  b. C2
+    1. mettwr2h: 20050101.000000 to 20080908.000000 = WinDir_DU_WVT 
+    2. met: 20080909.020000 to 20091231.000000 = wdir_vec_mean 
+    3. twr: MISSING
+
+7. Wind Speed 
+  a. C1
+    1. mettwr4h: 20050101.000000 to 20080911.000000 = WS2M_U_WVT 
+    2. mettwr4h: 20050101.000000 to 20080911.000000 = WS10M_U_WVT 
+    3. mettwr4h: 20050101.000000 to 20080911.000000 = WS20M_U_WVT 
+    4. mettwr4h: 20050101.000000 to 20080911.000000 = WS40M_U_WVT 
+    5. met: 20080918.010000 to 20091231.000000 = wspd_vec_mean 
+    6. twr: 20080918.010000 to 20091231.000000 = wspd_vec_mean 
+  b. C2
+    1. mettwr2h: 20050101.000000 to 20080908.000000 = WinSpeed_U_WVT 
+    2. met: 20080909.0000 to 20091231.000000 = wspd_vec_mean 
+    3. twr: MISSING
+-------------------------------------------------------------
+***** note: see above for the variables names to use for cdf2dat.pl ***** 
+To create the input data files (.dat):
+1.  cd to directory containing the raw netcdf files for a given network
+    (ie: /net/work/CEOP/version2/data_processing/other/NSA/raw/cdf/twr)
+2.  run cdf2dat.pl (found in the raw/bin directory)
+    example:
+      ../bin/cdf2dat.pl -i ./ -b '2008/09/18 00:00' -e '2009/12/31 23:59' -v base_time,time_offset,height,lat,lon,alt,atmos_pressure,dew_point_mean,rh_mean,temp_mean,wdir_vec_mean,wspd_vec_mean
+3.  mv all the .dat files from the cdf directory to the correct data directory
+    example (in the cdf directory):
+      mv *.dat ../../twr
+-------------------------------------------------------------
+Units for Atmospheric Pressure change from hPa to kPa at the following time:
+2006/07/06 21:00:00
+-------------------------------------------------------------
+Changed lon to -157.4066 due to rounding error in raw data
+-------------------------------------------------------------
+See /net/work/CEOP/version2/data_processing/other/NSA/conversion.constants.sfc.pl:apply_corrections for further corrections applied to the surface data
+See /net/work/CEOP/version2/data_processing/other/NSA/conversion.constants.twr.pl:apply_corrections for further corrections applied to the tower data
+-------------------------------------------------------------
+
+# since the format of the input files changed at different times for each station, all the .dat
+# files were converted to the format for the previous years.
+# see /net/work/CEOP/version2/data_processing/other/NSA/raw/bin/reformat.pl
+# to convert the input data format

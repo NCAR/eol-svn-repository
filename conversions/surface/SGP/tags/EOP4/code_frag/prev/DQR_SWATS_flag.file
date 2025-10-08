@@ -1,0 +1,42 @@
+CEOP EOP-4 GAPP ARM SGP SWATS DQR-Based Flags
+tsoil_W watcont_W 
+
+E3
+watcont_W (D)
+           if ($datetime >= 20040114.0500 && $datetime <= 20040114.0800) ||
+           if ($datetime >= 20040114.1800 && $datetime <= 20040114.2100) ||
+           if ($datetime >= 20040307.1000 && $datetime <= 20040310.1715) ||
+           if ($datetime >= 20040602.1700 && $datetime <= 20040606.1300) ||
+           if ($datetime >= 20040610.2000 && $datetime <= 20040610.2100) ||
+
+E4
+watcont_W (D)
+           if ($datetime >= 20030910.1600 && $datetime <= 20031008.1600) ||
+           if ($datetime >= 20040212.1500 && $datetime <= 20040212.1900) ||
+
+E7
+watcont_W (D)
+           if ($datetime >= 20040608.1900 && $datetime <= 20040608.2000) ||
+
+E12
+tsoil_W (D)
+           if ($datetime >= 20040219.2212 && $datetime <= 20040310.2247) ||
+
+watcont_W (D)
+           if ($datetime >= 20040219.2212 && $datetime <= 20040310.2247) ||
+
+E20
+watcont_W (D)
+           if ($datetime >= 20040709.1800 && $datetime <= 20040721.1900) ||
+
+E24
+watcont_W (D)
+           if ($datetime >= 20040205.1700 && $datetime <= 20040219.1700) ||
+           if ($datetime >= 20040430.2200 && $datetime <= 20040513.1900) ||
+           if ($datetime >= 20040513.1800 && $datetime <= 20040513.1900) ||
+
+
+E27
+watcont_W (D)
+           if ($datetime >= 20030820.1700 && $datetime <= 20040218.1700) ||
+

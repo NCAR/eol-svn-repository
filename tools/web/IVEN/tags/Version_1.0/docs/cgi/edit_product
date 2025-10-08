@@ -1,0 +1,155 @@
+#!/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>Displays the html form to add/update a product.  The user is give a blank
+# form if adding a new product or a form populated with a product to update
+# it.</p>
+#
+# <b>Expected Params: </b>
+#  <dd>project - part of State
+#  <dd>mode - 'add' or 'update'
+#  <dd>eproduct - product to update if mode == 'update'
+#
+# @author Dan Sullivan
+#  
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Utils;
+use ProductDBA;
+use State;
+use CGI;
+
+require "common";
+
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+edit_product( $state, $cgi );
+
+
+# Expected params:
+#  project - mandatory, part of state
+#  eproduct - product to edit
+#  mode - add/update
+sub edit_product
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $mode = $cgi->param( "mode" );
+	$mode = "add" if( !$mode );
+	my $project = $state->{project};
+	my $eproduct = $cgi->param( "eproduct" );
+
+	my $pd = Product->new();
+
+	if( $mode eq "add" )
+	{
+		$pd->{pjname} = $project;
+	}
+	else # update
+	{
+		$pd = ProductDBA::getFromDB( $eproduct, $project );
+	}
+
+	my $status_box = getStatusDropDown( $pd->{status} );
+
+	my $title = "Edit Product";
+	$title = "Add Product" if( $mode eq "add" );
+
+	println( $cgi->header( -expires=>"-1d" ) );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>Iven Edit: Product</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+
+	my $ncols = 2;	
+	println( "<table cellpadding=5 cellspacing=0 width=100% class=editTable>" );
+	println( "<form action=proc_product method=\"POST\">" );
+		println( "<tr class=editHeading><td colspan=$ncols>$title</td></tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Project:</b></td>" );
+			println( "<td>$project</td>" );
+		println( "</tr>" );
+		
+		println( "<tr>" );	
+			println( "<td align=right><b>Product Name:</b></td>" );
+			println( "<td><input type=text size=80 maxlength=100 value=\"$pd->{pdname}\" name=pdname></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Status:</b></td>" );
+			println( "<td>$status_box</td>" );
+		println( "</tr>" );
+
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( "<tr>" );	
+			println( "<td align=right><b>Note:</b></td>" );
+			println( "<td>" );
+				my $note_encoded = html_encode( $pd->{note} );
+				println( "<input type=text size=80 maxlength=255 value=\"$note_encoded\" name=note>" );
+			println( "</td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );	
+			println( "<td align=right><b>Link:</b></td>" );
+			println( "<td><input type=text size=80 maxlength=255 value=\"$pd->{product_link}\" name=product_link></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );	
+			println( "<td align=right><b>Link URL:</b></td>" );
+			println( "<td><input type=text size=80 maxlength=255 value=\"$pd->{product_link_url}\" name=product_link_url></td>" );
+		println( "</tr>" );
+
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( getButtons( $mode, $ncols ) );
+	
+		my $hidden = $state->getHiddenFieldString( "proc_edit"=>$EPRODUCT );
+
+		if( $mode eq "update" )
+		{
+			println( "<input type=hidden name=source_pdname value=\"$pd->{pdname}\">" );
+		}
+
+		println( $hidden );
+
+	println( "</table>" );
+	println( "</form>" );
+	println( "</html>" );
+	
+}
+
+sub getButtons
+{
+	my $mode = shift;
+	my $ncols = shift;
+	my $btns;
+
+	if( $mode eq "add" )
+	{
+	  $btns = "<tr class=editHeading><td colspan=$ncols align=right>" . 
+							"<input type=submit name=action value=\"Add Product\">" . &nbsp(2) .
+							"<input type=submit name=action value=\"Cancel\">" . 
+						"</td></tr>";
+	}
+	else
+	{
+	  $btns = "<tr class=editHeading><td colspan=$ncols align=right>" . 
+							"<input type=submit name=action value=\"Update Product\">" . &nbsp(2) .
+							"<input type=submit name=action value=\"Delete Product\" onClick=\"return confirm( 'This will also delete all of the product\\'s Datasets' );\">" . &nbsp(2) .
+							"<input type=submit name=action value=\"Cancel\">". 
+						"</td></tr>";
+	}  
+
+	return $btns;
+}
+
+1;

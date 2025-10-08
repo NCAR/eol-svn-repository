@@ -1,0 +1,140 @@
+import edu.ucar.eol.emdac.zith.*
+import grails.converters.XML
+import edu.ucsb.nceas.ezid.*
+
+conemail = System.getenv('USER')+'@ucar.edu'
+con = Contact.findByEmail(conemail)
+if (con == null) {
+  System.err.println "No contact found for ${conemail}"
+  System.exit(1)
+  }
+else {
+  println "Using rowReviseContact ${con}"
+  }
+
+/* ***** */
+/* bother, grails 2.3.x doesn't run BootStrap anymore, this is all pasted from there: */
+
+import org.codehaus.groovy.grails.commons.ApplicationAttributes
+
+java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone('UTC'))
+org.joda.time.DateTimeZone.setDefault(org.joda.time.DateTimeZone.UTC)
+
+// script needs to find this, BootStrap doesn't
+import org.codehaus.groovy.grails.commons.ApplicationHolder
+def servletContext = ApplicationHolder.getApplication().getParentContext().getServletContext()
+
+grails.converters.XML.createNamedConfig('datacite') {
+  it.registerObjectMarshaller(new edu.ucar.eol.emdac.xml.DataciteMarshaller(), 999)
+  it.setEncoding('UTF-8')
+  //it.setPrettyPrint(true)
+  }
+
+// hack! to inject applicationContext in order to get access to a service
+def d = new edu.ucar.eol.emdac.zith.Dataset()
+d.discard()
+def ac = servletContext.getAttribute(ApplicationAttributes.APPLICATION_CONTEXT)
+grails.converters.XML.getNamedConfig('datacite')?.getMarshaller(d).setApplicationContext(ac)
+
+/* ***** */
+
+
+// get datasets somehow, e.g. from a Project or this demo list
+arcs = [
+/*
+'1.33',
+'2.20',
+'69.080',
+'100.017',
+'245.B99-001',
+'106.346',
+'106.202',
+'13.104',
+*/
+'102.278',
+'245.B65-003',
+]
+datasets = []
+arcs.each{ arcid ->
+  println "archive_ident = ${arcid}\n"
+  dataset = Dataset.findByArchiveIdent(arcid)
+  println dataset.toString()
+  datasets.push(dataset)
+  }
+println "\n"
+
+
+// foreach dataset, get its datacite metadata and submit to EZID
+datasets.each{ dataset ->
+  println "Working on ${dataset.id} ${dataset}"
+  def mint = true
+
+  if (dataset.doiList.size() > 1) {
+    println "dataset ${dataset.archiveIdent} has ${dataset.doiList.size()} DOIs, skipping..."
+    return
+  } else if (dataset.doiList.size() == 1) {
+    println "setting metadata for dataset ${dataset.archiveIdent} DOI ${dataset.doiList[0].handle} ..."
+    mint = false
+  } else {
+    println "minting metadata for dataset ${dataset.archiveIdent} ..."
+  }
+
+  XML.use('datacite') { dcxml = dataset as XML }
+
+  // params for EZID API
+  md=[:]
+  md['_target']='http://data.eol.ucar.edu/codiac/dss/id='+dataset.archiveIdent
+  md['_status']='public'
+  md['_profile']='datacite'
+  md.datacite=dcxml.toString()
+
+  println "datacite xml:\n"
+  println md.datacite
+  println "\n\n"
+
+  // don't flood EZID
+  println "sleeping before EZID...\n";
+  sleep(1);
+
+  ezid = new EZIDService()
+  ezid.login('apitest','apitest')  // EZIDService won't let us auth on each request
+  if (mint)
+    newId = ezid.mintIdentifier('doi:10.5072/FK2',md)
+  else ezid.setMetadata(newId=dataset.doiList[0].handle,md)
+  println "archiveIdent = ${dataset.archiveIdent} newId = ${newId}"
+
+  // create & mintIdentifier() return both handles, but EZIDService won't let us see them,
+  //   so we have to do *another* request to get them
+  md2 = ezid.getMetadata(newId)
+
+  ezid.logout()
+
+  println "\nreturned metadata:\n"
+  md2.each {
+    println "${it.key} : ${it.value}"
+    }
+  println "\n\n"
+
+  if (mint)
+    // record the DOI
+    doi = new Doi(dataset:dataset, handle:newId, shadow:md2.'_shadowedby',
+      dataVersion:'1.0',
+      rowCreateContact: con, rowReviseContact: con,
+      publishTime: new java.sql.Timestamp(Long.parseLong(md2.'_created')*1000L)
+      )
+  else {
+    doi = dataset.doiList[0]
+    }
+  try {
+  if (doi.save(flush: true)) {
+    println "doi saved"
+  } else {
+    //println doi.errors
+    doi.errors.each { println it.resolvableToString() }
+  }
+  } catch (e) { // doesn't work?!?
+    println "Exception: ${e}"
+  }
+
+  println "\n\n"
+}

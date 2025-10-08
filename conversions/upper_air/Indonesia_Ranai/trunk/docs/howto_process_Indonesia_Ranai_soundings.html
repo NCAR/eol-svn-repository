@@ -1,0 +1,317 @@
+<html>
+<head>
+<title>How To: Process Indonesia Ranai Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Process Indonesia Ranai Upper Air Sounding Data</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#network">Network Information</a></li>
+        <li><a href="#version">Previous Versions</a>
+            <ol>
+                <li><a href="#version:DYNAMO_Ranai">2011 (DYNAMO)</a> - first created</li>
+            </ol>
+        </li>
+        <li><a href="#directory">Directory Structure</a></li>
+        <li><a href="#process">Processing the Data</a>
+            <ol> 
+			<li><a href="#setup">Initial Processing Setup</a></li>     		
+            <li><a href="#convert">Converting the Data</a></li>
+            <li><a href="#autoqc">Auto QC</a></li>
+ 			<li><a href="#visual_qc">Visual QC</a></li>
+            <li><a href="#finalize">Finalization</a></li>   
+			<li><a href="#5mb-extract">5mb Extraction</a></li>      		
+            </ol>
+        </li>
+        <li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+	<p>This document contains instructions for converting the Indonesian Ranai high resolution (2-second) radiosonde data into the EOL Sounding Composite
+	(ESC) format.  </p>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+    <li>The ID-Type is 99.</li>
+	<li>The Platform is 87 (Rawinsonde, Other)</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions</h2>
+<div class="block">
+
+    <a name="version:DYNAMO_Ranai"></a><h3>DYNAMO (2011) - Indonesia Ranai</h3>
+    <table class="version">
+	<tr><th>Software:</th><td><a
+	href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FRanai%2F#_conversions_upper_air_Ranai_tags_DYNAMO_2011_Ranai_">http://svn.eol.ucar.edu/svn/dmg/upper_air/Ranai/tags/DYNAMO_2011_RANAI_</a></td></tr>
+    <tr><th>Raw Data:</th><td>/net/work/Projects/dynamo/upper_air/Indonesia_Ranai/esc_processing/raw_data</td></tr>
+    <tr><th>Final Data:</th><td>/net/work/Projects/dynamo/upper_air/Indonesia_Ranai/esc_processing/dayfiles</td></tr>
+    </table>
+ 
+
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">Indonesia_Ranai/esc_processing/</h3>
+    <table class="directories">
+		<tr><th>5mb/</th><td>The directory where the extracted 5mb pressure
+		sounding files are stored.</td></tr>
+		<tr><th>build/</th><td>The auto-generated directory for the compiled
+		Java classes.</td></tr>
+		<tr><th>dayfiles/</th><td>The directory where the generated day files
+		are stored.  This is the final processed data that will be put on
+		line.</td></tr>
+	    <tr><th>docs/</th><td>The directory containing documentation about the
+	    processing and the data.</td></tr> 
+	    <tr><th>final/</th><td>The directory where the QC'ed files are placed once
+	    they have been created.</td></tr> 
+	    <tr><th>logs/</th><td>The directory where the error/check files from the QC
+	    are placed.</td></tr>
+	    <tr><th>output/</th><td>The directory where the CLASS files are put after
+	    they are generated.</td></tr> 
+	    <tr><th>raw_data/</th><td>The directory where the raw data is
+	    stored.</td></tr>
+	    <tr><th>software/</th><td>The directory where the software for the
+	    conversion is stored.</td></tr>
+	    <tr><th>src/</th><td>Unused directory - required for autoqc to run.</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+
+<a name="process"></a><h2>Processing the Data</h2>
+<div class="block"> 
+    <a name="setup"></a><h3>Initial Processing Setup</h3>
+	<ol>
+		<li><p>Copy the raw data into the <span
+		class="directoryName">raw_data</span> directory. Check the assumptions
+		made in the script regarding things such as file names and
+		locations.</p>
+
+	    <p><i>For DYNAMO 2011:</i></p>
+	    <ul>
+			<li><p>The raw data consists of two files for each sounding, COR
+			files with data and REF files with header information.  There are
+			334 *.cor (data) files and 300 *.ref (header info) files. Scot
+			advised that there are only two lines of header info we want, the
+			sonde ID and the software version. He said if there is no *.ref
+			file, simply say "No information." Because there is not a *.ref
+			file for every *.cor file, reading these into hashes and matching
+			them up is difficult, so I wrote a script (ReadTwoWriteOne.pl) to
+			read in the files and create a single raw data file (*.combo). If
+			no *.ref file exists it will add info for the Software Version and
+			Sonde ID that says "No information. I diffed all the files to make
+			sure nothing had been inadvertently affected by the
+			script.</p></li>
+			<li><p>Scot informed me that there is a zero sized ref file
+			(MO041205.ref) and also a zero sized cor file (MO311017.cor). I
+			moved MO311017.cor out of the /raw_data directory and into an
+			/unprocessed_files directory. Twelve files were removed from the
+			original raw data set and placed in the /unprocessed_files
+			directory. One was a zero size file length, one was removed at
+			Scot's request ("Ranai_201111100026.cls should be excluded from the
+			data set. There are no good data."), 9 had surface data only, and
+			one had only the column headings and no data. This left a total of
+			322 sounding files.</p></li>
+        </ul>	   
+	    </li>
+	</li>         
+    </ol>  
+
+    <a name="convert"></a><h3>Converting the Data</h3>
+ 	<p class="note">This step runs Perl code and should work on basically any
+	machine. However, to run the autoQC and any other processing/data prep done
+	by the build.xml (Ant) file, you must run on any machine with the proper
+	Ant and Java setup, such as tikal.</p>       
+	<p>Converting Indonesia Ranai High Resolution Radiosonde data into
+	the ESC format consists of the following steps.</p>
+
+	<ol>	
+	<li><p>Change to the <span class="directoryName">software</span> directory.</p></li>
+	<li><p>Edit the <span
+	class="softwareName">Ranai_Radiosonde_Converter.pl</span>
+	script.</p>
+	<ul>
+		<li><p><span class="beware">BEWARE: </span>The converter expects the
+		data to begin on the line 4 of the *.combo raw data file. The first
+		three lines are header information.</p></li>     
+		<li><p>Search for "HARD-CODED" to find and change the hard-coded
+		project-specific values in the script to be correct for your project.
+		For example, change the function: <code>getProjectName</code> to the
+		current project.</p></li>
+		<li><p>Code was added to the converter (from the Ron Brown Converter)
+		to derive the ascent rate values from the altitude and time
+		data.  The ascent rate flag was also set.</p></li>
+		<li><p><i>For DYNAMO 2011:</i></p>
+		<ul>
+			<li><p>The converter expects raw data files in the form:
+			MOddmmhh.combo where MO = MODEM sonde, dd = day, mm = month, and hh
+			= hour. So the raw data file name only provides month, day and hour
+			release information. The raw data "time" column (column 0)
+			contained 6 digits that represented UTC release time in seconds.
+			Scot asked that we determine that minutes and seconds from this
+			number. Some files had beginning numbers larger than 86400 (&gt;24
+			hours) so we subtracted 86400 from the first time and used the
+			remainder. The perl Date::Calc library function Add_Delta_DHMS was
+			used to convert the local release time to UTC time. </p></li>
+			<li><p>The raw data (*.combo) file contains header info on lines
+			1-3. Actual data starts on line 4. Some files end with incomplete
+			lines or lines that contained only "999999" in col. 0 so checks
+			were put in to detect and ignore these lines. Many of the files had
+			times that were "999999" and Scot indicated that these appeared
+			while the sondes were falling, so code was added to remove this
+			line and all that came after. Code was also added to remove
+			descending sonde data lines.</p></li>
+		</ul>
+	</ul>
+	</li>
+	<li><p>Run the <span
+	class="softwareName">Ranai_Radiosonde_Converter.pl</span>
+	script.  This will convert data to the ESC format.</p></li> 
+	<li><p>Run the format checker using the ant command:</p>
+    <p class="code">ant check-format-ESC</p></li>
+	<li><p>Check the log file (generated by the format checker) in the <span
+	class="directoryName">output</span> directory to determine if any format
+	issues need to be addressed before proceeding with AutoQC.</p></li>
+	</ol>
+
+
+<a name="autoqc"></a><h3>Auto QC</h3>
+	<p class="note">This step works best on tikal, but can be done on any
+	machine with the proper Ant and Java setup.</p>
+
+	<p>These steps execute the automatic QC on the processed files in the <span
+	class="directoryName">output</span> directory, generate log files in the
+	<span class="directoryName">logs</span> directory, and place the QC'ed data
+	files into the <span class="directoryName">final</span> directory, as
+	specified by the <span class="softwareName">build.xml</span> file.  The
+	final part of the automated process is to run the format checker on
+	the QC'ed files.  To run the sounding Automatic Quality Control
+	Processing:</p>
+    <ol>
+	   <li><p>Stay in/Change to the top level processing directory where the Ant
+	   <span class="softwareName">build.xml</span> file is located.</p></li>
+	   <li><p>Check the <span class="softwareName">build.xml</span> file for the
+	   <code>autoqc</code> target for the following:</p>
+           <ol>
+			   <li><p>A command to copy the properties file to the build
+			   directory. There is typically a copy of the autoqc properties
+			   file (e.g., "us_plains_autoqc.properties") in the
+			   software directory.</p></li>   		   
+			   <li><p>The java command(s) will be executed on the expected data
+			   in the expected locations (i.e., ensure that the directory names
+			   in the build.xml file are correct and what you want.)</p></li>
+			   <li><p>You have updated the project name in the build.xml,
+			   if included in the build.xml file.</p></li>
+		   </ol>
+	   <li><p>Perform the auto QC by executing the ant command:</p> <p
+	   class="code">ant autoqc</p></li>  
+	   <li><p>After all issues have been resolved, notify the Scientific Staff
+	   (Scot) that the data is ready for Visual QC. Also inform him of any
+	   issues noted so that he will be aware of them.</p></li>
+    </ol>
+
+
+<a name="visual_qc"></a><h3>Visual QC</h3>
+	<p>Once the auto QC is completed, email the scientific staff (i.e., Scot
+	Loehrer) so that they can perform a visual QC on the data and give final
+	approval of the processed data set, as required. Note that the visual qc is
+	not performed on all sounding datasets.</p>
+
+
+
+<a name="finalize"></a><h3>Finalization</h3>
+	<p>After the visual QC is completed, the data set is ready to be finalized
+	(i.e, prep'd for CODIAC).  
+       <ol>
+		 <li><p> Update this "How To" document to indicate the latest project
+		 this conversion was executed for and include any notes about upgrades
+		 made specifically for that project, as required. A copy of this
+		 document is generally found in the <span
+		 class="directoryName">/docs</span> directory. Place a copy of the
+		 updated doc in <span
+		 class="directoryName">/net/web/dmg/html/software/conversions/upper_air/Indonesian_Ranai</span>
+		 directory. The s/w repository page points to this doc in that web
+		 location, so this must be updated.  The s/w repository page is located
+		 <a
+		 href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/encyclopedia/repository-dmg-subversion-listing"
+		 target='_top'><b>here</b></a>. </p></li>
+
+		 <li><p>Update the dataset description (or EMDAC) document for this
+		 conversion. Work with the scientific staff to create an EMDAC
+		 document. Generally, start with an existing "similar" document and
+		 simply update it for this project and dataset.  Generally, a copy of
+		 the EMDAC doc can be found in the <span
+		 class="directoryName">/docs</span> area.</p></li>
+
+		<li><p>The next processing step is to create day files that can/will be
+		loaded into the EMDAC/CODIAC database, along with the EMDAC dataset
+		description document.  The dayfiles creation step will generate day
+		files sorted by nominal release date followed by station location as
+		required by CODIAC. It's very important that the output dayfiles be in
+		this expected sort order so that CODIAC can access all the soundings
+		within a single dayfile. Do the following steps to create the day
+		files.</p></li>
+    <ol>
+	   <li><p>Ensure that you are in the same (top) directory as the build.xml
+	   file. Create the day files using the ant command:</p>
+	   <p class="code">ant dayfiles</p> <p>This will create a file for each day
+	   where at least one sounding exists in the <span
+	   class="directoryName">dayfiles</span> directory or whichever directory
+	   is specified as the output directory in the build.xml file. If this
+	   dataset is to be put online "as is", these are the dayfiles to load into
+	   CODIAC.</p></li>
+       </li>
+    </ol>
+    </ol>
+
+
+<a name="5mb-extract"></a><h3>5mb Extraction</h3>
+	<p>If the converted soundings are also going to be placed into a 5mb
+	composite, the soundings need to have the proper 5mb pressure level
+	soundings generated.  This is done through the following steps:</p>
+    <ol>
+        <li><p>Generate the 5mb pressure level data files using the ant command:</p>
+            <p class="code">ant 5mb-extract</p>
+			<p>This will generate a 5 mb sounding file for each sounding in the
+			<span class="directoryName">final</span> directory and place
+			it in the <span class="directoryName">5mb</span>.  It will also run
+			some final checks to make sure the format is correct. Beware that
+			the file directories listed in the build.xml file are what you
+			expect and want.</p>   	        
+        </li>
+    </ol>
+	<p>The generated 5mb data files will then be available when the composite
+	is generated.</p>
+
+</div>
+<a href="#">Top</a><hr>
+
+<a name="documents"></a><h2>Documentation</h2>
+<p>The following are a list of documents that may help with the conversion or
+are related to the raw data.</p>
+<ul>
+	<li><a href="/software/tools/upper_air/autoqc">How To: AUTO QC Sounding Data</a>:  The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/software/tools/upper_air/esc_format_checker">How To: ESC Format Checker</a>:  The instructions and API for working with the ESC format checker program.</li>
+    <li><a href="#">How To: Process Indonesia Ranai Sounding Data</a>:  This document.</li>
+
+</ul>
+<a href="#">Top</a><hr>
+
+<p class="foot">Last Updated: 29 November 2012 - Linda Echo-Hawk</p>
+</body>
+</html>

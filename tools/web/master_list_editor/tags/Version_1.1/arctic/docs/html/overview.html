@@ -1,0 +1,111 @@
+<html><head><title>Master List Project Overview</title><head>
+<body bgcolor=white>
+<center><h1>Master List Project Overview</h1></center>
+By: Dan Sullivan
+<br>August 14, 2002
+<hr>
+<h3>Objective:</h3>
+<p>Develop a web-based tool that maintains a MySQL database of dataset information. This database can then be 
+queried to display master lists by different fields such as PI and discipline.  The project
+has two stages or parts: <br><dd>1) Develop an html form-based tool that allows users to add, delete, and update
+dataset information.  <br><dd>2) Develop a script that queries the database and dynamically builds master tables. 
+Currently no GUI is planned. The database will simply be queried through hard coded links.</p>
+
+<hr>
+
+<h3>Fields:</h3>
+<p>The following fields will be included in the database and will be the fields by which the master tables
+can be built.</p>
+
+<dd><b>1) storm_id:</b> The storm_id of the dataset in Codiac, if available.
+<dd><b>2) title:</b> The title of the dataset to be displayed in the table.
+<dd><b>3) author/PI:</b> Dataset's author or PI. 
+<dd><b>4) platform:</b> Dataset's platform. 
+<dd><b>5) data type:</b> The type of data this dataset consists of. 
+<dd><b>6) discipline:</b> Dataset's discipline. 
+<dd><b>7) date:</b> General date, can be determined later whether this is the date entered into Master List
+                    database or date submitted by PI.
+<dd><b>8) project:</b> The project this dataset belongs. 
+<dd><b>9) documentation url:</b> URL that links the dataset to its documentation. 
+
+<hr>
+<h3>Scripts</h3>
+
+<h4>Part One: Master List Maintenance</h4>
+<p>A script called master_maint will allow users, via the web, to add, delete and update datasets
+for the master list.  This will be similar to the Data Loading Notes pages developed before.  
+<a href=master_maint_tst.html>Form example.</a></p>
+
+<h4>Part Two: Master List Query</h4>
+<p>A script called master_query will allow hard coded links to query the database and then display
+tables based on the query.  It is possible for this to turn into a form-based query but is not in the
+current plan.</p> 
+
+<hr>
+<h3>Link To Data Loading Notes Page:</h3>
+<p>The most logical approach to this project is to link it to the already existing 
+<a href=http://www.joss.ucar.edu/dpg/notes>data loading notes</a> pages that are also backed with a MySQL database.
+The data loading notes contains similar fields such as storm_id and title and it makes little sense to be 
+entering in a single dataset's information at least three times (data loading notes, master list, and then Codiac).
+We should be able to combine at least two of these steps.  This will also help keep naming consistent.  I have
+often come across datasets in master tables that have completely different names than what is in the data 
+loading notes and Codiac.  This makes it difficult to keep track of what is what when you have little knowledge
+of the data and/or the project.  There are two ways in which these two steps could be combined:</p>
+<dd>1) Develop one application and one database that combine this master list application with the already 
+developed data loading notes.  In terms of future projects and use this is the best way to go, but this 
+would involve some serious time, which is not available, and is getting 
+too close to Codiac.  Also, others may not be interested in the master list setup but will still want to 
+use the data loading notes.  This is getting a little touchy and I'm not sure it is the direction I want to 
+take.<br>
+<dd>2) Link the master list application to the data loading notes application.  In this manner when a dataset is added
+to the master list database (using master_maint) the dataset information would also be added to the data 
+loading notes database.  Fields such as title and storm_id that are similar to the two projects could be
+added to both databases in one shot.  The user would then have to turn around and update the notes, person loading, 
+archive location, etc. in  the data loading notes.  This would keep the data loading notes independent 
+so the master list application would not have to be used by all the projects that use the data loading notes.  
+This method would also prevent entering in the same data twice and help keep naming conventions consistent.
+<br>
+<p>
+Because of time constraints the master list application will be developed without linking it to the data loading
+notes.  But I think linking the two should at least be tested to see if it makes things more efficient and
+less confusing.
+</p>
+
+<hr>
+<h3>Database</h3>
+<table border=1 cellpadding=2 cellspacing=2>
+<tr><td colspan=2><h4>List Table:</h4></td></tr>
+	<tr><td><b>id </b></td><td> INT, PRIMARY KEY</td></tr>
+	<tr><td><b>storm_id </b></td><td> VARCHAR(15)</td></tr>
+	<tr><td><b>title </b></td><td> VARCHAR(150)</td></tr>
+	<tr><td><b>date </b></td><td> DATE</td></tr>
+	<tr><tr><td><b>author </b></td><td> VARCHAR(30)</td></tr>
+	<tr><td><b>doc_url </b></td><td> VARCHAR(200)</td></tr>
+	<tr><td><b>data_type_id </b></td><td> INT</td></tr>
+	<tr><td><b>discipline_id </b></td><td> INT</td></tr>
+	<tr><td><b>platform_id </b></td><td> INT</td></tr>
+	<tr><td><b>proj_id </b></td><td> INT</td></tr>
+</table>
+<br><br>
+<table border=1 cellpadding=2 cellspacing=2>
+<tr><td colspan=2><h4>DataType Table:</h4></td>
+		<td colspan=2><h4>Discipline Table</hr></td>
+		<td colspan=2><h4>Platform Table</hr></td></tr>
+	<tr><td><b>id </b></td><td>INT, PRIMARY KEY</td>
+		<td><b>id </b></td><td>INT, PRIMARY KEY</td>
+		<td><b>id </b></td><td>INT, PRIMARY KEY</td></tr>
+	<tr><td><b>name </b></td><td>VARCHAR(100)</td>
+		<td><b>name </b></td><td>VARCHAR(100)</td>
+		<td><b>name </b></td><td>VARCHAR(100)</td></tr> 
+	<tr><td><b>description </b></td><td>TEXT</td>
+		<td><b>description </b></td><td>TEXT</td>
+		<td><b>description </b></td><td>TEXT</td></tr>
+</table> 
+<br><br>
+<table border=1 cellpadding=2 cellspacing=2>
+<tr><td colspan=2><h4>ListProjects Table:</h4></td></tr>
+	<tr><td><b>id </b></td><td>INT, PRIMARY KEY</td></tr>
+	<tr><td><b>name </b></td><td>VARCHAR(20)</td></tr> 
+	<tr><td><b>notes </b></td><td>TEXT</td></tr>
+</table>
+</body></html>

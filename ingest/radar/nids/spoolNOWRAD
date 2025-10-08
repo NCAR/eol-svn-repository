@@ -1,0 +1,103 @@
+#!/usr/bin/perl -w
+
+# spoolNOWRAD
+# mark, 2004 June 4
+#
+# $Id: spoolNOWRAD,v 1.3 2006/02/26 22:57:52 joss Exp joss $
+# $Log: spoolNOWRAD,v $
+# Revision 1.3  2006/02/26 22:57:52  joss
+# Fix MSS command paths
+#
+# Revision 1.2  2004/06/04 23:14:10  joss
+# Remove testing stubs
+#
+# Revision 1.1  2004/06/04 23:10:27  joss
+# Initial revision
+#
+#
+# Script to automatically spool compressed NIDS NOWRAD data and imagery to
+# MSS
+#
+# In order to preserve generated imagery, data older than 7 days, along
+# with the images, will be tarred, then gzipped, then copied to
+# /JOSS/DATA/RAW/RADAR/NIDS/NOWRAD/YYYY where YYYY is the year.  Filenames
+# will be nowrad.YYYYMMDD.tar.gz where YYYYMMDD is the file date.  Data
+# files will be removed from local disk, but imagery will not.
+#
+# Script will run once per day.
+
+use Time::Local;
+use POSIX "strftime";
+use FindBin qw($Script $Bin);
+
+$monitor="joss";
+open STDOUT, "|/bin/mail -s '$Script output' $monitor" or die
+    "Couldn't redirect stdout, $!";
+open STDERR, ">&STDOUT" or die "Couldn't dup stdout, $!";
+select STDERR; $|=1;
+select STDOUT; $|=1;
+
+print "I am $Bin/$Script running on ",`/bin/hostname`,"\n";
+
+$tmp='tmp';
+
+$TAR='/bin/tar';
+$RM='/bin/rm';
+$GZIP='/bin/gzip';
+#$RMDIR='/bin/rmdir --ignore-fail-on-non-empty'; # GNU rmdir can be quiet!
+$MSRCP='/net/local_lnx/dcs/bin/msrcp';
+$MSLS='/net/local_lnx/dcs/bin/msls';
+
+$destdir='/JOSS/DATA/RAW/RADAR/NIDS/NOWRAD';
+$prefix='nowrad';
+$suffix='.gz';
+$daysold=7;
+$wpwd='jossdata';
+$rtpd=32767;
+$opts="-wpwd $wpwd -pe $rtpd";
+
+chdir($Bin) or die "Couldn't cd to $Bin, $!";
+
+# Figure out start day
+($day, $month, $year) = (gmtime(time-$daysold*86400))[3,4,5];
+$startday = sprintf("%04d%02d%02d", $year+1900, $month+1, $day);
+$today=int(time()/86400);
+print "Spooling NIDS older than $startday (UTC)\n";
+
+opendir(DIR,'.');
+@days=sort(grep(/^\d{8}$/,readdir(DIR)));
+closedir(DIR);
+foreach $day (@days) {
+    ($y, $m, $d)=$day=~/^(\d\d\d\d)(\d\d)(\d\d)$/;
+    #print "y, m, d: $y, $m, $d\n";
+    $thisday=int(timegm(0,0,0,$d,$m-1,$y-1900)/86400);
+    #print "today, thisday: $today, $thisday\n";
+    next if ($today-$thisday) <= $daysold;
+
+    print "Spooling files from $day\n";
+
+    unless (-d "images/$day") {
+	print "Creating images for $day\n";
+	system("/ingest/ingest/rt_images/mk_nowrad_4day $day");
+    }
+    $f="$prefix.$day.tar";
+    $result=system("$TAR cvf $tmp/$f $day images/$day");
+    if ($result) {
+	print "ERROR $result in tar!\n";
+	next;
+    }
+    $result=system("$GZIP -v -f $tmp/$f");
+    if ($result) {
+	print "ERROR $result in gzip!\n";
+	next;
+    }
+    $result=system("$MSRCP $opts $tmp/$f$suffix mss:$destdir/$y/$f$suffix");
+    if ($result) {
+	print "ERROR $result in msrcp!\n";
+	next;
+    }
+    system("$MSLS -l $destdir/$y/$f$suffix");
+    system("$RM $tmp/$f$suffix");
+    system("$RM -r $day");
+}
+

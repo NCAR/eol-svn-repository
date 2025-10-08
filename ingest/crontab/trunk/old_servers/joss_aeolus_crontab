@@ -1,0 +1,54 @@
+HOST=aeolus.eol.ucar.edu
+
+####################################################
+# If you make a modification to this crontab,
+# PLEASE indicate what project it is for and who the
+# responsible party is, and include your initials.
+#
+# Also, the crontab is in subversion at
+# http://svn/svn/dmg/ingest/crontab
+# If you make significant changes, please upload a copy
+# to svn.
+#
+# 9 September 2014 - LECully - Updated crontab by
+#    commenting out NPN ingest script.
+# 26 May 2015 - LECully - Added PECAN project scripts
+#    to put PISA soundings onto GTS.
+# 8 March 2017 - JJubera - commented out reorg_winter_data.pl
+#    to keep script current with the live crontab
+# 4 April 2017 - JJubera - Kate Young added PERDIGAO
+#    data script    
+#
+# Thank you!
+####################################################
+
+# Operational ingest scripts. See Janine for details.
+0 10 * * * /h/eol/dmg/HPSS_cronjobs/ingest/atlas/HPSS_savefiles
+30 10 * * * /h/eol/dmg/HPSS_cronjobs/ingest/surface/madis/HPSS_madis_mysql_stage_to_mss.pl
+0 11 * * * /h/eol/dmg/HPSS_cronjobs/ingest/satellite/madis/HPSS_HDW_mysql_stage_to_mss.pl
+0 17 * * * /h/eol/dmg/HPSS_cronjobs/ingest/satellite/madis/HPSS_HDW1h_mysql_stage_to_mss.pl
+0 15 * * * /h/eol/joss/madis/madis_map_tar_mysql.pl
+0 16 * * * /h/eol/dmg/HPSS_cronjobs/ingest/surface/uspln/HPSS_USPLN_lightning.sh
+0 18 * * * /h/eol/dmg/HPSS_cronjobs/ingest/satellite/atlas/HPSS_gts_ldm_operational_db_update.pl
+0 2 1 * * /h/eol/dmg/HPSS_cronjobs/ingest/satellite/atlas/HPSS_ldm_metar_mss_db_update.pl
+0 3 * * * /h/eol/dmg/HPSS_cronjobs/ingest/aircraft/ACARS/HPSS_spoolACARS
+0 1 6 * * /h/eol/dmg/HPSS_cronjobs/ingest/surface/asos/HPSS_download_asos.pl
+0 9 * * * /h/eol/dmg/HPSS_cronjobs/ingest/chat/trunk/get_chatlogs.pl
+
+# NPN and HPCN operational ingest scripts. See Loehrer or Cully for details.
+# 30 10 * * 1,3,5 /net/work/operational/sounding/NPN/trunk/src/HPSS_NPN_wind_rass.pl
+30 10 15 * * /net/work/operational/surface/HPCN/trunk/src/HPCNfiles.pl
+
+
+# Script to list all of EOLs shared HPSS files. See Rilling for details.
+0 20 1 * * /h/eol/joss/hpss_retrieval/hpss_list_all_eol.sh
+
+# PROJECT-SPECIFIC scripts. See Janine for details.
+# WINTER
+# 30 9 * * * /net/archive/data/winter/by_flight/reorg_winter_data.pl
+# PECAN
+#0 8 * * * /h/eol/dmg/HPSS_cronjobs/ingest/surface/okmeso/okmeso_stage_to_hpss.pl
+#15 9 * * * /h/eol/dmg/HPSS_cronjobs/ingest/satellite/goes14/GOES14_mysql_stage_to_HPSS.pl
+
+#Operation script for PERDIGAO Data. See Kate for details
+#30 16  * * * /h/eol/dmg/HPSS_cronjobs/ingest/surface/isfs/HPSS_ISFS_5min_to_mss.pl 

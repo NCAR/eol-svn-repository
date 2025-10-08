@@ -1,0 +1,163 @@
+#!/usr/bin/perl
+
+# mark, 2001 Dec 10: remove refs to FTPed data (LDM-only for now)
+# $Log: savefiles,v $
+# Revision 1.6 2008/04/15 13:38:00   joss (janine)
+# Modified to send output to a log and only email monitors if a warning is
+# generated.
+#
+# Revision 1.5  2006/06/13 21:15:21  joss
+# Code out references to ETA 216 model, which has been unavailable
+# for some time
+#
+# Revision 1.4  2006/05/31 19:24:48  joss
+# Port to tsunami/Linux
+#
+
+use File::Basename;
+
+$RSYNC="/usr/bin/rsync -a";
+$MV="/bin/mv";
+$RM="/bin/rm";
+$CAT="/bin/cat";
+$LS="/bin/ls";
+$MSRCP="/net/local_lnx/dcs/bin/msrcp -wpwd jossdata -pe 32767";
+$MSLS="/net/local_lnx/dcs/bin/msls";
+$archive="mss:/JOSS/DATA/RAW/BY_PROJECT/ATLAS";
+#$tmpdir="/codiac_tmp/joss";
+$tmpdir="/home/joss/atlas/tmp";
+
+$monitor="eol-cds-ingest\@ucar.edu";
+$subject="ATLAS file save";
+
+$ETA_216_ENABLED=0;
+
+$log = "";
+close STDOUT;
+open(STDOUT,">",\$log) or die
+    "Couldn't redirect stdout, $!";
+#open STDOUT, "|/bin/mailx -s '$subject' $monitor" or die
+#    "Couldn't redirect stdout, $!";
+select STDOUT; $|=1;
+
+#open STDERR, ">&STDOUT" or die "Couldn't dup stdout, $!";
+#select STDERR; $|=1;
+
+use FindBin qw($Script $Bin);
+use Sys::Hostname;
+$host=hostname();
+&log("I am $Bin/$Script running on $host\n");
+
+use POSIX "strftime";
+
+sub asctime {
+    my($time)=@_;
+    return POSIX::strftime("%D %T %Z",localtime($time));
+}
+
+sub log {
+#    open(LOG,">>$log");
+#    print LOG &asctime(time),": @_\n";
+#    print &asctime(time),": @_\n" if $verbose;
+     print &asctime(time),": @_\n";
+#    close(LOG);
+}
+
+# Check whether given numeric argument
+$daysAgo = 0;
+$daysAgo = $ARGV[0] if ($ARGV[0]*1 == $ARGV[0]);
+# Get time from two (or more) days ago
+($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = 
+    gmtime(time-(2+$daysAgo)*86400);
+$year += 1900;
+$mon += 1;
+$ym = sprintf("%04d%02d", $year, $mon);
+$date = sprintf("%04d%02d%02d", $year, $mon, $mday);
+
+&log("Staging ATLAS files for $date to $archive");
+
+&log("Copying AVN model");
+#@files=glob("/ingest/ldm/data/hrs/raw/${date}*avn.grib");
+@files=glob("/scr/satellite/ldm/data/gempak/model/raw/${date}*avn.grib");
+if (@files==0) { &log("WARNING: No files exist in gempak/model/raw/ avn.grib data.\n");}
+foreach $file (@files) {
+    $base=basename($file);
+#    print("$MSRCP $file $archive/AVN/$ym/$base\n");
+    system("$MSRCP $file $archive/AVN/$ym/$base");
+}
+
+if ($ETA_216_ENABLED) {
+    &log("Selecting and moving ETA 216 model");
+
+# Create model-run files from FTPed Alaska ETA model.  For each model
+# run, compare the FTPed data to the LDM-acquired data, and keep the larger.
+# Then ax both sets of source files.
+    $etadate=sprintf("%02d%02d%02d", $year%100, $mon, $mday);
+    $srcdir="/ingest/ingest/atlas/ncepc/eta/alaska.$etadate";
+    $ldmdir="/ingest/ldm/data/hrs/raw";
+    mkdir($tmpdir,0755) unless -d $tmpdir;
+    foreach $run (qw(00 06 12 18)) {
+	$file="${date}${run}00_eta216.grib";
+	#    system("$CAT $srcdir/eta.T${run}Z* > $tmpdir/$file");
+	#    if ((-s "$tmpdir/$file") > (-s "$ldmdir/$file")) {
+	##        print("$MSRCP $tmpdir/$file $archive/ETA/$ym/$file\n");
+	#        system("$MSRCP $tmpdir/$file $archive/ETA/$ym/$file");
+	#	&log("Kept FTPed file for ${run}Z model run");
+	#    } else {
+#        print("$MSRCP $ldmdir/$file $archive/ETA/$ym/$file\n");
+	system("$MSRCP $ldmdir/$file $archive/ETA/$ym/$file");
+	&log("WARNING: Kept LDMed file for ${run}Z model run");
+	#    }
+	###unlink("$ldmdir/$file");
+	#    unlink("$tmpdir/$file");
+    }
+#system("$RM /ingest/ldm/data/hrs/gempak/${date}*eta216.gem");
+#system("$RM -r $srcdir");
+}
+
+&log("Copying observational data");
+#@files=glob("/ingest/ldm/data/weather/gempak/data/??${date}*.gem");
+@files=glob("/scr/satellite/ldm/data/gempak/surface/s?${date}*.gem");
+if (@files==0) { &log("WARNING: No files exist in gempak/surface location.\n"); }
+foreach $file (@files) {
+    $base=basename($file);
+#    print("$MSRCP $file $archive/OBS/$ym/$base\n");
+    system("$MSRCP $file $archive/OBS/$ym/$base");
+}
+@files=glob("/scr/satellite/ldm/data/gempak/upperair/ua${date}*.gem");
+if (@files==0) { &log("WARNING: No files exist in gempak/upperair location.\n"); }
+foreach $file (@files) {
+    $base=basename($file);
+#    print("$MSRCP $file $archive/OBS/$ym/$base\n");
+    system("$MSRCP $file $archive/OBS/$ym/$base");
+}
+
+&log("Results:");
+#chdir($archive);
+$ENV{'NCAR_MSSPWD'}='/JOSS/DATA/RAW/BY_PROJECT/ATLAS';
+#system("$MSLS -l \"AVN/$ym/${date}*avn.grib\"");
+$command = "$MSLS -l \"AVN/$ym/${date}*avn.grib\"";
+my $output = `$command`;
+print $output;
+#system("$MSLS -l \"ETA/$ym/${date}*eta216.grib\"") if $ETA_216_ENABLED;
+if ($ETA_216_ENABLED) {
+   $command = "$MSLS -l \"ETA/$ym/${date}*eta216.grib\"";
+   my $output = `$command`;
+   print $output;
+}
+#system("$MSLS -l \"OBS/$ym/??${date}*.gem\"");
+$command = "$MSLS -l \"OBS/$ym/??${date}*.gem\"";
+my $output = `$command`;
+print $output;
+
+open(LOG,">>savefiles.log");
+print LOG $log;
+close(LOG);
+
+# If any warnings were generated, send an email.
+if ($log =~ /WARNING:/) {
+    open STDERR, "|/bin/mailx -s '$subject' $monitor" or die
+        "Couldn't redirect stderr, $!";
+    select STDERR; $|=1;
+    print STDERR $log;
+}

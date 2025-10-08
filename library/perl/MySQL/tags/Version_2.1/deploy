@@ -1,0 +1,59 @@
+#! /usr/bin/perl -w
+
+##Module---------------------------------------------------------------------
+# The deploy script is used for generating the production version of the
+# MySQL Perl library and the scripts that use the library to insert files
+# into the database.  It copies the files to the production locations,
+# changes permissions to prevent them from being editted, changes group
+# ownership to CDS, and updates the library locations in the scripts to
+# point to the production version from the developmental version.
+#
+# @author Joel Clawson
+# @version 1.0 - Original creation of the script.
+##----------------------------------------------------------------------------
+use strict;
+
+# Define the locations for the scripts and library files.
+my $LIB_DIR = "";
+if (-d "/net/work/bin") { 
+    $LIB_DIR = "/net/work/lib/perl/mysql";
+} elsif (-d "/work/bin") { 
+    $LIB_DIR = "/work/lib/perl/mysql";
+} else {
+    printf("Unable to find the work directory to deploy the tools!\n");
+    exit(1);
+}
+
+&main();
+
+##----------------------------------------------------------------------------
+# @signature void main()
+# <p>Deploy the CODIAC insert scripts and the MySQL library modules to the
+# production locations for everyday use.</p>
+##----------------------------------------------------------------------------
+sub main {
+    deploy_library();
+}
+
+##-----------------------------------------------------------------------------
+# @signature void deploy_library()
+# <p>Copy the library files to the lib directory and change the pemissions
+# so they cannot be changed.</p>
+##-----------------------------------------------------------------------------
+sub deploy_library {
+    # Create the lib directory where the library is located.
+    system("mkdir -p $LIB_DIR");
+    system("chmod -R 775 $LIB_DIR");
+
+    # Copy the library files to the lib directory.
+    printf("Copying library files to $LIB_DIR ...\n");
+    system("cp -r lib/* $LIB_DIR");
+
+    # Change the permissions to prevent anyone from changing the files.
+    printf("Chaning permissions to read only ...\n");
+    system("chmod 444 $LIB_DIR/*.pm");
+
+    # Make sure all of the files are available to CDS users.
+    printf("Changing group to cds ...\n");
+    system("chgrp -R cds $LIB_DIR");
+}

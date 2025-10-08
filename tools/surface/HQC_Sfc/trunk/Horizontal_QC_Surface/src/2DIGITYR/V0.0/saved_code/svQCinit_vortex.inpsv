@@ -1,0 +1,18 @@
+1                          pmethod.                  (Determines computation of WEIGHT in QC processing.)
+500.0                      Area of Influence in km.  (Depends on pmethod above) (1/# = min_weight)
+20                         Data frequency (minutes). (Set to highest freq in input) (data_freq)
+1994                       Century/Year data was collected. (Integer YYYY) (current_year)
+940401                     Date Project Began YYMMDD. (Sigmas computed based on this date)(proj_begin_date)0401
+940401                     Begin date of data to process YYMMDD (begin_date) 0401
+940615                     End   date of data to process YYMMDD (end_date)   0615
+/data10/NEWQC/             Path name (and general name prefix) of 0qc files to QC.
+/scratch/vortex_qccomp/SIGMAFILES/     Path name of variance files computed by compute_sigmasq.
+?.??                       Precip Maximum `bad` limit. Millimeters per "data_freq" amt of time. (bmax)
+?.??                       Precip Minimum `dubious` limit. Millimeters per "data_freq" amt of time. (dmin)
+0.5   0.2                  Station Pressure      `bad & dubious` alpha values. (ALL ALPHAS WILL BE SQUARED!)
+0.5   0.2                  Sea Level Pressure    `bad & dubious` alpha values. 
+1.0   0.4                  Calc Sea Lvl Pressure `bad & dubious` alpha values.
+0.5   0.25                 Dry Bulb Temperature  `bad & dubious` alpha values.
+0.5   0.25                 Dew Point Temperature `bad & dubious` alpha values.
+4.0   2.25                 Wind Speed            `bad & dubious` alpha values.
+2.2   1.22                 Wind Direction        `bad & dubious` alpha values.

@@ -1,0 +1,46 @@
+These original dataTypes files were copied to "fake" genpro matching files that
+also need matching sql cmd created. For instance, SL said that the same sql cmd/GCMD keywords
+that are applied to dataset 365.006 need to be applied to 365.003 and so on for the 36 listed
+genpro dataset IDs listed in the right hand column below. I put "lec" in the "fake" genpro
+dataTypes files so that I could tell them apart from the software generated files. These files
+are a straight copy of one file to another. The plan is that the software will run on the "fake"
+genpro dataTypes files and do all the work to generate SQL commands without any post creation or
+sql commands. Should be safer than hand creating/copying commands and then having to look up
+dataset archIdents versus dataset IDs.  LEC 4 May 2020
+--------------------------------------------------------------------------------------------------
+cp   365-006_RF01.19810518.153802_172452.nc.dataTypes  365-003_lec_RF01.19810518.153802_172452.nc.dataTypes
+cp   365-007_RF22.19810710.093657_120214.nc.dataTypes  365-001_lec_RF22.19810710.093657_120214.nc.dataTypes
+cp   365-008_RF01.19810606.143527_165211.nc.dataTypes  365-002_lec_RF01.19810606.143527_165211.nc.dataTypes
+cp   365-009_RF16.19810606.133837_163722.nc.dataTypes  365-004_lec_RF16.19810606.133837_163722.nc.dataTypes
+cp   419-002_RF02.19820615.130421_154731.nc.dataTypes  419-001_lec_RF02.19820615.130421_154731.nc.dataTypes
+cp   420-002_RF01.19820116.100042_113653.nc.dataTypes  420-001_lec_RF01.19820116.100042_113653.nc.dataTypes
+cp   422-002_RF02.19820518.131143_162555.nc.dataTypes  422-001_lec_RF02.19820518.131143_162555.nc.dataTypes
+cp   423-002_RF01A.19820810.140334_164739.nc.dataTypes  423-001_lec_RF01A.19820810.140334_164739.nc.dataTypes
+cp   425-002_RF07.19810502.095723_123726.nc.dataTypes  425-001_lec_RF07.19810502.095723_123726.nc.dataTypes
+cp   426-002_RF02B.19810320.112708_125536.nc.dataTypes  426-001_lec_RF02B.19810320.112708_125536.nc.dataTypes
+cp   428-002_RF03.19810926.114343_141844.nc.dataTypes  428-001_lec_RF03.19810926.114343_141844.nc.dataTypes
+cp   433-002_RF06A.19800610.152909_173338.nc.dataTypes  433-001_lec_RF06A.19800610.152909_173338.nc.dataTypes
+cp   434-002_RF05.19800730.084115_113311.nc.dataTypes  434-001_lec_RF05.19800730.084115_113311.nc.dataTypes
+cp   435-002_RF02.19800820.102700_140340.nc.dataTypes  435-001_lec_RF02.19800820.102700_140340.nc.dataTypes
+cp   436-002_RF04.19800125.075937_100129.nc.dataTypes  436-001_lec_RF04.19800125.075937_100129.nc.dataTypes
+cp   437-002_RF01.19791117.203626_221441.nc.dataTypes  437-001_lec_RF01.19791117.203626_221441.nc.dataTypes
+cp   438-002_RF03.19791223.164010_185706.nc.dataTypes  438-001_lec_RF03.19791223.164010_185706.nc.dataTypes
+cp   439-002_RF01.19800516.145955_154741.nc.dataTypes  439-001_lec_RF01.19800516.145955_154741.nc.dataTypes
+cp   443-002_RF04.19790505.172811_195425.nc.dataTypes  443-001_lec_RF04.19790505.172811_195425.nc.dataTypes
+cp   444-003_RF04B.19790419.155625_190320.nc.dataTypes  444-001_lec_RF04B.19790419.155625_190320.nc.dataTypes
+cp   445-003_RF01.19790910.145145_162950.nc.dataTypes  445-001_lec_RF01.19790910.145145_162950.nc.dataTypes
+cp   445-004_RF01.19790910.145147_162836.nc.dataTypes  445-002_lec_RF01.19790910.145147_162836.nc.dataTypes
+cp   446-002_RF01.19790215.103344_133500.nc.dataTypes  446-001_lec_RF01.19790215.103344_133500.nc.dataTypes
+cp   447-002_RF05.19790116.142440_163959.nc.dataTypes  447-001_lec_RF05.19790116.142440_163959.nc.dataTypes
+cp   448-002_RF31.19781120.074724_100559.nc.dataTypes  448-001_lec_RF31.19781120.074724_100559.nc.dataTypes
+cp   455-002_RF02.19780523.094917_121118.nc.dataTypes  455-001_lec_RF02.19780523.094917_121118.nc.dataTypes
+cp   456-003_RF11.19780712.144748_162810.nc.dataTypes  456-001_lec_RF11.19780712.144748_162810.nc.dataTypes
+cp   456-004_RF05.19780710.151414_172209.nc.dataTypes  456-002_lec_RF05.19780710.151414_172209.nc.dataTypes
+cp   457-003_RF12A.19780921.144631_163328.nc.dataTypes  457-002_lec_RF12A.19780921.144631_163328.nc.dataTypes
+cp   457-004_RF07.19780909.133342_161227.nc.dataTypes  457-001_lec_RF07.19780909.133342_161227.nc.dataTypes
+cp   458-002_RF10.19780816.162610_200920.nc.dataTypes  458-001_lec_RF10.19780816.162610_200920.nc.dataTypes
+cp   459-002_RF05.19780421.110700_131920.nc.dataTypes  459-001_lec_RF05.19780421.110700_131920.nc.dataTypes
+cp   460-002_RF07.19780519.112339_151233.nc.dataTypes  460-001_lec_RF07.19780519.112339_151233.nc.dataTypes
+cp   461-002_RF09.19780223.105259_131730.nc.dataTypes  461-001_lec_RF09.19780223.105259_131730.nc.dataTypes
+cp   474-002_RF02B.19821211.061046_090944.nc.dataTypes  474-001_lec_RF02B.19821211.061046_090944.nc.dataTypes
+cp   478-002_RF04.19771105.135833_161150.nc.dataTypes  478-001_lec_RF04.19771105.135833_161150.nc.dataTypes

@@ -1,0 +1,134 @@
+#!/bin/perl -w
+
+# --------------------------------------------------------------
+# view_links: displays the links for the given category or project
+#  This script is not executed directly, the view_links subroutine
+#   is called from other scripts.
+# 
+# view_links( $id, $mode, $type, $hlight )
+#   $id - the id of the project or category it display
+#   $mode - the add or update mode, used by other scripts
+#    this just passes it on. (I think, hehe)
+#   $type - type of link, "project" or "category"
+#   $hlight - (optional) the link to hilight, used
+#    when performing updates/additions.
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use Project;
+use Utils;
+use Dataset;
+use Category;
+use Link;
+
+sub view_links
+{
+	my $id = shift;
+	my $mode = shift;
+	my $type = shift;
+	my $hlight = shift;
+
+	$hlight = -1 if( !defined( $hlight ) );
+
+	my @links;
+	my $title;
+	my $subtitle;
+	my $project;
+	my $category;
+	my $action;
+	if( $type eq "project" )
+	{
+		$title = "Edit/Add Project Links";
+		my $proj = Project->new();
+		$proj->setFromDB( $id );
+
+		$subtitle = $proj->{name};	
+		@links = Link::getProjectLinks( $id );
+		$project = $id;
+		$category = -1;
+		$action = "proc_proj_update"
+	}	
+	elsif( $type eq "category" )
+	{
+		$title = "Edit/Add Category Links";
+		my $cat = Category->new();
+		$cat->setFromDB( $id );
+		my $proj = Project->new();
+		$proj->setFromDB( $cat->{project} );
+
+		$subtitle = "$proj->{name}: $cat->{name}";
+		@links = Link::getCategoryLinks( $id );
+		$project = $cat->{project};
+		$category = $cat->{id};
+		$action = "proc_cat_update"
+	}
+	my $size = @links;
+
+	println( header( -expires=>"-1d" ) );
+
+	println( "<html><head><title>JOSS ML Editor</title></head>" );
+	println( $css );
+	println( $jscript );
+	println( "<body bgcolor=#e9e9e9 link=white alink=white vlink=white text=black>" );
+	println( "<center>" );
+	println( "<form method=post action=$action>" );
+
+	println( "<table border=0 cellpadding=3 cellspacing=1 width=95% bgcolor=#dcdcdc>" );
+		println( "<tr bgcolor=#336699><td colspan=2><font color=white size=+1>$title</td></tr>" );
+		println( "<tr>" );
+			println( "<td>&nbsp;</td>" );
+			println( "<td><b>$subtitle</b></td>" );
+		println( "</tr>" );
+
+		if( $size == 0 )
+		{
+			println( "<tr bgcolor=white>" );
+				println( "<td colspan=2><b>No Links to display.</b></td>" );
+			println( "</tr>" );
+		}
+		else
+		{
+			foreach my $link (@links)
+			{
+				my $bgcolor= "white";
+				$bgcolor = "#FFFFCC" if( $link->{id} == $hlight );
+
+				println( "<tr>" );
+					println( "<td valign=top align=center width=8% id=\"edit_link\"><a href=edit_link?linkto=$id&mode=update&type=$type&link=$link->{id}><font size=-2>EDIT</a></td>" );
+					println( "<td bgcolor=$bgcolor id=\"listing_link\">" );
+						println( "<table border=0 cellpadding=3>" );
+							println( "<tr><td>$link->{name}</td>" );
+							println( "<tr><td><a href=$link->{url}><b>$link->{url}</b></a></td>" );
+							println( "<tr><td><b><font size=-1>TARGET: </font></b>$link->{target}</td>" );
+						println( "</table>" );
+					println( "</td>" );
+				println( "</tr>" );
+			}
+		}
+		println( "<tr>" );
+			println( "<input type=hidden name=linkto value=$id>" );
+			println( "<input type=hidden name=mode value=$mode>" );
+			println( "<input type=hidden name=type value=$type>" );
+			println( "<input type=hidden name=project value=$project>" );
+			my $url = "view_cats?project=$project&hlight=$category";
+			my $onClick = "\"return doSubmit( this.value, this.form, top.opener.parent, \'$url\' )\"";
+			println( "<td colspan=2 align=right><input type=submit value=\"Done\" name=\"editButton\" onClick=$onClick></td>" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td colspan=2 bgcolor=#336699><font color=white><b>$size Links</td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td colspan=2 id=\"edit_link\"><a href=edit_link?type=$type&linkto=$id&mode=add><font size=-1>Add New</a></td>" );
+		println( "</tr>" );
+
+
+	println( "</table>" );
+	println( "</body></html>" );
+}
+1;

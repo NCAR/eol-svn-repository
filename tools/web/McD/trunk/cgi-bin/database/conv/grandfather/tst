@@ -1,0 +1,21 @@
+my $str = "Dan is\ncool";
+
+print( remove( $str, "\n" ) );
+
+sub remove
+{
+	my $str = shift;
+	my $char = shift;
+
+	$str =~ s/$char//g;
+
+	return $str;
+}
+
+sub noQuote
+{
+	my $str = shift;
+	$str =~ s/^\"//;
+	$str =~ s/\"$//;
+	return $str;
+}

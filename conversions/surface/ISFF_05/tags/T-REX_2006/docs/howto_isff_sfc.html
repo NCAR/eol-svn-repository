@@ -1,0 +1,179 @@
+<html>
+<head>
+    <title>How To: ISFF Surface Processing</title>
+    <link rel="stylesheet" type="text/css" href="/css/howto.css" />
+</head>
+<body>
+<h1 class="title">How To: ISFF Surface Processing</h1>
+
+<a name="toc"></a><h2>Table of Contents</h2>
+<div id="toc">
+    <ul>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#info">Network Information</a></li>
+        <li><a href="#version">Versions</a>
+            <ul>
+                <li><a href="#version:trex">2006 (T-REX)</a></li>
+            </ul>
+        </li>
+        <li><a href="#directory">Directory Structure</a></li>
+        <li><a href="#process">Processing the Data</a></li>
+        <li><a href="#docs">Documentation</a></li>
+    </ul>    
+</div>
+<a href="#">Top</a><hr>
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+    <p>The purpose of this document is to describe the process of converting the NCAR/EOL Integrated Surface Flux Facility (ISFF) met data to the QCF surface format.  See the <a href="README.html">Readme</a> for more information.</p>
+</div>
+<a href="#">Top</a><hr>
+
+<a name="info"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+        <li>The stations are not commissioned.</li>
+        <li>The stations are in California.</li>
+        <li>The station locations can be found included with the data.</li>
+        <li>The Platform is 28 (NCAR).</li>
+        <li>The network is in UTC (according to the <a href="http://www.eol.ucar.edu/rtf/projects/trex/isff/variables.shtml">T-REX Variable Web Site</a>).</li>
+        <li>The measurement units are found in the attribute section of the netCDF files.</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr>
+
+<a name="version"></a><h2>Versions</h2>
+<div class="block">
+    <a href="version:trex"></a><h3>2006 (T-REX)</h3>
+    <div class="block">
+        <table class="version">
+            <tr>
+                <th>Software:</th>
+                <td>/work/TREX/surface/ISFF/software</td>
+            </tr>
+            <tr>
+                <th>Raw Data:</th>
+                <td>/ingest/trex/surface/ISFF</td>
+            </tr>
+            <tr>
+                <th>Final Data:</th>
+                <td>/work/TREX/surface/ISFF/final</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directories_head">ISFF/</h3>
+    <table class="directories">
+        <tr>
+            <th>docs/</th>
+            <td>The directory containing all documentation for the conversion.  This includes readmes, howtos, raw station lists, etc.</td>
+        </tr>
+        <tr>
+            <th>final/</th>
+            <td>The directory where the final processed QCF data is stored.  This also includes the final station list for the processed data.</td>
+        </tr>
+        <tr>
+            <th>output/</th>
+            <td>The directory where the unchecked processed QCF data is stored.  It also contains generated log files by the conversion and the checkerds.</td>
+        </tr>
+        <tr>
+            <th>plots/</th>
+            <td>The directory where the plots generated from the converted data are stored.</td>
+        </tr>
+        <tr>
+            <th>raw_data/</th>
+            <td>The directory where the local copy of the data to processed is stored.</td>
+        </tr>
+        <tr>
+            <th>software/</th>
+            <td>The directory where the conversion software is stored.  It also contains scripts for checking and plotting the processed data.</td>
+        </tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="process"></a><h2>Processing the Data</h2>
+<div class="block">
+    <ol>
+        <li>Copy the raw data into the <span class="directoryName">raw_data</span> directory.  The data will probably be some where in the <span class="directoryName">/ingest</span> on <span class="machineName">tsunami</span>.</li>
+        <li>Update the processing software and scripts.
+            <ol>
+                <li><span class="softwareName">ISFF_SFC_Converter.pl</span>
+                    <ul>
+                        <li>Change the values in the <code>new</code> function to reflect the current project.</li>
+                        <li>Compare the format of the raw data with the previous raw data format.  Change the <code>parse_raw_file</code> function to reflect any changes to the format or missing values.</li>
+                        <li>Compare the raw data files names with the pattern match in the <code>read_raw_files</code> function.  Update the pattern to match with the new data files.</li>
+                    </ul>
+                </li>
+                <li><span class="softwareName">check_comp</span>
+                    <ul>
+                        <li>Check to see if the script points to the version of the composite checking script that should be used for this conversion.  Update the path to the script as necessary.</li>
+                    </ul>
+                </li>
+                <li><span class="softwareName">check_dupes</span>
+                    <ul>
+                        <li>Check to see if the script points to the version of the duplicate checking script that is to be used for this conversion.  Update the path to the script as necessary.</li>
+                    </ul>
+                </li>
+                <li><span class="softwareName">check_file</span>
+                    <ul>
+                        <li>Check to see if the script points to the version of the QCF file checking script that is to be used for this conversion.  Update the path to the script as necessary.</li>
+                    </ul>
+                </li>
+                <li><span class="softwareName">check_tightlimits</span>
+                    <ul>
+                        <li>Check to see if the script points to the version of the QCF tight limit checking script that is to be used for this conversion.  Update the path to the script as necessary.</li>
+                    </ul>
+                </li>
+                <li><span class="softwareName">convert_raw</span>
+                    <ul>
+                        <li>Check to see that the conversion script is being called with the correct parameters and if it is being run through nice.</li>
+                        <li>Check the names of the input and output files to the cosort command.  Update the file names to match the files generated by the conversion script.</li>
+                        <li>Check to see if the script points to the version of the create day files script that is to be used for the conversion.  Update the path to the script as necessary.</li>
+                        <li>Check the name of the input file to the create day files script and make sure it is the same file that was generated from the <span class="softwareName">cosort</span> command.</li>
+                        <li>Check the file prefix used by the create day files script to see if it matches the network and frequency for the current data.  Update the prefix if necessary.</li>
+                    </ul>
+                </li>
+                <li><span class="softwareName">data_freq.in</span>
+                    <ul>
+                        <li>Compare the value of the first line with the frequency of the processed data.  Change the value so they match.  (The value is in minutes).</li>
+                        <li>Compare the second value with the index of the character where the date starts in the file name of the day files.  Change the value so it aligns with the file names.</li>
+                    </ul>
+                </li>
+                <li><span class="softwareName">plot_qcf</span>
+                    <ul>
+                        <li>Check to see if the script points to the version of the QCF plotting script that is to be sued for this data.  Update the path to the script as necessary.</li>
+                        <li>Update the project after the <code>-P</code> flag to the project id of the current project.</li>
+                        <li>Update the date range after the <code>-t</code> flag to the time of interest of the current project.</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>Run the Software
+            <ol>
+                <li>Process and plot the data by running the <span class="softwareName">run_conversion_with_plots</span> script or just process the data without plotting by running the <span class="softwareName">run_conversion</span> script.</li>
+                <li>Look at all of the log files generated by the software to see if the data was converted properly.</li>
+                <li>If there were problems with the conversion (beyond data problems), update the software and rerun the conversion until the problems are resolved.</li>
+            </ol>
+        </li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="docs"></a><h2>Documentation</h2>
+<div class="block">
+    <ul>
+        <li><a href="README.html">README.html</a>- The raw data readme provided with the raw data for the T-REX project.</li>
+        <li><a href="#">How To: ISFF Surface Processing</a>- This document.  A how to convert the ISFF data to the QCF surface format.</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr />
+
+<p class="foot">Last Updated: 2007/02/15 - Joel Clawson</p>
+
+</body>
+</html>

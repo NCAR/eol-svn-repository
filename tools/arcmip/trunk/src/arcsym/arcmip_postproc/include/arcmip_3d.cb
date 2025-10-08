@@ -1,0 +1,15 @@
+c---------------------------------------------------------------------
+c ARCSyM atmospheric 3d variables
+      real *4 u_mod(ix,jx,nprs), v_mod(ix,jx,nprs),
+     +        u(ix,jx,nprs), v(ix,jx,nprs),
+     +        w(ix,jx,nprs), t(ix,jx,nprs),
+     +        z(ix,jx,nprs), rh(ix,jx,nprs),
+     +        qv(ix,jx,nprs), spechum(ix,jx,nprs),
+     +        cld(ix,jx,nprs), ice(ix,jx,nprs),
+     +        cld_frac(ix,jx,nprs)
+      common /arcmip_3d/ u_mod, v_mod, u,
+     +                   v, w, t,
+     +                   z, rh, qv,
+     +                   spechum, cld, ice,
+     +                   cld_frac
+c---------------------------------------------------------------------

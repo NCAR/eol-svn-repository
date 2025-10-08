@@ -1,0 +1,26 @@
+Here are the things we would like to add to this code eventually:
+
+1) The code splits the data to plot on spaces, so fields that contain a space 
+will cause the code to bomb.  The notable case of this is "Rec rainga" data.  
+User must change Rec rainga to Rec:rainga in the input data in order for 
+plotting to work.  The fix for this will require a fundamental change in the 
+code.
+
+2) Create a web front end for plot_ceop.pl so anyone can create plots of
+qcf- and ceop- formatted data.
+
+3) When raw data are zipped it is tempting to do something like:
+zmore *.qcf.gz | plot_ceop.pl qcf ..... -d -.  This does not work because 
+as the code stands, the input file is gone through twice - once to determine
+all stations/heights/CSEid's in the data, and then again to pull out just the
+data we want to plot.  Not sure if this is worth fixing (or even possible to
+fix).
+
+4) Make yranges input-able by user rather than hardcoded.
+
+5) If you put in conflicting flags (like -c and -m) I'm not sure what you'll 
+get. Have code handle this more gracefully in the future.
+
+6) Add station lat/lon/elev to title of plot.
+
+7) Can the code be easily upgraded to deal with R-justified fields?

@@ -1,0 +1,557 @@
+#! /bin/csh -f
+#
+#  Script used for rearchiving GENPRO data files after they have been
+#    converted to netCDF via the "g2n" program.
+#  This is basically a collection point used to keep track of those GENPRO-II
+#    data files that have been converted to netCDF.  The commands here are
+#    intended to archive the netCDF file in the same place as the original
+#    from which it was derived.
+#
+set RPWD = ""
+if ($?MSRCP_MACH) then
+  set msrcpMachine = $MSRCP_MACH
+else
+  set msrcpMachine = "vivaldi"
+endif
+#
+#  Check login (only "dmg" login allowed to run this script)
+if ($?USER) then
+  set user = $USER
+else
+  set user = `whoami`
+endif
+if ($user != "dmg") then
+  echo "${0}:  Only the 'dmg' login is allowed to run this script.  Quitting."
+  exit 1
+endif
+#
+date
+#
+#  New requests go here:
+#
+#
+#
+exit
+#
+#    T E M P L A T E  (replace # with file names)
+#
+set SDIR = "#"
+set DDIR = "#"
+set FILES = ( \
+# \
+)
+#
+echo "#  $#FILES Job(s) submitted on `date`"
+#
+foreach file ($FILES)
+  set ifile = $SDIR/$file
+#  Edit names below here, if needed
+  set ofile = `echo $file | sed "-e s/^...............//"`
+  set ofile = `echo $ofile | sed "-e s/nc/cdf/"`
+#  Edit names above here, if needed
+  set ofile = "$DDIR/$ofile"
+  if (-r $ifile) then
+#    echo \
+    rsh $msrcpMachine msput_job -pe 32767 -pr 41113009 -wpwd RAFDMG $RPWD \
+     $ifile mss:$ofile
+    set result = $status
+    if ($result == 0) then
+      echo "#  msrcp job for $ofile -- OK -- `date`"
+    else
+      echo "#  msrcp job for $ofile -- Failed -- `date`"
+      echo "#                $ofile error code $result"
+    endif
+  else
+    echo "#  msrcp job for $ofile -- Failed -- `date`"
+    echo "#^G   Cannot access source file $ifile"
+  endif
+end
+echo "#   Completed on `date`"
+#
+#  obsolete  T E M P L A T E  (replace # with file names)
+#nrnet msput $MIGS/#.cdf l df=tr r flnm=#.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#
+#  Completed requests (new to bottom)
+#
+#   1984-685  Shelfbreak Front
+#nrnet msput $MIGS/G51741.cdf l df=tr r flnm=/RAF/TL0910/G51741.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#   1984-633  Marine Radon
+#nrnet msput $MIGS/G51780.cdf l df=tr r flnm=/RAF/TL0688/G51780.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# 1984  782  Cumulonimbus Mass Flux
+#nrnet msput $MIGS/G52470.cdf l df=tr r flnm=/RAF/TL0910/G52470.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# 1984  735  Trace Gas Profiles
+#nrnet msput $MIGS/G52487.cdf l df=tr r flnm=/RAF/TL0910/G52487.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# 1984  265  NEWS (New England Winter Storms)
+#nrnet msput $MIGS/G55154.cdf l df=tr r flnm=/RAF/TL0910/G55154.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# 1984  215  AFCGOC II (Atmospheric Forcing of Circulation in Gulf of California)
+#nrnet msput $MIGS/G55174.cdf l df=tr r flnm=/RAF/TL0878/G55174.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Job(s) submitted on Thu May 20 10:00:05 MDT 1999
+# Sequence number = MI0121 -- G51741.cdf -- OK @ 20 May 1999 10:00:22
+# Sequence number = MI0128 -- G51780.cdf -- OK @ 20 May 1999 10:00:12
+# Sequence number = MI0135 -- G52470.cdf -- OK @ 20 May 1999 10:00:16
+# Sequence number = MI0142 -- G52487.cdf -- OK @ 20 May 1999 10:00:18
+# Sequence number = MI0149 -- G55154.cdf -- OK @ 20 May 1999 10:04:36
+# Sequence number = MI0156 -- G55174.cdf -- OK @ 20 May 1999 10:07:36
+#
+#-------
+#
+# 1984  215  AFCGOC II (Atmospheric Forcing of Circulation in Gulf of California)
+#nrnet msput $MIGS/G55277.cdf l df=tr r flnm=/RAF/TL0878/G55277.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Job(s) submitted on Fri May 21 11:34:16 MDT 1999
+# Sequence number = MI8511 -- G55277.cdf -- OK @ 21 May 1999 11:38:34
+#
+#-------
+#
+# 1984  263  Lake Effect Snow Storms
+#nrnet msput $MIGS/G55158.cdf l df=tr r flnm=/RAF/TL0878/G55158.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Job(s) submitted on Fri May 21 11:57:44 MDT 1999
+# Sequence number = MI8660 -- G55158.cdf -- OK @ 21 May 1999 12:00:22
+#
+#-------
+#
+# 1984  633  Marine Radon
+#nrnet msput $MIGS/G51782.cdf l df=tr r flnm=/RAF/TL0688/G51782.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Job(s) submitted on Fri May 21 14:12:47 MDT 1999
+# Sequence number = MI9334 -- G51782.cdf -- OK @ 21 May 1999 14:12:57
+#
+#-------
+#
+# 1984  633  Marine Radon
+# 1985  611  BOLDOS/SCCCAMP (South Central Coast Cooperative Aerometric Monitoring Program)
+#nrnet msput $MIGS/G51767.cdf l df=tr r flnm=/RAF/TL1170/G51767.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Job(s) submitted on Fri May 21 15:16:52 MDT 1999
+# Sequence number = MI9601 -- G51767.cdf -- OK @ 21 May 1999 15:17:28
+#
+#-------
+#
+# 1984  685  Shelfbreak Front
+#nrnet msput $MIGS/G51743.cdf l df=tr r flnm=/RAF/TL0910/G51743.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Job(s) submitted on Fri May 21 15:26:52 MDT 1999
+# Sequence number = MI9925 -- G51743.cdf -- OK @ 21 May 1999 15:27:07
+#
+#-------
+#
+#nrnet msput $MIGS/G249Hrf09.cdf l df=tr r flnm=/RAF/1992/249/HRT/RF09.cdf  name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Job(s) submitted on Thu Jun 17 10:34:13 MDT 1999
+# Sequence number = MI4407 -- HRT/RF09.cdf -- OK @ 17 Jun 1999 10:38:11
+#
+#-------
+#
+#nrnet msput $MIGS/ELDOM_MERGE.cdf l df=tr r flnm=/RAF/1988/ELDOM/MERGE.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G_TRACI_MERGE.cdf l df=tr r flnm=RAF/1985/TRACI/JULY/HRT/MERGE.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/TRACI_MERGEHRT.cdf l df=tr r flnm=RAF/1985/TRACI/MERGEHRT.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Job(s) submitted on Wed Mar 15 16:12:53 MST 2000
+# Sequence number = LN1305 -- /ELDOMM/MERGE.cdf -- Failed @ 15 Mar 2000 16:12:55
+# Sequence number = LN1313 -- /HRT/MERGE.cdf -- Failed @ 15 Mar 2000 16:12:56
+# Sequence number = LN1321 -- /MERGEHRT.cdf -- Failed @ 15 Mar 2000 16:12:56
+#   RCP Error Messages: rcp: /jnet/data/migs/dmg/:  No such file or directory
+#
+#-------
+#
+#nrnet msput $MIGS/ELDOM_MERGE.cdf l df=tr r flnm=/RAF/1988/ELDOM/MERGE.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G_TRACI_MERGE.cdf l df=tr r flnm=RAF/1985/TRACI/JULY/HRT/MERGE.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/TRACI_MERGEHRT.cdf l df=tr r flnm=RAF/1985/TRACI/MERGEHRT.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Job(s) submitted on Wed Mar 15 16:16:25 MST 2000
+# Sequence number = LN1438 -- /ELDOM/MERGE.cdf -- OK @ 15 Mar 2000 16:16:41
+# Sequence number = LN1446 -- /JULY/HRT/MERGE.cdf -- OK @ 15 Mar 2000 16:18:22
+# Sequence number = LN1454 -- /TRACI/MERGEHRT.cdf -- OK @ 15 Mar 2000 16:18:28
+#
+#-------
+#
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf01.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF01.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf02.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF02.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf03a.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF03A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf03b.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF03B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf04.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF04.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf05.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF05.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf06.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF06.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf07.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF07.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf08.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF08.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf09.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF09.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf10.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF10.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf11.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF11.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf12.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF12.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf13.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF13.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf14.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF14.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput /jnet/ftp/pub/projects/AGUILA/G244Hrf15.cdf l df=tr r flnm=/RAF/1991/244/HRT/RF15.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Job(s) submitted on Wed Mar 29 11:23:57 MST 2000
+# Sequence number = LN9851 -- HRT/RF01.cdf -- OK @ 29 Mar 2000 11:26:56
+# Sequence number = LN9859 -- HRT/RF02.cdf -- OK @ 29 Mar 2000 11:27:29
+# Sequence number = LN9867 -- HRT/RF03A.cdf -- OK @ 29 Mar 2000 11:27:27
+# Sequence number = LN9875 -- HRT/RF03B.cdf -- OK @ 29 Mar 2000 11:28:29
+# Sequence number = LN9890 -- HRT/RF04.cdf -- OK @ 29 Mar 2000 11:31:09
+# Sequence number = LN9909 -- HRT/RF05.cdf -- OK @ 29 Mar 2000 11:31:45
+# Sequence number = LN9925 -- HRT/RF06.cdf -- OK @ 29 Mar 2000 11:31:13
+# Sequence number = LN9943 -- HRT/RF07.cdf -- OK @ 29 Mar 2000 11:37:27
+# Sequence number = LN9961 -- HRT/RF08.cdf -- OK @ 29 Mar 2000 11:36:00
+# Sequence number = LN9978 -- HRT/RF09.cdf -- OK @ 29 Mar 2000 11:35:53
+# Sequence number = LN9987 -- HRT/RF10.cdf -- OK @ 29 Mar 2000 11:37:42
+# Sequence number = LN9995 -- HRT/RF11.cdf -- OK @ 29 Mar 2000 11:38:12
+# Sequence number = LN0003 -- HRT/RF12.cdf -- OK @ 29 Mar 2000 11:40:23
+# Sequence number = LN0011 -- HRT/RF13.cdf -- OK @ 29 Mar 2000 11:42:51
+# Sequence number = LN0019 -- HRT/RF14.cdf -- OK @ 29 Mar 2000 11:43:32
+# Sequence number = LN0027 -- HRT/RF15.cdf -- OK @ 29 Mar 2000 11:42:42
+#
+#-------
+#
+#  MSS path:  /RAF/1993/817/  TOGA-COARE
+# nrnet msput $MIGS/G817Hrf01a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF01A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf01b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF01B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf02a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF02A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf02b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF02B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf03.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF03.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf04.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF04.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf05a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF05A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf05b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF05B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf06a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF06A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf06b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF06B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf07.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF07.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf08a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF08A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf08b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF08B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf09.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF09.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf10a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF10A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf10b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF10B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf11a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF11A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf11b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF11B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf12a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF12A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf12b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF12B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf13a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF13A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf13b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF13B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf14a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF14A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf14b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF14B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+# nrnet msput $MIGS/G817Hrf15.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF15.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  MSS path:  /RAF/1993/817/
+#  Job(s) submitted on Mon Nov 13 13:48:23 MST 2000
+# Sequence number = LN6762 -- HRT/RF01A.cdf -- OK @ 13 Nov 2000 14:00:16
+# Sequence number = LN6770 -- HRT/RF01B.cdf -- OK @ 13 Nov 2000 13:54:32
+# Sequence number = LN6778 -- HRT/RF02A.cdf -- OK @ 13 Nov 2000 14:00:01
+# Sequence number = LN6787 -- HRT/RF02B.cdf -- OK @ 13 Nov 2000 13:54:25
+# Sequence number = LN6798 -- HRT/RF03.cdf -- OK @ 13 Nov 2000 14:09:02
+# Sequence number = LN6807 -- HRT/RF04.cdf -- OK @ 13 Nov 2000 14:07:52
+# Sequence number = LN6817 -- HRT/RF05A.cdf -- OK @ 13 Nov 2000 14:09:54
+# Sequence number = LN6826 -- HRT/RF05B.cdf -- OK @ 13 Nov 2000 14:08:39
+# Sequence number = LN6834 -- HRT/RF06A.cdf -- OK @ 13 Nov 2000 14:11:53
+# Sequence number = LN6842 -- HRT/RF06B.cdf -- OK @ 13 Nov 2000 14:18:51
+# Sequence number = LN6850 -- HRT/RF07.cdf -- OK @ 13 Nov 2000 14:23:28
+# Sequence number = LN6858 -- HRT/RF08A.cdf -- OK @ 13 Nov 2000 14:20:53
+# Sequence number = LN6866 -- HRT/RF08B.cdf -- OK @ 13 Nov 2000 14:24:12
+# Sequence number = LN6874 -- HRT/RF09.cdf -- OK @ 13 Nov 2000 14:17:35
+# Sequence number = LN6882 -- HRT/RF10A.cdf -- OK @ 13 Nov 2000 14:32:23
+# Sequence number = LN6890 -- HRT/RF10B.cdf -- OK @ 13 Nov 2000 14:30:02
+# Sequence number = LN6898 -- HRT/RF11A.cdf -- OK @ 13 Nov 2000 14:26:42
+# Sequence number = LN6906 -- HRT/RF11B.cdf -- OK @ 13 Nov 2000 14:29:00
+# Sequence number = LN6914 -- HRT/RF12A.cdf -- OK @ 13 Nov 2000 14:43:02
+# Sequence number = LN6922 -- HRT/RF12B.cdf -- OK @ 13 Nov 2000 14:32:30
+# Sequence number = LN6930 -- HRT/RF13A.cdf -- OK @ 13 Nov 2000 14:44:16
+# Sequence number = LN6938 -- HRT/RF13B.cdf -- OK @ 13 Nov 2000 14:38:00
+# Sequence number = LN6946 -- HRT/RF14A.cdf -- OK @ 13 Nov 2000 14:43:22
+# Sequence number = LN6954 -- HRT/RF14B.cdf -- OK @ 13 Nov 2000 14:43:29
+# Sequence number = LN6962 -- HRT/RF15.cdf -- OK @ 13 Nov 2000 14:52:41
+#
+#-------
+#
+#nrnet msput $MIGS/G817Hrf16.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF16.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf17a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF17A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf17b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF17B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf18a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF18A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf18b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF18B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf19a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF19A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf19b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF19B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf20a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF20A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf20b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF20B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf21.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF21.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf22a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF22A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf22b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF22B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf23a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF23A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf23b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF23B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf24a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF24A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf24b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF24B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf25a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF25A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf25b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF25B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf26a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF26A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf26b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF26B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf27a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF27A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf27b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF27B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf28a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF28A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf28b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF28B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf29a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF29A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf29b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF29B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf30a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF30A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf30b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF30B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf31a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF31A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf31b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF31B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf32a.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF32A.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/G817Hrf32b.cdf l df=tr r flnm=/RAF/1993/817/HRT/RF32B.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Job(s) submitted on Mon Nov 13 16:38:21 MST 2000
+# Sequence number = LN3587 -- HRT/RF16.cdf -- OK @ 13 Nov 2000 16:52:13
+# Sequence number = LN3595 -- HRT/RF17A.cdf -- OK @ 13 Nov 2000 16:49:59
+# Sequence number = LN3603 -- HRT/RF17B.cdf -- OK @ 13 Nov 2000 16:44:53
+# Sequence number = LN3611 -- HRT/RF18A.cdf -- OK @ 13 Nov 2000 16:50:17
+# Sequence number = LN3621 -- HRT/RF18B.cdf -- OK @ 13 Nov 2000 16:52:39
+# Sequence number = LN3630 -- HRT/RF19A.cdf -- OK @ 13 Nov 2000 17:01:28
+# Sequence number = LN3642 -- HRT/RF19B.cdf -- OK @ 13 Nov 2000 16:55:38
+# Sequence number = LN3650 -- HRT/RF20A.cdf -- OK @ 13 Nov 2000 17:00:45
+# Sequence number = LN3660 -- HRT/RF20B.cdf -- OK @ 13 Nov 2000 16:58:25
+# Sequence number = LN3668 -- HRT/RF21.cdf -- OK @ 13 Nov 2000 17:09:50
+# Sequence number = LN3676 -- HRT/RF22A.cdf -- OK @ 13 Nov 2000 17:06:11
+# Sequence number = LN3684 -- HRT/RF22B.cdf -- OK @ 13 Nov 2000 17:08:16
+# Sequence number = LN3692 -- HRT/RF23A.cdf -- OK @ 13 Nov 2000 17:11:21
+# Sequence number = LN3700 -- HRT/RF23B.cdf -- OK @ 13 Nov 2000 17:11:03
+# Sequence number = LN3708 -- HRT/RF24A.cdf -- OK @ 13 Nov 2000 17:15:16
+# Sequence number = LN3716 -- HRT/RF24B.cdf -- OK @ 13 Nov 2000 17:14:42
+# Sequence number = LN3724 -- HRT/RF25A.cdf -- OK @ 13 Nov 2000 17:32:06
+# Sequence number = LN3732 -- HRT/RF25B.cdf -- OK @ 13 Nov 2000 17:18:35
+# Sequence number = LN3740 -- HRT/RF26A.cdf -- OK @ 13 Nov 2000 17:30:36
+# Sequence number = LN3748 -- HRT/RF26B.cdf -- OK @ 13 Nov 2000 17:41:18
+# Sequence number = LN3756 -- HRT/RF27A.cdf -- OK @ 13 Nov 2000 17:30:22
+# Sequence number = LN3764 -- HRT/RF27B.cdf -- OK @ 13 Nov 2000 17:32:58
+# Sequence number = LN3772 -- HRT/RF28A.cdf -- OK @ 13 Nov 2000 17:44:47
+# Sequence number = LN3780 -- HRT/RF28B.cdf -- OK @ 13 Nov 2000 17:52:23
+# Sequence number = LN3788 -- HRT/RF29A.cdf -- OK @ 13 Nov 2000 17:45:00
+# Sequence number = LN3796 -- HRT/RF29B.cdf -- OK @ 13 Nov 2000 17:42:20
+# Sequence number = LN3804 -- HRT/RF30A.cdf -- OK @ 13 Nov 2000 17:57:34
+# Sequence number = LN3812 -- HRT/RF30B.cdf -- OK @ 13 Nov 2000 17:45:06
+# Sequence number = LN3820 -- HRT/RF31A.cdf -- OK @ 13 Nov 2000 17:58:01
+# Sequence number = LN3828 -- HRT/RF31B.cdf -- OK @ 13 Nov 2000 17:58:24
+# Sequence number = LN3836 -- HRT/RF32A.cdf -- OK @ 13 Nov 2000 17:30:50
+# Sequence number = LN3844 -- HRT/RF32B.cdf -- OK @ 13 Nov 2000 18:01:18
+#
+#-------
+#
+#nrnet msput $MIGS/RG53722HRb.cdf l df=tr r flnm=/RAF/1987/860/RF02A/HRT/RG53722.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#  Job(s) submitted on Thu Jan 25 17:35:00 MST 2001
+# Sequence number = LN9164 -- RF02A/HRT/RG53722.cdf -- OK @ 25 Jan 2001 17:41:46
+#
+#-------
+#
+#nrnet msput $MIGS/RMGR06.cdf l df=tr r flnm=/RAF/1985/260/RF06/RMGR06.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR07.cdf l df=tr r flnm=/RAF/1985/260/RF07/RMGR07.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR08.cdf l df=tr r flnm=/RAF/1985/260/RF08/RMGR08.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR09.cdf l df=tr r flnm=/RAF/1985/260/RF09/RMGR09.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR10.cdf l df=tr r flnm=/RAF/1985/260/RF10/RMGR10.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR12.cdf l df=tr r flnm=/RAF/1985/260/RF12/RMGR12.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR13.cdf l df=tr r flnm=/RAF/1985/260/RF13/RMGR13.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR14.cdf l df=tr r flnm=/RAF/1985/260/RF14/RMGR14.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR15.cdf l df=tr r flnm=/RAF/1985/260/RF15/RMGR15.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR16.cdf l df=tr r flnm=/RAF/1985/260/RF16/RMGR16.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR17.cdf l df=tr r flnm=/RAF/1985/260/RF17/RMGR17.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR18.cdf l df=tr r flnm=/RAF/1985/260/RF18/RMGR18.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR19.cdf l df=tr r flnm=/RAF/1985/260/RF19/RMGR19.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR20.cdf l df=tr r flnm=/RAF/1985/260/RF20/RMGR20.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR21.cdf l df=tr r flnm=/RAF/1985/260/RF21/RMGR21.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR22.cdf l df=tr r flnm=/RAF/1985/260/RF22/RMGR22.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR23.cdf l df=tr r flnm=/RAF/1985/260/RF23/RMGR23.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR24.cdf l df=tr r flnm=/RAF/1985/260/RF24/RMGR24.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR25.cdf l df=tr r flnm=/RAF/1985/260/RF25/RMGR25.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR26.cdf l df=tr r flnm=/RAF/1985/260/RF26/RMGR26.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR27.cdf l df=tr r flnm=/RAF/1985/260/RF27/RMGR27.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR28.cdf l df=tr r flnm=/RAF/1985/260/RF28/RMGR28.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR29.cdf l df=tr r flnm=/RAF/1985/260/RF29/RMGR29.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR30.cdf l df=tr r flnm=/RAF/1985/260/RF30/RMGR30.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR31.cdf l df=tr r flnm=/RAF/1985/260/RF31/RMGR31.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR32.cdf l df=tr r flnm=/RAF/1985/260/RF32/RMGR32.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR33.cdf l df=tr r flnm=/RAF/1985/260/RF33/RMGR33.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR34.cdf l df=tr r flnm=/RAF/1985/260/RF34/RMGR34.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR35.cdf l df=tr r flnm=/RAF/1985/260/RF35/RMGR35.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR36.cdf l df=tr r flnm=/RAF/1985/260/RF36/RMGR36.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR37.cdf l df=tr r flnm=/RAF/1985/260/RF37/RMGR37.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR38.cdf l df=tr r flnm=/RAF/1985/260/RF38/RMGR38.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR39.cdf l df=tr r flnm=/RAF/1985/260/RF39/RMGR39.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR41.cdf l df=tr r flnm=/RAF/1985/260/RF41/RMGR41.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR42.cdf l df=tr r flnm=/RAF/1985/260/RF42/RMGR42.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR43.cdf l df=tr r flnm=/RAF/1985/260/RF43/RMGR43.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR44.cdf l df=tr r flnm=/RAF/1985/260/RF44/RMGR44.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR45.cdf l df=tr r flnm=/RAF/1985/260/RF45/RMGR45.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR46.cdf l df=tr r flnm=/RAF/1985/260/RF46/RMGR46.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR47.cdf l df=tr r flnm=/RAF/1985/260/RF47/RMGR47.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR48.cdf l df=tr r flnm=/RAF/1985/260/RF48/RMGR48.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR49.cdf l df=tr r flnm=/RAF/1985/260/RF49/RMGR49.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR50.cdf l df=tr r flnm=/RAF/1985/260/RF50/RMGR50.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR51.cdf l df=tr r flnm=/RAF/1985/260/RF51/RMGR51.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR52.cdf l df=tr r flnm=/RAF/1985/260/RF52/RMGR52.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR53.cdf l df=tr r flnm=/RAF/1985/260/RF53/RMGR53.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR54.cdf l df=tr r flnm=/RAF/1985/260/RF54/RMGR54.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR55.cdf l df=tr r flnm=/RAF/1985/260/RF55/RMGR55.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR56.cdf l df=tr r flnm=/RAF/1985/260/RF56/RMGR56.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#nrnet msput $MIGS/RMGR57.cdf l df=tr r flnm=/RAF/1985/260/RF57/RMGR57.cdf name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+#
+#  Rearchive converted JHWRP data
+#  MSS path:  /RAF/1985/260/
+#  Job(s) submitted on Wed Feb 21 16:22:55 MST 2001
+# Sequence number = LN8701 -- RF06/RMGR06.cdf -- OK @ 21 Feb 2001 16:23:39
+# Sequence number = LN8709 -- RF07/RMGR07.cdf -- OK @ 21 Feb 2001 16:23:48
+# Sequence number = LN8718 -- RF08/RMGR08.cdf -- OK @ 21 Feb 2001 16:24:07
+# Sequence number = LN8726 -- RF09/RMGR09.cdf -- OK @ 21 Feb 2001 16:23:26
+# Sequence number = LN8736 -- RF10/RMGR10.cdf -- OK @ 21 Feb 2001 16:27:46
+# Sequence number = LN8746 -- RF12/RMGR12.cdf -- OK @ 21 Feb 2001 16:27:53
+# Sequence number = LN8756 -- RF13/RMGR13.cdf -- OK @ 21 Feb 2001 16:27:17
+# Sequence number = LN8766 -- RF14/RMGR14.cdf -- OK @ 21 Feb 2001 16:27:48
+# Sequence number = LN8774 -- RF15/RMGR15.cdf -- OK @ 21 Feb 2001 16:31:41
+# Sequence number = LN8782 -- RF16/RMGR16.cdf -- OK @ 21 Feb 2001 16:31:34
+# Sequence number = LN8790 -- RF17/RMGR17.cdf -- OK @ 21 Feb 2001 16:31:19
+# Sequence number = LN8798 -- RF18/RMGR18.cdf -- OK @ 21 Feb 2001 16:31:27
+# Sequence number = LN8806 -- RF19/RMGR19.cdf -- OK @ 21 Feb 2001 16:35:35
+# Sequence number = LN8814 -- RF20/RMGR20.cdf -- OK @ 21 Feb 2001 16:35:33
+# Sequence number = LN8822 -- RF21/RMGR21.cdf -- OK @ 21 Feb 2001 16:35:31
+# Sequence number = LN8830 -- RF22/RMGR22.cdf -- OK @ 21 Feb 2001 16:47:35
+# Sequence number = LN8838 -- RF23/RMGR23.cdf -- OK @ 21 Feb 2001 16:35:21
+# Sequence number = LN8846 -- RF24/RMGR24.cdf -- OK @ 21 Feb 2001 16:41:46
+# Sequence number = LN8854 -- RF25/RMGR25.cdf -- OK @ 21 Feb 2001 16:51:30
+# Sequence number = LN8862 -- RF26/RMGR26.cdf -- OK @ 21 Feb 2001 16:44:12
+# Sequence number = LN8870 -- RF27/RMGR27.cdf -- OK @ 21 Feb 2001 16:43:35
+# Sequence number = LN8878 -- RF28/RMGR28.cdf -- OK @ 21 Feb 2001 16:43:32
+# Sequence number = LN8886 -- RF29/RMGR29.cdf -- OK @ 21 Feb 2001 16:43:32
+# Sequence number = LN8894 -- RF30/RMGR30.cdf -- OK @ 21 Feb 2001 16:43:43
+# Sequence number = LN8903 -- RF31/RMGR31.cdf -- OK @ 21 Feb 2001 16:47:44
+# Sequence number = LN8911 -- RF32/RMGR32.cdf -- OK @ 21 Feb 2001 16:47:51
+# Sequence number = LN8919 -- RF33/RMGR33.cdf -- OK @ 21 Feb 2001 16:47:25
+# Sequence number = LN8927 -- RF34/RMGR34.cdf -- OK @ 21 Feb 2001 16:51:32
+# Sequence number = LN8935 -- RF35/RMGR35.cdf -- OK @ 21 Feb 2001 16:47:48
+# Sequence number = LN8943 -- RF36/RMGR36.cdf -- OK @ 21 Feb 2001 16:51:24
+# Sequence number = LN8951 -- RF37/RMGR37.cdf -- OK @ 21 Feb 2001 16:51:39
+# Sequence number = LN8959 -- RF38/RMGR38.cdf -- OK @ 21 Feb 2001 16:53:37
+# Sequence number = LN8967 -- RF39/RMGR39.cdf -- OK @ 21 Feb 2001 16:55:53
+# Sequence number = LN8975 -- RF41/RMGR41.cdf -- OK @ 21 Feb 2001 16:55:49
+# Sequence number = LN8983 -- RF42/RMGR42.cdf -- OK @ 21 Feb 2001 16:55:46
+# Sequence number = LN8991 -- RF43/RMGR43.cdf -- OK @ 21 Feb 2001 16:59:46
+# Sequence number = LN8999 -- RF44/RMGR44.cdf -- OK @ 21 Feb 2001 17:00:00
+# Sequence number = LN9007 -- RF45/RMGR45.cdf -- OK @ 21 Feb 2001 16:55:35
+# Sequence number = LN9015 -- RF46/RMGR46.cdf -- OK @ 21 Feb 2001 16:59:41
+# Sequence number = LN9023 -- RF47/RMGR47.cdf -- OK @ 21 Feb 2001 16:59:56
+# Sequence number = LN9031 -- RF48/RMGR48.cdf -- OK @ 21 Feb 2001 17:04:04
+# Sequence number = LN9039 -- RF49/RMGR49.cdf -- OK @ 21 Feb 2001 17:03:54
+# Sequence number = LN9047 -- RF50/RMGR50.cdf -- OK @ 21 Feb 2001 17:03:51
+# Sequence number = LN9055 -- RF51/RMGR51.cdf -- OK @ 21 Feb 2001 17:07:45
+# Sequence number = LN9063 -- RF52/RMGR52.cdf -- OK @ 21 Feb 2001 17:07:37
+# Sequence number = LN9071 -- RF53/RMGR53.cdf -- OK @ 21 Feb 2001 17:04:00
+# Sequence number = LN9079 -- RF54/RMGR54.cdf -- OK @ 21 Feb 2001 17:11:39
+# Sequence number = LN9087 -- RF55/RMGR55.cdf -- OK @ 21 Feb 2001 17:11:59
+# Sequence number = LN9095 -- RF56/RMGR56.cdf -- OK @ 21 Feb 2001 17:07:51
+# Sequence number = LN9103 -- RF57/RMGR57.cdf -- OK @ 21 Feb 2001 17:07:55
+#
+#-------
+#
+set FILES = ( \
+RF01.cdf \
+RF02.cdf \
+RF03A.cdf \
+RF03B.cdf \
+RF04.cdf \
+RF05.cdf \
+RF06.cdf \
+RF07.cdf \
+RF08.cdf \
+RF09.cdf \
+RF10.cdf \
+RF11.cdf \
+RF12.cdf \
+RF13.cdf \
+RF14.cdf \
+RF15.cdf \
+)
+#
+foreach ofile ($FILES)
+  set outfile = "$DATA_DIR/1991.244.HRT.$ofile"
+  echo \
+  nrnet msput $outfile l df=tr r flnm=/RAF/1991/244/HRT/$ofile name=RAF proj=41113009 rtpd=4095 wpwd=RAFDMG
+end
+#  Archive files for the MEXCAPS project after conversion to netCDF
+#  MSS path:  /RAF/1991/244/HRT/
+#  Job(s) submitted on Wed Feb  6 15:12:53 MST 2002
+# Sequence number = LN7743 -- RF01.cdf -- OK @ 6 Feb 2002 15:15:56
+# Sequence number = LN7751 -- RF02.cdf -- OK @ 6 Feb 2002 15:15:39
+# Sequence number = LN7759 -- RF03A.cdf -- OK @ 6 Feb 2002 15:15:31
+# Sequence number = LN7767 -- RF03B.cdf -- OK @ 6 Feb 2002 15:15:52
+# Sequence number = LN7775 -- RF04.cdf -- OK @ 6 Feb 2002 15:21:47
+# Sequence number = LN7787 -- RF05.cdf -- OK @ 6 Feb 2002 15:21:51
+# Sequence number = LN7797 -- RF06.cdf -- OK @ 6 Feb 2002 15:21:41
+# Sequence number = LN7807 -- RF07.cdf -- OK @ 6 Feb 2002 15:21:36
+# Sequence number = LN7817 -- RF08.cdf -- OK @ 6 Feb 2002 15:29:26
+# Sequence number = LN7826 -- RF09.cdf -- OK @ 6 Feb 2002 15:29:01
+# Sequence number = LN7835 -- RF10.cdf -- OK @ 6 Feb 2002 15:29:16
+# Sequence number = LN7843 -- RF11.cdf -- OK @ 6 Feb 2002 15:29:07
+# Sequence number = LN7851 -- RF12.cdf -- OK @ 6 Feb 2002 15:31:25
+# Sequence number = LN7859 -- RF13.cdf -- OK @ 6 Feb 2002 15:36:11
+# Sequence number = LN7867 -- RF14.cdf -- OK @ 6 Feb 2002 15:35:43
+# Sequence number = LN7875 -- RF15.cdf -- OK @ 6 Feb 2002 15:38:35
+#
+#-------
+#
+set SDIR = "/jnet/data/genpro"
+set DDIR = "/RAF/1986/272/LRT"
+set FILES = ( \
+N312D_19861014_RF01.nc \
+N312D_19861019_RF02.nc \
+N312D_19861022_RF04.nc \
+N312D_19861025_RF05.nc \
+N312D_19861025_RF06.nc \
+N312D_19861026_RF07A.nc \
+N312D_19861026_RF07B.nc \
+N312D_19861026_RF07C.nc \
+N312D_19861027_RF08.nc \
+N312D_19861028_RF09.nc \
+N312D_19861028_RF10.nc \
+N312D_19861030_RF11.nc \
+N312D_19861031_RF12.nc \
+N312D_19861101_RF13.nc \
+N312D_19861102_RF14.nc \
+)
+#
+echo "#  $#FILES Job(s) submitted on `date`"
+#
+foreach file ($FILES)
+  set ifile = $SDIR/$file
+  set ofile = `echo $file | sed "-e s/^...............//"`
+  set ofile = `echo $ofile | sed "-e s/nc/cdf/"`
+  set ofile = "$DDIR/$ofile"
+  if (-r $ifile) then
+#    echo \
+    rsh $msrcpMachine msput_job -pe 32767 -pr 41113009 -wpwd RAFDMG $RPWD \
+     $ifile mss:$ofile
+    set result = $status
+    if ($result == 0) then
+      echo "#  msrcp job for $ofile -- OK -- `date`"
+    else
+      echo "#  msrcp job for $ofile -- Failed -- `date`"
+      echo "#                $ofile error code $result"
+    endif
+  else
+    echo "#  msrcp job for $ofile -- Failed -- `date`"
+    echo "#^G   Cannot access source file $ifile"
+  endif
+end
+echo "#   Completed on `date`"
+#  15 Job(s) submitted on Fri Mar  4 16:12:32 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF01.cdf -- OK -- Fri Mar  4 16:12:40 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF02.cdf -- OK -- Fri Mar  4 16:12:50 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF04.cdf -- OK -- Fri Mar  4 16:12:58 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF05.cdf -- OK -- Fri Mar  4 16:13:06 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF06.cdf -- OK -- Fri Mar  4 16:13:14 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF07A.cdf -- OK -- Fri Mar  4 16:13:46 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF07B.cdf -- OK -- Fri Mar  4 16:14:10 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF07C.cdf -- OK -- Fri Mar  4 16:14:20 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF08.cdf -- OK -- Fri Mar  4 16:14:47 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF09.cdf -- OK -- Fri Mar  4 16:14:57 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF10.cdf -- OK -- Fri Mar  4 16:15:11 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF11.cdf -- OK -- Fri Mar  4 16:15:37 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF12.cdf -- OK -- Fri Mar  4 16:15:47 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF13.cdf -- OK -- Fri Mar  4 16:15:56 MST 2005
+#  msrcp job for /RAF/1986/272/LRT/RF14.cdf -- OK -- Fri Mar  4 16:16:07 MST 2005
+#   Completed on Fri Mar  4 16:16:07 MST 2005
+#
+#-------
+#
+# -------  Put completed job commands above this line

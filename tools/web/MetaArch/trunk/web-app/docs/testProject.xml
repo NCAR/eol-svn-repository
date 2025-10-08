@@ -1,0 +1,55 @@
+<project name="PacMARS">
+
+	<domainOptions>
+		<category hidden="true" />
+		<platform hidden="true" />
+	</domainOptions>
+
+
+	<fieldSeason display="Field Season">
+		<cruise display="Cruise">
+			<cruiseId type="String"  display="Cruise ID" />
+			<cruiseStartDate type="Date" display="Cruise Start Date" />
+			<cruiseEndDate type="Date" display="Cruise End Date" />
+		</cruise>
+	</fieldSeason>
+	<discipline type="List" display="Discipline">
+		<disciplineItem type="ListItem">Biology</disciplineItem>
+		<disciplineItem type="ListItem">Chemistry</disciplineItem>
+		<disciplineItem type="ListItem">Hydrology</disciplineItem>
+		<disciplineItem type="ListItem">Model</disciplineItem>
+		<disciplineItem type="ListItem">Oceanography</disciplineItem>
+		<disciplineItem type="ListItem">Radioisotope</disciplineItem>
+		<disciplineItem type="ListItem">Satellite</disciplineItem>
+		<disciplineItem type="ListItem">Sea Ice</disciplineItem>
+		<disciplineItem type="ListItem">Underway</disciplineItem>
+	</discipline>
+	<instrument type="List" display="Instrument">
+		<instrumentItem type="ListItem">accelerometers</instrumentItem>
+		<instrumentItem type="ListItem">acoustic sounders</instrumentItem>
+		<instrumentItem type="ListItem">ADCP</instrumentItem>
+		<instrumentItem type="ListItem">aerosol monitor</instrumentItem>
+		<instrumentItem type="ListItem">aerosol/cloud particle sizer</instrumentItem>
+		<instrumentItem type="ListItem">AERS</instrumentItem>
+		<instrumentItem type="ListItem">AIRSAR</instrumentItem>
+		<instrumentItem type="ListItem">altimeters</instrumentItem>
+		<instrumentItem type="ListItem">AMI</instrumentItem>
+		<instrumentItem type="ListItem">AMMR</instrumentItem>
+		<instrumentItem type="ListItem">AMS</instrumentItem>
+		<instrumentItem type="ListItem">AMSR</instrumentItem>
+		<instrumentItem type="ListItem">AMSR-E</instrumentItem>
+		<instrumentItem type="ListItem">anemometers</instrumentItem>
+		<instrumentItem type="ListItem">aneroid pressure sensor</instrumentItem>
+		<instrumentItem type="ListItem">ARGOS</instrumentItem>
+		<instrumentItem type="ListItem">ASTER</instrumentItem>
+		<instrumentItem type="ListItem">ATM</instrumentItem>
+		<instrumentItem type="ListItem">AVHRR</instrumentItem>
+		<instrumentItem type="ListItem">AWS</instrumentItem>
+		<instrumentItem type="ListItem">barometers</instrumentItem>
+		<instrumentItem type="ListItem">bathyphotometer</instrumentItem>
+		<instrumentItem type="ListItem">bathythermographs</instrumentItem>
+		<instrumentItem type="ListItem">bongo nets</instrumentItem>
+		<instrumentItem type="ListItem">bottom pressure guages</instrumentItem>
+<!--		<instrumentItem type="ListItem"></instrumentItem>-->
+	</instrument>
+</project>

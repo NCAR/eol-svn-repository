@@ -1,0 +1,9 @@
+SHELL = /bin/sh
+
+#CC=purify acc -g
+CC=acc
+##CFLAGS = -g
+
+stats_debug: stats_debug.o gQC.o process_qcfrec.o date.o
+	$(LINK.c) -o stats_debug stats_debug.o gQC.o process_qcfrec.o date.o -lm
+	chmod 0755 stats_debug

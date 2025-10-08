@@ -1,0 +1,89 @@
+dataset:
+- title_content: titleSep
+- name: <PROJECT>
+- archive_ident: '999.999'
+- title: Left-Looking Digital Camera Imagery
+- summary: During <PROJECT>, the NSF/NCAR C-130 (Tail Number N130AR) flew a left looking digital camera for in-flight video capture. Individual photo jpeg images were captured once per second during flights. Images taken after dark have been stripped from this archive. The remaining images have been combined into hour long tarfiles running from zero minutes zero seconds (or the start time of the first file) to 23 minutes 59 seconds (or the end time of the last file) after each hour. Note that the first and last tarfile for each flight will contain less than a full hour of imagery. Directory files returned with each order give the contents of each corresponding tar file.
+- begin_date: '1001-01-01 00:00:00'
+- end_date: '7998-12-31 23:59:59'
+- visible: 0
+- auth_reqd: 0
+- eula_reqd: 0
+- version_number: '1.0'
+- quality: 2
+- ingest_location: /scr/raf/Raw_Data/<PROJECT>/camera_images/flight_number_(\E\E\E\E)
+- archive_location: /glade/campaign/eol/archive/<year>/<project>/aircraft/c130_n130ar/CAMERA
+- filename_pattern: (\E\E\E\E).LEFT.(\Y\Y\Y\Y\M\M\y\y).[\H\H\m\m\S\S]_{\H\H\m\m\S\S}.jpg.tar
+- startdate_pattern: YYYY-MM-yy HH:mm:SS
+- enddate_pattern: YYYY-MM-yy HH:mm:SS
+- filelength: ''
+- minimum_latitude: '-90.0'
+- maximum_latitude: '90.0'
+- minimum_longitude: '-180.0'
+- maximum_longitude: '180.0'
+- CODIAC_specific_fields: titleSep
+- category_id: 2
+- platform_id: 130
+- is_eol_data: 1
+- format: 53
+- host: campaign
+- frequency_id: 4
+- spatial_type: raster
+- point_of_contact_id_codiac: 1
+- internal_contact_id_codiac: 179
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+- dodsable: 0
+- t_subset: 0
+- event_subset: 1
+- file_subset: 0
+- order_allow_compress: 1
+- gcmd_science_keyword_id: 519, 541
+- xlink_id:
+- DTS_specific_fields: titleSep
+- source_contact_id_dts: 
+- internal_contact_id_dts: 
+- ingest_contact_id_dts: 
+- ingest_status_id_dts: 2
+- load_contact_id_dts: 
+- load_data_location: '*tar, *tar.dir'
+- load_status_id_dts: 6
+- approve_contact_id_dts: 
+- approve_status_id_dts: 6
+- author_id_dts: 
+- note_type_id: 4
+- note_text: Loaded with new load_data_proj script
+- readme_url: 'default'
+- remote_url: 'default'
+- optional_fields: titleSep
+- archive_location_2: /glade/campaign/eol/archive/<year>/<project>/aircraft/c130_n130ar/CAMERA
+- filename_pattern_2: (\E\E\E\E).LEFT.(\Y\Y\Y\Y\M\M\y\y).[\H\H\m\m\S\S]_{\H\H\m\m\S\S}.jpg.tar.dir
+- startdate_pattern_2: YYYY-MM-yy HH:mm:SS
+- enddate_pattern_2: YYYY-MM-yy HH:mm:SS
+- filelength_2: ''
+- format_2: 147
+- host_2: campaign
+- archive_location_3: ''
+- filename_pattern_3: ''
+- startdate_pattern_3: ''
+- enddate_pattern_3: ''
+- filelength_3: ''
+- format_3:  ''
+- host_3:  ''
+- description: 'default'
+- iso_citation_role: 2
+- contact_id_codiac: 179
+- datacite_contributor_type: 4
+- iso_citation_role_2: 9
+- contact_id_codiac_2: 721
+- datacite_contributor_type_2: 2
+- iso_citation_role_3: 1
+- contact_id_codiac_3: ''
+- datacite_contributor_type_3: ''
+- iso_citation_role_4: ''
+- contact_id_codiac_4: ''
+- datacite_contributor_type_4: ''
+- iso_citation_role_5: ''
+- contact_id_codiac_5: ''
+- datacite_contributor_type_5: ''

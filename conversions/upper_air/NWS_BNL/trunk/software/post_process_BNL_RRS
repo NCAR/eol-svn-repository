@@ -1,0 +1,43 @@
+#! /bin/csh
+
+######################################################################
+# This is a special script for the BNL processing.  It performs 
+# necessary actions requested by the people at BNL to work with
+# their software.
+#
+# Revised to correct Barrow AK name, 24 Apr 2013, L. Echo-Hawk
+######################################################################
+echo "Running post_process BNL RRS NWS"
+echo "COPY rrs_output/*.cls to rrs_output/*.cls.orig"
+
+# Copy the converted data to the final directory
+# cp rrs_output/*.cls rrs_final
+foreach file (rrs_output/*.cls)
+    cp -f $file $file.orig
+end
+
+# Rename the files to be 3 letter station IDs and only go to minute accuracy.
+# This command was pulled from the internet at
+#     http://www.ibm.com/developerworks/linux/library/l-p101
+#
+echo "Rename the Barrow AK PABR files so that the old BRW station ID is used"
+echo "Rename file to be 3 letter station IDs and cut times to minute accuracy."
+
+cd rrs_output
+
+# Rename the Barrow AK files so that the "old" station ID is used
+# NOTE: The old station was not KBRW or PBRW, but just BRW -- I added
+# the K at the beginning so that the code that chops off the first
+# character would work correctly for this station (LEH)
+find . | perl -ne'chomp; next unless -e; $oldname = $_; s/PABR/KBRW/; next if -e; rename $oldname, $_'
+
+find *.cls | /usr/bin/perl -ne 'chomp; next unless -e; $oldname = $_; s/[KP](.{3}_\d{12}).*\.cls/$1.cls/; rename $oldname, $_'
+
+cd ..
+
+# Replace "Ascension Number" with "Ascension No"
+echo "Replace Ascension Number with Ascension No."
+
+/usr/bin/perl -pi -e 's/Ascension Number:/Ascension No:    /g' rrs_output/*.cls
+
+echo "End post_process BNL RSS NWS."

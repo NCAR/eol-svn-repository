@@ -1,0 +1,59 @@
+"Reamde.ebrr"
+Readme file for UCAR/OFPS E-BUFR Read Routines software (EBRR)
+
+Version/Modification Info:
+ $Id: Readme.ebrr,v 1.4 1995/03/10 17:43:39 john Exp $
+
+Included in the E-BUFR Read Routines software library (EBRR):
+
+   1. Low Level FORTRAN subroutines to read the E-BUFR data files.
+   2. High Level, easy to use, FORTRAN subroutines to read
+      the E-BUFR data files. This consists of only 2 subroutines
+      (getobs.f and getval.f).
+   3. Four "INCLUDE" files for using the subroutines.
+   4. An example FORTRAN program (exampl.f) that uses the high
+      level E-BUFR read subroutines. This program simply reads
+      an E-BUFR file and prints it out to $stdout. It is suitable
+      to modify into a program which converts EBUFR data into your
+      own format.
+   5. A "bare bones" program (bare.f) that illustrates the minimal
+      steps needed in order to use the EBRR.
+   6. A Makefile for compiling and linking the example program.
+   7. A verbose documentation file (ebrr.doc) for details
+      on using the E-BUFR read routines. *Reccommended*Reading*
+
+To run the example program on an E-BUFR data file:
+
+   1. --> make (compiles and links the exampl.f program)
+      1.a. if make doesn't work, then edit the Makefile
+	   according to your local needs; see your local
+	   system administrator
+   2. --> exampl (runs the exampl program)
+      The program will prompt you for the E-BUFR file name to read
+      and can display to the standard output or write to a file.
+      When displaying to $stdout, it pauses after each record has
+      been displayed, but large records may scroll off the screen.
+
+The EBRR have been tested (and do work) on:
+	SunOS Release 4.1.[13]
+	DEC ULTRIX V4.2 (Rev. 96)
+
+The "ebufr_parm.inc" file needs to be modified depending on your
+source datasets. For example, large soundings need much huger
+arrays than most surface data, e.g.:
+ parameter	soundings	surface
+ MAXREC		10		2 [or even 1]
+ MAXDES		50		10
+ MAXENT		32		512
+ MAXDAT		64000		10000 [or even 100]
+ MAXTXT		10		10
+
+
+For questions or comments contact:
+
+John J. Allison
+john@ofps.ucar.edu
+UCAR/OFPS
+P.O. Box 3000
+Boulder CO 80307-3000
+(303) 497-8154

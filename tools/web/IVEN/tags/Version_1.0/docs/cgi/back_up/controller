@@ -1,0 +1,55 @@
+#!/bin/perl -w 
+
+use strict; 
+use CGI;
+use lib "lib"; 
+use State;
+use Utils;
+
+require "menu";
+
+my $state = State->new();
+my $cgi = CGI->new();
+
+$state->setFromParams( $cgi );
+
+if( defined( $state->{edit} ) )
+{
+	require "./edit_controller";
+	edit_controller( $state, $cgi );
+}
+elsif( !defined( $state->{project} ) )
+{
+	require "./project_list";
+	project_list( $state, $cgi );
+}
+elsif( $state->{view} == $PROJECT )
+{
+	require "project_view";
+	project_view( $state, $cgi );
+}
+elsif( $state->{view} == $PRODUCT )
+{
+	require "product_view";
+	product_view( $state, $cgi );
+}
+elsif( $state->{view} == $DATASET )
+{
+	require "dataset_view";
+	dataset_view( $state, $cgi );
+}
+elsif( $state->{view} == $USER )
+{
+	require "user_view";
+	user_view( $state, $cgi );
+}
+elsif( $state->{view} == $THREAD )
+{
+	require "thread_view";
+	thread_view( $state, $cgi );
+}
+else
+{
+	die( "State is not valid." );	
+}
+

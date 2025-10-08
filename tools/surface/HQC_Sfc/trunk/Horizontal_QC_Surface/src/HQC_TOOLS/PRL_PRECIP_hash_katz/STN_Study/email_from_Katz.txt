@@ -1,0 +1,78 @@
+sid.katz@noaa.gov wrote:
+> 
+> At 07:47 PM 7/21/98, you wrote:
+> >Sid,
+> >Well I have just returned again from travel and hope to be
+> >around till late August!
+> 
+> I hope that you went somewhere exciting.  I am planning some vacation
+> travel in the next 6-18 months.  Have you visited Turkey, South Africa, or
+> Spain ?
+> 
+> >I don't have your return address to FedEX the tapes back.
+> 
+> Sidney Katz
+> 5200 Auth Road, Room 811 G
+> Camp Springs, MD  20746
+> 301-763-8000  ext 7509
+> 
+> >We have been processing the data you sent. However, we have found
+> >that there are a large number of missing site IDs from your
+> >station list file. I have attached Linda Cully's description
+> >below. Also, she pulled out a small sample to help you
+> >try and locate them rather than sending you the entire list!
+> >Let me know what you find out or if you have any questions.
+> >
+> 
+> Here is more than you care to know about the station list which I sent on the
+> archive tapes.  That list has not been updated for at least 2 years.  It seems
+> that everytime I attempt to get an updated copy,  higher priority tasks
+> take over.
+> Not an excuse, just the way it is.  I really want to update this list as
+> soon as possible.
+> 
+> The format for the 'official' NWS ID is 3 characters for the site with a 2
+> character state
+> abbreviation.  The state abbreviation is a letter (first letter of the
+> state in question)
+> followed by a number (alphabetical order).  Calif is C1, Colo is C2, and
+> Conn is C3.
+> The other 'official' NWS ID is the well known ID used at the NWS 1st order
+> type
+> stations, ie DEN for Denver(old airport), GJT Grand Junction, etc.
+> However, there
+> are other program ID's associated with the site ID, such as NCDC cooperative
+> site number, NESDIS GOES platform ID.  Therefore, GJT can have a cooperative
+> reporting site and a GOES platform which will lead to extra entries in the
+> file nwsli.uniq
+> And I have thrown is a few hundred ID's from specialized networks that
+> don't follow
+> any rules.  The SHEF decoder accepts any combination of 3 to 8 characters
+> as a valid
+> ID.  I suspect that an ID of 4 letters is not valid, whether all letters or
+> 3 letters
+> and a digit.  I have noticed that the hourly precipitation files tend to
+> have a lot of these
+> 4 character ID's.  Garbled messages is a probable cause.  I will try to
+> look into this
+> during the next couple of weeks.
+> 
+> Another explanation for missing ID's is the use of  'stranger' reports in a
+> SHEF
+> encoded message.  Quoting from the NWS SHEF Manual, "Stranger reports are
+> reports form unofficial locations for which no 5-character identifier
+> exists.  Such
+> reports can come form a variety of sources, including radio and TV
+> stations, law
+> enforcement agencies, etc.  Even though such reports are infrequently
+> received,
+> it may at times be important to have them deciphered by the SHEF decoder and
+> perhaps stored in a database.'   The format is Xxxxyyyy, where xxx is the
+> latitude
+> and yyyy is the longitude of the site. E.G.  X3080995 is 30.8 degrees north
+> latitude
+> and 99.5 degrees west longitude.
+> 
+> Let me know how much this reduces the list of missing ID's.
+> 
+> Sid....

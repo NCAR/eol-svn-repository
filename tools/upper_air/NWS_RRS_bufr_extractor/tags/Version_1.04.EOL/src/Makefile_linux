@@ -1,0 +1,31 @@
+SHELL=/bin/csh
+
+all: decoder grabbufr dumpdata splitdump
+
+decoder:
+	source /usr/local/lf9562/csh_setup;
+	limit coredumpsize 1024 megabytes;
+	limit stacksize unlimited;
+	/usr/local/lf9562/bin/lf95 -o ../bin/decoder_linux BUFR_1_07.f RRS_Decoder_1_04.EOL.f
+
+dumpdata:
+	source /usr/local/lf9562/csh_setup;
+	limit coredumpsize 1024 megabytes;
+	limit stacksize unlimited;
+	/usr/local/lf9562/bin/lf95 -o ../bin/dumpdata_linux BUFR_1_07.f DumpData.f
+
+grabbufr:
+	source /usr/local/lf9562/csh_setup;
+	limit coredumpsize 1024 megabytes;
+	limit stacksize unlimited;
+	/usr/local/lf9562/bin/lf95 -o ../bin/grabbufr_linux BUFR_1_07.f grabbufr.f
+
+splitdump:
+	source /usr/local/lf9562/csh_setup;
+	limit coredumpsize 1024 megabytes;
+	limit stacksize unlimited;
+	/usr/local/lf9562/bin/lf95 -o ../bin/splitdump_linux BUFR_1_07.f split_dump.f
+
+
+deploy: decoder dumpdata grabbufr splitdump
+	cp ../bin/*_linux /net/work/bin/extractors/NWS_RRS

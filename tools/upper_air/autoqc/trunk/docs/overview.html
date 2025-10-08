@@ -1,0 +1,18 @@
+<html>
+<body>
+    <p>This document contains the API documentation for the ESC Automatic Quality Control Software.</p>
+
+    <h3>Related Documentation</h3>
+    <ul>
+        <li><a href="howto_execute.html" target="_top">How To Execute the Sounding Auto QC</a></li>
+        <li><a href="howto_build.html" target="_top">How To Build/Develop the Auto QC</a></li>
+    </ul>
+
+    <h3>Historical Information</h3>
+    <p>In the summer of 2007, the auto QC program was rewritten in Java from C/C++.  This was done as part of the clean up of the sounding processing tools getting them into a common language for easier use.  The output results and logs of the QC process is equivalent between the two versions less minor rounding issues with floating point numbers.  (This does cause some minor flagging changes on boundary conditions caused by the rounding.)  This was not a problem with the science staff.</p>
+    <p>The primary difference between the Java and C/C++ versions is the handling of the QC limits.  The C/C++ had all of the limits defined in <code>.h</code> header files and required a recompilation of the executable for each change.  This also caused a project to have multiple executables to handle all of the networks for the project.  (T-REX in 2006 required 5 executables (autoqc_TREX, autoqc_TREX_5point_avg, autoqc_TREX_5point_avg_ISS, autoqc_drop_TREX, nws_autoqc_TREX) to QC all of the soundings.</p>
+    <p>The Java version makes use of <code>.properties</code> files to contain the QC limits and passes them to executables as a command line argument.  (There are multiple executables still in the Java version.  However, these are defines as extensions of the main QC class instead of a compile time command line argument.)  Each network passes a <code>.properties</code> file to the QC.  This allows the main QC program to remain unchanged through the project (and across projects).  It also allows the same network to use multiple QC limits depending on the requirements of the network without needing separate executables (BNL_ARM has one for the continental US and another for Alaska).  This also allows the QC limits to be kept with the network over time instead of being directly attached to the project only.</p>
+    <p>In the repository, the version tags reflect this change as well.  The C/C++ versions were tagged by project as each collection of limits was attached to the QC header files.  The Java versions are tagged with a Java version number as a single Java version can apply to multiple projects.</p>
+    <p>At this point, the C/C++ has been retired and should no longer be used.  The final projects that used the C/C++ version were RAINEX_2005, T-REX_2006, CEOP_2002 (through the 2006 data), and BNL_ARM (through the 2007 data).</p>
+</body>
+</html>

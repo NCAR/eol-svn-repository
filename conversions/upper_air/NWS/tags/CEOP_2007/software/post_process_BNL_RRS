@@ -1,0 +1,23 @@
+#! /bin/csh
+
+######################################################################
+# This is a special script for the BNL processing.  It performs 
+# necessary actions requested by the people at BNL to work with
+# their software.
+######################################################################
+
+# Copy the converted data to the final directory
+#cp rrs_output/*.cls rrs_final
+foreach file (rrs_output/*.cls)
+    cp -f $file $file.orig
+end
+
+# Rename the files to be 3 letter station IDs and only go to minute accuracy.
+# This command was pulled from the internet at
+#     http://www.ibm.com/developerworks/linux/library/l-p101
+cd rrs_output
+find *.cls | /usr/bin/perl -ne 'chomp; next unless -e; $oldname = $_; s/[KP](.{3}_\d{12}).*\.cls/$1.cls/; rename $oldname, $_'
+cd ..
+
+# Replace "Ascension Number" with "Ascension No"
+/usr/bin/perl -pi -e 's/Ascension Number:/Ascension No:    /g' rrs_output/*.cls

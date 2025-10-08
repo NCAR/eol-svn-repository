@@ -1,0 +1,42 @@
+<project name="Utilities" default="compile" basedir=".">
+
+    <property name="build" location="build" />
+    <property name="build.classes" location="build/classes" />
+    <property name="build.tests" location="build/tests" />
+    <property name="dist" location="dist" />
+    <property name="reports" location="reports" />
+    <property name="src" location="src" />
+    <property name="src_files" location="data_files/source_files" />
+    <property name="tests" location="tests" />
+
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <pathelement path="${build.classes}" />
+    </path>
+
+    <target name="clean">
+        <delete dir="${build}" />
+        <delete dir="${dist}" />
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build.classes}">
+            <classpath refid="classpath" />
+        </javac>
+        <copy todir="${build.classes}">
+            <fileset dir="data_files" />
+        </copy>
+    </target>
+
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build.classes}" />
+    </target>
+
+    <target name="parse" depends="compile">
+        <java classname="milagro.question.parser.QuestionnaireParserRunner" fork="yes">
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+</project>

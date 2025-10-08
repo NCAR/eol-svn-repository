@@ -1,0 +1,143 @@
+#!/bin/perl
+#
+# Stage GOES data to Mass Store
+# mark, 2000 Oct 4
+# Add 1KM archiving, mark, 2001 May 1
+# Do 1KM before 4KM, mark, 2001 May 7
+# Move to ingest.joss.ucar.edu, streamline code, do DCS msrcp over NFS
+# mount, mark, 2001 Sep 13
+# Change to do infinite loop; once-per-hour wasn't keeping up.
+# Add better reporting, mark, 2002 Mar 26
+# Add gzip compression, mark, 2002 Mar 29
+
+$|=1;
+
+use NDBM_File;
+
+use Time::Local;
+
+BEGIN {
+    use Fcntl;       # for O_ constants 
+    use POSIX qw(tmpnam);
+    do { $name = tmpnam() } until sysopen(FH, $name, O_RDWR|O_CREAT|O_EXCL);
+
+    open STDOUT, ">&FH" or die "Couldn't redirect stdout, $!";
+    open STDERR, ">&STDOUT" or die "Couldn't dup stdout, $!";
+    select STDERR; $|=1;
+    select STDOUT; $|=1;
+}
+
+END {
+    close(FH);
+    $monitor="stoss";
+    $subject="GOES stage to Mass Store";
+    if (-s $name > 0) {
+	system("/bin/mailx -s '$subject' $monitor < $name");
+    }
+    unlink($name);
+}
+
+BEGIN {
+    use FindBin qw($Script $Bin);
+    chdir $Bin or die "Couldn't cd to $Bin: $!";
+    if (-f "LOCK") {
+	if ((-M "LOCK")*24 > 6) {
+	    print "WARNING: Lock file older than 6 hours, ignoring\n";
+	} else {
+#           print "Lockfile exists, exiting.\n";
+    	    exit(0);
+        }
+    }
+    open(LOCK, ">LOCK") or die "Couldn't open lockfile: $!";
+    close(LOCK);
+}
+
+END {
+    unlink("LOCK");
+}
+
+$LOG="$Script.log";
+
+sub log_msg {
+    my ($msg)=@_;
+    my ($sec,$min,$hour,$mday,$mon,$year) = localtime(time);
+    my $timestamp=sprintf("%04d%02d%02d %02d%02d%02d", $year+1900, $mon+1,
+        $mday, $hour, $min, $sec);
+    open(LOG, ">>$LOG") or die "couldn't open $LOG, $!";
+    print LOG "$timestamp $msg";
+    close(LOG);
+}
+
+$MSRCP='/opt/dcs/bin/msrcp';
+$MSLS='/opt/dcs/bin/msls';
+
+$CP='/bin/cp';
+$GZIP='/opt/bin/gzip';
+$TMP='/seaspace/tmp';
+
+@sats=qw(G08 G10);
+$destroot='/JOSS/DATA/RAW/SATELLITE/GOES';
+$wpwd='jossdata';
+$rtpd=32767;
+$opts="-wpwd $wpwd -pe $rtpd";
+$resdir{'1KM'}='HighRes';
+$resdir{'4KM'}='LowRes';
+
+tie %SENT, "NDBM_File", "$Bin/sent", O_RDWR|O_CREAT, 0644;
+
+#while (1) {
+    foreach $res (qw(1KM 4KM)) {
+	foreach $sat (@sats) {
+	    &log_msg("Sending $res files for $sat\n");
+	    $dir="/goes/$sat/imager/$resdir{$res}";
+	    opendir(DIR,$dir) or die "Couldn't open $dir, $!";
+	    @files=readdir(DIR);
+	    closedir(DIR);
+	    $prefix=lc($sat);
+	    #	print "Files: @files\n";
+	    # Two stages: 1) copy to $TMP  2) compress and send to MSS
+	    foreach $file (@files) {
+		# Send file if it's older than 15 minutes and hasn't been sent
+		next unless $file =~ /^($prefix)\.(\d+)\.(\d+)$/;
+		$src="$dir/$file";
+		$age = (-M $src) * 86400;  # Age in seconds
+		#        print "$src is $age seconds old.\n";
+		#		next if ($SENT{$src} or $age < 15*60);
+		next if ($SENT{$src} or $age < 8*60);
+		$before=`/bin/ls -l $src`;
+		$result=system("$CP $src $TMP/$res");
+		if ($result) {
+		    print "ERROR in cp.  Before: $before";
+		    print "After: ",`/bin/ls -l $TMP/$res/$file`;
+		}
+	    }
+	    foreach $file (@files) {
+		next unless $file =~ /^($prefix)\.(\d+)\.(\d+)$/;
+		my ($satellite, $filedate, $filetime) = ($1, $2, $3);
+		next if ($SENT{"$dir/$file"});
+		$year=substr($filedate,0,4);
+		$src="$TMP/$res/$file";
+		$result=system("$GZIP $src");
+		if ($result) {
+		    print "ERROR in gzip.";
+		    next;
+		}
+		$dest="$destroot/$sat/$res/$year/$filedate/$file.gz";
+		log_msg("Sending $src to $dest...");
+		$result=system("$MSRCP $opts $src.gz mss:$dest");
+		log_msg("status $result\n");
+		$SENT{"$dir/$file"}=1 unless $result;
+		if ($result) {
+		    print "ERROR in msrcp.";
+		    print "After: ",`/bin/ls -l $src.gz`;
+		    print "MSLS: ",`$MSLS -l $dest`;
+		} else {
+		    #unlink("$src.gz");
+		}
+	    }
+	}
+    }
+    #    sleep 300;
+    #}
+      
+untie %SENT;

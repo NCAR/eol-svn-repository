@@ -1,0 +1,148 @@
+#===============================================================================#
+# configYaml.yml                                                                #
+#                                                                               #
+# This file serves as a config file for load_data_proj.py script                #
+#                                                                               #
+# The instructions for adding a new field is as follows:                        #
+#                                                                               #
+# 1. decide the placement of your new field. All fields with the "titleSep"     #
+#    will automatically act as a separator for all the fields and create a      #
+#    new tab for all fields under the titleSep up until the new titleSep or     #
+#    the end of the file.                                                       #
+#                                                                               #
+# 2. decide the name of your new field:                                         #
+#      1) lower-case every character                                            #
+#      2) put an underscore ("_") where you want a space                        #
+#      3) all the first words will be capitalized                               #
+#      ex. if you want the label of your dataset to be "Archive Indent"         #
+#      in the GUI, you must enter it as "archive_indent" in this config file    #
+#                                                                               #
+# 3. decide the type of your new field. There are five types of fields that     #
+#    are currently available:                                                   #
+#      1) lineEdit: fields that are one line long                               #
+#      2) plainTextEdit: fields that are more than one line long                #
+#      3) comboBox: drop down list with additional config file required         #
+#         comboBox fields also need their own config files.                     #
+#         read the comboBox script for more details.                            #
+#      4) checkBox: check box field                                             #
+#      5) dateTimeEdit: date and time field                                     #
+#      6) titleSep: seperates the config file into different tabs               #
+#                   (consult with Soo before using)                             #
+#                                                                               #
+# 4. decide on the requirements of your new field. (ex. it must be in           #
+#    decimals, or it cannot be more than certain characters/words long,         #
+#    the date must be in between a certain range...)                            #
+#                                                                               #
+# 5. depending on the requirements, you may have to write additional lines of   #
+#    code to implement the new checking method. If your checking method         # 
+#    is already implemented in the field moduels, you do not have to write      #
+#    any additional code.                                                       #
+#                                                                               #
+# 6. once the checking method implementation is complete, add your new field    #
+#    with the type in the exact format of currently existing fields.            #
+#                                                                               #
+#===============================================================================#
+# created by Soo Park 2015                                                      #
+# updated: 4/24/15                                                              #
+# copyright: University Corporation for Atmospheric Research, 2015              #
+#===============================================================================#
+
+dataset:
+
+####################################
+# Main Edit Area                    
+  - title_content: titleSep
+####################################
+  - name: lineEdit
+  - archive_ident: lineEdit 
+  - title: lineEdit
+  - summary: plainTextEdit
+  - begin_date: dateTimeEdit
+  - end_date: dateTimeEdit 
+  - visible: checkBox
+  - auth_reqd: checkBox
+  - eula_reqd: checkBox
+  - version_number: lineEdit
+  - quality: comboBox
+  - ingest_location: lineEdit
+  - archive_location: lineEdit
+  - filename_pattern: lineEdit
+  - startdate_pattern: lineEdit
+  - enddate_pattern: lineEdit
+  - filelength: lineEdit
+  - minimum_latitude: lineEdit
+  - maximum_latitude: lineEdit
+  - minimum_longitude: lineEdit
+  - maximum_longitude: lineEdit
+
+####################################
+# Usually left alone below this line
+  - CODIAC_specific_fields: titleSep
+####################################
+  - category_id: comboBox
+  - platform_id: comboBox
+  - is_eol_data: checkBox
+  - format: comboBox
+  - host: comboBox
+  - frequency_id: comboBox
+  - spatial_type: comboBox
+  - point_of_contact_id_codiac: comboBox
+  - internal_contact_id_codiac: comboBox
+  - online_orderable: checkBox
+  - offline_orderable: checkBox
+  - browseable: checkBox
+  - dodsable: checkBox
+  - t_subset: checkBox
+  - event_subset: checkBox
+  - file_subset: checkBox
+  - order_allow_compress: checkBox
+
+####################################
+  - DTS_specific_fields: titleSep
+####################################
+  - source_contact_id_dts: comboBox
+  - internal_contact_id_dts: comboBox
+  - ingest_contact_id_dts: comboBox
+  - ingest_status_id_dts: comboBox
+  - load_contact_id_dts: comboBox
+  - load_data_location: lineEdit
+  - load_status_id_dts: comboBox
+  - approve_contact_id_dts: comboBox
+  - approve_status_id_dts: comboBox
+  - author_id_dts: comboBox
+  - note_type_id: comboBox
+  - note_text: plainTextEdit
+
+####################################
+  - optional_fields: titleSep
+####################################
+  - archive_location_2: lineEdit
+  - filename_pattern_2: lineEdit
+  - startdate_pattern_2: lineEdit
+  - enddate_pattern_2: lineEdit
+  - filelength_2: lineEdit
+  - format_2: comboBox
+  - host_2: comboBox
+  - archive_location_3: lineEdit
+  - filename_pattern_3: lineEdit
+  - startdate_pattern_3: lineEdit
+  - enddate_pattern_3: lineEdit
+  - filelength_3: lineEdit
+  - format_3: comboBox 
+  - host_3: comboBox
+  - description: lineEdit
+  - iso_citation_role: comboBox
+  - contact_id_codiac: comboBox
+  - datacite_contributor_type: comboBox
+  - iso_citation_role_2: comboBox
+  - contact_id_codiac_2: comboBox
+  - datacite_contributor_type_2: comboBox
+  - iso_citation_role_3: comboBox
+  - contact_id_codiac_3: comboBox
+  - datacite_contributor_type_3: comboBox
+  - iso_citation_role_4: comboBox
+  - contact_id_codiac_4: comboBox
+  - datacite_contributor_type_4: comboBox
+  - iso_citation_role_5: comboBox
+  - contact_id_codiac_5: comboBox
+  - datacite_contributor_type_5: comboBox

@@ -1,0 +1,131 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------
+# <p>The make_esc_dayfiles script generates a set of day files by
+# combining a set of EOL Sounding Composite (ESC) formatted sounding
+# files.  The script reads in the list of ESC files from the command
+# line followed by the prefix to be used to add to the beginning of
+# each day file.  The script assumes that the last argument passed
+# to the script is the output prefix and not another file.</p>
+# <p>The day files place the soundings in a specific order to be able
+# to be plotted in CODIAC.  It requires the soundings to be in order
+# by nominal date, nominal time, latitude, and longitude.  CODIAC only
+# cares about the nominal hour and will think soundings are the same
+# if they have the same date and hour even if they have different 
+# minutes and seconds.  This script uses the minutes and seconds anyway
+# to allow for future expansion on the CODIAC browsing programs.</p>
+#
+# @use make_esc_dayfiles <input_file_list> <output_prefix>
+#
+# @author Joel Clawson
+# @version 1.0 Original creation of the script.
+##Module-----------------------------------------------------------
+use strict;
+&main();
+
+##-----------------------------------------------------------
+# @signature void main(String[] input_files, String output_prefix)
+# <p>Read in the list of input files and the output file prefix
+# from the command line, organize the input files into the correct
+# sort order for the day files, and generate the day files.
+#
+# @input input_files[] The list of input files to be put into day files.
+# @input $output_prefix The prefix to be used for all generated day files.
+##-----------------------------------------------------------
+sub main {
+  if (@ARGV < 2) {
+    printf("Usage: make_esc_dayfiles <input_file_list> <output_prefix>\n");
+    exit(1);
+  }
+
+  # Parse the input from the command line.  It should be a set of
+  # files followed at the end with the prefix used for the day files.
+  my @input_files = @ARGV;
+  delete($input_files[-1]);
+  my $output_prefix = $ARGV[-1];
+
+  my $data = read_input(@input_files);
+  create_dayfiles($output_prefix,$data);
+}
+
+##-----------------------------------------------------------
+# @signature void create_dayfiles(String prefix, Hash* data)
+# <p>Create day files for each day defined in the hash of data
+# organizing the soundings by date, time, latitude, longitude,
+# and finally station id.  Files will be created that begin
+# with the specified prefix, followed by the date of the files
+# and terminating with the .cls extension.</p>
+#
+# @input $prefix The prefix to use for the day files.
+# @input $data A hash containing the data to be put into the
+# data files.
+##-----------------------------------------------------------
+sub create_dayfiles {
+  my ($prefix,$data) = @_;
+
+  foreach my $date (sort(keys(%{$data}))) {
+    open(my $OUT,sprintf(">%s%s.cls",$prefix,$date)) or die("Cannot create day file for $date\n");
+    foreach my $time (sort(keys(%{$data->{$date}}))) {
+      foreach my $lat (sort(keys(%{$data->{$date}->{$time}}))) {
+	foreach my $lon (sort(keys(%{$data->{$date}->{$time}->{$lat}}))) {
+	  foreach my $file (sort(@{$data->{$date}->{$time}->{$lat}->{$lon}})) {
+	    open(my $IN,$file) or die("Can't read $file\n");
+	    foreach my $line (<$IN>) {
+	      print($OUT $line);
+	    }
+	    close($IN);
+	  }
+	}
+      }
+    }
+    close($OUT);
+  }
+}
+
+##-----------------------------------------------------------
+# @signaure Hash* read_input(String[] input_files)
+# <p>Read the latitude, longitude, nominal date and nominal
+# time from each of the specified files and add them to a
+# Hash to store them for making day files.</p>
+#
+# @input $input_files[] The list of input files to be put
+# into day files.
+##-----------------------------------------------------------
+sub read_input {
+  my (@input_files) = @_;
+  my $data = {};
+
+  foreach my $file (sort(@input_files)) {
+    open(my $FILE,$file) or die("Cannot open file $file\n");
+    my @lines = <$FILE>;
+    close($FILE);
+
+    # Pull out the latitude and longitude
+    my @location = split(' ',substr($lines[3],35));
+    my $lon = $location[-3];
+    $lon =~ s/,//g;
+    my $lat = $location[-2];
+    $lat =~ s/,//g;
+
+    # Pull out the nominal date and time.
+    my @datetime = split(/[,:]/,substr($lines[11],35));
+    my $date = sprintf("%04d%02d%02d",trim($datetime[0]),trim($datetime[1]),
+		       trim($datetime[2]));
+#    my $time = sprintf("%02d%02d%02d",trim($datetime[3]),trim($datetime[4]),
+#		       trim($datetime[5]));
+    my $time = sprintf("%02d",trim($datetime[3]));
+
+    # Add the file to the location it should be sorted.
+    push(@{$data->{$date}->{$time}->{$lat}->{$lon}},$file);
+  }
+
+  return $data;
+}
+
+sub trim {
+  my ($data) = @_;
+  return $data if (!defined($data));
+  $data =~ s/^\s+//;
+  $data =~ s/\s+$//;
+  return $data;
+}

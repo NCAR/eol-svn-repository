@@ -1,0 +1,19 @@
+
+/* threshold the distances */
+for (ni=0; ni<NUM_NBORS; ni++)
+ if (nbor_dist[ei][ni] > MAX_KM)
+   nbor_dist[ei][ni] = 0.0;
+
+/* find new farthest */
+for (far_idx=-1,far_dist=-1.0, ni=0; ni<NUM_NBORS; ni++)
+ if (nbor_dist[ei][ni] > far_dist) {
+ far_idx=ni;
+ far_dist=nbor_dist[ei][ni];
+ }
+
+/* calc ratios for wtd avg */
+for (ni=0; ni<NUM_NBORS; ni++)
+ if (nbor_dist[ei][ni] > 0.0)
+  nbor_rats[ei][ni] = (far_idx==ni) ? 1.0 : (nbor_dist[ei][far_idx] / nbor_dist[ei][ni]);
+ else nbor_rats[ei][ni] = 0.0;
+ 

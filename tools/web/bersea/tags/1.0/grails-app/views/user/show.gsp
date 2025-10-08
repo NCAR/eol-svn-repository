@@ -1,0 +1,77 @@
+  
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="layout" content="main" />
+    <title>Show Researcher</title>
+  </head>
+  <body>
+    <div class="nav">
+      <span class="menuButton"><a href="${createLinkTo(dir:'')}">Home</a></span>
+      <span class="menuButton"><g:link action="list">Researcher List</g:link></span>
+	  <g:ifAllGranted role="ROLE_USER,ROLE_ADMIN">      
+      	<span class="menuButton"><g:link action="create">New Researcher</g:link></span>
+	  </g:ifAllGranted>
+    </div>
+    
+    <div class="body">
+      <h1>Show Researcher</h1>
+      <g:if test="${flash.message}">
+        <div class="message">${flash.message}</div>
+      </g:if>
+      <div class="dialog">
+        <table>
+          <tbody>
+                   
+            <tr class="prop">
+              <td valign="top" class="name">Full Name:</td>
+              <td valign="top" class="value">
+                ${person.userRealName?.encodeAsHTML()}
+              </td>
+            </tr>
+                   
+            <tr class="prop">
+              <td valign="top" class="name">Phone:</td>
+              <td valign="top" class="value">
+                ${person.phoneNumber?.encodeAsHTML()}
+              </td>
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name">Organization:</td>
+              <td valign="top" class="value">
+                ${person.organization?.encodeAsHTML()}
+              </td>
+            </tr>
+
+            <tr class="prop">
+              <td valign="top" class="name">Description:</td>
+              <td valign="top" class="value">
+                ${person.description?.encodeAsHTML()}
+              </td>
+            </tr>
+                   
+            <tr class="prop">
+              <td valign="top" class="name">Email:</td>
+              <td valign="top" class="value">
+                ${person.email?.encodeAsHTML()}
+              </td>
+            </tr>
+                   
+          </tbody>
+        </table>
+      </div>
+
+	<g:ifAllGranted role="ROLE_USER,ROLE_ADMIN">      
+      <div class="buttons">
+        <g:form controller="user">
+          <input type="hidden" name="id" value="${person?.id}" />
+          <span class="button"><g:actionSubmit value="Edit" /></span>
+          <span class="button"><g:actionSubmit value="Delete" /></span>
+        </g:form>
+      </div>
+	</g:ifAllGranted>
+      
+    </div>
+  </body>
+</html>

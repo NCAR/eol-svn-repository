@@ -1,0 +1,78 @@
+/* Adapted from:	http://sixrevisions.com/css/css-only-tooltips/ 		*/
+
+.sub-nav ul { overflow: visible; min-height: 30px; }
+.helptip:hover { color: #000 !important; }
+.nav a.helptip:hover {  background: none !important; }
+.helptip {
+	max-width: 16px; /* For the image */
+	border-bottom: 1px dotted #000000; color: #000000; outline: none;
+	cursor: help; text-decoration: none;
+	position: relative;
+	display: inline-block !important;
+	border-radius: 0px !important;
+	padding: 0px !important;
+	
+}
+/*
+.helptip span {
+	margin-left: -999em;
+	position: absolute;
+}
+.helptip:hover span {
+	border-radius: 5px 5px !important;
+	-moz-border-radius: 5px !important;
+	-webkit-border-radius: 5px !important; 
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2) !important;
+	-webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.2) !important;
+	-moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.2) !important;
+	font-family: Calibri, Tahoma, Geneva, sans-serif !important;
+	position: absolute !important;
+	left: 1em !important;
+	top: 2em !important;
+	z-index: 99 !important;
+	margin-left: 0 !important;
+	width: 250px !important;
+}
+*/
+.helptip span {
+	margin-left: -999em;
+	position: absolute;
+	border-radius: 5px 5px !important;
+	-moz-border-radius: 5px !important;
+	-webkit-border-radius: 5px !important; 
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2) !important;
+	-webkit-box-shadow: 5px 5px rgba(0, 0, 0, 0.2) !important;
+	-moz-box-shadow: 5px 5px rgba(0, 0, 0, 0.2) !important;
+	font-family: Calibri, Tahoma, Geneva, sans-serif !important;
+	left: 1em !important;
+	top: 2em !important;
+	z-index: 99 !important;
+	width: 250px !important;
+}
+.helptip:hover span {
+	margin-left: 0 !important;
+	position: absolute !important;
+}
+.helptip:hover span img {
+	border: 0 !important;
+	/*margin: -10px 0 0 -55px !important;*/
+	margin: -10px 0 0 -48px !important;
+	float: left !important;
+	position: absolute !important;
+}
+.helptip:hover em {
+	font-family: Candara, Tahoma, Geneva, sans-serif !important;
+	font-size: 1.2em !important;
+	font-weight: bold !important;
+	display: block !important;
+	padding: 0.2em 0 0.6em 0 !important;
+}
+.classic { padding: 0.8em 1em; }
+.custom { padding: 0.5em 0.8em 0.8em 2em; }
+* html a:hover { background: transparent !important; }
+.classic {background: #FFFFAA; border: 1px solid #FFAD33; }
+.critical { background: #FFCCAA; border: 1px solid #FF3334;	}
+/*.help { background: #9FDAEE; border: 1px solid #2BB0D7;	}*/
+.help { background: #e7e7e7; border: 1px solid #929292;	}
+.info { background: #9FDAEE; border: 1px solid #2BB0D7;	}
+.warning { background: #FFFFAA; border: 1px solid #FFAD33; }

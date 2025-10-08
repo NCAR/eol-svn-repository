@@ -1,0 +1,169 @@
+<html><head><title>Query Master List: How To</title></head>
+<body bgcolor=white>
+
+<center><h1>Query Master List: How To</h1></center>
+
+<hr>
+<h3>Step 1:</h3>
+<p>Specify the url of the script in the CGI bin followed by a question mark (?): 
+http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?</p>
+
+<h3>Step 2:</h3>
+<p>Specify the name of the project using the parameter 'project', this must be set or you will get 
+an error: <br>http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=SBI</p>
+
+<h3>Step 3:</h3>
+<p>Narrow the search by specifying values for different fields in the databaase.  Possible
+fields are:</p>
+
+<b>-platforms</b>
+	<dd>the name(s) of the platform(s) to pull from database, if not set all platforms are shown
+<br><br>
+<b>-disciplines</b>
+	<dd>the name(s) of the discipline(s) to pull from database, if not set all disciplines are shown
+
+<br><br>
+<b>-data_types</b>
+	<dd>the name(s) of the data type(s) to pull from database, if not set all data types are shown
+
+<br><br>
+<b>-sites</b>
+	<dd>the name(s) of the site(s) to pull from database, if not set all sites are shown
+
+<br><br>
+<b>-spat_resolutions</b>
+	<dd>the name(s) of the spat_res(s) to pull from database, if not set all spatial resolutions are shown
+
+<br><br>
+<b>-year</b>
+	<dd>the year to pull from the database.  Pulls all datasets whose start_year and end_year fall around the year given.
+
+<br><br>
+<b>-comments</b>
+	<dd>the value(s) of the comments field to pull from the database.
+
+<br><br>
+<b>-phases</b>
+	<dd>the value(s) of the phase field to pull from the database.
+<br>
+<b>Note: </b>More than one comment string or one phase string can be entered.
+
+<br><br>
+<b>-methods_of_obs</b>
+	<dd>the value(s) of the method_of_obs (Method of Observation) field to pull from the database.
+
+<br><br>
+<b>-dateeq, datelt, dategt, datele, datege</b>
+	<dd>conditionals to pull datasets submitted to JOSS from a given time period.  Date must in the YYYY-MM-DD format.
+	<dd>Ex: 
+	<a href=http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=ATLAS&fields=title&fields=storm_id&fields=date&dategt=2002-09-01&datelt=2002-09-30>
+		http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=ATLAS&fields=title&fields=storm_id&fields=date&dategt=2002-09-30
+	</a>
+
+
+<h3>Step 4:</h3>
+<p>Determine the display by specifying the fields to display, the sort order, and a title.</p>
+
+<b>-fields</b>
+	<dd>the field(s) to display. The order given is the order they appear from left to right.  
+	<dd>Possible fields: 
+	<dd><table border=0 cellpading=0 cellspacing=2 width=75%>
+		<tr>
+			<td><b>date</td>
+			<td><b>data_type</td>
+			<td><b>documentation</td>
+			<td><b>comments</td>
+			<td><b>frequency</b> (observing frequency from CODIAC)</td>
+		</tr>
+		<tr>
+			<td><b>storm_id</td>
+			<td><b>discipline</td>
+			<td><b>phase</td>
+			<td><b>year</b> (from CODIAC)</td>
+			<td><b>begin_date</b> (from CODIAC)</td>
+		</tr>
+		<tr>
+			<td><b>title</td>
+			<td><b>platform</td>
+			<td><b>url</td>
+			<td><b>start_year</b> (from CODIAC)</td>
+			<td><b>end_date</b> (from CODIAC)</td>
+		</tr>
+		<tr>
+			<td><b>author</td>
+			<td><b>site</td>
+			<td><b>doc_url</td>
+			<td><b>end_year</b> (from CODIAC)</td>
+			<td><b>size</b> (sum of all the file sizes in CODIAC)</td>
+		</tr>
+	</table>
+<br>
+	<dd>Note: if year is specified start_year 'dash' (-) end_year is displayed (1999-2000 for example).
+
+<br><br>
+<b>-order</b>
+	<dd>the field(s) by which to sort the table.   
+	<dd>Possible order: 
+	<dd>
+	<table border=0 cellpading=2 cellspacing=2 width=50%>
+		<tr>
+			<td><b>date</td>	
+			<td><b>data_type</td>	
+			<td><b>phase</td>	
+		</tr>
+		<tr>
+			<td><b>storm_id</td>
+			<td><b>discipline</td>	
+			<td><b>comments</td>	
+		</tr>
+		<tr>
+			<td><b>title</td>	
+			<td><b>platform</td>	
+			<td><b>url</td>	
+		</tr>
+		<tr>
+			<td><b>author</td>	
+			<td><b>site</td>	
+			<td><b>doc_url</td>	
+		</tr>
+	</table>
+	<dd><b>Currently, the table cannot be sorted by any of the fields pulled from CODIAC.  If this is desired the 
+   query script will have to be updated.</b>
+	<dd>Example: &order=date&order=storm_id - in this case the table is sorted first by date and then by storm_id.
+
+<br><br>
+<b>-title</b>
+	<dd>the title to display at the top of the table.
+<br><br>
+<b>Note: </b> The url cannot contain spaces!  Spaces are replaced with plus signs (+).  Example:
+&title=This+is+a+title+with+spaces 
+ 
+ 
+<h3>display parameter</h3>
+<p>The display parameter allows you to pull default tables and summary information from the database.  Along with the
+value of the display parameter the project parameter must be included and the title parameter may also be included.</p>
+<b>-display</b>
+	<dd>Possible values:
+	<dd><dd>-summary - displays a summary of the datasets in the database for the given project.
+<br>
+<hr>
+<h3>Examples:</h3>
+
+<a href=http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=ATLAS&display=summary>http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=ATLAS&display=summary</a>
+<br><br>
+<a href=http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=SBI&fields=date&fields=title&fields=author> 
+http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=SBI&fields=date&fields=title&fields=author</a> 
+<br><br>
+<a href= http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=SBI&fields=date&fields=platform&fields=title&fields=author&platforms=HLY-02-03&title=Platform:+HLY-02-03+Datasets> 
+http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=SBI&fields=date&fields=platform&fields=title&fields=author&platforms=HLY-02-03&title=Platform:+HLY-02-03+Datasets</a> 
+<br><br>
+<a href=http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=SBI&fields=date&fields=discipline&fields=title&fields=author&disciplines=Ice&disciplines=Water&order=discipline&order=title> 
+http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=SBI&fields=date&fields=discipline&fields=title&fields=author&disciplines=Ice&disciplines=Water&order=discipline&order=title</a> 
+<br><br>
+<a href=http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=SBI&fields=title&fields=author&order=author&order=title&title=This+is+the+last+example> 
+http://www.joss.ucar.edu/cgi-bin/dpg/arctic_ml/master_query?project=SBI&fields=title&fields=author&order=author&order=title&title=This+is+the+last+example</a> 
+
+
+<hr>
+Last Updated: August 13, 2003
+<hr>

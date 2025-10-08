@@ -1,0 +1,64 @@
+$Id: Readme.s2m,v 1.1 1992/11/02 21:08:32 john Exp $
+
+S2M - seconds to millibars
+ s2m.f
+ gni.f
+ calcsm.f
+
+Converts a SCF file to interpolated 10 mb levels. To change the
+interpolation level requires changing a PARAMETER value and
+recompiling. ****S2M has its own makefile.**** It may need to be
+edited for your own use, e.g. it assumes the environment variable
+LD_LIBRARY_PATH has been set such that /home/john/lib is included.
+For example, LD_LIBRARY_PATH="/home/john/lib:/usr/local/lib".
+But the key is simply to compile with "calcsm.o" and "gni.o", i.e.
+  f77 -u -c -fast -O3 calcsm.f
+  f77 -u -c -fast -O3 gni.f
+  f77 -u -fast -O3 -o s2m s2m.f calcsm.o gni.o
+
+s2m converts each file given on its command line. Or, if there
+are no command line arguments, it converts stdin to stdout.
+When compiled with the "-xld" option, it also writes a log file
+to "file.log" (where "file.ext" was given on the cmd line) or
+to "s2m.log" if no cmd line args were given. This log file mainly
+contains a listing of which points were used to interpolate each
+10 mb level.
+
+s2m cannot currently handle a balloon's descent properly. If
+the balloon bursts and descends continuously, then s2m can handle it.
+But if the balloon descends some and then rises and falls and
+rises ... then s2m will output bad data after the bursting point.
+This is because it was originally thought that s2m would get data
+that had such ugliness removed. However, there is un-QC'd data out
+there now that has that ugliness. Whether somebody willl remove it
+for me or not is unknown. What this all boils down to is this:
+s2m expects the pressures in the input to be non-decreasing.
+(As it turns out, s2m can accept input with pressures which are
+non-decreasing until a certain level, and then non-increasing
+until the end of the file (what's the math name for that?).)
+**** Now, s2m will halt if it gets a weird interpolation points,
+which can probably only happen for ballon descent.
+
+But, the descent should never appear as part of the input to s2m.
+
+Output file is called "file.10mb". If you change the interpolation
+interval (PRSINT), then the output file becomes "file.??mb" where
+?? is replaced by INT(PRSINT). If PRSINT >= 100, though, then
+?? is replaced by "XX". Example:
+   PRSINT = 10.0 , output file = "file.10mb"
+   PRSINT = 3.14 , output file = "file.03mb"
+   PRSINT = 125.0 , output file = "file.XXmb"
+
+To compile and link:
+ use "make". See first paragraph of this file for more info.
+
+s2m should be run before c2e. Please read "Readme.c2e".
+To run s2m on /fest/snd/class/work/*.qc.Z :
+ zcat /fest/snd/class/work/sssmddhhmm.0cls.qc.Z | s2m > sssmddhh.10mb
+ mv s2m.log sssmddhh.log
+ c2e sssmddhh.10mb
+ compress sssmddhh.10mb sssmddhh.log sssmddhh.ebufr
+where "sss" is the station ID, "mdd" is month/day, and "hhmm" is hours
+and minutes of launch. Note that c2e expects filenames of the form
+"sssmddhh.ext", i.e. without the minutes.
+

@@ -1,0 +1,19 @@
+
+
+Some important notes for packaging the EBRR.
+
+As they are stored in CVS, the EBRR have some things
+set for the Suns only. These should be unset before
+a tar file is created for distribution.
+
+THIS FILE SHOULD NOT BE INCLUDED IN THE TAR FILE.
+THE CVS SUBDIRECTORY SHOULD NOT BE INCLUDED IN THE TAR FILE.
+But everything else should be.
+Use:
+ % tar cf ebrr.tar Copyright [D-Za-z]*
+
+Before you tar it up:
+ * comment out the STANDARD_ARITHMETIC calls
+   at the ends of bare.f and exampl.f
+ * comment out the FFLAGS lines in the Makefile;
+   these may be Sun-specific flags (especially -fast)

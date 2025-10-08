@@ -1,0 +1,251 @@
+<html>
+<head>
+<title>How To: Process NWS Brookhaven National Lab (BNL) Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h2 class="title">How To: Process National Weather Service (NWS) Brookhaven National Lab (BNL) Upper Air Sounding Data</h2>
+<a name="toc"></a><h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+	<li><a href="#network">Network Information</a></li>
+	<li>Previous Versions<ol>
+		<li><a href="#version:bnl">BNL_ARM 2004</a></li>
+		</ol></li>
+	<li><a href="directory">Directory Structure</a></li>
+	<li>Processing the Data<ol>
+	        <li><a href="#proc_setup">Initial Processing Setup</a></li>
+		<li><a href="#convert_microart">Converting the MicroART Data</a></li>
+                <li><a href="#convert_rrs">Converting the RRS Data</a></li>
+		<li><a href="#autoqc">Auto QC</a></li>
+                <li><a href="#visual_qc">Visual QC</a></li>
+                <li><a href="#finalize">Finalization</a></li>
+	        </ol></li>
+        <li>Building Libraries and Executables<ol>
+		<li><a href="#mat_library">Creating the Matrix Library</a></li>
+		<li><a href="#programs">Creating the Conversion Programs</a></li>
+		</ol></li>
+	<li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+    <p>This document contains the process of how to convert the National Weather Service (NWS) BNL upper air sounding data EOL receives from NCDC from their ASCII file formats to the ESC format. Do NOT use this doc to convert the general NWS sounding data. Use the doc written specifically for that processing.</p>
+    <p class="note">If you make any changes to the software that would affect the general NWS processing, ensure that you update that s/w, too. This is because the BNL conversion s/w is very similar to the general processing with only a few minor BNL requirements (e.g., nominal times (not actual release times) must be in the output file names, etc.)</p>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+	<li>The Platform is 54.</li>
+        <li>The soundings are recorded in UTC.</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Current Version</h2>
+<div class="block">
+
+    <a name="version:bnl"></a><h3>BNL_ARM (Active)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS_BNL%2F&rev=0&sc=0">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS_BNL</a> 
+    </table>
+
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+
+<a></a><h2>Previous Versions</h2>
+<div class="block">
+
+    <a name="version:bnl"></a><h3>BNL_ARM (2004)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FBNL_ARM_2004%2F#_conversions_upper_air_NWS_tags_BNL_ARM_2004_">http://eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/BNL_ARM_2004</a> - BEWARE that this tag is in the general NWS svn location. Use the NWS_BNL svn area for all other NWS BNL work.
+    </table>
+
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">NWS_BNL/</h3>
+    <table class="directories">
+	<tr><th>build/</th><td>The auto-generated directory for the compiled Java classes.</td></tr>
+        <tr><th>database/</th><td>The directory where the final processed data that will be put online is stored.</td></tr>
+	<tr><th>docs/</th><td>The directory containing documentation about the processing and the data.</td></tr>
+	<tr><th>final/</th><td>The directory where the auto QC'ed MicroART files are placed as they are created.</td></tr>
+        <tr><th>final_merged/</th><td>The directory where the best auto QC'ed files for both MicroART and RRS are placed in preparation for the visual QC.  The visual QC results are also placed in this directory.</td></tr>
+	<tr><th>lib/</th><td>The directory containing libraries for the conversion.</td></tr>
+	<tr><th>logs/</th><td>The directory where the error/check files from the QC are placed.</td></tr>
+	<tr><th>matrix_lib/</th><td>The directory that contains the source code and header files for the matrix library used by the NWS BNL conversion programs.</td></tr>
+	<tr><th>nws_src/</th><td>The directory that contains the source code for the NWS BNL conversion programs.</td></tr>
+	<tr><th>output/</th><td>The directory where the processed MicroART files are put after they are formatted to ESC.</td></tr>
+	<tr><th>raw_data/</th><td>The directory where the MicroART raw data is stored for the conversion.</td></tr>
+	<tr><th>rrs_final/</th><td>The directory where the auto QC'ed RRS files are places as they are created.</td></tr>
+        <tr><th>rrs_output/</th><td>The directory where the processed RRS fiels are put after they are formatted to ESC.</td></tr>
+        <tr><th>rrs_raw_data</th><td>The directory where the source RRS files are stored for the conversion.</td></tr>
+	<tr><th>software/</th><td>The directory where the executable software for the conversion is stored.</td></tr>
+        <tr><th>src/</th><td>The directory where the Java source files for the conversion are stored.</td></tr>
+    </table>
+    <h3>Other Directories</h3>
+    <table class="directories">
+        <tr><th>/net/work/operational/soundings/NWS/archive/ascii_files</th><td>The location where the MicroArt ASCII data files are stored after being inventoried. <i>These are the files (i.e., raw data) to convert.</i></td></tr>
+        <tr><th>/net/work/operational/soundings/NWS/archive/rrs_text</th><td>The location where the RRS ASCII data files are stored after being extracted from the buffer files and archived. <i>These are the files (i.e., raw data) to convert.</i></td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<h2>Processing the Data</h2>
+<div class="block">
+
+<a name="proc_setup"></a><h3>Initial Processing Setup</h3>
+<div class="block">
+    <p>There are four things that must be done before processing the data.</p>
+    <ol>
+       <li><a href="#mat_library">Creating the Matrix Library</a>:  This is special library downloaded from the internet that is used by the MicroArt converter.  Instructions on creation can be found <a href="#mat_library">here</a>.</li>
+       <li><a href="#programs">Build the Executables</a>:  The MicroART conversion software is in C/C++ and needs to be compiled to an executable to be run.  The instructions on doing this can be found <a href="#programs">here</a>.</li>
+       <li><a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use">Setup Ant</a>:  The RRS conversion uses an Ant build configuration and must be setup in your environment.  If your environment has already been setup for Ant, this step may be skipped.  To setup your environment for Ant, see:  <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use">Ant Setup and Use</a>.</li>
+       <li>Copy the source data file to the appropriate directories.  The MicroART files go in <span class="directoryName">raw_data</span> and the RRS files go in <span class="directoryName">rrs_raw_data</span>.</li>
+    </ol>
+</div>
+
+<a name="convert_microart"></a><h3>Convert the MicroART Data</h3>
+<div class="block">
+    <p class="note">This must be done on a Solaris OS, since the matrix library and executables will only be created on that OS.</p>
+    <p>This step will convert the MicroART ASCII files into ESC ASCII files.</p>
+    <ol>
+        <li>Change to the <span class="directoryName">software</span> directory.</li>
+        <li>Make sure both the <span class="softwareName">nwsVaisala</span> and <span class="softwareName">nwsVIZ</span> executables are in the <span class="directoryName">software</span> directory.  If they are not, see <a href="#programs">Build the Executables</a>. BEWARE:: These two programs MUST have been built using the "Nominal" release time version of the NWS s/w. Make sure to build/rebuild with the MakeNWS_BNL make file!</li>
+        <li>Update the <code>getProjectName()</code> function to return the correct project ID in the <span class="softwareName">BNL_NWS_Converter.pl</span> script.</li>
+        <li>Run the <span class="softwareName">NWS_Converter.pl</span> script.  This will convert all of the files in the <span class="directoryName">raw_data</span> to ESC sounding files and generate the appropriate station list.</p>
+    </ol>
+    <p class="note">This can be a slow process at about 20-30 minutes per month file.</p>
+    <p>If you are processing BNL data prior to 2008, you should continue with the following auto QC step.  Any other conversion should use the auto QC described <a href="#autoqc">here</a> after converting the RRS data. <b>The autoqc.pl script can be found in the svn repository NWS tag for the NWS_BNL 2004 project. In general, you should not use this autoqc.pl script. You should use the Ant autoqc command in the build.xml file as described below.</b></p>
+    <ol>
+        <li>Edit the <span class="softwareName">autoqc.pl</span> script.  The <code>$AUTOQC</code> variable needs to point to the correct executable for the converion for the current processing.</li>
+        <li>Run the <span class="softwareName">autoqc.pl</span> script.  This will auto QC each ESC file in the <span class="directoryName">output</span> and put the resulting file in the <span class="directoryName">final</span> directory and a log file in the <span class="directoryName">log</span> directory.</li>
+    </ol>
+</div>
+
+
+<a name="convert_rrs"></a><h3>Convert the RRS Data</h3>
+<div class="block">
+    <p class="note">This step works best on merlot, but can be done on any machine with the proper Ant and Java setup.</p>
+    <ol>
+        <li>Change to the top level processing directory of the conversion.  (Where the <span class="softwareName">build.xml</span> file is located.)</li>
+        <li><p>This step will convert the RRS binary BUFR files or previously extracted txt files into ESC ASCII files.</p>
+	    <p><span class="note">This step is only required if the ASCII RRS files are unavailable and have to be generated from the buffer files.</span>  Extract the RRS BUFR files into txt files:  This uses the <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/link/nws-rrs-buffer-extraction-documentation">RRS Buffer Extraction Software</a> to extract the ASCII text files from the BUFR files.</p>
+            <p>Execute the Ant command:</p>
+            <p class="code">ant unbufr</p>
+            </li>
+        <li>Update the <code>PROJECT_ID</code> constant in the <span class="softwareName">src/dmg/ua/sounding/convert/nws/RRSSoundingConverter.java</span> file to contain the correct project ID.</li>
+        <li><p>Convert the RRS ASCII text files into ESC files.  This will join the meta data, PTU, and wind file (*_1Meta.txt, *_5pPTU.txt, *_6pGPS.txt) for each sounding into a single ESC sounding file in the <span class="directoryName">rrs_output</span> directory.  This also runs the format checker on the output data, sorts the records (and renames the originals to .unsort), and runs the format checker again on the sorted record files.</p>
+            <p>Execute the Ant command:</p>
+            <p class="code">ant convert_bnl</p>
+            <p>to convert for the BNL project.  This will perform some extra processing to the resulting files to satisfy their needs including altering filenames to contain nominal time instead of actual release times and changing the header "Ascension No." information using a script called <span class="softwareName">software/post_process_BNL_RRS</span>. See that script for to learn all the post processing required by the BNL. Note that the <b>MicroArt</b> conversion s/w handles these BNL updates in the C++ code. You must properly rebuild that s/w to ensure that the "nominal" versions of that code are run on the <b>MicroArt</b> s/w. No post processing is required on the MicroArt since everything is handled in the C++ code.</p>
+    </ol>
+</div>
+
+<a name="autoqc"></a><h3>Auto QC</h3>
+<div class="block">
+    <p class="note">This step works best on merlot, but can be done on any machine with the proper Ant and Java setup.</p>
+    <p>This step executes the automatic QC on the processed files, generates log files, and places the QC'ed files in its own directory.  After the QC is run, it runs the format checker on the QC'ed files.</p>
+    <ol>
+       <li>Stay in/Change to the top level processin directory where the Ant <span class="softwareName">build.xml</span> file is located.</li>
+       <li>Check the <span class="softwareName">build.xml</span> file for the <code>autoqc</code> target and make sure there are:
+           <ol>
+               <li>Command to copy the property files to the build directory.</li> 
+               <li>The java command(s) perform on the expected data and place files in the expected locations.</li>
+           </ol></li>
+       <li><p>Perform the auto QC by executing the ant command:</p>
+           <p class="code">ant autoqc_bnl</p>
+           </li>
+       <li><p>Merge the MicroART and RRS final data files together into a single directory to prepare for the visual QC.  This is done by the command:</p>
+           <p class="code">ant merge</p>
+           </li>
+    </ol>
+</div>
+
+<a name="visual_qc"></a><h3>Visual QC</h3>
+<div class="block">
+    <p>Once the auto QC is completed, Scot will perform a visual QC on the data and do final approval of the processed data set.</p>
+</div>
+
+<a name="finalize"></a><h3>Finalization</h3>
+<div class="block">
+    <p>After the visual QC is completed, the data set is ready to be finalized.  Forthe BNL data, then finalization is the creation of the monthly tar files and placing them on the FTP server. Non-BNL NWS processing requires different final processing. See the general NWS conversion doc for that. Do Not Use This Doc To Do General NWS processing! </p>
+   <h5>BNL</h5>
+   <p class="note">Finalization for BNL must be done on <span class="machineName">tsunami</span> as it is the only machine with access to the correct FTP area.</p>
+   <ol>
+       <li>Remove all previous tar files from the FTP directory.  This is to leave only the new files in the directory to be picked up.</li>
+       <li><p>Create the new tar files and put them in the FTP directory.  This is done with the ant command:</p>
+           <p class="code">ant bnl_final</p>
+           <p>This copies all of the .qc files to a temporary work directory and runs the script <span class="softwareName">software/bnl_tar_creator</span> to put the tar files into month files or if there is only a single station a monthly tar file including the station ID.</p>
+           </li>
+       <li>GZIP all of the data files used or generated for the month and move them to the processed area to clean up the work area for the next month's processing.  This includes all of the data/logs in the following directories: raw_data, output, final, rrs_raw_data, rrs_output, rrs_final, logs, and merged_final.</li> 
+
+       <li> THINK BEN G. created a final processing script for the BNL processing....what is that called, where is it????/
+       <li> Note that we NEVER create a 5MB version of the BNL NWS sounding data.
+   </ol>
+</div>
+
+<h2>Building Libraries and Executables</h2>
+<a name="mat_library"></a><h3>Creating the Matrix Library</h3>
+<div class="block">
+    <p class="note">The following currently only works on a Solaris OS and works best on tornado.</p>
+    <p>The matrix library is a download from the internet that is dated from 1992-1995.  As of August 2009, there were difficulties rebuilding this s/w. Currently must be rebuilt on cabernet or pandora's Solaris OS 9 with 2.95.3 g++ compiler. This is being worked on as the matrix libs will only rebuild on cabernet and the C++ code will only rebuild on pandora.<br><br>
+
+The previous online version created by J. Clawson is the same as the EOL version and has not been updated.  The EOL version has been updated to work with the current version of g++, which the online version does not.  The change was to add the <b>const</b> keyword to the matrix::matrix(matrix &y) function so now the function prototype looks like: matrix::matrix(const matrix &y).</p>
+    <p>The following steps are how to generate the matrix library, <span class="softwareName">libmat.a</span>:</p>
+    <ol>
+	<li>Change to the <span class="directoryName">matrix_lib</span> directory.  This contains all of the header and code files for the library, along with the makefile: libmat.mak to generate the library.</li>
+	<li>Create the library:
+                <p class="softwareName">make -f libmat.mak</p>
+		<p>This will create the library <span class="softwareName">matrix_lib.a</span> in the <span class="directoryName">lib</span> directory and copy the needed <span class="softwareName">matrix.hpp</span> file to the <span class="directoryName">lib</span> directory as well.  To make the library issue the command listed directly above.</p>
+		</li>
+	<li>Change to the <span class="directoryName">lib</span> directory to make sure that the <b>libmat.a</b> library and the <b>matrix.hpp</b> header file both are in the directory.</li>
+    </ol>
+</div>
+
+<a name="programs"></a><h3>Creating the Conversion Programs</h3>
+<div class="block">
+    <p class="note">The following currently only works on a Solaris OS.</p>
+    <p>The following steps will create the binaries for converting the MicroART data into the ESC format.</p>
+    <ol>
+	<li>Change to the <span class="directoryName">nws_src</span> directory.</li>
+	<li>Run the command to make the binaries and put them into the <span class="directoryName">software</span> directory. It is CRITICAL that you use the MakeNWS_BNL build file so that the "nominal" versions of the C++ code are included in the nwsVIZ and nwsVaisala executables. If you fail to do this, the conversion will put actual (instead of nominal) times in the output file names, which is required by BNL.i
+                <p>Only the BNL project:</p>
+		<p class="softwareName">make -f MakeNWS_BNL</p>
+        </li>
+    </ol>
+</div>
+
+
+<p><a href="#">Top</a></p><hr />
+
+<a name="documents"></a><h2>Documentation</h2>
+<div class="block">
+    <p>The following are a list of documents that may help with the conversion or are related to the raw data.</p>
+    <ul>
+	<li><a href="/software/tools/upper_air/autoqc">How To: AUTO QC Sounding Data</a>- The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/software/tools/upper_air/esc_format_checker">How To: ESC Format Checker</a>- The instructions and API for working with the ESC format checker program.</li>
+        <li><a href="/software/tools/upper_air/esc_record_sorter">How To: ESC Record Sorter</a>- The instructions and API for working with the ESC record sorter program.</li>
+	<li><a href="#">How To: Process NWS Sounding Data</a>- This document.</li>
+        <li><a href="/software/library/java/station">Java Station Library API</a></li>
+        <li><a href="/software/library/java/upper_air">Java Upper Air Library API</a></li>
+        <li><a href="/software/library/java/utilities">Java Utilities Library API</a></li>
+    </ul>
+</div>
+<a href="#">Top</a><hr>
+
+<p class="foot">Last Updated: 2009/08/28 - Linda Cully</p>
+</body>
+</html>

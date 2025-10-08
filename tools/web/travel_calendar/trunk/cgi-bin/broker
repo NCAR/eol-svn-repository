@@ -1,0 +1,150 @@
+#! /usr/bin/perl -T -w
+
+##Module-------------------------------------------------------------------
+# <p>The <code>Broker</code> module is a <code>CGI</code> module that is
+# used to connect the cgi backend to the web interface.  All of the actions
+# from the forms should be run through this program after it has been checked
+# by the javascript.  It controls the updating of the data files and refreshing
+# the frames that have the data in them changed.</p>
+#
+# <p><b>How it works:</b> This module receives a POST request from one of
+# the other travel forms.  It calls the correct modules to update the files
+# that need to be changed according to the post.  Once the data has been
+# changed in the files, it replaces the web page in the pop up travel_form
+# window with a blank page.  The blank page has javascript commands in the
+# <i>onLoad</i> command in the <code>body</code> tag.  The javascript 
+# commands in the <i>onLoad</i> get run when the blank page is loaded.  This
+# is used to refresh the appropriate frames based on the data change.  It 
+# then finishes by closing the pop up window.</p>
+#
+# <p><b>Note:</b> This is needed to allow the travel page to be run in all
+# the different browsers.  Originally all of this functionality was contained
+# within other modules and javascript, but it would only work in Internet
+# Explorer.  Besides working in more browsers, it also seems to be a somewhat
+# cleaner way to handle the data manipulation and refreshing than having
+# a number of checks in the other modules for the changes.</p>
+#
+# @author Joel Clawson
+##Module-------------------------------------------------------------------
+package Broker;
+use strict;
+use lib ".";
+use EmployeeList;
+use TravelList;
+use CGI qw(:standard :html3);
+our @ISA = ("CGI");
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+&main();
+
+##-------------------------------------------------------------------------
+# @signature void main()
+# <p>Create the blank broker page containing the javascript onLoad actions
+# after updating the data file modules.</p>
+##-------------------------------------------------------------------------
+sub main() {
+  my $self = Broker->new();
+  my $travel_change = "";
+  my $employee_change = "";
+  my $edit_employee = "";
+
+  my $trav = TravelList->new();
+
+  # Inserted or Updated travel information
+  if (defined($self->param("travel")) && $self->param("travel") eq "Submit") {
+     if (defined($self->param("orig_id"))) { # Updated Travel info
+        $trav->update_travel($self->param("orig_id"),
+			     $self->param("orig_sdate"),
+	                     $self->param("id"),
+	                     $self->param("s_date"),
+	                     $self->param("e_date"),
+                             $self->param("reason"),
+                             $self->param("where"));
+     } else { # New Travel info
+	$trav->insert_travel($self->param("id"),
+			     $self->param("s_date"),
+			     $self->param("e_date"),
+			     $self->param("reason"),
+			     $self->param("where"));
+     }
+     $travel_change=sprintf("calendar?year=%04d;month=%02d",
+			    substr($self->param("e_date"), 0, 4),
+	                    substr($self->param("e_date"), 5, 2));
+  # Delete Travel information
+  } elsif (defined($self->param("travel")) && $self->param("travel") eq "Delete") {
+	$trav->delete_travel($self->param("orig_id"),
+		             $self->param("orig_sdate"));
+        $travel_change = "calendar";
+  }
+
+  # Check to see if the list of employees has been changed and change it
+  my $emps = EmployeeList->new();
+  if (defined($self->param("employee")) && $self->param("employee") eq "Submit") {
+	if (defined($self->param("orig_id"))) {
+	   $emps->update_employee($self->param("orig_id"),
+			          $self->param("id"),
+				  $self->param("fname"),
+                                  $self->param("lname"),
+			          $self->param("color"));
+	   $employee_change = "listing";
+	   $travel_change = "calendar";
+        } else {
+	   $emps->insert_employee($self->param("id"), 
+				  $self->param("fname"),
+                                  $self->param("lname"),
+			          $self->param("color"));
+	   $employee_change = "listing";
+        }
+  }
+
+  # Check to see if an employee has been archived/unarchived.
+  if (defined($self->param("archive")) && $self->param("archive") eq "Archive")
+  {
+      $emps->update_employee($self->param("id"),
+			     sprintf("arch%03d_%s", $emps->getArchiveCount()+1,
+				     $self->param("id")),
+			     $emps->getFirstName($self->param("id")),
+			     $emps->getLastName($self->param("id")),
+			     "black");
+      $employee_change = "listing";
+      $travel_change = "calendar";
+  } elsif (defined($self->param("archive")) && $self->param("archive") eq "Unarchive") {
+      $edit_employee = sprintf("employee_form?id=%s", $self->param("id"));
+  }
+
+  print($self->header());
+  print("<html>\n");
+  print("<body onload=\"javascript: ");  
+
+  # Check to see if the travel information has changed and add it to the onLoad
+  if ($travel_change ne "") {
+      printf("window.open('%s', 'travel_disp'); ", $travel_change);
+  }
+
+  # Check to see if the employee info has changed and add it to the onLoad
+  if ($employee_change ne "") {
+      printf("window.open('%s', 'travel_emp'); ", $employee_change);
+  }
+
+  # Open the employee_form to edit an unarchived employee, so don't close
+  # the window onLoad.
+  if ($edit_employee ne "") {
+      printf("window.open('%s', 'travel_form');", $edit_employee);
+      printf("\">\n");
+  } else {
+      print("window.close();\">\n");
+  }
+
+  print("</body>\n");
+  print("</html>\n");
+}
+
+
+
+
+
+
+
+
+

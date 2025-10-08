@@ -1,0 +1,116 @@
+> groovy authorshipConnect.groovy ITEX
+
+Created log file:	logs/log_20160413153517.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+--------------------------------------------------------------------------------
+  ITEX:  56.800
+		NCAR/EOL
+Which of these contacts matches this author:	NCAR/EOL
+
+		3	swilliams	Steven F. Williams	NCAR/EOL/CDS
+		4	jja	John Allison	NCAR/EOL
+		54	jjensen	Jorgen Jensen	NCAR/EOL
+		72	jclawson	Joel Clawson	NCAR/EOL/CDS
+		73	sloehrer	Scot Loehrer	NCAR/EOL/CDS
+		136	lcully	Linda Cully	NCAR/EOL/CDS
+		149	null	Don Stott	NCAR/EOL/CDS
+		171	gstoss	Greg Stossmeister	NCAR/EOL/CDS
+		179	jaquino	Janine Aquino	NCAR/EOL/CDS
+		288	juwang	June Wang	NCAR/EOL
+		328	kbeierle	Kathryn Young	NCAR/EOL
+		448	ncar/rdp	null	NCAR/EOL/RDP
+		508	ncar/raf	null	NCAR/EOL Research Aviation Facility
+		644	jhurst	Jean Hurst	NCAR/EOL
+		687	soncley	Steve Oncley	NCAR/EOL/ISFF
+		690	gpoulos	Gregory Poulos	NCAR/EOL/ISF
+		696	promashkin	Pavel Romashkin	NCAR/EOL
+		697	rruth	Ron Ruth	NCAR/EOL
+		708	anstett	Janet Scannell	NCAR/EOL
+		722	cwebster	Chris Webster	NCAR/EOL
+		724	goldenb	Ben Golden	NCAR/EOL/CDS
+		729	jstith	Jeffrey Stith	NCAR/EOL
+		799	plucas	Luke Przygocki	NCAR/EOL/CDS
+		800	snorman	Susan Stringer	NCAR/EOL/CDS
+		815	lechohawk	Linda Echo-Hawk	NCAR/EOL/CDS
+		827	aboughton	Alex Boughton	NCAR/EOL/CDS
+		841	rilling	Bob Rilling	NCAR/EOL/CDS
+		844	sstroble	Sean Stroble	NCAR/EOL/CDS
+		848	dongl	Ling Ling Dong	NCAR/EOL
+		851	null	Amanda Orin	NCAR/EOL/CDS
+		852	nmetts	Nicolas Metts	NCAR/EOL/CDS
+		858	tweckwerth	Tammy Weckwerth	NCAR/EOL
+		864	bonfanti	Christina Bonfanti	NCAR/EOL/CDS
+		865	schick	Kelly Schick	NCAR/EOL/RAF
+		888	csibo	Christian Sibo	NCAR/EOL
+		889	cbsnyder	Craig Brooks Snyder	NCAR/EOL
+		897	zader	null	NCAR/EOL
+		933	ej	Erik Johnson	NCAR/EOL
+		934	dennisf	Dennis Flanigan	NCAR/EOL
+		972	wharrisn	Harrison Williams	NCAR/EOL
+		980	devinb	Devin Brown	NCAR/EOL
+		1000	fgr	null	NCAR/EOL
+		1002	dmgscripts	null	NCAR/EOL
+		1003	catalog_ingest	null	NCAR/EOL
+		1004	joss	null	NCAR/EOL
+		1177	null	Eric Dattore	NCAR/EOL
+		1194	null	Scotty Belden	NCAR/EOL
+		1586	null	Michael Dixon	NCAR/EOL/RSF
+		1589	null	null	NCAR/EOL Remote Sensing Facility
+		1621	null	Morgan Garske	NCAR/EOL
+		1622	null	Soo Rin Park	NCAR/EOL
+		1643	null	null	NCAR/EOL Computing, Data and Software Facility (CDS)
+		1656	null	Dalton Behringer	NCAR/EOL
+		1785	null	Dean Lauritsen	NCAR/EOL
+		1951	null	Alex Doran	NCAR/EOL
+		1973	null	Patrick Boylan	NCAR/EOL
+		2093	null	Matt Paulus	NCAR/EOL
+		2131	null	Julie Anne Jubera	NCAR/EOL
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1001
+
+		1001	eolDataCite	null	UCAR/NCAR - Earth Observing Laboratory	(null)
+
+Is this the author? (y/n)  > y
+Unable to find contact 1001 for data set 56.800. Will insert contact.
+Unable to find contact 1001 for data set 56.801. Will insert contact.
+Unable to find contact 1001 for data set 56.802. Will insert contact.
+Unable to find contact 1001 for data set 56.803. Will insert contact.
+Unable to find contact 1001 for data set 56.804. Will insert contact.
+Unable to find contact 1001 for data set 56.805. Will insert contact.
+Unable to find contact 1001 for data set 56.806. Will insert contact.
+Unable to find contact 1001 for data set 56.807. Will insert contact.
+Unable to find contact 1001 for data set 56.808. Will insert contact.
+Unable to find contact 1001 for data set 56.809. Will insert contact.
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1001, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.800';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1001, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.801';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1001, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.802';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1001, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.803';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1001, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.804';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1001, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.805';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1001, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.806';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1001, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.807';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1001, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.808';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1001, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.809';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

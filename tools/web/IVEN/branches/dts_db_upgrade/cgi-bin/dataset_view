@@ -1,0 +1,237 @@
+#! /usr/bin/perl -w
+
+package DatasetViewCGI;
+use strict;
+use lib ".";
+use ViewCGI;
+our @ISA = ("ViewCGI");
+
+&main();
+
+sub main {
+    my $self = DatasetViewCGI->new();
+    $self->buildPage("View: ".$self->getDataset($self->param("id"))->getId());
+}
+
+sub buildContent {
+    my ($self) = @_;
+
+    $self->printHeader();
+    $self->printStatusTable();
+    $self->printSourceTable();
+    $self->printProductTable();
+}
+
+sub getStatusLink {
+    my ($self,$link) = @_;
+    my $real = $link;
+    $link =~ s/^\/work\/([^\/]+)/\/dpg\/$1\/iven/;
+    $link =~ s/\*\*$//;
+    return $link =~ /^\/dpg/ ? sprintf("<a href=\"%s\">%s</a>",$link,$real) : $real;
+}
+
+sub printHeader {
+    my ($self) = @_;
+    my $dataset = $self->getDataset();
+    my $status = $self->getStatusMap()->{$dataset->getStatusId()};
+
+    printf("<table class=datasetHeader>\n");
+    printf("   <tr>\n");
+    printf("      <td class=status><span class=title>Status:</span> <font class=%s>%s</font>%s</td>\n",
+	   $status->getStyle(),$status->getName(),$dataset->hasQuestions() ? 
+	   sprintf("<img src=%s/questions.gif alt=\"Question(s) with data\">",$self->{"IMAGES"}) : "");
+    printf("      <td class=title>%s</td>\n",$dataset->getName());
+    printf("      <td class=processor><span class=title>Processing Contact:</span> %s</td>\n",
+	   $self->getUserMap()->{$dataset->getProcessContactId()}->getName());
+    printf("   </tr>\n");
+    printf("</table>\n");
+}
+
+sub printProductTable {
+    my ($self) = @_;
+    my $dataset = $self->getDataset();
+
+    printf("<center>\n");
+    printf("   <table class=statusTable>\n");
+    printf("      <tr class=statusHeading>\n");
+    printf("         <td>\n");
+    printf("            <table>\n");
+    printf("               <tr>\n");
+    printf("                  <td class=left>&nbsp;</td>\n");
+    printf("                  <td class=center>Associated Composites/Groups</td>\n");
+    printf("                  <td class=right>&nbsp;</td>\n");
+    printf("               </tr>\n");
+    printf("            </table>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("      <tr class=statusRow>\n");
+    printf("         <td>\n");
+    printf("            <table class=statusLinkTable>\n");
+
+    foreach my $product ($dataset->getProducts()) {
+	printf("               <tr>\n");
+	printf("                  <td><a href=\"%s?project=%s&id=%s\">%s</a></td>\n",$product->getViewer(),
+	       $self->uriEscape($self->getProject()->getId()),$self->uriEscape($product->getId()),$product->getName());
+	printf("               </tr>\n");
+    
+    }
+
+    printf("            </table>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("   </table>\n");
+    printf("</center>\n");
+}
+
+sub printSourceTable {
+    my ($self) = @_;
+    my $dataset = $self->getDataset();
+
+    printf("<center>\n");
+    printf("   <table class=statusTable>\n");
+    printf("      <tr class=statusHeading>\n");
+    printf("         <td>\n");
+    printf("            <table>\n");
+    printf("               <tr>\n");
+    printf("                  <td class=left>&nbsp;</td>\n");
+    printf("                  <td class=center>Dataset Sources</td>\n");
+    printf("                  <td class=right><a href=\"javascript: addSourceDataset('%s');\"><img src=%s/a_dataset.gif alt=\"Add Dataset\"></a></td>\n",
+	   $dataset->getId(),$self->{"IMAGES"});
+    printf("               </tr>\n");
+    printf("            </table>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("      <tr class=statusRow>\n");
+    printf("         <td>\n");
+    printf("            <table class=statusLinkTable>\n");
+    
+    foreach my $source ($dataset->getDatasets()) {
+	printf("               <tr class=%s>\n",$source->isExcluded() ? "excludeRow" : "dsRow");
+	printf("                  <td class=edit><a href=\"javascript: editSource('%s');\"><img src=%s/edit.gif></a><br>%s</td>\n",
+	       $source->getId(),$self->{"IMAGES"},$source->getId());
+	printf("                  <td class=name>%s</td>\n",($source->getDatasetType() eq "Composite" || $source->getDatasetType() eq "Processed") ?
+	       sprintf("<a href=\"dataset_view?project=%s&id=%s\">%s</a>",$self->uriEscape($self->getProject()->getId()),
+		       $self->uriEscape($source->getId()),$source->getName()) : $source->getName());
+	printf("                  <td class=note><div class=shortNote id=note%s><div class=expander><a href=\"javascript: noteExpander('note%s','shortNote')\"><img id=note%sImg src=%s/e_notes.gif></a></div>%s</div></td>\n",$source->getNoteId(),$source->getNoteId(),$source->getNoteId(),$self->{"IMAGES"},$source->getNote());
+	printf("                  <td class=edit><div><a href=\"javascript: validateDatasetSourceDelete('%s','%s');\">Remove</a></div><div><a href=\"javascript: %sDataset('%s','%s');\">%s</a></div></td>\n",
+	       $dataset->getId(),$source->getId(),$source->isExcluded() ? "include" : "exclude" ,$dataset->getId(),$source->getId(),$source->isExcluded() ? "Include" : "Exclude");
+	printf("               </tr>\n");
+    }
+
+    printf("            </table>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("   </table>\n");
+    printf("</center>\n");
+}
+
+sub printStatusTable {
+    my ($self) = @_;
+    my $dataset = $self->getDataset();
+
+    printf("<center>\n");
+    printf("   <table class=statusTable>\n");
+    printf("      <tr class=statusHeading>\n");
+    printf("         <td>\n");
+    printf("            <table>\n");
+    printf("               <tr>\n");
+    printf("                  <td class=left>&nbsp;</td>\n");
+    printf("                  <td class=center>Dataset Status</td>\n");
+    printf("                  <td class=right><a href=\"javascript: editDataset('%s');\"><img src=%s/e_dataset.gif alt=\"Edit Dataset\"></a></td>\n",
+	   $dataset->getId(),$self->{"IMAGES"});
+    printf("               </tr>\n");
+    printf("            </table>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("      <tr class=statusRow>\n");
+    printf("         <td>\n");
+    printf("            <table class=statusLinkTable>\n");
+    printf("               <tr>\n");
+    printf("                 <th>Work Dir:</th>\n");
+    printf("                 <td>%s</td>\n",$self->getStatusLink($dataset->getHomeDir()));
+    printf("               </tr>\n");
+    printf("               <tr>\n");
+    printf("                 <th>Final Data Dir:</th>\n");
+    printf("                 <td>%s</td>\n",$self->getStatusLink($dataset->getFinalDir()));
+    printf("               </tr>\n");
+    printf("               <tr>\n");
+    printf("                 <th>Plot Dir:</th>\n");
+    printf("                 <td>%s</td>\n",$self->getStatusLink($dataset->getPlotDir()));
+    printf("               </tr>\n");
+    printf("               <tr>\n");
+    printf("                 <th>Repos Dir:</th>\n");
+    printf("                 <td>%s</td>\n",$self->getStatusLink($dataset->getReposDir()));
+    printf("               </tr>\n");
+    printf("               <tr>\n");
+    printf("                 <th>Station List:</th>\n");
+    printf("                 <td>%s</td>\n",$self->getStatusLink($dataset->getStationList()));
+    printf("               </tr>\n");
+    printf("               <tr>\n");
+    printf("                 <th>How To:</th>\n");
+    printf("                 <td>%s</td>\n",$self->getStatusLink($dataset->getHowTo()));
+    printf("               </tr>\n");
+    printf("               <tr>\n");
+    printf("                  <th>Readme(s):</th>\n");
+    printf("                  <td>\n");
+    foreach my $readme ($dataset->getReadmes()) {
+	$readme =~ /\/([^\/]+)$/;
+	printf("                     <li><a href=\"%s\">%s</a>\n",$readme,$1);
+    }
+    printf("                  </td>\n");
+    printf("               </tr>\n");
+    printf("               <tr>\n");
+
+    printf("                 <th>Source Info:<br><a href=\"javascript: noteExpander('srcNote','srcInfo');\"><img id=srcNoteImg src=%s/e_notes.gif></a></th>\n",
+	   $self->{"IMAGES"});
+    printf("                 <td class=srcInfo>\n");
+    printf("                 <div id=srcNote class=srcInfo>\n",);
+    printf("                    <table>\n");
+    printf("                       <tr>\n");
+    printf("                          <th>Source</th>\n");
+    printf("                          <th>Readme(s)</th>\n");
+    printf("                          <th>UTC Offset</th>\n");
+    printf("                          <th>DST</th>\n");
+    printf("                          <th>Collection Time</th>\n");
+    printf("                          <th>Source of Time Info</th>\n");
+    printf("                       </tr>\n");
+    
+    foreach my $source ($dataset->getDatasets()) {
+	next if ($source->isExcluded());
+	printf("                       <tr>\n");
+	printf("                          <td>%s</td>\n",$source->getId());
+	printf("                          <td>\n");
+	foreach my $file ($source->getReadmes()) {
+	    $file =~ /\/([^\/]+)$/;
+	    printf("                             <li><a href=\"%s\">%s</a></li>\n",$file,$1);
+	}
+	printf("                          </td>\n");
+	printf("                          <td>%s</td>\n",$source->getUTCOffset());
+	printf("                          <td align=center class=%s>%s</td>\n",defined($source->getDSTFlag()) ? ($source->getDSTFlag() ? "yes" : "no") : "unknown",
+	       defined($source->getDSTFlag()) ? ($source->getDSTFlag() ? "Yes" : "No") : "Unknown");
+	printf("                          <td>%s</td>\n",$source->getCollectionTimeNote());
+	printf("                          <td>%s</td>\n",$source->getSourceTimeNote());
+	printf("                       </tr>\n");
+    }
+
+
+    printf("                    </table>\n");
+    printf("                 </td>\n");
+    printf("                 </div>\n");
+    printf("               </tr>\n");
+    printf("               <tr>\n");
+    printf("                 <th>Notes:</th>\n");
+    printf("                 <td>%s</td>\n",$dataset->getNote());
+    printf("               </tr>\n");
+    printf("            </table>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("   </table>\n");
+    printf("</center>\n");
+}
+
+
+
+
+
+
+

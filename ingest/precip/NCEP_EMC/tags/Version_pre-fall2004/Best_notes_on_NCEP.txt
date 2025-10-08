@@ -1,0 +1,220 @@
+NOTE:  This file is no longer being kept up.  The archival of this data has
+been automated via a script, and new tools allow us to obtain tape numbers 
+easily directly from the database.
+
+JAG 3/14/05
+
+
+Satus of Sid Katz's CPC/NCEP datasets
+		Last updated:  May 17, 2004,  JC	
+                (This file located on /work/ALL_katz_data/Best*)
+
+Dashes mean need CODIAC Tape Number.
+
+21.006  NCEP 4KM GRIB (ST2_4KM)
+
+Note that as of Jan 1, 2002 the format of the GRIB data has changed.  See
+grids.readme for details.
+
+NOTE: This message from one of Sid's colleagues explains the status of missing 
+GRIB data.  We may forward this info to any users who inquire about missing 
+GRIB data.
+
+>    The missing radar data most likely resulted from an interrupted
+> data feed (i.e. radar data not reaching us at all for a number of
+> hours - the data are piped through to us via the OSO gateway).  It
+> happens every now and then - for example, on 1 Dec 2001, when I
+> noticed that there was no multi-sensor analysis for an hour,  I
+> looked into the radar data file we were receiving, and found that
+> there was simply no radar data at all for that hour.
+>
+>    There is something like 1/4 time of one person (me) working on
+> the maintenance/upgrade of this product, and back in 1999 this was
+> done by an off-site person (Mike Baldwin) who had a job in Oklahoma,
+> so as you can imagine there is usually not much human QC done on
+> the product.  If something goes wrong within the past 5 days or so,
+> and if we do have the data, I usually try to repair the damage, but
+> for something that's more than 2 years old, and for which we didn't
+> receive the data, it is really not possible to re-make the analysis,
+> I am sorry.  We do have plans to push this to operational status in
+> the future, things should improve significantly then.
+>
+>    I use the stage2/stage4 data for precipitation assimilation, and
+> every now and then would run into a missing hour.  What I do is to
+> use the gauge-only data instead (and when both are missing - it does
+> happen - I have to fall back to a 'no precip obs available' option).
+> I looked into that day and noticed that there were gauge-only data
+> for those hours, maybe you'd like to consider using that.
+>
+> Ying
+>
+> --
+> Ying Lin
+> NCEP/EMC/Mesoscale Modeling Branch
+> ylin@ncep.noaa.gov
+> (301) 763-8000 ext 7248
+
+
+
+Time Span       CODIAC Tape Numbers
+-----------------------------------
+
+960501-961231	002242 002243
+970101-970228	002244 002245
+970301-970528	001114 001115
+970529-970830	001116 001117
+970831-971231	001118 001119
+980101-980228	001120 001121
+980301-980331	001400 001401
+980401-980630	002240 002241 (June replaced by data on Nov 98 Tape.)
+980601-980930   002034 002035
+981001-981231	002036 002037
+990101-990630	001174 001175
+990701-991231	001492 001493
+
+20000101-20000630 001370 001371
+20000701-20001231 001498 001499
+20010101-20010630 001372 001373
+20010701-20011231 001920 001921
+20020101-20020630 001912 001913
+20020701-20021231 001374 001375
+20030101-20030630 001382 001383
+20030701-20031231 001384 001385
+20040101-20040630 001386 001387
+20040701-20040831 001388 001389
+
+21.093  NCEP Stage III 4KM GRIB data (ST4.)
+
+This data exists beginning Jan 1, 2002.
+
+Time Span       CODIAC Tape Numbers
+-----------------------------------
+
+20020101-20020630 001912 001913
+20020701-20021231 001374 001375
+20030101-20030630 001382 001383
+20030701-20031231 001384 001385
+20040101-20040630 001386 001387
+20040701-20040831 001388 001389
+
+21.007 NCEP Preview GIF Imagery
+
+Time Span       CODIAC Tape Numbers
+-----------------------------------
+
+971201-980331	------ ------   ???? (Mar - See 001401 & 001400.)
+980401-980630   002240 002241 (June replaced by data on Nov 98 Tape.)
+980601-980930   002034 002035
+981001-981231   002036 002037
+990101-990630	001174 001175  (Apr 7-30 preview GIF Imagery could not 
+be retrieved
+				by CPC/NCEP so these files are missing. See Sid Katz
+				May 14th email.)
+990701-991231   001492 001493  (Please note that there are missing grib data files 
+				for 23-Dec-1999 and a loss of some of the hourly 
+				grib/preview files for 30 & 31 Dec. See Sid Katz Jan 
+				7, 2000 email.)
+
+20000101-20000630 001370 001371 (Please note that there are minimal 'gif-preview' 
+				files for 1-4,8,9 Jan 2000.  Also, there were 
+				communications problems on Jan 08, so there is 
+				little or no data for Jan 08. See Sid Katz Feb 
+				8, 2000 email.)
+
+20000701-20001231 001498 001499 (There are some random days with smaller
+than
+				usual file sizes.  CPC did have some computer
+				problems during the month of July causing these
+				smaller file sizes.
+				During Aug2000, the preview file is smaller due 
+				to the fact the hourly images were not made.  It
+				was an oversight during some script changes 
+				during the month.  The 24 hour gif images for 
+				each day are in the file though.)
+
+20010101-20010630 001372 001373
+20010701-20011231 001920 001921
+20020101-20020630 001912 001913
+20020701-20021231 001374 001375
+20030101-20030630 001382 001383
+20030701-20031231 001384 001385
+20040101-20040630 001386 001387
+20040701-20040831 001388 001389
+
+21.005 NCEP Daily Precip
+
+Time Span        Notes
+--------------------------------------------
+960101-980630  - Currently loaded on CODIAC. (gage.dly.prcp.YYYYMMDD)
+980701-980930  - Currently loaded on CODIAC. (/archive/jb0/codiac/eop/katz_data/dly_gage/)
+                 (All of the replacement data that Sid sent
+                  have been replaced on CODIAC as of 19 Jan 1999.)
+981001-981231  - Currently loaded on CODIAC.
+990101-990228  - Currently loaded on CODIAC.	
+990301-990331  - Currently loaded on CODIAC.
+990401-990430  - Currently loaded on CODIAC.
+990501-990531  - Currently loaded on CODIAC.
+990601-990630  - Currently loaded on CODIAC.
+990701-991231  - Currently loaded on CODIAC.
+
+20000101-20000630  - Currently loaded on CODIAC.
+20000701-20001231  - Currently loaded on CODIAC.
+20010101-20010630  - Currently loaded on CODIAC.
+20010701-20011231  - Currently loaded on CODIAC.      
+20020101-20020630  - Currently loaded on CODIAC.
+20020701-20021231  - Currently loaded on CODIAC.
+20030101-20030630  - Currently loaded on CODIAC.
+20030701-20031231  - Currently loaded on CODIAC.
+20040101-20040630  - Currently loaded on CODIAC.
+20040701-20040831  - Currently loaded on CODIAC.
+
+21.004 NCEP Hourly Precip
+
+Time Span        Notes 
+--------------------------------------------
+950111-980630  - Currently loaded on CODIAC. (gage.hrly.prcp.YYYYMMDD) 
+980701-980930  - Currently Loaded on CODIAC. (/archive/jb0/codiac/eop/katz_data/hrly_gage)
+                 (All of the replacement data that Sid sent
+                  have been replaced on CODIAC as of 19 Jan 1999.)
+981001-981231  - Currently loaded on CODIAC.
+990101-990228  - Currently loaded on CODIAC.	
+990301-990331  - Currently loaded on CODIAC.
+990401-990430  - Currently loaded on CODIAC.
+990501-990531  - Currently loaded on CODIAC.
+990601-990630  - Currently loaded on CODIAC.
+990701-991231  - Currently loaded on CODIAC.
+ 
+20000101-20000630  - Currently loaded on CODIAC.
+20000701-20001231  - Currently loaded on CODIAC.
+20010101-20010630  - Currently loaded on CODIAC.
+20010701-20011231  - Currently loaded on CODIAC.
+20020101-20020630  - Currently loaded on CODIAC.
+20020701-20021231  - Currently loaded on CODIAC.
+20030101-20030630  - Currently loaded on CODIAC.
+20030701-20031231  - Currently loaded on CODIAC.
+20040101-20040630  - Currently loaded on CODIAC.
+20040701-20040831  - Currently loaded on CODIAC.
+
+21.011 NCEP Ancillary Catalogue of Available GCIP Precip Data (archive-list)
+
+   Latest catalog dated Jun 16, 2000 was downloaded with June data.
+
+21.009 NCEP Ancillary Station List
+   
+   Sid Katz sent latest version on 14 May 99.
+
+??GAGE DATA README FILE (gage.readme)
+
+  Latest version updated Jun 20, 2000.
+
+Note that as of 1/1/2002, the format of the grib data has changed.  The
+new README is called grids.readme.
+
+  Latest version updated Feb 01, 2002
+
+??STAGE IV DATA README FILE
+
+  Latest version downloaded with Sep 2000 data.
+
+??Gage Station List Readme File
+

@@ -1,0 +1,55 @@
+a:link, a:visited {
+	color: #297ac9;
+	text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+#ucar_head {
+	background-color: #8f1501;
+	padding-bottom: 0px;
+}
+.nav {
+	background-color: #a51901;
+	color: #f2f2f2;
+}
+.nav a, .nav a:active, .nav a:visited { color: #f2f2f2; }
+.nav a:focus, .nav a:hover {
+	background-color: transparent;
+	text-shadow: none;
+	text-decoration: underline;
+}
+.admin-nav, .sub-nav, .admin-nav a, .sub-nav a { color: #666 !important; }
+.admin-nav, .sub-nav { background-color: #e3e4e6; }
+.nav-pills a.nav-pill {
+	background-color: #ddd;
+	color: #666;
+}
+.nav-pills a.nav-pill.active, .nav-pills a.nav-pill:focus, 
+	.nav-pills a.nav-pill:hover { background-color: #297ac9; }
+.prj { border-color: #666; }
+.prjtop { background-color: #666; }
+.prj:hover { border-color: #a51901; }
+.prj:hover > .prjtop { background-color: #a51901; }
+.prjtop .name a { color: #f2f2f2; }
+.project-permitted h4, .ds-list h4 { color: #297ac9; }
+fieldset.buttons a, fieldset.buttons input, 
+	fieldset.buttons a:hover, fieldset.buttons input:hover {
+	background-color: transparent;
+	color: #666;
+}
+fieldset.buttons a:hover, fieldset.buttons input:hover {
+	text-shadow: none;
+	text-decoration: underline;
+}
+.footer a:link, .footer a:active, .footer a:hover, .footer a:visited { color: #f2f2f2; }
+.tooltip-ui a { color: #a51901; }
+#ds-opts a, #ds-opts-2 a { color: #666; }
+#ds-opts a:hover, #ds-opts-2 a:hover {
+	color: #f2f2f2;
+	background-color: #297ac9;
+	text-decoration: none;
+}
+
+h1, h2, h3, h4, .full_box h2, .full_box h3, .full_box h4 { color: #a51901; }
+h3 { color: #a51901 !important; }
+hr.divider { background-color: #a51901 !important; }

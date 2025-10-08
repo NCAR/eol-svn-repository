@@ -1,0 +1,111 @@
+#!/bin/perl -w
+
+# --------------------------------------------------------------
+# view_cats: Displays the add/edit categories page for the given 
+#  project.  
+#  
+# Expected Params:
+#   "project" - the project id to display
+#   "hlight" - (optional) the category id number to hilight, used
+#     for updates and additions
+#   "sleep" - (optional) if defined the script sleeps for one second,
+#     this allows the proc_cat_update to update the db before
+#     displaying the updates in yellow.  
+# 
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use Project;
+use Utils;
+use Category;
+use Dataset;
+use Time::HiRes qw(sleep);
+
+my $sleep = param( "sleep" );
+sleep( 1.00 ) if( defined( $sleep ) );
+
+my $project = param( "project" );
+my $hlight = param( "hlight" );
+$hlight = -1 if( !defined( $hlight ) );
+
+my $proj = Project->new();
+$proj->setFromDB( $project );
+
+my $title = $proj->{title};
+
+my @tree = Category::getTree( $project );
+
+my $ds = Dataset::getDatasetList( \@tree );
+
+my $count = 0;
+
+println( header() );
+
+println( "<html><head><title>JOSS ML Editor</title></head>" );
+println( $css );
+println( $jscript );
+println( "<body bgcolor=#e9e9e9 link=#000066 alink=#000066 vlink=#000066 text=black>" );
+println( "<br><br><br>" );
+println( "<center><table border=0 cellpadding=2 cellspacing=1 width=75% bgcolor=#e9e9e9>" );
+
+println( "<tr><td colspan=5 bgcolor=#336699 id=\"path_item\">" );
+	println( "<font color=white size=+1><b>Add/Edit Categories: $proj->{name} " );
+println( "</td></tr>" );
+
+println( "<tr bgcolor=white>" );
+	println( "<td bgcolor=#e9e9e9 width=8%>&nbsp;</td>" );
+	println( "<td align=center bgcolor=#dcdcdc><b>Category</td>" );
+	println( "<td bgcolor=#dcdcdc><b>Parent</td>" );
+	println( "<td nowrap bgcolor=#dcdcdc><b># Sub-Cats</td>" );
+	println( "<td nowrap bgcolor=#dcdcdc><b># Datasets</td>" );
+println( "</tr>" );
+showTree( $ds, 0, "root" );
+
+println( "<tr><td colspan=5 bgcolor=#336699><font color=white><b>$count Categories</td></tr>" );
+println( "<tr>" );
+	println( "<td colspan=5 id=\"edit_link\">" );
+		my $url = "edit_category?mode=add&project=$project";
+		println( "<font size=-1><a href=\"javascript: editCatWindow( \'$url\' )\">Add New</a>" );
+	println( "</td>" );
+println( "</tr>" );
+println( "</table>" );
+println( "</body></html>" );
+
+sub showTree
+{
+	my @tree = @{ $_[0] };
+	my $depth = $_[1];
+	my $parent = $_[2];
+
+	foreach my $node (@tree )
+	{
+		$count++;
+		my $bgcolor = ( $node->{category}->{id} == $hlight )? "#FFFFCC" : "white";
+
+		println( "<tr bgcolor=$bgcolor>" );
+			println( "<td align=center valign=center id=\"edit_link\" bgcolor=#e9e9e9 width=8%>" );
+				println( "<font size=-2>", 
+								 "<a href=\"javascript: editCatWindow( \'edit_category?mode=update&category=$node->{category}->{id}\' )\">",
+								 "EDIT</a>" );
+			println( "</td>" );
+			println( "<td width=50%>" );
+				println( &nbsp( $depth*4 ), $node->{category}->{name} );
+			println( "</td>" );
+			println( "<td width=20%>" );
+				println( $parent );	
+			println( "</td>" );
+			println( "<td width=10% align=right>" );
+				my $nch = ( $node->{childern} )? @{ $node->{childern} } : 0;	
+				println( $nch );
+			println( "</td>" );
+			println( "<td width=10% align=right>" );
+				my $nds = ( $node->{datasets} )? @{ $node->{datasets} } : 0;	
+				println( $nds );
+		println( "</tr>" );
+		showTree( $node->{childern}, $depth+1, $node->{category}->{name} ) if( $node->{childern} );
+	}
+}

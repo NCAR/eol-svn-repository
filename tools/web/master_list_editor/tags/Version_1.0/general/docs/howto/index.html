@@ -1,0 +1,247 @@
+<html>
+<head>
+	<title>How To: Create a New Project ML</title>
+</head>
+
+<body>
+
+<h1><center>How To: Create a New Project Master List</h1></center>
+
+<p>
+This document outlines the steps needed to create a form-based Master List for a new Project.
+The first three steps listed below explain how to create a
+default master list with default categories.  Step 4 explains
+how to add new headings and categories.  Some knowledge
+of MySQL and databases are needed for this step.
+</p>
+
+<hr>
+
+<p>
+	<font size=+1><b>1. Create the needed database tables</b></font>
+		<ul>
+			<p>
+				<li>Copy the three .sql files from the <a href=database>./database</a> directory to a temporary directory.
+			</p>
+			<p>
+				<li> Replace all occurencses of 'PROJECT' in the three files to the name of the new project.  
+           You might want to avoid including '/' and '_' characters because the behavior with these characters
+           is uncertain.  Names in all caps such as IHOP or NAME would work best.
+			</p>
+			<p>
+				<li>These three files create the needed tables in the ml database located
+           on hurricane.  It also INSERTS the default headings and categories.
+           If you don't want these feel free to remove the INSERT statements in
+           the catPROJECT.sql file and the headPROJECT.sql file.
+			</p>
+			<p>
+				<li>
+           Execute the CREATE and INSERT SQL statements in these files.  The easiest way to do this is to 
+           cat the three files and pipe it through the mysql utility:
+            <dd><code>cat dsPROJECT.sql catPROJECT.sql headPROJECT.sql | mysql -h hurricane -u stormdba -p ml<br></code>
+           Ask John Allison, Don Stott, or Dan Sullivan for the password.
+			</p>
+		</ul>
+	</ol>
+</p>
+
+<p>
+	<font size=+1><b>2. Create the needed public html pages</font></b>
+		<ul>
+			<p>
+				<li>Copy the files in the <a href=html>./html</a> directory to where you want the new master list
+         to be located.  The convention has been:
+           <dd><code>/web/docs/project_name/dm/archive</code><br>
+        NOTE: the variables in the cgi script reflect this convention, these can be 
+        easily changed but to avoid confusion you may want to create the above
+        directory structure.
+			</p>
+			<p>
+				<li>Description of each file:
+  				<dd><b>index.html</b>: Defines the frameset for the master list.  Should not have to be modified
+   					except maybe the title tag.
+  
+  				<dd><b>data_list.html</b>: Contains the actual master list table.  This file is overridden by 
+           the script and should not be modified.  Be sure 'all' can write to this.  Can be achieved by:
+             <dd>&nbsp;&nbsp;&nbsp;<code>chmod a+w data_list.html</code>
+
+          <dd><b>data_type.html</b>: Contains the list of headings that link to the table 
+            in data_list.html.  This will have to be modified as headings are added. 
+			</p>
+			<p>
+				<li>More html files, similar to the data_type.html file,  may have to be written if 
+         additional categories are created.  Refer to IHOP to see how this is done. 
+			</p>
+		</ul>
+</p> 
+
+<p>
+	<font size=+1><b>3. Copy and update the cgi script </b></font>
+	<ul>
+		<p>
+			<li>Copy the <a href=script/master_list>./script/master_list</a> file to /web/cgi-bin/master/project_name
+		</p>
+		<p>
+			<li>Change the variables at the top to correspond to the new project.  
+         <dd><b>$proj </b> -  the name of the project as seen in the directory structure
+         (e.g. ihop or name)
+         <dd><b>$db_proj </b> -  the name used when creating the database tables (e.g. IHOP 
+         or NAME)
+         <dd><b>$dis_proj </b> -  the name displayed on the web pages (e.g. IHOP_2002)
+         <dd><b>$out_file </b> -  the location of the data_list.html file
+         <dd><b>$my_url </b> -  the url of the script it self
+		</p>
+		
+	</ul>
+</p>
+
+<p>
+	<font size=+1><b>4. Adding new headings and categories</b></font><br>
+	<dd>NOTE: This is rather confusing, taking a look at how IHOP or another project is set up may help.  I will
+	admit the database was not setup well.  There is some redundancy between the catPROJECT and headPROJECT
+	tables so don't be surprised.  
+	
+	<p>
+	<b><u>Database tables to insert records:</b></u><br>
+	<br>
+	<b>headPROJECT table:</b><br>
+	The headPROJECT contains the 'headings' for the project.  These are really the top level categories, the
+	categories the user first sees in the left hand frame.  However, we do not associate datasets with
+	these headings, we associate datasets with the categories defined in the catPROJECT table.  If you want
+	to associate datasets with a heading (i.e. it has no sub-categories) then you must set the is_category
+	field to 1 and enter a corresponding (almost identical) record to the catPROJECT table (this is where
+	the redundancy comes in).
+	Originally, I thought there would be headings then sub-categories under these headings, but later I found
+	out most of the time there are no sub-categories. 
+
+	<pre>
++-------------+-------------+------+-----+---------+----------------------------------------------------+
+| Field       | Type        | Null | Key | Default | Extra          
++-------------+-------------+------+-----+---------+----------------------------------------------------+
+| id          | int(11)     |      | PRI | NULL    | auto_increment primary key, set to 0 (zero) 
+| name        | varchar(50) | YES  |     | NULL    | name of the heading
+| abrv        | varchar(20) | YES  |     | NULL    | abreviation, used to 'jump' to the category using
+|             |             |      |     |         |  <a name="abrv"> tag, must be unique per project
+| is_category | int(11)     | YES  |     | 0       | set to 1 if this is a category, i.e. there is a               
+|             |             |      |     |         |  corresponding entry in the catPROJECT table
+| proj_id     | int(11)     | YES  |     | NULL    | set to NULL, this is obsolete
++-------------+-------------+------+-----+---------+----------------------------------------------------+
+
+	</pre>
+
+	<b>catPROJECT table:</b><br>
+	The heading_id field in a sense can mean two different things.  It can mean the heading under which
+	the category is located (or is a sub-category of).  It can also mean the heading to which it corresponds,
+	or is basically the identical of (has the same name).
+	<pre>
++------------+-------------+------+-----+---------+-----------------------------------------------------+
+| Field      | Type        | Null | Key | Default | Extra          
++------------+-------------+------+-----+---------+-----------------------------------------------------+
+| id         | int(11)     |      | PRI | NULL    | auto_increment primary key, set to 0 (zero)
+| name       | varchar(50) | YES  |     | NULL    | name of the category               
+| abrv       | varchar(20) | YES  |     | NULL    | category abbreviation, similar to abrv in headPROJECT               
+| heading_id | int(11)     | YES  |     | NULL    | the associated heading in headPROJECT               
++------------+-------------+------+-----+---------+-----------------------------------------------------+
+	</pre>
+	</p>
+
+	<p>
+		<b><u>IHOP Example:</u></b> <br>
+		Maybe I can explain this by example using IHOP.  <br>
+		<ol>
+			<li>Add the desired headings:
+				<dd><code>INSERT INTO headIHOP VALUES (1,'Aircraft','air',1,NULL);</code>
+				<dd><code>INSERT INTO headIHOP VALUES (2,'GPS','gps',1,NULL);</code>
+				<dd><code>INSERT INTO headIHOP VALUES (3,'Land','land',1,NULL);</code>
+				<dd><code>INSERT INTO headIHOP VALUES (4,'Lidar','lidar',1,NULL);</code>
+				<dd><code>INSERT INTO headIHOP VALUES (5,'Mesonet','Meso',0,NULL);</code>
+				<dd><code>INSERT INTO headIHOP VALUES (6,'Model','model',1,NULL);</code>
+				<dd><code>INSERT INTO headIHOP VALUES (7,'Photography','photo',1,NULL);</code>
+				<dd><code>INSERT INTO headIHOP VALUES (8,'Profiler/SODAR','sodar',1,NULL);</code>
+				<dd><code>INSERT INTO headIHOP VALUES (9,'Radar','radar',1,NULL);</code>
+				<dd><code>INSERT INTO headIHOP VALUES (10,'Radiation','rad',1,NULL);</code>
+				<dd><code>INSERT INTO headIHOP VALUES (11,'Satellite','sat',1,NULL);</code>
+				<dd><code>INSERT INTO headIHOP VALUES (12,'Soundings','sound',1,NULL);</code>
+			<br><br>
+			<li>For the headings which do not have sub-categories insert the corresponding entries into the
+				catIHOP table:
+				<dd><code>INSERT INTO catIHOP VALUES (1,'Aircraft','aircraft',1);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (2,'GPS','gps',2);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (3,'Land','land',3);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (4,'Lidar','lidar',4);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (9,'Model','model',6);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (10,'Photography','photography',7);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (11,'Profiler/SODAR','sodar',8);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (12,'Radar','radar',9);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (13,'Radiation','radiation',10);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (14,'Satellite','satellite',11);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (15,'Soundings','soundings',12);</code>
+			<br><br>
+			<li>For headings which do have sub-categories, add these sub-categories to the catIHOP table:
+				<dd><code>INSERT INTO catIHOP VALUES (5,'Composites','composites',5);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (6,'Regional Networks','regional',5);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (7,'State Networks','state',5);</code>
+				<dd><code>INSERT INTO catIHOP VALUES (8,'Special Networks','special',5);</code>
+		</ol>
+
+<b>The two tables then look like this....</b>
+		<pre>
+<b>headIHOP:</b>
++----+----------------+-------+-------------+---------+
+| id | name           | abrv  | is_category | proj_id |
++----+----------------+-------+-------------+---------+
+|  1 | Aircraft       | air   |           1 |    NULL |
+|  2 | GPS            | gps   |           1 |    NULL |
+|  3 | Land           | land  |           1 |    NULL |
+|  4 | Lidar          | lidar |           1 |    NULL |
+|  5 | Mesonet        | Meso  |           0 |    NULL | - Mesonet is not a category we don't associate dataset's
+|  6 | Model          | model |           1 |    NULL |   with 'Mesonet' but with the sub-categories of Mesonet
+|  7 | Photography    | photo |           1 |    NULL |
+|  8 | Profiler/SODAR | sodar |           1 |    NULL |
+|  9 | Radar          | radar |           1 |    NULL |
+| 10 | Radiation      | rad   |           1 |    NULL |
+| 11 | Satellite      | sat   |           1 |    NULL |
+| 12 | Soundings      | sound |           1 |    NULL |
++----+----------------+-------+-------------+---------+
+		</pre>
+		<pre>
+<b>catIHOP:</b>
++----+-------------------+-------------+------------+
+| id | name              | abrv        | heading_id |
++----+-------------------+-------------+------------+
+|  1 | Aircraft          | aircraft    |          1 |---| the value of heading_id for these types of categories 
+|  2 | GPS               | gps         |          2 |   | is the id of the corresponding heading in the headIHOP 
+|  3 | Land              | land        |          3 |   | table
+|  4 | Lidar             | lidar       |          4 |---|
+|  5 | Composites        | composites  |          5 |------|
+|  6 | Regional Networks | regional    |          5 |      | here are the Mesonet 'sub-categories'
+|  7 | State Networks    | state       |          5 |      |
+|  8 | Special Networks  | special     |          5 |------|
+|  9 | Model             | model       |          6 |---|
+| 10 | Photography       | photography |          7 |   | similar to the first 4
+| 11 | Profiler/SODAR    | sodar       |          8 |   |
+| 12 | Radar             | radar       |          9 |   |
+| 13 | Radiation         | radiation   |         10 |   |
+| 14 | Satellite         | satellite   |         11 |   |
+| 15 | Soundings         | soundings   |         12 |---|
++----+-------------------+-------------+------------+
+</pre>
+		
+	</p>
+</p>
+
+<p>
+<b>Update HTML files</b>
+Once the database is setup, or you have added new categories, the static html file with the category list,
+which shows up on the left of the public view,
+(usually named <code>data_type.html</code>) has to be updated.  The cgi script does not do this for you.
+The new categories have to be added with links to the appropriate abbreviations (the value given in the
+'abrv' attribute of the catPROJECT and headPROJECT tables).
+</p>
+
+<br>
+<hr>
+<b>Author: </b> Dan Sullivan <br>
+<b>Last Modified: </b>May, 2004
+<br>
+<br>

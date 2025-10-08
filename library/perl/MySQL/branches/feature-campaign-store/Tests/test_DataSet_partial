@@ -1,0 +1,57 @@
+#! /usr/bin/perl -w
+
+use strict;
+use lib "/h/eol/stroble/scripts/MySQL/lib";
+use MySqlDatabase;
+use MySqlDataset;
+
+my $dataset_id = "testSS";
+
+my $database = MySqlDatabase->new("stroble","tempass");
+$database->setHost("localhost");
+$database->connect();
+
+print "Setting localhost file information\n";
+my $dataset = MySqlDataset->new($dataset_id);
+#print "Selecting dataset $dataset_id\n";
+#my $msg =  $dataset->selectDataset($database);
+#if ($msg eq "") {
+#    print "Selection Successful!\n";
+#    print "Begin Date:" . $dataset->getBeginDate() . "\n";
+#    print "End Date:" . $dataset->getEndDate() . "\n";
+#    print "Min Lat:" . $dataset->getMinlat() . "\n";
+#    print "Max Lat:" . $dataset->getMaxlat() . "\n";
+#    print "Min Lon:" . $dataset->getMinlon() . "\n";
+#    print "Max Lon:" . $dataset->getMaxlon() . "\n";
+    
+    
+    print "Setting Start Date to 01/01/2010 00:00:00\n";
+    $dataset->setBeginDate(1900,01,01,0,0,0);
+    print "Setting End Date to 12/30/2010 23:59:59\n";
+    $dataset->setEndDate(2000,12,30,23,59,59);
+#    print "Setting Min/Max Lat/Lon\n";
+#    $dataset->setMinlat(10);
+#    $dataset->setMaxlat(20);
+#    $dataset->setMinlon(30);
+#    $dataset->setMaxlon(40);
+    print "Attempting to update dataset without selecting and without setting lats/lons\n";
+    my $msg = $dataset->updateDataset($database);
+    if ($msg eq ""){
+	print "Successfully Updated Dataset! (Now make sure the lats/lons were not changed)\n";
+	$database->commit();
+    }
+    else
+    {
+	print "FAILED to update dataset!\n";
+	print "$msg";
+	$database->rollback();
+    }
+#}
+#else
+#{
+#    print "Selection FAILED!\n";
+#    print "$msg";
+#}
+
+
+$database->disconnect();

@@ -1,0 +1,105 @@
+This README was current as of 8-19-2002
+
+The database for this project is currently part of the MySQL suldan database but it should become its
+own seperate identity.  Four tables within the suldan database are used DayTable, FileTable, Schedule,
+and Sector.  The Schedule and Sector tables are static tables that were put together using the GOES-8
+and GOES-10 schedules pulled off of NOAA's Office of Satellite Operations website.  These tables are 
+simply queried and should never change.  The DayTable and FileTable are both updated daily through a 
+cronjob (/home/suldan/mass_store/perl/query_daily).  Below each table is detailed and hopefully the 
+database scheme and be determined.
+
+
+Sector:
+
+This is a small table that contains information for each scan sector for both GOES-8 and GOES-10.
++----------+--------------+------+-----+---------+-----------------------------------------------------------+
+| Field    | Type         | Null | Key | Default | Comments          
++----------+--------------+------+-----+---------+-----------------------------------------------------------+
+| id       | int(11)      |      | PRI | 0       | Primary key 
+| name     | varchar(100) | YES  |     | NULL    | Name of the sector               
+| abrv     | varchar(10)  | YES  |     | NULL    | Abbreviation of the sector's name              
+| duration | time         | YES  |     | NULL    | The duration of the scan               
++----------+--------------+------+-----+---------+-----------------------------------------------------------+
+
+Schedule:
+
+This table contains the schedules for both GOES-8 and GOES-10.  Each record contains the time and sector
+for a particular scan.
++-----------+---------+------+-----+---------+-----------------------------------------------------------+
+| Field     | Type    | Null | Key | Default | Comments
++-----------+---------+------+-----+---------+-----------------------------------------------------------+
+| id        | int(11) |      | PRI | 0       | primary key 
+| time      | time    | YES  |     | NULL    | the time of the scan
+| sector    | int(11) | YES  |     | NULL    | the id number of the sector from the Sector table
+| satellite | char(3) | YES  |     | NULL    | the name of the satellite - either G08 or G10 (currently)
++-----------+---------+------+-----+---------+-----------------------------------------------------------+
+
+DayTable:
+
+Each record of this table more or less contains a summary of the files for one day of one satellite of one 
+resolution.  So since we have two satellites and two resolutions each calendar day can have up to four records
+in this table.  But I refer to each of these records as a day throughout my documentation.
++------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| Field      | Type         | Null | Key | Default | Comments 
++------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| id         | int(11)      |      | PRI | 0       | Primary key, id number         
+| date       | int(11)      |      | MUL | 0       | Date stored as in integer in the YYYYJJJ format
+| satellite  | varchar(30)  |      |     |         | Satellite, either G10 or G08
+| resolution | varchar(10)  |      |     |         | Resolution, ether 1KM or 4KM
+| nfiles     | int(11)      | YES  |     | NULL    | Total number of files for this day
+| size       | int(11)      | YES  |     | NULL    | Total size for this day, sum of all the file sizes
+| path       | varchar(100) | YES  |     | NULL    | Path in mass store for this day
+| missing    | int(11)      | YES  |     | NULL    | Value is either 1 or 0 (true/false), whethere or not this 
+|            |              |      |     |         |   day could have missing data
++------------+--------------+------+-----+---------+-----------------------------------------------------------+
+
+
+FileTable:
+
+Each record of this table stores information regarding one file on mass store.  Each file is linked to the 
+DayTable via  the day_id field.  Each record in the DayTable has its unique id that corresponds to around 100
+records in the FileTable.
++-----------+--------------+------+-----+---------+---------------------------------------------------------------+
+| Field     | Type         | Null | Key | Default | Comments
++-----------+--------------+------+-----+---------+---------------------------------------------------------------+
+| day_id    | int(11)      |      | MUL | 0       | The link between the FileTable and DayTable
+| date      | int(11)      | YES  |     | NULL    | The date stored as an integer in the YYYYJJJ format
+| time      | int(11)      | YES  |     | NULL    | The time of the scan stored as an integer in the HHMM format
+| size      | int(11)      | YES  |     | NULL    | The size of the file in KB
+| path      | varchar(100) | YES  |     | NULL    | The path of the file on mass store
+| sector    | int(11)      | YES  |     | NULL    | The id number of sector this file was determined to be* 
+| sector_qc | int(11)      | YES  |     | NULL    | A quality control value for the sector - see below 
+| id        | int(11)      |      | PRI | 0       | Primary key 
++-----------+--------------+------+-----+---------+---------------------------------------------------------------+
+ 
+* Sector id number:
+ -When mass store is queried by the query_daily script each file is matched with a sector using the 
+  respective satellite's schedule.  All in all this works well except when the satellites are put into
+  rapid scan mode or super-rapid scan mode.  These scripts are not smart enough to pick that up (that is
+  in the future hopefully).  In general these scans should come back as 'unknown' but often a couple of
+  bogus sectors sneek through (i.e. a file is given a valid sector id number but that file is not actually
+  the given sector because the satellite was in rapid scan mode).  Therefore watch out, especially if 
+  the scan times are a couple of minutes apart - this probably means rapid scan mode.
+
+Sector quality control:
+ -When a file is established as a certain scan sector it is also given a quality control number to help 
+  tell how good of a match this really is.  These qc numbers are currently not in use but may serve a 
+  purpose down the road.  These numbers are based on two things - the time of the file relative to the 
+  given scheduled time and the time until the next recorded scan relative to the duration of the scan.  If
+  the file time plus the duration of the scan are within five minutes of the next file time then it is 
+  thought to be a good match.  If the file time plus the duration of the scan is something like six hours 
+  before the next file time this is thought of as a poor match.
+  Below is a summary of these numbers:
+  
+	- 0 - the file time and schedule time match perfectly, time to complete within five minutes
+  - 1 - the file time is one more minute than the scheduled time, time to complete is within five minutes
+	- 2 - the scheduled time is one more minute than the file time, time to complete is within five minutes 
+  - 3 - the file time and scheduled time match perfectly, the time to complete is NOT within five minutes
+  - 4 - the file time is one more minute than the scheduled time, time to complete is NOT within five minutes
+  - 5 - the scheduled time is one more minute than the file time, time to complete is NOT within five minutes 
+  - 6 - the sector can not be determined, unknown
+  - 7 - other
+
+NOTE: if the file time plus the duration of the scan overlaps onto the next file time then the sector is 
+ is labled as unknown - because there wasn't enough time to complete the task.
+ 

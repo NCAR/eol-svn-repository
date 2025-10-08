@@ -1,0 +1,173 @@
+#!/bin/perl -w
+
+# useage:
+#  db_to_text <project name>
+#
+#  possible projects:
+#   BAMEX, IHOP, NAME, SALLJEX, VOCALS
+#
+# output:
+#  project.cat = the category data file
+#  project.ml = the dataset data file
+
+use DBI;
+
+my $dbh = connectToDB( "ml", "hurricane", "stormdba", "codiac" );
+my %projects = ( "BAMEX" => 1, "IHOP"=>2, "NAME"=>3, "SALLJEX"=>4, "VOCALS"=>5 );
+
+my $project = $ARGV[0];
+
+if( !defined( $project ) || ! exists $projects{$project} )
+{
+	print( "Invalid Project name.\n" );
+	exit 0;
+}
+
+my ($cats, $cid_to_abrv) = getCategories( $project );
+writeCategories( $cats, $project );
+
+my $dss = getDatasets( $project );
+writeDatasets( $project, $dss, $cid_to_abrv );
+
+print( "done!\n" );
+
+sub getCategories
+{
+	my $proj = shift;
+	my @cats;
+	my @heads;
+	my %cat_to_abbrv;
+
+	my $sql = "SELECT * FROM head$proj";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	while( (my $row = $sth->fetchrow_hashref()) )
+	{
+		$heads[scalar(@heads)] = $row;
+	}
+
+	foreach my $head (@heads)
+	{
+		$head->{parent} = undef();
+		$cats[scalar(@cats)] = $head;
+
+		if( $head->{is_category} )
+		{
+			my $sql = "SELECT * FROM cat$proj WHERE heading_id=$head->{id}";
+			my $sth = $dbh->prepare( $sql );
+			$sth->execute();
+			my $cat = $sth->fetchrow_hashref();
+
+			$head->{abrv} = $cat->{abrv};
+	
+			$cat_to_abbrv{$cat->{id}} = $cat->{abrv};
+		}
+		else
+		{
+			my $sql = "SELECT * FROM cat$proj WHERE heading_id=$head->{id}";
+			my $sth = $dbh->prepare( $sql );
+			$sth->execute();
+
+			while( (my $row = $sth->fetchrow_hashref()) )
+			{
+				$row->{parent} = $head->{abrv};
+				$cat_to_abbrv{$row->{id}} = $row->{abrv};
+
+				$cats[scalar(@cats)] = $row;
+			}
+		}
+	}
+
+	return( \@cats, \%cat_to_abbrv );
+}
+
+sub writeCategories
+{
+	my $cats = shift;
+	my $proj = shift;
+
+	open( OUT, ">$proj.cat" ) || die( "cannot open $proj.cat\n" );
+
+	foreach my $cat (@$cats)
+	{
+		print( OUT "$cat->{name},$cat->{abrv}," );
+		print( OUT "$cat->{parent}" ) if( defined( $cat->{parent} ) );
+		print( OUT "\n" );
+	}
+
+	close( OUT );
+}
+
+sub getDatasets
+{
+	my $proj = shift;
+	my @dss;
+
+	my $sql = "SELECT * FROM ds$proj";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	while( (my $row = $sth->fetchrow_hashref()) )
+	{
+		$dss[scalar(@dss)] = $row;
+	}
+
+	return \@dss;
+}
+
+sub writeDatasets
+{
+	my $proj = shift;
+	my $dss = shift;
+	my $id_to_abrv = shift;
+
+	open( OUT, ">$proj.ml" );
+
+	foreach my $ds (@$dss)
+	{
+		if( $ds->{link} && $ds->{link} =~ /^http:\/\/www.joss.ucar.edu\/cgi-bin\/codiac\/dss/ )
+		{
+			my $l1 = length( "http://www.joss.ucar.edu/cgi-bin/codiac/dss?" );
+			my $l2 = length( $ds->{link} );
+			$ds->{storm_id} = substr( $ds->{link}, $l1, $l2-$l1 );
+			$ds->{link} = "";
+		}
+		else
+		{ 
+			$ds->{storm_id} = "99.999"; 
+			$ds->{link} = "" if( !defined( $ds->{link} ) );
+		}
+		$ds->{category} = $id_to_abrv->{$ds->{category}};
+		
+		$ds->{date} = "0000-00-00" if( !defined( $ds->{date} ) );
+		$ds->{document} = "" if( !defined( $ds->{document} ) );
+		$ds->{link} = "" if( !defined( $ds->{link} ) );
+		$ds->{in_progress} = 0 if( !$ds->{in_progress} );
+		
+		my $sep = "";
+		print( OUT $ds->{storm_id}, $sep,
+							$ds->{data_set}, $sep,
+							$ds->{date}, $sep,
+							$ds->{link}, $sep,
+							$ds->{document}, $sep,
+							$ds->{category}, $sep,
+							$ds->{in_progress}, "" );
+	}
+
+	close( OUT );
+}
+
+
+sub connectToDB
+{
+  my $db = shift;
+  my $host = shift;
+  my $user = shift;
+  my $passw = shift;
+  return DBI->connect( "DBI:mysql:database=$db;host=$host",
+                        $user, $passw, { RaiseError=>1} ) || die( "Unable to connect to database: $db" );
+}
+
+
+

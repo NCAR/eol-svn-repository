@@ -1,0 +1,500 @@
+#!/bin/perl -w
+
+# Insert the ML and DLN of a project into the database
+# usage: insert_db project_name dln.dat ml.dat cats.dat
+
+use DBI;
+
+my @dln_fields = (
+              "storm_id",
+              "title",
+              "date",
+              "remote_url",
+              "loader",
+              "checker",
+              "int_contact",
+              "ext_contact",
+              "ext_email",
+              "ingest",
+              "archive",
+              "notes",
+              "documented",
+              "checked",
+              "loaded"
+            );
+my @ml_fields = (
+              "storm_id",
+              "title",
+              "date",
+              "remote_url",
+              "doc_url",
+							"category" );
+
+die( "usage: insert_db project_name dln.dat ml.dat cats.dat\n\n" ) if( @ARGV != 4 );
+
+my $project = $ARGV[0];
+my $dln_file = $ARGV[1];
+my $ml_file = $ARGV[2];
+my $cats_file = $ARGV[3];
+my $dbh = connectToDB();
+
+print( "Processing.....$project\n" );
+
+print( "Insert project...\n" );
+my $proj_id = insertProject( $project );
+
+print( "Insert categories...\n" );
+my %cats = insertCats( $cats_file, $proj_id );
+
+print( "Read the data files...\n" );
+my @dln = readFile( $dln_file, \@dln_fields );
+my @ml = readFile( $ml_file, \@ml_fields );
+
+print( "Proc master list....\n" );
+addMLDatasets( $proj_id, @ml );
+
+print( "Proc data loading notes....\n" );
+updateDLNDatasets( $proj_id, @dln );
+
+addViews();
+
+sub insertProject
+{
+	my $project = shift;
+
+	my $sql = "INSERT INTO project (id,name,active) VALUES (0, " . $dbh->quote( $project ) . ", 1)";
+
+	#print( $sql, "\n" );
+	$dbh->do( $sql );
+
+	return $dbh->{'mysql_insertid'};
+}
+
+sub insertCats
+{
+	my $file = shift;
+	my $proj_id = shift;
+
+	open( IN, "<$file" );
+	my %cats;
+
+	while( !eof( IN ) )
+	{
+		my %cat;
+		my $line = <IN>;
+		chomp( $line );
+		my @a = split( ",", $line );
+		$cat{name} = $a[0];
+		my $abrv = $a[1];
+		$cat{parent} = $a[2];
+
+		my $parent = NULL;
+		$parent = $cats{$cat{parent}}->{id} if( $cat{parent} ); 
+		my $sql = "INSERT INTO category VALUES ( 0, " .
+							$dbh->quote( $cat{name} ) . ", " .
+							$parent . ", " .
+							$proj_id . ")";
+
+	
+		#print( $sql, "\n" );	 
+		$dbh->do( $sql );	
+
+		$cat{id} = $dbh->{'mysql_insertid'};
+
+		$cats{$abrv} = \%cat;
+	}
+
+	close( IN );
+
+	return %cats;
+}
+
+
+sub readFile
+{
+	my $file_name = shift;
+	my $fields = shift;
+	my @fields = @$fields;
+
+	my @ret;
+	
+	open( IN, "<$file_name" );
+
+	my $file;
+	while( !eof( IN ) )
+	{
+		$file = $file . <IN>;				
+	}
+
+	my @recs = split( "", $file );
+	foreach my $rec (@recs)
+	{
+		my @vals = split( "", $rec );
+		my %ds;
+		foreach my $field (@fields )	
+		{
+			$ds{$field} = shift( @vals );	
+		}
+
+		if( defined( $ds{remote_url} ) && $ds{remote_url} ne "" )
+		{
+			if( substr( $ds{remote_url}, length( $ds{remote_url} ) - 1, 1 ) eq "/" )
+			{
+				chop( $ds{remote_url} );
+			}
+		}
+		$ret[scalar(@ret)] = \%ds;
+	}
+
+
+	close( IN );
+	return @ret;
+}
+
+sub connectToDB
+{
+  my $db = "mcd";
+  my $host = "hurricane";
+  my $user = "stormdba";
+  my $passw = "codiac";
+  return DBI->connect( "DBI:mysql:database=$db;host=$host",
+                        $user, $passw, { RaiseError=>1} ) || die( "Unable to connect to database: $db" );
+}
+
+sub addMLDatasets
+{
+	my $proj = shift;  # the project id
+	my @dss = @_;
+
+	foreach my $ds (@dss)
+	{
+		$remote_url = "NULL";
+		$remote_url = $dbh->quote( $ds->{remote_url} ) if( $ds->{remote_url} && $ds->{remote_url} ne "" );
+		$ds->{storm_id} = undef() if( $ds->{storm_id} eq "99.999" );
+	
+		my $sql = "INSERT INTO dataset (id, storm_id, title, date, remote_url) " . 
+								"VALUES (".
+								"0, " . 																# id
+								$dbh->quote( $ds->{storm_id} ) . ", " .						
+								$dbh->quote( $ds->{title} ) . ", " .						
+								"CURDATE()" . ", " .						
+								$remote_url .
+								")";
+
+		#print( $sql, "\n" );
+		$dbh->do( $sql ) || die( "addMLDatasets: Unable to add master list dataset\n" );
+
+		my $new_id = $dbh->{'mysql_insertid'};
+
+		addStatus( $new_id, $ds );
+		addMLView( $new_id, $ds );
+		addDsProjLink( $new_id, $proj );
+		addDsCatLink( $new_id, $cats{$ds->{category}}->{id} );
+	}
+}
+
+sub addStatus
+{
+	my $ds_id = shift;
+	my $ds = shift; # either a ml or dln
+
+	my $documented = "0";
+	$documented = "1" if( $ds->{documented} );
+
+	my $checked = "0";
+	$checked = "1" if( $ds->{checked} );
+
+	my $loaded = "0";
+	$loaded = "1" if( $ds->{checked} );
+
+	my $status_new = "0";
+	my $updated = "0";
+
+	my $in_progress = "0";
+	$in_progress = "1" if( $ds->{in_progress} );
+
+	my $sql = "INSERT INTO status (dataset, documented, checked, loaded, in_progress, new, updated) VALUES (" .	
+						$ds_id . ", " .	
+						$documented . ", " .
+						$checked . ", " .	
+						$loaded . ", " .
+						$in_progress . ", " .	
+						$status_new . ", " .	
+						$updated . ")";
+
+	#print( $sql, "\n" );
+	$dbh->do( $sql ) || die( "addStatus: Unable to add status\n" );
+					
+}
+
+sub addMLView
+{
+	my $ds_id = shift;
+	my $ds = shift;
+
+	my $hide = "NULL";
+	$hide = 1 if( $ds->{hide} );
+	my $active = "NULL";
+	$active = 1 if( $ds->{remote_url} && $ds->{remote_url} ne "" );
+	$active = 1 if( $ds->{storm_id} && $ds->{storm_id} ne "99.999" );
+
+	my $sql = "INSERT INTO mlview (dataset, date, hide, doc_url, active) " . 
+							"VALUES (" .
+							"$ds_id, " . 																# id
+							$dbh->quote( $ds->{date} ) . ", " .						
+							"$hide, " .
+							$dbh->quote( $ds->{doc_url} ) . ", " .						
+							"$active " .														
+							")";
+
+	#print( $sql, "\n" );
+	$dbh->do( $sql ) || die( "addMLView: Unable to add mlview\n" );
+}
+
+sub addDsProjLink
+{
+	my $ds = shift;
+	my $proj = shift; # the project id
+	my $sql = "INSERT INTO dsproj VALUES ( $ds, $proj )";
+
+	#print( $sql, "\n" );
+	$dbh->do( $sql ) || die( "Unable to add dataset project link" );
+}
+
+sub addDsCatLink
+{
+	my $ds = shift;
+	my $cat = shift;
+
+	my $sql = "INSERT INTO dscat VALUES ($ds, $cat)";
+
+	#print( $sql, "\n" );
+	$dbh->do( $sql ) || die( "unable to insert dscat\n" );
+}
+
+
+
+sub updateDLNDatasets
+{
+	my $proj = shift;
+	my @dss = @_;
+
+	foreach my $ds (@dss)
+	{
+		my $ds_id = getNewDsId( $ds, $proj );
+
+		if( $ds_id )
+		{
+			updateStatus( $ds_id, $ds );
+			addDLNView( $ds_id, $ds );	
+		}
+		else
+		{
+			addDLNDatasets( $proj, $ds );
+		}
+	}
+}
+
+sub getNewDsId
+{
+	my $ds = shift;
+	my $proj = shift;
+	my $storm_id = $ds->{storm_id};
+	my $title = $ds->{title};
+	my $id = undef();
+
+	# Check for existing storm_id
+	if( $storm_id ne "99.999" )
+	{
+		my $sql = "SELECT dataset.id FROM dataset, dsproj WHERE dsproj.project = $proj AND " .
+								"dataset.storm_id = " . $dbh->quote( $storm_id )  . " AND dsproj.dataset = dataset.id";
+
+		my $sth = $dbh->prepare( $sql );
+		$sth->execute();
+		my @row = $sth->fetchrow();
+		$id = $row[0]  if( @row );
+	}
+
+	# Check for existing title - it does happen
+	if( !defined( $id ) && defined( $title ) && $title ne "" )
+	{
+		my $sql = "SELECT dataset.id,dataset.storm_id FROM dataset, dsproj WHERE dsproj.project = $proj AND " .
+								"dataset.title = " . $dbh->quote( $title )  . " AND dsproj.dataset = dataset.id";
+		my $sth = $dbh->prepare( $sql );
+		$sth->execute();
+		my @row = $sth->fetchrow();
+		if( @row )
+		{
+			$id = $row[0];
+			my $sql = "SELECT dataset from dlnview where dataset=$id";
+			my $sth = $dbh->prepare( $sql );
+			$sth->execute();
+			$id = undef() if( ! $sth->fetchrow() ); # check to see if dlnview already exists
+		}
+	}
+
+	# Some projects have multiple datasets sharing a single url - INDOEX
+	#if( !defined( $id ) && defined( $url ) && $url ne "" )
+	#{
+	#	my $sql = "SELECT dataset.id FROM dataset, dsproj WHERE dsproj.project = $proj AND " .
+	#							"dataset.remote_url = " . $dbh->quote( $url )  . " AND dsproj.dataset = dataset.id";
+	#	my $sth = $dbh->prepare( $sql );
+	#	$sth->execute();
+	#	my @row = $sth->fetchrow();
+	#	$id = $row[0]  if( @row );
+	#}
+
+	return $id
+}
+
+sub updateStatus
+{
+	my $ds_id = shift;
+	my $ds = shift; # dln
+
+	my $documented = "0";
+	$documented = "1" if( $ds->{documented} );
+	my $checked = "0";
+	$checked = "1" if( $ds->{checked} );
+	my $loaded = "0";
+	$loaded = "1" if( $ds->{checked} );
+
+	my $sql = "UPDATE status SET " . 
+						"documented=$documented, " .
+						"checked=$checked, " .
+						"loaded=$loaded " . 
+						"WHERE dataset=$ds_id"; 
+
+
+	$dbh->do( $sql ) || die( "updateStatus: Unable to update status\n" );
+					
+}
+
+sub addDLNView
+{
+	my $ds_id = shift;
+	my $ds = shift;
+
+	my $loaded = 0;
+	$loaded = 1 if( $ds->{checked} );
+
+	$ds->{loader} = "unassigned" if( !defined($ds->{loader}) || $ds->{loader} eq "" );
+	$ds->{checker} = "unassigned" if( !defined($ds->{checker}) || $ds->{checker} eq "" );
+	$ds->{int_contact} = "unassigned" if( !defined($ds->{int_contact}) || $ds->{int_contact} eq "" );
+
+	my $sql = "INSERT INTO dlnview (dataset, date, loader, checker, int_contact, ext_contact, ext_email, " . 
+							"ingest, archive, notes  ) " . 
+							"VALUES (" .
+							"$ds_id, " . 
+							$dbh->quote( $ds->{date} ) . ", " .  
+							$dbh->quote( $ds->{loader} ) . ", " .  
+							$dbh->quote( $ds->{checker} ) . ", " .  
+							$dbh->quote( $ds->{int_contact} ) . ", "  . 
+							$dbh->quote( $ds->{ext_contact} ) . ", " .  
+							$dbh->quote( $ds->{ext_email} ) . ", " .  
+							$dbh->quote( $ds->{ingest} ) . ", " .  
+							$dbh->quote( $ds->{archive} ) . ", " .  
+							$dbh->quote( $ds->{notes} ) .   
+							")";
+	#print( $sql, "\n" );
+	$dbh->do( $sql ) || die( "addDLNView: unable to add dlnview\n" );
+
+}
+
+sub addDLNDatasets
+{
+	my $proj = shift;
+	my @dss = @_;
+
+	foreach my $ds (@dss)
+	{
+		my $remote_url = NULL;
+		$remote_url = $dbh->quote( $ds->{remote_url} ) if( $ds->{remote_url} && $ds->{remote_url} ne "" );
+		$ds->{storm_id} = undef() if( $ds->{storm_id} eq "99.999" );
+
+		my $sql = "INSERT INTO dataset (id, storm_id, title, date, remote_url) " . 
+								"VALUES (".
+								"0, " . 	
+								$dbh->quote( $ds->{storm_id} ) . ", " .						
+								$dbh->quote( $ds->{title} ) . ", " .						
+								"CURDATE()" . ", " .						
+								$remote_url . 
+								")";
+
+		$dbh->do( $sql ) || die( "addDLNDatasets: Unable to add dataset\n" ) ;
+		my $new_id = $dbh->{'mysql_insertid'};
+	
+		addStatus( $new_id, $ds );	
+		addDLNView( $new_id, $ds );
+		addDsProjLink( $new_id, $proj );
+	}
+
+}
+
+sub addViews
+{
+	# Get dataset in both ml and dln
+	#my $sql = "SELECT dataset.id FROM dataset, dlnview, mlview WHERE " .
+						#"dataset.id=dlnview.dataset AND dataset.id=mlview.dataset";
+
+	# Get the datasets in ml
+	my $sql = "SELECT dataset FROM mlview";
+
+	my $sth = $dbh->prepare($sql);
+	$sth->execute();
+	my $in = "IN (0";	
+	while( (my @row = $sth->fetchrow()) )
+	{
+		$in = $in . " ,$row[0]";
+	}	
+	$in = $in . ")";
+
+	# Get dln datasets not in ml
+	$sql = "SELECT dataset FROM dlnview WHERE dataset NOT $in";	
+	$sth = $dbh->prepare($sql);
+	$sth->execute();
+	while( (my @row = $sth->fetchrow() ) )
+	{
+		insertBlankML( $row[0] );
+	}
+
+	# Get the dataset in the dln
+	$sql = "SELECT dataset FROM dlnview";
+	$sth = $dbh->prepare($sql);
+	$sth->execute();
+	$in = "IN (0";	
+	while( (my @row = $sth->fetchrow()) )
+	{
+		$in = $in . " ,$row[0]";
+	}	
+	$in = $in . ")";
+
+	# Get ml dataset not in dln
+	$sql = "SELECT dataset from mlview WHERE dataset NOT $in";	
+	$sth = $dbh->prepare($sql);
+	$sth->execute();
+	while( (my @row = $sth->fetchrow() ) )
+	{
+		insertBlankDLN( $row[0] );
+	}
+}
+
+sub insertBlankML
+{
+	my $dataset = shift;
+
+	my $sql = "INSERT INTO mlview (dataset, date, hide) VALUES ($dataset, '0000-00-00', 1)";
+	#print( $sql, "\n" );
+	$dbh->do( $sql ) || die( "unable to add blank mlview" );
+}
+
+sub insertBlankDLN
+{
+	my $dataset = shift;
+
+	my $sql = "INSERT INTO dlnview (dataset, date, loader, checker, int_contact) " . 
+						"VALUES ($dataset, '0000-00-00', 'unassigned', 'unassigned', 'unassigned')";
+
+	#print( $sql, "\n" );
+	$dbh->do( $sql ) || die( "unable to add blank dlnview" );
+}

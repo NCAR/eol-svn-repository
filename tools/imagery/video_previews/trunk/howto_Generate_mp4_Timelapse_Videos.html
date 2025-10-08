@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+<title>How To: Generate timelapse previews from mp4's</title><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css"></head>
+<body>
+<h1 class="title">How To: Generate timelapse previews from mp4's</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#process">Processing the Data</a>
+            <ol> 
+			<li><a href="#setup">Initial Processing Setup</a></li>     		
+            <li><a href="#convert">Converting the Data</a></li>
+            </ol>
+        </li>
+        <li><a href="#errors">Errors</a>
+            <ol>
+                <li><a href="#scripterrors">Script Errors</a></li>
+                <li><a href="#ffmpegerrors">ffmpeg Errors</a></li>
+            </ol>
+        </li>
+        <li><a href="#documentation">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr>
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+	<p> This script is meant to take in the lengthy
+and sizable MPEG4 videos collected during the T28 flights and reduce
+their file size as well as render playback at 30x the original speed.
+This is meant to allow preview of the videos through CODIAC without
+lengthy downloads.</p>
+</div>
+<a href="#">Top</a><hr>
+
+
+<a name="process"></a><h2>Processing the Data</h2>
+<div class="block"> 
+    <a name="setup"></a><h3>Initial Processing Setup</h3>
+	<ol>
+
+	<li><p>Place <span class="softwareName">mp4PreviewMaker.sh</span> in the top directory under which are all videos you want to be converted.</p></li>
+    </ol>  
+
+    <a name="convert"></a><h3>Converting the Data</h3>
+ 	<p class="note">This is a bash script and should work on all unix enviroments. The only prerequisite is that <a href="http://www.ffmpeg.org/" target="new">ffmpeg</a> be installed on the machine.</p>
+
+	<ol>	
+	<li><p>Edit the <span class="softwareName">mp4PreviewMaker.sh</span> script.</p>
+	<ul>
+		<li><p>Make sure that the output video will be of the desired fps. This is the line <br>
+         <span class="code">ffmpeg -i $mp4 -r 1 -f image2 $dir/ffmpeg_temp/%05d.png</span> <br>
+where the -r switch is the desired fps (literally, the interval at
+which ffmpeg will grab images from the input video). 1 is 1 fps. 30
+would be realtime.</p></li>  
+		<li><p>This
+script will append "_preview.mp4" to the input video's filename for the
+output video by default. To change this, you can change lines 96, 77,
+and 84 and replace _preview with whatever string you would like.</p></li>
+	</ul>
+	</li>
+    <li><p>Run the script</p></li><li>The
+use of ffmpeg, described above, generates an mp4 file. &nbsp;To create
+the videos for codiac preview, the .mp4 preview videos were run through
+the Miro Video Converter to create .webm versions of the preview
+videos. &nbsp;Possibly, the ffmpeg command could be modified to create
+.webm preview videos instead of .mp4 videos.</li>
+
+	</ol>
+    
+</div>
+<a href="#">Top</a><hr>
+
+<a name="errors"></a><h2>Errors</h2>
+<div class="block">
+    <p>This script will output several (or many,
+depending on the number of subdirectories) false errors which will not
+affect the conversion process.</p>
+    <a name="scripterrors"></a><h3>Script errors</h3>
+    <ol>
+    <li>Several
+rm errors will occur throughout the exicution for removal of
+ffmpeg_temp or png's within ffmpeg_temp. These are normal, redundant
+operations.</li>
+    <li>Some find errors may occur with "no such file or folder exists." This is normal.</li>
+    <li>Several
+lines starting with "NOT CONVERTING..." will be displayed as a log of
+videos or folders skipped due to having already been converted or not
+existing</li>
+    </ol>
+    <a name="ffmpegerrors"></a><h3>ffmpeg errors</h3>
+    <ol>
+    <li>Incompatable
+data format: The .mp4 trying to be converted is in some fashon
+incompatable with ffmpeg's default codecs or is corrupted</li>
+    <li>Bitrate
+too low: The bitrate parameter listed within the script header is set
+too low. The bitrate param is measured in Bytes, not KiB. </li>
+    <li>No
+ffmpeg_temp/%05d.png: The temp folder or images are missing. Check to
+make sure it is being created in the same directory as the input video
+and that the images are being saved and retrieved from that same
+location/ffmpeg_temp/</li>
+</ol></div>
+<a href="#">Top</a><hr>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<div class="block">
+    <p>Further documentation can be found within <span class="softwareName">mp4PreviewMaker.sh</span>.</p>
+   </div>
+<a href="#">Top</a><hr>
+  
+
+
+</body></html>

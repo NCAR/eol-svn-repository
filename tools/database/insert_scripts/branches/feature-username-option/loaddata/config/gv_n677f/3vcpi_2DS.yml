@@ -1,0 +1,87 @@
+dataset:
+- title_content: titleSep
+- name: <PROJECT>
+- archive_ident: '999.999'
+- title: NSF/NCAR GV (HIAPER) 3V-CPI Raw 2D-S Imagery
+- summary: The Three-View Cloud Particle Imager (3V-CPI) is a combination of three imaging instruments. Two of them comprise a 2D-S instrument, in which two 2D probes image particles as they pass through beams that are oriented orthogonally to each other and the airflow. If particles also lie in the intersection of the sensitive areas of the two beams, they are seen by both 2D probes. In that case, the CPI is triggered to take a high-resolution picture, via a briefly illuminated high-resolution imaging array, to provide a third image at high resolution. The probe is particularly suited to imaging ice crystals, but also provide good detection of other hydrometeors including large cloud droplets, drizzle and small rain drops, and precipitation particles. The 3V-CPI measures the size, shape and concentration of water drops and ice particles in clouds in the size range of 15-250 micrometers. This dataset contains 2D-S imagery collected by the 3V-CPI aboard the NCAR GV during the <PROJECT> project.  The 2DS puts all flight data into 3 files, and the size of these files depends on the amount of time in clouds.
+- begin_date: '1000-01-01 00:00:00'
+- end_date: '7999-12-31 23:59:59'
+- visible: 0
+- auth_reqd: 0
+- eula_reqd: 0
+- version_number: '0.1'
+- quality: 1
+- ingest_location: /scr/raf/Raw_Data/<PROJECT>/3v_cpi
+- archive_location: /FS/EOL/<year>/<project>/aircraft/gv_n677f/3V-CPI/2DS/<PROJECT>_(\E\E\E\E)
+- filename_pattern: base[\Y\Y\M\M\y\y\h\h\m\m\S\S].2DSCPI
+- startdate_pattern: 20YY-MM-yy hh:mm:SS
+- enddate_pattern: ''
+- filelength: 6 hours
+- minimum_latitude: '-90'
+- maximum_latitude: '90'
+- minimum_longitude: '-180'
+- maximum_longitude: '180'
+- CODIAC_specific_fields: titleSep
+- category_id: 2
+- platform_id: 350
+- is_eol_data: 1
+- format: 75
+- host: hpss
+- frequency_id: 2
+- spatial_type: raster
+- point_of_contact_id_codiac: 1
+- internal_contact_id_codiac: 179
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+- dodsable: 0
+- t_subset: 0
+- event_subset: 1
+- file_subset: 0
+- order_allow_compress: 1
+- DTS_specific_fields: titleSep
+- source_contact_id_dts: ''
+- internal_contact_id_dts: 203
+- ingest_contact_id_dts: 203
+- ingest_status_id_dts: 2
+- load_contact_id_dts: 345
+- load_data_location: '*'
+- load_status_id_dts: 6
+- approve_contact_id_dts: 345
+- approve_status_id_dts: 6
+- author_id_dts: 203
+- note_type_id: 2
+- note_text: This dataset loaded with the insert_proj_dataset script.
+- optional_fields: titleSep
+- archive_location_2: ''
+- filename_pattern_2: <PROJECT>_(\E\E\E\E)/base[\Y\Y\M\M\y\y\h\h\m\m\S\S].2DSCPIHK
+- startdate_pattern_2: 20YY-MM-yy HH:mm:SS
+- enddate_pattern_2: ''
+- filelength_2: 6 hours
+- format_2: 75
+- host_2: hpss
+- archive_location_3: ''
+- filename_pattern_3: ''
+- startdate_pattern_3: ''
+- enddate_pattern_3: ''
+- filelength_3: ''
+- format_3: ''
+- host_3: ''
+- description: 'default'
+- iso_citation_role: 11 
+- contact_id_codiac: 54
+- datacite_contributor_type: ''
+- iso_citation_role_2: 10
+- contact_id_codiac_2: 1001
+- datacite_contributor_type_2: ''
+- iso_citation_role_3: 1
+- contact_id_codiac_3: ''
+- datacite_contributor_type_3: ''
+- iso_citation_role_4: ''
+- contact_id_codiac_4: ''
+- datacite_contributor_type_4: ''
+- iso_citation_role_5: ''
+- contact_id_codiac_5: ''
+- datacite_contributor_type_5: ''
+- readme_url: 'default'
+- remote_url: 'default'

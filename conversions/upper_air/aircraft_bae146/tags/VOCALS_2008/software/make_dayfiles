@@ -1,0 +1,10 @@
+#! /bin/csh
+
+# BEWARE: DO NOT USE THIS SCRIPT TO FORM THE DAYFILES. USE THE ant dayfiles
+#    COMMAND IN THE BUILD.XML FILE. 
+
+if (!(-e ../database)) then
+    mkdir ../database
+endif
+
+/net/work/dev/make_esc_dayfiles/make_esc_dayfiles ../final/*.cls.qc ../database/BAE146_

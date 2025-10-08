@@ -1,0 +1,147 @@
+> groovy authorshipConnect.groovy ARCSS ATLAS BEST BSIERP ITEX PacMARS SBI SHEBA
+
+Created log file:	logs/log_20131120104330.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+Unable to find 1326 for data set 106.ARCSS078
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1326, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '106.ARCSS078';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ATLAS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BEST
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1295 for data set 102.063
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1295, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.063';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BSIERP
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Unable to find 1298 for data set 245.B71-001
+Unable to find 1255 for data set 245.B71-001
+Unable to find 1254 for data set 245.B72-001
+Unable to find 1317 for data set 245.B74-001
+Unable to find 1322 for data set 245.B75-001
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1298, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B71-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1255, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B71-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1254, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B72-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1317, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B74-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1322, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B75-001';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ITEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  ITEX:  56.700
+		Robinson, C. and P. Wookey
+Which of these contacts matches this author:	C. Robinson
+
+		1312	null	Clare H. Robinson	University of London
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1312
+
+--------------------------------------------------------------------------------
+  ITEX:  56.700
+		Robinson, C. and P. Wookey
+Which of these contacts matches this author:	P. Wookey
+
+		1311	null	Philip A. Wookey	Uppsala University
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1311
+
+Unable to find 1312 for data set 56.700
+Unable to find 1311 for data set 56.700
+Unable to find 1312 for data set 56.7000
+Unable to find 1311 for data set 56.7000
+Unable to find 1312 for data set 56.701
+Unable to find 1311 for data set 56.701
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	
+
+--------------------------------------------------------------------------------
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1312, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.700';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1311, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.700';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1312, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.7000';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1311, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.7000';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1312, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.701';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1311, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.701';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PacMARS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SBI
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SBI:  62.118
+		(Service Group)
+Which of these contacts matches this author:	Service Group
+
+		342	null	Joseph G. Verfaillie	Global Change Research Group
+		553	cua	null	University of Colorado - ARCSyM group
+		752	swhitlow	Sallie Whitlow	University of New Hampshire - Glacier Research Group
+		804	rlammers	Richard B. Lammers	Institute for the Study of Earth, Oceans, and Space (Water Systems Analysis Group)
+		866	dzona	Donatella Zona	Department of Biology and Global Change Research Group, San Diego State University
+		1197	null	Cove S. Sturtevant	Global Change Research Group
+		1327	null	null	University of Washington - Cloud and Aerosol Research Group (CARG)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SHEBA
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

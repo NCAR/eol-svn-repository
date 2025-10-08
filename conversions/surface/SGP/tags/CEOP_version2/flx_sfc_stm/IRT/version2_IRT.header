@@ -1,0 +1,158 @@
+netcdf sgpirt10mC1.b1.20080615.000000 {
+dimensions:
+	time = UNLIMITED ; // (1440 currently)
+variables:
+	int base_time ;
+		base_time:string = "14-Jun-2008,23:04:00 GMT" ;
+		base_time:long_name = "Base time in Epoch" ;
+		base_time:units = "seconds since 1970-1-1 0:00:00 0:00" ;
+	double time_offset(time) ;
+		time_offset:long_name = "Time offset from base_time" ;
+		time_offset:units = "seconds since 2008-06-14 23:04:00 0:00" ;
+	double time(time) ;
+		time:long_name = "Time offset from midnight" ;
+		time:units = "seconds since 2008-06-15 00:00:00 0:00" ;
+	int qc_time(time) ;
+		qc_time:long_name = "Results of quality checks on sample time" ;
+		qc_time:units = "unitless" ;
+		qc_time:description = "The qc_time values are calculated by comparing each sample\n",
+			"time with the previous time (i.e. delta_t = t[n] - t[n-1]).\n",
+			"If the \'qc_check_prior\' flag is set the first sample time\n",
+			"from a new raw file will be compared against the time just\n",
+			"previous to it in the stored data. If the \'qc_check_prior\'\n",
+			"flag is not set the qc_time value for the first sample time\n",
+			"will be set to 0\n",
+			"\n",
+			"The qc_time bit values are as follows:\n",
+			"=========================================================\n",
+			"0x0 = delta time is within the specified range\n",
+			"0x1 = delta time is equal to 0, duplicate sample times\n",
+			"0x2 = delta time is less than the \'delta_t_lower_limit\'\n",
+			"0x4 = delta time is greater than the \'delta_t_upper_limit\'\n",
+			"\n",
+			"" ;
+		qc_time:delta_t_lower_limit = 60 ;
+		qc_time:delta_t_upper_limit = 60 ;
+		qc_time:prior_sample_flag = 1 ;
+	float sfc_ir_temp(time) ;
+		sfc_ir_temp:long_name = "Surface Infra-Red Temperature" ;
+		sfc_ir_temp:units = "K" ;
+		sfc_ir_temp:valid_min = 223.f ;
+		sfc_ir_temp:valid_max = 323.f ;
+		sfc_ir_temp:valid_delta = 50.f ;
+		sfc_ir_temp:resolution = 0.1f ;
+		sfc_ir_temp:missing_value = -9999.f ;
+	int qc_sfc_ir_temp(time) ;
+		qc_sfc_ir_temp:long_name = "Quality check results on field: Surface Infra-Red Temperature" ;
+		qc_sfc_ir_temp:units = "unitless" ;
+	float sfc_ir_temp_std(time) ;
+		sfc_ir_temp_std:long_name = "Surface Infra-Red Temperature, Standard Deviation" ;
+		sfc_ir_temp_std:units = "K" ;
+		sfc_ir_temp_std:resolution = 0.1f ;
+		sfc_ir_temp_std:missing_value = -9999.f ;
+	float sfc_ir_temp_max(time) ;
+		sfc_ir_temp_max:long_name = "Surface Infra-Red Temperature Maxima" ;
+		sfc_ir_temp_max:units = "K" ;
+		sfc_ir_temp_max:valid_min = 223.f ;
+		sfc_ir_temp_max:valid_max = 323.f ;
+		sfc_ir_temp_max:valid_delta = 50.f ;
+		sfc_ir_temp_max:resolution = 0.1f ;
+		sfc_ir_temp_max:missing_value = -9999.f ;
+	int qc_sfc_ir_temp_max(time) ;
+		qc_sfc_ir_temp_max:long_name = "Quality check results on field: Surface Infra-Red Temperature Maxima" ;
+		qc_sfc_ir_temp_max:units = "unitless" ;
+	float sfc_ir_temp_min(time) ;
+		sfc_ir_temp_min:long_name = "Surface Infra-Red Temperature Minima" ;
+		sfc_ir_temp_min:units = "K" ;
+		sfc_ir_temp_min:valid_min = 223.f ;
+		sfc_ir_temp_min:valid_max = 323.f ;
+		sfc_ir_temp_min:valid_delta = 50.f ;
+		sfc_ir_temp_min:resolution = 0.1f ;
+		sfc_ir_temp_min:missing_value = -9999.f ;
+	int qc_sfc_ir_temp_min(time) ;
+		qc_sfc_ir_temp_min:long_name = "Quality check results on field: Surface Infra-Red Temperature Minima" ;
+		qc_sfc_ir_temp_min:units = "unitless" ;
+	float logger_temp(time) ;
+		logger_temp:long_name = "Logger Temperature" ;
+		logger_temp:units = "C" ;
+		logger_temp:resolution = 0.1f ;
+		logger_temp:missing_value = -9999.f ;
+	float internal_voltage(time) ;
+		internal_voltage:long_name = "Battery Voltage" ;
+		internal_voltage:units = "V" ;
+		internal_voltage:resolution = 0.1f ;
+		internal_voltage:missing_value = -9999.f ;
+	float lat ;
+		lat:long_name = "north latitude" ;
+		lat:units = "degrees" ;
+		lat:valid_min = -90.f ;
+		lat:valid_max = 90.f ;
+	float lon ;
+		lon:long_name = "east longitude" ;
+		lon:units = "degrees" ;
+		lon:valid_min = -180.f ;
+		lon:valid_max = 180.f ;
+	float alt ;
+		alt:long_name = "altitude" ;
+		alt:units = "meters above Mean Sea Level" ;
+
+// global attributes:
+		:ingest_version = "process-ingest-irt_ingest-9.2-0" ;
+		:libingest_version = "ds-dsutil-ingest_lib-1.7-0" ;
+		:libdslibc_version = "ds-dslib-c_lib-1.2-0" ;
+		:libdsdb_version = "database-dsdb-c_lib-1.2-0" ;
+		:ingest_software = " irt_ingest.c,v 2.6 2006/10/26 02:07:40 ermold process-ingest-irt_ingest-9.2-0 $" ;
+		:proc_level = "b1" ;
+		:input_source = "/data/collection/sgp/sgpirt10mC1.00/1213484640.icm" ;
+		:site_id = "sgp" ;
+		:facility_id = "C1: Lamont, Oklahoma" ;
+		:sample_int = "2 seconds" ;
+		:averaging_int = "60 seconds" ;
+		:comment = "" ;
+		:resolution_description = "The resolution field attributes refer to the number of significant\n",
+			"digits relative to the decimal point that should be used in\n",
+			"calculations.  Using fewer digits might result in greater uncertainty;\n",
+			"using a larger number of digits should have no effect and thus is\n",
+			"unnecessary.  However, analyses based on differences in values with\n",
+			"a larger number of significant digits than indicated could lead to\n",
+			"erroneous results or misleading scientific conclusions.\n",
+			"\n",
+			"resolution for lat= 0.001\n",
+			"resolution for lon = 0.001\n",
+			"resolution for alt = 1" ;
+		:sensor_location = "Sensors height (above base \'alt\'): 10m" ;
+		:serial_number = "\n",
+			"IRT:        1026\n",
+			"" ;
+		:calib_coeff = "\n",
+			"IRT:      0.10 Degrees K per millivolt\n",
+			"" ;
+		:IRT_offset = "    223.20\n",
+			"" ;
+		:qc_method = "Standard Mentor QC" ;
+		:Mentor_QC_Field_Information = "For each qc_<field> interpret the values as follows:\n",
+			"\n",
+			"Basic mentor QC checks (bit values):\n",
+			"==========================================\n",
+			"0x0 = value is within the specified range\n",
+			"0x1 = value is equal to \'missing_value\'\n",
+			"0x2 = value is less than the \'valid_min\'\n",
+			"0x4 = value is greater than the \'valid_max\'\n",
+			"0x8 = value failed the \'valid_delta\' check\n",
+			"\n",
+			"If the value is a \'missing_value\' no min, max, or delta checks are performed.\n",
+			"\n",
+			"The delta checks are done by comparing each data value to the one just\n",
+			"prior to it in time. If a previous data value does not exist or is a\n",
+			"\'missing_value\' the delta check will not be performed.\n",
+			"\n",
+			"Note that the delta computation for multi-dimensioned data compares the\n",
+			"absolute value between points in the same spatial location to the previous\n",
+			"point in time.\n",
+			"\n",
+			"If the associated non-QC field does not contain any mentor-specified minimum,\n",
+			"maximum, or delta information a qc_field is not generated.\n",
+			"" ;
+		:zeb_platform = "sgpirt10mC1.b1" ;
+		:history = "created by user dsmgr on machine ruby at 15-Jun-2008,0:11:05, using $State: ds-zebra-zeblib-4.16-0 $" ;
+}

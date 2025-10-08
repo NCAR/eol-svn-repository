@@ -1,0 +1,19 @@
+steps:
+0. edit/copy *.h for this model
+   see the files in the model subdirs
+   (I never got around to properly parameterizing this)
+   You need the GD library to make the progs that create GIFs.
+1. run mkease to make the ARCMIP EASE-Grid lat lon file
+2. run findnn to make the nearest neighbor file relating
+   the EASE-Grid to this model
+3. printnn > ease_nn.txt will make a text output of the NN file
+   ifnn is interactive findnn : give it "col row" e.g. "162 145"
+   and it finds the NNs just like findnn
+   perl -e 'while(<>){ /dist=(.*) km/ && print "$1\n";}' < ease_nn.txt > nn.dat
+4. run mkdist to make netCDF file of NN distances
+5. run nnmap to make GIFs of avg NN distances (foo.gif,bar.bif)
+6. run regrid to cvt model to EASE-Grid, with distance-weighted
+   interpolation using the NN file:
+    nohup nice +20 \
+     ../regrid /path/to/model/*may*nc /path/to/model/*mon*nc \
+     >& regrid.err < /dev/null &

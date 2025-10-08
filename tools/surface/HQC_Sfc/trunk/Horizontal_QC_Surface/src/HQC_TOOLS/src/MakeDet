@@ -1,0 +1,11 @@
+SHELL = /bin/sh
+
+#CC=purify cc -g
+CC=cc
+##CFLAGS = -g
+
+det_best_aoi: det_best_aoi.o dist.o process_qcfrec.o
+	$(LINK.c) -o det_best_aoi det_best_aoi.o dist.o process_qcfrec.o -l m
+	chmod 0755 det_best_aoi
+clean:
+	rm *.o

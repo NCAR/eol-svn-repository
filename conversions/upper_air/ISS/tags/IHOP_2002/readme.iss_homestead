@@ -1,0 +1,151 @@
+IHOP 2002 ISS Soundings at Homestead 
+
+Contacts/PIs:           Dave Parsons  
+	        	parsons@ucar.edu
+
+	                Tammy Weckwerth
+	                tammy@ucar.edu
+
+	                William Brown
+	                wbrown@ucar.edu
+
+Mailing Address:        NCAR/Atmospheric Technology Division 
+                        P.O. Box 3000
+			1850 Table Mesa Drive
+			Boulder, CO 80307; USA
+                         
+  		        Phone: (303)-497-8833
+			Fax:   (303)-487-8770
+
+Data Inquiry Contacts:  William Brown
+		        wbrown@ucar.edu 
+
+			Kathryn Beierle
+			kbeierle@ucar.edu
+
+
+I. Data Set Overview
+
+IHOP ISS information:              http://www.atd.ucar.edu/rtf/projects/ihop_2002/iss/
+Time period covered:               5/12/02 - 6/25/02
+Launch Location (lon,lat,alt):     100 36.36'W, 36 33.54'N, -100.60600 36.55900 862  
+
+
+II. File Naming Conventions
+
+The "y" files are typically one-second data files with appropriate corrections 
+and quality control measures applied.  The naming convention for most 
+of these files is the same - "y", followed by  "mddhhmm.cls" where m = month, 
+hh = hour of the day GMT, mm = minute of the hour, and ".cls" refers to the NCAR CLASS format 
+(for more recent projects the .cls has been replaced by an abbreviation of the site name).
+An exception to this rule is, for months October thru December the month 
+will be abbreviated as a single letter, oct = a, nov = b, and dec = c. 
+
+
+III. Header Information
+
+The header records contain data type, project ID, site ID, site location, actual release time, 
+nominal release time, and possibly other specialized information.  The first five header lines 
+contain information identifying the sounding, and have rigidly defined form.  The following
+6 header lines contain auxiliary information and comments about the sounding, and they can
+vary from data set to data set. The last 3 header records contain header information for the
+data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains
+dashes (--- characters) signifying the end of the header.
+
+The six standard header lines are as follows:
+
+Line  Label  (fixed to 35 chars in length)                  Contents
+
+1. Data Type:					   Description of type and resolution of 
+						   data.
+2. Project ID:					   ID of weather project.
+3. Launch Site Type/Site ID:			   Description of launch site.
+4. Launch Location (lon,lat,alt):		   Position of launch 
+5. GMT Launch:                                     Time of release, in format:
+						   yyyy, mm, dd, hh:mm:ss
+6. Sonde Id:                                       9 digit number assigned to all radiosondes
+						   by Vaisala.
+
+The release location is given as : lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), 
+alt (m).
+
+Longitude in deg min is in the format: ddd mm.mm'W where ddd is the number of degrees from True 
+North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents 
+represents W or E for west or east longitude, respectively. Latitude has the same format as 
+longitude, except there are only two digits for degrees and N or S for north/south latitude.
+The decimal equivalent of longitude and latitude and station elevation follow.
+
+The six non-standard header lines may contain any label and contents.  The label is fixed to 
+35 characters to match the standard header lines.
+
+
+IV. Data Records
+
+The data records each contain time from release, pressure, temperature, dew point, relative 
+humidity, U and V wind components, wind speed and direction, ascent rate, balloon position
+data, altitude, and quality control flags.  
+
+Field                   Parameter                     Units                 Missing Value
+ No. 
+------------------------------------------------------------------------------------------
+
+ 1			Time                         Seconds		     9999.0
+ 2 			Pressure		     Millibars               9999.0
+ 3			Dry-bulb Temp		     Degrees C  	      999.0
+ 4			Dew Point Temp 		     Degrees C		      999.0
+ 5			Relative Humidity            Percent                  999.0
+ 6			U Wind Component             Meters/Second            999.0
+ 7			V Wind Component  	     Meters/Second            999.0
+ 8			Wind Speed		     Meters/Second	      999.0
+ 9			Wind Direction		     Degrees		      999.0
+ 10			Ascension Rate		     Meters/Second            999.0
+ 11			Longitude		     Degrees		      999.0
+ 12			Latitude		     Degrees		      999.0
+ 13		        Range			     Kilometers               999.0	
+ 14			Angle			     Degrees		      999.0
+ 15 			Altitude		     Meters		    99999.0
+ 16			QC flag for Pressure                                   99.0
+ 17			QC flag for Temp				       99.0
+ 18 			QC flag for Humidity                                   99.0
+ 19			QC flag for U Component                                99.0
+ 20			QC flag for V Component				       99.0
+ 21			QC flag for Horizontal Wind			       99.0
+
+
+V. Data File Specifics 
+
+The files contain data calculated at one-second intervals . The variables
+pressure, temperature, and relative humidity are calibrated values from
+measurements made by the sonde.  The dew point is calculated from the relative
+humidity. The altitude value is calculated from the hydostatic equation using
+pressure, temperature, and dew point.  The rate of ascent is obtained from 
+the altitude difference between two successive time steps.  The position
+(lat, lon), angle and range come from the GPS and altitude data. This data
+is interpolated to one second in order to match the wind data.
+
+All wind data are computed from GPS navigation signals received from the sonde.  The
+raw wind values are calculated at a one half second data rate by a commercial processing
+card.  These raw values are subjected to a digital filter to remove low frequency oscillations
+due to the sonde pendulum motion beneath the balloon. The resolution of the data is reduced to one
+second.  This time record is used in the interpolation of the pressure, temperature, and 
+humidity data. 
+
+V. Data Quality Control 
+
+The raw soundings are first run through the Atmospheric Sounding Processing 
+ENvironment (ASPEN), which analyzes the data, performs smoothing, and removes 
+suspect data points.  The soundings are then visually evaluated for 
+outliers, or any other obvious problems.  Finally, the prelaunch PTU 
+radiosonde data are compared with surface data measured by independent 
+surface sensors to check for problems that may have gone undetected by 
+the first two quality control procedures. 
+
+By performing the QC measures outlined above on the data from IHOP 2002, 
+it was found that in some cases the prelaunch sonde data are drier
+than the surface data during the day, and that the dry bias
+increases with the solar angle, and reaches its maximum around noon. 
+This dry bias in the prelaunch sonde humidity data corresponds to warmer 
+prelaunch temperature data. Whether the drier, warmer prelaunch data is due 
+to sensor arm heating, or some other problem, is not clear. 
+For this reason, no corrections have been applied to the data. 
+

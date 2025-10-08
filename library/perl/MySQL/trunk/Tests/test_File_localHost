@@ -1,0 +1,52 @@
+#! /usr/bin/perl -w
+
+use strict;
+use lib "/h/eol/stroble/scripts/MySQL/lib";
+use MySqlDatabase;
+use MySqlFile;
+
+my $dataset_id = "testSS";
+
+my $database = MySqlDatabase->new("stroble","tempass");
+$database->setHost("localhost");
+$database->connect();
+
+print "Setting localhost file information\n";
+my $file = MySqlFile->new();
+print "Setting Dataset_id=$dataset_id\n";
+$file->setDatasetId($dataset_id);
+print "Setting Directory and Filename\n";
+$file->setFile("/h/eol/stroble/scripts/MySQL/Tests","test_File");
+print "Setting Format_id=43\n";
+$file->setFormatId(43);
+print "Setting Start Date to 01/01/2010 00:00:00\n";
+$file->setBeginDate(1900,01,01,0,0,0);
+print "Setting End Date to 12/30/2010 23:59:59\n";
+$file->setEndDate(2000,12,30,23,59,59);
+print "Setting Event to TESTEVENT1\n";
+$file->setEvent("TESTEVENT1");
+print "Setting Min/Max Lat/Long\n";
+$file->setMinlat(10);
+$file->setMaxlat(20);
+$file->setMinlon(10);
+$file->setMaxlon(20);
+print "Setting min/max alt and units\n";
+$file->setMinalt(1);
+$file->setMaxalt(100);
+$file->setAltUnits("meters");
+
+
+print "Attempting to Insert file\n";
+my $msg = $file->insert($database);
+
+
+if ($msg eq "") {
+	print "Successful Insert Please verify file information manually\n";
+	$msg = $database->commit(); 
+}
+else {
+	$msg .= "Database rolled back.\n".$database->rollback(); 
+	print "INSERT FAILED:\n     $msg\n";
+}
+
+$database->disconnect();

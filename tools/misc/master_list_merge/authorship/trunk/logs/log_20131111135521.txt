@@ -1,0 +1,1182 @@
+> groovy authorshipConnect.groovy ARCSS ATLAS BEST BSIERP ITEX PacMARS SBI SHEBA
+
+Created log file:	logs/log_20131111135521.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	William S. Reeburgh
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  ARCSS:  106.ARCSS078
+		Zhang, Tingjun, Roger Barry, and David Gilichinsky (U. Colorado, Russian Academy of Sciences)
+Which of these contacts matches this author:	U. Colorado
+
+		1122	null	Roger G. Barry	U. Colorado, NSIDC, World Data Center for Glaciology
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  ARCSS:  106.ARCSS078
+		Zhang, Tingjun, Roger Barry, and David Gilichinsky (U. Colorado, Russian Academy of Sciences)
+Which of these contacts matches this author:	Russian Academy of Sciences
+
+		1123	null	David Gilichinsky	Russian Academy of Sciences
+		1251	null	Dmitry Zamolodchikov	Russian Academy of Sciences
+		1294	null	null	Russian Academy of Sciences
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1294
+
+Unable to find 1294 for data set 106.ARCSS078
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1294, 'author', 5, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '106.ARCSS078';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ATLAS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	R. Dargaville
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  ATLAS:  46.800
+		Nolan, M.
+Which of these contacts matches this author:	M. Nolan
+
+		374	ndoesken	Nolan Doesken	Colorado State
+		1296	null	Matthew A. Nolan	University of Alaska Fairbanks
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1296
+
+Unable to find 1296 for data set 46.800
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1296, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '46.800';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BEST
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  BEST:  102.001
+		Sambrotto, R. (LDEO)
+Which of these contacts matches this author:	LDEO
+
+		1209	null	null	Lamont-Doherty Earth Observing Laboratory (LDEO)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1209
+
+Found 1209 for data set 102.001 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.002 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.003 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.004 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.005 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.006 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.007 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.008 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.009 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.010 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.011 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.012 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.013 and has sort_key of 65534 (instead of 2).
+--------------------------------------------------------------------------------
+  BEST:  102.017
+		US Coast Guard
+Which of these contacts matches this author:	US Coast Guard
+
+		1299	null	null	United States Coast Guard (USCG)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1299
+
+Unable to find 1299 for data set 102.017
+Unable to find 1299 for data set 102.018
+Found 1209 for data set 102.021 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.022 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.023 and has sort_key of 65534 (instead of 2).
+Unable to find 1299 for data set 102.026
+Unable to find 1299 for data set 102.027
+Found 1209 for data set 102.028 and has sort_key of 65534 (instead of 2).
+Unable to find 1299 for data set 102.029
+Unable to find 1299 for data set 102.030
+Unable to find 1209 for data set 102.031
+Found 1209 for data set 102.032 and has sort_key of 65534 (instead of 2).
+Unable to find 1299 for data set 102.033
+Unable to find 1299 for data set 102.034
+Found 1209 for data set 102.035 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.036 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.037 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.038 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.039 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.040 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.041 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.042 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.043 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.044 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.045 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.046 and has sort_key of 65534 (instead of 2).
+Unable to find 1299 for data set 102.048
+Found 1209 for data set 102.049 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.050 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.051 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.052 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.053 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.054 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.055 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.056 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.057 and has sort_key of 65534 (instead of 2).
+--------------------------------------------------------------------------------
+  BEST:  102.063
+		Cameron, M.
+Which of these contacts matches this author:	M. Cameron
+
+		1005	null	Cameron Homeyer	NCAR/ACD
+		1295	null	Michael Cameron	NOAA-National Marine Mammal Laboratory
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1295
+
+Unable to find 1295 for data set 102.063
+Found 1209 for data set 102.064 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.065 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.066 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.067 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.068 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.069 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.070 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.071 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.072 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.073 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.074 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.075 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.076 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.077 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.084 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.085 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.086 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.087 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.088 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.089 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.090 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.091 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.092 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.093 and has sort_key of 65534 (instead of 2).
+Found 1209 for data set 102.094 and has sort_key of 65534 (instead of 2).
+Unable to find 1299 for data set 102.098
+Unable to find 1299 for data set 102.099
+Unable to find 1299 for data set 102.100
+Unable to find 1209 for data set 102.101
+Unable to find 1209 for data set 102.102
+Unable to find 1209 for data set 102.103
+Unable to find 1209 for data set 102.104
+Unable to find 1209 for data set 102.105
+Unable to find 1209 for data set 102.106
+Unable to find 1209 for data set 102.107
+Unable to find 1209 for data set 102.108
+Unable to find 1299 for data set 102.109
+Unable to find 1299 for data set 102.110
+Unable to find 1299 for data set 102.111
+Unable to find 1209 for data set 102.112
+Unable to find 1209 for data set 102.113
+Unable to find 1209 for data set 102.114
+Unable to find 1209 for data set 102.115
+Unable to find 1209 for data set 102.116
+Unable to find 1209 for data set 102.117
+Unable to find 1209 for data set 102.118
+Unable to find 1209 for data set 102.119
+Unable to find 1209 for data set 102.120
+Unable to find 1209 for data set 102.121
+Unable to find 1209 for data set 102.122
+Unable to find 1209 for data set 102.123
+Unable to find 1209 for data set 102.124
+Unable to find 1209 for data set 102.128
+Unable to find 1209 for data set 102.139
+Unable to find 1209 for data set 102.140
+Unable to find 1209 for data set 102.141
+Unable to find 1209 for data set 102.147
+Unable to find 1209 for data set 102.148
+Unable to find 1209 for data set 102.149
+Unable to find 1209 for data set 102.150
+Unable to find 1209 for data set 102.151
+Unable to find 1299 for data set 102.152
+Unable to find 1299 for data set 102.153
+Found 845 for data set 102.162 and has sort_key of 65534 (instead of 1).
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	USCG-ESU
+
+--------------------------------------------------------------------------------
+
+Unable to find 1299 for data set 102.171
+Unable to find 1209 for data set 102.199
+Unable to find 1209 for data set 102.200
+Unable to find 1209 for data set 102.201
+Unable to find 1209 for data set 102.202
+Unable to find 1209 for data set 102.204
+Unable to find 1209 for data set 102.205
+Unable to find 1209 for data set 102.206
+Unable to find 1209 for data set 102.207
+Unable to find 1209 for data set 102.208
+Unable to find 1209 for data set 102.209
+Unable to find 1209 for data set 102.210
+Unable to find 1209 for data set 102.211
+Unable to find 1299 for data set 102.212
+Unable to find 1299 for data set 102.213
+Unable to find 1209 for data set 102.214
+Unable to find 1209 for data set 102.215
+Unable to find 1209 for data set 102.216
+Unable to find 1209 for data set 102.217
+Unable to find 1209 for data set 102.218
+Unable to find 1209 for data set 102.219
+Unable to find 1209 for data set 102.220
+Unable to find 1209 for data set 102.221
+Unable to find 1209 for data set 102.222
+Unable to find 1209 for data set 102.223
+Unable to find 1209 for data set 102.224
+Unable to find 1209 for data set 102.225
+Unable to find 1209 for data set 102.226
+Unable to find 1209 for data set 102.227
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7016 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7017 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8286 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8285 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7018 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7019 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7020 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7021 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8278 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8281 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8282 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7022 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7023 and contact_id = 1209;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.017';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.018';
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7026 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7027 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7028 and contact_id = 1209;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.026';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.027';
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8276 and contact_id = 1209;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.029';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.030';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.031';
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7034 and contact_id = 1209;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.033';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.034';
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7037 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7038 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7039 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7040 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7041 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7042 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8277 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7043 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7044 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7045 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8292 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7046 and contact_id = 1209;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.048';
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7744 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7049 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7050 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7745 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7051 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7052 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7053 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8271 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8270 and contact_id = 1209;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1295, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.063';
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7055 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7056 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7057 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7746 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7058 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7059 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7060 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7747 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7061 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7062 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7748 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7063 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7064 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 8272 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7069 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7070 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7071 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7072 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7073 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7074 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7075 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7076 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7077 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7078 and contact_id = 1209;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 7079 and contact_id = 1209;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.098';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.099';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.100';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.101';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.102';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.103';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.104';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.105';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.106';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.107';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.108';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.109';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.110';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.111';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.112';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.113';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.114';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.115';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.116';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.117';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.118';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.119';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.120';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.121';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.122';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.123';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.124';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.128';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.139';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.140';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.141';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.147';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.148';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.149';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.150';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.151';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.152';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.153';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 7694 and contact_id = 845;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.171';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.199';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.200';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.201';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.202';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.204';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.205';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.206';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.207';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.208';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.209';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.210';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.211';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.212';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.213';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.214';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.215';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.216';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.217';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.218';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.219';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.220';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.221';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.222';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.223';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.224';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.225';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.226';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.227';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BSIERP
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  BSIERP:  245.B71-001
+		Dalton, Michael and Andre Punt
+Which of these contacts matches this author:	Michael Dalton
+
+		1298	null	Michael Dalton	NOAA-Alaska Fisheries Science Center
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1298
+
+Unable to find 1298 for data set 245.B71-001
+Unable to find 1255 for data set 245.B71-001
+Unable to find 1254 for data set 245.B72-001
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Simone Vincenzi
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Tadayasu Uchiyama
+
+--------------------------------------------------------------------------------
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1298, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B71-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1255, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B71-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1254, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B72-001';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ITEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Totland
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Robinson-Wookey
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PacMARS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Samuel W. Stoker
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.016
+		Brown, John S., Ken H. Dunton, Greg Durell, Michael Galginaitis, Jerry M. Neff, George W. Shepard, Robert B. Spies, John H. Trefry (Battelle)
+Which of these contacts matches this author:	John S. Brown
+
+		1284	null	John S. Brown	Battelle Memorial Institute
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1284
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.016
+		Brown, John S., Ken H. Dunton, Greg Durell, Michael Galginaitis, Jerry M. Neff, George W. Shepard, Robert B. Spies, John H. Trefry (Battelle)
+Which of these contacts matches this author:	Michael Galginaitis
+
+		1300	null	Michael Galginaitis	Applied Sociocultural Research
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1300
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.016
+		Brown, John S., Ken H. Dunton, Greg Durell, Michael Galginaitis, Jerry M. Neff, George W. Shepard, Robert B. Spies, John H. Trefry (Battelle)
+Which of these contacts matches this author:	Jerry M. Neff
+
+		1283	null	Jerry M. Neff	Neff & Associates LLC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1283
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Robert B. Spies
+
+--------------------------------------------------------------------------------
+
+Unable to find 1284 for data set 255.016
+Unable to find 1300 for data set 255.016
+Unable to find 1283 for data set 255.016
+--------------------------------------------------------------------------------
+  PacMARS:  255.037
+		(Olgoonik Fairweather LLC)
+Which of these contacts matches this author:	Olgoonik Fairweather LLC
+
+		1119	null	Christopher Guay	Pacific Marine Sciences and Technology LLC
+		1244	null	Jeremiah Drage	Hattenburg and Dilley, LLC
+		1273	null	null	Fairweather Leasing, LLC
+		1282	null	Jay Brueggeman	Canyon Creek Consulting LLC
+		1283	null	Jerry M. Neff	Neff & Associates LLC
+		1301	null	null	Neff & Associates LLC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.039
+		(Battelle Memorial Institute, Exponent Inc., Florida Institute of Technology, Neff & Associates)
+Which of these contacts matches this author:	Neff & Associates
+
+		1283	null	Jerry M. Neff	Neff & Associates LLC
+		1301	null	null	Neff & Associates LLC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1301
+
+Unable to find 1301 for data set 255.039
+--------------------------------------------------------------------------------
+  PacMARS:  255.040
+		Norcross, Brenda L., Brenda A. Holladay, Robert M. Meyer, and Jeffrey A. June
+Which of these contacts matches this author:	Robert M. Meyer
+
+		199	tilden	Tilden Meyers	NOAA/ATDD
+		1005	null	Cameron Homeyer	NCAR/ACD
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.043
+		(LGL Alaska Research Associates Inc.)
+Which of these contacts matches this author:	LGL Alaska Research Associates Inc.
+
+		1291	null	null	LGL Alaska Research Associates Inc.
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1291
+
+Unable to find 1291 for data set 255.043
+Unable to find 1291 for data set 255.044
+--------------------------------------------------------------------------------
+  PacMARS:  255.045
+		Aerts, Lisanne and Jay Brueggeman
+Which of these contacts matches this author:	Jay Brueggeman
+
+		1282	null	Jay Brueggeman	Canyon Creek Consulting LLC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1282
+
+Unable to find 1282 for data set 255.045
+--------------------------------------------------------------------------------
+  PacMARS:  255.049
+		Day, Robert and Adrian Gall
+Which of these contacts matches this author:	Robert Day
+
+		80	dayers	David Ayers	University of Florida
+		882	nfriday	Nancy Friday	National Marine Mammal Laboratory
+		1263	null	Brenda A. Holladay	University of Alaska Fairbanks
+		1290	null	Robert H. Day	ABR Inc. – Environmental Research & Services
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1290
+
+Unable to find 1290 for data set 255.049
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1284, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1300, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1283, 'author', 5, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1301, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.039';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1291, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.043';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1291, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.044';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1282, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.045';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1290, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.049';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SBI
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SBI:  62.015
+		Cota, G., L. Pomeroy
+Which of these contacts matches this author:	L. Pomeroy
+
+		1289	null	Larry Pomeroy	University of Georgia
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1289
+
+Unable to find 1289 for data set 62.015
+--------------------------------------------------------------------------------
+  SBI:  62.036
+		(USCG)
+Which of these contacts matches this author:	USCG
+
+		1299	null	null	United States Coast Guard (USCG)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1299
+
+Unable to find 1299 for data set 62.036
+Unable to find 1299 for data set 62.037
+Unable to find 1299 for data set 62.042
+Unable to find 1299 for data set 62.043
+Unable to find 1299 for data set 62.044
+Unable to find 1299 for data set 62.045
+Unable to find 1299 for data set 62.046
+Unable to find 1299 for data set 62.047
+Unable to find 1299 for data set 62.076
+--------------------------------------------------------------------------------
+  SBI:  62.118
+		(Service Group)
+Which of these contacts matches this author:	Service Group
+
+		342	null	Joseph G. Verfaillie	Global Change Research Group
+		553	cua	null	University of Colorado - ARCSyM group
+		752	swhitlow	Sallie Whitlow	University of New Hampshire - Glacier Research Group
+		804	rlammers	Richard B. Lammers	Institute for the Study of Earth, Oceans, and Space (Water Systems Analysis Group)
+		866	dzona	Donatella Zona	Department of Biology and Global Change Research Group, San Diego State University
+		1197	null	Cove S. Sturtevant	Global Change Research Group
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+Unable to find 1209 for data set 62.124
+Unable to find 1299 for data set 62.127
+Unable to find 1209 for data set 62.160
+Unable to find 1299 for data set 62.170
+Unable to find 1299 for data set 62.171
+Unable to find 1299 for data set 62.177
+Unable to find 1299 for data set 62.186
+--------------------------------------------------------------------------------
+  SBI:  62.187
+		Moore, Kent (University of Toronto)
+Which of these contacts matches this author:	Kent Moore
+
+		1287	null	G. W. Kent Moore	University of Toronto
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1287
+
+--------------------------------------------------------------------------------
+  SBI:  62.187
+		Moore, Kent (University of Toronto)
+Which of these contacts matches this author:	University of Toronto
+
+		1287	null	G. W. Kent Moore	University of Toronto
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+Unable to find 1287 for data set 62.187
+--------------------------------------------------------------------------------
+  SBI:  62.188
+		(NCEP)
+Which of these contacts matches this author:	NCEP
+
+		189	skatz	Sidney Katz	NCEP/EMC
+		363	kmitchell	Kenneth Mitchell	NCEP/EMC(NOAA/NWS)
+		364	jschemm	Jae-Kyung E. Schemm	CPC/NCEP/NWS/NOAA
+		384	hjuang	Hann-Ming (Henry) Juang	NCEP
+		429	ylin	Ying Lin	NCEP/EMC
+		556	ncep/emc	null	NCEP Environmental Modeling Center
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+Unable to find 1209 for data set 62.190
+--------------------------------------------------------------------------------
+  SBI:  62.219
+		Lane, P., D. Sorarrain-Pilz, S. L. Smith, and L. Llinas
+Which of these contacts matches this author:	L. Llinas
+
+		1288	null	Leopoldo Llinas	Rosenstiel School of Marine and Atmospheric Science (RSMAS)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1288
+
+Unable to find 1288 for data set 62.219
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	P. S. Fratantoni
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SBI:  62.227
+		Eicken, H., K. Tateyama
+Which of these contacts matches this author:	K. Tateyama
+
+		1286	null	Kazutake Tateyama	Kitami Institute of Technology
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1286
+
+Unable to find 1286 for data set 62.227
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1289, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.015';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.036';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.037';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.042';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.043';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.044';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.045';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.046';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.047';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.076';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.124';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.127';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.160';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.170';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.171';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.177';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1299, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.186';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1287, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.187';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1209, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.190';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1288, 'author', 4, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.219';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1286, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.227';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SHEBA
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.401
+		(Univ. of Alaska - Geophysical Institute)
+Which of these contacts matches this author:	Univ. of Alaska - Geophysical Institute
+
+		40	mwetzel	Melanie Wetzel	Desert Research Institute
+		119	nbates	Nick R. Bates	Bermuda Institute of Ocean Sciences
+		155	jhudson	Jim Hudson	Desert Research Institute
+		221	rstorvold	Rune Storvold	Geophysical Institute, UAF
+		239	vromanovsky	Vladimir E. Romanovsky	Geophysical Institute UAF
+		242	jlobert	Jurgen Lobert	Scripps Institute
+		264	ijnsdttir	Ingibjorg S. Jonsdottir	Botanical Institute
+		266	sbret-harte	Syndonia Bret-Harte	Institute of Arctic Biology
+		279	ccopass	Catharine D. Copass	Institute of Arctic Biology
+		303	null	Donald A. (Skip) Walker	Institute of Arctic Biology
+		318	rweber	Rodney J. Weber	Georgia Institute of Tech
+		427	hyabuki	Hironori Yabuki	Institute Observat. Research
+		449	mit/ll	null	Massachusetts Institute of Technology/Lincoln Laboratory
+		455	nmimt	null	New Mexico Institute of Mines and Technology
+		489	mit	Phil Rosenkranz	Massachussets Institute of Technology
+		504	ori/tokyo	null	Ocean Research Institute, Univ. of Tokyo
+		505	mpi	null	Max Plaank Institute
+		509	sio	null	Scripps Institute of Oceanography
+		523	dri	null	Desert Research Institute
+		537	whoi	null	Woods Hole Oceanographic Institute
+		561	gatech	null	Georgia Institute of Technology
+		563	caltec	null	California Institute of Technology
+		569	metri	null	Meteorological Research Institute
+		570	k-jist	null	Kwanji Institute of Science and Engineering
+		577	nier	null	National Institute of Environmental Research
+		578	kist	null	Korean Institute of Science and Technology
+		579	null	null	Institute of Low Temperature Science, Hokkaido University
+		595	omayol	Olga L. Mayol-Bracero	Institute for Tropical Ecosystem Studies (ITES)
+		600	sschonberg	Susan Schonberg	University of Texas at Austin Marine Science Institute
+		612	rpickart	Robert S. Pickart	Woods Hole Oceanographic Institute
+		646	heicken	Hajo Eicken	Geophysical Institute/University of Alaska
+		665	tsavunen	Tarja Savunen	Finnish Meteorological Institute
+		681	vgrubisic	Vanda Grubisic	Desert Research Institute
+		694	gmayr	Georg Mayr	Institute for Meteorology and Geophysics
+		703	akitoh	Akio Kitoh	Meteorological Research Institute - Japan Meteorological Agency
+		734	ehunter	Eli Hunter	Institute for Marine and Coastal Sciences, Rutgers University
+		758	null	Thomas J. Weingartner	University of Alaska - Institute of Marine Science
+		775	null	James T. Randerson	California Institute of Technology
+		776	abalser	Andrew W. Balser	U. of Alaska Fairbanks - Institute of Arctic Biology
+		788	dhelmig	Detlev Helmig	Institute of Alpine and Arctic Research (INSTAAR)
+		804	rlammers	Richard B. Lammers	Institute for the Study of Earth, Oceans, and Space (Water Systems Analysis Group)
+		828	mlomas	Michael Lomas	Bermuda Institute of Ocean Sciences
+		901	agadian	Alan Gadian	Institute of Atmospheric Sciences
+		931	jfochesatto	Javier Fochesatto	Geophysical Institute and College of Natural Sciences and Mathematics
+		935	ewelty	Ethan Welty	Institute of Arctic and Alpine Research
+		939	null	Astrid E. J. Ogilvie	Institute of Arctic and Alpine Research
+		941	gspreen	Gunnar Spreen	Jet Propulsion Laboratory, California Institute of Technology
+		952	jfrancis	Jennifer Francis	Institute of Marine and Coastal Sciences, Rutgers University
+		963	cimss	null	Cooperative Institute for Meteorological Satellite Studies
+		1001	ablanchard	Arnold Blanchard	Institute of Marine Science
+		1006	bbluhm	Bodil A. Bluhm	Institute of Marine Science
+		1012	jtrefry	John H. Trefry	Florida Institute of Technology, Department of Marine and Environmental Systems
+		1068	null	Kenichi Matsuoka	Norwegian Polar Institute
+		1079	null	W. Tad Pfeffer	Institute of Arctic and Alpine Research
+		1103	null	Steven V. Muller	Institute of Arctic and Alpine Research 
+		1105	null	Paul A. Mayewski	Institute for the Study of Earth,  Oceans and Space
+		1124	null	William A. Gould	International Institute of Tropical Forestry
+		1131	null	Nan D. Lederer	Institute of Arctic and Alpine Research
+		1142	null	Hiroshi Furutani	Atmosphere and Ocean Research Institute (AORI)
+		1165	null	Katrin Iken 	Institute of Marine Science
+		1199	null	Robert P Trocine	Florida Institute of Technology
+		1223	null	Walker O. Smith	Virginia Institute of Marine Science
+		1225	null	Erika J. Edwards	U. Alaska-Fairbanks, Institute of Arctic Biology
+		1226	null	Amber Moody	U. Alaska-Fairbanks, Institute of Arctic Biology
+		1237	null	Dmitry Nicolsky	University of Alaska Fairbanks - Geophysical Institute
+		1238	null	Dmitri Sergueev	University of Alaska Fairbanks - Geophysical Institute
+		1239	null	Gennady Tipenko	University of Alaska Fairbanks - Geophysical Institute
+		1261	null	null	Bermuda Institute of Ocean Sciences (BIOS)
+		1262	null	null	Battelle Memorial Institute
+		1274	null	null	Florida Institute of Technology
+		1276	null	Gregory Durell	Battelle Memorial Institute
+		1278	null	Humfrey Melling	Institute of Ocean Sciences
+		1284	null	John S. Brown	Battelle Memorial Institute
+		1285	null	Knut Stamnes	Stevens Institute of Technology
+		1286	null	Kazutake Tateyama	Kitami Institute of Technology
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.404
+		(Univ. of Wisconsin - SSEC)
+Which of these contacts matches this author:	Univ. of Wisconsin - SSEC
+
+		32	wfeltz	Wayne Feltz	CIMSS/SSEC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	T. Siferd
+
+--------------------------------------------------------------------------------
+
+Unable to find 1289 for data set 13.460
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	U. Washington - CARG
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.801
+		Tucker, W. B.
+Which of these contacts matches this author:	W. B. Tucker
+
+		1303	null	W. B. Tucker III	Cold Regions Research and Engineering Laboratory (CRREL)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1303
+
+Unable to find 1303 for data set 13.801
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	T. Arbetter
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	S. Drobot
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	R. Kwok
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.815
+		Yu, Y.
+Which of these contacts matches this author:	Y. Yu
+
+		184	rshirooka	Ryuichi Shirooka	IORGC
+		335	tmurayama	Toshiyuki Murayama	Tokyo Univ Mercantile Marine
+		348	kkim	Ki-Hyun Kim	Sejong University
+		364	jschemm	Jae-Kyung E. Schemm	CPC/NCEP/NWS/NOAA
+		367	syuter	Sandra E. Yuter	Department of Atmos. Science
+		403	jyu	Jian Zhen Yu	Hong Kong University of Science and Technology
+		562	null	Toshiyuki Murayama	Tokyo University of Mercantile Marine
+		683	ihiroyuki	Iwasaki Hiroyuki	Gunma University
+		840	hkim	Hyun Mee Kim	Yonsei University
+		1052	null	Yuri Shur	Dept. of Civil and Environmental Engineering
+		1069	null	Yu-Ping Chin	School of Earth Sciences
+		1140	null	Hideyuki Honda	null
+		1233	null	Yuan Sui	EOL
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	T. Horst
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	S. Roode
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.823
+		Perovich, D., T. Grenfell, B. Light, J. Richter-Menge, T. Tucker, H. Eicken
+Which of these contacts matches this author:	T. Tucker
+
+		1303	null	W. B. Tucker III	Cold Regions Research and Engineering Laboratory (CRREL)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.824
+		Perovich, D., J. Richter-Menge, W. Tucker, B. Elder, B. Bosworth
+Which of these contacts matches this author:	W. Tucker
+
+		1303	null	W. B. Tucker III	Cold Regions Research and Engineering Laboratory (CRREL)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1303
+
+Unable to find 1303 for data set 13.824
+--------------------------------------------------------------------------------
+  SHEBA:  13.831
+		Stamnes, K., H. Eide
+Which of these contacts matches this author:	K. Stamnes
+
+		1285	null	Knut Stamnes	Stevens Institute of Technology
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1285
+
+Unable to find 1285 for data set 13.831
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1289, 'author', 3, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.460';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1303, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.801';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1303, 'author', 3, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.824';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1285, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.831';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

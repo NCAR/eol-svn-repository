@@ -1,0 +1,139 @@
+#!/bin/perl 
+
+##Module-----------------------------------------------------------------------
+# <p>Takes the values entered into the edit_extraction form and does the 
+#  requested 'action'.  Either 'sets' a new extraction to the chosen dataset
+#  or cancels.  </p>
+#
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Dataset;
+use ExtractionDBA;
+use Utils;
+use State;
+use CGI;
+
+# The possible actions to perform
+my %actions = ( "Set Extraction" => \&setExtraction,
+								"Cancel" => \&cancel
+							);
+
+# Get the state information
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+# Process the input from the user
+proc_extraction( $state, $cgi );
+
+sub proc_extraction
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	# Call the appropriate function based on the button (has a value of
+	#  'action') the user pressed.
+	my $action = $cgi->param( "action" );
+	$actions{$action}->($state, $cgi);
+}
+
+#-----------------------------------------------------------------------------
+# Extraction getFromParams( State $state, CGI $cgi );
+#
+# Populates an Extraction object with the data entered into
+#  the fields of the html form
+#-----------------------------------------------------------------------------
+sub getFromParams
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $ex = Extraction->new();
+
+	$ex->{dsname} = $cgi->param( "source_dsname" );
+	$ex->{pdname} = $cgi->param( "source_pdname" );
+	$ex->{pjname} = $state->{project};
+	$ex->{pdsource} = $cgi->param( "pdsource" );
+	$ex->{pjsource} = $state->{project};
+
+	return $ex;
+}
+
+#-----------------------------------------------------------------------------
+# void setExtraction( State $state, CGI $cgi ) 
+#
+# Associates a new extraction with the selected dataset
+#  Deletes the old extraction, if it exists, and inserts
+#  a new extraction.  Calls the showStatus() function.
+#-----------------------------------------------------------------------------
+sub setExtraction
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $ex = getFromParams( $state, $cgi );
+
+	# Always delete the old extraction
+	ExtractionDBA::deleteFromDB( $ex );
+
+	if( $ex->{pdsource} ne "none" )
+	{
+		ExtractionDBA::insertDB( $ex );
+	}
+
+	$state->{proc_edit} = undef();
+	my $url = $state->getUrlString();
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+	showStatus( $state, $cgi, $onLoad, "Extraction Set" );	
+}
+
+
+#-----------------------------------------------------------------------------
+# void cancel( State $state, CGI $cgi )
+#
+# Cancels the action, does nothing.  Calls the showStatus() function.
+#-----------------------------------------------------------------------------
+sub cancel
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	$state->{proc_edit} = undef();
+	my $url = $state->getUrlString();
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Action Canceled" );	
+}
+
+#-----------------------------------------------------------------------------
+# void showStatus( State $state, CGI $cgi, string $onLoad, string $msg )
+#
+# Displays the return page after the processing is complete - consists of the 
+#  'Close Window' button.
+#-----------------------------------------------------------------------------
+sub showStatus
+{
+	my $state = shift;
+	my $cgi = shift;
+	my $onLoad = shift;
+	my $msg = shift;
+
+
+	println( $cgi->header() );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>$msg</title>" );
+	println( "</head>" );
+	println( "<body onLoad=$onLoad>" );
+	println( "<center><br><br><br>" );
+	println( "<b>$msg</b>" );
+	println( "<br>" );
+	println( "<input type=submit value='Close Window' onClick=\"window.close()\">" );
+
+	println( "</body></html>" );
+}
+
+1;

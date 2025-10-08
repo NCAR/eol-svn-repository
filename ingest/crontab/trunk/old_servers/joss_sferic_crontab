@@ -1,0 +1,36 @@
+HOST=sferic.eol.ucar.edu
+
+####################################################
+# If you make a modification to this crontab,
+# PLEASE indicate what project it is for and who the
+# responsible party is, and include your initials.
+#
+# Also, the crontab is in subversion at
+# http://svn/svn/dmg/ingest/crontab
+# If you make significant changes, please upload a copy
+# to svn.
+#
+# Thank you!
+####################################################
+
+# Operational ingest scripts. See Janine for details.
+30 10 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_madis_mysql_stage_to_mss.pl
+0 15 * * * /h/eol/joss/madis/madis_map_tar_mysql.pl
+0 17 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_HDW1h_mysql_stage_to_mss.pl
+0 11 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_HDW_mysql_stage_to_mss.pl
+0 3 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_spoolACARS
+0 18 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_gts_ldm_operational_db_update.pl
+0 2 1 * * /h/eol/dmg/HPSS_cronjobs/HPSS_ldm_metar_mss_db_update.pl
+0 10 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_savefiles
+0 1 6 * * /h/eol/dmg/HPSS_cronjobs/HPSS_download_asos.pl
+
+00 16 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_USPLN_lightning.sh
+# Was /ingest/ingest/pacs/fulldisk_backtrack
+00 18 * * * /h/eol/dmg/HPSS_cronjobs/PACS_fulldisk_backtrack.sh
+
+# Script to list all of EOLs shared HPSS files
+0 20 1 * * /h/eol/joss/hpss_retrieval/hpss_list_all_eol.sh
+
+# NPN and HPCN operational ingest scripts. See Amanda for details.
+30 10 * * 1,3,5 /net/work/operational/sounding/NPN/trunk/src/HPSS_NPN_wind_rass.pl
+30 10 15 * * /net/work/operational/surface/HPCN/trunk/src/HPCNfiles.pl

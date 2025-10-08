@@ -1,0 +1,14 @@
+SHELL = /bin/sh
+#
+#    Makefile for remove_OKMESO s/w.
+#
+
+CC=acc
+##CFLAGS = -g
+
+remove_OKMESO: remove_OKMESO.o 
+	$(LINK.c) -o remove_OKMESO remove_OKMESO.o  
+	chmod 0755 remove_OKMESO
+
+clean:
+	rm *.o

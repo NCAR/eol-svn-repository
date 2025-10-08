@@ -1,0 +1,94 @@
+<html>		
+<head>
+   <title>How To: 5 mb Extraction Software</title>
+   <style>
+<!--
+   a:link,a:visited { color: blue; text-decoration: none; }
+   a:hover { color: red; text-decoration: underline; }
+   body {
+      font-family: Arial, sans-serif;
+      font-size: 12pt;
+      text-align: justify;
+   }  
+   h1 { text-align: center; }
+   .note { color: #006600; }
+   p.code {
+      font-family: monospace;
+      font-weight: bold;
+      text-indent: 50px;
+   }
+   p.foot {
+      font-style: italic;
+      text-align: right;
+   }
+   th.dir {
+      text-align: left;
+   }
+-->
+   </style>
+</head>
+
+<body>
+
+<h1>How To: 5 mb Extraction Software</h1>
+
+<h2>Table of Contents</h2>
+<ul>
+   <li><a href="#purpose">Purpose</a></li>
+   <li><a href="#repos">Repository</a></li>
+   <li><a href="#directory">Directory Structure</a></li>
+   <li><a href="#software">Software</a></li>
+   <li><a href="#docs">Documentation</a></li>
+</ul>
+<hr>
+
+<a name="purpose"></a>
+<h2>Purpose</h2>
+<p>The purpose of this document is to describe the process and files for creating the 5 mb extraction software for soundings.  The software reads CLASS formated data and generates new CLASS files with the surface data point and records for each pressure value that is a multiple of 5.  If there is not a pressure value at the 5 mb interval, it is interpolated from the surrounding points.</p>
+<hr>
+
+<a name="repos"></a>
+<h2>Repository</h2>
+<p>The 5 mb extraction software is under revision control through subversion.  (For more information on subversion see: <a href="/dpg/GENERAL/repository/howto_subversion.html">How To: Subversion</a>.)  The repository can be found at:</p>
+<p class="code">/work/software/repository/subversion/tool/upper_air/composite/5mb/extracter</p>
+<hr>
+
+<a name="directory"></a>
+<h2>Directory Structure</h2>
+<table border=1>
+   <tr>
+      <th class="dir">bin</th>
+      <td>The directory where the binaries are to be stored once they have been generated.</td>
+   </tr>
+   <tr>
+      <th class="dir">docs</th>
+      <td>The directory where all of the documentation files for the software should be stored.</td>
+   </tr>
+   <tr>
+      <th class="dir">src</th>
+      <td>The directory where all of the source and Makefiles should be stored for generating the binaries.</td>
+   </tr>
+</table>
+<hr>
+
+<a name="software"></a>
+<h2>Software</h2>
+<p>There are several files in the <b>src</b> directory, but only three create the extract5mb binary (<b>s2m.f, calcsm.f, gni.f</b>).  <font class="note">The extract5mb binary is also called s2m</font>.  I believe the others will make other 5 mb extracters for different types of soundings (dropsondes), but these haven't been checked yet.</p>
+<p>To create the binary use the <b>Makefile</b> or use the command:</p>
+<p class="code">f77 -o ../bin/extract5mb s2m.f calcsm.f gni.f</p>
+
+<a name="docs"></a>
+<h2>Documentation</h2>
+<ul>
+   <li><a href="howto_5mb_extracter_software.html">How To: 5 mb Extraction Software</a>- this document</li>
+   <li><a href="e2f.doc">e2f.doc</a></li>
+   <li><a href="prof77.doc">prof77.doc</a></li>
+   <li><a href="prof77.ps">prof77.ps</a></li>
+   <li><a href="Readme.s2m">Readme.s2m</a></li>
+   <li><a href="Readme.scf_cvts">Readme.scf_cvts</a></li>
+   <li><a href="s2m.doc">s2m.doc</a></li>
+</ul>
+
+</body>
+</html> 
+    

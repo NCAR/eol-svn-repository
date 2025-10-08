@@ -1,0 +1,41 @@
+Questions for 1995 High Plains Data.
+
+1)  We have hard copy for station A211899 Crookston, MN but no data file 
+to match.
+
+2) We have a data file ne18.ucr which is an exact duplicate of co18.ucr 
+(Akron, CO).  There is no corresponding hard copy sheet.  Can I delete ne18?
+
+3) Most files have >Air Temp< in >F@4.9ft< but a few files only have 
+>Sam Temp< in >F<.  Are these fields really equivalent?
+
+4) Files with >Sam Temp< also have the units for >REL HUM< as >%-S< where 
+all other files have the units for >REL HUM< simply as >%<.  Are these 
+equivalent?
+
+5) One field that we expect is >WIND DIR< in >DEGREES<.  Unfortunately 
+no data files contain this field.  However most contain a field called 
+>VECT DIR< and a few files have >DIRECTIN AV.<  Are >VECT DIR< and 
+>DIRECTIN AV.< the same thing and are they the >WIND DIR< that we want?
+
+6) We expect a field for >SOIL TMP< in >F< for each data file.  Most files 
+have a field >Soil Tmp< in >F@4in< which is what I think we want to use.  
+A few files have >Sam Soil T< in >F@4in<.  Are these equivalent?  A few 
+files have more than one Soil Tmp field.  Sometimes the units are >F@2in< 
+or >F@8in<, but in one case there are 2 fields labeled >Soil Tmp< >F@4in<.  
+I think the second one may be mislabeled since the actual numbers are not 
+the same and another file is identical except that the units are >F@8in< 
+for 2nd one.  Can we always use the first >Soil Tmp< field and ignore any 
+other Soil Tmp fields?
+
+7) We expect a field >SOLAR< in >W/M**2<.  None of data files have anything 
+in >W/M**2<.  Option 1 - set this field to missing since we really don't 
+use it anyway.  Option 2 - most files have a >Rad Flux< in >Kcal m-2< 
+which could maybe be converted?
+
+8) Stratton vs. Sterling CO.  An old station list has Stratton at 39 18 lat, 
+102 31 lon, 1390 ele. and Sterling at 40 28 lat, 103 01 lon, 1200 ele.  
+The new hard copy shows Stratton at 40 28 lat, 103 01 lon, 1390 ele. and 
+Sterling at 39 18 lat, 102 31 lon, 1200 ele.  The id numbers and names 
+in the data files match those found on the hard copy, but Stratton should 
+be south of Sterling.  What is really correct?

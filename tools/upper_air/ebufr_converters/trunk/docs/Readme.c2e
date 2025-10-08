@@ -1,0 +1,70 @@
+$Id: Readme.c2e,v 1.1 1992/11/02 21:08:32 john Exp $
+
+"Readme.c2e" : Readme file for "c2e"
+
+c2e = CLASS to EBUFR
+CLASS is the same as SCF (STORM CLASS Format)
+SCF is used in the code alot, the name c2e remains for historical reasons
+
+***IMPORTANT*** The filename(s) given on the command line to c2e *must*
+be of the form sssmddhh.ext or sssmddhhmm.ext. There can*not* be any
+leading pathname components, e.g. /fest/snd/work/sssmddhh.ext. This
+means that c2e must be run in the same directory as the files to be
+converted, which means that the control file, class file, code files,
+and description file must also all be in the same directory. The reason
+is because of the two possible forms of the filename. c2e reads Nominal
+time information and the station ID from the filename and expects it
+to be without a lead pathname. Why? Because it's the easiest way right now.
+
+Read the following files:
+ c2e.doc - documentation of c2e, contents of IDATA,RDATA,CDATA, and
+           matchings for SCF->EBUFR conversion
+
+Also, the code ("c2e.f") has some explanatory comments.
+
+I use the following to compile:
+
+f77 [flags] -o c2e c2e.f -L/home/john/lib -lGext -lGER -lGsun
+
+where [flags] could be:
+ -u : check for undeclared variables
+ -g : compile with debug information
+ -fast -O3 : compile with most complete optimization
+
+and where -L/home/john/lib can be removed if the environment
+variable is set appropriately.
+
+/home/john/lib contains:
+ libGext.a : GTFXYU.o and CLSUNI.o (the functions passed to WRTHDR)
+ libGER.a : symbolic link to the Generic Encode Routine library
+	    -> /home/murdock/Generic-Encoder/Libs/Code.a
+ libGsun.a : Sun specific routines used by GER
+ *.f : the source code for libGext.a and libGsun.a
+
+***** NOTE IMPORTANT *****
+  libGext,libGER,libGsun are all from the Generic Encode Routine library.
+  libGER is the main bulk of the library.
+  libGext and libGsun are from the "EXTERNAL" subdirectory of the library.
+  The CVS module for the GER library is "generic_encoder".
+
+/home/murdock/Generic-Encoder/Libs contains:
+ Code.a : GER compiled with -fast -O3
+ Code.debug.a : GER compiled with -g
+
+/home/john/c2e contains:
+ Readme.c2e : this file
+ c2e.f : c2e source
+ rdcls.f : test program to read SCF data files
+ c2e.doc : documentation
+ *.0cls  : (symlinks to) SCF test files
+ *.class : (symlinks to) SCF test files
+ j21506.class : 100 records from yzt21506.0cls, with QC flags changed for tests
+ j21506.s : 5 records from yzt21506.0cls, with QC flags changed for tests
+ control.txt : control file for encode routines
+ code*   : code table files for encode routines
+ class_file : class file for encode routines
+ desc_file : parameter description file for encode routines
+ *.ebufr : files in EBUFR format
+ *.ebufr.d : files produced by ebdump
+ (plus all the s2m stuff!)
+ <other> : executable, object, or junk

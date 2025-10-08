@@ -1,0 +1,29 @@
+<html>
+<head>
+		<title><g:layoutTitle default="CADIS metadata" /></title>
+        <link rel="stylesheet" type="text/css" href="${createLinkTo(dir:'css',file:'formpage.css')}" />
+		<g:layoutHead />
+		<g:javascript library="application" />				
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#EBF6FF" text="#000000">
+<table width="100%" border="0" cellspacing="0" cellpadding="2" height="808" bordercolor="#CCCCCC" name="contact panel">
+  <tr>
+    <td height="860" width="78%">
+      <table width="100%" border="0" cellspacing="2" cellpadding="2">
+        <tr>
+        <div class="nav" align="center"> 
+            <g:render template="/adminmenubar" />   
+        </div>
+          <td height="825">
+		  	<g:layoutBody />		
+		  </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  
+</table>
+</body>
+</html>

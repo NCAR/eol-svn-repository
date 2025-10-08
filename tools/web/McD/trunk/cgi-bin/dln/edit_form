@@ -1,0 +1,320 @@
+
+use lib "lib";
+use DLNUtils;
+
+use lib "../mcd_lib";
+use DLNDatasetDBA;
+use ProjectDBA;
+use UserDBA;
+use McDDB;
+
+sub edit_form
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $dba = DLNDatasetDBA->new();
+	my $user_dba = UserDBA->new();
+
+	my $mode = $cgi->param( "mode" );
+	$mode = "add" if( !defined( $mode ) );
+	$mode = "update" if( $mode ne "add" );
+
+	my $ds;
+	my $project;
+	if( $mode eq "add" )
+	{
+		$ds = DLNDataset->new();
+		$ds->checkDefined();
+		my $proj_dba = ProjectDBA->new();
+		$project = $proj_dba->getFromDB( $state->{list_view_id} );
+	}
+	else
+	{
+ 		$ds = $dba->getFromDB( $cgi->param("ds_id") );
+		my @projs = $dba->getProjects( $ds->{id} );
+		$project = $projs[0];  # ************** Note this shortcut ****************
+	}	
+
+	my $title = "Data Loading Notes: Edit Dataset";
+	$title = "Data Loading Notes: Add Dataset" if( $mode eq "add" );
+
+	my $date = today();
+	$date = $ds->{date} if( $mode eq "update" );
+
+	#my @users = $user_dba->getAllUsers( "display_name", 1 );
+	my @users = $user_dba->getAllUsers( "display_name" ); # get all users
+	my $int_contact = getSelectBox( "int_contact", \@users, $ds );
+	my $loader = getSelectBox( "loader", \@users, $ds );
+	my $checker = getSelectBox( "checker", \@users, $ds );
+
+	my $documented = getCheckBox( "documented", $ds );
+	my $loaded = getCheckBox( "loaded", $ds );
+	my $checked = getCheckBox( "checked", $ds );
+
+	my $buttons = getButtons( $mode );
+
+	# Used to check if an e-mail should be sent
+	my $jscript2 = "<script language=\'javascript\'>var old_loader=\'$ds->{loader}\'</script>";
+
+	my $next_id = getNextStormId( $project );
+	my $storm_id = $next_id;
+	$storm_id = $ds->{storm_id} if( $mode eq "update" );
+
+	my $ncols = 5;
+	my $ncols_1 = $ncols - 1;
+	my $ncols_2 = $ncols - 2;
+	print( cr(
+		$cgi->header( -expires=>'-1d'),
+		"<html>",
+			"<head>",
+				"<title>JOSS DLN: Edit Dataset</title>",
+				$body_css,
+				$jscript,
+				$jscript2,
+			"</head>",
+		"<body>",
+			"<center><table border=0 cellpadding=6 cellspacing=3 width=98% class=editTable>",
+			"<form method=POST action=controller name=mainForm>",
+				"<tr>",
+					"<td width=100% colspan=$ncols>",
+						"<table width=100% border=0 cellpadding=4 cellspacing=0>",
+							"<tr class=titleBar>",
+								"<td width=50%>",
+									$title,
+								"</td>",
+								"<td width=50% align=right><font size=-1>",
+									$date,
+								"</td>",
+							"</tr>",
+						"</table>",
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td align=right width=20%>",
+						"<b>Project:</b>",
+					"</td>",
+					"<td>",
+						"<b>$project->{name}</b>",
+					"</td>",
+					"<td nowrap align=right>",
+						"<b>Storm Id:", &nbsp(2),
+					"</td>",
+					"<td>",
+						"<input type=text name=storm_id value=\"$storm_id\" size=10 maxlength=16>", &nbsp(2),
+						"<font size=-1><a href=\"javascript: nextId( mainForm, \'$next_id\' )\">Next Id</a>",
+					"</td>",
+					"<td>",
+						"<a href=$help_src#dln_a target=_blank><img border=0 src=$img_src/help.gif alt=\"ML/DLN Help\"></a>",
+					"</td>",
+				"</tr>",
+				"<tr>",
+					"<td align=right width=20%>",
+						"<b>Title:</b>",
+					"</td>",
+					"<td colspan=$ncols_1>",
+						"<input type=text name=title value=\"$ds->{title}\" size=70 maxlength=255>",
+					"</td>",
+				"</tr>",
+				
+				"<tr><td colspan=$ncols class=spacer></td></tr>",
+	
+				"<tr>",
+					"<td align=right width=20%>",	
+						"<b>Ingest Loc: </b>",
+					"</td>",	
+					"<td colspan=$ncols_2>",	
+						"<input type=text name=ingest value=\"$ds->{ingest}\" size=70 maxlength=255>",
+					"</td>",	
+					"<td>",
+						"&nbsp",
+					"</td>",
+				"</tr>",
+				"<tr>",
+					"<td align=right width=20%>",	
+						"<b>Archive Loc: </b>",
+					"</td>",	
+					"<td colspan=$ncols_2>",	
+						"<input type=text name=archive value=\"$ds->{archive}\" size=70 maxlength=255>",
+					"</td>",	
+				"</tr>",
+
+				"<tr><td colspan=$ncols class=spacer></td></tr>",
+
+				"<tr>",
+					"<td align=right width=20% nowrap>",
+						"<b>External Contact: </b>",
+					"</td>",
+					"<td colspan=$ncols_2>",
+						"<input type=text name=ext_contact value=\"$ds->{ext_contact}\" maxlength=100 size=20>", &nbsp(5),
+						"<b>E-mail: </b>", &nbsp(2),
+						"<input type=text name=ext_email value=\"$ds->{ext_email}\" maxlength=100 size=30>",
+					"</td>",
+					"<td>",
+						"&nbsp",
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td align=right width=20% nowrap>",
+						"<b>Internal Contact: </b>",
+					"</td>",
+					"<td>",
+						$int_contact,
+					"</td>",
+					"<td align=right nowrap>",
+						"<b>Readme Complete: </b>"	,
+					"</td>",
+					"<td colspan=2>",
+						$documented,	
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td align=right width=20% nowrap>",
+						"<b>Person Loading: </b>",
+					"</td>",
+					"<td>",
+						$loader,
+					"</td>",
+					"<td align=right nowrap>",
+						"<b>Dataset Loaded: </b>"	,
+					"</td>",
+					"<td colspan=2>",
+						$loaded,	
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td align=right width=20% nowrap>",
+						"<b>Person Checking: </b>",
+					"</td>",
+					"<td>",
+						$checker,
+					"</td>",
+					"<td align=right nowrap>",
+						"<b>Dataset Checked: </b>"	,
+					"</td>",
+					"<td colspan=2>",
+						$checked,	
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td align=right width=20% nowrap>",
+						"<b>Remote URL: </b>",
+					"</td>",
+					"<td colspan=$ncols_2>",
+						"<input type=text name=remote_url value=\"$ds->{remote_url}\" maxlength=255 size=70>",
+					"</td>",
+					"<td>",
+						"&nbsp",
+					"</td>",
+				"</tr>",
+
+				"<tr><td colspan=$ncols class=spacer></td></tr>",
+
+				"<tr>",
+					"<td width=20% colspan=$ncols>",
+						"<b>Notes: </b>", "<br>",
+						"<textarea name=notes rows=12 cols=75>$ds->{notes}</textarea>",
+					"</td>",
+				"</tr>",
+
+				"<tr class=titleBar>",
+					"<td colspan=$ncols align=right>",
+						$buttons,
+						$state->getHiddenFieldString(),	
+						"<input type=hidden name=project value=$project->{id}>",
+						"<input type=hidden name=id value=$ds->{id}>",
+						"<input type=hidden name=proc_edit value=1>",
+						"<input type=hidden name=date value=$date>",
+						"<input type=hidden name=send_mail value=n>",
+					"</td>",
+				"</tr>",
+			"</table>",
+			"</form>",
+		"</body></html>" ) );
+		
+
+}
+
+sub getSelectBox
+{
+	my $field = shift;
+	my $users = shift;
+	my $ds = shift;
+
+	my $select = "<select name=$field>";
+	foreach my $user (@{$users})
+	{
+		my $selected = "";
+
+		if( $user->{id} eq $ds->{$field} )
+		{
+			$select = $select . "<option selected value=\"$user->{id}\">$user->{display_name}</option>"; 
+		}
+		elsif( $user->{active} )
+		{
+			$select = $select . "<option value=\"$user->{id}\">$user->{display_name}</option>"; 
+		}
+	}
+
+	$select = $select . "</select>";
+
+	return $select;
+}
+
+sub getCheckBox
+{
+	my $field = shift;
+	my $ds = shift;
+	my $checked = "";
+	$checked = "checked" if( $ds->{status}->{$field} );
+
+	return "<input type=checkbox name=$field $checked>";
+}
+
+sub getButtons
+{
+	my $mode = shift;
+	if( $mode eq "add" )
+	{
+		return cr( "<input type=submit name=action value=\"Add Dataset\" onClick=\"checkEmail( this.form )\">",
+							 "<input type=submit name=action value=\"Cancel\">" );
+	}
+	else
+	{
+		return cr( "<input type=submit name=action value=\"Update\" onClick=\"checkEmail( this.form )\">",
+							 "<input type=submit name=action value=\"Add Dataset\" onClick=\"checkEmail( this.form )\">",
+							 "<input type=submit name=action value=\"Delete\">",
+							 "<input type=submit name=action value=\"Cancel\">" );
+	}
+}
+
+sub getNextStormId
+{
+	my $project = shift;
+
+	my $dbh = McDDB::connect();
+
+	my $sql = "SELECT MAX(storm_id) FROM dataset WHERE storm_id like \'$project->{storm_id_prefix}.%\'";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	
+	my @row = $sth->fetchrow();
+	my $max = $project->{storm_id_prefix} . ".001";
+
+	if( $row[0] )
+	{
+		$max = $row[0];
+		$max = $max * 1000;
+		$max++;
+		$max = $max / 1000;
+	}
+	
+	return sprintf( "%.3f", $max );
+}
+
+1;

@@ -1,0 +1,132 @@
+#! /usr/bin/perl -w 
+
+# NOTE: This is no longer in use.  The State.pm module and the getScriptName
+#  function takes care of this type of thing.  The controller made more
+#  sense by I got rid of it in an effort to speed things up.
+
+##Module-----------------------------------------------------------------------
+# <p><font color=red size=+1><b>Depricated: </font></b>This script is no 
+#  longer in use.  It's functionality has essentially been replaced with 
+#  the State.pm module's getScriptName() function.
+# </p>
+#
+# <p>The controller determines (from the State)  which view or edit form to 
+#  display to the the user.  The controller first determines if the user has
+#  requested an edit, edit processing, or simply a view.  The associated
+#  file is 'required' and the function called to display the needed html.
+#  All requests by the user are sent through the controller which, with the
+#  State class, performs all the needed control flow allowing the views
+#  to concentrate on rendering the needed html.</p>
+#
+# @author Dan Sullivan
+#
+##Module-----------------------------------------------------------------------
+
+
+use strict; 
+use CGI;
+use lib "lib"; 
+use State;
+use Utils;
+
+require "menu";
+
+my $state = State->new();
+my $cgi = CGI->new();
+
+$state->setFromParams( $cgi );
+
+if( defined( $state->{edit} ) )
+{
+	if( $state->{edit} == $EPROJECT_NOTES )
+	{
+		require "./edit_proj_notes";
+		edit_proj_notes( $state, $cgi );
+	}
+	elsif( $state->{edit} == $EPRODUCT )
+	{
+		require "./edit_product";
+		edit_product( $state, $cgi );
+	}
+	elsif( $state->{edit} == $EDATASET_ADMIN )
+	{
+		require "./edit_ds_admin";
+		edit_ds_admin( $state, $cgi );
+	}
+	elsif( $state->{edit} == $EDATASET_STATUS )
+	{
+		require "./edit_ds_status";
+		edit_ds_status( $state, $cgi );
+	}
+	else
+	{
+		die( "Edit mode not valid!" );
+	}
+}
+elsif( defined( $state->{proc_edit} ) )
+{
+	if( $state->{proc_edit} == $EPROJECT_NOTES )
+	{
+		require "./proc_proj_notes";
+		proc_proj_notes( $state, $cgi );
+	}
+	elsif( $state->{proc_edit} == $EPRODUCT )
+	{
+		require "./proc_product";
+		proc_product( $state, $cgi );
+	}
+	elsif( $state->{proc_edit} == $EEXTRACTION )
+	{
+		require "./proc_extraction";
+		proc_extraction( $state, $cgi );
+	}
+	elsif( $state->{proc_edit} == $EDATASET_ADMIN )
+	{
+		require "./proc_ds_admin";
+		proc_ds_admin( $state, $cgi );
+	}
+	elsif( $state->{proc_edit} == $EDATASET_STATUS )
+	{
+		require "./proc_ds_status";
+		proc_ds_status( $state, $cgi );
+	}
+	else
+	{
+		die( "Proc Edit mode not valid!" );
+	}
+}
+elsif( !defined( $state->{project} ) )
+{
+	require "./project_list";
+	project_list( $state, $cgi );
+}
+elsif( $state->{view} == $PROJECT )
+{
+	require "project_view";
+	project_view( $state, $cgi );
+}
+elsif( $state->{view} == $PRODUCT )
+{
+	require "product_view";
+	product_view( $state, $cgi );
+}
+elsif( $state->{view} == $DATASET )
+{
+	require "dataset_view";
+	dataset_view( $state, $cgi );
+}
+elsif( $state->{view} == $USER )
+{
+	require "user_view";
+	user_view( $state, $cgi );
+}
+elsif( $state->{view} == $THREAD )
+{
+	require "thread_view";
+	thread_view( $state, $cgi );
+}
+else
+{
+	die( "State is not valid." );	
+}
+

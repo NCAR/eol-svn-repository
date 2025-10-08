@@ -1,0 +1,23 @@
+HOST=sferic-dev.eol.ucar.edu
+
+####################################################
+# If you make a modification to this crontab,
+# PLEASE indicate what project it is for and who the
+# responsible party is, and include your initials.
+#
+# Also, the crontab is in subversion at
+# http://svn/svn/dmg/ingest/crontab
+# If you make significant changes, please upload a copy
+# to svn.
+#
+# Thank you!
+####################################################
+
+# Moved from sferic for testing of automount issue JAA 12/16/2011
+# Moved back to sferic 1/17/2012 JAA
+#00 16 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_USPLN_lightning.sh
+
+# Moved from sferic for testing of automount issue JAA 12/16/2011
+# Moved back to sferic 1/17/2012 JAA
+# Was /ingest/ingest/pacs/fulldisk_backtrack
+#00 18 * * * /h/eol/dmg/HPSS_cronjobs/PACS_fulldisk_backtrack.sh

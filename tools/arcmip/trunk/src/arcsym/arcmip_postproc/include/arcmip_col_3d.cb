@@ -1,0 +1,19 @@
+c---------------------------------------------------------------------
+c ARCSyM atmospheric 3d variables (SHEBA column)
+      real *4 u_mod_col(ic,jc,nprs,mt), v_mod_col(ic,jc,nprs,mt),
+     +        u_col(ic,jc,nprs,mt), v_col(ic,jc,nprs,mt),
+     +        w_col(ic,jc,nprs,mt), t_col(ic,jc,nprs,mt),
+     +        z_col(ic,jc,nprs,mt), rh_col(ic,jc,nprs,mt),
+     +        qv_col(ic,jc,nprs,mt), spechum_col(ic,jc,nprs,mt),
+     +        cld_col(ic,jc,nprs,mt), ice_col(ic,jc,nprs,mt),
+     +        cld_frac_col(ic,jc,nprs,mt), adv_t_col(ic,jc,nprs,mt),
+     +        adv_spechum_col(ic,jc,nprs,mt), adv_cld_col(ic,jc,nprs,mt),
+     +        adv_ice_col(ic,jc,nprs,mt)
+      common /arcmip_col_3d/ u_mod_col, v_mod_col, u_col,
+     +                       v_col, w_col, t_col,
+     +                       z_col, rh_col, qv_col,
+     +                       spechum_col, cld_col, ice_col,
+     +                       cld_frac_col, adv_t_col,
+     +                       adv_spechum_col, adv_cld_col,
+     +                       adv_ice_col
+c---------------------------------------------------------------------

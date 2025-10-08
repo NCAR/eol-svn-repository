@@ -1,0 +1,96 @@
+#! /usr/bin/perl -T -w
+
+##Module--------------------------------------------------------------------
+# <p>The <code>Listing</code> module is a <code>CGI</code> module that displays
+# the list of administrative tools and the list of active employees from the 
+# <code>EmployeeList</code>.</p>
+#
+# @author Joel Clawson
+##Module--------------------------------------------------------------------
+package Listing;
+use strict;
+use lib ".";
+use EmployeeList;
+use CGI qw(:standard :html3);
+our @ISA = ("CGI");
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+&main();
+
+##---------------------------------------------------------------------------
+# @signature void main()
+# <p>Create the listing page.</p>
+##---------------------------------------------------------------------------
+sub main() {
+  my $self = Listing->new();
+  $self->{"emp_dat"} = EmployeeList->new();
+
+  print($self->header());
+  print("<html>\n");
+  print("<head>\n<script type=\"text/javascript\" src=\"/travel/javascript/travel.js\"></script>\n</head>\n");
+
+  print($self->generateListing());
+
+  print("</html>\n");
+}
+
+##---------------------------------------------------------------------------
+# @signature String generateListing()
+# <p>Create the HTML containing the list of employees and administrative 
+# tools.</p>
+# @output $output The HTML containing the web page.
+##---------------------------------------------------------------------------
+sub generateListing {
+  my $self = shift;
+  my $output = "<body>\n";
+
+  # Create the administrative tool list
+  $output .= "<table align=left width=100%>\n";
+  $output .= "<tr><td><h2>Administration</h2></td></tr>\n";
+  $output .= "<tr><td><a href=\"javascript:openWin('travel_form');\"><font color=black><b>Add New Travel Information</b></font></a></td></tr>\n";
+  $output .= "<tr><td>&nbsp;</td></tr>\n";
+  $output .= "<tr><td><a href=\"javascript:openWin('employee_form');\"><font color=black><b>Add New Employee</b></font></a></td></tr>\n";
+  $output .= "<tr><td><a href=\"javascript:openWin('edit_employee_selector');\"><font color=black><b>Edit Employee</b></font></a></td></tr>\n";
+  $output .= "<tr><td>&nbsp;</td></tr>\n";
+  $output .= "<tr><td><a href=\"javascript:openWin('archive_form');\"><font color=black><b>Archive Data</b></font></a></td></tr>\n";
+
+  $output .= "<tr><td>&nbsp;</td></tr>\n";
+  $output .= "<tr><td><hr width=100%></td></tr>\n";
+
+
+  # Create the list of employees
+  $output .= "<tr><td><h2>Travel Info</h2></td></tr>\n";
+  foreach my $employee ($self->getEmployees()) {
+    (my $lname, my $fname, my $id) = split(' ', $employee);
+    $output .= "<tr><td>";
+    $output .= "<a href=\"individual_travel?id=$id\"";
+    $output .= " target=travel_disp>";
+    $output .= "<b><font color=".$self->{"emp_dat"}->getColor($id).">";
+    $output .= sprintf("%s %s (%s)</b>", $lname, $fname, $id);
+    $output .= "</a></td></tr>\n";
+  }
+  $output .= "</table>\n\n</body>\n";
+
+  return $output;
+}
+
+##---------------------------------------------------------------------------
+# @signature String[] getEmployees()
+# <p>Get the list of active employees.</p>
+# @output String[] The list of employees.
+##---------------------------------------------------------------------------
+sub getEmployees {
+  my $self = shift;
+  my @tmp = ();
+ 
+  foreach my $id ($self->{"emp_dat"}->employee_list()) {
+    push(@tmp, sprintf("%s %s %s", $self->{"emp_dat"}->getLastName($id),
+                       $self->{"emp_dat"}->getFirstName($id), $id));
+  }
+
+  return (sort(@tmp));
+}
+
+
+

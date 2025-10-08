@@ -1,0 +1,155 @@
+NAME Phoenix, Arizona SRP PRELIMINARY Raw Format Rawinsonde Data
+
+1.0 General Description
+
+This data set includes 369 high vertical resolution (5-sec) soundings from 
+the Phoenix, Arizona sounding site (WMO 74626) from 2 June to 24 September 
+2004.  This station is located at 33.45 North latitude and 111.95 West longitude
+and 379 m elevation.  These soundings were provided by the Salt River Project 
+(SRP).  During the period from 10 June to 6 July 2004 Phoenix released two
+soundings per day at 0000 and 1200 UTC.  For the period from 7 July to 29 August 
+2004 Phoenix released between 4 and 6 soundings per day.  After 29 August Phoenix
+released 3 or 4 soundings per day.
+
+These data are PRELIMINARY and are in their raw format.  The University 
+Corporation for Atmospheric Research/Joint Office for Science Support 
+(UCAR/JOSS) has conducted no processing or quality control on these data.
+
+The SRP home page can be found here:
+http://www.srpnet.com/
+
+
+1.1 Data Set Contact
+
+Jose Meitin
+UCAR/JOSS
+meitin@ucar.edu
+
+
+2.0  Detailed Data Description
+
+2.1  Detailed Format Description
+     
+These soundings are PRELIMINARY and in their raw format.  The format is a
+Vaisala variant format.
+
+The beginning few lines of each file include a varying set of header
+records.  At various times these header records include the version
+of software used, the station name and WMO number and location, the 
+radiosonde serial number, and/or other information.
+
+After the header section, there is a header line that defines the 
+parameters in each data column and then another header line that
+defines the units used for each parameter.
+
+The data columns are
+
+Time:  time since release in minutes and seconds
+AscRate: Ascent rate in m/s
+Hgt/MSL: Height in m
+Pressure: pressure in hPa
+Temp: temperature in degrees C
+RH: relative humidity in %
+Dewp: Dew Point in degrees C
+Dir: Wind direction in degrees
+Speed: Wind speed in m/s
+MixR: Mixing Ratio in g/kg
+PEPT: Pseudo-Equivalent Potential Temperature in degrees Kelvin
+Rng: Range in meters.
+
+Then there are data records every five seconds to the end of the data
+collection.
+
+The final section of the file includes the Global Telecommunications
+System (GTS) formatted TTAA, TTBB, TTCC, TTDD, PPAA, PPBB, PPCC and PPDD
+messages for that sounding.  Also, the same information is decoded into
+a columnar ASCII form.
+
+2.2  Sample Data
+
+The following are sample records of the NAME San Jose, Costa Rica data
+in their raw format.
+
+2.2.1 Header Record Sample
+
+The exact set of header records vary from sounding to sounding.  Here
+is a sample:
+
+Start Up Date 22 JUL 04  5:13 UTC
+
+System test passed  -No errors found
+
+
+Sounding program REV 8.34 using Loran-C
+
+Station  : 74626 SRP/PSR
+Location : 33.45 N 111.95 W    379 m
+
+RS-number: 347200109
+
+
+
+Loran-C chain 1:  9610
+Loran-C chain 2:  8970
+
+Phase fitting length is  60 s from   0 min to  10 min
+Phase fitting length is 120 s from  10 min to  45 min
+Phase fitting length is 240 s from  45 min to 120 min
+
+Started at:      22 JUL 04  5:34 UTC
+
+2.2.2 High Resolution Data Record Sample
+
+   Time AscRate Hgt/MSL Pressure   Temp  RH   Dewp  Dir Speed  MixR     PEPT Comp Rng
+ min  s     m/s       m      hPa   degC   %   degC  deg   m/s  g/kg        K        m
+
+   0  0     0.0     379    961.7   35.8  22   10.8  260   4.6   8.4    333.6        0
+   0  5     6.0     410    958.4   37.7  21   11.7  257   6.4   9.0    337.2        0
+   0 10     4.7     426    956.7   37.8  20   11.1  257   7.1   8.6    336.5      100
+   0 15     4.2     441    955.1   38.0  20   11.3  257   7.6   8.8    337.2      100
+   0 20     4.3     466    952.5   37.8  20   11.1  256   8.2   8.6    337.1      200
+
+
+2.2.3 GTS Data Record Sample
+
+These are found at the end of each data file.
+
+040722 06:00
+
+74626 TTAA 72061 74626
+99962 35875 26009 00020 ///// ///// 92734 36276 25521
+85496 29470 27020 70180 14463 34009 50591 05971 16509
+40762 16368 20005 30972 32908 22022 25098 407// 24042
+20246 529// 22526 15426 663// 21025 10665 693// 12008
+88999
+77999=
+
+2.2.4 GTS Decoded Record Sample
+
+  Time   Hght  Press  Temp  Hum   Td
+ min  s   gpm   hPa     C    %     C
+
+   0  0   379  961.7  35.8  22   10.8 T U
+   0 14   437  955.6  38.0  20   11.2 T
+   9 26  2836  728.9  17.7  34    1.7   U
+  14 52  4208  618.6   4.9  77    1.2 T U
+  15  2  4251  615.3   4.6  80    1.5   U
+  18 44  5111  553.2  -1.6  77   -5.1   U
+  20  4  5454  529.8  -4.0  59  -10.8 T
+  21 16  5772  508.9  -4.7  20  -24.3 T U
+  22 38  6131  486.0  -7.3  16  -28.9   U
+  27  6  7206  422.6 -14.2  17  -34.0   U
+  27 24  7271  419.0 -14.5  36  -26.3   U
+
+2.3 File Naming Conventions
+
+These data files are named using the following conventions:
+
+yymmddhh.txt
+
+where yy is the two digit year (e.g. 04 = 2004)
+      mm is the two digit month (e.g. 07 = July)
+      dd is the two digit day of month
+      hh is the nominal hour of release in UTC time
+
+The txt can be either upper or lower case.

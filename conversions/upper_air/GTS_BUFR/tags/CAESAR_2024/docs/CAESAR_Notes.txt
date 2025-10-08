@@ -1,0 +1,110 @@
+Aug/Sep 2024 - LEC
+---------------------------------------------
+Notes on processing CAESAR Sounding Datasets:
+---------------------------------------------
+Code from SVN at 
+http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FGTS_BUFR%2Ftrunk%2F&#a453a11ca454d2c42b2654b96bab88549
+
+Work Location: /net/work/Projects/CAESAR/data_processing/upper_air/radiosonde/GTS_BUFR
+
+From Online: https://www.umr-cnrm.fr/dbfastex/instruments/rsc_dat.html
+------------
+--------------------------------------------------------------------------------------
+WMO code	Country and Site	Lat	Lon	Alt (m)	Number of Soundings  Last Update
+--------------------------------------------------------------------------------------
+01001	NORWAY:Jan Mayen	70.93	-8.67	9	117	970407   *** CAESAR Site - Yes data in EN files
+01004	NORWAY:Ny-Alesund II	78.92	11.93	8	55	970407   *** CAESAR Site - Yes - Only IUK station
+01028	NORWAY:Bjornoya	        74.52	19.02	20	115	970407   *** CAESAR Site - Yes data in EN files
+01010   NORWAY: Andenes-Andoya, Norway  - Not on list found             *** CAESAR Site - Yes data in EN files
+----------------------------------------------------------------------------------------
+01152	NORWAY:Bodo Vi	        67.27	14.37	20	117	970407   Not Included in CAESAR - No data in EN files
+01241	NORWAY:Orland Iii	63.70	9.60	10	118	970407   Not Included in CAESAR - Yes data in EN files
+01384	NORWAY:Oslo Gardermoen	60.20	11.08	201	66	970407   Not Included in CAESAR - No data in EN files
+01400	NORWAY:Ekofisk	        56.53	3.22	46	102	970407   Not Included in CAESAR - Yes data in EN files
+01415	NORWAY:Stavanger Sola	58.88	5.63	14	118	970407   Not Included in CAESAR - Yes data in EN files
+----------------------------------------------------------------------------------------
+
+
+From Online: https://www.unidata.ucar.edu/support/help/MailArchives/gempak/msg03851.html
+(Complete METAR Table) from Unidata:
+----------------------------------------------------------------
+ENAL      01210 ALESUND/VIGRA                    -- NO  6257    612    22
+ENAN      01010 ANDOYA/ANDENES(AFB)              -- NO  6930   1615    14
+
+
+----------------------------------------------------------------
+From Online: http://www.moratech.com/aviation/metar-stations.txt
+----------------------------------------------------------------
+ CD = 2 letter state (province) abbreviation                               
+ STATION = 16 character station long name                                  
+ ICAO = 4-character international id                                       
+ IATA = 3-character (FAA) id                                               
+ SYNOP = 5-digit international synoptic number                             
+ LAT = Latitude (degrees minutes)                                          
+ LON = Longitude (degree minutes)                                          
+ ELEV = Station elevation (meters)                                         
+ M = METAR reporting station.   Also Z=obsolete? site                      
+ N = NEXRAD (WSR-88D) Radar site                                           
+ V = Aviation-specific flag (V=AIRMET/SIGMET end point, A=ARTCC T=TAF U=T+V)
+ U = Upper air (rawinsonde=X) or Wind Profiler (W) site                    
+ A = Auto (A=ASOS, W=AWOS, M=Meso, H=Human, G=Augmented) (H/G not yet impl.)
+ C = Office type F=WFO/R=RFC/C=NCEP Center                                 
+ Digit that follows is a priority for plotting (0=highest)
+ Country code (2-char) is last column
+---------------------------------------------------------------------------------------------------
+Station          ICAO        SYNOP  Lat     Lon     Elev Metar                Country Code (Norway)
+---------------------------------------------------------------------------------------------------
+JAN MAYEN(NOR-NA ENJA        01001  70 55N  008 40W    9   X        X       7 NO
+NY-ALESUND II    ENAS        01004  78 55N  011 55E    8   X                7 NO
+BJORNOYA ISLAND  ENBJ        01028  74 31N  019 01E   14   X        X       7 NO
+ANDOYA/ANDENES(A ENAN        01010  69 17N  016 08E   14   X     T          6 NO
+
+
+--------------------------------------------------------------------------------------
+From Online: https://play.google.com/books/reader?id=nrB0ucYlfkkC&pg=GBS.RA1-PA9&hl=en
+Book: Guide to Standard Weather Summaries..../NAVAIR 50-1C-534
+--------------------------------------------------------------------------------------
+01001   NORWAY:Jan Mayen Island  "128"?
+01004   NORWAY:Ny-Alesund II       (01210 Alesund-Vigra = "71")
+01028   NORWAY:Bjornoya          "46"
+01009   NORWAY: Andenes          "23"
+01010   Norway: Andoya           "29"
+
+
+-----------------------------
+Email from SL on 28 May 2024:
+-----------------------------
+We will be developing native and 5mb resolution sounding composites for CAESAR.
+
+This will only consist of a few BUFR stations and the C-130 dropsonde data.
+
+The BUFR soundings to be included are all to be found in the ENMI*bufr files:
+
+01001 Jan Mayen Norway
+01004 Ny-Alesund, Svalbard, Norway
+01010 Andenes, Andoya, Norway
+01028 Bjornoya Norway                   
+
+We will typically use only the *ius_sounding.bufr sounding data. The *iuk_sounding.bufr sounding should be used only if there isn't a corresponding ius sounding at that time.
+
+The BUFR files are those from our archived dataset:
+/net/archive/data/operational/upperair/radiosonde/GTS_BUFR
+
+The time period to be processed is: 22 February to 5 April 2024.
+
+The C-130 dropsonde data have not been finalized yet.
+
+The CAESAR account is:
+Account Key: A7433881 DMS CAESAR FC & DM
+
+
+----------------------------------------------
+On the C130 Dropsondes from SL on 4 June 2024:
+----------------------------------------------
+The last time we processed EOL dropsonde data was the SWEX CIRPAS Twin Otter data. 
+Even though it's not an NCAR plane it went through the ISF process and it's in NetCDF format, 
+so it might be the best starting point since I think the most recent before that was SOCRATES 
+but the data then were still in the EOL ASCII format.
+
+
+--end of file---

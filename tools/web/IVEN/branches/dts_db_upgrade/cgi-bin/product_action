@@ -1,0 +1,35 @@
+#! /usr/bin/perl -w
+
+package ProductActionCGI;
+use strict;
+use lib ".";
+use lib "lib";
+use ActionCGI;
+use Composite;
+use Group;
+our @ISA = ("ActionCGI");
+
+&main();
+
+sub main {
+    my $self = ProductActionCGI->new();
+    $self->buildPage("Product Action");
+}
+
+sub processParams {
+    my ($self) = @_;
+    my $project = $self->getProject();
+
+    my $product = $self->param("type") eq "Composite" ? Composite->new() : Group->new();
+    if ($product->isGroup()) {
+	$product->setName($self->param("group_name"));
+    } else {
+	$product->setId($self->param("dataset_id"));
+	$product->setName($self->param("dataset_name"));
+    }
+    $product->setStatusId($self->param("status"));
+    $product->setProject($project);
+    $product->setNote($self->param("note_text"));
+
+    $self->insert($product);
+}

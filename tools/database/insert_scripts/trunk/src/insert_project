@@ -1,0 +1,438 @@
+#! /usr/bin/perl -w
+##-----------------------------------------------------------------------------
+# Script to insert projects into zith9 with the help of setup
+# files to facilitate automated data loading.
+#
+# Janine Aquino 6/18/2012
+#
+# Written to grab fields directly from mysql tables rather than hardcode
+# them, EXCEPT:
+# # WARNING #
+# This assumes that the table project_xlink contains the fields
+# project_id and xlink_id and the table xlink contains the field id
+# whick corresponds to xlink_id.
+#
+# Used g2n conversion scripts written by Sean Stroble as a starting point,
+# then made extensive modification.
+#
+# Updated 3/25/2021 for changes in database authentication protocols. Also
+# cleaned up formatting and added comments.
+#
+# Updated 8/20/2021 to separate inserting projects and datasets into two
+# different scripts
+##-----------------------------------------------------------------------------
+my $libdir;
+my $scriptsdir;
+BEGIN
+{
+    $libdir = $ENV{"MYSQL_DIR"};
+    if (!defined($libdir)) {
+       $libdir = "/net/work/lib/perl/mysql";
+    }
+    $scriptsdir = $ENV{"SCRIPTS_DIR"};
+    if (!defined($scriptsdir)) {
+       $scriptsdir = "/net/work/bin/scripts/insert";
+    }
+}
+
+use strict;
+# Use deployed copy of perl mysql scripts to work with production database;
+use lib $libdir;
+use MySqlDatabase;
+use lib $scriptsdir;
+use ReadConfig;
+my $config = ReadConfig->new();
+
+my $msg = "";  # String to contain error messages
+my $options = 0;
+my $project_file = 0;  # Name of YAML file with project info
+my $records_to_commit = 0;  # Flag to indicate we have inserted records.
+
+# Usage statement
+sub usage {
+    my @ARGV = shift;
+    print "Usage: $0 [-o] [-dev] add_project=proj \n";
+    print "\t -o \t Output the possible options for use in the setup files\n";
+    print "\t\t and exit. Not pretty, but informative...\n";
+    print "\t -dev \t For testing, commits to data.dev\n";
+    print "\t\t Example: \"insert_project -o add_project=proj.yml\"\n";
+    exit(1);
+}
+
+if ($#ARGV == -1) #no options, only program name
+{
+    usage(@ARGV);
+}
+
+print("This script should not be used because it requires setting\n");
+print("dataset_prefix_project and John says that should never be set\n");
+print("by a script. If ever decide to resurrect this script, note that\n");
+print("some of the functions are exact duplicates of those in\n");
+print("insert_dataset. Extract those to a common library.\n");
+exit(1);
+
+my $group = 'loaddata.py';  # Default group, production mode
+# Read in the command line args, and call subroutines to do the work
+foreach my $arg (@ARGV) {
+    if ( $arg eq "-o") {
+        # Don't do project loading, just print options for setup files
+        $options = 1;
+    }
+    elsif ( $arg eq "-dev") {
+        # Change group to development mode. Commit to data.dev
+        print "\nDEVELOPMENT MODE: Datasets will be loaded to data.dev\n\n";
+        $group = 'loaddata.py-dev';
+    }
+    elsif ($arg =~ /add_project=(.*)/) {
+        # Make sure YAML file exists
+        unless (-e $1) { die "$1 does not exist!\n"; }
+        $project_file = $1
+    } else {
+        # Catch invalid command line options
+        print "\n WARNING: Invalid command line option ".$arg."\n\n";
+        usage(@ARGV);
+        exit(1);
+    }
+}
+
+# Catch if user didn't set add_project
+if ($project_file eq 0 and not $options) {
+    print " Please set filename using add_project command\n";
+    print " line option\n\n";
+    usage(@ARGV);
+    exit(1);
+}
+
+# Connect to database
+my $database = MySqlDatabase->new(undef,undef,undef,'zith9',undef,undef,$group);
+$msg = $database->connect();
+if ($msg ne "") {
+    print "\n\n$msg";
+    exit(1);
+}
+
+# Add a new project.
+if ($options) {
+    print "\nPROJECT OPTIONS\n";
+    print   "-----------------\n";
+}
+
+if ($options or $project_file) {
+    $msg = addproject($database, $project_file, $options);
+    if ($msg ne "") {  # Catch errors
+        print "Message: $msg\n";
+        $database->rollback();
+        exit(1);
+    }
+}
+
+if (!$options) {
+    # Successfully inserted a project record
+    $records_to_commit = 1;
+}
+
+# If this was just an options request, close database and exit;
+if ($options) {
+    $database->rollback();
+    $database->disconnect();
+    exit(1);
+}
+
+if ($group eq 'loaddata.py') {
+    print "\n\n*** Commits are being made to PRODUCTION database ***\n";
+} elsif ($group eq 'loaddata.py-dev') {
+    print "\n\n*** Commits are being made to DEVELOPMENT database ***\n";
+} else {
+    # Should never get here, but catch it to be thorough...
+    print "\nWARNING: Unknown group $group. This script should only be\n";
+    print "\n    used with [loaddata.py] or [loaddata.py-dev] groups. Fix database auth\n";
+    print "\n    setting and rerun script.\n";
+    exit(1);
+}
+
+# If there are no errors, ask user to confirm commit changes to db.
+if ($records_to_commit) {
+    printf("Please review changes proposed above for accuracy.");
+    printf("\nTo commit changes, press Enter.\n");
+    printf("To cancel changes, enter any value and press Enter.\n\n");
+    printf(">> ");
+    my $result = <STDIN>;
+
+    if ($result =~ /^\s*$/) {
+        $database->commit()
+    } else {
+        print "User Selected to Cancel!\n";
+        $database->rollback();
+    }
+}
+
+
+$database->disconnect();
+
+# End of Main #
+##-----------------------------------------------------------------------------
+# @signature String addproject()
+# <p> Add a new project to the database.</p>
+#
+# @input $db Database name
+# @input $filename Name of YAML file
+# @input $options Flag to request printing of all fields in each table
+# @output $msg An error message
+##-----------------------------------------------------------------------------
+sub addproject {
+    my $db = shift;
+    my $filename = shift;
+    my $options = shift;
+    my $msg = "";
+
+    my @ATTR;
+    my @VAL;
+    if ($filename ne 0) {
+        # Read in the attributes and values from the YAML config file
+        $config->read_config_file($filename, \@ATTR, \@VAL);
+    }
+
+    my $table = "";
+    my @attr = ();
+    my @attribute = ();
+    my @value = ();
+
+    #Insert project, project_prefix
+    foreach $table ("project", "dataset_prefix_project") {
+        $msg = insert_record($database, $table, $options, \@ATTR, \@VAL);
+        if ($msg ne "") { return $msg; }  # Error occurred
+
+        #If we are just printing options, go to next table
+        if ($options) { next; }
+
+        if ($table eq "project") {get_project_id(\@ATTR, \@VAL);}
+
+    }
+
+    # Skip code from here down...
+    return "";
+
+    ## project_xlink logic has not been tested but is left here in case ##
+
+    # we ever want to get it working.
+    # Add xlinks to project where
+    # # WARNING #
+    # This assumes that the table project_xlink contains the fields
+    # project_id and xlink_id and the table xlink contains the field id
+    # whick corresponds to xlink_id.
+    $table = "project_xlink";
+    $msg = insert_record($database, $table, $options, \@ATTR, \@VAL);
+    if ($msg ne "") { return $msg; }  # Error occurred
+
+    #If we are just printing options, go to next table
+    if (!$options) {
+
+        @attr = ();
+        push @attr, "project_id";
+        my @attributetemp = ();
+        my @valuetemp = ();
+        my $where;
+        foreach (@attr) {
+            $a = $_;
+            for (my $i = 0; $i <= $#ATTR; $i++) {
+                if ($a eq $ATTR[$i]) {
+                    push @attributetemp, $ATTR[$i]; push @valuetemp, $VAL[$i];
+                }
+                if ($ATTR[$i] eq "add_xlink_where")
+                {
+                    $where = $VAL[$i];
+                }
+            }
+        }
+        print "Adding XLINKS WHERE $where\n";
+        if (defined $where && $where ne "") {
+            ($msg, my @data) = $database->selectAll("xlink","id",$where);
+            if ($msg ne "") { return $msg; }
+            foreach (@data) {
+                my @attribute = @attributetemp;
+                my @value = @valuetemp;
+                push @attribute, "xlink_id";
+                push @value, @{$_}[0];
+                print " xlink: @{$_}[0]\n";
+                print "INSERT INTO $table(" . join(',', @attribute) .
+                      ") VALUES(" . join(',', @value) . ")\n\n";
+                $msg .= $database->insert($table, join(',', @attribute),
+                                          join(',', @value));
+            }
+        }
+    }
+
+    return $msg;
+}
+##-----------------------------------------------------------------------------
+# @signature Void get_project_id
+#
+# <p>zith9 uses database-generated keys which are stored in the 'id' field.
+# Get id from project table.</p>
+#
+# @input @_ Variables passed to subroutine as array. First var is $_[0], etc
+# @input $_[0] keys from the dataset table
+# @input $_[1] values from the dataset table
+# @output @_ Modifies variables passed to subroutine as array.
+##-----------------------------------------------------------------------------
+sub get_project_id {
+    my $table = "project";
+    my $key = "name";
+    (my $msg, my $project_id) =
+        select_db_key($table, $key, \@{ $_[0] }, \@{ $_[1] });
+    if ($msg ne "") {
+        print "\n\n$msg";
+        exit(1);
+    }
+    # Add 'project_id' key to end of keys array
+    push @{ $_[0] }, "project_id";
+    # Add value associated with 'project_id' key to end of values array.
+    push @{ $_[1] }, $config->ProcAttr("project_id", $project_id);
+}
+##-----------------------------------------------------------------------------
+# @signature (String, String) select_db_key
+#
+# <p>Get id for a single record in a table. Use key/value arrays passed in
+# to identify desired record by matching key passed in and retrieving value.
+# SELECT id from $table where key = value</p>
+#
+# @input $table Database table to query
+# @input $key Key for which to return value
+# @input @_ Variables passed to subroutine as array.
+# @input $_[0] keys from the dataset table
+# @input $_[1] values from the dataset table
+# @output $msg  String containing error message from database command
+# @output $id[0] String containing value of id 
+##-----------------------------------------------------------------------------
+sub select_db_key {
+    my $table = shift;
+    my $key = shift;
+    my @ATTR = @{ $_[0] };
+    my @VAL = @{ $_[1] };
+    my $val;
+    my @attr = ();
+    push @attr, $key;  # Add key to a new array
+
+    foreach (@attr) {  # loop through keys, so just $key
+        $a = $_;
+        # Find $key in keys from table and get $value for this record.
+        for (my $i = 0; $i <= $#ATTR; $i++) {
+            if ($a eq $ATTR[$i]) { $val = $VAL[$i]; }
+        }
+    }
+    # Get 'id' from table for record where $key equals value retrieved from
+    # record array passed in to this function.
+    # "select 'id' from table where $key = $value"
+    my $tests = "$key = $val";
+    ($msg, my @id) = $database->select($table,"id",$tests);
+    if ($msg ne "") {
+        print "\n\n$msg";
+        exit(1);
+    }
+    if (not @id) {
+        print "Could not find id for ".$tests." in database table '".$table."'\n";
+        print "Are you sure ".$val." is defined in '".$table."'\n";
+        exit(1);
+    }
+
+    # Return record 'id' and any error messages
+    return ($msg, $id[0]);
+}
+##-----------------------------------------------------------------------------
+# @signature String insert_record
+#
+# Insert a record into a database table
+#
+# @input $database database name (zith9)
+# @input $table database table name
+# @input $options
+# @input @_ Variables passed to subroutine as array.
+# @input $_[0] keys from the dataset table
+# @input $_[1] values from the dataset table
+# @input $_[2] fields from the dataset table, retrieved if no YAML file given
+# @output
+##-----------------------------------------------------------------------------
+sub insert_record {
+    my $database = shift;
+    my $table = shift;
+    my $option = shift;
+    my @ATTR = @{ $_[0] };
+    my @VAL = @{ $_[1] };
+
+    my $msg= "";
+    my %results;
+    my @attribute = ();
+    my @value = ();
+
+    # Return all the fields (columns) from the table, in $results{"name"}
+    ($msg, %results) = $database->selectFull($table,'*');
+    if ($msg ne "") {
+        print "\n\n$msg";
+        exit(1);
+    }
+
+    # If user just wants to see fields in table, return the list here.
+    if ($option) {
+        print "$table\n";
+        foreach ( @{$results{"name"}} ) {print "\t".$_."\n";}
+        return $msg;
+    }
+
+    # Loop through the column names
+    foreach (@{$results{"name"}}) {
+        $a = $_;
+
+        # Loop through the fields in the record we are going to insert
+        for (my $i = 0; $i <= $#ATTR; $i++) {
+            # Loaddata adds a marker to identify database for some parameters.
+            # We want the codiac ones, so remove that here so they will match
+            # database fields. Note that fields with _dts will not match and
+            # not get used, by design.
+            $ATTR[$i] =~ s/_codiac$//;#, $ATTR[$i];
+
+            # Each table in the database contains a subset of the fields in
+            # our complete record. If our field matches a field (column) in
+            # the database, add it to the list of fields we will insert.
+            if ($a eq $ATTR[$i]) {
+                push @attribute, $ATTR[$i]; push @value, $VAL[$i];
+            }
+            #exceptions/inconsistencies
+            if ($a eq "project_name" && $ATTR[$i] eq "name") {
+                push @attribute, "project_name"; push @value, $VAL[$i];
+            }
+        }
+    }
+
+    # If we didn't match anything...
+    if (scalar(@attribute) == 0) {return "";}
+
+    # If we only found one parameter to insert to a table, it will be the
+    # dataset_id, and we don't have a complete entry, so bail.
+    if ((scalar(@attribute) == 1) && ($attribute[0] eq "dataset_id")) {
+        print "Skip $table: only dataset_id defined for $table\n";
+        return "";
+    }
+
+    # Let the user see the insert command we are about to send to the database,
+    # and output a user-friendly table of keys and values we are inserting.
+    # These output should be reviewed by the user before they approve the
+    # insertion.
+    print "INSERT INTO $table(" . join(',', @attribute) . ") VALUES(" .
+           join(',', @value) . ")\n";
+    print "\nNew $table entry:\n";
+    for (my $i = 0; $i < scalar(@attribute); $i++) {
+        print "\t".$attribute[$i].": ".$value[$i]."\n";
+    }
+    print "\n";
+
+    # Send the insert command to the database. Won't be official until the 
+    # user confirms and the script sends a commit.
+    $msg .= $database->insert($table,join(',', @attribute),join(',', @value));
+    if ($msg ne "") {
+        print "\n\n$msg";
+        exit(1);
+    }
+
+    return $msg;
+}
+##-----------------------------------------------------------------------------

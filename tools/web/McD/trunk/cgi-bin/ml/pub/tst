@@ -1,0 +1,11 @@
+
+my $num = 1;
+tst( \$num );
+print( $num, "\n" );
+sub tst
+{
+	my $ref = shift;
+
+	print( $$ref, "\n" );
+	$$ref = 2;
+}

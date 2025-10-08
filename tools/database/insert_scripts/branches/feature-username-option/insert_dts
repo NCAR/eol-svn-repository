@@ -1,0 +1,216 @@
+#! /usr/bin/perl -w
+
+##------------------------------------------------------------------------------
+# Script to insert datasets into dmg_dts (the DTS)  with the help of setup
+# files to facilitate automated data loading.
+# 
+# Janine Aquino 9/20/2012
+#
+##------------------------------------------------------------------------------
+my $libdir;
+my $scriptsdir;
+BEGIN
+{
+    $libdir = $ENV{"MYSQL_DIR"};
+    if (!defined($libdir)) {
+       $libdir = "/net/work/lib/perl/mysql";
+    }
+    $scriptsdir = $ENV{"SCRIPTS_DIR"};
+    if (!defined($scriptsdir)) {
+       $scriptsdir = "/net/work/bin/scripts/insert";
+    }
+}
+use strict;
+use POSIX qw(strftime);
+use lib $libdir;
+use MySqlDatabase;
+use lib $scriptsdir;
+use ReadConfig;
+my $config = ReadConfig->new();
+
+my $msg = "";
+our $options = undef;
+our @dts_options = ();
+
+# Usage statement
+sub usage {
+    my @ARGV = shift;
+    print "Usage: $0 [-o] add_dts=dts\n";
+    print "\t -o \t Output the possible options for use in the setup files.";
+    print "\n\t\t Not pretty, but informative...\n";
+    exit(1);
+}
+
+if ($#ARGV == -1) #no options, only program name
+{
+    usage(@ARGV);
+}
+
+# Connect to database
+my $database = MySqlDatabase->new("dts-update","gu3uz3","tsunami-dev.eol.ucar.edu","dmg_dts");
+
+$database->connect();
+
+# Read in the command line args, and call subroutines to do the work
+foreach my $arg (@ARGV) {
+    #print $arg."\n";
+       if ( $arg eq "-o") { 
+           # Don't do dataset loading, just print options for setup files
+	   $options = 1;
+       }
+       elsif ($arg =~ /add_dts=(.*)/) {
+	   	unless (-e $1) { die "$1 does not exist!\n"; }
+		#print "\nADD A NEW DATASET TO THE DTS\n";
+		#print   "----------------------------\n";
+		$msg = adddts($database, $1);
+		if ($msg ne "") {
+			print "Message: $msg\n";
+			$database->rollback();
+			$database->disconnect();
+			exit(1);
+		}
+	} else { 
+	    usage(@ARGV);
+	    exit(1);
+	}
+}
+
+if ($options) {
+    $database->rollback();
+    $database->disconnect();
+    exit(1);
+}
+
+# If there are no errors, ask user to confirm commit changes to db.
+if ($msg eq "") { 
+    printf("\n\nTo commit changes, press Enter.\n");
+    printf("To cancel changes, enter any value and press Enter.\n\n");
+    printf(">> ");
+    my $result = <STDIN>;
+    
+    if ($result =~ /^\s*$/) {
+	$database->commit() 
+    }
+    else { 
+	print "User Selected to Cancel!\n";
+	$database->rollback();
+    }
+}
+# If there are errors, let user know and don't commit changes.
+else {print "Message: $msg\n"; $database->rollback() }
+$database->disconnect();
+
+# End of Main #
+##-----------------------------------------------------------------------------
+sub adddts {
+        my $msg = "";	
+	my $db = shift;
+	my $filename = shift;
+
+	my @ATTR;
+	my @VAL;
+        $config->read_config_file($filename,\@ATTR,\@VAL);
+	#for (my $i = 0; $i <= $#ATTR; $i++) {
+	#    print $ATTR[$i]."=".$VAL[$i]."\n";
+	#}
+	#print "\n";
+
+
+	push @ATTR,"entry_date";
+	my $now_string = strftime "%Y-%m-%d %H:%M:%S", localtime;
+	push @VAL,"\"$now_string\"";
+
+	my $table = "";
+	my %results;
+	my @result;
+
+	#Insert dataset, Project Ref, Categories, Platforms, Options (Subset/Browse)
+	foreach $table ("dataset","dataset_project","dataset_approve","dataset_ingest","dataset_load", "note","dataset_note") {
+	    ($msg, %results) = $database->selectFull($table,'*');
+	    if ($options) {
+		push @dts_options, @{$results{"name"}};
+		print "$table\n";
+		foreach ( @{$results{"name"}} ) {print "\t".$_."\n";}
+	    } else {
+		$msg = insert_record($table, \@{$results{"name"}}, \@ATTR, \@VAL);
+		if ($msg ne "") { return $msg; }
+		if ($table eq "note") {
+		   print "Get the new note_id ";
+                   for (my $i = 0; $i < scalar(@ATTR); $i++) { 
+		       if ($ATTR[$i] eq "entry_date") {
+			   print "for entry_date = $VAL[$i]\n";
+		           ($msg, @result)=$database->select($table,"note_id","entry_date = $VAL[$i]");
+		           if ($msg ne "") { return $msg; }
+		       }
+                    }
+		    push @ATTR,"note_id";
+		    push @VAL,$result[0];
+		}
+	    }
+	}
+
+	return $msg;
+}
+##------------------------------------------------------------------------------
+# Insert a record into a database table
+sub insert_record {
+    my $table = shift;
+    my @attr = @{ $_[0] };
+    my @ATTR = @{ $_[1] };
+    my @VAL = @{ $_[2] };
+    my @attribute = ();
+    my @value = ();
+
+    #Loop over attribute from database table
+    foreach (@attr) {
+	$a = $_;
+	# Loop over attributes and values from input file
+	for (my $i = 0; $i <= $#ATTR; $i++) {
+
+	    #exceptions/inconsistencies
+	    # With change to YAML files, this section changes ZINC field
+	    # names to DTS field names. It can go away if ZINC and DTS are ever
+	    # merged.
+	    if ($a =~ /dataset_id/ && $ATTR[$i] eq "archive_ident") {
+		 # dataset_id in DTS corresponds to archive_ident in ZINC
+	         push @attribute, "dataset_id"; push @value, $VAL[$i];
+	    } elsif ($a eq "project_id" && $ATTR[$i] eq "name") {
+		 # project_id in DTS corresponds to name in ZINC
+	         push @attribute, "project_id"; push @value, $VAL[$i];
+	    } elsif ($a eq "name" && $ATTR[$i] eq "title") {
+		 # name in DTS corresponds to title in ZINC
+ 	         push @attribute, "name"; push @value, $VAL[$i];
+	    } else {
+	         if ($ATTR[$i] =~ /(.*)_dts/) {$ATTR[$i]=$1;}
+		 if ($table eq "dataset" && $ATTR[$i] eq "name") {
+		     # name holds PROJECT in ZINC and title in DTS
+		     # so remove name from array of fields and reassign as above
+		     print splice(@ATTR,$i,1)."\n";
+	  	     print splice(@VAL,$i,1)."\n";
+		     # After remove, back it up so we don't miss a field
+		     $i=$i-1;
+		 } else {
+		     # No exceptions/inconsistencies, so proceed normally
+		     if ($a eq $ATTR[$i]) { 
+		         push @attribute, $ATTR[$i]; push @value, $VAL[$i]; }
+		 }
+	    }
+	    # Obsolete inconsistency (I think)
+	    #if ($a eq "project_name" && $ATTR[$i] eq "name") {
+	    #         push @attribute, "project_name"; push @value, $VAL[$i];
+	    #}
+	}
+    }
+
+    $database->add_quotes_to_string($table,\@attribute,\@value);
+    
+    print "INSERT INTO $table(" . join(',', @attribute) . ") VALUES(" . join(',', @value) . ")\n";
+    print "\nNew $table entry:\n";
+    for (my $i = 0; $i < scalar(@attribute); $i++) { 
+	print "\t".$attribute[$i].": ".$value[$i]."\n"; 
+    }
+    print "\n";
+    $msg .= $database->insert($table,join(',', @attribute),join(',', @value));
+    if ($msg ne "") { return $msg; }
+}
+##------------------------------------------------------------------------------

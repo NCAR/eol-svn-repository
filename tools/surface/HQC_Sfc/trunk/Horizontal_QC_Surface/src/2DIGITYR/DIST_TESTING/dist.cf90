@@ -1,0 +1,265 @@
+#include <f90.h>
+
+void ll2xydrv_(plat_,plon_,x_,y_,orlat_,orlon_,angxax_)
+     Real *plat_;
+     Real *plon_;
+     Real *x_;
+     Real *y_;
+     Real *orlat_;
+     Real *orlon_;
+     Real *angxax_;
+{
+Real tmp1;
+Real tmp2;
+Real tmp3;
+auto Real swlat_;
+auto Real swlon_;
+
+extern void ll2xy_();
+
+auto Integer icross_;
+auto Real x1_;
+auto Real y1_;
+auto Real x2_;
+auto Integer inhem_;
+auto Integer iwhem_;
+auto Real deglat_;
+auto Real theta_;
+auto Real deglon_;
+auto Real xt_;
+auto Real y2_;
+auto Real yt_;
+
+static char FMT_10[] = "(/,5X,'+++ CANNOT HANDLE DUAL HEMISPHERE CROSSOVER ','+++')";
+icross_ = 0;
+
+if ((Real)sign_r((tmp2 = (float) 1.00 , &tmp2),& *orlat_)>(Real)sign_r((tmp3 = (float) 1.00 , &tmp3),& *plat_)) {
+
+icross_ = 1;
+}
+if ((Real)sign_r((tmp2 = (float) 1.00 , &tmp2),& *orlat_)<(Real)sign_r((tmp3 = (float) 1.00 , &tmp3),& *plat_)) {
+icross_ = 2;
+}
+if ((Real)sign_r((tmp2 = (float) 1.00 , &tmp2),& *orlon_)>(Real)sign_r((tmp3 = (float) 1.00 , &tmp3),& *plon_)) {
+if (icross_!=0) {
+f90_write(6,FMT_10,-1,(char*)0,0,0);
+f90_endwrite();
+stop((char*)0);
+} else {
+icross_ = 3;
+}
+
+
+} else if ((Real)sign_r((tmp2 = (float) 1.00 , &tmp2),& *orlon_)<(Real)sign_r((tmp3 = (float) 1.00 , &tmp3),& *plon_)) {
+if (icross_!=0) {
+f90_write(6,FMT_10,-1,(char*)0,0,0);
+f90_endwrite();
+stop((char*)0);
+} else {
+icross_ = 4;
+}
+}
+if ( *orlat_>(float) 0.00) {
+inhem_ = 1;
+} else {
+inhem_ = 0;
+}
+if ( *orlon_>(float) 0.00) {
+iwhem_ = 1;
+} else {
+iwhem_ = 0;
+}
+if (icross_==0) {
+deglat_ = ( *plat_>=(float)0 ? ( *plat_) : -(( *plat_)));
+deglon_ = ( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)));
+swlat_ = ( *orlat_>=(float)0 ? ( *orlat_) : -(( *orlat_)));
+swlon_ = ( *orlon_>=(float)0 ? ( *orlon_) : -(( *orlon_)));
+ll2xy_(&deglat_,&deglon_,x_,y_,&swlat_,&swlon_);
+if (inhem_==0) {
+ *y_ = -( *y_);
+}
+if (iwhem_==0) {
+ *x_ = -( *x_);
+}
+} else if (icross_==1) {
+deglat_ = (float) 9.99999974737875164e-05;
+deglon_ = ( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)));
+swlat_ = ( *orlat_>=(float)0 ? ( *orlat_) : -(( *orlat_)));
+swlon_ = ( *orlon_>=(float)0 ? ( *orlon_) : -(( *orlon_)));
+ll2xy_(&deglat_,&deglon_,&x1_,&y1_,&swlat_,&swlon_);
+if (iwhem_==0) {
+x1_ = -(x1_);
+}
+deglat_ = ( *plat_>=(float)0 ? ( *plat_) : -(( *plat_)));
+deglon_ = ( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)));
+swlat_ = (float) 9.99999974737875164e-05;
+swlon_ = ( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)));
+ll2xy_(&deglat_,&deglon_,&x2_,&y2_,&swlat_,&swlon_);
+ *y_ = -(((y1_>=(float)0 ? y1_ : -(y1_)) + (y2_>=(float)0 ? y2_ : -(y2_))));
+ *x_ = x1_;
+} else if (icross_==2) {
+deglat_ = (float) 9.99999974737875164e-05;
+deglon_ = ( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)));
+swlat_ = ( *orlat_>=(float)0 ? ( *orlat_) : -(( *orlat_)));
+swlon_ = ( *orlon_>=(float)0 ? ( *orlon_) : -(( *orlon_)));
+ll2xy_(&deglat_,&deglon_,&x1_,&y1_,&swlat_,&swlon_);
+if (iwhem_==0) {
+x1_ = -(x1_);
+}
+deglat_ = ( *plat_>=(float)0 ? ( *plat_) : -(( *plat_)));
+deglon_ = ( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)));
+swlat_ = (float) 9.99999974737875164e-05;
+swlon_ = ( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)));
+ll2xy_(&deglat_,&deglon_,&x2_,&y2_,&swlat_,&swlon_);
+ *y_ = ((y1_>=(float)0 ? y1_ : -(y1_)) + (y2_>=(float)0 ? y2_ : -(y2_)));
+ *x_ = x1_;
+} else if (icross_==3) {
+deglat_ = ( *plat_>=(float)0 ? ( *plat_) : -(( *plat_)));
+if (( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)))<=(float) 4.50000000000000000e+01) {
+deglon_ = (float) 9.99999974737875164e-05;
+} else if (( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)))>=(float) 1.35000000000000000e+02) {
+deglon_ = (float) 1.79999893188476562e+02;
+}
+swlat_ = ( *orlat_>=(float)0 ? ( *orlat_) : -(( *orlat_)));
+swlon_ = ( *orlon_>=(float)0 ? ( *orlon_) : -(( *orlon_)));
+ll2xy_(&deglat_,&deglon_,&x1_,&y1_,&swlat_,&swlon_);
+if (inhem_==0) {
+y1_ = -(y1_);
+}
+deglat_ = ( *plat_>=(float)0 ? ( *plat_) : -(( *plat_)));
+deglon_ = ( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)));
+swlat_ = ( *plat_>=(float)0 ? ( *plat_) : -(( *plat_)));
+if (( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)))<=(float) 4.50000000000000000e+01) {
+swlon_ = (float) 9.99999974737875164e-05;
+} else if (( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)))>=(float) 1.35000000000000000e+02) {
+swlon_ = (float) 1.79999893188476562e+02;
+}
+ll2xy_(&deglat_,&deglon_,&x2_,&y2_,&swlat_,&swlon_);
+ *y_ = y1_;
+ *x_ = ((x1_>=(float)0 ? x1_ : -(x1_)) + (x2_>=(float)0 ? x2_ : -(x2_)));
+} else if (icross_==4) {
+deglat_ = ( *plat_>=(float)0 ? ( *plat_) : -(( *plat_)));
+if (( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)))<=(float) 4.50000000000000000e+01) {
+deglon_ = (float) 9.99999974737875164e-05;
+} else if (( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)))>=(float) 1.35000000000000000e+02) {
+deglon_ = (float) 1.79999893188476562e+02;
+}
+swlat_ = ( *orlat_>=(float)0 ? ( *orlat_) : -(( *orlat_)));
+swlon_ = ( *orlon_>=(float)0 ? ( *orlon_) : -(( *orlon_)));
+ll2xy_(&deglat_,&deglon_,&x1_,&y1_,&swlat_,&swlon_);
+if (inhem_==0) {
+y1_ = -(y1_);
+}
+deglat_ = ( *plat_>=(float)0 ? ( *plat_) : -(( *plat_)));
+deglon_ = ( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)));
+swlat_ = ( *plat_>=(float)0 ? ( *plat_) : -(( *plat_)));
+if (( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)))<=(float) 4.50000000000000000e+01) {
+swlon_ = (float) 9.99999974737875164e-05;
+} else if (( *plon_>=(float)0 ? ( *plon_) : -(( *plon_)))>=(float) 1.35000000000000000e+02) {
+swlon_ = (float) 1.79999893188476562e+02;
+}
+ll2xy_(&deglat_,&deglon_,&x2_,&y2_,&swlat_,&swlon_);
+ *y_ = y1_;
+ *x_ = -(((x1_>=(float)0 ? x1_ : -(x1_)) + (x2_>=(float)0 ? x2_ : -(x2_))));
+}
+if ( *angxax_!=(float) 9.00000000000000000e+01) {
+theta_ = ( *angxax_ - (float) 9.00000000000000000e+01)*(float) 1.74532905220985413e-02;
+xt_ =  *x_;
+yt_ =  *y_;
+ASSIGNFLOAT(tmp2,r_cos_(&theta_));
+ASSIGNFLOAT(tmp3,r_sin_(&theta_));
+ *x_ = xt_*tmp2 - yt_*tmp3;
+ASSIGNFLOAT(tmp2,r_sin_(&theta_));
+ASSIGNFLOAT(tmp3,r_cos_(&theta_));
+ *y_ = xt_*tmp2 + yt_*tmp3;
+}
+return ;
+}
+void ll2xy_(deglat_,deglon_,x_,y_,swlat_,swlon_)
+     Real *deglat_;
+     Real *deglon_;
+     Real *x_;
+     Real *y_;
+     Real *swlat_;
+     Real *swlon_;
+{
+Real tmp1;
+Real tmp2;
+Real tmp3;
+Real tmp4;
+Real tmp5;
+auto Real cosn_;
+auto Real cblat_;
+auto Real sblat_;
+auto Real dlon_;
+auto Real s_;
+auto Real dlat_;
+auto Real cdlon_;
+auto Real alat_;
+auto Real aza_;
+auto Real sinn_;
+auto Real calat_;
+auto Real azb_;
+auto Real salat_;
+auto Real along_;
+auto Real blat_;
+auto Real blong_;
+ *x_ = (float) 0.00;
+ *y_ = (float) 0.00;
+alat_ =  *swlat_*(float) 1.74532905220985413e-02;
+ASSIGNFLOAT(tmp2,r_cos_(&alat_));
+calat_ = tmp2;
+ASSIGNFLOAT(tmp2,r_sin_(&alat_));
+salat_ = tmp2;
+tmp2 =  *swlon_*(float) 1.74532905220985413e-02;
+along_ = (tmp2>=(float)0 ? tmp2 : -(tmp2));
+blat_ =  *deglat_*(float) 1.74532905220985413e-02;
+blong_ = ( *deglon_>=(float)0 ? ( *deglon_) : -(( *deglon_)))*(float) 1.74532905220985413e-02;
+ASSIGNFLOAT(tmp2,r_cos_(&blat_));
+cblat_ = tmp2;
+ASSIGNFLOAT(tmp2,r_sin_(&blat_));
+sblat_ = tmp2;
+dlon_ = along_ - blong_;
+tmp2 =  *deglat_ -  *swlat_;
+dlat_ = (tmp2>=(float)0 ? tmp2 : -(tmp2))*(float) 1.74532905220985413e-02;
+if (dlat_<(float) 9.99999974737875164e-05 && (dlon_>=(float)0 ? dlon_ : -(dlon_))<(float) 9.99999974737875164e-05) {
+goto L_90;
+}
+ASSIGNFLOAT(tmp2,r_cos_(&dlon_));
+cdlon_ = tmp2;
+ASSIGNFLOAT(tmp3,r_sin_(&dlon_));
+ASSIGNFLOAT(tmp4,r_atan_((tmp2 = tmp3/(calat_*sblat_/cblat_ - salat_*cdlon_) , &tmp2)));
+aza_ = tmp4;
+ASSIGNFLOAT(tmp4,r_sin_((tmp3 = -(dlon_) , &tmp3)));
+ASSIGNFLOAT(tmp5,r_atan_((tmp2 = tmp4/(cblat_*salat_/calat_ - sblat_*cdlon_) , &tmp2)));
+azb_ = tmp5;
+if (blat_<alat_) {
+aza_ = aza_ + (float) 3.14159274101257324e+00;
+}
+if (alat_<blat_) {
+azb_ = azb_ + (float) 3.14159274101257324e+00;
+}
+if (aza_<0) {
+aza_ = aza_ + (float) 6.28318548202514648e+00;
+}
+if (azb_<0) {
+azb_ = azb_ + (float) 6.28318548202514648e+00;
+}
+sinn_ = dlat_;
+if (dlon_!=(float) 0.00) {
+ASSIGNFLOAT(tmp2,r_sin_(&dlon_));
+ASSIGNFLOAT(tmp4,r_sin_((tmp3 = (float) 1.57079637050628662e+00 - blat_ , &tmp3)));
+ASSIGNFLOAT(tmp5,r_sin_(&aza_));
+sinn_ = tmp2*tmp4/tmp5;
+}
+cosn_ = salat_*sblat_ + calat_*cblat_*cdlon_;
+ASSIGNFLOAT(tmp3,r_atan_((tmp2 = sinn_/cosn_ , &tmp2)));
+s_ = (float) 6.38012011718750000e+03*tmp3;
+ASSIGNFLOAT(tmp2,r_sin_(&aza_));
+ *x_ = s_*tmp2;
+ASSIGNFLOAT(tmp2,r_cos_(&aza_));
+ *y_ = s_*tmp2;
+L_90:
+;
+return ;
+}

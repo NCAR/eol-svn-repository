@@ -1,0 +1,213 @@
+#!/bin/perl -w
+
+# McD
+# --------------------------------------------------------------
+# list_table: displays all of the datasets ordered by title for
+#   the given project.  
+#
+# Expected Params:
+#  "project" - the project to display
+#  "hlight" - (optional) the dataset to hilight in yellow, used
+#    when the dataset has been updated and refreshing.
+#  "sleep" - (optional) if defined the script sleeps for 1 
+#    second to allow the proc_update script finish executing.
+#    Also used when editing a dataset.
+#    
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use Time::HiRes qw(sleep);
+
+use lib "lib";
+use Utils;
+use State;
+
+use lib "../mcd_lib";
+use Project;
+use ProjectDBA;
+use Category;
+use CategoryDBA;
+use MLDataset;
+use MLDatasetDBA;
+
+my $sleep = param( "sleep" );
+sleep( 1.00 ) if( $sleep );
+
+my $proj_dba = ProjectDBA->new();
+my $ds_dba = MLDatasetDBA->new();
+
+my $project = param( "project" );
+my $hlight = param( "hlight" );
+
+my $proj = $proj_dba->getFromDB( $project );
+
+$hlight = -1 if( !defined( $hlight ) );
+
+my $state = State->new( State::LIST_TABLE, $project );
+my $sort = param( "sort" );
+
+$sort = "dataset.title" if( !defined( $sort ) );
+$state->setSort( $sort );
+
+my @list = $ds_dba->getByProject( $project, [], $state->getSort() );
+
+$ds_dba->getDocUrls_array( \@list );
+
+my $count = @list;
+println( header( -expires=>'-1d') );
+
+println( "<html><head><title>JOSS ML Editor</title></head>" );
+println( $css );
+println( $jscript );
+println( "<body bgcolor=#e9e9e9 link=#000066 alink=#000066 vlink=#000066 text=black>" );
+println( "<br><br>" );
+println( "<center><table border=0 cellpadding=3 cellspacing=1 width=97%>" );
+
+println( "<tr><td colspan=6 bgcolor=#336699 id=\"path_item\">" );
+	println( &nbsp(2), "<font color=white size=+1><b>Master List: $proj->{name}" );
+println( "</td></tr>" );
+
+showTableHeading();
+
+showTable( @list );
+
+println( "<tr><td colspan=6 bgcolor=#336699><font color=white><b>$count Datasets</td></tr>" );
+println( "</table>" );
+println( "</body></html>" );
+
+sub showTable
+{
+	my @list = @_;
+	my $readme = "http://www.joss.ucar.edu/master_list/readme.gif";
+
+	foreach my $ds (@list)
+	{
+		my $bgcolor = ( $ds->{hide} )? "#B0B0B0" : "white";
+		#$bgcolor = ( $ds->{id} == $hlight )? "#FFFFCC" : "white";
+		$bgcolor = "#FFFFCC" if ( $ds->{id} == $hlight );
+
+		println( "<tr bgcolor=$bgcolor onmouseover=\"javascript: style.backgroundColor=\'#ebebf5\'\" onmouseout=\"javascript: style.backgroundColor=\'$bgcolor\'\">" );
+		#println( "<tr bgcolor=$bgcolor>" );
+
+			my $edit_url = "edit_fields?mode=update&dataset=$ds->{id}";
+			$edit_url = $edit_url . $state->getUrlParams();
+
+			my $url = $ds->{remote_url};
+			if( (!$url || $url eq "") && $ds->{storm_id} )
+			{
+				$url = "http://www.joss.ucar.edu/cgi-bin/codiac/dss?$ds->{storm_id}"; 
+			}	
+			
+			my $status = getStatus( $ds );
+	
+			println( "<td nowrap bgcolor=#e9e9e9>$status</td>" );
+
+			println( "<td width=75% id=\"listing_link\">" );
+				if( defined( $url ) && $url ne "" )
+				{
+					println( "<a href=$url target=_blank>$ds->{title}</a>" );
+				}
+				else
+				{
+					println( "$ds->{title}" );
+				}
+			println( "</td>" );
+
+			println( "<td nowrap align=center width=10%>" );
+				if( $ds->{status}->{in_progress} )
+				{ println( "<font color=red size=-1 face=Verdana>In Progress</font>" ); }
+				elsif( $ds->{status}->{updated} )
+				{ 
+					#println( "<font color=red>Updated</font>" ); 
+					println( "<img src=$img_src/updated.gif>" );
+					println( "<br>", $ds->{date} ) if( $ds->{date} ne "0000-00-00" );
+				}
+				elsif( $ds->{status}->{new} )
+				{ 
+					#println( "<font color=red>New</font>" ); 
+					println( "<img src=$img_src/new.gif>" );
+					println( "<br>", $ds->{date} ) if( $ds->{date} ne "0000-00-00" );
+				}
+				elsif( $ds->{date} ne "0000-00-00" )
+				{ println( "$ds->{date}" ); }
+				else
+				{ println( "&nbsp;" ); }
+			println( "</td>" );
+
+			println( "<td nowrap align=center id=\"listing_link\" width=10%>" );
+				if( defined( $ds->{doc_url} ) && $ds->{doc_url} ne "" )
+				{
+					println( "<a href=$ds->{doc_url} target=_blank><font size=-1>documentation</a>" );
+				}
+				else
+				{
+					println( "&nbsp;" );
+				}
+			println( "</td>" );
+
+			println( "<td align=center bgcolor=#e9e9e9 id=\"listing_link\" nowrap>" );
+				if( defined( $ds->{storm_id} ) )
+				{
+					println( "<a href=http://www.joss.ucar.edu/cgi-bin/codiac/dss?$ds->{storm_id} target=_blank>$ds->{storm_id}</a>" );
+				}
+				else
+				{
+					println( "&nbsp;" );
+				}
+			println ( "</td>" );
+
+			println( "<td bgcolor=#e9e9e9 width=5% id=\"edit_link\" align=center>", 
+							 "<a href=\"javascript: editWindow( \'$edit_url\' )\">",
+							 "<img src=$img_src/edit.gif border=0 alt=\"Edit Dataset\" width=21 height=15>" );
+		println( "</tr>" );
+	}
+}
+
+sub getStatus
+{
+	my $ds = shift;
+
+	my $stat = "<table border=0 cellpadding=0 cellspacing=0 width=100%>";
+	$stat = $stat . "<tr>";
+
+	if( $ds->{remote_url} && $ds->{remote_url} ne "" )
+	{
+		$stat = $stat . "<td><img src=$img_src/rl.gif alt=\"Remote Link\" width=20 height=15></td>";
+	}
+	else
+	{
+		$stat = $stat . "<td><img src=$img_src/blank.gif width=20 height=15></td>";
+	}
+
+	#if( $ds->{hide} )
+	#{
+	#	$stat = $stat . "<td><img src=$img_src/hide.gif alt=\"Dataset Hidden\" width=20 height=16></td>";
+	#}
+	#else
+	#{
+	#	$stat = $stat . "<td><img src=$img_src/blank.gif width=20 height=15></td>";
+	#}
+
+	$stat = $stat . "</tr></table>";
+
+	return $stat;
+}
+
+sub showTableHeading
+{
+	my $turl = $state->getUrl( "dataset.title" );
+	my $durl = $state->getUrl( "mlview.date" );
+	my $surl = $state->getUrl( "dataset.storm_id" );
+	println(
+		"<tr class=tableHeading>",
+			"<td>&nbsp;</td>",
+			"<td align=center><a href=$turl>Dataset Title</a>",
+			"<td align=center><a href=$durl>Date</a>",
+			"<td>Documentation</td>",
+			"<td align=center nowrap><a href=$surl>Storm Id</a>",
+			"<td>&nbsp;</td>",
+		"</tr>" );
+}

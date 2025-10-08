@@ -1,0 +1,86 @@
+<a name="CIMIS">
+<h3>  X.X.X California Irrigation Management Information System (CIMIS)</h3>
+<p>This data set contains surface meteorological data from the California Irrigation Management information System (CIMIS) weather stations.  CIMIS is a program in the Office of Water Use Efficiency (OWUE) in the California Department of Water Resources.  There are 127 stations included in this T-REX 2006 Five Minute Surface Composite.</p>
+
+<p><b>Instrumentation</b></p>
+<p>All stations have their equipment and sensors mounted on a mast that is mounted on a tripod base. The sensors and their heights are as follows:</p>
+
+<p>Air temperature/relative humidity (HMP35)</p>
+<pre>
+Sensor:         Fenwall Thermistor/HUMICAP H-sensor
+Model:          HMP35C
+Maker:          Vaisala/modified by Campbell Scientific, Inc.
+Height:         1.5 m
+Range:          0 to 100% RH, -35 to +50 degrees C
+Accuracy:       ±2% RH (0-90% RH), ±5% RH (90-100%), ±0.1 °C over -24 to 48 °C range
+Note:           Both sensors are enclosed in a 12-plate naturally aspirated radiation shield made by R. M. Young.
+</pre>
+<p>Wind direction (wind vane)</p>
+<pre>
+Sensor:         2.0 meters
+Model:          024A
+Maker:          Met-One
+Height:         2.0 meters
+Range:          0-360 degrees
+Output:         0-10 * 10³ Ohms
+Threshold:      0.45 m per sec (1 mph)
+Accuracy:       ±5%
+Delay distance: less than 1.3 m
+</pre>
+<p>Wind speed (anemometer)</p>
+<pre>
+Sensor:         Three-cup anemometer utilizing a magnet activated reed switch whose frequency is proportional to wind speed
+Model:          014A
+Maker:          Met-One
+Height:         2.0 meters
+Range:          0-45 m per sec (0-100 mph)
+Threshold:      0.45 m per sec (1 mph)
+Gust Survival:  0-53 m per sec (0-120 mph)
+Accuracy:       1.5% or 0.11 m per sec (0.25 mph)
+</pre>
+<p>Precipitation (tipping-bucket rain gauge)</p>
+<pre>
+Sensor:         Tipping-bucket rain gauge with magnetic reed switch.
+Model:          TE525MM
+Maker:          Texas Electronics
+Height:         1.0 meters
+Orifice:        24.5 cm (9.644 in)
+Resolution:     0.1 mm
+Accuracy:       ±1% at 5 cm per hr or less.
+</pre>
+<p>Dew Point Temperature</p>
+<p>Dew point temperature is the temperature to which the atmosphere must be cooled, at constant pressure and water vapor content, in order to reach saturation. It is calculated from vapor pressure (relative humidity) and air temperature data (<a href="">CIMIS Sensors, cited 2007</a>).</p>
+
+<p><b>Operation</b></p>
+<p>A small datalogger (a small microprocessor) mounted on the mast of each station is connected to the electronic sensors by wires. Once every minute, the datalogger takes a reading of each sensor and records it. It continues for one hour, then averages the 60 readings for an hourly average, or accumulates the 60 readings for an hourly total, and stores all these in its memory. It continues collecting data in this manner throughout the day (midnight to midnight). After 24 hours have elapsed, the datalogger then calculates the daily averages and totals using the 24 hourly averages and totals and stores them. The data- loggers also determines the maximum and minimum temperatures and relative humidities. These values are the highest and lowest of the one-minute readings during the day.</p>
+<p>After 12:00 midnight (always Pacific Standard Time) a microcomputer located with the main CIMIS computer begins the interrogations of the stations. This communication is done using telephone lines. Each station has its own telephone service and modem. The microcomputer makes a phone connection with a datalogger and the data is dumped to the micro- computer. This continues through the early morning hours. The majority of the stations will be interrogated by 4:00 a.m. Some stations will not answer the phone call from the microcomputer during these early morning hours due to problems with the telephone lines themselves. Usually these stations will answer the telephone by 9:00 or 10:00 a.m.</p>
+<p>The collected data is transferred to the CIMIS computer. The CIMIS computer then performs three tasks: 1) Reference Evapotranspiration (ETo) is calculated, 2) the data is run through the quality control program and flags are placed appropriately, and 3) the data is stored in a relational database for retrieval by CIMIS users (<a href="">CIMIS Network, cited 2007</a>).</p>
+
+<p><b>Quality Control</b></p>
+<p>The following are codes that were applied to data during the T-REX time period.</p>
+<ul>
+   <li>Precipitation
+      <ul>
+         <li>R - Precipitation is more than 100 mm (4 inches).  Measured solar radiation is greater than 75 percent of calculated extraterrestrial radiation, the sun is 10 or more degrees above the horizon, and the station shows recorded precipitation (precipitation is greater than 0).</li>
+         <li>Y - Measured solar radiation is greater than 65 percent of calculated extraterrestrial radiation, the sun is 10 or more degrees above the horizon and the station shows recorded precipitation.</li>
+      </ul>
+   </li>
+   <li>Wind Direction
+      <ul>
+         <li>R - Wind direction is constant for four hours in a row.</li>
+      </ul>
+   </li>
+   <li>Wind Speed
+      <ul>
+         <li>I - Wind speed is equal to or less than 0.447 (1 mph) or wind speed is constant for four hours in a row.</li>
+      </ul>
+   </li>
+</ul>
+<p>The entire list of quality control flags used by CIMIS can be found on the <a href="http://wwwcimis.water.ca.gov/cimis/dataQcCurrentHourly.jsp">Current Hourly Flags</a> site (<a href="">CIMIS Flags, cited 2007</a>).</p>
+<p>The R and Y flags for the precipitation were translated to the QCF dubious flag.  The R wind direction flag was translated to the QCF bad flag.  The I wind speed flag was translated to the QCF dubious flag.</p>
+
+
+<p><b>References</b></p>
+<p>Network Maintenance: http://wwwcimis.water.ca.gov/cimis/infoStnMaint.jsp
+<p>Current Hourly Flags: http://wwwcimis.water.ca.gov/cimis/dataQcCurrentHourly.jsp
+<p>Sensor Specs: http://wwwcimis.water.ca.gov/cimis/infoStnMaint.jsp

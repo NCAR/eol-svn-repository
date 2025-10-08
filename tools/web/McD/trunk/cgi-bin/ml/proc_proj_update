@@ -1,0 +1,163 @@
+#!/bin/perl -w
+
+# --------------------------------------------------------------
+# proc_proj_update: processes the form displayed by the edit_project
+#   script.  Performs the needed database operations and then
+#   displays a status message or allows the user to edit the
+#   project links.
+# 
+# Expected Params:
+#   "editButton" - the button the user pressed, used to determine
+#     the action
+#   "mode" - the add or delete mode established by edit_project
+#  Others from the form, see getPostedProj()
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI;
+use lib "lib";
+use Utils;
+
+use lib "../mcd_lib";
+use MLProjectDBA;
+use CategoryDBA;
+use MLDatasetDBA;
+require "./view_links";
+
+my $proj_dba = MLProjectDBA->new();
+my $ds_dba = MLDatasetDBA->new();
+my $cat_dba = CategoryDBA->new();
+
+my $cgi = CGI->new();
+
+my %actions = ( "Update" => \&updateProj, 
+								"Delete" => \&deleteProj, 
+								"Done" => \&done, 
+								"Next >>" => \&editLinks, 
+								"Edit Links..." => \&editLinks, 
+								"Cancel" => \&cancelProj );
+
+my $action = $cgi->param( "editButton" );
+
+my $proj = getPostedProj(); 
+my $mode = $cgi->param( "mode" );
+
+$actions{$action}->();
+
+sub showPage
+{
+	my $msg = shift;
+	my $onLoad = shift;
+	$onLoad = "\"\"" if( !defined( $onLoad ) );
+
+	println( $cgi->header() );
+
+	println( "<html><head><title>Project Edit</title></head>" );
+	println( $css );
+	println( $jscript );
+
+	println( "<body onLoad=$onLoad bgcolor=#e9e9e9 link=white alink=white vlink=white text=black>" );
+	println( "<center><table border=0 cellpadding=3 cellspacing=8 width=95% bgcolor=#e9e9e9>" );
+		println( "<tr bgcolor=#336699><td><font color=white size=+1>Add/Edit Categories</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td align=center><b>$msg</b></td></tr>" );
+		println( "<tr><td align=center><input type=submit value=\"Close Window\" onClick=\"window.close();\"></td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+
+	println( "</body></html>" );
+}
+
+sub updateProj
+{
+	$proj_dba->updateDB( $proj );
+
+	my $onLoad = "\"setFrames( top.opener.parent, \'\', \'category_list?project=$proj->{id}\', \'view_cats?project=$proj->{id}\' );" .
+	             " top.opener.parent.focus(); \"";
+	showPage( "Project has been updated.", $onLoad );
+}
+
+sub deleteProj
+{
+	my @datasets = $ds_dba->getByProject( $proj->{id} );	
+	my $delete = 0;
+	if( scalar(@datasets) != 0 )
+	{
+		my @tree = $cat_dba->getTree( $proj->{id} );
+		$delete = 1 if( scalar(@tree) == 0 );
+	}
+	else
+	{
+		$delete = 1;
+	}
+
+	if( !$delete )
+	{
+		# notify user can't delete
+		showPage( "Unable to delete project with categories and/or datasets." );
+	}
+	else
+	{
+		$proj_dba->deleteDB( $proj );
+		my $onLoad = "\"setFrames( top.opener.parent, \'\', \'project_list\', \'$html_src/body.html\' );" . 
+		             " top.opener.parent.focus(); \"";
+		showPage( "Project has been deleted", $onLoad );
+	}
+}
+
+sub editLinks
+{
+	if( $proj->{id} == -1 )
+	{
+		$proj_dba->insertDB( $proj );
+	}
+	else
+	{
+		$proj_dba->updateDB( $proj );
+	}
+
+	view_links( $proj->{id}, $mode, "project" );
+}
+
+sub cancelProj
+{
+	my $onLoad = "\"top.opener.parent.focus(); \"";
+	showPage( "Action has been Canceled.", $onLoad );
+}
+
+sub done
+{
+	my $project = $cgi->param( "linkto" );
+	my $msg = "Project has been updated.";
+	my $body_src = "$html_src/body.html";
+	$msg = "Project has been added." if( $mode eq "add" );
+	$body_src = "view_cats?project=$project" if( $mode ne "add" );
+
+	my $onLoad = "\"setFrames( top.opener.parent, \'\', \'category_list?project=$project\', \'$body_src\' );" . 
+	             "  top.opener.parent.focus(); \"";
+	showPage( $msg, $onLoad );
+}
+
+sub getPostedProj
+{
+	my $proj = MLProject->new();
+
+	$proj->{id} = $cgi->param( "id" );
+	$proj->{name} = $cgi->param( "name" );
+	$proj->{long_name} = $cgi->param( "long_name" );
+	$proj->{active} = defined( $cgi->param( "active" ) )? 1: 0;
+	$proj->{logo_src} = $cgi->param( "logo_src" );
+	$proj->{left_css_src} = $cgi->param( "left_css_src" );
+	$proj->{body_css_src} = $cgi->param( "body_css_src" );
+	$proj->{internal_contact} = $cgi->param( "internal_contact" );
+	$proj->{storm_id_prefix} = $cgi->param( "storm_id_prefix" );
+
+	$proj->checkDefined();
+
+	return $proj;
+}
+

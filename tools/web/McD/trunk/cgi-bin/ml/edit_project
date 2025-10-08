@@ -1,0 +1,165 @@
+#!/bin/perl -w
+
+# McD
+# --------------------------------------------------------------
+# edit_project: displays the form to edit/add a project.
+#
+# Expected Params:
+#  "project" - (optional) the project to edit, if undef adding
+#    new project
+#  "mode" - (optional) "add" or "update" mode
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use Utils;
+
+use lib "../mcd_lib";
+use Project;
+use MLProjectDBA;
+use UserDBA;
+
+my $proj_dba = MLProjectDBA->new();
+my $user_dba = UserDBA->new();
+
+my $id = param( "project" );
+my $proj = Project->new();
+my $mode = param( "mode" );
+
+$mode = "add" if( !defined( $mode ) );
+
+my $title = "Edit Project";
+$title = "Add Project" if( $mode eq "add" );
+
+my @users = $user_dba->getAllUsers( "display_name", 1 );
+
+if( defined( $id ) )
+{
+	$proj = $proj_dba->getFromDB( $id );
+}
+else
+{
+	$id = -1;
+}
+
+
+println( header( -expires=>'-1d' ) );
+
+println( "<html><head><title>Project Edit</title></head>" );
+println( $css );
+println( $jscript );
+println( "<body bgcolor=#e9e9e9 link=white alink=white vlink=white text=black>" );
+println( "<center>" );
+println( "<form method=post action=proc_proj_update name=\"main_form\">" );
+
+println( "<table border=0 cellpadding=3 cellspacing=8 width=95% bgcolor=#dcdcdc>" );
+	println( "<tr bgcolor=#336699><td colspan=2><font color=white size=+1>$title</td></tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>Project Name: </b></td>" );
+		println( "<td>" );
+			println( "<input type=text name=name value=\"$proj->{name}\" size=10 maxlength=16>" );
+		println( "</td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>Full Name: </b></td>" );
+		println( "<td><input type=text name=long_name value=\"$proj->{long_name}\" size=50 maxlength=255></td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>Internal Contact: </b></td>" );
+		println( "<td>" );
+			println( "<select name=internal_contact>" );
+				$proj->{internal_contact} = "" if( !$proj->{internal_contact} );
+				foreach my $c (@users)
+				{
+					my $selected = ($c->{id} eq $proj->{internal_contact})? "selected" : "";
+					println( "<option value=$c->{id} $selected>$c->{display_name}</option>" );
+				}
+			println( "</contact>" );
+		println( "</td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>Storm Id Prefix: </td>" );
+		$proj->{storm_id_prefix} = "" if( !defined( $proj->{storm_id_prefix} ) );
+		println( "<td><input type=text size=10 maxlength=16 name=storm_id_prefix value=\"$proj->{storm_id_prefix}\"></td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>Logo Source</b><sup>1</sup><b>: </b></td>" );
+		println( "<td><input type=text name=logo_src value=\"$proj->{logo_src}\" size=50 maxlength=255></td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>Left CSS Source</b><sup>2</sup><b>: </b></td>" );
+		println( "<td><input type=text name=left_css_src value=\"$proj->{left_css_src}\" size=50 maxlength=255></td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>Body CSS Source</b><sup>2</sup><b>: </b></td>" );
+		println( "<td><input type=text name=body_css_src value=\"$proj->{body_css_src}\" size=50 maxlength=255></td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>Active: </b></td>" );
+		my $checked = "";
+		$checked = "checked" if( $proj->{active} );
+		println( "<td><input type=checkbox name=active $checked></td>" );
+	println( "</tr>" );
+	println( "<tr bgcolor=#336699><td colspan=2>&nbsp;</td></tr>" );
+
+		println( "<td colspan=2 align=right>" );
+
+			my $url = "view_cats?project=$id";
+
+			if( $mode eq "add" )
+			{
+				println( "<input type=submit name=\"editButton\" value=\"Next >>\" onClick=\"return checkProject(this.form);\">" );
+			}
+			else
+			{
+				#my $onClick = "\"return doSubmit( this.value, this.form, top.opener.parent, \'$url\' )\"";
+				#println( "<input type=submit name=\"editButton\" value=\"Update\" onClick=$onClick>" );
+				println( "<input type=submit name=\"editButton\" value=\"Update\" onClick=\"return checkProject(this.form);\">" );
+				
+				#$url = "http://www.joss.ucar.edu/mcd/dev/ml/edit/body.html";
+				#$onClick = "\"return doSubmit( \'\', this.form, top.opener.parent, \'$url\' )\"";
+				#println( "<input type=submit name=\"editButton\" value=\"Delete\" onClick=$onClick>" );
+				println( "<input type=submit name=\"editButton\" value=\"Delete\">" );
+
+				#$onClick = "\"return doCancel( this.form, top.opener.parent )\"";
+				#println( "<input type=submit name=\"editButton\" value=\"Cancel\" onClick=$onClick>" );
+				println( "<input type=submit name=\"editButton\" value=\"Cancel\">" );
+			}
+
+		println( "</td>" );
+	println( "</tr>" );
+
+	println( "<tr>" );
+		println( "<td colspan=2 align=right>" );
+			println( "<input type=hidden name=id value=$id>" );
+			println( "<input type=hidden name=mode value=$mode>" );
+			if( $mode eq "add" )
+			{
+				#my $onClick = "\"return doCancel( this.form, top.opener.parent )\"";
+				#println( "<input type=submit name=\"editButton\" value=\"Cancel\" onClick=$onClick>" );
+				println( "<input type=submit name=\"editButton\" value=\"Cancel\">" );
+			}
+			else
+			{
+				println( "<input type=submit name=\"editButton\" value=\"Edit Links...\">" );
+			}
+		println( "</td>" );
+	println( "</tr>" );
+
+	println( "<tr>" );
+		println( "<td colspan=2 align=center bgcolor=#336699><font color=white>&nbsp;</td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td colspan=2><font size=-2><sup>1</sup> Can either be a full source path (http://...) or off of <b>/web/docs/master_list/images</b><br>" ); 
+		println( "<sup>2</sup> Can either be a full source path (http://...) or off of <b>/web/docs/master_list/css</b></td>" ); 
+	println( "</tr>" );
+	
+		
+println( "</form></table>" );
+
+println( "</body></html>" );
+

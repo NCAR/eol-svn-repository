@@ -1,0 +1,5 @@
+/bin/rm web*.htm web.log
+form_webPage_output_elev.pl final_TREX06_stationCD.out.llsort  200 100 > web.log
+cp final_TREX06_stationCD.out.llsort  /web/dmg/html/projects/trex/HQC/FiveMinute_Final/.
+cp webPage_200.htm /web/dmg/html/projects/trex/HQC/stnList/prelim_5minHrly_webPage_200.htm
+

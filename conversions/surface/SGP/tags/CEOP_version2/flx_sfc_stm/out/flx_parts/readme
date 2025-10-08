@@ -1,0 +1,23 @@
+
+
+May 1, 2010
+
+The 2005-2008 flux was processed separately from the
+2009 flux. The two outputs were then catted together
+to make the 2005-2009 out file. This file was divided
+by station into separate files, and then the E21
+file was hand edited to fix a time shift from DST 
+to UTC, per Scot's instructions:
+
+"For the ECOR data at station E21 the times are incorrect (DST rather
+than UTC) from 01/20/2009 at 2030 to 01/22/2009 at 1800. Go ahead and
+add 5 hours to the times in this period to correct this problem."
+
+A five hour period of missing obs at the end of the time shift 
+was copied to the beginning of the period, and then the times
+were changed to add 5 hours to them.
+
+-ds
+
+
+

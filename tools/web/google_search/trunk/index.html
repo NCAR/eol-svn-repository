@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<head>
+
+    <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <link rel="stylesheet" href="css/dhtmlwindow.css" type="text/css" />
+    
+<script src="http://www.google.com/jsapi?key=ABQIAAAA3tbucVxlGNFBYLARMRuqahTL2tmjYYlVN2mt_K7dcvt5qRSuIhQA2YAv3guoDXdWwxvpZ5k2fFwMhQ"></script>
+
+<h1 id="popupwin"></h1> <!--fixes IE/Safari bug when opening dhtml window-->
+
+<input type="hidden" name="filter" value="0" />
+<script type="text/javascript" src="js/search.js"></script>
+<link rel="stylesheet" href="css/customsearch.css" type="text/css" />
+
+
+    <script type="text/javascript" src="js/dhtmlwindow.js">
+
+
+    /***********************************************
+    * DHTML Window Widget- (c) Dynamic Drive (www.dynamicdrive.com)
+    * This notice must stay intact for legal use.
+    * Visit http://www.dynamicdrive.com/ for full source code
+    ***********************************************/
+
+    </script>
+		<title>
+   		ARCSS EOL web page
+		</title>
+
+		<script type="text/javascript">
+			var accordian = 0;
+			var showitlast = 0;
+			window.onload=showit;
+			function showit(id) {
+
+				//-BG- closing accordian check.
+				if (showitlast != id){accordian = 0}
+				var d = document.getElementById(id);
+					for (var i = 1; i<=10; i++) {
+						if (document.getElementById('smenu'+i)) {document.getElementById('smenu'+i).style.display='none';}
+					}
+				//-BG- Added the following if to allow for closing the accordian as well as opening it.
+				if (d) {
+					if (accordian == 1){d.style.display='none';accordian = 0;}			
+					else{d.style.display='inline';accordian = 1;}
+				}
+				showitlast = id;
+			}
+			//
+		</script>
+
+    <script type="text/javascript">
+
+    function makeTable(items){
+			for(var i = 0; i<items.length; i++){
+				document.write('<li>');
+	
+				//modify the strings to be in the proper format
+				title = items[i];
+				title2 = title.replace(" ","+"); 				// "+" character instead of a space
+				category = title2.toLowerCase();
+				
+				//make the open window command
+				command = "showWindow('"+category+"','"+title2+"')";
+			
+				//make the link
+				line = "<a href=\"#\" onclick="+command+">"+title+"</a>";
+		
+				document.write(line);
+				document.write('</li>');
+			}
+    }
+
+    //used to show a dhtmlwindow with datasets of the given category
+    function showWindow(category,title){	
+			link = "http://data.eol.ucar.edu/cgi-bin/master_list/master_query?project=ARCSS&amp;fields=author&amp;fields=data_type&amp;fields=title&amp;fields=documentation&amp;disciplines="+category+"&amp;order=author&amp;title=ARCSS+Datasets:+"+title;
+			//excecute open window command with proper link
+     	data_table=dhtmlwindow.open('subwin', 'iframe',link, 'Data Table', 'width=' + dtWidth + 'px,height=' + dtHeight + 'px,left=' + dtLeft + 'px,top=' + dtTop + 'px,resize=1,scrolling=1');
+    }
+    </script>
+
+		<!--[if lt IE 7]> 
+		<style type="text/css"> 
+		.captioned_photo p { 
+ 			background: none; 
+ 			filter:progid:DXImageTransform.Microsoft.AlphaImageLoader 
+   		(sizingMethod=scale, src='images/caption-white.png'); 
+		} 
+		</style> 
+		<![endif]--> 
+
+</head>
+
+<body onload="javascript:showit('smenu2')">
+	<br />
+  <table border="0" cellspacing="1" cellpadding="4" align="left" width="100%">
+      <tr>
+        <td align="right" height="39" width="33%" style="font-family:Arial, Helvetica, San Serif;font-size:11pt;color:#003399;font-weight: bold">
+            <a class="top_nav" onclick="data_table=dhtmlwindow.open('docwin', 'iframe', href='docs/Data_Policy.html', 'Docs', 'width=950px,height=550px,left=165px,top=70px,resize=1,scrolling=1'); return false">Data Management Policy</a>
+        </td>
+        <td align="center" height="39" width="33%" style="font-family:Arial, Helvetica, San Serif;font-size:11pt;color:#003399;font-weight: bold">
+            <a class="top_nav" onclick="data_table=dhtmlwindow.open('docwin', 'iframe', href='docs/Data_format_guidelines.html', 'Docs', 'width=950px,height=550px,left=165px,top=70px,resize=1,scrolling=1'); return false">Documentation and Format Guidelines</a>
+        </td>
+        <td align="left" height="39" width="34%" style="font-family:Arial, Helvetica, San Serif;font-size:11pt;color:#003399;font-weight: bold">
+            <a class="top_nav" onclick="data_table=dhtmlwindow.open('docwin', 'iframe', href='docs/Data_submission_procedures.html', 'Docs', 'width=950px,height=550px,left=165px,top=70px,resize=1,scrolling=1'); return false">Data Submissions Instructions</a>
+        </td>
+      </tr>
+    </table>
+
+    <div id="id_banner">
+      <img width="635" height="40" src="images/banner_title-10.gif" align="middle" alt="ARCSS Data Archive at NCAR/EOL" />
+    </div>
+
+<dl id="menu">
+
+		<dt onclick="javascript:showit();"><a href="#" onclick="data_table=dhtmlwindow.open('subwin', 'iframe', 'http://data.eol.ucar.edu/cgi-bin/master_list/master_query?project=ARCSS&amp;fields=author&amp;fields=data_type&amp;fields=title&amp;fields=documentation&amp;order=author&amp;title=PI+Datasets+for+ARCSS', 'Data Table', 'width=' + dtWidth + 'px,height=' + dtHeight + 'px,left=' + dtLeft + 'px,top=' + dtTop + 'px,resize=1,scrolling=1'); return false">Data by PI</a></dt>
+				
+		<dt onclick="javascript:showit('smenu2');">Data by Discipline</dt>
+			<dd style="display: block;" id="smenu2">
+				<ul>
+      		<script type="text/javascript">
+      			// a list of categories that we want to make the discipline table with
+      			items = ["Biology","Biogeochemical","Nutrient","Buoy","Chemistry","Navigation","Flux","GIS","Hydrography","Hydrology","Sea Ice","Ancillary","Active Layer/Permafrost","Vegetation","Aircraft","Land Based","Land Characterization","Meteorology","Model","Oceanography","Radiation","Soils","Snow","Terrestrial Ecosystems","Upper Air"];
+      			makeTable(items.sort());
+      		</script>
+				</ul>
+			</dd>	
+
+		<dt onclick="javascript:showit('smenu3');">Ship Data</dt>
+			<dd style="display: block;" id="smenu3">
+				<ul>
+      		<script type="text/javascript">
+      			// a list of categories that we want to use for the ship data  table
+      			items = ["CTD","Mooring","Ship Based","Satellite","Underway","Water Chemistry"];
+      			makeTable(items.sort());
+      		</script>
+				</ul>
+			</dd>
+
+		<dt onclick="javascript:showit('smenu4');">Projects</dt>
+			<dd style="display: block;" id="smenu4">
+			<ul>
+          		<li><a href="http://www.eol.ucar.edu/projects/atlas/" target="_blank">ATLAS</a></li>
+          		<li><a href="http://www.eol.ucar.edu/projects/sbi/" target="_blank">SBI</a></li>
+          		<li><a href="http://www.eol.ucar.edu/projects/sheba/" target="_blank">SHEBA</a></li>
+          		<li><a href="http://www.eol.ucar.edu/projects/itex/" target="_blank">ITEX</a></li>
+			</ul>
+			</dd>
+
+		<dt onclick="javascript:showit('smenu5');">Related Links</dt>
+			<dd style="display: none;" id="smenu5">
+				<ul>
+          <li><a  href="#" onclick="data_table=dhtmlwindow.open('subwin', 'iframe', 'http://data.eol.ucar.edu/codiac/ds_proj?ARCSS', 'List', 'width=950px,height=550px,left=190px,top=70px,resize=1,scrolling=1'); return false">All Data Sets</a></li>
+       <!--   <li><a  href="#" onclick="data_table=dhtmlwindow.open('subwin', 'iframe', 'http://data.eol.ucar.edu/cgi-bin/master_list/ml_summary?project=ARCSS', 'Stats', 'width=950px,height=550px,left=190px,top=70px,resize=1,scrolling=1'); return false">Archive Summary</a></li>  -->
+          <li><a href="http://www.arcus.org/arcss/" target="_blank">ARCSS Home Page</a></li>
+				</ul>
+			</dd>
+		</dt>
+<!--*BEN* Inserting the google search into the page -->
+
+		<dt onclick="javascript:showit('smenu6');">Search</dt>
+			<dd style="display: none;" id="smenu6">
+				<ul>
+	  
+          <input type="text" id="inputElement" name="searchField" /><a class="gsc-branding" style="text-decoration:none;" href="http://www.google.com"><strong> powered by </strong><img style="border:none; position:relative; top:4px;" src="images/google.png"></a>
+				</ul>
+			</dd>
+		</dt>
+
+<!--*BEN* end insertion -->
+
+
+			<!-- This is a Google Custom Search Engine  -->
+		
+
+<div id="content" style="display:none;">Loading...</div>
+<div id="searchControl_div" >Loading...</div>
+
+
+  </dl>
+    <div id="sponsor_logo">
+		<a href="http://www.nsf.gov"><img src="images/nsf_logo_lg-2.gif" width="80" height="80" border="0" alt="NSF logo" /></a>
+	</div>
+
+</body>
+
+
+</html>

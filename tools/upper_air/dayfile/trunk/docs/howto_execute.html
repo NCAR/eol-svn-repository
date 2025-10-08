@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>How To: Upper Air Day File Creator</title>
+    <link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css" />
+  </head>
+
+  <body>
+    <h1>How To: Upper Air Day File Creator</h1>
+
+    <a name="top"></a>
+    <h2>Contents</h2>
+       <ol>
+          <li><a href="#about">About</a></li>
+          <li><a href="#setup">Setup</a></li>
+          <li><a href="#exec">Execution</a></li>
+          <li><a href="#format">Formats</a></li>
+       </ol>
+    <hr />
+
+    <a name="about"></a>
+    <h2>About</h2>
+    <p>This document contains the information required for creating upper air day files.</p>
+    <p>The software described in this document is written in Java 1.5 with the use of generics.  Java 1.5 or newer is required for the software to run.</p>
+    <p>The upper air day file software is designed to allow it to be extended to handle multiple formats of upper air data.  It currently can created day files for the following formats:</p>
+       <ul>
+          <li>EOL Sounding Composite (ESC) Format</li>
+       </ul>
+    </p>
+
+    <p><a href="#top">Top</a></p>
+    <hr />
+
+    <a name="setup"></a>
+    <h2>Setup</h2>
+    <p>There are two ways to execute the upper air day file software:  Ant and the Command Line.</p>
+
+    <h3>Ant Setup</h3>
+    <p>If you already know Ant is setup properly for you or you do not plan on using Ant, this part can be skipped.</p>
+    <p>Ant is a Java based build tool that can be used to do a number of different tasks.  To be able to use Ant, you need to setup your environment so it can be used.  The setup is not dependent for the day file software and can be found at:</p>
+    <p><a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use/#environment">http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use/#environment</a></p>
+
+    <h3>Command Line Setup</h3>
+    <p>The only setup required for the command line is that Java 1.5 be on the environment path.  (You can also call the java commmand using the full path to the binary if you don't want it added to the path.)</p>
+
+    <p><a href="#top">Top</a></p>
+    <hr />
+
+
+    <a name="exec"></a>
+    <h2>Execution</h2>
+    <p>You will need to know the following information to successfully run the day file creation software.</p>
+    <ul>
+       <li>The name of the class containing the main function.  See the <a href="#format">Format Table</a> for the list of classes.</li>
+       <li>The location of the <code><a href="http://dmg.eol.ucar.edu/software/java/api/library/utilities">utilities.jar</a></code> library.</li>
+       <li>The location of the <code><a href="http://dmg.eol.ucar.edu/software/java/api/library/upper_air">upper_air.jar</a></code> library.</li>
+       <li>The location of the <code><a href="http://dmg.eol.ucar.edu/software/java/api/upper_air/dayfile">upper_air_dayfile.jar</a></code> binary library.</li>
+    </ul>
+
+    <h3>Ant Execution</h3>
+    <p>Ant is a Java based build tool that can be used to do many different tasks.  If you have used Ant before, you can skip the setup and jump to the classpath setup.   If you haven't, you will need to set up your environment to be able to use it.  The instructions on Ant can be found at <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use">How To Setup And Use Ant</a>.</p>
+
+    <h4>Define the Classpath</h4>
+    <p>The day file creator requires the following jar files to be in the classpath.</p>
+    <ul>
+       <li>utilities.jar</li>
+       <li>upper_air.jar</li>
+       <li>upper_air_dayfiles.jar</li>
+    </ul>
+    <p>If you don't know how to define the classpath, you can find the instructions <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use#classpath">here</a>.</p>
+
+    <h4>Create the Target</h4>
+    <p>To run the day file creator from Ant, the build file must contain a target that defines how to run the tool.  Here is an example for the ESC day file creator.</p>
+    <pre>
+    &lt;target name="dayfiles"&gt; &lt;-- The name of the target to be called on the command line when running Ant --&gt;
+        &lt;java classname="dmg.ua.sounding.dayfile.ESCDayFileCreator" fork="yes"&gt; &lt;-- The class to be run to create the day files --&gt;
+            &lt;arg value="-Z" /&gt;                &lt;!-- Don't gzip the created day files  --&gt;
+            &lt;arg value="NWS_" /&gt;              &lt;!-- Prefix before the date in the file names --&gt;
+            &lt;arg value="final" /&gt;             &lt;!-- The directory where the source files used to create the day files can be found --&gt;
+            &lt;arg value="dayfiles" /&gt;          &lt;!-- The directory where the dayfiles will be stored after they are created --&gt;
+            &lt;arg value="\.cls(\.gz)?" /&gt;      &lt;!-- The pattern to match against the file names to include in the day files --&gt;
+            &lt;classpath refid="classpath" /&gt;   &lt;!-- The classpath containing the classes needed for the day file creator to run --&gt;
+        &lt;/java&gt;
+    &lt;/target&gt;
+    </pre>
+    </p>
+
+    <h4>Execute the Target</h4>
+    <p>From the same directory where the <code>build.xml</code> file is stored, you can now call the day file creator using ant.</p>
+    <p class="code">ant dayfiles</p>
+    <p class="note">If you used a different name for the target, you will need to replace <i>dayfiles</i> with the actual target name.</p>
+
+    <h3>Command Line Execution</h3>
+    <p>To run the day file creator from the command line or a script, run:</p>
+    <p class="code">java -cp /net/work/bin/dayfiles/upper_air_dayfile.jar:/net/work/lib/java/upper_air.jar:/net/work/lib/java/utilities.jar dmg.ua.sounding.dayfile.ESCDayFileCreator -Z GTS_ ../output ../database \.cls</p>
+    <p>You will need to update the paths in the -cp (classpath) argument and updated the arguments passed to the class to match the data you are creating day files for.</p>
+
+    <p><a href="#top">Top</a></p>
+
+    <hr />
+
+    <a name="format"</a>
+    <h2>Format Table</h2>
+
+    <table border="1">
+        <tr>
+            <th>Format</th>
+            <th>Class Name</th>
+            <th>Parameters</th>
+        </tr>
+        <tr>
+            <td>ESC</td>
+            <td>dmg.ua.sounding.dayfile.ESCDayFileCreator</td>
+            <td>
+                <li>-Z (Optional) Tell the creator <b>not</b> to gzip the day files.</li>
+                <li>Prefix (Required) The prefix of the day files before the date.</li>
+                <li>Data Directory (Required) The location of the soundings to put into day files.</li>
+                <li>Output Directory (Required) The location where the dayfiles are to be written to.</li>
+                <li>File Pattern (Optional) The pattern to match files in the data directory to include in the day files.  The default is \.cls(\.gz)?$</li>
+            </td>
+        </tr>
+    </table>
+    
+    <p><a href="#top">Top</a></p>
+    <hr>
+    <p class="foot">Last Updated: August 14, 2007 - jclawson</p>
+  </body>
+</html>

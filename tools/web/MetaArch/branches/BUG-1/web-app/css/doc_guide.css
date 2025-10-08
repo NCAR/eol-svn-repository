@@ -1,0 +1,207 @@
+/*
+body {
+	max-width: 800px;
+	width: 100%;
+	
+	margin: auto;
+	padding: 10px;
+	
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 11pt;
+	text-align: left;
+	
+	position:relative;
+	top:-11px;
+}
+*/
+
+h1 {
+	text-align: center;
+	font-size: 20pt;
+}
+
+h3 {
+	margin: 10px 0px 2px 0px;
+	
+	color: #005d9a;
+	font-weight: normal;
+	font-style: oblique;
+	font-size: 14pt;
+}
+
+hr {
+	height: 1px;
+	background-color: #999;
+	border: 0;
+}
+
+hr.divider {
+	margin-left: 95px;
+	
+	position: relative;
+	top: 27px;
+	
+	background-color: #005d9a;
+}
+
+#intro, #note { font-size: 10.5pt; }
+
+#note {
+	font-style: italic;
+	color: #666;
+}
+
+.email { font-weight: bold; }
+.email:hover, .section-title:hover { cursor: pointer; }
+
+a, a:visited { color: #005d9a; text-decoration: none; }
+a:hover, .email:hover { color: #f00; }
+
+a.download { font-weight: bold; }
+
+#template-header {
+	border: 2px solid #93b7d1;
+	border-radius: 4px;
+	
+	padding: 5px 10px;
+	margin: 10px 0px;
+	
+	min-height: 80px;
+	
+	/*background-image: url('acadis_banner_long.jpg');*/
+	background-size: 169px 75px;
+	background-repeat: no-repeat;
+	background-position: top right;
+	background-origin: content-box;
+}
+
+#template-header h2 {
+	font-size: 17pt;
+	margin: 0px;
+	
+	padding: 25px 0px;
+}
+
+#template-header h2#header {
+	padding: 15px 0px;
+}
+
+#template-header span { margin-top: -5px; }
+
+#template-header h4 {
+	font-size: 12pt;
+	font-weight: normal;
+	font-style: italic;
+	margin: 5px 0px;
+}
+
+.section-title {
+	font-size: 13pt;
+	font-weight: bold;
+	
+	margin-top: 10px;
+	
+	border: 1px solid #aaa;
+	border-width: 0px 0px 1px 0px;
+}
+
+.section-subtitle {
+	font-weight: bold;
+	margin-left: 5px;
+}
+
+span.arrow-left, span.arrow-right, span.arrow-down {
+	width: 0; 
+	height: 0;
+	
+	margin-right: 10px;
+}
+
+span.arrow-right, span.arrow-down {
+	float: left;
+}
+
+span.arrow-left {
+	float: right;
+
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-right: 5px solid #aaa;
+}
+
+span.arrow-right {
+	margin-top: 3px;
+	float: left;
+
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	border-left: 5px solid #aaa;
+}
+
+span.arrow-down {
+	margin-top: 6px;
+	
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid #000;
+}
+
+#download p {
+	margin: 0px 0px 15px 0px;
+}
+
+#download, #template {
+	margin-left: 10px;
+}
+
+#template {  counter-reset: section-counter;  }
+
+#template .section-title:before {
+	content: counter(section-counter);
+	counter-increment: section-counter;
+	padding-right: 10px;
+}
+
+.section-body ul { margin-top: 2px; margin-left: 20px; }
+
+.section-body #title-checker { padding-left: 20px; }
+
+.section-body #title-checker p { margin-bottom: 2px; }
+
+.section-body #title-checker input#title { min-width: 550px; }
+
+.section-body #title-checker #title-length {
+	font-weight: bold;
+	padding-left: 5px;
+}
+
+.hide {
+	display: none;
+	visibility: hidden;
+}
+
+.right { float: right; }
+
+.err {
+	color: #f00;
+	font-weight: bold;
+}
+
+#title-errors fieldset {
+	border: 1px solid #8a8a8a;
+}
+
+#title-errors legend {
+	color: #8a8a8a;
+	font-weight: bold;
+}
+
+#intro {
+	margin: 10px;
+}
+
+#intro > p {
+	font-size: 11pt;
+	color: #444444;
+	padding-bottom: 10px;
+}

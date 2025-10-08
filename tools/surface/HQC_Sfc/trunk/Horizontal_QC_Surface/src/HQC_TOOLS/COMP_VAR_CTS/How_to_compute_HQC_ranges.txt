@@ -1,0 +1,61 @@
+        How_to_compute_HQC_ranges
+
+1. If there are no Mobile networks in data,
+run:    
+       >  compute_var_cts
+
+
+To compute the HQC range limits needed to fill
+in table 3.2 Ranges of HQC flag limit values for 
+the current project. The use must run the C program
+"compute_var_cts.c" on all the SIGMASQ (variance) files
+created during the HQC of the surface data being
+studied.  This C program expects a file named "file_list.txt"
+as input which contains a list of all the SIGMASQ
+files to be processed.  The compute_var_cts program
+processes each file and "bins" each variance read
+by parameter. Once all the SIGMASQ files have been
+processed, compute_var_cts uses an algorithm to
+determine the span of "bins" that contains 95% of
+the SIGMASQ values. It them uses these 95% limits
+to compute high and low end ranges and the table
+values for HQC Table 3-2.  The user should do a 
+quick verification to ensure that they agree with
+the program output in file var_ct.out.  Note that
+the user may decide to modify the "bins" in the
+C program and rerun to generate different or
+more exact results. The user should read the final
+output and warnings in the the output file var_ct.out
+before publishing the HQC flag limit values.
+
+
+2) If there are Mobile networks, first remove the
+Mobile sigma values, then run compute_var_cts:
+
+   >  create_nonMobile_sigmaFiles.pl
+   >  compute_var_cats
+
+If the user determines that the original SIGMASQ files
+contained values for mobile sites (DATSAV2M or GLERLM)
+then the user may wish to create another set of SIGMASQ
+files and then redo the HQC flag limit values. To do this,
+the user MUST create a directory named "NOMOBILE" in
+the are in which they will be running (generally the
+SIGMASQ area). Then the user can run the PERL script
+"create_nonMobile_sigmaFiles.pl" which will fill the 
+NOMOBILE area with duplicate SIGMASQ files which have
+had all the non_missing mobile site variances changed
+to -888.88. The user can then rerun the compute_var_cts.c
+program on the NOMOBILE SIGMASQ files.
+
+If the user simply wants to see how many non-missing
+mobile variances were computed in the SIGMASQ files,
+the user can run the "find_mobile_vars.pl" PERL script
+on the SIGMASQ files.  Redirect the output from this
+program to a file so that the results may be studied
+earlier.  Generally, the user will find that because
+of the nature of mobile sites that many will not even
+have non-missing variance values and so they have little
+impact on the HQC range limits which are computed.
+
+LEC  17 May 1999

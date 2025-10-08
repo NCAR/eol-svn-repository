@@ -1,0 +1,91 @@
+Checking QCF file: test.0qc.
+Test failed for Temperature =     NaN
+   ERROR: Bad temperature (    NaN) for MODOC      Mount Vernon    on 96/07/05 00:00
+
+WARNING: INVALID QCF value(s) in record: 1.
+Test failed for Elevation = 4301.00
+   ERROR: Bad elev (4301.00) for MODOC      Piedmont       
+
+WARNING: INVALID QCF value(s) in record: 2.
+Test failed for Latitude =   11.15
+   ERROR: Bad lat (  11.15) for MODOC      Mountain Grove 
+
+Test failed for Longitude = -125.27
+   ERROR: Bad lon (-125.27) for MODOC      Mountain Grove 
+
+Test failed for Elevation =  -18.00
+   ERROR: Bad elev ( -18.00) for MODOC      Mountain Grove 
+
+WARNING: INVALID QCF value(s) in record: 3.
+Test failed for Latitude =   60.64
+   ERROR: Bad lat (  60.64) for MODOC      Salem          
+
+Test failed for Longitude =   70.62
+   ERROR: Bad lon (  70.62) for MODOC      Salem          
+
+Test failed for Elevation =   -5.01
+   ERROR: Bad elev (  -5.01) for MODOC      Salem          
+
+WARNING: INVALID QCF value(s) in record: 4.
+Test failed for SeaLevelPressure =  799.00
+   ERROR: Bad SLP ( 799.00) for MODOC      Farmington      on 96/07/05 00:00
+
+Test failed for missing value computedSeaLvlPres =  750.00
+   ERROR: Bad Calc SLP ( 750.00) for MODOC      Farmington     on 96/07/05 00:00
+
+WARNING: INVALID QCF value(s) in record: 5.
+Test failed for missing value Pressure = 1200.00
+   ERROR: Bad stn press (1200.00) for MODOC      Sullivan        on 96/07/05 00:00
+
+Test failed for missing value SeaLevelPressure =  500.00
+   ERROR: Bad SLP ( 500.00) for MODOC      Sullivan        on 96/07/05 00:00
+
+Test failed for missing value computedSeaLvlPres =  300.00
+   ERROR: Bad Calc SLP ( 300.00) for MODOC      Sullivan       on 96/07/05 00:00
+
+WARNING: INVALID QCF value(s) in record: 7.
+Invalid YEAR = 99
+Invalid MONTH = 13
+WARNING: INVALID QCF value(s) in record: 8.
+Test failed for DewPoint =  -88.88
+  ERROR: Bad dew_point ( -88.88) for MODOC      Mount Vernon    on 96/07/05 25:61
+
+Invalid YEAR = 52
+Invalid MONTH = 22
+Invalid Hour = 25
+Invalid Minutes = 61
+Invalid Hour = -1
+Invalid Minutes = -4
+WARNING: INVALID QCF value(s) in record: 9.
+Test failed for Temperature =  100.00
+   ERROR: Bad temperature ( 100.00) for MODOC      Piedmont        on 96/07/05 01:00
+
+Test failed for DewPoint =  222.22
+  ERROR: Bad dew_point ( 222.22) for MODOC      Piedmont        on 96/07/05 01:00
+
+  ERROR: dew_point ( 222.22) > temperature ( 100.00) for MODOC      Piedmont        on 96/07/05 01:00
+
+WARNING: INVALID QCF value(s) in record: 10.
+Test failed for windDirection =  380.00
+   ERROR: Bad wind dir ( 380.00) for MODOC      Mountain Grove  on 96/07/05 01:00
+
+WARNING: INVALID QCF value(s) in record: 11.
+Test failed for windSpeed =   -1.56
+   ERROR: Bad temperature (  23.11) for MODOC      Salem           on 96/07/05 01:00
+
+Test failed for windDirection = -107.00
+   ERROR: Bad wind dir (-107.00) for MODOC      Salem           on 96/07/05 01:00
+
+WARNING: INVALID QCF value(s) in record: 12.
+Test failed for Precipitation =  333.00
+   ERROR: Bad precip ( 333.00) for MODOC      Camdenton       on 96/07/05 01:00
+
+WARNING: INVALID QCF value(s) in record: 14.
+Test failed for missing value SquallGust =   -0.55
+   ERROR: Bad squall Gust (  -0.55) for MODOC      Sullivan        on 96/07/05 01:00
+
+WARNING: INVALID QCF value(s) in record: 15.
+Test failed for missing value SquallGust =   55.00
+   ERROR: Bad squall Gust (  55.00) for MODOC      Clinton         on 96/07/05 01:00
+
+WARNING: INVALID QCF value(s) in record: 16.

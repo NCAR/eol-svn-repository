@@ -1,0 +1,8 @@
+convert -rotate 90 cslp_var.ps   cslp_var.gif
+convert -rotate 90 dewpt_var.ps  dewpt_var.gif
+convert -rotate 90 slp_var.ps    slp_var.gif
+convert -rotate 90 stnp_var.ps   stnp_var.gif
+convert -rotate 90 temp_var.ps   temp_var.gif
+convert -rotate 90 wdir_var.ps   wdir_var.gif
+convert -rotate 90 wdsp_var.ps   wdsp_var.gif
+cp *.gif /web/dmg/html/projects/trex/HQC/Hourly_RUN7/.

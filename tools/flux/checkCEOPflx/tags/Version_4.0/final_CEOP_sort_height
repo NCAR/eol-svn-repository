@@ -1,0 +1,115 @@
+# cosort specifications by LEC (Linda Cully)
+# Fri 26 Sep 2003
+#
+sort		# Action
+0		# Record length (Variable)
+1		# Number of input files
+input.dat	# Input file 1
+17 		# Number of keys
+ascending	# Key 1 direction Nominal Year
+fixed		#	location
+1		#	starting column
+4		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 2 direction Nominal Mon
+fixed		#	location
+6		#	starting column
+2		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 3 direction Nominal Day
+fixed		#	location
+9		#	starting column
+2		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 4 direction Nominal Hour
+fixed		#	location
+12		#	starting column
+2		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 5 direction Nominal Min
+fixed		#	location
+15		#	starting column
+2		#	length
+numeric		#	format
+external	#	value interpretation
+ascending       # Key 6 direction Actual Year
+fixed           #       location
+18              #       starting column
+4               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 7 direction Actual Mon
+fixed           #       location
+23              #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 8 direction Actual Day
+fixed           #       location
+26              #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 9 direction Actual Hour
+fixed           #       location
+29              #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 10 direction Actual Min
+fixed           #       location
+32              #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation 
+ascending       # Key 11 direction CSE_ID
+fixed           #   location
+35              #   starting column
+10              #   length
+alpha           #   format
+none            #   space/tab trimming
+no              #   case-folded  
+ascending       # Key 12 direction Reference_Site_ID
+fixed           #   location
+46              #   starting column
+15              #   length
+alpha           #   format
+none            #   space/tab trimming
+no              #   case-folded  
+ascending       # Key 13 direction Stn_ID
+fixed           #   location
+62              #   starting column
+15              #   length
+alpha           #   format
+none            #   space/tab trimming
+no              #   case-folded  
+ascending	# Key 14 direction Lat
+fixed		#	location
+78		#	starting column
+10		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 15 direction Lon
+fixed		#	location
+89		#	starting column
+11		#	length
+numeric		#	format
+external	#	value interpretation
+ascending       # Key 16 direction Elev
+fixed           #       location
+101             #       starting column
+7               #       length
+numeric         #       format
+external        #       value interpretation 
+ascending       # Key 17 direction Sensor Height
+fixed           #       location
+109             #       starting column
+7               #       length
+numeric         #       format
+external        #       value interpretation      
+file            # Output
+input.sort      # Output file name  

@@ -1,0 +1,19 @@
+# $Id$
+# $Log$
+#
+#
+# Makefile for jac2 automation program for NCDC precip data.
+# Although jac2.c existed, couldn't find Make file so created this.
+# 
+# 11 Oct 93 lec
+#   Created.
+#
+
+#CFLAGS=  -g 
+CFLAGS=-O
+
+jac2:	jac2.c
+	cc $(CFLAGS) -o jac2 jac2.c
+
+clean:
+	rm -f jac2.o

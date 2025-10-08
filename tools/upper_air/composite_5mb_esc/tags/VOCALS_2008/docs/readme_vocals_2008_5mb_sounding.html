@@ -1,0 +1,272 @@
+<html>
+<head>
+<title>VOCALS 2008 Sounding Composite 5-mb Resolution Upper-Air Data Set [NCAR/EOL]</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">VOCALS 2008 Sounding Composite 5-mb Resolution Upper-Air Data Set</h1>
+
+<h2>1.0 General Description</h2>
+
+<p>
+This data set is a composite of radiosondes collected from 5 sounding platforms
+during the Variability of the American MOnsoonS (VAMOS)
+Ocean-Cloud-Atmosphere-Land Study (VOCALS) 2008 project with
+data collected from 30 September 2008 through 1 December 2008.
+This project was conducted off and along the coast of northern Chile,
+South America in the eastern Pacific Ocean.
+<br>
+<br>
+The data include 678 soundings with 91 soundings from the
+lower site at Paposo, Chile, 215 soundings from R/V Ron Brown, 47
+dropsondes from the United Kingdom Facility for Airborne Atmospheric Measurements (FAAM)
+BAe-146 aircraft, 192 from the GPS Advanced Upper_Air Sounding (GAUS) system 
+located at Iquique, Chile, and 133 soundings from the R/V Jose Olaya GAUS system.
+<br>
+<br>
+  This data set contains upper-air sounding data interpolated to a constant vertical 
+  resolution of 5 hPa in the National Center for Atmospheric Research (NCAR) Earth 
+  Observing Laboratory (EOL) Sounding Composite Format from stations in the following 
+  networks:</p>
+<ul>
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/89.118/Readme_VOCALS_Iquique_GAUS_soundings.html">Iquique GAUS Radiosonde Data</a>,</li>
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/89.116/Readme_VOCALS_Olaya_GAUS_soundings.html"> R/V Jose Olaya Radiosonde Data</a>,</li>
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/89.120/Readme_VOCALS_Paposo_soundings.html">Paposo Lower Site Raiosondes (RAOBS)Data</a>,</li>
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/89.117/Readme_VOCALS_Ron_Brown_soundings.html">NOAA R/V Ron Brown Sounding Data</a>,</li>
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/89.135/Readme_VOCALS_BAE146_soundings.html">FAAM BAe-146 Dropsonde Data</a>,</li> 
+</ul>
+
+<br>
+See the <a href="http://data.eol.ucar.edu/codiac/dss/id=89.136">
+VOCALS 2008 Multi-Network Composite Highest Resolution Upper Air Data</a> 
+set for high resolution form of these soundings. 
+<br>
+<br>
+Users are strongly encouraged to contact FAAM BAe for guidance on using their
+dropsonde data. Please contact Grant Allen at grant dot allen at manchester.ac.uk.
+</p>
+
+<p><a href="#section2.1">Section 2.1</a> contains a detailed description of the 
+format of the composite dataset. See <a href="#section3.0">Section 3.0</a> below 
+for the quality control processing  performed by NCAR/EOL on this dataset. 
+<a href="#section4.0">Section 4.0</a> contains references.</p>
+
+<a name="section2.0"></a><h2>2.0 Detailed Data Description</h2>
+<p>
+The `native' resolution data for every sounding were interpolated to 5 hPa vertical resolution files. The surface data point was kept
+as the initial level in each sounding. The first interpolated data point was at the next lowest pressure evenly divisible by 5 and then
+every 5 hPa pressure level beyond that point to either 50 hPa or the lowest pressure level reached by the radiosonde, whichever came
+first. The first 15 lines of each file (the header information) were kept without change.
+<p>
+For the interpolation, the software searched for two data points around the desired pressure level. The search was conducted by looking
+for two valid (i.e. non-missing) data points around the desired pressure level, while also paying attention to the time difference
+between the two data points as well as their quality control flags. There was a search for the two best possible data points to use in
+the interpolation. If the desired pressure level was within the original dataset, that data point was used without interpolation.
+<p>
+There was first a search for values flagged as good within some time range (50 sec for temperature, humidity, and wind and 100 sec for
+pressure; hereafter termed the ARANGE) and the interpolated data point was flagged as good. Failing that, it searched for values
+flagged as estimated within the same time range and the interpolated data point was flagged as estimated. Then the search went for good
+values within a wider time range (100 sec for temperature, humidity, and wind and 200 sec for pressure; hereafter termed the BRANGE)
+the flag for the interpolated data point here was then degraded (even though two `good' data points were used there was a significant
+time difference between them) to questionable. Then, in turn, estimated values within the BRANGE were used (flag set to questionable),
+questionable values within the BRANGE (flag set to bad), good values greater than the BRANGE apart (flag set to bad), estimated values
+greater than BRANGE apart (flag set to bad), questionable values greater than BRANGE apart (flag set to bad), finally any bad values
+(flag set to bad). This search was conducted separately for each interpolated variable (pressure, temperature, relative humidity, and
+the u and v wind components.
+<p>
+Thus for each interpolated data point, the quality control flag was set to the worst case among the data points used in the
+interpolation, except, for each time range apart, the quality control flag was degraded one level (i.e. good to questionable, etc).
+<p>
+The quality control flags should be carefully heeded in these files. While some of the data may look good, it may have been
+interpolated over large pressure intervals, and thus be suspect.
+<p>
+For each interpolated data point the dew point was calculated from the temperature and relative humidity (Bolton 1980) and the total
+wind speed and direction were calculated from the interpolated u and v component values. Also, the altitude and time were interpolated
+using the same data points used for the pressure interpolation. The ascension rate was recalculated based on the time and altitude
+values from the two data points used to interpolate the 5 hPa data point. Thus the ascension rate values do not reflect the values
+based on the interpolated data. The latitude and longitude values were interpolated using the same data points used in the wind
+component interpolation.
+<p>
+<p>
+<a name="section2.1"></a><h2>2.1 Detailed Format Description</h2>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing 
+Laboratory (NCAR/EOL) Sounding Composite Format (ESCF).  ESCF is a version of the National Center for 
+Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records 
+for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, 
+release time, sonde type, meteorological and wind data processors, and the operator's name and 
+comments.  The first five header lines contain information identifying the sounding, and have a 
+rigidly defined form.  The following 7 header lines are used for auxiliary information and 
+comments about the sounding, and may vary from dataset to dataset.  The last 3 header records 
+contain header information for the data columns.  Line 13 holds the field names, line 14 the 
+field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North 
+(with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E 
+for west or east longitude, respectively. Latitude has the same format as longitude, except there 
+are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of 
+longitude and latitude and station elevation follow.</p>
+
+<p>The seven nonstandard header lines may contain any label and contents. The 
+  labels are padded to 35 characters to match the standard header lines. Records 
+  for this dataset include the following three nonstandard header lines.</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, 
+U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and 
+quality control flags (see the QC code description).  Each data line contains 21 fields, separated by 
+spaces, with a total width of 130 characters.  The data are right-justified within the fields.  
+All fields have one decimal place of precision, with the exception of latitude and longitude, 
+which have three decimal places of precision.  The contents and sizes of the 21 fields that appear 
+in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=1 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL Sounding Composite Format codes:</p>
+
+<table border=1 align="center">
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+    
+<h4>Sample Data</h4>
+<p>The following is a sample record of a VOCALS 2008  5-mb rawinsonde data in EOL Sounding Composite format. 
+The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  
+See section 2.1 for an exact format specification
+
+<pre>
+Data Type:                         GAUS SOUNDING DATA/Ascending
+Project ID:                        VOCALS_2008
+Release Site Type/Site ID:         Iquique, Chile
+Release Location (lon,lat,alt):    070 07.84'W, 20 16.25'S, -70.131, -20.271, 32.9
+UTC Release Time (y,m,d,h,m,s):    2008, 11, 12, 07:28:23
+Sonde Id/Sonde Type:               082025386/Vaisala RS92-SGP (ccGPS)
+Reference Launch Data Source/Time: Vaisala WXT510/07:28:27.19
+System Operator/Comments:          yan y crist y tim/none, Good Sounding
+Post Processing Comments:          Aspen Version
+/
+/
+Nominal Release Time (y,m,d,h,m,s):2008, 11, 12, 07:28:23
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat   Ele   Azi    Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg   deg   deg     m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+  -1.0 1008.7  16.8  11.2  69.2    0.0    0.2   0.2 182.1 999.0  -70.131 -20.271 999.0 999.0    32.9  1.0  1.0  1.0  1.0  1.0  9.0
+   5.7 1005.0  17.2  11.5  68.9   -0.7    0.0   0.7  87.7   5.7  -70.131 -20.271 999.0 999.0    60.2  1.0  1.0  1.0  1.0  1.0 99.0
+  14.0 1000.0  17.0  11.6  70.3   -0.6    0.8   1.0 143.1   4.7  -70.131 -20.271 999.0 999.0   103.4  1.0  1.0  1.0  1.0  1.0 99.0
+  21.7  995.0  16.6  11.3  70.9   -0.9    0.7   1.1 128.8   6.2  -70.131 -20.271 999.0 999.0   145.6  1.0  1.0  1.0  1.0  1.0 99.0
+  29.5  990.0  16.2  11.2  72.5   -1.4   -0.1   1.4  87.9   5.7  -70.131 -20.271 999.0 999.0   188.7  1.0  1.0  1.0  1.0  1.0 99.0
+  36.7  985.0  15.8  11.2  73.9   -0.9   -0.8   1.2  49.4   5.7  -70.131 -20.271 999.0 999.0   231.6  1.0  1.0  1.0  1.0  1.0 99.0
+  46.0  980.0  15.6  11.1  74.8   -0.7   -0.9   1.1  37.9   5.2  -70.131 -20.271 999.0 999.0   274.9  1.0  1.0  1.0  1.0  1.0 99.0
+  53.7  975.0  15.3  11.2  76.6   -1.0    0.0   1.0  88.1   5.3  -70.131 -20.271 999.0 999.0   318.4  1.0  1.0  1.0  1.0  1.0 99.0
+  62.0  970.0  15.0  11.2  78.0   -0.5    0.3   0.6 121.0   5.2  -70.131 -20.271 999.0 999.0   361.7  1.0  1.0  1.0  1.0  1.0 99.0
+  70.5  965.0  14.8  11.5  80.6   -0.1    0.2   0.2 166.0   5.5  -70.131 -20.271 999.0 999.0   405.9  1.0  1.0  1.0  1.0  1.0 99.0
+  78.5  960.0  14.4  11.3  81.9    0.3    0.2   0.4 236.3   5.6  -70.131 -20.271 999.0 999.0   449.6  1.0  1.0  1.0  1.0  1.0 99.0
+  86.4  955.0  14.0  11.3  83.8    0.5    0.2   0.6 253.9   5.7  -70.131 -20.271 999.0 999.0   493.9  1.0  1.0  1.0  1.0  1.0 99.0
+  93.8  950.0  13.7  11.0  83.8    1.0   -0.1   1.0 275.7   5.5  -70.131 -20.271 999.0 999.0   538.0  1.0  1.0  1.0  1.0  1.0 99.0
+ 102.4  945.0  13.3  10.7  84.3    1.0   -0.2   1.0 281.3   5.5  -70.131 -20.271 999.0 999.0   582.8  1.0  1.0  1.0  1.0  1.0 99.0
+</pre>
+
+<a name="section2.2"></a><h2>2.2 Station List</h2>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+
+<tr>
+<th>ID</th> <th>SITE</th> <th>COUNTRY</th> <th>LONG</th> <th>LAT</th> <th>ELEV (m)</th> <th>Resolution</th>
+</tr>
+
+<tr>
+<td>Iquique_GAUS</td> <td>Iquique</td> <td>Chile</td> <td>-70.13100</td> <td>-20.27100</td> <td>32.9</td> <td>1 second</td>
+</tr>
+
+<tr>
+<td>Olaya_GAUS</td> <td>R/V Jose Olaya</td> <td>Peru</td> <td>Mobile</td> <td>Mobile</td> <td>Mobile</td> <td>1 second</td>
+</tr>
+
+<tr>
+<td>SCQN 85575</td> <td>Paposo</td> <td>Chile</td> <td>-70.46000</td> <td>-25.00000</td> <td>22.0</td> <td>10 second</td>
+</tr>
+
+<tr>
+<td>WTEC</td> <td>R/V Ron Brown</td> <td>Mobile</td> <td>Mobile</td> <td>Mobile</td> <td>Mobile</td> <td>1 second</td>
+</tr>
+
+<tr>
+<td>FAAM</td> <td>BAe-146</td> <td>Chile</td> <td>Mobile</td> <td>Mobile</td> <td>Mobile</td> <td>0.5 second</td>
+</tr>
+
+
+
+</table>
+
+<a name="section3.0"></a><h2>3.0 Quality Control Processing</h2>
+
+<p>No additional quality control was applied to this 5 mb resolution data set.  For information on the 
+quality control applied to the high resolution data sets that were the basis for the 5 mb data set please
+see the documentation for the high resolution data sets:
+
+<ul>
+<li> <a href="http://data.eol.ucar.edu/datafile/nph-get/89.135/Readme_VOCALS_BAE146_soundings.html">FAAM BAe-146</a></li>
+<li><a href="http://data.eol.ucar.edu/datafile/nph-get/89.118/Readme_VOCALS_Iquique_GAUS_soundings.html">Iquique GAUS</a></li>
+<li><a href="http://data.eol.ucar.edu/datafile/nph-get/89.116/Readme_VOCALS_Olaya_GAUS_soundings.html">R/V Jose Olaya</a></li>
+<li><a href="http://data.eol.ucar.edu/datafile/nph-get/89.120/Readme_VOCALS_Paposo_soundings.html">Paposo</a></li>
+<li><a href="http://data.eol.ucar.edu/datafile/nph-get/89.117/Readme_VOCALS_Ron_Brown_soundings.html">R/V Ron Brown</a> </li>
+
+</ul>
+</p>
+
+<p>
+<a name="section4.0"></a><h2>4.0 References</h2>
+</p>
+
+<p><b>Bolton, D., 1980:</b> The Computation of Equivalent Potential Temperature. 
+  Mon. Wea. Rev., 108, 171-180.</p>
+</body>
+</html>
+

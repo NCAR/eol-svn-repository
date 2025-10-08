@@ -1,0 +1,63 @@
+#! /usr/bin/perl -w
+
+##Module---------------------------------------------------------------------
+# The deploy script is used for generating the production version of the
+# MySQL Perl library and the scripts that use the library to insert files
+# into the database.  It copies the files to the production locations,
+# changes permissions to prevent them from being editted, changes group
+# ownership to CDS, and updates the library locations in the scripts to
+# point to the production version from the developmental version.
+#
+# @author Joel Clawson
+# @version 1.0 - Original creation of the script.
+##----------------------------------------------------------------------------
+use strict;
+
+# Define the locations for the scripts and library files.
+my $BIN_DIR = "";
+if (-d "/net/work/bin") { 
+    $BIN_DIR = "/net/work/bin/scripts/insert";
+} elsif (-d "/work/bin") { 
+    $BIN_DIR = "/work/bin/scripts/insert";
+} else {
+    printf("Unable to find the work directory to deploy the tools!\n");
+    exit(1);
+}
+
+&main();
+
+##----------------------------------------------------------------------------
+# @signature void main()
+# <p>Deploy the CODIAC insert scripts and the MySQL library modules to the
+# production locations for everyday use.</p>
+##----------------------------------------------------------------------------
+sub main {
+    deploy_scripts();
+}
+
+##------------------------------------------------------------------------------
+# @signature void deploy_scripts()
+# <p>Copy the scripts to the bin directory and change the permissions of the
+# files so they can be read and executed.</p>
+##------------------------------------------------------------------------------
+sub deploy_scripts {
+    # Create the bin directory where the scripts are located.
+    system("mkdir -p $BIN_DIR");
+    system("chmod -R 775 $BIN_DIR");
+
+    # Copy the scripts to the bin directory.
+    printf("Copying scripts to $BIN_DIR ...\n");
+    system("cp -r scripts/* $BIN_DIR");
+
+    # Change the library references to the dev area to the production area.
+    printf("Updating to use the correct library...\n");
+    system("perl -pi -e \"s/use lib (.+)\\\/dev\\\/mysql\\\/lib/use lib \\\$1\\\/lib\\\/perl\\\/mysql/\" $BIN_DIR/*");
+
+    # Change the permissions to prevent anyone from changing the files.
+    printf("Changing permissions to read and execute only ...\n");
+    system("chmod 554 $BIN_DIR/*");
+
+    # Make sure all of the scripts are available to CDS users.
+    printf("Chaning group to cds ...\n");
+    system("chgrp -R cds $BIN_DIR");
+}

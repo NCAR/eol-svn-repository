@@ -1,0 +1,20 @@
+
+use strict;
+
+my @arr = (1,2,3,4,5,6);
+my $ref = \@arr;
+
+tst( $ref );
+
+foreach my $a ( @{$ref} )
+{
+	print( $a, "\n" );
+}
+sub tst
+{
+	my $r = shift;
+	my $a = shift( @$r );
+	my $b = shift( @$r );
+	print( "tst: $a $b\n" );
+}
+

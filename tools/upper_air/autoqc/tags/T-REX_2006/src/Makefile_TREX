@@ -1,0 +1,6 @@
+TREX:
+	g++ -g -o ../bin/nws_autoqc_TREX auto_qc.cpp -lm -I../lib -DTREX -DNWS
+	g++ -g -o ../bin/autoqc_TREX auto_qc.cpp -lm -I../lib -DTREX
+	g++ -g -o ../bin/autoqc_TREX_5point_avg auto_qc.cpp -lm -I../lib -DTREX -DFIVE
+	g++ -g -o ../bin/autoqc_TREX_5point_avg_ISS auto_qc.cpp -lm -I../lib -DTREX -DFIVE -DISS
+	g++ -g -o ../bin/autoqc_drop_TREX auto_qc.cpp -lm -I../lib -DTREX -DDROP

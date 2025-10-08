@@ -1,0 +1,31 @@
+netcdf distance {
+dimensions:
+ col = 100;
+ row = 92;
+ neighbor = 4;
+variables:
+ int model_index(neighbor,row,col);
+ double distance(neighbor,row,col);
+ double avgdist(row,col);
+ model_index:long_name = "index into model array";
+ distance:long_name = "distance from center of EASE-Grid cell";
+ distance:units = "km";
+ avgdist:long_name = "average distance from center of EASE-Grid cell";
+ avgdist:units = "km";
+ :title = "distance.nc";
+ :type = "distance";
+ :modeler = "UCAR/JOSS";
+ :fullname = "ARCMIP 50km EASE-Grid Nearest Neighbors";
+ :start_col = 113;
+ :start_row = 101;
+ :ease_comment = "ARCMIP grid starts at specified row and column of a 50km northern azimuthal EASE-Grid.";
+ :x_index = "col = index of grid points in x direction" ;
+ :y_index = "row = index of grid points in y direction" ;
+ :model_name = "XXX";
+ :model_iew = 1;
+ :model_jns = 2;
+ :model_j = "model_index / model_iew";
+ :model_i = "model_index % model_iew";
+ :comment = "Data is the index and distance for the model cells closest to the center of the EASE-Grid cell. These cells were used for interpolations of model variables during regridding.";
+ :joss_comment = "Prepared by UCAR/JOSS, 2003. http://www.joss.ucar.edu/arcmip/regrid/  codiac@joss.ucar.edu" ;
+ }

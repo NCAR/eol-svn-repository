@@ -1,0 +1,96 @@
+<project name="dln" default="deploy" basedir=".">
+
+  <property name="app.name" value="dpgapps"/>
+  <property name="catalina.top" value="/dmsdev/web/java"/>
+  <property name="catalina.base" value="${catalina.top}/tomcat/current"/>
+  <property name="src" value="src"/>
+  <property name="web" value="web"/>
+  <property name="meta-inf" value="META-INF"/>
+  <property name="web-inf" value="WEB-INF"/>
+  <property name="build" value="build"/>
+  <property name="build.classes" value="${build}/classes"/>
+  <property name="deploy"  value="${catalina.top}/webapps/${app.name}"/>
+  <property name="lib"  value="lib"/>
+
+   <path id="theclasspath">
+   <!-- for the record, this is a major pain -->
+
+    <!-- get the old classpath, if available -->
+    <pathelement path="${classpath}"/>
+
+    <!-- Tomcat 4.1.x's stuff is spread out everywhere -->
+    <fileset dir="${catalina.base}/common/lib">
+     <include name="**/*.jar"/>
+    </fileset>
+    <fileset dir="${catalina.base}/common/endorsed">
+     <include name="**/*.jar"/>
+    </fileset>
+    <pathelement location="${catalina.base}/common/classes"/>
+    <!-- these are our 3rd-party installed classes shared amongst any/all webapps -->
+    <fileset dir="${catalina.base}/shared/lib">
+     <include name="**/*.jar"/>
+    </fileset>
+    <pathelement location="${catalina.base}/shared/classes"/>
+
+    <!-- additional local requirements: stuff that can't be put in shared -->
+    <fileset dir="${catalina.top}/bil">
+     <include name="**/*.jar"/>
+    </fileset>
+
+   </path>
+
+  <property name="classpath" refid="theclasspath"/>
+
+
+  <target name="all" depends="compile"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" classpath="${classpath}" destdir="${build.classes}"
+     debug="off"
+     deprecation="on"
+     verbose="no"
+     />
+  </target>
+
+  <target name="deploy-init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the deploy directories -->
+    <mkdir dir="${deploy}"/>
+    <mkdir dir="${deploy}/WEB-INF/classes"/>
+    <mkdir dir="${deploy}/WEB-INF/lib"/>
+    <mkdir dir="${deploy}/WEB-INF/logs"/>
+  </target>
+
+  <!-- pick which deploy method to use -->
+  <target name="deploy" depends="deploy-copy"/>
+
+  <target name="deploy-copy" depends="compile, deploy-init">
+    <!-- "static" web and conf files -->
+    <copy todir="${deploy}/dln">
+      <fileset dir="${web}"/>
+    </copy>
+
+    <copy todir="${deploy}/META-INF">
+      <fileset dir="${meta-inf}" />
+    </copy>
+
+    <copy todir="${deploy}/WEB-INF">
+      <fileset dir="${build}"/>
+      <fileset dir="${web-inf}" />
+    </copy>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}"/>
+  </target>
+
+</project>

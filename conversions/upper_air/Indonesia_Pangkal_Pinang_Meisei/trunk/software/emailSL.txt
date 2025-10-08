@@ -1,0 +1,42 @@
+Date: Thu, 11 Oct 2012 10:26:30 -0600
+From: Scot Loehrer <loehrer@ucar.edu>
+To: cully@ucar.edu
+Subject: Re: DYNAMO Indonesia Pangkal Pinang Run1 - some issues, only partial processing
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:10.0.7) Gecko/20120824 Thunderbird/10.0.7
+
+Linda,
+
+> F2011121318S7014715.CSV
+>     Output file name is Indonesia_Pangkal_Pinang_201112131835.cls
+>     ERROR: Bad-Missing pressure on Release Point (0 second) record = -999.99 . Exit!
+>     ***The s/w must have a pressure on the first "7" record.
+
+In this case the 2 second record appears to be the actual independent
+surface record.  So I have changed the original zero second record to
+a 100 with a 6 and changed the original 2 second record to be the zero
+second record.
+
+> F2012012018S7014582.CSV
+>     Output file name is Indonesia_Pangkal_Pinang_201201201851.cls
+>     Does this file contain multiple soundings?
+
+This is now two files.  F2012012018S7014582.CSV contains the first
+sounding and F2012012218S7014575.CSV the second (we did not have a
+file
+at this time previously).
+
+> Processing file: F2012030320S7111340.CSV
+>     Output file name is Indonesia_Pangkal_Pinang_201203032013.cls
+>     Does this file contain multiple soundings?
+
+In this case the file contained two identical duplicate profiles.  I
+removed the second one.
+
+Thanks.
+
+Scot
+
+ls F2011121318S7014715.CSV
+ls F2012012018S7014582.CSV
+ls F2012012218S7014575.CSV
+ls F2012030320S7111340.CSV

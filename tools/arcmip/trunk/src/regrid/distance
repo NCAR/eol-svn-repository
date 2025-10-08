@@ -1,0 +1,19 @@
+a1=lat1
+b1=lon1
+a2=lat2
+b2=lon2
+
+r=radius of earth
+
+west<0
+south<0
+
+distance
+= Arccos[Cos[a1] Cos[b1] Cos[a2] Cos[b2] + Cos[a1] Sin[b1] Cos[a2] Sin[b2]
+	   + Sin[a1] Sin[a2]]/360 * 2Pi * r
+= Arccos[Cos[b1-b2] Cos[a1] Cos[a2] + Sin[a1] Sin[a2]]/360 * 2Pi * r
+
+
+linear weighted avg
+v0 = ( v1*d4/d1 + v2*d4/d2 + v3*d4/d3 + v4*d4/d4 ) / ( d4/d1 + d4/d2 + d4/d3 + d4/d4)
+where d4 is the distance of the furthest point

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Changes from 1.2 to 2.0</title>
+  </head>
+
+  <body>
+      <h1>Changes from 1.2 to 2.0</h1>
+
+      <h2>Database</h2>
+      <p>There has been significant changes to the database behind IVEN.  It is the new DTS database that combines the DLN, IVEN, and to a lesser extent ML.  All of the datasets that appear in IVEN, will appear in CODIAC and in the DLN as well and processed datasets (that have been associated with a group or composite) and composite datasets that are entered into the DLN will appear in IVEN (more on this later).</p>
+
+      <h2>Projects</h2>
+      <p>All currently active DTS projects will appear in the IVEN project listing.  IVEN cannot edit any aspect of a project.  DTS activation needs to be done through the DLN while all other information needs to done through GUImaint.</p>
+
+      <h2>Products</h2>
+      <p>Product is the term used by the original IVEN for a collection of datasets that have some association.  The association could be that they form the composite or that they are all the same type of data (Aircraft, GAPP data in CEOP).  Since there are two types of products, IVEN now allows the user to define they type of product they are creating.  (This is caused by a composite being a dataset while the dataset group is just a collection.)</p>
+      <h3>Composites</h3>
+      <p>Composites are now true datasets in IVEN.  They have all of the same directories, associations, note sets, etc. that is expected with a dataset in IVEN.  This is a major upgrade from version 1.x where composites only had a tiny note and a link.  (More info on datasets in general later.).</p>
+      <p>A composite can be added to the systems through IVEN where other datasets must be entered through the DLN or through GUImaint.  When a composite is added, the user must select a new, unused dataset_id in the system.  It is added through the "Add Product" link at the top of the project product listing.</p>
+      <p>It can also be added through the DLN and GUImaint.  If a composite is entered through the DLN/GUImaint, the dataset_type must be assigned to "Composite" for IVEN to recognize it as a composite to be displayed in the product list.</p>
+      <h3>Groups</h3>
+      <p>A dataset group is a collection of datasets that have some form of processing similarity.  These datasets need the association, but do not form a composite and do not need a dataset id.  A group consists of a name, status, and note.  The status is to monitor progress of the processing of the entire group.  The note is general information that applies to all of the datasets within the group.</p>
+      <p>A group is added into IVEN through the "Add Product" link at the top of the project product listing.</p>
+
+      <h2>Datasets</h2>
+      <p>Datasets have many changes in version 2 of IVEN.  All datasets now have a dataset id and appear in both the DLN and CODIAC, besides appearing in IVEN.  There is only a single note for a dataset (where there used to be a general note and a processing note).  This note is combined with the notes from the DLN as well.  This provided one note that can be accessed/editted by any of the tools that deal with the DTS notes.</p>
+      <p>Datasets now have a general "Work Dir" that is the top level of the directory where the processing was performed and should contain the data and software that was used during the processing in most cases.</p>
+      <p>The "Repos Dir" field or repository directory is the location of the final best software.  This could be in a repository or the location of the best tar ball.  This replaces both the software dir (which is used to fill it in from the porting from the original database) and the best software flag.  It is assumed that if the "Repos Dir" field is filled in, it is the best software and the flag is no longer needed.</p>
+      <p>There is no longer a readme field for the dataset.  It reads in the "doc" purpose files for the dataset from CODIAC.  The readmes are for the processed datasets, not the source datasets used to generate the processed datasets (that is in another section).</p>
+      <p>The Source Info is the listing of the information about the source datasets that are used to generate the processed dataset.  It contains the source data readmes, UTC offset, DST flag, and other notes on collection/source times.  This information can be edited through the edit image on the left of the dataset listed in the "Dataset Sources" table beneath the status table of the dataset view.</p>
+      <p>Every processed dataset needs to have at least one source dataset that is used to generate it.  All of the source datasets are listed with their notes and allows the user to edit the "Source Info" previously mentioned.</p>
+      <p>Source datasets can only be added to the dataset through the dataset view (unless the dataset is a "Composite" dataset which can be done on the project product listing).  Adding a source dataset only adds the association of the source dataset to the processed dataset.  <b>It does not create a new dataset.</b>  The dataset must already exist in the database or an error will occur.</p>
+      <p>In the "Dataset Source" table a source dataset can be removed or excluded from the dataset.  Exclusion is maintaining the association between the source and processed datasets while providing the information that the source will not be included in the final product.  Removing a source dataset only removes its association with the product.  All of the notes, source info, dataset info, etc. remains in the database and is still viewable in the DLN.</p>
+
+      <h2>Deleting Data</h2>
+      <p>Deleting is generally not implemented in IVEN.  You can delete associations between two datasets or a dataset and a group, but this does not actually delete any dataset information.  You cannot Composites either.  Any of these actions must be done through other means.</p>
+      <p>The only item that can truly be deleted is a dataset group.  This is because it only exists in any manner in IVEN.  This is still limited as a group can only be deleted if it is not associated with any datasets.</p>
+
+      <h2>Ommissions from 1.2</h2>
+      <p>There is no longer an "Extraction" that existed in previous versions of IVEN.  This is because every processed/composite dataset is extracted from one or more source datasets.  It is no longer important to specify an extraction since they all are.  (In the cases where the extraction was previously used [i.e. Dly Precip extracted from Hrly Precip], there would now be a new dataset for the extracted dataset with the source being the composite.)</p>
+      <p>There is no longer a drop down box to view by the Processing Contact.  This was not used often (from my poll) and was not worth the effort to change over at this time.</p>
+      <p>There is no longer a dependancy view.  This was deemed to be not worth the time and effort at this time (along with there being some confusion to what it actually was intended to represent).</p>
+
+      <h2>Limitations</h2>
+      <p>All datasets used by IVEN (except for composites) must be entered through a different tool to be used by IVEN.  When IVEN says it is adding a dataset, it is adding an association between datasets or a dataset and group.  This was a design choice to limit confusion and force datasets to be added consistantly through the same tool.</p>
+      <p>Composites were allowed to still be entered through IVEN because it is a product and with groups also being a product and not having another way to be entered, it seemed to be the best to allow all products to be added in IVEN.</p>
+
+      <h2>Idiosyncrocies</h2>
+      <p>When expanding/shrinking notes you may notice the opposite effect happening.  This is a result of the stylesheet parameters.  The basic note area has a specified height while the expanded height is automatic.  This means that notes that are expanded when there area is smaller than the specified height shrink to the auto height.</p>
+  </body>
+</html>

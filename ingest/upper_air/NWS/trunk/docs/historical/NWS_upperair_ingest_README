@@ -1,0 +1,64 @@
+This document describes the ingest of National Weather Service Upper Air ascii and binary files and their
+management. 
+
+The National Weather Service (NWS) maintains a network of sites 
+(see http://www.ua.nws.noaa.gov/nws_upper.htm and http://www.ua.nws.noaa.gov/stations.htm) where upper air 
+observations are regularily collected. See http://www.ua.nws.noaa.gov/net-info.htm and 
+http://www.ua.nws.noaa.gov/factsheet.htm for more information. The list 
+(http://www.ua.nws.noaa.gov/stations.htm) contains station identifiers (XXX), wmo numbers (ddddd), site
+elevations, latitudes and longitudes, and equipment type. The file: /work/1R/ncdc/NWS_Rawinsonde_list
+contains a text version of the aforementioned list. This information is used by various perl scripts to
+sort ,manage, and process NWS upper air data.   
+
+The NWS archives upper air data for each month and site at the National Climatic Data Center (NCDC).
+NCDC sends this data to JOSS every month. After a year's worth of data is collected, the data is archived 
+on the MSS (/JOSS/DATA/RAW/SOUNDING/NWS/ASCII and /JOSS/DATA/RAW/SOUNDING/NWS/BINARY). The lag is 
+generally about two months. For example, 2003 was complete by about March 2004. On occasion NCDC will send
+replacement files for a year which has been previously archived, so the last couple years of the MSS 
+archive are maintained in /work/1R/ncdc/binary_files (binaries) and /work/1R/ncdc/ncdc_gzipped (ascii 
+files) just in case. 
+ 
+NCDC places two types of files via ftp in /work/1R/ncdc, Binary files (XXXdddd.Syy) and ascii files
+(dddddyy.mm).  
+
+The binary files contain encoded rawinsonde profiles and are unreadable. XXX is the site identifier, dddd
+is the release number, and yy is the year. The last three digits of the release number refer to a 
+rawinsonde release relative to January 1st and the 1st digit represents the number of attempts needed for
+a successfull release. Since the National Weather Service typically releases rawinsondes twice a day 
+(00Z and 12Z), release numbers range between 001 and about 730 (2*365). Most of the time, the first 
+release attempt is successful, but on occasion more attempts are needed. So the first digit is usually 1,
+and occasionally 2 or 3. So the file NKX1304.S04, is a binary file for San Diego containing the 304th 
+release for 2004. The first attempt was successful. TOP2330.S04 is the binary file for the 330th release
+during 2004 which required a 2nd attempt. Scot Loehrer can help you with the 3 letter IDs. These ids are
+often hard to find and NCDC or NWS may not adhere to the same list all the time. An important caution,
+pgac1361.S0 which is supposed to be a binary file for Guam are always missing the final digit of the year.
+Apparently the computer sending NCDC this data has a filename length limit. Without reading the file,
+there is no way to know for sure. Dividing 361 by 2 yeilds a rough estimate of the Julian date. It is a
+good bet this is a file for 2004. When you see these files, rename them ASAP. Otherwise, they will not be
+moved. Using the following command works reasonably well:'ren "pgac*.S0" "pgac#1.S04"'
+
+The script /work/1R/ncdc/binary_files/organize_binary.pl gzips the binary files and moves them to
+/work/1R/ncdc/binary_files/. The files are placed in the appropriate region and site directory. The urls
+mentioned in the first paragraph describe the regions and their sites. There are currently four regions
+and hence sub directories in /work/1R/ncdc/binary_files/2004 (alaska, central_america, continental_us, and
+pacific island). The archive directories (2002 and 2003) contain these sub directories as well. 
+
+The script /work/1R/ncdc/binary_files/create_dir.pl creates the directory tree struture for the binary
+files. Make sure the associative arrays in create_dir.pl and organize_binary.pl contain the same regions
+and sites. Otherwise binary files will be moved to non-existent locations. Binary files are archived by
+region and year on the MSS. For example NWS_2001_BINARY.continental_us.tar, contains the binary files for
+2001 for the Continental US.
+       
+The ascii files contain ascii versions of the binary files concatenated into monthly files. These files
+are readable and are not tar files. Files for the current year are kept in /work/1R/ncdc. Once a complete
+year has been ingested, files are tared by month and set to the MSS (/JOSS/DATA/RAW/SOUNDING/NWS/ASCII
+contains a mirror of the MSS archive for the last few years , no tar files, just the originals). 
+NWS_1999_ASCII.01.tar contains all the files for January 1999. The file 9380504.01.gz contains data for 
+TALLAHASSEE, FL (NWS_Rawinsonde_list) for January 2004. An inventory of the files sent each month is 
+performed once a complete months worth of the ascii files have been sent by NCDC (Scot will inform you
+when this happens). Currently, /work/1R/ncdc/check_NCDC_inventory.pl performs an inventory of the files 
+ingested during a given year. It reads a file generated using the following command: "dir ?????YY.??.* >
+list file". Then using NWS_Rawinsonde_list and an array containing (YY01,YY02,...,) , the script creates
+a table with file size enteries for each ddddd and YYMM identifer. See 0401_thru_0405.out. The tables
+permits easy identification of missing sites and months. /work/1R/ncdc/check_NCDC_inventory.pl could be
+set up to generate the table automatically. It currently requires editing for different years and months. 

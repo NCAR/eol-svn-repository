@@ -1,0 +1,10 @@
+#! /usr/bin/csh
+
+echo "Converting data..."
+/usr/bin/nice -5 ISFF_SFC_Converter.pl
+
+echo "Sorting data..."
+cosort Y2Kqcf_sort_spec <../output/isff05.0qc > ../output/isff05.0qc.sort
+
+echo "Creating the dayfiles..."
+/work/software/library/createdays/Version4_4digitYear/Y2Kcreate_day_files ../output/isff05.0qc.sort ../final/ISFF05_

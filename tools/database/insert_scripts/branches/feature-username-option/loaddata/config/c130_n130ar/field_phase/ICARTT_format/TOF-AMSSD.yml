@@ -1,0 +1,68 @@
+dataset:
+- title_content: titleSep
+- name: <PROJECT>
+- archive_ident: '999.999'
+- title: PRELIMINARY Time-of-Flight Aerosol Mass Spectrometer Data - size segregated
+- summary: This dataset contains size-segregated, non-refractory, chemical speciated submicron particulate chemical mass data taken aboard the NSF/NCAR C-130 aircraft (Tail Number N130AR) during the <PROJECT> project. Please see the header portion of the data files for a list of parameters measured.  These are PRELIMINARY FIELD-PHASE data and are not for publication. Final, production data having the highest-quality that EOL/RAF and CU can provide will be available within 6 months of the end of the project.
+- begin_date: '1000-01-01 00:00:00'
+- end_date: '7999-12-31 23:59:59'
+- visible: 0
+- auth_reqd: 1
+- eula_reqd: 1
+- version_number: '0.1'
+- quality: 1
+- ingest_location: /scr/raf/Raw_Data/<PROJECT>/field_phase/CU_HRAMS
+- archive_location: /FS/EOL/<year>/<project>/aircraft/c130_n130ar/FIELD/TOF-AMS
+- filename_pattern: <PROJECT>-AMSSD_C130_(\Y\Y\Y\Y\M\M\y\y)_R<Version>.ict
+- startdate_pattern: YYYY-MM-yy 00:00:00
+- enddate_pattern: YYYY-MM-yy 23:59:59
+- filelength: ''
+- minimum_latitude: '-90'
+- maximum_latitude: '90'
+- minimum_longitude: '-180'
+- maximum_longitude: '180'
+- CODIAC_specific_fields: titleSep
+- category_id: 2
+- platform_id: 130
+- is_eol_data: 1
+- format: 152
+- host: hpss
+- frequency_id: 34
+- spatial_type: point
+- point_of_contact_id_codiac: 1
+- internal_contact_id_codiac: 179
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+- dodsable: 0
+- t_subset: 0
+- file_subset: 1
+- event_subset: 0
+- order_allow_compress: 1
+- DTS_specific_fields: titleSep
+- source_contact_id_dts: 203
+- internal_contact_id_dts: 203
+- ingest_contact_id_dts: 203
+- ingest_status_id_dts: 6
+- load_contact_id_dts: 345
+- load_data_location: '*ict'
+- load_status_id_dts: 6
+- approve_contact_id_dts: 345
+- approve_status_id_dts: 6
+- author_id_dts: 203
+- note_type_id: 4
+- note_text: Loaded with new load_data_proj script
+- optional_fields: titleSep
+- archive_location_2: ''
+- filename_pattern_2: ''
+- startdate_pattern_2: ''
+- enddate_pattern_2: ''
+- format_2: ''
+- host_2: ''
+- description: ''
+- iso_citation_role: 2
+- contact_id_codiac: 179
+- datacite_contributor_type: 4
+- iso_citation_role_2: 9
+- contact_id_codiac_2: 1364
+- datacite_contributor_type_2: 2

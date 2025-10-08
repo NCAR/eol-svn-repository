@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>CuPIDO Mexico SMN-CNA High Resolution Rawinsonde Data Set</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">CuPIDO Mexico SMN-CNA High Resolution Rawinsonde Data Set</h1>
+
+<h2>1.0 General Description</h2>
+<p>This is one of the upper air data sets developed for the Cumulus Photogrammetric, In-Situ and Doppler Observations (CuPIDO) project.  This data set includes the high resolution vertical (2 second) rawinsonde data from the Servicio Meteorol&oacute;gico Nacional (SMN) Comisi&oacute;n del Agua (CNA), which forms part of the Secretar&iacute;a de Medio Ambiente y Recursos Naturales (SEMARNAT).  There are five stations that measure pressure, temperature, humidity and wind.  There are a total of 93 soundings from the five sites:  Empalme (22), Monterrey (3), Chihuahua (28), Zacatecas (5), and Mazatlan (35).</p>
+<p>The SMN home page can be found here: <a href="http://smn.cna.gob.mx/SMN.html">http://smn.cna.gob.mx/SMN.html</a>.  It is in spanish.</p>
+
+<h3>1.1 Data Set Contact</h3>
+<p>
+Steve Williams<br>
+NCAR/EOL<br>
+sfw@ucar.edu<br>
+<p>
+<h2>2.0 Detailed Data Description</h2>
+<h3>2.1 Detailed Format Description</h3>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite Format (ESC).  ESC is a version of the National Center for Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, meteorological and wind data processors, and the operator's name and comments.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+<p>The seven non-standard header lines may contain any label and contents.  The labels are padded to 35 characters to match the standard header lines. Records for this dataset include the following three non-standard header lines.</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=1 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL codes:</p>
+
+<table border=1 align="center">
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of SMN CuPIDO high resolution rawinsonde data in ESC format.   The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  See section 2.1 for an exact format specification
+
+<pre>
+Data Type:                         Mexican National Weather Service/Unspecified
+Project ID:                        CuPIDO
+Release Site Type/Site ID:         MMCU 76225 Chihuahua
+Release Location (lon,lat,alt):    106 7.00'W, 28 42.00'N, -106.117, 28.700, 1482.0
+UTC Release Time (y,m,d,h,m,s):    2006, 07, 04, 12:00:00
+/
+/
+/
+/
+/
+/
+Nominal Release Time (y,m,d,h,m,s): 2006, 07, 04, 12:00:00
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat    Ele   Azi   Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg    deg   deg    m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+   0.0  853.0  23.6  11.7  47.0    0.0    0.0   0.0   0.0 999.0 -106.117  28.700 999.0 999.0  1482.0 99.0 99.0 99.0 99.0 99.0  9.0
+   2.0  852.6  23.6   9.3  40.0    0.0    0.7   0.7 182.0   2.0 9999.000 999.000 999.0 999.0  1486.0 99.0 99.0 99.0 99.0 99.0 99.0
+   4.0  851.1  23.5   9.9  42.0    0.1    0.9   0.9 185.0   7.5 9999.000 999.000 999.0 999.0  1501.0 99.0 99.0 99.0 99.0 99.0 99.0
+   6.0  849.9  23.4  10.2  43.0    0.2    1.1   1.1 188.0   6.5 9999.000 999.000 999.0 999.0  1514.0 99.0 99.0 99.0 99.0 99.0 99.0
+   8.0  848.7  23.3  10.1  43.0    0.2    1.3   1.3 191.0   6.5 9999.000 999.000 999.0 999.0  1527.0 99.0 99.0 99.0 99.0 99.0 99.0
+  10.0  847.6  23.3  10.4  44.0    0.4    1.5   1.5 194.0   5.0 9999.000 999.000 999.0 999.0  1537.0 99.0 99.0 99.0 99.0 99.0 99.0
+</pre>
+
+<h3>2.3 Station List</h3>
+
+<table border=1 align="center">
+<tr><th>ID</th><th>SITE</th><th>COUNTRY</th><th>LONG</th<th>LAT</th><th>ELEV (m)</th></tr>
+<tr><td>MGYM</td><td>76256 Empalme/Guaymas</td><td>MX</td><td>-110.825</td><td>27.942</td><td>12.0</td></tr>
+<tr><td>MMAN</td><td>76394 Monterrey</td><td>MX</td><td>-100.234</td><td>25.899</td><td>450.0</td></tr>
+<tr><td>MMCU</td><td>76225 Chihuahua</td><td>MX</td><td>-106.117</td><td>28.700</td><td>1482.0</td></tr>
+<tr><td>MMZC</td><td>76526 Zacatecas</td><td>MX</td><td>-103.757</td><td>22.771</td><td>2265.0</td></tr>
+<tr><td>MMZT</td><td>76458 Mazatlan</td><td>MX</td><td>-106.301</td><td>23.147</td><td>3.0</td></tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+#
+# Created to sort QCF data.
+#
+#
+sort		# Action
+0		# Record length (Variable)
+1               # Number of input files
+../out/hplains.cvt	# Number of input files
+8		# Number of keys
+ascending       # Key 1 direction year
+fixed           #       location
+1               #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 2 direction mon
+fixed           #       location
+4               #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 3 direction day 
+fixed           #       location
+7               #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 4 direction min 
+fixed           #       location
+10              #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 5 direction hr 
+fixed           #       location
+13              #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending	# Key 6 direction lat
+fixed		#	location
+58		#	starting column
+10		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 7 direction lon
+fixed		#	location
+69		#	starting column
+11		#	length
+numeric		#	format
+external	#	value interpretation
+ascending	# Key 8 direction occur
+fixed		#	location
+81		#	starting column
+3		#	length
+numeric		#	format
+external	#	value interpretation
+file            # Output
+../out/hplains.sort    # Output file name

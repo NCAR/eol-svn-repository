@@ -1,0 +1,121 @@
+body.dataset { min-height: 550px; min-width: 1100px; }
+
+div.datasetForm {
+    border: 1px solid #000066;
+    display: table;
+    margin: 0 20px;
+    height: 400px;
+    padding: 0;
+}
+
+div.sides { display: table-row; }
+div.formSide, div.projectListSide { border: 1px solid #000066; display: table-cell; vertical-align: top; width: 100%; }
+
+
+div.datasetProjectList {
+    border: 1px solid #000066;
+    bottom: 72px;
+    margin: 0;
+    overflow: auto;
+    padding: 0;
+    right: 28px;
+    top: 100px;
+    width: 330px;
+}
+
+div.error {
+	background-color: #FF0000;
+	color: #FFFFFF;
+	font-weight: bold;
+    border: 1px solid #000066;
+    margin: 0 20px;	
+}
+
+div.error p { padding-left: 10px; }
+
+div.headerbar {
+    border: 1px solid #000066;
+    height: 30px;
+    margin: 0 20px;
+    padding: 0 0 0 5px;
+    position: relative;
+    vertical-align: middle;
+}
+
+div.headerbar div.buttons {
+    margin: 0 2px 0 2px;
+    padding: 2px 0 2px 5px;
+    text-align: right;
+}
+
+div.noteBlock {
+	border: 1px solid #000066;
+	margin: 0 20px;
+}
+
+div.shortSpacer {
+    background-color: #FFFF99;
+    border: 1px solid #000066;
+    height: 10px;
+}
+
+div.spacer {
+    background-color: #FFFF99;
+    border: 1px solid #000066;
+    height: 10px;
+    margin: 0 20px;
+}
+
+
+
+div.form {
+    border: 1px solid #000066;
+    margin: 0 20px;
+    overflow: auto;
+}
+
+
+div.smallForm {
+	border: 1px solid #000066;
+	margin: 0 0 0 20px;
+	overflow: auto;
+}
+
+form { margin: 0; padding: 0; }
+
+table.datasetProjectTable {
+    border: 1px solid #000066;
+    text-align: center;
+    width: 100%;
+}
+
+table.datasetProjectTable th {
+	background-color: #000066;
+	color: #FFFFFF;
+}
+
+table.datasetProjectTable td {
+	border: 1px solid #000066;
+}
+
+table.datasetForm, table.projectForm, table.userForm {
+    padding: 1px;
+	width: 100%;
+}
+
+table.datasetForm tr td, table.projectForm tr td, table.userForm tr td {
+    padding: 4px;
+}
+
+table.datasetForm tr th, table.projectForm tr th, table.userForm tr th {
+	color: #000066;
+	font-weight: bold;
+    text-align: right;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+table.datasetForm tr th.required, table.projectForm tr th.required, table.userForm tr th.required, th.required { color: #CC0000; }
+
+
+.uneditableName { font-weight: bold; }

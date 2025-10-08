@@ -1,0 +1,19 @@
+# $Id$
+# $Log$
+#
+#
+# Makefile for sck program for NCDC 15m precip data.
+# Although sck.c existed, couldn't find Make file so created this.
+# 
+# 11 Oct 93 lec
+#   Created.
+#
+
+#CFLAGS=  -g 
+CFLAGS=-O
+
+sck:	sck.c
+	cc $(CFLAGS) -o sck sck.c
+
+clean:
+	rm -f sck.o

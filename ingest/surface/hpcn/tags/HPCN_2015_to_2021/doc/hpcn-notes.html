@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Unix)">
+	<META NAME="AUTHOR" CONTENT="Amanda Orin">
+	<META NAME="CREATED" CONTENT="20120210;9364600">
+	<META NAME="CHANGEDBY" CONTENT="Amanda Orin">
+	<META NAME="CHANGED" CONTENT="20120213;14125400">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 0.79in }
+		P { margin-bottom: 0.08in }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+
+<BODY LANG="en-US" DIR="LTR">
+
+<P ALIGN=LEFT STYLE="margin-bottom: 0in"><FONT COLOR="#000000"><FONT FACE="Helvetica"><FONT SIZE=5><B>Notes
+on HPCNfiles.pl:</B></FONT></FONT></FONT></P>
+
+<div style="margin-left: 15px; margin-right: 15px; line-height: 25px;">
+
+<P ALIGN=LEFT STYLE="margin-bottom: 0in; font-weight: normal;">
+	<FONT COLOR="#000000">
+	<FONT FACE="Times New Roman, serif">
+		<FONT SIZE=3>To invoke:		
+			<FONT FACE="Courier New, monospace" style="margin-left: 60px;">./HPCNfiles.pl [MM YYYY]</FONT>
+		</FONT>
+	</FONT>
+	</FONT>
+	<BR>
+	<FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>where		<FONT FACE="Courier New, monospace" style="margin-left: 90px;">MM</FONT>
+= 2-digit representation of a given month</FONT></FONT></FONT><BR>
+
+<FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>			<FONT FACE="Courier New, monospace" style="margin-left: 132px;">YYYY</FONT>
+= 4-digit representation of a given year</FONT></FONT></FONT>
+<BR><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>e.g.
+	08 2011 = August 2011</FONT></FONT></FONT>
+<BR>
+<FONT COLOR="#000000" style="line-height: 40px;"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Adding
+a given month and year is optional.</FONT></FONT></FONT></P>
+
+<HR>
+
+<P ALIGN=LEFT STYLE="margin-bottom: 0in; font-weight: normal"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>CODIAC
+Dataset affected:</FONT></FONT></FONT>
+<BR>
+<FONT COLOR="#000000" style="margin-left: 40px; line-height: 40px;"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>		100.015
+      <FONT FACE="Times New Roman, serif">—     </FONT> <A HREF="http://data.eol.ucar.edu/codiac/dss/id=100.015">High
+Plains Climate Data</A></FONT></FONT></FONT>
+<BR>
+<FONT COLOR="#000000" style="margin-left: 40px; line-height: 40px;"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>		This dataset is currently visible.</FONT></FONT></FONT>
+</P>
+
+<HR>
+
+<P ALIGN=LEFT STYLE="margin-bottom: 0in; font-weight: normal"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Directories Involved:</FONT></FONT></FONT>
+<BR>
+<FONT COLOR="#000000" style="margin-left: 40px; line-height: 40px;"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>          <B>ingest:</B> 
+      <FONT FACE="Times New Roman, serif">—     </FONT> <FONT FACE="Courier New, monospace">/net/ftp/pub/data/incoming/hpcn</FONT>
+	<span style="margin-left: 40px;">(formerly <FONT FACE="Courier New, monospace">/net/ingest/hpcn</FONT>)</span> </FONT></FONT></FONT>
+<BR>
+<FONT COLOR="#000000" style="margin-left: 40px; line-height: 40px;"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>          <B>working:</B>
+      <FONT FACE="Times New Roman, serif">—     </FONT> <FONT FACE="Courier New, monospace">/net/work/operational/surface/HPCN</FONT> </FONT></FONT></FONT>
+<BR>
+<FONT COLOR="#000000" style="margin-left: 40px; line-height: 40px;"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>          <B>archive:</B>
+      <FONT FACE="Times New Roman, serif">—     </FONT> <FONT FACE="Courier New, monospace">/net/archive/data/operational/hpcn</FONT> </FONT></FONT></FONT>
+</P>
+
+<HR>
+
+<P ALIGN=LEFT STYLE="margin-bottom: 0in; font-weight: normal"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>About the script:</FONT></FONT></FONT>
+<UL>
+	<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>If
+	a month and year are not provided, then the script automatically
+	uses the current month and year as its input parameters, called
+	<FONT FACE="Courier New, monospace">$month</FONT> and <FONT FACE="Courier New, monospace">$year</FONT>,
+	respectively.</FONT></FONT></FONT>
+	<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Using
+	<FONT FACE="Courier New, monospace">$month</FONT> and <FONT FACE="Courier New, monospace">$year</FONT>,
+	the script checks the previous three months for files (e.g. if the
+	month is April, it will check January, February and March, but not
+	April) </FONT></FONT></FONT>
+	<UL>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>but
+		<B>only</B> if no optional input parameters are given (e.g.
+		<FONT FACE="Courier New, monospace">./HPCNfiles.pl</FONT>, not
+		<FONT FACE="Courier New, monospace">./HPCNfiles 08 2011</FONT>)</FONT></FONT></FONT>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="font-weight: normal">if
+		optional input parameters are given, it will only check that given
+		month (e.g. </SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><FONT SIZE=3><SPAN STYLE="font-weight: normal">./HPCNfiles
+		08 2011</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="font-weight: normal">
+		will only check August 2011 for files)</SPAN></FONT></FONT></FONT>
+	</UL>
+	<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="font-weight: normal">The
+	script checks a specified ingest directory (currently
+	</SPAN><FONT COLOR="#000000"><FONT FACE="Courier New, monospace">/net/ftp/pub/data/incoming/hpcn</FONT></FONT><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">)
+	for binary files that match the file format </SPAN></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><SPAN STYLE="font-weight: normal">A######.JJJ.YYYY.Z</SPAN></FONT></FONT><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">
+	(number of # can vary) where </SPAN></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><SPAN STYLE="font-weight: normal">JJJ</SPAN></FONT></FONT><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">
+	is the Julian day for that year (</SPAN></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><SPAN STYLE="font-weight: normal">YYYY</SPAN></FONT></FONT><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">).</SPAN></FONT></FONT></FONT></FONT>
+	<UL>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>If
+		files are found, the script will then </FONT></FONT></FONT>
+		<UL>
+			<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>TAR
+			those files together by Julian day (e.g <FONT FACE="Courier New, monospace">hpcn.213.2011.tar.gz</FONT><FONT FACE="Times New Roman, serif">
+			for 01 August 2011</FONT>)</FONT></FONT></FONT>
+			<UL>
+				<LI>
+				<FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>if
+				TAR file already exists, the script will create a different
+				version of it so as not to overwrite existing contents and an
+				e-mail is sent out to Linda Cully and Scot Loehrer</FONT></FONT></FONT>
+				<UL>
+					<LI>
+					<FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>this
+					new version is not updated in the database, so it would need to
+					be evaluated manually to determine quality against the original
+					TAR file</FONT></FONT></FONT>
+					<LI>
+					<FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>e.g.
+					<FONT FACE="Times New Roman, serif">if </FONT><FONT FACE="Courier New, monospace">hpcn.213.2011.tar.gz</FONT>
+					exists, then <FONT FACE="Courier New, monospace">hpcn.213.2011.tar.gz.1</FONT>
+					will be created and an e-mail will be sent to Linda Cully and
+					Scot Loehrer</FONT></FONT></FONT>
+				</UL>
+				<LI>
+				<FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>TAR
+				files have a size of approximately 3.0 MB – 3.5 MB per file</FONT></FONT></FONT>
+			</UL>
+			<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">move
+			those TAR files to the archive/operational location (currently
+			</SPAN></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><SPAN STYLE="font-weight: normal">/net/archive/data/operational/hpcn</SPAN></FONT></FONT><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">)</SPAN></FONT></FONT></FONT></FONT>
+			<UL>
+				<LI>
+				<FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>this
+				directory is on localhost, and files are never moved up to HPSS</FONT></FONT></FONT>
+				<LI>
+				<FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>this
+				directory is approximately 546 MB in size (as of 13 February
+				2012)</FONT></FONT></FONT>
+			</UL>
+			<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>insert
+			changes to the database in order to update the dataset (date
+			range, latitude/longitude range)</FONT></FONT></FONT>
+			<UL>
+				<LI>
+				<FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>the
+				host for the files in the database is set to localhost, and not
+				to HPSS, so these file entries would need to be updated if the
+				TAR files are moved up to HPSS manually</FONT></FONT></FONT>
+			</UL>
+		</UL>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">If
+		no files are found for a month, that month has a </SPAN></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><SPAN STYLE="font-weight: normal">file
+		size</SPAN></FONT></FONT><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">
+		of </SPAN></FONT><FONT COLOR="#000000"><B>0</B></FONT><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">
+		and a compression </SPAN></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><SPAN STYLE="font-weight: normal">ratio</SPAN></FONT></FONT><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">
+		of </SPAN></FONT><FONT COLOR="#000000"><B>NA</B></FONT></FONT></FONT></FONT>
+
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3> <B>File size</B> is the size of the uncompressed file in Kilobytes.  Each .Z file is uncompressed using gunzip (because sferic does not have uncompress utility installed).  </FONT></FONT></FONT>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3> <B>Ratio</B> is the compression ratio of the compressed and uncompressed file sizes.  </FONT></FONT></FONT>
+
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Inventories
+		of TAR file contents are kept and used to compare changes in
+		already existing TAR files of the same name</FONT></FONT></FONT>
+	</UL>
+	<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">The
+	script keeps a list of stations from an existing file (currently
+	</SPAN></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><SPAN STYLE="font-weight: normal">./HPCNstations.txt</SPAN></FONT></FONT><FONT COLOR="#000000"><SPAN STYLE="font-weight: normal">),
+	where</SPAN></FONT></FONT></FONT></FONT>
+	<UL>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>each
+		line contains 1 station</FONT></FONT></FONT>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>each
+		station has an ID, city, and state</FONT></FONT></FONT>
+	</UL>
+	<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="font-weight: normal">When
+	the ingest directory (currently </SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><FONT SIZE=3><SPAN STYLE="font-weight: normal">/net/ftp/pub/data/incoming/hpcn</SPAN></FONT></FONT></FONT><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="font-weight: normal">)
+	is being searched for binary files</SPAN></FONT></FONT></FONT>
+	<UL>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>if
+		a new station is found (one that is not in the list of known
+		stations), it is added to the list</FONT></FONT></FONT>
+	</UL>
+	<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="font-weight: normal">The
+	script creates a monthly file inventory HTML page in the inventory
+	directory (currently in
+	</SPAN></FONT></FONT></FONT><A HREF="http://dmg.eol.ucar.edu/projects/operational/surface/hpcn/docs/inventory/"><FONT COLOR="#000000"><FONT FACE="Courier New, monospace"><FONT SIZE=3><SPAN STYLE="font-weight: normal">/net/web/dmg/html/projects/operational/surface/hpcn/docs/inventory/</SPAN></FONT></FONT></FONT></A><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><SPAN STYLE="font-weight: normal">)</SPAN></FONT></FONT></FONT>
+	<UL>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>e.g.
+		<A HREF="http://dmg.eol.ucar.edu/projects/operational/surface/hpcn/docs/inventory/HPCN_inventory_201107_201112.sample.html"><FONT FACE="Courier New, monospace">HPCN_inventory_201107_201112.sample.html</FONT></A><FONT FACE="Times New Roman, serif">
+		for July-December 2011 sample inventory file</FONT></FONT></FONT></FONT>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>each
+		page contains 6 months of inventory (January through June, July
+		through December)</FONT></FONT></FONT>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>pages
+		contain links to both previous and next page of inventories</FONT></FONT></FONT>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>if
+		HTML file of the same name already exists, the script will save the
+		contents of the existing file and add to them</FONT></FONT></FONT>
+	</UL>
+</UL>
+
+<HR>
+
+<!-- HPCN data are FTP'd to us where the user must use
+a password/login...not anonymous FTP. If possible we may switch
+this HPCN FTP to our new /net/ftp/pub/data/incoming
+anonymous FTP area -->
+<P ALIGN=LEFT STYLE="margin-bottom: 0in; font-weight: normal"><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>About the data:</FONT></FONT></FONT>
+	<UL>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>HPCN data were FTP'd to an area where the user was required to enter a password/login</FONT></FONT></FONT>
+		<LI><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Anonymous FTP is currently used, the directory is <FONT FACE="Courier New, monospace">/net/ftp/pub/data/incoming/hpcn</FONT></FONT></FONT></FONT>
+	</UL>
+</P>
+
+</div>
+
+</BODY>
+</HTML>

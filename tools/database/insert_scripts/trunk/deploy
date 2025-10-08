@@ -1,0 +1,155 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------------------
+# Deploy the insert scripts in this repo to the production location, make 
+# deployed version read-only and owned by the DMS group (users should only
+# make changes to their own# checkout of the repo and then deploy those
+# changes after they are tested.
+#
+# @author Joel Clawson
+# @version 1.0 - Original creation of the script.
+# @author Janine Aquino
+# @version 2.0 - Reworked to remove MySql scripts (those are deployed by their
+#     own script) and make consistent with MySql deploy script (for ease of 
+#     maintenance)
+#      
+##-----------------------------------------------------------------------------
+use strict;
+
+# Usage statement
+sub usage {
+    my @ARGV = shift;
+    print "Usage: $0 [-h] [dev] [install]\n";
+    print "\t -h \t Print this usage statement.\n";
+    print "\t dev \t deploy to dev dir\n";
+    print "\t install \t deploy to production dir\n";
+    exit(1);
+}
+
+if (($#ARGV == -1) #no options, only program name
+    || ($ARGV[0] eq '-h')) # Request to print usage statement
+{
+    usage(@ARGV);
+}
+
+# Check if all local code checked in to svn before run deploy if deploying to
+# install dir. If deploying to dev dir, then don't have check in changes first
+# because still testing them.
+if ($#ARGV == 0 && $ARGV[0] eq 'install') {
+    my @status = `svn status`;
+    foreach (@status) {
+        if ($_ =~ m/^M/) {
+            print "You have code changes that are not checked in:\n";
+            print @status;
+            print "Please check your changes in to SVN before deploying\n";
+            exit(1);
+        }
+    }
+}
+
+# Define the locations for the scripts and library files
+my $BIN_DIR = '';
+my $CFG_DIR = '';
+my $WEB_DIR = '';
+my $ROOT_DIR = '/net/work';
+
+$ROOT_DIR.='/dev' if ($#ARGV == 0 && $ARGV[0] eq 'dev');
+
+if (-d "${ROOT_DIR}/bin" && -d "${ROOT_DIR}/lib" && "/net/web/dmg/html") { 
+    # bother, can't easily combine with above test since $_ is uninitialized
+    # if -d fails
+    if (-w "${ROOT_DIR}/bin" && -w "${ROOT_DIR}/lib") { 
+         $BIN_DIR = "${ROOT_DIR}/bin/scripts/insert";
+         $CFG_DIR = "${ROOT_DIR}/cfg-files";
+         $WEB_DIR = "/net/web/dmg/html/software/tools/database/insert_scripts";
+    }
+} else {
+    printf("Unable to find or write to deploy dirs ${ROOT_DIR}/bin,lib.\n");
+    exit(1);
+}
+
+my $copy_command = "rsync -vcCrl --delete --delete-excluded";
+
+&main();
+
+##-----------------------------------------------------------------------------
+# @signature void main()
+# <p>Deploy the CODIAC insert scripts and the MySQL library modules to the
+# production locations for everyday use.</p>
+##-----------------------------------------------------------------------------
+sub main {
+    umask(2);
+    deploy_scripts();
+    deploy_cfg();
+    deploy_docs();
+}
+
+##-----------------------------------------------------------------------------
+# @signature void deploy_docs()
+# <p>Copy the documentation to the web directory and change the permissions of
+# the files so they can be read.</p>
+##-----------------------------------------------------------------------------
+sub deploy_docs {
+    # Create the web directory where the documentation is located.
+    if (! -e $WEB_DIR) {
+        system("mkdir -p $WEB_DIR");
+        system("chmod -R 02775 $WEB_DIR");
+        system("chgrp eoldata $WEB_DIR");
+    }
+
+    # Copy the documentation to the web dir.
+    printf("Copying docs to $WEB_DIR ...\n");
+    system("$copy_command docs/* $WEB_DIR");
+
+    # Change the permissions to prevent anyone from changing the files
+    printf("Chanding permissions on documentation files ...\n");
+    system("chmod 464 $WEB_DIR/*html");
+}
+
+##-----------------------------------------------------------------------------
+# @signature void deploy_cfg()
+# <p>Copy the cfg template to the cfg-files directory and change the
+# permissions of the files so they can be read.</p>
+##-----------------------------------------------------------------------------
+sub deploy_cfg {
+    # Create the cfg-files directory where the cfg-template is located.
+    if (! -e $CFG_DIR) {
+        system("mkdir -p $CFG_DIR");
+        system("chmod -R 02775 $CFG_DIR");
+        system("chgrp eoldata $CFG_DIR");
+    }
+
+    # Copy the cfg-template file to the cfg-files dir.
+    printf("Copying cfg-template to $CFG_DIR ...\n");
+    system("$copy_command config/cfg-template $CFG_DIR");
+
+    # Change the permissions to prevent anyone from changing the files
+    printf("Changing permissions on template file ...\n");
+    system("chmod 464 $CFG_DIR/cfg-template");
+}
+##------------------------------------------------------------------------------
+# @signature void deploy_scripts()
+# <p>Copy the scripts to the bin directory and change the permissions of the
+# files so they can be read and executed.</p>
+##------------------------------------------------------------------------------
+sub deploy_scripts {
+    # Create the bin directory where the scripts are located.
+    if (! -e $BIN_DIR) {
+        system("mkdir -p $BIN_DIR");
+        system("chmod -R 02775 $BIN_DIR");
+    }
+
+    # Copy the scripts to the bin directory.
+    #system("chmod -R 02775 $BIN_DIR/*");
+    printf("Copying scripts to $BIN_DIR ...\n");
+    system("$copy_command src/* $BIN_DIR");
+
+    # Change the permissions to prevent anyone from changing the files.
+
+    printf("Changing permissions to read and execute only ...\n");
+    #system("chmod -R 570 $BIN_DIR/*");
+
+    # Make sure all of the scripts are available to CDS users.
+    printf("Changing group to eoldata ...\n");
+    #system("chgrp -R eoldata $BIN_DIR/*");
+}

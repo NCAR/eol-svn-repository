@@ -1,0 +1,9 @@
+If the input file has every other data point missing, then no lines show in
+the color plots since gnuplot won't connect lines if ref $12, only if ref 12.
+Thus we can't plot flags for these files.
+
+see gnuplot.new, help using for explanation of why $12 does not connect lines.
+
+Thunderbird email client won't attach files with names containing a ':'.
+This is a thunderbird problem, but keep it in mind when chooseing a 
+separator_char for plot_converted_data.pl

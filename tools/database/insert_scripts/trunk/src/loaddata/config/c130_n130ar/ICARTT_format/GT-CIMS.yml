@@ -1,0 +1,69 @@
+dataset:
+- title_content: titleSep
+- name: <PROJECT>
+- archive_ident: '999.999'
+- title: Georgia Tech Chemical Ionization Mass Spectrometer (GTCIMS) Trace Gases In Situ Measurements
+- summary: This data set contains NASA DC-8 In Situ Measurements by the Georgia Tech Chemical Ionization Mass Spectrometer (CIMS) of  <chemicals> collected during <PROJECT>. This data set is in ICARTT format. Please see the header portion of the data files for details on instruments, parameters, quality assurance, quality control, contact information, and data set comments.
+- begin_date: '1001-01-01 00:00:00'
+- end_date: '7998-12-31 23:59:59'
+- visible: 0
+- auth_reqd: 1
+- eula_reqd: 1
+- version_number: '1.0'
+- quality: 2
+- ingest_location: /scr/raf/Prod_Data/<PROJECT>/GT-CIMS
+- archive_location: /FS/EOL/<year>/<project>/aircraft/c130_n130ar/GT-CIMS
+- filename_pattern: <PROJECT>-GTCIMS_C130_[\Y\Y\Y\Y\M\M\y\y]_R<VERSION>.ict
+- startdate_pattern: YYYY-MM-yy 00:00:00
+- enddate_pattern: YYYY-MM-yy 00:00:00
+- filelength: ''
+- minimum_latitude: '-90'
+- maximum_latitude: '90'
+- minimum_longitude: '-180'
+- maximum_longitude: '180'
+- CODIAC_specific_fields: titleSep
+- category_id: 2
+- platform_id: 130
+- is_eol_data: 1
+- format: 152
+- host: hpss
+- frequency_id: 4
+- spatial_type: point
+- point_of_contact_id_codiac: 1
+- internal_contact_id_codiac: 179
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+- dodsable: 0
+- t_subset: 0
+- event_subset: 0
+- file_subset: 1
+- order_allow_compress: 1
+- DTS_specific_fields: titleSep
+- source_contact_id_dts: 
+- internal_contact_id_dts: 
+- ingest_contact_id_dts: 
+- ingest_status_id_dts: 2
+- load_contact_id_dts: 
+- load_data_location: '*ict'
+- load_status_id_dts: 6
+- approve_contact_id_dts: 
+- approve_status_id_dts: 6
+- author_id_dts: 
+- note_type_id: 4
+- note_text: Loaded with new load_data_proj script.
+- optional_fields: titleSep
+- archive_location_2: ''
+- filename_pattern_2: ''
+- filename_pattern_3: ''
+- startdate_pattern_2: ''
+- enddate_pattern_2: ''
+- format_2: ''
+- host_2: ''
+- description: ''
+- iso_citation_role: 9
+- contact_id_codiac: 1500
+- datacite_contributor_type: 2
+- iso_citation_role_2: 2
+- contact_id_codiac_2: 179
+- datacite_contributor_type_2: 4

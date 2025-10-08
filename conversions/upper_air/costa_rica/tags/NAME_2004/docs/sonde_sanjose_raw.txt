@@ -1,0 +1,125 @@
+NAME San Jose, Costa Rica UCR-IMN PRELIMINARY Raw Format Rawinsonde Data
+
+1.0 General Description
+
+This data set includes 325 high vertical resolution (2-sec) soundings from 
+the San Jose, Costa Rica sounding site (WMO 78762) from 16 June to 30 September 
+2004.  This station is located at 10.00 North latitude and 84.21 West longitude
+and 921 m elevation.  These soundings were provided by the Universidad de Costa 
+Rica-Instituto Meteorologico Nacional (UCR-IMN).  During the period from 
+17 June to 5 September 2004 San Jose released four soundings per day at 
+0000, 0600, 1200, and 1800 UTC each day.  For the period from 6 to 30 September 
+2004 San Jose released one sounding per day at 1200 UTC (except on Sundays when 
+no soundings were released).
+
+These data are PRELIMINARY and are in their raw format.  The University 
+Corporation for Atmospheric Research/Joint Office for Science Support 
+(UCAR/JOSS) has conducted no processing or quality control on these data.
+
+The IMN home page can be found here:
+http://www.imn.ac.cr/
+
+This station used both Vaisala RS80-15G and RS90-AG radiosonde models during NAME.
+
+1.1 Data Set Contact
+
+Jose Meitin
+UCAR/JOSS
+meitin@ucar.edu
+
+
+2.0  Detailed Data Description
+
+2.1  Detailed Format Description
+     
+These soundings are PRELIMINARY and in their raw format.  The format is a
+Vaisala variant format.
+
+The beginning few lines of each file include a varying set of header
+records.  At various times these header records include the version
+of software used, the station name and WMO number, the radiosonde
+model and serial number, ground check information, and/or the time at
+which the radiosonde was released.
+
+After the header section, there is a header line that defines the 
+parameters in each data column and then another header line that
+defines the units used for each parameter.
+
+The data columns are
+
+Time:  time since release in minutes and seconds
+AscRate: Ascent rate in m/s
+Hgt/MSL: Height in m
+Pressure: pressure in hPa
+Temp: temperature in degrees C
+RH: relative humidity in %
+Dewp: Dew Point in degrees C
+Dir: Wind direction in degrees
+Speed: Wind speed in m/s
+
+Then there are data records every two seconds to the end of the data
+collection.
+
+The final section of the file includes the Global Telecommunications
+System (GTS) formatted TTAA, TTBB, TTCC, and TTDD messages for that
+sounding.
+
+2.2  Sample Data
+
+The following are sample records of the NAME San Jose, Costa Rica data
+in their raw format.
+
+2.2.1 Header Record Sample
+
+The exact set of header records vary from sounding to sounding.  Here
+is a sample:
+
+    Sounding program REV 8.34 using GPS
+
+    Station  : 78762 Alajuela
+    Location : 10.00 N  84.21 W    921 m
+
+    Sounding :           203
+    RS-number:           Z2220075
+    Radiosonde model:    RS90-AG
+
+
+    STARTED AT:         01   august 04  11:32 UTC^L
+
+2.2.2 High Resolution Data Record Sample
+
+   Time AscRate Hgt/MSL Pressure   Temp  RH   Dewp  Dir Speed
+ min  s     m/s       m      hPa   degC   %   degC  deg   m/s
+
+   0  0     0.0     921    910.4   19.4  89   17.5   50   3.1
+   0  2     2.0     925    910.0   18.7  90   17.0   53   3.4
+   0  4     2.0     929    909.6   18.2  91   16.7   55   3.5
+   0  6     1.8     932    909.4   17.7  92   16.4   58   3.7
+   0  8     1.9     936    908.9   17.1  93   16.0   60   3.9
+   0 10     1.9     940    908.5   16.5  92   15.2   62   4.0
+
+2.2.3 GTS Data Record Sample
+
+These are found at the end of each data file.
+
+ZCZC USCS01 MROC 011200
+78762 TTAA 51121 78762
+99910 19419 05006 00109 ///// ///// 92786 ///// /////
+85505 14032 11014 70125 06256 11019 50581 09733 12020
+40750 20329 10521 30957 33756 03014 25082 441// 02518
+20228 559// 00533 15404 711// 01034 10638 757// 19014
+88126 791// 02527
+77999=
+
+2.3 File Naming Conventions
+
+These data files are named using the following conventions:
+
+ddmmyyhhZ.txt
+
+where dd is the two digit day of the month
+      mm is the two digit month (e.g. 07 = July)
+      yy is the two digit year (e.g. 04 = 2004)
+      hh is the nominal hour of release in UTC time
+
+The Z can be either upper or lower case as can the txt.

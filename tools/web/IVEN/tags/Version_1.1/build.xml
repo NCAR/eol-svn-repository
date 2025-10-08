@@ -1,0 +1,35 @@
+<project name="iven" default="deploy" basedir=".">
+
+  <property name="app.name" value="iven" />
+  <property name="docs" value="docs" />
+  <property name="src" value="cgi-bin"/>
+  <property name="web" value="html"/>
+  <property name="deploy"  value="/net/web/dmg/cgi-bin/${app.name}"/>
+  <property name="deploy.html" value="/net/web/dmg/html/software/tools/web/${app.name}" />
+
+  <target name="clean-deploy">
+    <delete dir="${deploy}" />
+    <delete dir="${deploy.html}" />
+  </target>
+
+  <!-- pick which deploy method to use -->
+  <target name="deploy" depends="deploy-copy"/>
+
+  <target name="deploy-copy" depends="clean-deploy">
+    <!-- "static" web and conf files -->
+    <copy todir="${deploy}">
+      <fileset dir="${src}"/>
+    </copy>
+    <chmod perm="775">
+       <fileset dir="${deploy}">
+          <include name="**/*" />
+       </fileset>
+    </chmod>
+    <copy todir="${deploy.html}">
+      <fileset dir="${web}" />
+    </copy>
+    <copy todir="${deploy.html}/${docs}">
+      <fileset dir="${docs}" />
+    </copy>
+  </target>
+</project>

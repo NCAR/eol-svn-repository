@@ -1,0 +1,54 @@
+#
+# This cosort input file sorts QCF
+# format by nominal time, lat, and
+# then lon.
+#
+sort		# Action
+0		# Record length (Variable)
+1               # Number of input files
+input.qcf	# input file
+7		# Number of keys
+ascending       # Key 1 direction nominal year
+fixed           #       location
+1               #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 2 direction nominal month
+fixed           #       location
+4               #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 3 direction nominal day
+fixed           #       location
+7               #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 4 direction nominal hour
+fixed           #       location
+10              #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 5 direction nominal minute
+fixed           #       location
+13              #       starting column
+2               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 6 direction lat
+fixed           #       location
+58              #       starting column
+10              #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 7 direction lon
+fixed           #       location
+70              #       starting column
+11              #       length
+numeric         #       format
+external        #       value interpretation
+file            # Output
+input.srt       # Output file name

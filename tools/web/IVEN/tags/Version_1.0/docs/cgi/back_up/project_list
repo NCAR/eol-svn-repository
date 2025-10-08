@@ -1,0 +1,39 @@
+
+use strict;
+
+use lib "lib";
+use ProjectDBA;
+use Utils;
+use State;
+
+sub project_list
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	$state->{view} = $PROJECT;
+	my $projects = ProjectDBA::getAllProjects();
+
+	println( $cgi->header() );
+	println( "<html><head><title>JOSS Inventory Pages</title></head>" );
+	println( "<br><br>" );
+	println( "<center>" );
+		println( "<table border=0 cellpadding=20 cellspacing=20 width=75% bgcolor=#ebebeb>" );
+			println( "<tr>" );
+				println( "<td align=center><font size=+3><b>Welcome to Iven</font></b><br>The JOSS Inventory and Status Pages</td>" );
+			println( "</tr>" );
+		println( "</table>" );
+	println( "<br><br>" );
+	println( "<font size+1><u><b>Select a Project: </font></u></u>" );
+	println( "<ul>" );
+	foreach my $proj (@$projects)
+	{
+		my $url = $state->getUrlString( "project" => $proj->{pjname} );
+		println( "<li><a href=$url>$proj->{pjname}</a>" );
+	}
+
+	println( "</ul>" );
+	println( "</body></html>" );
+}
+
+1;

@@ -1,0 +1,84 @@
+#!/bin/perl -w
+
+# Creates the four lists of the files on mass store for GOES-8, 4KM, between 2001001 and 2003092:
+#  g8.HH15.dat  
+#  g8.HH16.dat  
+#  g8.HH45.dat  
+#  g8.HH46.dat  
+
+# Created for Darren - 2003-07-29
+
+# Author: Dan Sullivan
+
+
+use strict;
+use DBI;
+use CGI;
+
+my $cgi = CGI->new();
+my $dbh = connectDB(); 
+my $sql;
+my $sth;
+
+# g8.HH15.dat
+$sql = "SELECT FileTable.*, DayTable.resolution FROM DayTable, FileTable WHERE " .
+					"FileTable.day_id=DayTable.id AND FileTable.time % 100 = 15 AND DayTable.resolution = '4KM' " .
+          "AND DayTable.satellite='G08' AND DayTable.date >= 2001001 AND DayTable.date <= 2003092";
+$sth = $dbh->prepare( $sql );
+$sth->execute();
+outFile( $sth, "g8.HH15.dat" );
+
+# g8.HH16.dat
+$sql = "SELECT FileTable.*, DayTable.resolution FROM DayTable, FileTable WHERE " .
+					"FileTable.day_id=DayTable.id AND FileTable.time % 100 = 16 AND DayTable.resolution = '4KM' " .
+          "AND DayTable.satellite='G08' AND DayTable.date >= 2001001 AND DayTable.date <= 2003092";
+$sth = $dbh->prepare( $sql );
+$sth->execute();
+outFile( $sth, "g8.HH16.dat" );
+
+# g8.HH45.dat
+$sql = "SELECT FileTable.*, DayTable.resolution FROM DayTable, FileTable WHERE " .
+					"FileTable.day_id=DayTable.id AND FileTable.time % 100 = 45 AND DayTable.resolution = '4KM' " .
+          "AND DayTable.satellite='G08' AND DayTable.date >= 2001001 AND DayTable.date <= 2003092";
+$sth = $dbh->prepare( $sql );
+$sth->execute();
+outFile( $sth, "g8.HH45.dat" );
+
+# g8.HH46.dat
+$sql = "SELECT FileTable.*, DayTable.resolution FROM DayTable, FileTable WHERE " .
+					"FileTable.day_id=DayTable.id AND FileTable.time % 100 = 46 AND DayTable.resolution = '4KM' " .
+          "AND DayTable.satellite='G08' AND DayTable.date >= 2001001 AND DayTable.date <= 2003092";
+$sth = $dbh->prepare( $sql );
+$sth->execute();
+outFile( $sth, "g8.HH46.dat" );
+
+sub outFile
+{
+	my $sth = shift;
+	my $file = shift;
+	open( OUT, ">$file" );
+
+	while( (my $row = $sth->fetchrow_hashref()) )
+	{
+		$row->{time} = sprintf( "%4.4d", $row->{time} );
+		print( OUT tab(
+				$row->{date},
+				$row->{time},
+				$row->{size},
+				$row->{path},
+		), "\n" );
+}
+
+	close( OUT );
+}
+
+sub connectDB
+{
+  return DBI->connect( "DBI:mysql:database=suldan;host=thunder",
+                        "suldan", "hithere", { RaiseError=>1} ) || die( "Unable to connect to database: ml" );
+}
+
+sub tab
+{
+	return( join( "\t", @_ ) );
+}

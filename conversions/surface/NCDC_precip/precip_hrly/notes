@@ -1,0 +1,22 @@
+
+
+						June 5th
+
+Ran NCDC process_precip on April data in two different ways.
+	1) Selected all of April into one file
+	2) Selected each day of April into different files
+
+Results:
+	- "all.*" files are the same  (these are combined from all "*.dat" files)
+	- the station.list formed from the month select has some garbage
+		(see /out/final/stlst.dif)
+	- the log file for the month select has a long series of dropped lat/lon
+	    the day select does not have these dropped lat/lon
+	    (see apr.log and apr2.log in /exe)
+	- the IDs which did not match and were dropped were the same in both the 
+	  month and the day select
+	- checkers check_PQCF_comp and statPQCF came out with same results on
+	  on both sets of data
+
+Note:  also tried a select from April 1 to May 10.
+       Had errors with snm, according to log file.

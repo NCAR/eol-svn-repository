@@ -1,0 +1,950 @@
+#! /usr/bin/perl 
+
+#-----------------------------------------------------------------
+# master_list: 
+#-----------------------------------------------------------------
+use lib "lib";
+use Row;
+use Field;
+use Table;
+use Util;
+use Heading;
+use Category;
+
+use Date::Calc qw(Delta_Days);
+use Time::localtime;
+use CGI qw(:standard :html3 );
+use DBI;
+
+$| = 1;
+
+my $cgi = CGI->new();
+#-----------------Initialize Variables---------------
+
+#------------ Project name variables ----------------#
+# Project as seen in directory structures
+#my $proj;
+# Project name used for the database tables 
+my $db_proj;
+# Project name displayed to the users
+my $dis_proj;
+# The number of days a dataset is flagged as 'new'
+my $new_period = 90;
+# The file to write to when the master list is updated
+my $outfile;
+#my $out_file = "/web/docs/$proj/dm/archive/data_list.html";
+
+if ($cgi->param("project") eq "AMMA") {
+    $db_proj = "AMMA";
+    $dis_project = "AMMA";
+    $out_file = "/export/web/data/webapps/master_list/static/amma/data_list.html";
+} elsif ($cgi->param("project") eq "BAMEX") {
+#    $proj = "bamex";
+    $db_proj = "BAMEX";
+    $dis_proj = "BAMEX";
+    $new_period = 90;
+    $out_file = "/export/web/data/webapps/master_list/static/bamex/data_list.html";
+} elsif ($cgi->param("project") eq "EPIC") {
+#    $proj = "epic";
+    $db_proj = "EPIC";
+    $dis_proj = "EPIC";
+    $new_period = 90;
+    $out_file = "/export/web/data/webapps/master_list/static/epic/data_list.html";
+} elsif ($cgi->param("project") eq "IHOP_2002") {
+#    $proj = "ihop";
+    $db_proj = "IHOP";
+    $dis_proj = "IHOP_2002";
+    $new_period = 90;
+    $out_file = "/export/web/data/webapps/master_list/static/ihop/data_list.html";
+} elsif ($cgi->param("project") eq "INDOEX") {
+#    $proj = "indoex";
+    $db_proj = "INDOEX";
+    $dis_proj = "INDOEX";
+    $new_period = 90;
+    $out_file = "/export/web/data/webapps/master_list/static/indoex/data_list.html";
+} elsif ($cgi->param("project") eq "LPB") {
+#    $proj = "lpb";
+    $db_proj = "LPB";
+    $dis_proj = "LPB";
+    $new_period = 90;
+    $out_file = "/export/web/data/webapps/master_list/static/lpb/data_list.html";
+} elsif ($cgi->param("project") eq "NAME") {
+#    $proj = "name";
+    $db_proj = "NAME";
+    $dis_proj = "NAME";
+    $new_period = 90;
+    $out_file = "/export/web/data/webapps/master_list/static/name/data_list.html";
+} elsif ($cgi->param("project") eq "PACS") {
+#    $proj = "pacs";
+    $db_proj = "PACS";
+    $dis_proj = "PACS";
+    $new_period = 90;
+    $out_file = "/export/web/data/webapps/master_list/static/pacs/data_list.html";
+} elsif ($cgi->param("project") eq "RAINEX") {
+#    $proj = "rainex";
+    $db_proj = "RAINEX";
+    $dis_proj = "RAINEX";
+    $new_period = 90;
+    $out_file = "/export/web/data/webapps/master_list/static/rainex/data_list.html";
+} elsif ($cgi->param("project") eq "RICO") {
+#    $proj = "rico";
+    $db_proj = "RICO";
+    $dis_proj = "RICO";
+    $new_period = 90;
+    $out_file = "/export/web/data/webapps/master_list/static/rico/data_list.html";
+} elsif ($cgi->param("project") eq "SALLJEX") {
+#    $proj = "salljex";
+    $db_proj = "SALLJEX";
+    $dis_proj = "SALLJEX";
+    $new_period = 90;
+    $out_file = "/export/web/data/webapps/master_list/static/salljex/data_list.html";
+} elsif ($cgi->param("project") eq "TEST") {
+#    $proj = "test";
+    $db_proj = "TEST";
+    $dis_proj = "TEST";
+    $new_period = 60;
+    $out_file = "/export/web/dmg/html/master_list/test.test.html";
+} elsif ($cgi->param("project") eq "T-REX") {
+#    $proj = "trex";
+    $db_proj = "TREX";
+    $dis_proj = "T-REX";
+    $new_period = 60;
+    $out_file = "/export/web/data/webapps/master_list/static/trex/data_list.html";
+} elsif ($cgi->param("project") eq "VOCALS") {
+#    $proj = "vocals";
+    $db_proj = "VOCALS";
+    $dis_proj = "VOCALS";
+    $new_period = 90;
+    $out_file = "/export/web/data/webapps/master_list/static/vocals/data_list.html";
+} else {
+    println(header());
+    println("<html>");
+    println("<head>");
+    println("<title>Master List Editor</title>");
+    println("<body>");
+    println("<h1>Master List Editor</h1>");
+
+    if (defined($cgi->param("project")) && $cgi->param("project") !~ /^\s*$/) {
+       println("<p>Project (".$cgi->param("project").") is not known to the master list.</p>");
+    }
+
+    println("<ul>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=AMMA\">AMMA</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/master_list/arctic\">ATLAS</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=BAMEX\">BAMEX</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=EPIC\">EPIC</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=IHOP_2002\">IHOP_2002</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=INDOEX\">INDOEX</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/master_list/arctic\">ITEX</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=LPB\">LPB</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=NAME\">NAME</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=PACS\">PACS</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=RAINEX\">RAINEX</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=RICO\">RICO</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=SALLJEX\">SALLJEX</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/master_list/arctic\">SBI</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/master_list/arctic\">SHEBA</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=T-REX\">T-REX</a></li>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/cgi-bin/master_list/editor?project=VOCALS\">VOCALS</a></li>");
+    println("</ul>");
+
+    println("<h1>Documentation Files</h1>");
+    println("<ul>");
+    println("<li><a href=\"http://dmg.eol.ucar.edu/master_list/docs/general_howto\">How To: Create a new Project Master List</a></li>");
+    println("</ul>");
+
+    println("</body>");
+    println("</html>");
+    exit();
+}
+
+
+
+# Get today's date
+my $today = get_today();
+#-------------------------------------------------#
+
+# The location of this file
+my $my_url = "http://dmg.eol.ucar.edu/cgi-bin/master_list/editor";
+
+
+#-- Database variables --#
+my $ds = "ds$db_proj";
+my $head = "head$db_proj";
+my $cat = "cat$db_proj";
+#------------------------#
+
+#--These variables are common to all projects and should not have to be changed --#
+my $javascript = "http://data.eol.ucar.edu/master_list/javascript/ml.js";
+my $joss_logo = "http://data.eol.ucar.edu/master_list/images/eol.gif";
+my $readme_logo = "http://data.eol.ucar.edu/master_list/images/readme.gif";
+my $new_logo = "http://data.eol.ucar.edu/master_list/images/new.gif";
+#my $expected_logo = "http://www.joss.ucar.edu/master_list/joss.gif";
+my $ftp_page = "http://data.eol.ucar.edu/master_list/ftp_url.html";
+#----------------------------------------------------------------------------------#
+
+
+my %actions = ( "display", \&display,
+	       "Cancel", \&display,
+	       "Add Dataset", \&addDataset,
+	       ">>",	\&getUpdate,
+	       "getupdate",	\&getUpdate,
+	       "Update Dataset", \&updateDataset,
+	       "Delete", \&deleteDataset );
+
+my $dbh = connectToDB();
+
+#----------------------------------------------------
+
+#-----------------Main Program-----------------------
+my $action = param( "Action" );
+
+my @headings;
+my @categories;
+
+getHeadingsAndCategories();
+
+if( !defined( $action ) ) { $action = "display"; }
+
+$actions{$action}->();
+
+$dbh->disconnect();
+#----------------------------------------------------
+
+#-----------------Subroutines------------------------
+
+# display( form_row, hlt_id, mode )
+sub display
+{
+	my $row = shift;
+	my $hlt_id = shift;
+	my $mode = shift;
+
+	$mode = "add" if( !defined( $mode ) );
+	$hlt_id = -1 if( !defined( $mode ) );
+
+	showHeader();
+
+	showForm( $row, $mode );
+
+	showTableHeader();
+
+	showTable( $hlt_id, $mode );
+
+	println( "</body></html>" );
+}
+
+sub addDataset
+{
+	my $hlt = getNewDataset();
+
+	writeOutfile();
+
+	display( undef, $hlt, "add" );
+}
+
+sub getNewDataset {
+    my $row = readInRow();
+    $row->{id} = 0;
+    
+    my $in_prog = (${$row->getFieldByName( "in_progress" )}->{value} eq "Y")? 1 : 0; 
+    
+    my $stmt = $dbh->prepare("INSERT INTO $ds(id,data_set,link,date,document,category,in_progress,expected_date)".
+			     "VALUES (?,?,?,?,?,?,?,?)");
+    $stmt->execute($row->{id},${$row->getFieldByName( "data_set" )}->{value},${$row->getFieldByName( "link" )}->{value},
+		   ${$row->getFieldByName( "date" )}->{value},${$row->getFieldByName( "document" )}->{value},
+		   ${$row->getFieldByName( "category" )}->{value},$in_prog,
+		   ${$row->getFieldByName( "expected_date" )}->{value}) || die( "doing: ", $dbh->errstr );
+    $stmt->finish();
+
+    $stmt = $dbh->prepare("SELECT MAX(id) from $ds");
+    $stmt->execute();
+    my @row = $stmt->fetchrow();
+    $stmt->finish();
+    return $row[0];
+}
+
+sub readInRow
+{
+	my $row = getBlankRow();
+	my $size = $row->{count};
+
+	for( my $x = 0; $x < $size; $x++ )
+	{
+		${$row->getFieldByIndex($x)}->read_param();
+	}
+
+	$row->{id} = param( "id" );
+	if( !defined( $row->{id} ) )
+	{
+			$row->{id} = 0;
+	}
+
+	return $row;
+}
+
+sub getUpdate
+{
+	my $id = param( "id" );
+	my $row = getRowFromDB( $id );
+
+	display( $row, $id, "update" );
+}
+
+sub getRowFromDB {
+    my $id = shift;
+    my $row = getBlankRow();
+    
+    my $sql = "SELECT data_set, link, date, document, category, in_progress, expected_date FROM $ds WHERE id=?";
+    my $sth = $dbh->prepare( $sql );
+    $sth->execute($id);
+    
+    my @rw = $sth->fetchrow();
+    
+    ${$row->getFieldByName( "data_set" )}->{value} = $rw[0];	
+    ${$row->getFieldByName( "link" )}->{value} = $rw[1];	
+    ${$row->getFieldByName( "date" )}->{value} = $rw[2];	
+    ${$row->getFieldByName( "document" )}->{value} = $rw[3];	
+    ${$row->getFieldByName( "category" )}->{value} = $rw[4];	
+    $rw[5] = ( $rw[5] == 1 )? "Y" : "N";
+    ${$row->getFieldByName( "in_progress" )}->{value} = $rw[5];
+    ${$row->getFieldByName( "expected_date" )}->{value} = $rw[6];
+
+    $row->{id} = $id;
+
+    $sth->finish();
+
+    return $row;
+}
+
+sub updateDataset {
+    my $row = readInRow();
+    
+    my $hlt_row = $row->{id};
+    
+    my $in_prog = (${$row->getFieldByName( "in_progress" )}->{value} eq "Y")? 1 : 0; 
+
+    my $sql = "UPDATE $ds SET data_set=?,link=?,date=?,document=?,category=?,in_progress=?,expected_date=? WHERE id=?";
+    
+    my $stmt = $dbh->prepare($sql);
+    $stmt->execute(${$row->getFieldByName( "data_set" )}->{value},
+		   ${$row->getFieldByName( "link" )}->{value},
+		   ${$row->getFieldByName( "date" )}->{value},
+		   ${$row->getFieldByName( "document" )}->{value},
+		   ${$row->getFieldByName( "category" )}->{value},
+		   $in_prog,
+		   ${$row->getFieldByName( "expected_date" )}->{value},
+		   $row->{id}) || die( "doing: ", $dbh->errstr );
+    $stmt->finish();
+    writeOutfile();    
+    display( undef, $hlt_row, "add" );		
+}
+
+sub deleteDataset {
+    my $id = param( "id" );
+    
+    my $stmt = $dbh->prepare("DELETE FROM $ds WHERE id=?");
+    $stmt->execute($id) || die( "doing: ", $dbh->errstr );
+    $stmt->finish();
+    
+    writeOutfile();
+    
+    display();
+}
+
+sub showHeader
+{
+	my $field = Field->new( "category", "select", "" );
+	$field->{othertagmods} = getCategoryNamesAndAbrvs();
+	$field->{onChange} = "jumpToCategory( this ); return false;";
+
+	println( header() );
+	println( "<html><head><title>$dis_proj Data Sets</title>" );
+		println( "<script language=javascript>" );
+			println( "function jumpToCategory( sel )" );
+			println( "{ val = sel.options[sel.selectedIndex].value; if( val != \"no_jump\" ) document.location = \"" . $my_url."?project=".$cgi->param("project") . "#\" + val }" );
+		println( "</script>" );
+		println( "<script language=javascript src=$javascript></script>" );
+	println( "</head>" );
+	println( "<body text=#000000 bgcolor=#FFFFFF link=#0000EE vlink=#0000EE alink=#0000EE onLoad=\"jumpAnchor()\">" );
+	println( "<center>" );
+	println( "<hr size=3 noshade>" );
+		println( "<h1>$dis_proj DATA SETS &nbsp; <img src=\"$joss_logo\" width=\"50\" height=\"50\" align=absmiddle></h1>" );
+	println( "<hr size=3 noshade>" );
+		println( "<form><input type=hidden name=project value=\"".$cgi->param("project")."\"><b>Jump To: </b>" . $field->htm_tag() . "</form>" );
+}
+
+sub showTableHeader
+{
+	println( "<table border=1 cellpadding=5 width=100%>" );
+	println( $tr );
+		println( $td2 );
+			println( "<b>Data Set Name (Responsible group/PIs shown in parentheses)</b>" );
+		println( $tde );
+		println( $td2 );
+			println( "<b>Date Posted</b>" );
+		println( $tde );
+		println( $td2 );
+			println( "<b>Expected Receive Date</b>" );
+		println( $tde );
+		println( $td2 );
+			println( "<b>Documentation</b>" );
+		println( $tde );
+	println( $tre );		
+}
+
+sub showForm
+{
+	my $row = shift;
+	my $mode = shift;
+
+	if( !defined( $row ) ) { $row = getBlankRow(); }
+	#my $mode = "update";
+
+	#if( !defined( $row ) )
+	#{
+		#$row = getBlankRow();
+		#$mode = "add";
+	#}
+
+	println( "<table border=1 cellpadding=2 cellspacing=2 width=100%>" );
+	println( "<form method=post action=$my_url>" );
+	println("<input type=hidden name=project value=\"".$cgi->param("project")."\">");
+	println( $tr );
+		println( $td );
+			println( "<b>Dataset Name:<br>&nbsp;&nbsp;&nbsp;" . ${$row->getFieldByName( "data_set" )}->htm_tag() . "</b><br>" );
+			println( "<b>Dataset Link:<br>&nbsp;&nbsp;&nbsp;" . ${$row->getFieldByName( "link" )}->htm_tag() . "</b>" );
+		println( $tde );
+		println( $td );
+			println( "<b>Date Posted:</b><font size=-2>(YYYY-MM-DD)</font><br>&nbsp;&nbsp;&nbsp;" . ${$row->getFieldByName( "date" )}->htm_tag() . "<br>");
+        		println( "<b>Expected Receive Date:</b><font size=-2>(YYYY-MM-DD)</font><br>&nbsp;&nbsp;&nbsp;" . ${$row->getFieldByName( "expected_date" )}->htm_tag() . "<br>");
+			println( "<br><b>Dataset In Progress:</b>&nbsp;&nbsp;&nbsp;" . ${$row->getFieldByName( "in_progress" )}->htm_tag() . "<br>");
+		println( $tde );
+		println( $td );
+			println( "<b>Documentation URL:<br>&nbsp;&nbsp;&nbsp;" . ${$row->getFieldByName( "document" )}->htm_tag() . "</b>" );
+		println( $tde );
+		println( $td );
+			println( "<b>Category:<br>&nbsp;&nbsp;&nbsp;" . ${$row->getFieldByName( "category" )}->htm_tag() . "</b>" );
+		println( $tde );
+	println( $tre );
+	println( $tr );
+		println( "<td align=right colspan=4>" );
+			if( $mode eq "add" )
+			{
+				println( "<input type=submit name=Action value=\"Add Dataset\"></input>" );
+				println( "<input type=reset name=Reset value=\"Clear\"></input>" );
+			}
+			else
+			{
+				println( "<input type=submit name=Action value=\"Update Dataset\"></input>" );
+				println( "<input type=submit name=Action value=\"Add Dataset\"></input>" );
+				println( "<input type=submit name=Action value=\"Delete\" onClick=\"return verifyDelete();\"></input>" );
+				println( "<input type=submit name=Action value=\"Cancel\"></input>" );
+				println( "<input type=hidden name=id value=$row->{id}></input>" );
+			}
+		println( $tde . "</form>" );
+	println( $tre );
+
+	println( "</table>" );	
+}
+
+sub getBlankRow
+{
+	my $row = Row->new();
+	my $field;
+	$row->{id} = -1;
+
+	$field = Field->new( "data_set", "text", "" );
+	$field->{size} = 40;
+	$row->addField( $field );
+
+	$field = Field->new( "link", "text", "" );
+	$field->{size} = 40;
+	$row->addField( $field );
+
+	$field = Field->new( "date", "date", get_today() );
+	$row->addField( $field );
+
+	$field = Field->new( "document", "text", "" );
+	$field->{size} = 40;
+	$row->addField( $field );
+
+	$field = Field->new( "category", "select", "" );
+	$field->{othertagmods} = getCategoryNamesAndIds();
+	$row->addField( $field );
+
+	$field = Field->new( "in_progress", "checkbox", "N" );
+	$row->addField( $field );
+
+	$field = Field->new( "expected_date", "date", "" );
+	$row->addField($field);
+
+	return $row;
+}
+
+sub getCategories
+{
+	my @categories;
+	my $count = 0;
+	my $sql = "SELECT id, name, abrv FROM $cat ORDER BY name";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @row;
+
+	while( (@row = $sth->fetchrow()) )
+	{
+		my $cat = Category->new( $row[0], $row[1], $row[2] );
+		$categories[$count] = $cat;
+		$count++;
+	}
+
+	$sth->finish();
+
+	return @categories;	
+}
+
+sub getCategoryNamesAndIds
+{
+	my @names;
+	my $count = 0;
+	my $cat;
+
+	foreach $cat (@categories)
+	{
+		$names[$count] = $cat->{id};
+		$count++; 
+		$names[$count] = $cat->{name};
+		$count++;
+	}
+	return \@names;
+}
+
+sub getCategoryNamesAndAbrvs
+{
+	my @names;
+	my $count = 0;
+	my $cat;
+
+	$names[$count++] = "no_jump";
+	$names[$count++] = "SELECT";
+
+	foreach $cat (@categories)
+	{
+		$names[$count] = $cat->{abrv};
+		$count++; 
+		$names[$count] = $cat->{name};
+		$count++;
+	}
+	return \@names;
+}
+
+
+sub showTable
+{
+	my $hlt_id = shift;
+	my $mode = shift;
+
+	my $head;
+
+	foreach $head (@headings)
+	{
+		print( blankRow() );	
+		if( $head->{is_category} )
+		{
+			my $category = $head->{categories}[0];
+			println( $tr );
+				println( $td );
+					println( "<a name=" . getCategoryAbrv( $category ) . "></a><b>$head->{name}</b>" );
+				println( $tde );
+				println( $td . "&nbsp;" . $tde );
+				println( $td . "&nbsp;" . $tde );
+				println( $td . "&nbsp;" . $tde );
+			println( $tre );
+			showRows( $category, undef, $hlt_id, $mode );
+		}
+		else
+		{
+			my $category;
+			my @categories = @{$head->{categories}};
+
+			println( $tr );
+				println( $td );
+					println( "<b>$head->{name}</b>" );
+				println( $tde );
+				println( $td . "&nbsp;" . $tde );
+				println( $td . "&nbsp;" . $tde );
+				println( $td . "&nbsp;" . $tde );
+			println( $tre );
+			foreach $category (@categories) 
+			{
+				print( blankRow() );
+				println( $tr );
+					println( $td );
+						println( "<a name=" . getCategoryAbrv( $category ) . "></a><b>" . getCategoryName( $category ) . "</b>" );
+					println( $tde );
+					println( $td . "&nbsp;" . $tde );
+					println( $td . "&nbsp;" . $tde );
+				println( $tre );
+				showRows( $category, getCategoryAbrv( $category ), $hlt_id, $mode );
+			}
+		}
+	}
+	println( "</table>" );
+}
+
+sub showRows {
+    my $id = shift;
+    my $abrv = shift;
+    my $hlt_id = shift;
+    my $mode = shift;
+    
+    my $first = 1;
+    my @row;
+    
+    my $sql = "SELECT data_set,link,date,document,id,in_progress,expected_date FROM $ds WHERE category=? ORDER BY data_set";
+    
+    my $sth = $dbh->prepare( $sql );
+    $sth->execute($id);
+
+    while( (@row=$sth->fetchrow()) ) {
+	my $tr = "<tr>";
+	my $anchor = "";
+	
+	if( $row[4] == $hlt_id )
+	{
+	    $tr = "<tr bgcolor=$yellow>";
+	    $anchor = "<a name=mark></a>" if( $mode eq "add" );
+	}
+	
+	if( $first && defined( $abrv ) )
+	{	
+	    print( $tr . $td . "<a name=$abrv></a>" );
+	    print( $anchor ) if( $anchor );
+	    
+	    $first = 0;
+	}	
+	else
+	{
+	    print( $tr . $td );
+	    print( $anchor ) if( $anchor );
+	}
+	
+	println( "<form method=post action=$my_url>" );
+	println("<input type=hidden name=project value=\"".$cgi->param("project")."\">");
+	println( "<input type=submit name=Action value=&gt;&gt;></input>" );
+	println( "<input type=hidden name=id value=$row[4]></input>" ); 
+	
+	if( !defined( $row[1] ) || $row[1] eq "" )
+	{
+	    println( "$row[0]" );
+	}
+	else
+	{
+	    println( "<a href=$row[1]>$row[0]</a>" );
+	}
+	println( "$tde</form>" );
+	
+	if( defined( $row[2] ) && $row[2] ne "0000-00-00" && $row[5] ne "1" )
+	{
+	    println( "<td align=center>" );
+	    
+	    my $diff = dayDiff( $row[2], $today );
+	    if( $diff >= 0 && $diff < $new_period )
+	    {
+		println( "<img src=$new_logo><br>" );
+	    }
+	    println( " $row[2] </td>" );
+	    #println( "<td align=center>" . $row[2] . $tde ); 
+	}
+	elsif( $row[5] eq "1" )
+	{
+	    println( "<td align=center>" . "<font color=#CC0000><b>In Progress</b></font>" . $tde );
+	}
+	else
+	{
+	    println( $td . "&nbsp;" . $tde );
+	}
+	
+	if( defined( $row[6]) && $row[6] ne "0000-00-00") {
+	    println( "<td align=center>" );
+#		    println( "<img src=$expected_logo><br>" );
+	    println(" <font size=-2 color=#009900>EXPECTED</font><br>" );
+	    println( "$row[6] </td>" );
+	} else {
+	    println( $td . "&nbsp;" . $tde );
+	}
+	
+	
+	if( !defined( $row[3] ) || $row[3] eq "" )
+	{
+	    println( $td . "&nbsp;" . $tde );
+	}
+	else
+	{
+	    println( "<td align=center>" . "<a href=$row[3]><img border=0 src=$readme_logo></img></a>" . $tde );
+	}
+	println( $tre );
+    }
+
+    $sth->finish();
+}
+
+sub get_today
+{
+	my $tm = localtime;
+	return sprintf( "%4.4d-%2.2d-%2.2d", $tm->year+1900, $tm->mon+1, $tm->mday );
+}
+
+sub dayDiff
+{
+	my $start = shift;
+	my $end = shift;
+
+	my @start = split( "-", $start );
+	my @end = split( "-", $end );
+
+	return Delta_Days( @start, @end );
+}
+
+sub getCategoryAbrv
+{
+	my $id = shift;
+	my $category;
+	my $abrv = undef;
+
+	foreach $category (@categories)
+	{
+		if( $category->{id} == $id )
+		{
+			$abrv = $category->{abrv};
+			last;
+		}
+	}
+	return $abrv;
+}
+
+sub getCategoryName
+{
+	my $id = shift;
+	my $category;
+	my $name = undef;
+
+	foreach $category (@categories)
+	{
+		if( $category->{id} == $id )
+		{
+			$name = $category->{name};
+			last;
+		}
+	}
+	return $name;
+}
+
+
+sub writeOutfile
+{
+	open( OUT, ">$out_file" ) || die( "unable to open output file" );
+
+	print( OUT "<html><head><title>$dis_proj Data Sets</title></head>\n" );
+	print( OUT $warningMessage, "\n" );
+	print( OUT "<body text=#000000 bgcolor=#FFFFFF link=#0000EE vlink=#0000EE alink=#0000EE>\n" );
+	print( OUT "<center>\n" );
+	print( OUT "<hr size=3 noshade>\n" );
+		print( OUT "<h1>$dis_proj DATA SETS &nbsp; <img src=\"$joss_logo\" width=\"50\" height=\"50\" align=absmiddle></h1>\n" );
+	print( OUT "<hr size=3 noshade>\n" );
+
+	my $td2 = "<td align=center bgcolor=#fffcda>";
+	print( OUT "<table border=1 cellpadding=5>\n" );
+	print( OUT $tr, "\n" );
+		print( OUT $td2, "\n" );
+			print( OUT "<b>Data Set Name (Responsible group/PIs shown in parentheses)</b>\n" );
+		print( OUT $tde, "\n" );
+		print( OUT $td2, "\n" );
+			print( OUT "<b>Date Posted</b>\n" );
+		print( OUT $tde, "\n" );
+		print( OUT $td2, "\n" );
+			print( OUT "<b>Documentation</b>\n" );
+		print( OUT $tde, "\n" );
+	print( OUT $tre, "\n" );		
+
+	my $head;
+
+	foreach $head (@headings)
+	{
+		print( OUT blankRow() );
+		if( $head->{is_category} )
+		{
+			my $tr = "<tr bgcolor=#fffcda>";
+			my $td = "<td colspan=3>";
+			my $category = $head->{categories}[0];
+			print( OUT $tr, "\n" );
+				print( OUT $td, "\n");
+					print( OUT "<a name=" . getCategoryAbrv( $category ) . "></a><b>$head->{name}</b>\n" );
+				print( OUT $tde, "\n");
+			print( OUT $tre, "\n");
+			outRows( *OUT, $category );
+		}
+		else
+		{
+			my $category;
+			my @categories = @{$head->{categories}};
+
+			my $tr = "<tr bgcolor=#fffcda>";
+			my $td = "<td colspan=3>";
+			print( OUT $tr, "\n");
+				print( OUT $td, "\n" );
+					print( OUT "<b>$head->{name}</b>\n" );
+				print( OUT $tde, "\n" );
+			print( OUT $tre, "\n" );
+			foreach $category (@categories) 
+			{
+				my $tr = "<tr bgcolor=#fffcda>";
+				my $td = "<td colspan=3>";
+				print( OUT blankRow() );
+				print( OUT $tr, "\n");
+					print( OUT $td, "\n" );
+					print( OUT "<a name=" . getCategoryAbrv( $category ) . "></a><b>" . getCategoryName( $category ) . "</b>\n" );
+					print( OUT $tde, "\n" );
+				print( OUT $tre, "\n" );
+				outRows( *OUT, $category );
+			}
+		}
+	}
+	print( OUT "</table></body></html>\n" );
+	close( OUT );
+}
+
+sub outRows {
+    *OUT = shift;
+    my $id = shift;
+    my $abrv = shift;
+    my $first = 1;
+    my @row;
+    
+    my $sql = "SELECT data_set, link, date, document, id, in_progress, expected_date FROM $ds WHERE category=? " .
+	"ORDER BY data_set, date";
+    
+    my $sth = $dbh->prepare( $sql );
+    $sth->execute($id);
+
+    while( (@row=$sth->fetchrow()) )
+    {
+	if( $first && defined( $abrv ) )
+	{	
+	    print( OUT $tr . $td . "<a name=$abrv></a>" );
+	    $first = 0;
+	}	
+	else
+	{
+	    print( OUT $tr . $td );
+	}
+	
+	if( !defined( $row[1] ) || $row[1] eq "" )
+	{
+	    print( OUT "$row[0]", "\n" );
+	}
+	elsif( $row[1] =~ /^ftp/ )
+	{
+	    my $title = join( "+", split( / /, $row[0] ) );
+	    print( OUT "<a href=$ftp_page?$title&$row[1] target=_top>$row[0]</a>", "\n" );
+	}
+	else
+	{
+	    print( OUT "<a href=$row[1] target=_top>$row[0]</a>", "\n" );
+	}
+	print( OUT "$tde</form>", "\n" );
+	
+	if (defined($row[6]) && $row[6] ne "0000-00-00") {
+	    print( OUT "<td align=center>" );
+#		    print( OUT "<img src=$expected_logo><br>" );
+	    print( OUT " <font size=-2 color=#009900>EXPECTED</font><br>" );
+	    print( OUT "$row[6]</td>\n" );
+	}
+	elsif( defined( $row[2] ) && $row[2] ne "0000-00-00" && $row[5] ne "1")
+	{
+	    print( OUT "<td align=center>" );
+	    my $diff = dayDiff( $row[2], $today );
+	    if( $diff >= 0 && $diff < $new_period )
+	    {
+		print( OUT "<img src=$new_logo><br>" );
+	    }
+	    print( OUT "$row[2]</td>\n" ); 
+	}
+	elsif( $row[5] eq "1" )
+	{
+	    print( OUT "<td align=center>" . "<font color=#CC0000><b>In Progress</b></font>" . $tde, "\n" );
+	}
+	else 
+	{
+	    print( OUT $td . "&nbsp;" . $tde, "\n" );
+	}
+	
+	if( !defined( $row[3] ) || $row[3] eq "" )
+	{
+	    print( OUT $td . "&nbsp;" . $tde, "\n" );
+	}
+	else
+	{
+	    print( OUT "<td align=center>" . "<a href=$row[3]><img border=0 src=$readme_logo></img></a>" . $tde, "\n" );
+	}
+	print( OUT $tre, "\n" );
+    }
+
+    $sth->finish();
+}
+
+sub connectToDB {
+    return DBI->connect( "DBI:mysql:database=dmg_ml;host=tsunami.eol.ucar.edu",
+			 "dts-full", "l\@micbc", { RaiseError=>1 } ) || die( "Unable to connect to database" );
+}
+
+sub blankRow
+{
+ return "<tr><td colspan=4>&nbsp;</td></tr>";
+}
+#----------------------------------------------------
+
+
+sub getHeadingsAndCategories
+{
+    my $hcount = 0;
+    my $ccount = 0;
+    
+    my $sql = "SELECT id, name, abrv, is_category, proj_id FROM $head ORDER BY name";
+    
+    my $sth = $dbh->prepare( $sql );
+    $sth->execute();
+    
+    my @row;
+    
+    while( (@row=$sth->fetchrow()) )
+    {
+	my @cats;
+	my $c = 0;
+	
+	my $sql2 = "SELECT id, name, abrv FROM $cat WHERE heading_id=? ORDER BY name";
+	my $sth2 = $dbh->prepare( $sql2 );
+	$sth2->execute($row[0]);
+	
+	my @row2;
+	while( (@row2 = $sth2->fetchrow()) )
+	{
+	    my $cat = Category->new( $row2[0], $row2[1], $row2[2] );
+	    
+	    if( $row[3] ne 1 )
+	    {
+		$cat->{name} = $row[2] . ": " . $cat->{name};
+	    }
+	    
+	    $categories[$ccount++] = $cat;
+	    $cats[$c++] = $row2[0];
+	}
+	
+	my $head = Heading->new( $row[1], $row[2], $row[3], @cats );
+	$headings[$hcount++] = $head;
+	
+	$sth2->finish();
+    }
+    
+    $sth->finish();
+}

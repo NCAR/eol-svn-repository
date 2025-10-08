@@ -1,0 +1,324 @@
+#!/bin/perl -w
+
+my %users = ( "PS" => "pSkinner",
+							"LEC" => "lCully",
+							"JG" => "jGoldstein",
+							"JAG" => "jGoldstein",
+							"DS" => "dStott",
+							"BS" => "rSmith",
+							"GS" => "gStoss",
+							"Drew" => "dWilkinson",
+							"JC" => "jclawson",
+							"RB" => "rBateman",
+							"JAG/Drew" => "jGoldstein",
+							"SFW" => "swilliams",
+							"SL" => "sloehrer",
+						);
+my @fields = (
+							"storm_id", 
+							"title", 
+							"date", 
+							"remote_url", 
+							"loader",
+							"checker", 
+							"int_contact", 
+							"ext_contact", 
+							"ext_email", 
+							"ingest", 
+							"archive", 
+							"notes",
+							"documented",
+							"checked",
+						);
+
+my $in = "ace_asia_notes.html";
+my $out = "dln.dat";
+
+$file = readFile( $in );
+
+my @tr = split( "<tr", $file );
+
+my @records;
+my $rec_count = 0;
+foreach my $tr (@tr)
+{
+	if( $tr ne "" )
+	{
+		my @td = split( "<td", $tr );
+		my @fields;
+		my $c = 0;
+		foreach $td (@td)
+		{
+			$fields[$c++] = substr( $td, 1, index( $td, "</td>" ) - 1 );	
+		}
+
+		$records[$rec_count++] = parseFields( @fields );
+	}
+}
+
+outRecords( \@records );
+
+print( "total records: $rec_count\n" );
+
+sub parseFields
+{
+	my @fields = @_;
+	my %record;
+	
+	($record{storm_id}, $record{remote_url}) = parseStormId( $fields[1] ); 
+	$record{loader} = parseLoader( $fields[2] ); 
+	$record{title} = parseTitle( $fields[3] );
+	$record{documented} = parseFlag( $fields[4] );
+	$record{checked} = parseFlag( $fields[5] );
+	$record{master} = parseFlag( $fields[6] );
+	$record{date} = parseDate( $fields[7] );
+	($record{ingest}, $record{archive}) = parsePaths( $fields[8] );
+	($record{int_contact}, $record{ext_contact}) = parseContacts( $fields[9] );
+	$record{notes} = parseNotes( $fields[10] );
+
+	return \%record;
+}
+
+sub parseNotes
+{
+	return trim( shift );
+}
+
+sub parseContacts
+{
+	my $cell = shift;
+	my $int = "";
+	my $ext = "unassigned";
+	my @contacts = split( "<font", $cell );
+
+	$int = trim( removeTags( $contacts[0] ) );
+	$ext = trim( removeTags( "<" . $contacts[1] ) ) if( @contacts > 1 );
+
+	$int = $users{$int};
+	return( $int, $ext );	
+}
+
+sub parsePaths
+{
+	my $cell = shift;
+	my $ingest = "";
+	my $archive = "";
+	my @paths = split( "<br>", $cell );
+	@paths = split( "<BR>", $cell ) if( @paths == 1 );
+
+	$paths[1] = $paths[0] if( @paths == 1 );
+	$paths[1] = $paths[2] if( trim( $paths[1] ) eq "" );
+
+	$ingest = shrinkWhite( trim( removeTags( $paths[0] ) ) );
+	$archive = shrinkWhite( trim( removeTags( $paths[1] ) ) );
+
+	return( $ingest, $archive );	
+}
+
+sub parseDate
+{
+	my $cell = shift;
+	my $date = removeTags( $cell );
+	$date = trim( $date );
+	
+	my $year = substr( $date, 0, 4 );
+	my $month = substr( $date, 5, 2 ); 
+	my $day = substr( $date, 8, 2 ); 
+
+	return "0000-00-00" if( !( isNumber($year) && isNumber($month) && isNumber($day) ) );
+
+	return "$year-$month-$day";
+}
+
+sub parseLoader
+{
+	my $cell = shift;
+	$cell = trim( $cell );
+	my $user;
+	if( exists( $users{$cell} ) )
+	{
+ 		$user = $users{$cell};
+	}
+	else
+	{
+		$user = "unassigned";
+		#print( "user: $cell not defined\n" );
+	}
+	
+	return $user;
+}
+
+sub parseFlag
+{
+	my $cell = shift;
+	my $str = removeTags( $cell );
+	$str = trim( $str );
+	
+	if( $str eq "Y" )
+	{ $str = 1; }
+	else	
+	{ $str = 0; }
+
+	return $str;
+}
+
+sub removeTags
+{
+	my $str = shift;
+	my @chars = split( //, $str );
+	my $ignore = 0;
+	$str = "";
+	foreach $char (@chars)
+	{
+		if( $char eq "<" )
+		{
+			$ignore = 1;
+		}
+		elsif( $char eq ">" )
+		{
+			$ignore = 0;
+		}
+		elsif( !$ignore )
+		{
+			$str = $str . $char;
+		}
+	}
+
+	return $str;
+}
+
+sub parseTitle
+{
+	return trim( shrinkWhite( shift, "\n" ) );
+}
+
+sub parseStormId
+{
+	my $cell = shift;
+	my $href = index( $cell, "href" );
+	my $href_end = getSmallest( index( $cell, ">", $href ),
+															index( $cell, " ", $href ),
+															index( $cell, "\n", $href ) );
+	my $a_end = index( $cell, ">", $href );
+
+	my $length = length( $cell ) - ($href+5) - ( length($cell) - $href_end );
+ 
+
+	#my $url = noQuote( trim( substr( $cell, $href+5, $length )  ) );
+	my $url = noQuote( trim( substring( $cell, $href+5, $href_end )  ) );
+
+	$url = undef() if( $url =~ /^http:\/\/www.joss.ucar.edu\/cgi-bin\/codiac\/dss/ );	
+
+	$length = length( $cell ) - ($a_end+1) - ( length($cell) - index( $cell, "</a>" ) );
+	my $storm_id = substr( $cell, $a_end+1, $length );
+	chomp( $storm_id );
+ 	$storm_id = trim( $storm_id );
+
+	if( $storm_id eq "Link" )
+	{
+		print( $url, "\n" );
+	}	
+	$storm_id = "99.999" if( !isNumber( $storm_id ) );
+
+	return( $storm_id, $url );
+}
+
+# substring( str, start, end )
+sub substring
+{
+	my $str = shift;
+	my $start = shift;
+	my $end = shift;
+	my $length = length($str) - $start - (length($str) - $end);
+	return substr( $str, $start, $length );
+}
+
+sub readFile
+{
+	my $file = shift;
+	my $str = "";
+	open( IN, "<$file" ) || die( "unable to open $file" );
+
+	while( !eof( IN ) )
+	{
+		$str = $str . <IN>;
+	}	
+
+	return $str;
+}
+
+sub isNumber 
+{
+	my $value = shift;
+	if ($value =~ m/^-?([0-9]+[\.]?[0-9]*|[0-9]*[\.]?[0-9]+)$/) 
+	{
+		return 1;
+	} 
+	else 
+	{
+		return 0;
+	}
+}
+
+sub trim
+{
+	local $str = $_[0];
+	$str =~ s/^\s+//;
+	$str =~ s/\s+$//;
+	return $str;
+}
+
+sub noQuote
+{
+	my $str = shift;
+	$str =~ s/^\"//;
+	$str =~ s/\"$//;
+	return $str;
+}
+
+sub getSmallest
+{
+	my $small = shift;
+	foreach my $s (@_)
+	{
+		$small = $s if( $s >= 0 && $s < $small );
+	}
+	return $small;	
+}
+
+sub remove
+{
+	my $str = shift;
+	my $char = shift;
+
+	$str =~ s/$char//g;
+
+	return $str;
+}
+
+sub shrinkWhite
+{
+	my $str = shift;
+
+	$str =~ s/\s+/ /g;
+
+	return $str;
+}
+
+sub outRecords
+{
+	my $recs = shift;
+	open( OUT, ">$out" );
+	my $last = $fields[scalar(@fields)-1];
+
+	foreach my $rec (@$recs)
+	{
+		foreach my $f( @fields)
+		{
+			$rec->{$f} = "" if( !defined( $rec->{$f} ) );
+			print( OUT $rec->{$f} );	
+			my $end = ( $f eq $last )? "" : "";
+			print( OUT $end );
+		}		
+	}
+}

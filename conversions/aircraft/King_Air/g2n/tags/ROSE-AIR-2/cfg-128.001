@@ -1,0 +1,64 @@
+###############################################################################
+# cfg-template
+#
+# This is a template for a configuration file to use with the MySqlInserter.pm
+# Perl module.  It contains sets of key/value pairs that are used by the 
+# inserter to determine which files to be inserted into the database.
+#
+# The full documetation is at http://dmg.eol.ucar.edu/tutorials/archival/codiac/howto_insert_script.pl 
+#
+# This is just intended to be a quick reference on required fields and
+# formats.
+#
+# Key/Value Pairs
+#     directory - REQUIRED - Directory where the files can be found can
+#                            use date/time meta-characters
+#     enddate - REQUIRED when date/time is not fully defined in the directory
+#               and filename and the filelength key is not used; must be in
+#               YYYY-MM-yy HH:mm:SS format
+#     filelength - REQUIRED when the end date is not defined in the directory
+#                  and filename and the end date key is not used; format is a value
+#                  followed by a case-insensitive frequency of year, month, day,
+#                  hour, or minute (any of them can be plural)
+#     filename - REQUIRED - Pattern used to find files, can use date/time
+#                           meta-character
+#     format - REQURED - the CODIAC id of the format of the file types
+#     host - OPTIONAL - Default = localhost; set to mss or mass_store to
+#                       search the mass store instead of the local system
+#     insertrange - OPTIONAL - use when only a subset of the files are to be
+#                   inserted; format must be YYYY-MM-yy:YYYY-MM-yy
+#     purpose - OPTIONAL - Default = data; set to doc or eula for inserting
+#                          non-data files
+#     recursedirectories - OPTIONAL - Default = true; set to false to prevent
+#                          searching directories below the base directory;
+#                          will also recognize integral boolean values
+#     startdate - REQUIRED when date/time is not fully defined in the directory
+#                 and filename keys; must be in YYYY-MM-yy HH:mm:SS format
+#
+# Date/Time Meta-Characters
+#   Grouping
+#      () - Included meta-characters are both begin and end dates.
+#      [] - Included meta-characters are only begin date.
+#      {} - Included meta-characters are only end date.
+#      NOTE: Date/Time groupings MUST ONLY CONTAIN date/time meta-characters
+#
+#   Date/Time
+#      \Y - Match 1 digit of a year
+#      \M - Match 1 digit of a month
+#      \y - Match 1 digit of a day
+#      \H - Match 1 digit of an hour
+#      \m - Match 1 digit of a minute
+#      \J - Match 1 digit of a julian day
+#      \V - Match 3 or 4 characters that make up a month abbreviation
+###############################################################################
+# Example of begin date == end date but different times
+{
+  host: mass_store
+  directory: /RAF/1992/249/HRT/NetCDF
+  filename: (\E\E\E\E).(\Y\Y\Y\Y\M\M\y\y).[\H\H\m\m]\d\d_{\H\H\m\m}\d\d.PNI.nc
+  startdate: YYYY-MM-yy HH:mm:00
+  stopdate: YYYY-MM-yy HH:mm:00
+  format: 22
+  purpose:data
+}
+

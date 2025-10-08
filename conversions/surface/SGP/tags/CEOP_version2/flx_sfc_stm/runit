@@ -1,0 +1,27 @@
+#!/bin/tcsh
+
+#-------------------
+# soil - stm
+#-------------------
+del g.log h.log
+( ./CEOP_stm_refsite_SGP.pl > g.log) >& h.log
+
+#-------------------
+# tower - twr
+#-------------------
+# del e.log f.log
+# ( ./CEOP_twr_refsite_SGP.pl > e.log) >& f.log
+
+#-------------------
+# flux - flx
+#-------------------
+# del c.log d.log
+# ( ./CEOP_flx_refsite_SGP.pl > c.log ) > & d.log
+# del c2.log d2.log
+# ( ./CEOP_flx-2009_refsite_SGP.pl > c2.log ) >& d2.log
+
+#-------------------
+# surface - sfc
+#-------------------
+# del a.log b.log
+# ( ./CEOP_sfc_refsite_SGP.pl > a.log ) > & b.log

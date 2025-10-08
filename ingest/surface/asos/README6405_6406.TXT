@@ -1,0 +1,48 @@
+This directory contains the page 1 and page 2 ASOS one minute (temporal resolution)
+data. The page 1 data are in data set DSI 6405 and page 2 data are in data set DSI 
+6406. All files in DSI 6405 and DSI 6406 are further organized in subdirectories named by
+data set name and 4 digit year.
+
+DSI 6405 files (page one data): Each data file contains data for one station-month.
+The files names for the page one data begin with 64050 (for data set name), followed 
+by the 4 character call letter identifier (e.g. KNYC = New York Central Park, NY), 
+the 4 digit year and two digit month. The file extensions are ".dat".
+The format documentation for these files are available at
+
+http://www1.ncdc.noaa.gov/pub/data/documentlibrary/tddoc/td6405.pdf 
+(Adobe Acrobat reader required)
+
+or
+
+http://www1.ncdc.noaa.gov/pub/data/documentlibrary/tddoc/td6405.doc
+(Microsoft Word or compatible required).
+
+
+DSI 6406 files (page two data): Each data file contains data for one station-month.
+The files names for the page one data begin with 64060 (for data set name), followed 
+by the 4 character call letter identifier (e.g. KNYC = New York Central Park, NY), 
+the 4 digit year and two digit month. The file extensions are ".dat".
+The format documentation for these files are available at
+
+http://www1.ncdc.noaa.gov/pub/data/documentlibrary/tddoc/td6406.pdf 
+(Adobe Acrobat reader required)
+
+or
+
+http://www1.ncdc.noaa.gov/pub/data/documentlibrary/tddoc/td6406.doc
+(Microsoft Word or compatible required).
+
+
+Anonymous ftp instructions:
+
+   1. Enter: open ftp.ncdc.noaa.gov
+   2. Login is: ftp or anonymous
+   3. Password is: your email address
+   4. You are now logged onto a workstation. Enter help if you'd like a list of available commands.
+   5. To move to the correct subdirectory, enter: cd /pub/data/asos-onemin/.
+   6. To get a copy of the file descriptions, enter: get README.TXT destination (destination is your output location and name)...e.g.--get README.TXT c:README.TXT - copies to hard drive c: Note that file names are in all CAPITAL letters/numbers.
+   7. To logoff the system when finished, enter: bye
+
+
+
+

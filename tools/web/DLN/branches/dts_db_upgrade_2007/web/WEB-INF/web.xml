@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+        http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+  <display-name>EOL/DMG Data Loading Notes</display-name>
+  <description>EOL Data Management Group:  Data Tracking System - Data Loading Notes</description>
+
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>Data Loading Notes Application</realm-name>
+	</login-config>	
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Data Loading Notes Restrictions</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>basic</role-name>
+            <role-name>super</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-role><role-name>basic</role-name></security-role>
+    <security-role><role-name>super</role-name></security-role>
+</web-app>

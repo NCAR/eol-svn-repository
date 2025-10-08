@@ -1,0 +1,150 @@
+#!/bin/perl -w
+
+# --------------------------------------------------------------
+# proc_proj_update: processes the form displayed by the edit_project
+#   script.  Performs the needed database operations and then
+#   displays a status message or allows the user to edit the
+#   project links.
+# 
+# Expected Params:
+#   "editButton" - the button the user pressed, used to determine
+#     the action
+#   "mode" - the add or delete mode established by edit_project
+#  Others from the form, see getPostedProj()
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+#use strict;
+use CGI;
+use lib "lib";
+use Category;
+use Utils;
+use Link;
+use Project;
+require "./view_links";
+
+my $cgi = CGI->new();
+
+my %actions = ( "Update" => \&updateProj, 
+								"Delete" => \&deleteProj, 
+								"Done" => \&done, 
+								"Next >>" => \&editLinks, 
+								"Edit Links..." => \&editLinks, 
+								"Cancel" => \&cancelProj );
+
+my $action = $cgi->param( "editButton" );
+
+my $proj = getPostedProj(); 
+my $mode = $cgi->param( "mode" );
+
+$actions{$action}->();
+
+sub showPage
+{
+	my $msg = shift;
+	my $onLoad = shift;
+	$onLoad = "\"\"" if( !defined( $onLoad ) );
+
+	println( $cgi->header() );
+
+	println( "<html><head><title>Project Edit</title></head>" );
+	println( $css );
+	println( $jscript );
+
+	println( "<body onLoad=$onLoad bgcolor=#e9e9e9 link=white alink=white vlink=white text=black>" );
+	println( "<center><table border=0 cellpadding=3 cellspacing=8 width=95% bgcolor=#e9e9e9>" );
+		println( "<tr bgcolor=#336699><td><font color=white size=+1>Add/Edit Categories</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td align=center><b>$msg</b></td></tr>" );
+		println( "<tr><td align=center><input type=submit value=\"Close Window\" onClick=\"window.close();\"></td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+
+	println( "</body></html>" );
+}
+
+sub updateProj
+{
+	$proj->updateDB();
+
+	my $onLoad = "\"setFrames( top.opener.parent, \'\', \'category_list?project=$proj->{id}\', \'\' );\"";
+	showPage( "Project has been updated.", $onLoad );
+}
+
+sub deleteProj
+{
+	my @datasets = Project::getAllDatasets( $proj->{id} );	
+	my $delete = 0;
+	if( scalar(@datasets) != 0 )
+	{
+		my @tree = Category::getTree( $proj->{id} );
+		$delete = 1 if( scalar(@tree) == 0 );
+	}
+	else
+	{
+		$delete = 1;
+	}
+
+	if( !$delete )
+	{
+		# notify user can't delete
+		showPage( "Unable to delete project with categories and/or datasets." );
+	}
+	else
+	{
+		$proj->deleteDB();
+		my $onLoad = "\"setFrames( top.opener.parent, \'\', \'project_list\', \'\' );\"";
+		showPage( "Project has been deleted", $onLoad );
+	}
+}
+
+sub editLinks
+{
+	if( $proj->{id} == -1 )
+	{
+		$proj->insertDB();
+	}
+	else
+	{
+		$proj->updateDB();
+	}
+
+	view_links( $proj->{id}, $mode, "project" );
+}
+
+sub cancelProj
+{
+	showPage( "Action has been Canceled." );
+}
+
+sub done
+{
+	my $msg = "Project has been updated.";
+	$msg = "Project has been added." if( $mode eq "add" );
+	my $project = $cgi->param( "linkto" );
+	my $onLoad = "\"setFrames( top.opener.parent, \'\', \'category_list?project=$project\', \'\' );\"";
+	showPage( $msg, $onLoad );
+}
+
+sub getPostedProj
+{
+	my $proj = Project->new();
+
+	$proj->{id} = $cgi->param( "id" );
+	$proj->{name} = $cgi->param( "name" );
+	$proj->{long_name} = $cgi->param( "long_name" );
+	$proj->{active} = defined( $cgi->param( "active" ) )? 1: 0;
+	$proj->{logo_src} = $cgi->param( "logo_src" );
+	$proj->{left_css_src} = $cgi->param( "left_css_src" );
+	$proj->{body_css_src} = $cgi->param( "body_css_src" );
+	$proj->{contact_name} = $cgi->param( "contact_name" );
+	$proj->{contact_email} = $cgi->param( "contact_email" );
+
+	$proj->checkDefined();
+
+	return $proj;
+}
+

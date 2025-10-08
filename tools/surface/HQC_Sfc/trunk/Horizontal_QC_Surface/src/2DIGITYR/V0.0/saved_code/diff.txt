@@ -1,0 +1,216 @@
+131,161d130
+< /*-------------------------------------------------------
+<  * copy_qcfrec.c - copies data from qcfptr1 to qcfptr.
+<  *
+<  *  Input: qcfptr is the pointer to a structure of
+<  *         type qcfrec (qcf record variables)
+<  *
+<  *  Output: qcfptr2.
+<  *
+<  *-------------------------------------------------------*/
+< void copy_qcfrec ( /*in/out*/  QCFREC *qcfptr,
+<                    /*in*/      QCFREC *qcfptr1 )
+<    {
+<    qcfptr->year_nom = qcfptr1->year_nom;
+<    qcfptr->month_nom = qcfptr1->month_nom;
+<    qcfptr->day_nom = qcfptr1->day_nom;
+<    qcfptr->hour_nom = qcfptr1->hour_nom;
+<    qcfptr->minute_nom = qcfptr1->minute_nom;
+<     
+<    qcfptr->year = qcfptr1->year;
+<    qcfptr->month = qcfptr1->month;
+<    qcfptr->day = qcfptr1->day;
+<    qcfptr->hour = qcfptr1->hour;
+<    qcfptr->minute = qcfptr1->minute;
+<     
+<    strncpy( qcfptr->qnet, qcfptr1->qnet,10);
+<    strncpy( qcfptr->statn, qcfptr1->statn,15);
+<     
+<    qcfptr->lat = qcfptr1->lat;
+<    qcfptr->lon = qcfptr1->lon;
+<    qcfptr->occur = qcfptr1->occur;
+<    qcfptr->staelv = qcfptr1->staelv;
+163,213d131
+<    qcfptr->staprs = qcfptr1->staprs;
+<    qcfptr->staflg = qcfptr1->staflg;
+<    qcfptr->seaprs = qcfptr1->seaprs;
+<    qcfptr->seaflg = qcfptr1->seaflg;
+<    qcfptr->cmpsea = qcfptr1->cmpsea;
+<    qcfptr->cmpflg = qcfptr1->cmpflg;
+< 
+<    qcfptr->temp   = qcfptr1->temp;
+<    qcfptr->tmpflg = qcfptr1->tmpflg;
+<    qcfptr->dewpnt = qcfptr1->dewpnt;
+<    qcfptr->dewflg = qcfptr1->dewflg;
+<  
+<    qcfptr->wndspd = qcfptr1->wndspd;
+<    qcfptr->spdflg = qcfptr1->spdflg;
+<    qcfptr->wnddir = qcfptr1->wnddir;
+<    qcfptr->dirflg = qcfptr1->dirflg;
+<  
+<    qcfptr->precip = qcfptr1->precip;
+<    qcfptr->prcflg = qcfptr1->prcflg;
+<  
+<    qcfptr->sg     = qcfptr1->sg;
+<    qcfptr->squall = qcfptr1->squall;
+<    qcfptr->sqlflg = qcfptr1->sqlflg;
+<  
+<    qcfptr->prswea = qcfptr1->prswea;
+<    qcfptr->pwflg  = qcfptr1->pwflg;
+<  
+<    qcfptr->visib  = qcfptr1->visib;
+<    qcfptr->visflg = qcfptr1->visflg;
+<  
+<    qcfptr->celht1 = qcfptr1->celht1;
+<    qcfptr->celfg1 = qcfptr1->celfg1;
+<    qcfptr->c1flg  = qcfptr1->c1flg;
+<    qcfptr->clamt1 = qcfptr1->clamt1;
+<    qcfptr->ca1flg = qcfptr1->ca1flg;
+<  
+<    qcfptr->celht2 = qcfptr1->celht2;
+<    qcfptr->celfg2 = qcfptr1->celfg2;
+<    qcfptr->c2flg  = qcfptr1->c2flg;
+<    qcfptr->clamt2 = qcfptr1->clamt2;
+<    qcfptr->ca2flg = qcfptr1->ca2flg;
+< 
+<    qcfptr->celht3 = qcfptr1->celht3;
+<    qcfptr->celfg3 = qcfptr1->celfg3;
+<    qcfptr->c3flg  = qcfptr1->c3flg;
+<    qcfptr->clamt3 = qcfptr1->clamt3;
+<    qcfptr->ca3flg = qcfptr1->ca3flg;
+<  
+<    } /* copy_qcfrec() */
+<  
+< 
+228c146
+< 
+---
+>  
+231c149
+<    fprintf( out_stream, "%2.2d/%2.2d/%2.2d %2.2d:%2.2d ", 
+---
+>    fprintf( output_stream, "%2.2d/%2.2d/%2.2d %2.2d:%2.2d ", 
+235c153
+<    fprintf( out_stream, "%2.2d/%2.2d/%2.2d %2.2d:%2.2d ", 
+---
+>    fprintf( output_stream, "%2.2d/%2.2d/%2.2d %2.2d:%2.2d ", 
+239c157
+<    fprintf( out_stream, "%-10s %-15s %10.5f %11.5f %3d %7.2f ",   /* updated statn size*/
+---
+>    fprintf( output_stream, "%-10s %-15s %10.5f %11.5f %3d %7.2f ", 
+244c162
+<    fprintf( out_stream, "%7.2f %c %7.2f %c %7.2f %c ", 
+---
+>    fprintf( output_stream, "%7.2f %c %7.2f %c %7.2f %c ", 
+249c167
+<    fprintf( out_stream, "%7.2f %c %7.2f %c %7.2f %c %7.2f %c ", 
+---
+>    fprintf( output_stream, "%7.2f %c %7.2f %c %7.2f %c %7.2f %c ", 
+255c173
+<    fprintf( out_stream, "%7.2f %c %c %7.2f %c %4d %c %8.2f %c ", 
+---
+>    fprintf( output_stream, "%7.2f %c %c %7.2f %c %4d %c %8.2f %c ", 
+261c179
+<    fprintf(out_stream,"%7.2f %2d %c %2d %c %7.2f %2d %c %2d %c %7.2f %2d %c %2d %c\n", 
+---
+>    fprintf(output_stream,"%7.2f %2d %c %2d %c %7.2f %2d %c %2d %c %7.2f %2d %c %2d %c\n", 
+266,267d183
+<     *output_stream = out_stream;
+< 
+287a204
+> 
+300c217
+< /*was:    fscanf( in_stream, "%10s%1c%15s%1c%10f%1c%11f%1c%3d%1c%7f%1c", /* updated statn size */
+---
+> /*was:   fscanf( in_stream, "%10s%1c%15s%1c%10f%1c%11f%1c%3d%1c%7f%1c",
+308c225
+<  
+---
+> 
+310c227
+<  
+---
+> 
+312,317c229,234
+<  
+<    for (ii=0;ii<15;ii++)
+<       qcfptr->statn[ii] = fgetc (in_stream);
+<  
+<    qcfptr->statn[15] = '\0';
+<  
+---
+> 
+>    for (ii=0;ii<15;ii++) 
+>       qcfptr->statn[ii] = fgetc (in_stream);   
+> 
+>    qcfptr->statn[15] = '\0'; 
+> 
+319c236
+<  
+---
+> 
+324c241,246
+< /*-------- 
+---
+> /*-------------
+>    printf("%-10s %-15s %10.5f %11.5f %3d %7.2f\n",
+>             qcfptr->qnet,  qcfptr->statn,
+>             qcfptr->lat,   qcfptr->lon,
+>             qcfptr->occur, qcfptr->staelv);
+> 
+337d258
+< -------- */
+338a260,261
+>  -------- */
+> 
+392,394d314
+<     *input_stream = in_stream;
+< 
+< /*    printf ("Exit read fn\n"); */
+407a328
+> 
+425a347
+> 
+433,474d354
+< 
+< 
+< /*---------------------------------------------------------
+<  * determine_stn_no() - Determines internal stn number.
+<  *
+<  * 09 Dec 94 lec
+<  *   Created.
+<  *--------------------------------------------------------*/
+< int determine_stn_no(/*in*/ STRING16 stn_list[MAXNUMSTNS],
+<                      /*in*/ long     *numstns,
+<                      /*in*/ char     statn[16])
+<    {
+<    int      i;
+<    long int nums;
+<  
+<    /* printf ("Enter determine_stn_no. numstns, statn: %ld %-sxxx\n",
+<            *numstns, statn); */
+<  
+<    nums = *numstns;
+<    for (i=0;i<nums;i++)
+<      if (!strncmp(stn_list[i], statn,16))
+<         {
+<         /* printf ("Found a match, i = %ld\n", i); */
+<         return(i);
+<         }
+<  
+<    /*
+<     * Else found new station. Add to stn_list and increment
+<     * number of stations. Note that nums is incremented one
+<     * extra in the loop above.
+<     */
+<    strncpy (stn_list[nums], statn, 16);
+<  
+<    /* printf ("Exit determine_stn_no. numstns = %ld, stn_list[%ld] = %-sxxx\n",
+<             *numstns, nums, stn_list[nums]); */
+<  
+<    *numstns = nums+1;
+<    /* printf ("Add stn to stn list in determine_stn_no!!! *numstns: %ld\n", *numstns); */
+<  
+<    return (nums); /* return the element in the array, and number of stns above.*/
+<  
+<    }/*determine_stn_no()*/

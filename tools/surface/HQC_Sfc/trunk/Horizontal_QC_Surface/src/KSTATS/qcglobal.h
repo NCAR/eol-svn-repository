@@ -1,0 +1,78 @@
+C*********************************************************************
+C qcglobal.h
+C
+C circa 92 Ken Scully
+C   Created.
+C 21 Jan 94 lec
+C   Modified pathnames, FIRSTDAY and LASTDAY parameter for GIDS-1
+C 23 Aug 94 lec
+C   Modified pathnames, FIRSTDAY and LASTDAY parameter for Vortex
+C   and GIST. Plus some cleanup.
+C
+C*********************************************************************
+
+C
+C default unit nos and file names
+C
+      integer unit_config,unit_0qc,unit_qcf,unit_var,unit_toss,
+     +        unit_stns,unit_stns2,unit_anal
+
+      parameter (unit_config=1,		!qc config file unit
+     +           unit_0qc   =2,		!0qc input file unit
+     +           unit_qcf   =3,		!qcf output file unit
+     +           unit_var   =4,		!qcf variance file unit
+     +           unit_toss  =9,		!qcf toss file unit
+     +           unit_stns  =10,	!station master input file unit
+     +           unit_stns2 =11,	!station master output file unit
+     +           unit_anal  =7)		!qc analyses file unit
+
+      character*30 qc_0qc  			!0qc input file
+      character*30 qc_qcf		 	!qcf output file
+      character*30 qc_var    			!qcf variance file
+      character*30 qc_toss   			!qcf toss file
+      character*30 qc_stns   			!station master input file
+      character*30 qc_stns2  			!station master output file
+      character*30 qc_config			!qc config file
+      character*30 qc_anal			!MAPS file directory
+
+      parameter (qc_config='./qc_config',	!qc config file
+     +           qc_stns ='../exe/qc_stns',	!stn input file
+     +           qc_stns2 ='../exe/qc_stns2',   !stn output file
+     +           qc_anal ='../MAPS')		!qc analyses files
+
+C
+C Parameters for array sizing
+C
+C FIRSTDAY and LASTDAY of current project.
+C
+C  GIDS-1 period (1Feb92 thru 30Apr92)
+C  VORTEX period (1Apr94 thru 15Jun94)
+C  GIST   period (1Apr94 thru 30Sep94)
+C  MICROFRONTS  period (15Feb95 thru 30Mar95)
+C
+      integer*2 NQCPARMS,NANALPARMS,NQCFLAGS
+      integer*2 MAXPLATFORM,MAXSTNS
+      integer*2 FIRSTDAY,LASTDAY
+
+      parameter (NQCPARMS=17,		!number of parms to qc
+     +		 NANALPARMS=7,  	!number of analyses parms to use
+     +		 NQCFLAGS=13,		!number of possible qc flags - was 8
+     +           MAXPLATFORM=11,	!max no. of unique platforms - was 10
+     +           MAXSTNS=1500,    	!max no. of unique stations (all platforms)
+     +           FIRSTDAY=46,           !first day of field program (Julian Day) GIST (91)
+     +           LASTDAY=89)            !last day of field program (Julian Day) GIST (243)
+
+
+Ccccccccccccccccccccccccccccc
+C Following were used for GIDS-1 (Second half only. GIDS-1 began 1Feb92 and ended 30Apr92):
+C
+C     +           FIRSTDAY=32,		!first day of field program:16 Mar 92 = 76 (was 32 for 2/1/92)
+C     +           LASTDAY=121)		!last day of field program: 4/30/92; was: 3/15/92
+Ccccccccccccccccccccccccccccc
+
+C
+C qcf format indicator (=1 -> include nominal date/time;
+C                      !=1 -> don't include nominal date/time)
+      integer*2 qcf_format
+
+      common /qcglobal/ qcf_format,qc_0qc,qc_qcf,qc_var,qc_toss

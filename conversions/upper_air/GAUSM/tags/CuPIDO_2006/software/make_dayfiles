@@ -1,0 +1,10 @@
+#! /bin/csh
+
+#if (!(-e ../database)) then
+#    mkdir ../database
+#endif
+
+#/net/work/dev/make_esc_dayfiles/make_esc_dayfiles ../final/*.qc ../database/MGAUS_
+
+java -cp /net/work/bin/dayfiles/upper_air_dayfile.jar:/net/work/lib/java/upper_air.jar:/net/work/lib/java/utilities.jar dmg.ua.sounding.dayfile.ESCDayFileCr
+eator -Z MGAUS_ ../output ../database \.cls

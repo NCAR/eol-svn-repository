@@ -1,0 +1,16 @@
+../fixtimes.pl RF01.nc
+../fixtimes.pl RF02.nc
+../fixtimes.pl RF03A.nc
+../fixtimes.pl RF03B.nc
+../fixtimes.pl RF04.nc
+../fixtimes.pl RF05.nc
+../fixtimes.pl RF06.nc
+../fixtimes.pl RF07.nc
+../fixtimes.pl RF08.nc
+../fixtimes.pl RF09.nc
+../fixtimes.pl RF10.nc
+../fixtimes.pl RF11.nc
+../fixtimes.pl RF12.nc
+../fixtimes.pl RF13A.nc
+../fixtimes.pl RF13B.nc
+../fixtimes.pl TF02.nc

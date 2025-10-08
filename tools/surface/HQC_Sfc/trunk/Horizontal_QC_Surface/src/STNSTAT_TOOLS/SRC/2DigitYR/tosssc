@@ -1,0 +1,244 @@
+:
+# Run the toss program
+#   flags: -debug = run in debug mode
+#          -h     = hourly report (default)
+#          -5m    = 5 minute report
+#          -20m   = 5 minute report
+#          -b     = print bad values only
+#          -d     = print doubtful values only
+#          -bd    = print both bad and doubtful values only (default)
+#          -pres  = print pressure report
+#          -temp  = print temperature report (default)
+#          -wind  = print winds report
+#          -prcp  = print precipitation report
+#          -s XXXX= print report for station id: XXXX
+#
+# 24 Jan 94 lec
+#   Updated pathnames.
+#
+USAGE="Usage:  $0 [-b | -d | -bd] [-h | -5m | -20m] [-pres] [-temp] [-wind] [-prcp] [-debug] [-s XXXX] FILE1.toss [FILE2.toss] [FILE3.toss] ..."
+
+PRTB="y";
+PRTD="y";
+PRTT="-h";
+PRTS="";
+PRTPRES="n";
+PRTTEMP="n";
+PRTWIND="n";
+PRTPRCP="n";
+DEBUG="n";
+case $ in
+	0)	echo $USAGE;
+		exit 1;;
+	1)	case $1 in
+		   -debug|-b|-d|-bd|-db|-h|-5m|-20m|-sxxxx|temp|pres|wind|prcp) echo $USAGE;
+		   exit 1;;
+		esac;;
+esac
+for parm in $*
+do
+	case $parm in
+		-debug)	DEBUG="y";
+			shift;;
+		-b)	PRTB="y";
+			PRTD="n";
+			shift;;
+		-d)	PRTD="y";
+			PRTB="n";
+			shift;;
+		-bd)	PRTB="y";
+			PRTD="y";
+			shift;;
+		-db)	PRTB="y";
+			PRTD="y";
+			shift;;
+		-h)	PRTT="-h";
+			shift;;
+		-5m)	PRTT="-5m";
+			shift;;
+                -20m)   PRTT="-20m";
+                        shift;;
+		-pres)	PRTPRES="y";
+			shift;;
+		-temp)	PRTTEMP="y";
+			shift;;
+		-wind)	PRTWIND="y";
+			shift;;
+		-prcp)	PRTPRCP="y";
+			shift;;
+		-s)	PRTS="-s";
+		   	PRTS=$PRTS$2;
+                        echo "  Print data for particular station.";
+			shift;
+			shift;;
+	esac
+done
+#echo "DEBUG=$DEBUG"
+#echo "PRTT=$PRTT"
+#echo "PRTS=$PRTS"
+#echo "PRTB=$PRTB"
+#echo "PRTD=$PRTD"
+#echo "FLAGS=$FLAGS"
+#echo "PRTPRES=$PRTPRES"
+#echo "PRTTEMP=$PRTTEMP"
+#echo "PRTWIND=$PRTWIND"
+#echo "PRTPRCP=$PRTPRCP"
+#echo "FNAMES=$*"
+# was: QCPATH="/fest/hrly_sfc/qc"
+QCPATH="../exe"
+
+echo
+echo "Running toss print program.  Begin: `date`"
+
+if [ $DEBUG = "y" ]
+then
+   echo "  DEBUG mode ON"
+fi
+
+if [ $PRTPRES = "n"  -a $PRTTEMP = "n" -a $PRTWIND = "n" -a $PRTPRCP = "n" ]
+then
+   echo "  Presure, temperature, wind, and precip will be processed."
+##   PRTTEMP="y"
+fi
+if [ $PRTPRES = "y" ]
+then
+   echo "  print pressure report"
+fi
+if [ $PRTTEMP = "y" ]
+then
+   echo "  print temperature report"
+fi
+if [ $PRTWIND = "y" ]
+then
+   echo "  print wind report"
+fi
+if [ $PRTPRCP = "y" ]
+then
+   echo "  print precipitation report"
+fi
+
+if [ $PRTT = "-h" ]
+then
+   echo '  print hourly report'
+elif [ $PRTT = "-5m" ]
+then
+   echo '  print 5-minute report'
+elif [ $PRTT = "-20m" ]
+then
+   echo '  print 20-minute report'
+fi
+
+
+if [ $PRTB = "y" -a $PRTD = "y" ]
+then
+   echo '  print "B" and "D" toss info'
+   FLAGS="-bd"
+elif [ $PRTB = "y" ]
+then
+   echo '  print "B" toss info only'
+   FLAGS="-b"
+elif [ $PRTD = "y" ]
+then
+   echo '  print "D" toss info only'
+   FLAGS="-d"
+else
+   echo '  print "B" toss info only'
+   FLAGS="-b"
+fi
+echo
+echo -n "Continue[y/n]? "
+read reply
+if [ $reply != "y" ]
+then
+  echo "exiting..."
+  exit
+fi
+
+
+for fname in $*
+do
+   p=`/bin/ucb/expr substr "$fname" 1 1`
+   if [ $p = "-" ]
+   then
+	continue
+   fi
+   echo "Processing file: $fname"
+   i=`/bin/ucb/expr index "$fname" .`
+   i=`/bin/ucb/expr $i - 1`
+   f=`/bin/ucb/expr substr "$fname" 1 $i`
+   i=`/bin/ucb/expr $i + 2`
+   ext=`/bin/ucb/expr substr "$fname" $i 4`
+   if [ $ext != "toss" ]
+   then
+	echo "$fname has incorrect extension.  Skipping..."
+	continue
+   fi
+
+   if [ -r prttoss.toss ]
+   then
+     echo "prttoss.toss already exists; Removing..."
+     rm -f prttoss.toss
+   fi
+   if [ -r prttoss.var ]
+   then
+     echo "prttoss.var already exists; Removing..."
+     rm -f prttoss.var
+   fi
+   if [ -r prttoss.pres ]
+   then
+     echo "prttoss.pres already exists; Removing..."
+     rm -f prttoss.pres
+   fi
+   if [ -r prttoss.temp ]
+   then
+     echo "prttoss.temp already exists; Removing..."
+     rm -f prttoss.temp
+   fi
+   if [ -r prttoss.wind ]
+   then
+     echo "prttoss.wind already exists; Removing..."
+     rm -f prttoss.wind
+   fi
+   if [ -r prttoss.prcp ]
+   then
+     echo "prttoss.prcp already exists; Removing..."
+     rm -f prttoss.prcp
+   fi
+   echo "sorting $f.toss..."
+   sort $f.toss > prttoss.toss
+
+   echo "uncompressing $f.var..."
+   uncompress $f.var
+
+   echo "sorting $f.var..."
+   sort $f.var > prttoss.var
+   compress $f.var
+
+   echo   "$QCPATH/toss $FLAGS $PRTT $PRTS"
+   if [ $DEBUG = "y" ]
+   then
+      exec $QCPATH/toss $FLAGS $PRTT $PRTS "-debug"
+   else
+      $QCPATH/toss $FLAGS $PRTT $PRTS
+   fi
+
+###   lpr /home/ken/landscape
+#   if [ $PRTPRES = "y" ]
+#   then
+#      lpr -p prttoss.pres
+#   fi
+#   if [ $PRTTEMP = "y" ]
+#   then
+#      lpr -p prttoss.temp
+#   fi
+#   if [ $PRTWIND = "y" ]
+#   then
+#      lpr -p prttoss.wind
+#   fi
+#   if [ $PRTPRCP = "y" ]
+#   then
+#      lpr -p prttoss.prcp
+#   fi
+done
+echo
+echo "End of Job!     Finish: `date`"

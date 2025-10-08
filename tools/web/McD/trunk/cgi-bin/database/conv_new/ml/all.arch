@@ -1,0 +1,87 @@
+-- Table structure for table 'project'
+DROP TABLE IF EXISTS project;
+DROP TABLE IF EXISTS link;
+DROP TABLE IF EXISTS dataset;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS dscatlink;
+DROP TABLE IF EXISTS linkcatlink;
+DROP TABLE IF EXISTS linkprojlink;
+
+CREATE TABLE project (
+	id int(11) primary key auto_increment,
+	name varchar(16) unique,
+	long_name varchar(255),
+	active int(11),
+	logo_src varchar(255),
+	left_css_src varchar(255) default 'left_def.css' NOT NULL,
+	body_css_src varchar(255) default 'body_def.css' NOT NULL,
+	contact_name varchar(100),
+	contact_email varchar(100)
+) TYPE=INNODB;
+
+-- Table structure for table 'link'
+
+CREATE TABLE link (
+	id int(11) NOT NULL auto_increment primary key,
+	name varchar(200) NOT NULL,
+	url varchar(255) NOT NULL,
+	target varchar(20) default '_self',
+) TYPE=INNODB;
+
+-- Table structure for table 'dataset'
+
+CREATE TABLE dataset (
+	id int(11) NOT NULL auto_increment primary key,
+	title varchar(200) default NULL,
+	storm_id varchar(15) default NULL,
+	date date default NULL,
+	url varchar(200) default NULL,
+	doc_url varchar(200) default NULL,
+	in_progress int(11) default '0',
+	hide int(11) default '0',
+	project int(11) not NULL,
+	INDEX project_ind (project),
+	FOREIGN KEY (project) REFERENCES project(id) ON DELETE RESTRICT
+) TYPE=INNODB;
+
+-- Table structure for table 'category'
+
+CREATE TABLE category (
+	id int(11) NOT NULL auto_increment primary key,
+	name varchar(50) NOT NULL,
+	parent int(11) default NULL,
+	project int(11) NOT NULL,
+	INDEX project_ind (project),
+	FOREIGN KEY (project) REFERENCES project(id) ON DELETE RESTRICT
+) TYPE=INNODB;
+
+-- Table structure for table 'dscatlink'
+
+CREATE TABLE dscatlink (
+	category int,
+	dataset int,
+	INDEX category_ind (category),
+	INDEX dataset_ind( dataset),
+	FOREIGN KEY (category) REFERENCES category(id) ON DELETE CASCADE,
+	FOREIGN KEY (dataset) REFERENCES dataset(id) ON DELETE CASCADE
+) TYPE=INNODB;
+
+-- Table structure for table 'linkcatlink'
+
+CREATE TABLE linkcatlink (
+	link int,
+	category int,
+	INDEX link_ind (link),
+	INDEX category_ind (category),
+	FOREIGN KEY (link) REFERENCES link(id) ON DELETE CASCADE,
+	FOREIGN KEY (category) REFERENCES category(id) ON DELETE CASCADE
+) TYPE=INNODB;
+
+CREATE TABLE linkprojlink (
+	link int,
+	project int,
+	INDEX link_ind (link),
+	INDEX project_ind (project),
+	FOREIGN KEY (link) REFERENCES link(id) ON DELETE CASCADE,
+	FOREIGN KEY (project) REFERENCES project(id) ON DELETE CASCADE
+) TYPE=INNODB;

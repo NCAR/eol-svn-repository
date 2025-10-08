@@ -1,0 +1,16 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for look_at_qcf s/w.
+#
+
+CC=cc
+CFLAGS = 
+
+procncdc: look_at_qcf.o
+	$(LINK.c) -o look_at_qcf.exe look_at_qcf.o 
+	mv look_at_qcf.exe look_at_qcf
+	chmod 0755 look_at_qcf
+
+clean:
+	rm *.o

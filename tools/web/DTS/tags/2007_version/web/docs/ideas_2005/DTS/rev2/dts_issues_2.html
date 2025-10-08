@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>DTS Issues &amp; Questions (version 2)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style>
+<!--
+.topic { font-size: 16pt; font-weight: bold; }
+-->
+</style>
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align=center>Issues & Questions with the DTS Database</h1>
+
+<ol>
+	<li class=topic>How are we going to handle old "active" projects?</li>
+		<p>Old "active" projects are projects like Ace-Asia and EPIC.  These are still active on the Quick Access page and in the navigational bar but are not in any of our tools and use static web pages to handle what the tools do.
+		<ol>
+			<li>Are these projects still "active"?</li>
+				<p>If they are not active, then the rest of the questions here are irrelevant.
+			<li>How do we want to handle these types of projects?</li>
+				<p>Option 1:  Copy all of the DPG project page into the project notes.  This would probably be the least amount of work.  It would result in being able to keep all of the old pages as is, but would generate a bunch of links into the DTS that would not (should not?) be used.  I would assume that we would want to continue to update the static pages if they would need changing than to have most of the data in the static page and then having all of the new changes in the DTS.
+				<p>Option 2:  Write an HTML parser that would parse the data out from the static web pages and put it into the DTS.  This could potentially be a difficult task depending on how structured everyone was that modified the pages (provided all the closing tags).  I am not sure what there is for processing stuff that could be in the processing part, but that could interesting as well.
+		</ol>
+	
+	<li class=topic>How do want to put the data in the Quick Access page into the DTS/JEDI?  Should this be an automatic process that is part of the porting or a manual update once the porting is finished?</li>
+	
+	<li class=topic>How are we going to handle the Category/Platform/Discipline/etc.?</li>
+		<p>Ideally this is all going to be the GCMD thing in JEDI and we will just use that, but John has not yet finished this.  This is bringing up many other questions.</p>
+		<ol>
+			<li>How long is it going to be before John has something that we can use?</li>
+				<p>John hinted that we could help with this definition and setup, but we don't have the knowledge or the time to do much with this.</p>
+			<li>Do the scientists want the master list to use the GCMD structure or do they want something else (i.e. something like we have now)?</li>
+			<li>How long do we wait on John to get it working before we do something on our own to suit our needs until he is ready?</li>
+			<li>If we have to create our own how far do we want to go into some of this?  Just simple categories/subcategories like we have now?</li>
+			<li>In either case, what should the mappings be between our current categories to the new ones?  When should we get the scientists involved to help define the mappings?</li>
+		</ol>
+		
+	<li class=topic>Do we want to try to make the ML a part of JEDI instead of the DTS?</li>
+		<p>I bring this up because if all of the category/platform information is in JEDI like we hope than the only information in the DTS for the ML is a flag that says if the dataset should be included.  This should only require an extra table in JEDI that would be something like:<b>master_list(project_id_fk,dataset_id_fk)</b> and any dataset that is in this table for a project would appear in the ML.</p>
+		<p>If we end up doing our own category/platform stuff this question becomes irrelevant.</p>
+		
+	<li class=topic>How much can we assume (force) name conventions?</li>
+		<p>Some we can do easily (work_link) and (database_link) because the first we are in complete control of and can define in whatever way we wish.  The second because it has to set up a specific way for JEDI to work correctly.
+		<p>The issue comes up with the other links (i.e. home_page, field_catalog, etc.).  In many cases these follow the same pattern www.joss.ucar.edu/lower_case(project_id)/...  Can we assume that the catalog is always going to be in the same relative location, the data managment page, image logo and stylesheet for each project?</p>
+	
+	<li class=topic>Where are we going to put the symbolic links for the IVEN part of the tool so we can view the data online like the current setup?</li>
+		<p>I assume that we are going to have a seperate link to the top of each project since going up another level would potentially open our entire work space to the world.  Do we want a DPG_HTML/DTS directory where all of the links for the DTS will be placed or do we want to have the link under DPG_HTML/project_id?</p>
+		<p>What do we want to do with best software tar balls?  Are we going to have a link to this as well?  This would require another symbolic link into /work/software or several into /work/software/project_id.  I think it would be beneficial to have the link because the tool could automatically create the correct file name and put it into the page if the file exists or leave it blank if it doesn't.  This would show that the processor put it into the correct place when it shows up.
+	
+	<li class=topic>How much are we going to force a location for processing information?</li>
+		<p>Are we going to go to a top level for a network (/work/NAME/upper_air/SMN or /work/NAME/upper_air/sounding/SMN) or are we going to try to force software, final data, etc in certain locations?</p>
+		
+	<li class=topic>How are we going to handle CEOP and its EOPs?  The same with NAME and the NAMAPs.</li>
+		<p>I am not sure that NAMAP will have quite the same issues as CEOP, but it could.  The big issue is that in some of the tools all of the EOPs are under CEOP (DLN) and others they are seperated into the individual EOPs (IVEN).  Are we just going to shove everything into CEOP (I doubt this considering the way things are going) or how do we split up the data we have in the DLN to its correct EOP?  We still have the issue with the 3, 4, and 3and4 issue as well.</p>
+		
+	<hr>
+	
+	<li class=topic>How do we want to handle conflicts with merging the DLN, ML, and IVEN into DTS?</li>
+		<p>There are two potential conflicts.<ol>
+			<li>DLN, ML, IVEN -> DTS:  This is where the different databases represent the same information (i.e. same dataset) but their shared information does not match (different dataset names).  I would suggest that in these cases that the porting will die and the old database is changed manually to make them match to prevent the porting scripts from becoming too smart and doing things that we don't want to happen.</li>
+			<li>DTS -> JEDI:  This is where there is infomation in the old DTS databases that is replicating information in JEDI.  I suggest the same thing as in the previous conflict.</li>
+			</ol>
+		<p>Ideally, none of this will happen, but in the first steps into writing porting scripts, this has already occurred.  The big problem will be with datasets because of the sheer number of entries that are going to be worked with.  In the case of datasets we may want to just print out a log and assume an order (ML, DLN, IVEN) for what is correct.</p>
+		
+	<li class=topic>How are we going to match the datasets in IVEN to the rest of the world?</li>
+		<p>I am not sure how many datasets this will affect, but I think it could be a lot.  Trying to match the datasets in IVEN to the DTS may be quite time consuming because I do not think there will be a clean matching.  This is due to that many (most?) of the datasets are only referenced by their name which may or may not be the same as the actual dataset name in the rest of the world.  There is a spot for the dataset id, but I doubt this has been filled out often.  (As of 7/27/2005 over 250 of the 310 were not set.)</p>
+		
+	<li class=topic>How are we going to match the unassigned (link) datasets in the DLN to the same dataset in the ML?  The same with datasets that are hidden in JEDI and not yet linked in the ML.</li>
+		<p>It is hard to match on the dataset name because they could be slightly different (an extra space somewhere) and would not match.  The problem is that every dataset in the ML is not in the DLN and vice versa.  We need to find a decent way of doing this automatically.  Would it be enough to make sure that the datasets in both have exactly the same dataset name?</p>
+		
+	<li class=topic>How are notes going to be handled?</li>
+		<p>My suggestion is that it becomes a single note by the JOSS Local user.  (There will also be a note at the end of each note set saying that all notes prior to this one were ported from the old databases and were set to the JOSS Local user during the port.)  Is this the way we want to go?
+		<p>What about the notes from the DLN?  Parts of the note will fit into the dataset_notes table or the dataset_loading_notes table.  It would be easiest to put the note in both tables.  Do we want to do it this way?</p>
+		
+	<li class=topic>What statuses do we want defined to begin the DTS with?</li>
+		<p>There will be a TBD, Done, and N/A.  I am also creating an In Progress and a Do NOT Do.  The NAME processing groups (Hourly Surface) will get the status of Do NOT Do and drop the "Will NOT Create" section of the group name.</p>
+		
+	<li class=topic>Do we want to move the JSP stuff and the static HTML into a single directory?</li>
+		<p>The reason for this is that if all of our DPG_HTML stuff is in with the JSP we will only need the JSP/Tomcat security stuff and not the .htaccess file.  (We would have to check with John/Mark on this for sure.)  I am assuming this could be set up, but not 100% sure since I don't know much about sysadmin and web servers.</p>
+</ol>
+
+</body>
+</html>

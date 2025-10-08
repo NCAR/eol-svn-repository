@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>The Master List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="nattap.css">
+</head>
+
+<body>
+<h1>Master List</h1>
+
+<p>The Master List (ML) will become just a viewer without a special ML editor as the tool is currently set up.  It will use information that is set through the DTS.  Flags like the <i>in progress</i> and <i>new</i> will be displayed depending on the values of certain fields in the <i>dataset_project</i> table.  There will be flag to be set in the same table to include/discard a dataset from the list.  The dataset will be placed into each category that it is associated with through the <i>dataset_category</i> table.  This will allow a single edit of the dataset and it will be changed and displayed with each category in the list.  (i.e.  Altair Radiosondes will show up under both the Upper Air Soundings and the Ship Altair categories.)
+
+<h3>Suggested Changes</h3>
+<ul>
+	<li><p><b>Straight Database Access</b>
+		<p>The current version(s) of the ML has the editor overwrite a static web page for the main list after every save.  The category list is a set of pages (there are also pages for each category that has a subcategory) that are only hand editable (to my knowledge).  These need to be updated when the categories are changed for the project and could be done easily if they were read when the database was read.
+		<p class="joel">I think that having the ML read from the database would be better even though it will probably be slower than a static web page.  The biggest gain that I see is it would make the ML a single point for data entry.  We would not have to know or remember where the static files were located because it was all taken care of through the database.
+		<p class="joel">It would also handle the category - subcategory relationship internally without having to create seperate pages.  I have written some javascript that performs a similar function that (from an observational point of view) should be easy to adapt to our needs here.  The one potentially large hurdle in this could be how different browsers may handle the javascript and making them all handle the subcategory insertion in a reasonable fashion.
+		<p class="joel">Another suggestion for this would be a seperate database read when expanding/contracting a category.  This probably would be slower than the javascript, but would be more likely to behave in a consistant manner between browsers.
+	<li><p><b>Handling Multiple Doc Files</b>
+		<p>With the new design of <i>jedi</i>, there is now the potential of having several readmes, EULA's, and other documentation files for a dataset.  The ML needs to be able to display these to the user.
+	<li><p><b>Making Composites Stand Out More</b>
+		<p>This is a specific issue that has come recently that some (many??) of the users are not aware of the composites that we form.  An attempt should be made to make these more visible with possiblities of different naming conventions (include multi-network in the dataset title) and/or having a different background color for these datasets.
+	<li><p><b>General Layout Redesign</b>
+		<p>At this point, we may want to consider redesigning the entire ML layout and format.  This may be necessary anyway to handle some of the other functionality we want to add to the tool.
+</ul>
+
+
+</body>
+</html>

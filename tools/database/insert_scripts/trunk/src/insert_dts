@@ -1,0 +1,252 @@
+#! /usr/bin/perl -w
+
+##-----------------------------------------------------------------------------
+# Script to insert datasets into dmg_dts (the DTS) with the help of YAML config
+# files to facilitate automated data loading.
+# 
+# Janine Aquino 9/20/2012
+#
+# Modified 3/24/2021
+#   Needed lots of work. Reformatting. Changes for new database authentication
+#   process. Rework the logic so -o works and it's just cleaner. Some error
+#   checking.
+# 
+# Modified 4/6/2021
+#   database authentication now uses "loaddata.py" and "loaddata.py-dev" groups
+##-----------------------------------------------------------------------------
+my $libdir;
+BEGIN
+{
+    $libdir = $ENV{"MYSQL_DIR"};
+    if (!defined($libdir)) {
+       $libdir = "/net/work/lib/perl/mysql";
+    }
+}
+use lib $libdir;
+# libs are also stored in the dir this script is in
+use File::Basename;
+use lib dirname (__FILE__);
+
+use strict;
+use POSIX qw(strftime);
+use MySqlDatabase;
+use ReadConfig;
+my $config = ReadConfig->new();
+
+my $msg = "";
+my $filename = "";
+our $options = undef;
+
+# Usage statement
+sub usage {
+    my @ARGV = shift;
+    print "Usage: $0 [-o] [-dev] add_dts=<dataset>.yml\n";
+    print "\t -o \t\t Output possible values for use in YAML config files\n";
+    print "\t\t\t and exit.";
+    print "\n\t\t\t Not pretty, but informative...\n";
+    print "\t -dev \t\t For testing, commits to data.dev\n";
+    print "\t add_dts \t Pass in the YAML config file.\n";
+    exit(1);
+}
+
+if ($#ARGV == -1) #no options, only program name
+{
+    usage(@ARGV);
+}
+
+my $group = 'loaddata.py';
+
+# Read in the command line args, and call subroutines to do the work
+foreach my $arg (@ARGV) {
+    if ( $arg eq "-dev") {  # testing, so commit to development database
+        $group = 'loaddata.py-dev';
+    } elsif ( $arg eq "-o") { 
+        # Don't do dataset loading, just print options for setup files
+        $options = 1;
+    } elsif ($arg =~ /add_dts=(.*)/) {
+        unless (-e $1) { die "$1 does not exist!\n"; }
+        $filename = $1;
+    } else {
+        # Catch invalid command line options
+        print "\nWARNING: Invalid command line option ".$arg."\n";
+        usage(@ARGV);
+        exit(1);
+    }
+}
+
+# Connect to database
+my $database = MySqlDatabase->new(undef,undef,undef,'dmg_dts',undef,undef,$group);
+
+$msg = $database->connect();
+if ($msg ne "") {
+    print "\n\n$msg";
+    exit(1);
+}
+
+# Insert new DTS entry using metadata from supplied YAML file.
+$msg = adddts($database, $filename);
+
+if ($msg ne "" or $options) {
+    # Error occurred or user just requested options, so clean up and exit
+    print "Message: $msg\n";
+    $database->rollback();
+
+} else {
+    # Let user know which database they are connecting to
+    if ($group eq 'loaddata.py') {
+        print "\n\n*** Commits are being made to PRODUCTION database ***\n";
+    } elsif ($group eq 'loaddata.py-dev') {
+        print "\n\n*** Commits are being made to DEVELOPMENT database ***\n";
+    } else {
+        # Should never get here, but catch it to be thorough...
+        print "\nWARNING: Unknown group $group. This script should only be\n";
+        print "\tused with [loaddata.py] or [loaddata.py-dev] groups. \n";
+        print "\tFix database auth\n";
+        print "\tsetting and rerun script.\n";
+        exit(1);
+    }
+
+    # There are no errors. Ask user to confirm commit changes to db.
+    printf("Please review changes proposed above for accuracy.");
+    printf("\nTo commit changes, press Enter.\n");
+    printf("To cancel changes, enter any value and press Enter.\n\n");
+    printf(">> ");
+    my $result = <STDIN>;
+    
+    if ($result =~ /^\s*$/) {
+        $database->commit() 
+    }
+    else { 
+        print "User Selected to Cancel!\n";
+        $database->rollback();
+    }
+}
+
+$database->disconnect();
+
+# End of Main #
+##-----------------------------------------------------------------------------
+sub adddts {
+    my $db = shift;
+    my $filename = shift;
+
+    my $msg = "";
+    my $table = "";
+    my %results;
+    my @result;
+
+    # Catch if user didn't set filename
+    if ($filename eq "" and not $options) {
+        return "Please set filename using adddts command line option\n";
+    }
+
+    my @ATTR;
+    my @VAL;
+    $config->read_config_file($filename,\@ATTR,\@VAL);
+    # Uncomment for debugging
+    # for (my $i = 0; $i <= $#ATTR; $i++) {
+    #     print $ATTR[$i]."=".$VAL[$i]."\n";
+    # }
+    # print "\n";
+    #}
+
+    push @ATTR,"entry_date";
+    my $now_string = strftime "%Y-%m-%d %H:%M:%S", gmtime;
+    push @VAL,"\"$now_string\"";
+
+    #Insert dataset, Project Ref, Categories, Platforms, Options (Subset/Browse)
+    foreach $table ("dataset", "dataset_project", "dataset_approve",
+                    "dataset_ingest", "dataset_load", "note", "dataset_note") {
+        ($msg, %results) = $database->selectFull($table,'*');
+        if ($msg ne "") { return $msg; }  # Error occurred
+
+        if ($options) {
+            # Output the possible options for use in the config file
+            print "$table\n";
+            foreach ( @{$results{"name"}} ) {print "\t".$_."\n";}
+            $msg = "\nThe above DTS fields can be set in the YAML file\n";
+        } else {
+
+            $msg = insert_record($table, \@{$results{"name"}}, \@ATTR, \@VAL);
+            if ($msg ne "") { return $msg; }  # Error occurred
+            if ($table eq "note") {
+                print "Get the new note_id ";
+                for (my $i = 0; $i < scalar(@ATTR); $i++) { 
+                    if ($ATTR[$i] eq "entry_date") {
+                        print "for entry_date = $VAL[$i]: ";
+                        ($msg, @result)=$database->select($table, "note_id",
+                                             "entry_date = $VAL[$i]");
+                        if ($msg ne "") {  # Error occurred
+                            print "\n";
+                            return $msg;
+                        }
+                    }
+                }
+                print $result[0]."\n\n";
+                push @ATTR,"note_id";
+                push @VAL,$result[0];
+            }
+        }
+    }
+
+    return $msg;
+}
+##------------------------------------------------------------------------------
+# Insert a record into a database table
+sub insert_record {
+    my $table = shift;
+    my @attr = @{ $_[0] };
+    my @ATTR = @{ $_[1] };
+    my @VAL = @{ $_[2] };
+    my @attribute = ();
+    my @value = ();
+
+    #Loop over attribute from database table
+    foreach (@attr) {
+        $a = $_;
+        # Loop over attributes and values from input file
+        for (my $i = 0; $i <= $#ATTR; $i++) {
+
+            ### exceptions/inconsistencies ###
+            # With change to YAML files, this section changes ZINC field
+            # names to DTS field names. It can go away if ZINC and DTS are ever
+            # merged.
+            if ($a =~ /dataset_id/ && $ATTR[$i] eq "archive_ident") {
+                # dataset_id in DTS corresponds to archive_ident in ZINC
+                push @attribute, "dataset_id"; push @value, $VAL[$i];
+            } elsif ($a eq "project_id" && $ATTR[$i] eq "name") {
+                # project_id in DTS corresponds to name in ZINC
+                push @attribute, "project_id"; push @value, $VAL[$i];
+            } elsif ($a eq "name" && $ATTR[$i] eq "title") {
+                # name in DTS corresponds to title in ZINC
+                push @attribute, "name"; push @value, $VAL[$i];
+            } else {
+                if ($ATTR[$i] =~ /(.*)_dts/) {$ATTR[$i]=$1;}
+                if ($table eq "dataset" && $ATTR[$i] eq "name") {
+                    # name holds PROJECT in ZINC and title in DTS
+                    # so remove name from array of fields and reassign as above
+                    splice(@ATTR,$i,1);
+                    splice(@VAL,$i,1);
+                    # After remove, back it up so we don't miss a field
+                    $i=$i-1;
+                } else {
+                    # No exceptions/inconsistencies, so proceed normally
+                    if ($a eq $ATTR[$i]) { 
+                        push @attribute, $ATTR[$i]; push @value, $VAL[$i]; }
+                }
+            }
+        }
+    }
+
+    $database->add_quotes_to_string($table,\@attribute,\@value);
+    
+    print "INSERT INTO $table(" . join(',', @attribute) . ") VALUES(" . join(',', @value) . ")\n";
+    print "\nNew $table entry:\n";
+    for (my $i = 0; $i < scalar(@attribute); $i++) { 
+        print "\t".$attribute[$i].": ".$value[$i]."\n"; 
+    }
+    print "\n";
+    $msg .= $database->insert($table,join(',', @attribute),join(',', @value));
+    if ($msg ne "") { return $msg; }
+}
+##------------------------------------------------------------------------------

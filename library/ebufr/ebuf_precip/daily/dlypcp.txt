@@ -1,0 +1,148 @@
+               GIDS-1 Daily Precipitation Composite
+
+
+1.0  General Description
+
+     The Daily Precipitation Composite is one of two precipitation
+datasets provided on the GEWEX Continental-scale International Project
+(GCIP) Initial Dataset One (GIDS-1) CD-ROM. This precipitation
+composite is composed of data from thousands of stations from several
+sources (i.e., Daily totals computed from GIDS-1 Hourly Precipitation
+Composite, United States Geological Survey (USGS) daily precipitation,
+Tennessee Valley Authority (TVA) daily precipitation, and the Daily
+precipitation extracted from the NCDC Cooperative data). Data from these
+sources were merged and quality controlled to form this precipitation
+composite. This composite contains data for the GIDS-1 time period (01
+February 1992 through 30 April 92) and for the GIDS-1 area of interest,
+only. The GIDS-1 area is approximately 85W to 106W longitude and 30N
+to 45N latitude.
+
+2.0  Detailed Data Description
+
+     The Daily Precipitation Composite format contains six metadata
+parameters followed by four data parameters. The metadata parameters
+describe the station location and time at which the data were collected. The
+four data parameters repeat once for each day in the monthly record. Every
+record has 31 days reported, regardless of the actual number of days in the
+month. For months with less than 31 days, the extra days are reported as
+missing (i.e., '-999.99 7 M'). All records are identical in length. Each 24
+hour precipitation value has an associated observation hour. The
+observation hour is the beginning UTC hour for the 24 hour period for
+which the precipitation value is valid. Data values are valid for the 24
+hours preceding the observation hour given for the day.  All times are
+reported in UTC. A Quality Flag and a Quality Control (QC) Code are
+assigned to each data value during quality control processing. For a list of
+possible Quality Flag and QC Code values see the Quality Control section
+3.0. The table below details each parameter, including a C programming
+language format description.
+
+
+Parameters               Units (C format)
+
+Date of Observation      UTC ('%-7s ')
+Network Identifier       Abbreviation of platform name ('%-10s ')
+Station Identifier       Network Dependent ('%-15s ')
+Latitude                 Decimal degrees, South is negative
+                         ('%10.5f ')
+Longitude                Decimal degrees, West is negative
+                         ('%11.5f ')
+Station Occurrence       Unitless ('%3d')
+Daily Precip Value       millimeters (' %7.2f ')
+Quality Flag             See list of Definitions ('%1d ')
+QC Code                  See list of Definitions ('%1c ')
+Observation hour         Beginning UTC hour for 24 hour period
+                         for which value is valid. ('%2d') 
+               
+
+2.1  Sample Data
+
+     The following is a sample record of the Daily Precipitation data.
+Unlike this example, there are no carriage returns in the data. See section
+2.0 for the exact format specifications.
+
+1992/04 USGS       441800091140000   44.30000   -91.23333   0 .51 0
+G  6 -999.99 7 M  6 -999.99 7 M  6 -999.99 7 M  6 -999.99 7 M  6
+-999.99 7 M  5    1.27 0 G  5 -999.99 7 M  5 -999.99 7 M  5 -999.99 7
+M  5    3.30 0 G  5 -999.99 7 M  5 -999.99 7 M  5    0.51 0 G  5   10.67
+0 G  5   17.78 0 G  5 -999.99 7 M  5 -999.99 7 M  5  11.94 0 G  5   
+2.03 0 G  5   24.89 0 G  5    2.54 0 G  5 -999.99 7 M  5 -999.99 7 M  
+5 -999.99 7 M  5 -999.99 7 M  5 -999.99 7 M  5 -999.99 7 M  5 -999.99
+7 M  5 -999.99 7 M  5 -999.99 7 M  5
+
+2.2  Data Remarks
+
+     The length of the station identifier in the USGS precipitation data
+forces the composite station identifier field to be 15 characters . All other
+composites and datasets allow only 10 character station identifiers.
+
+     Negative precipitation and values too large to be represented in the
+output format were changed to missing ('-999.99') and were assigned the
+'C' QC code.
+
+     The NCDC Summary of Day Co-operative data have observation
+hours that vary by station.  Data values are valid for the 24 hours
+preceding the observation hour given for the day. 
+
+3.0  Quality Control Processing
+
+     This precipitation composite was formed from several sub-datasets
+(i.e., Daily totals computed from GIDS-1 Hourly Precipitation Composite,
+USGS daily precipitation, TVA daily precipitation, and the Daily
+precipitation extract from the NCDC Cooperative data).  Each of these
+sub-datasets was uniquely and independently Quality Controlled. 
+
+     Gross  limit checks were used to determine the quality of the data
+in this composite.   Data values less than 101.6 millimeters (4 inches) were
+flagged as good. Any data value greater than or equal to 101.6 millimeters
+but less than 127 millimeters (5 inches) was flagged as questionable. Any
+data value greater than or equal to 127 millimeters was flagged as unlikely.
+Several questionable and unlikely data values were also manually
+inspected.  After inspection, the quality control code and flag may have
+been manually updated to better reflect the likelihood of the actual
+occurrence of the precipitation value. Data was never modified, unless the
+precipitation value was negative or too large to be represented in the
+output format. In these cases the data value was flagged with a QC code
+of 'C' and changed to a missing value (i.e., '-999.99'). A table of the
+possible quality control flags and their meanings is listed below. 
+
+After the sub-datasets were merged to form the GIDS-1 Daily Precipitation
+Composite, a statistics program was executed to ensure that the quality of
+the individual sub-datasets had been retained.
+
+Quality Control Flag         Description
+
+0 		                  No qualifier required 
+1         		          Accumulation period
+2                 		  End of Accumulation period
+3          	          Deleted value. Original data was unreadable.
+4-6                	  Reserved
+7              	          Missing value
+
+
+QC Code             Description
+
+U                   Unchecked
+G                   Good
+M                   Normally recorded but missing
+D                   Questionable
+B                   Unlikely
+N                   Not available or Not observed. 
+X                   Glitch
+E                   Estimated
+C                   Reported value exceeds 9999.99 millimeters
+                    or was negative. Data changed to -999.99.
+T                   Trace precipitation amount recorded
+
+
+4.0  File Name Conventions and Data Location
+
+     These data are stored as one file for each month, sorted by time
+and then by station latitude and longitude within each file.  The files are
+located in the /precip/dlycomp directory of the GIDS-1 CD-ROM and are
+named `YYMM.pqc' where YYMM is the UTC year and UTC month that
+the data are valid. The file for April 1992 would be named 9204.pqc.
+
+5.0  References
+
+     For additional station information, refer to the station list provided
+in the /stn_list directory on the GIDS-1 CD_ROM.

@@ -1,0 +1,76 @@
+<html>
+<head>
+	<title>Docs: QCODIAC</title>
+</head>
+
+<body>
+<h1><center>QCODIAC</center></h1>
+
+<center>Below is a brief description of the QCODIAC application Dan Sullivan and Phil Dressen put together
+during the Summer of 2003.  This gives an overview, hopefully the code contains sufficient documentation
+as well.</center>
+
+<br><b>NOTE: </b>All scripts are located in the <code>/net/web/dmg/cgi-bin/qcodiac</code> directory.  The static HTML, stylesheet, and javascript files are located in the <code>/net/web/dmg/html/software/tools/web/qcodiac</code> directory.
+<br><br>
+<hr><br>
+
+<p>
+<b>Basic Model Description:</b><br>
+QCODIAC was developed using a simple model by which future tools can easily be added.  The model
+consists of <i>tools</i> (each it's own class and contained in it's own perl module) and a supervisor script
+which oversees the interaction between all the tools.  The supervisor script is set up so that 
+the output of multiple tools can be displayed in a single page.  
+</p>
+
+<p>
+<b>Tools:</b> (All tools are located in the lib/ directory.)  <br>
+Each tool contains a specific set of subroutines and instance variables utilized by the supervisor script.
+A tool can provide a description of itself, an html query form which a user can fill out to submit
+a query, and a query result, given the needed URL parameters.  Each tool is given a unique identifier and 
+is placed in one of three tool <i>groups</i>: dataset, project, and general.  The identifier and
+group are set within each tool module.  The tool groups are setup so that the output of multiple
+tools can be viewed at once.  For example, given a storm_id, the output to the Dataset Description Tool
+and the On Line Phys Dir Tool can be viewed within the same page for the given storm_id.
+The Shell_Tool.pm module can be used to create new tools by simply <i>filling in the blanks</i>.  
+This module contains descriptions of each subroutine and instance variable and what their purpose is, 
+refer to the module itself for further documentation.  Once a new tool is created it must be added
+to the Tools.pm module.  This module includes or 'uses' each tool in the library and then declares
+in instance of each module for use by the supervisor script.  Again, see the module itself for further
+documentation.
+</p>
+
+<p>
+<b>Supervisor Script:</b><br>
+The supervisor script takes in two paramaters: 1) results - a list of all the tools (by identifier) which
+should display a query result; each tool is provided with URL parameters and uses them to query the
+CODIAC database and display the result; 2) qform - a single tool (by identifier) that should 
+display a query form.  Only one of these paramaters should be provided, I'm uncertain what happens if
+both are set.  The beauty is when a new tool is added the supervisor script does not have to be
+modified it obtains all the needed information from the tool itself and the Tools.pm module.
+</p>
+
+<p>
+<b>details and query scripts:</b><br>
+The details script displays the list of each tool and it's description in the right hand frame when the
+user first visits the application.  Each tool contains, within itself, a description which
+is displayed by the details script to give the user and idea of what the tool does.  The query script displays
+the left hand frame or navigation frame.  This frame breaks down the tools into groups and allows the
+user to perform a query using multiple tools.   
+</p>
+
+
+<p>
+<b>Going to MySQL</b><br>
+Unfortunately, because the new MySQL database contains significant architecture changes all the
+tools will have to updated.  I don't think there is any quick and easy way out.
+</p>
+<p style="color: green;">The tools was upgraded to MySQL in May 2005.</p>
+
+<br>
+<hr>
+<br>
+<b>Author: </b>Dan Sullivan<br>
+<b>Created: </b>May, 2004<br>
+<b>Updated:</b> July, 2006 - Joel Clawson<br>
+</body>
+</html>

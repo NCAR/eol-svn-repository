@@ -1,0 +1,78 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------------------
+# <p>Displays the IVEN 'Home' page.  Gives the user the list of projects in 
+#  the system and a link to each project page.</p>
+#
+# @author Joel Clawson
+# @version 2.0 Updated to use the DTS database.
+#
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+use strict;
+
+use lib "lib";
+use CGI;
+use Project;
+use Utils;
+
+&main();
+
+sub main {
+    my $cgi = CGI->new();
+
+    println($cgi->header());
+
+    println("<html>");
+    println("<head>");
+    println("    <title>DMG Processing Inventory</title>");
+    println("    <link rel=\"stylesheet\" type=\"text/css\" href=\"$css\" />");
+    println("</head>\n");
+    println("<body>");
+
+    # Print the title heading box.
+    println("<div class=\"titleBox\">");
+    println("    <div class=\"welcome\">Welcome to IVEN</div>");
+    println("    <div class=\"desc\">The DMG Inventory and Status Page Tool</div>");
+    println("</div>\n");
+
+    # Print the project list table.
+    println("<table class=\"projectList\">");
+   
+    # Print the header row
+    println("    <tr>");
+    println("        <th>Available Projects:</th>");
+    println("    </tr>");
+
+    # Loop through the projects in the database and build a table
+    # cell for each one.
+    foreach my $project (Project::getAllProjects()) {
+	println("    <tr>");
+	println("        <td class=\"projectCell\">");
+
+	# Print out the project id link
+	print("            <div class=\"link\">");
+	print("<a href=\"project_view?project=");
+	print($project->getProjectId());
+	print("\">");
+	print($project->getProjectId());
+	println("</a></div>");
+
+	# Print out the project full name.
+	print("            <div class=\"name\">");
+	print($project->getName());
+	println("</div>");
+
+	println("        </td>");
+	println("    </tr>");
+    }
+
+
+    println("</table>\n");
+
+
+    println("</body>");
+    println("</html>");
+}
+
+1;

@@ -1,0 +1,68 @@
+dataset:
+- title_content: titleSep
+- name: <PROJECT>
+- archive_ident: '483.012'
+- title: PRELIMINARY Airborne Ring-down Nitrogen Oxide Laser Detector (ARNOLD) Data
+- summary: This data set contains diode laser cavity ring down spectroscopy measurements obtained from the NSF/NCAR C-130 aircraft (Tail Number N130AR) during the <PROJECT> project. These data are in ICARTT format.  These are PRELIMINARY FIELD-PHASE data and are not for publication. Final, production data (with calibrated values in engineering units) having the highest-quality that RAF can provide will be available within 6 months of the end of the project.
+- begin_date: '2015-01-23 00:00:00'
+- end_date: '2015-03-13 23:59:59'
+- visible: 0
+- auth_reqd: 1
+- eula_reqd: 1
+- version_number: '0.1'
+- quality: 1
+- ingest_location: /scr/raf/Raw_Data/<PROJECT>/field_phase/ARNOLD
+- archive_location: /FS/EOL/<year>/winter/aircraft/c130_n130ar/FIELD_INTERNAL_ONLY/ARNOLD
+- filename_pattern: <PROJECT>-ARNOLD_C130_(\Y\Y\Y\Y\M\M\y\y)_R<Version>.ict
+- startdate_pattern: YYYY-MM-yy 00:00:00
+- enddate_pattern: YYYY-MM-yy 23:59:59
+- filelength: ''
+- minimum_latitude: '32'
+- maximum_latitude: '48'
+- minimum_longitude: '-86'
+- maximum_longitude: '-65'
+- CODIAC_specific_fields: titleSep
+- category_id: 2
+- platform_id: 130
+- is_eol_data: 1
+- format: 152
+- host: hpss
+- frequency_id: 4
+- spatial_type: point
+- point_of_contact_id_codiac: 1
+- internal_contact_id_codiac: 179
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+- dodsable: 0
+- t_subset: 0
+- file_subset: 1
+- event_subset: 0
+- order_allow_compress: 1
+- DTS_specific_fields: titleSep
+- source_contact_id_dts: 
+- internal_contact_id_dts: 
+- ingest_contact_id_dts: 
+- ingest_status_id_dts: 2
+- load_contact_id_dts: 
+- load_data_location: '*ict'
+- load_status_id_dts: 6
+- approve_contact_id_dts: 
+- approve_status_id_dts: 6
+- author_id_dts: 
+- note_type_id: 4
+- note_text: Loaded with new load_data_proj script
+- optional_fields: titleSep
+- archive_location_2: ''
+- filename_pattern_2: ''
+- startdate_pattern_2: ''
+- enddate_pattern_2: ''
+- format_2: ''
+- host_2: ''
+- description: ''
+- iso_citation_role: '9'
+- contact_id_codiac: '1798'
+- datacite_contributor_type: ''
+- iso_citation_role_2: '2'
+- contact_id_codiac_2: '179'
+- datacite_contributor_type_2: '4'

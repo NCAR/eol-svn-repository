@@ -1,0 +1,200 @@
+#!/bin/perl -w
+
+# McD
+# --------------------------------------------------------------
+# proc_cat_update: processes the input from the form displayed 
+#  by the edit_category script.  Performs any needed database
+#  operations and then either displays a status message and
+#  a "Close Window" button or allows the user to edit the
+#  links associated with the category.
+#
+# Expected Parameters:
+#   "mode" - "add" or "edit" mode established by edit_category
+#   All of the parameters from the form - see getPostedCat()
+#   
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI;
+use lib "lib";
+use Utils;
+
+use lib "../mcd_lib";
+use Category;
+use CategoryDBA;
+use LinkDBA;
+use MLDatasetDBA;
+
+require "./view_links";
+
+my $cat_dba = CategoryDBA->new();
+my $link_dba = LinkDBA->new();
+my $ds_dba = MLDatasetDBA->new();
+
+my $cgi = CGI->new();
+
+my %actions = ( "Update" => \&updateCat, 
+								"Delete" => \&deleteCat, 
+								"Done" => \&done, 
+								"Next >>" => \&editLinks, 
+								"Edit Links..." => \&editLinks, 
+								"Yes" => \&delDatasets, 
+								"No" => \&delCat, 
+								"Cancel" => \&cancelCat );
+
+my $action = $cgi->param( "editButton" );
+
+my $cat = getPostedCat(); 
+my $mode = $cgi->param( "mode" );
+
+$actions{$action}->();
+
+sub showPage
+{
+	my $msg = shift;
+	my $onLoad = shift;
+	$onLoad = "\"\"" if( !defined( $onLoad ) );
+
+	println( $cgi->header() );
+
+	println( "<html><head><title>Category Edit</title></head>" );
+	println( $css );
+	println( $jscript );
+
+	println( "<body onLoad=$onLoad bgcolor=#e9e9e9 link=white alink=white vlink=white text=black>" );
+	println( "<center><table border=0 cellpadding=3 cellspacing=8 width=95% bgcolor=#e9e9e9>" );
+		println( "<tr bgcolor=#336699><td><font color=white size=+1>Add/Edit Categories</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td align=center><b>$msg</b></td></tr>" );
+		println( "<tr><td align=center><input type=submit value=\"Close Window\" onClick=\"window.close();\"></td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+
+	println( "</body></html>" );
+}
+
+sub updateCat
+{
+	$cat_dba->updateDB( $cat );
+
+	my $onLoad = "\"setFrames( top.opener.parent, \'\', \'category_list?project=$cat->{project}\', \'view_cats?project=$cat->{project}&hlight=$cat->{id}\' );" . 
+               "  top.opener.parent.focus(); \"";
+	showPage( "Category has been updated.", $onLoad );	
+}
+
+sub deleteCat
+{
+	my $datasets = @{ $ds_dba->getByCategory( $cat->{id} ) };
+
+	if( $cat_dba->getSubCats( $cat->{id} ) )
+	{
+		# notify user can't delete
+		showPage( "Unable to delete category with sub-categories." );
+	}
+	elsif( $datasets != 0 )
+	{
+		confirmDelete( $datasets ); 
+		# ask user if delete datasets
+	}
+	else
+	{
+		delCat( "Category has been deleted." ); 
+	}
+}
+
+sub delDatasets
+{
+	$ds_dba->deleteByCategory( $cat->{id} );
+	delCat( "Category and datasets have been deleted." );
+} 
+
+sub delCat
+{
+	my $msg = shift;
+	$msg = "Category has been deleted. Datasets remain." if( !defined( $msg ) );
+	my $onLoad = "\"setFrames( top.opener.parent, \'\', \'category_list?project=$cat->{project}\', \'view_cats?project=$cat->{project}\' ); top.opener.parent.focus();\"";
+ 
+	$link_dba->deleteByCategory( $cat->{id} );
+	$cat_dba->deleteDB( $cat );
+
+	showPage( $msg, $onLoad  );
+}
+
+sub editLinks
+{
+	if( $cat->{id} == -1 )
+	{
+		$cat_dba->insertDB( $cat );
+	}
+	else
+	{
+		$cat_dba->updateDB( $cat );
+	}
+
+	view_links( $cat->{id}, $mode, "category" );
+}
+
+sub cancelCat
+{
+	showPage( "Action has ben Canceled." );
+}
+
+sub done
+{
+	my $msg = "Category has been updated.";
+	$msg = "Category has been added." if( $mode eq "add" );
+	my $linkto = $cgi->param( "linkto" );
+	my $onLoad = "\"setFrames( top.opener.parent, \'\', \'category_list?project=$cat->{project}\', \'view_cats?project=$cat->{project}&hlight=$linkto\' );" . 
+	             " top.opener.parent.focus(); \"";
+	showPage( $msg, $onLoad );
+}
+
+sub getPostedCat
+{
+	my $cat = Category->new();
+
+	$cat->{id} = $cgi->param( "id" );
+	$cat->{name} = $cgi->param( "name" );
+	$cat->{parent} = $cgi->param( "parent" );
+	$cat->{project} = $cgi->param( "project" );
+
+	$cat->checkDefined();
+
+	$cat->{parent} = undef() if( defined( $cat->{parent} ) && $cat->{parent} == -1 );
+
+	return $cat;
+}
+
+sub confirmDelete
+{
+	my $datasets = shift;
+
+	println( $cgi->header() );
+
+	println( "<html><head><title>Category Edit</title></head>" );
+	println( $css );
+	println( $jscript );
+
+	println( "<body bgcolor=#e9e9e9 link=white alink=white vlink=white text=black>" );
+	println( "<center><table border=0 cellpadding=3 cellspacing=8 width=95% bgcolor=#e9e9e9>" );
+		println( "<form method=post action=proc_cat_update>" );
+		println( "<tr bgcolor=#336699><td><font color=white size=+1>Delete Category</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td align=center>This category contains $datasets datasets.  If they do not ",
+							"belong to other categories they may become &quot;stray&quot; datasets when this ",
+							"category is deleted and not show up in the public view.  Would you like to ",
+							"<b><u>permanently</b></u> delete them from ",
+							"the Master List system?</td></tr>" );
+		println( "<tr><td align=center>" );
+		println( "<input type=hidden name=id value=$cat->{id}>" );
+		println( "<input type=hidden name=project value=$cat->{project}>" );
+		println( "<input type=submit name=\"editButton\" value=\"Yes\">&nbsp;&nbsp;<input type=submit name=\"editButton\" value=\"No\">" );
+		println( "</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+
+	println( "</body></html>" );
+}

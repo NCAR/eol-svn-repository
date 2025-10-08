@@ -1,0 +1,87 @@
+netcdf sgpirt10mC1.a1.20021101.000000 {
+dimensions:
+	time = UNLIMITED ; // (1440 currently)
+variables:
+	int base_time ;
+		base_time:string = "31-Oct-2002,23:02:00 GMT" ;
+		base_time:long_name = "Base time in Epoch" ;
+		base_time:units = "seconds since 1970-1-1 0:00:00 0:00" ;
+	double time_offset(time) ;
+		time_offset:long_name = "Time offset from base_time" ;
+		time_offset:units = "seconds since 2002-10-31 23:02:00 0:00" ;
+	float sfc_ir_temp(time) ;
+		sfc_ir_temp:long_name = "Surface Infra-Red Temperature" ;
+		sfc_ir_temp:units = "K" ;
+		sfc_ir_temp:resolution = 0.1f ;
+		sfc_ir_temp:missing_value = -9999.f ;
+	float sfc_ir_temp_std(time) ;
+		sfc_ir_temp_std:long_name = "Surface Infra-Red Temperature, Standard Deviation" ;
+		sfc_ir_temp_std:units = "K" ;
+		sfc_ir_temp_std:resolution = 0.1f ;
+		sfc_ir_temp_std:missing_value = -9999.f ;
+	float sfc_ir_temp_max(time) ;
+		sfc_ir_temp_max:long_name = "Surface Infra-Red Temperature Maxima" ;
+		sfc_ir_temp_max:units = "K" ;
+		sfc_ir_temp_max:resolution = 0.1f ;
+		sfc_ir_temp_max:missing_value = -9999.f ;
+	float sfc_ir_temp_min(time) ;
+		sfc_ir_temp_min:long_name = "Surface Infra-Red Temperature Minima" ;
+		sfc_ir_temp_min:units = "K" ;
+		sfc_ir_temp_min:resolution = 0.1f ;
+		sfc_ir_temp_min:missing_value = -9999.f ;
+	float logger_temp(time) ;
+		logger_temp:long_name = "Logger Temperature" ;
+		logger_temp:units = "C" ;
+		logger_temp:resolution = 0.1f ;
+		logger_temp:missing_value = -9999.f ;
+	float internal_voltage(time) ;
+		internal_voltage:long_name = "Battery Voltage" ;
+		internal_voltage:units = "V" ;
+		internal_voltage:resolution = 0.1f ;
+		internal_voltage:missing_value = -9999.f ;
+	float lat ;
+		lat:long_name = "north latitude" ;
+		lat:units = "degrees" ;
+		lat:valid_min = -90.f ;
+		lat:valid_max = 90.f ;
+	float lon ;
+		lon:long_name = "east longitude" ;
+		lon:units = "degrees" ;
+		lon:valid_min = -180.f ;
+		lon:valid_max = 180.f ;
+	float alt ;
+		alt:long_name = "altitude" ;
+		alt:units = "meters above Mean Sea Level" ;
+
+// global attributes:
+		:ingest_software = " irt_ingest.c,v 1.5 2002/01/04 15:16:12 koontz process-ingest-irt_ingest-8.4-0 $" ;
+		:proc_level = "a1" ;
+		:input_source = "irt10m1:/data/collection/sgp/sgpirt10mC1.00/1036105320.icm" ;
+		:site_id = "sgp" ;
+		:facility_id = "C1 : Central_Facility" ;
+		:comment = " " ;
+		:resolution_description = "The resolution field attributes refer to the number of significant\n",
+    "digits relative to the decimal point that should be used in\n",
+    "calculations.  Using fewer digits might result in greater uncertainty;\n",
+    "using a larger number of digits should have no effect and thus is\n",
+    "unnecessary.  However, analyses based on differences in values with\n",
+    "a larger number of significant digits than indicated could lead to\n",
+    "erroneous results or misleading scientific conclusions.\n",
+    "\n",
+    "resolution for lat= 0.001\n",
+    "resolution for lon = 0.001\n",
+    "resolution for alt = 1" ;
+		:averaging_int = "60 seconds" ;
+		:sample_int = "2 seconds" ;
+		:serial_number = "\n",
+    "IRT:        1026\n",
+    "" ;
+		:calib_coeff = "\n",
+    "IRT:      0.10 Degrees K per millivolt\n",
+    "" ;
+		:IRT_offset = "    223.20\n",
+    "" ;
+		:zeb_platform = "sgpirt10mC1.a1" ;
+		:history = "created by the Zebra DataStore library, 1-Nov-2002,1:17:29, $RCSfile: DFA_NetCDF.c,v $ $Revision: 3.54 $\n",
+    "" ;
+}

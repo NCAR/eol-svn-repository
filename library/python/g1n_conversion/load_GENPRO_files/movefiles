@@ -1,0 +1,387 @@
+#!/usr/bin/env python
+
+#=======================================================================#
+#                                                                       #
+# This is a python script that reads tapelogs and moves genpro-i files  #
+# from its old directory to the new one.                                #
+#                                                                       #
+#=======================================================================#          
+# created by Soo Park 2015                                              #
+# updated: 6/30/15                                                      #
+# version: v0.1                                                         #
+# copyright: University Corporation for Atmospheric Research, 2015      #
+#=======================================================================#         
+
+import sys, re, os, argparse, subprocess
+from plumbum import local
+from bs4 import BeautifulSoup
+import yaml, copy
+
+class movefiles():
+    def __init__(self):
+         
+        # define arguments
+        proj = sys.argv[1] #project name. Doesn't matter upper or lower case.
+        arcid = sys.argv[2] # archive identifier. 
+        tapLogName = sys.argv[3] #tapelog name. Must retreive manually. 
+
+        self.counter1 = 0
+        self.counter2 = 0
+        self.counter3 = 0
+
+        print "\nImporting " + tapLogName + "..."
+    
+        self.aircraftDic = {"N130AR": ["c130_n130ar", "NSF/NCAR C-130", 130], 
+                            "N312D": ["kingair_n312d", "B200T KingAir", 31],
+                            "N304D": ["queenaira80_n304d", "QueenAir, A-80", 778],
+                            "N677F": ["gv_n677f", "NSF/NCAR Hiaper Gulfstream-V (GV)", 350],
+                            "N595KR": ["electra_n595kr", "L-188 Electra", 1084],
+                            "N306D": ["queenairb80_n306d", "QueenAir, B-80", 393],
+                            "N307D": ["sabreliner_n307d", "Sabreliner", 391],
+                            "N308D": ["electra_n308d", "L-188 Electra", 30],
+                            "N9929J": ["schweitzer_n9929j", "Schweitzer 2-32 Sailplane", 33] }
+
+        filesInfo = self.getFileInfo(tapLogName)
+
+        for flights in filesInfo:
+            fltno = flights[0] # flight number
+            fileDir = flights[1] # current file directory
+            fileName = flights[2] # file name
+            date = flights[3] # date of flight
+            start = flights[4] # start time
+            end = flights[5] # end time
+            aircraftID = flights[6] # aircraft ID
+            dataType = flights[7] # data type
+
+            if "-" in fileDir:
+                print fileName + ": Please move this file manually"
+                pass
+            else:
+                # make a directory for each file. 
+                newDir = self.makeDir(proj, fltno, fileDir, fileName, date, start, end, aircraftID, dataType)
+                #move files.
+                self.moveFiles(fileDir, newDir, fileName)
+
+        startDate = filesInfo[0][3]
+        endDate = filesInfo[-1][3]
+  
+        startTime = filesInfo[0][4]
+        endTime = filesInfo[-1][5]
+   
+        if "~" in startTime:
+            startTime = startTime.replace("~", "")
+            startTime = startTime + ":00"
+        if "~" in endTime:
+            endTime = endTime.replace("~", "")
+            endTime = endTime + ":59"
+        if startTime == "?":
+            startTime = "00:00:00"
+        if endTime == "?":
+            endTime = "23:59:59"
+
+        self.createYaml(tapLogName, proj, arcid, dataType, fileDir, newDir, aircraftID, startDate, endDate, startTime, endTime)
+
+    # parse the tapelog and get the necessary information. 
+    def getFileInfo(self, tapLogName):
+        
+        #tapelog location
+        htmlFile = "/net/www/raf/Catalog/%s" % tapLogName
+        # parse with bs
+        htmlData = BeautifulSoup(open(htmlFile))
+        # filter content in the <pre> tag
+        tapData = str(htmlData.pre.text)
+        # retreive the files directory
+        self.TLDir = re.findall("(TL.*?(?=\/))", tapData)
+        if not self.TLDir: # if the current directory doesn't start with TLxxxx
+            print "Please move these files manually"
+            sys.exit()
+        # retreive the aircraft number
+        aircraftID = re.findall("(?<=Aircraft:\s\s)(N.*?(?=\s))", tapData)
+        # retreive the data type
+        dataType = re.findall("(?<=Data type:\s\s)(.*?(?=\s))", tapData)
+    
+        aircraftID = aircraftID[0]
+        dataType = dataType[0]
+
+        print "===================================================================================\n"
+        print tapData + "\n"
+        print "===================================================================================\n"
+        # isolate each line in tapelog
+        fileList = re.findall("((?<=\n\s)[R|T|F|D].*?(?=\n))", tapData)
+        filesInfo = []
+
+        # if there are multiple directories
+        if self.TLDir[0] == "TLxxxx":
+            for info in fileList:
+                infoFind = re.findall("\S+", info)
+                if len(infoFind) == 8: 
+                    # remove the file sizes from list
+                    infoFind.pop(7)
+                    infoFind.pop(6)
+                elif len(infoFind) == 7:
+                    infoFind.pop(6)
+                # create directory
+                infoFind[1] = "/EOL/RAF/%s" % infoFind[1]
+                # edit file name
+                infoFind[2] = infoFind[2].replace("*", "")
+                # add aircraft number and data type to list
+                infoFind.append(aircraftID)
+                infoFind.append(dataType)
+                # add each rf info to separate list
+                filesInfo.append(infoFind)        
+                print infoFind
+            return filesInfo
+
+        else:
+            for info in fileList: 
+                infoFind = re.findall("\S+", info)
+                infoFind.insert(1, "/EOL/RAF/%s" % self.TLDir[0])
+                if len(infoFind) == 8:
+                    infoFind.pop(7)
+                    infoFind.pop(6)
+                elif len(infoFind) == 7:
+                    infoFind.pop(6)
+                infoFind[2] = infoFind[2].replace("*", "")
+                infoFind.append(aircraftID)
+                infoFind.append(dataType)
+                filesInfo.append(infoFind)
+                print infoFind
+            return filesInfo 
+    
+    # creating new directory    
+    def makeDir(self, proj, fltno, fileDir, fileName, date, start, end, aircraftID, dataType):
+    
+        # fix fltno
+        if "*" in fltno:
+            fltno = fltno.replace("*", "")
+
+        # fix file name
+        if "x" in fileName:
+            fileName = fileName.replace("*", "")
+
+        # parse the date info
+        dateParse = re.findall("[^/]+", date)
+        month = dateParse[0]
+        day = dateParse[1]
+        year = dateParse[2]
+        # "99991231" format
+        dateFormatted = year + month + day
+
+        start = start.replace("*", "")
+        end = end.replace("*", "")
+
+        # parse start time
+        timeParseStart = re.findall("[^:]+", start)
+        if "~" in str(timeParseStart[0]):
+            timeParseStart[0] = str(timeParseStart[0]).replace("~", "")
+        # if time doesn't have seconds
+        if len(timeParseStart) < 3:
+            timeParseStart.append("00")
+        # if time is only "?"
+        if timeParseStart[0] == "?":
+            timeParseStart = ["00", "00", "00"]
+        if "e" in timeParseStart[0]:
+            timeParseStart[0] = timeParseStart[0].replace("e", "")
+        startTime = "".join(timeParseStart)
+
+        # parse end time
+        timeParseEnd = re.findall("[^:]+", end)
+        if "~" in str(timeParseEnd[0]):
+            timeParseEnd[0] = timeParseEnd[0].replace("~", "")
+        if len(timeParseEnd) < 3:
+            timeParseEnd.append("59")
+        if timeParseEnd[0] == "?":
+            timeParseEnd = ["23", "59", "59"]
+        if "e" in timeParseEnd[0]:
+            timeParseEnd[0] = timeParseEnd[0].replace("e", "")
+        endTime = "".join(timeParseEnd)
+
+        # "99991231.000000_235959" format
+        dateRange = dateFormatted + "." + startTime + "_" + endTime
+    
+        # convert project names to lower case
+        proj = proj.lower()
+    
+        # find the aircraft in the dictionary retreive the aircraft name
+        for tailNum, aircraftNames in self.aircraftDic.iteritems():
+            if tailNum == aircraftID:
+                aircraft = aircraftNames[0]
+        # "RF00.99991231.000000_235959" format
+        dirInfo = fltno + "." + dateRange
+
+        # create a new directory
+        # ex) /EOL/1978/glale/aircraft/queenairb80_n306d/DRT/GENPRO-I/RF01.19780516.173400_180300/
+        newDir = "/EOL/%s/%s/aircraft/%s/%s/GENPRO-I/%s/" % (year, proj, aircraft, dataType, dirInfo)
+        return newDir
+
+    # move files from the old location to the new
+    def moveFiles(self, oldDir, newDir, fileName):
+  
+        # testing purposes
+        #oldDir = oldDir.replace("/EOL/RAF/", "")
+        #newDir = "/home/eoldata/new%s" % newDir
+        #oldDir = "/home/eoldata/old/%s" % oldDir
+        ######
+   
+        bothFiles = [fileName, fileName+"C"]
+
+        # initiate connection to hpss
+        hsi = local["/opt/local/bin/hsi"]
+        # find the file that we want to move. 
+        # find command will return the file name + directory if found
+        # nothing if not
+        for file in bothFiles:
+
+            oldFileDir = oldDir + "/" + file
+            # run find command on hsi to locate the wanted files. 
+            findcmd = hsi.run("find %s -name %s" % (oldDir, file))[2]
+            #print findcmd 
+            splitFind = findcmd.split("\n")
+
+            # if file was found
+            if splitFind[1] == oldFileDir:
+                print oldFileDir + " has been located"
+                self.counter1 = self.counter1 + 1
+                # ask the user to progress
+                response = raw_input("Please press enter if you'd like to move this file from \n%s \nto \n%s\nAny other input will not move the file. " % (oldFileDir, newDir))
+        
+                if response == "":
+                    
+                    self.counter2  = self.counter2 + 1
+                    # comment for testing 
+                    # make the new directory
+                    hsi.run("mkdir -p %s" % newDir)
+                    # move the files from old to new
+                    hsi.run("mv %s %s" %(oldFileDir, newDir))
+                    ######
+
+                    print "=========================================================="
+
+            else:
+                self.counter3 = self.counter3 + 1
+                print oldFileDir + " is not in its location. Please move this file manually."
+                print "=========================================================="
+
+
+    def createYaml(self, tapLogName, proj, arcid, dataType, oldDir, newDir, aircraftID, startDate, endDate, startTime, endTime):
+
+        tapLogName = tapLogName.replace(".html", ".yml")
+    
+        PROJ = proj.upper()
+        proj = proj.lower()
+
+        projID = re.findall("([0-9]+)(?=\.)", arcid)
+        projID = projID[0]
+
+        if (dataType == "HRT") or (dataType == "DRT"):
+            summaryDataType = "high"
+            freq = 3
+        elif (dataType == "LRT") or (dataType == "NTI"):
+            summaryDataType = "low"
+            freq = 4
+
+        # parse the date info
+        startDateParse = re.findall("[^/]+", startDate)
+        startMonth = startDateParse[0]
+        startDay = startDateParse[1]
+        startYear = startDateParse[2]
+        startDate = "-".join([startYear, startMonth, startDay])
+
+        # parse the date info
+        endDateParse = re.findall("[^/]+", endDate)
+        endMonth = endDateParse[0]
+        endDay = endDateParse[1]
+        endYear = endDateParse[2]
+        endDate = "-".join([endYear, endMonth, endDay])
+
+        start = " ".join([startDate, startTime])
+        end = " ".join([endDate, endTime])
+    
+        for tailNum, info in self.aircraftDic.iteritems():
+            if tailNum == aircraftID:
+                newDir = "/EOL/%s/%s/aircraft/%s/%s/GENPRO-I/(\E*).(\Y\Y\Y\Y\M\M\y\y).[\H\H\m\m\S\S]_{\H\H\m\m\S\S}" %(startYear, proj, self.aircraftDic[tailNum][0], dataType)
+
+        configFile = open("/net/work/Projects/g1n_conversion/template.yml", 'r')
+        configYaml = yaml.load(configFile)
+
+        blankYaml = copy.deepcopy(configYaml)
+
+        for key,val in blankYaml.iteritems():
+            for index in range(0,len(val)):
+                for key1, val1 in val[index].iteritems():
+
+                    if key1 == "name":
+                        blankYaml[key][index][key1] = PROJ
+
+                    elif key1 == "archive_ident":
+                        blankYaml[key][index][key1] = arcid
+
+                    elif key1 == "title":
+                        blankYaml[key][index][key1] = "Navigation, State Parameter, and Microphysics %s Data - [GENPROI]" % dataType
+                
+                    elif key1 == "summary":
+                        for key2, val2 in self.aircraftDic.iteritems():
+                            if key2 == aircraftID:
+                                blankYaml[key][index][key1] = "This data set includes airborne measurements obtained from the %s aircraft (Tail Number %s) during the %s project. This dataset contains %s rate navigation, state parameter, and microphysics flight-level data in GENPRO-I format." % (val2[1], key2, PROJ, summaryDataType)
+
+                    elif key1 == "begin_date":
+                        blankYaml[key][index][key1] = start
+
+                    elif key1 == "end_date":
+                        blankYaml[key][index][key1] = end
+
+                    elif key1 == "ingest_location":
+                        blankYaml[key][index][key1] = "/EOL/RAF/" + self.TLDir[0] + "(C)"
+                
+                    elif key1 == "archive_location":
+                        blankYaml[key][index][key1] = newDir
+              
+                    elif key1 == "platform_id":
+                        for key3, val3 in self.aircraftDic.iteritems():
+                            if key3 == aircraftID:
+                                blankYaml[key][index][key1] = val3[2]
+
+                    elif key1 == "load_data_location":
+                        blankYaml[key][index][key1] = newDir + "/G*"
+                    
+                    elif key1 == "frequency_id":
+                        blankYaml[key][index][key1] = freq
+
+        print self.counter2, " out of ", self.counter1, "files have been moved and ", self.counter3, " files were not found."
+        savePrettyData = yaml.dump(blankYaml, default_flow_style = False, width=10000000)
+        if os.path.exists("/net/work/cfg-files/%s_%s/" %(PROJ, projID)):
+            pass
+        else:
+            os.makedirs("/net/work/cfg-files/%s_%s/" %(PROJ, projID))
+        saveDir = "/net/work/cfg-files/%s_%s/%s" %(PROJ, projID, tapLogName)
+        saveFile = open(saveDir, 'w')
+        saveFile.write(savePrettyData)
+        saveFile.close()
+        subprocess.call(["/net/work/dev/loaddata/load_data_proj", "--called", saveDir])
+
+def main():
+
+    # call getFileInfo function. 
+    movefiles()
+
+
+if __name__ == '__main__':
+    
+    # add arguments for project name and tapelog name
+    parser = argparse.ArgumentParser(description="This script moves g1n files to new directories. Lower or upper case is accepted.") 
+    
+    parser.add_argument('project', metavar = 'proj', help="Enter in the project name. Either lower or uppercase is accepted.")
+    
+    parser.add_argument('archive id', metavar = 'arcid', help = "Enter in the archive identifier of the dataset. This will most likely be the first time you'll have to decide the archive identifier for this dataset.")
+    
+    parser.add_argument('tapLog name', metavar = 'tapLog', help="tape log name retreived from https://www.eol.ucar.edu/node/906")
+
+    # if there aren't arguments, print help
+    if len(sys.argv) < 4:
+        parser.print_help()
+        sys.exit()
+        
+    args = parser.parse_args()
+    
+    main()
+

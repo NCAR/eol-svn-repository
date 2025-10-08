@@ -1,0 +1,70 @@
+#!/bin/perl -w
+
+# Queries the mass store and displays the GOES-8 files that occur 15 minutes after the
+#  hour.  This is a CGI script and displays the data formatted with html, so the 
+#  make_lists script for a tab-delimited output
+
+# Created for Darren - 2003-07-29
+
+# Author: Dan Sullivan
+
+
+use strict;
+use DBI;
+use CGI;
+
+my $cgi = CGI->new();
+my $dbh = connectDB(); 
+
+my $sql = "SELECT FileTable.*, DayTable.resolution FROM DayTable, FileTable WHERE " .
+					"FileTable.day_id=DayTable.id AND FileTable.time % 100 = 15 AND DayTable.resolution = '1KM' " .
+          "AND DayTable.satellite='G08' AND DayTable.date >= 2001001 AND DayTable.date <= 2003092";
+
+my $sth = $dbh->prepare( $sql );
+$sth->execute();
+
+print( cr(
+	$cgi->header(),
+	"<html>",
+		"<head>",
+			"<title>GOES-8 HH:15 min files</title>",
+		"</head>",
+	"<body>",
+	"<center><font size=+2>GOES-8 HH:15 min files, 1KM resolution</font><br>",
+	"Where date >= 2001001 and date <= 2003092<br>",
+	"<table border=1 cellpading=7 cellspacing=1>",
+		"<tr>",
+			"<th>Julian Date</th>",
+			"<th>Time</th>",
+			"<th>File Size</th>",
+			"<th>Path</th>",
+		"</tr>"
+	) );
+
+
+while( (my $row = $sth->fetchrow_hashref()) )
+{
+	$row->{time} = sprintf( "%4.4d", $row->{time} );
+	print( cr(
+		"<tr>",
+			"<td>$row->{date}</td>",
+			"<td>$row->{time}</td>",
+			"<td align=right>$row->{size}</td>",
+			"<td>$row->{path}</td>",
+		"</tr>",
+	) );
+}
+
+print( cr(
+	"</table></body></html>" ) );
+
+sub connectDB
+{
+  return DBI->connect( "DBI:mysql:database=suldan;host=thunder",
+                        "suldan", "hithere", { RaiseError=>1} ) || die( "Unable to connect to database: ml" );
+}
+
+sub cr
+{
+	return( join( "\n", @_ ) );
+}

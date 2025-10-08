@@ -1,0 +1,145 @@
+<html>
+<head>
+<title>How To: EBUFR CLASS Soundings</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/howto.css">
+</head>
+
+<body>
+<h1>How To: EBUFR CLASS Soundings</h1>
+<ol>
+	<li><a href="#background"><b>Background</b></a></li>
+	<li><a href="#repos"><b>Repository</b></a></li>
+	<li><b>CLASS to EBUFR</b><ol>
+		<li><a href="#class2ebufr_convert">Converting CLASS to EBUFR</a></li>	
+    	<li><a href="#class2ebufr_executable">Creating the Executable</a></li>
+		</ol></li>
+		
+	<li><b>EBUFR to CLASS</b><ol>
+		<li><a href="#ebufr2class_convert">Converting EBUFR to CLASS</a></li>
+		<li><a href="#ebufr2class_executable">Creating the Executable</a></li>
+		</ol></li>
+</ol>
+<hr>
+
+<a name="background"></a>
+<h3>Background</h3>
+<p>This document contains the instructions on how to run the EBUFR conversions for CLASS formatted sounding data.  It explains how to run the converters and how to create their executables in the case that they would need to be created.</p>
+
+<table border=1>
+<tr><th class="header">Directory</th><th class="header">Description</th></tr>
+<tr><th>Code</th><td>This contains the fortran code for building the <b>Code.a</b> library for the <b>class2ebufr</b> programs.  It contains a number of subdirectories that are included in the library as well.</td></tr>
+<tr><th>Commons</th><td>This directory contains header files that are used by both EBUFR converters.</td></tr>
+<tr><th>EXTERNAL</th><td>This directory contains the fortran files that are used for the system specific libraries of the <b>class2ebufr</b> converter.</td></tr>
+<tr><th>Files</th><td>This directory contains configuration files used by the <b>class2ebufr</b> converter.  They need to be copied to the directory where the conversion will be executed.</td></tr>
+<tr><th>Libs</th><td>This directory is where the libraries are stored once they have been created.</td></tr>
+<tr><th>Objects</th><td>This is where the object files are stored for the <b>Code.a</b> library.</td></tr>
+<tr><th>bin</th><td>This directory contains the executable files for the conversions.</td></tr>
+<tr><th>ebufr_subs</th><td>This directory contains the fortran files that are used for creating the library for the <b>ebufr2class</b> conversion.</td></tr>
+<tr><th>src</th><td>This directory contains the Makefile and the main source files for generating the converter executables.</td></tr>
+</table>
+<hr>
+
+<a name="repos"></a>
+<h3>The Repository</h3>
+<p>The CLASS-EBUFR software is under version control using subversion.  (See <a href="/dpg/GENERAL/repository/howto_subversion.html">How To: Subversion</a> for more information on subversion's usage.)  It can be found in:</p>
+<p class="code">/work/software/repository/subversion/tool/upper_air/ebufr</p>
+
+<a name="class2ebufr_convert"></a>
+<h3>Converting CLASS to EBURF</h3>
+<p>The following instructions assume that the executable <b>class2ebufr_Solaris</b> has been successfully created.  (The current system is Solaris.)  If the executable is not in the <b>bin</b> directory, see <a href="#class2ebufr_executable">Creating the Executable</a> documentation in this how to.</p>
+<p>At this point, the CLASS files should be created.  Each CLASS file will become its own EBURF file.  This means that if you want day files, individual sounding need to be put together to form day files.</p>
+<p>The converter needs to be run in the same directory as the files that are to be converted.  There also need to be five files that the converter use in the directory as well.  They can be found in the <b>Files</b> directory.  They can all be symbolic links, except for <b>control_scf.txt</b>.  This file needs to be editted (line 12) to match the current project before the converter is run.</p>
+<p>The converter can now be run.  It needs to be run on each file individually, so a script is wise to run it on all of the files.  The command to run the converter is:</p>
+<p class="code">class2ebufr_Solaris $file</p>
+<p>Where <b>$file</b> is the name of the class file to be converted.  An EBUFR file with the same name will be created with the replacement extension of <b>.ebufr</b>.</p>
+
+<a name="class2ebufr_executable"></a>
+<h3>Creating the Executable</h3>
+<p>Hopefully, this step will not be required to ebufr the sounding data.  The only time this may need to be recreated is if the system changes (the operating system is upgrated or replaced) or the actual code needs to be changed.  The executables should be able to be run from the <b>bin</b> directory without reforming the binary.</p>
+<p>In the case where the binary needs to be recreated, the following steps should create a working binary without too many issues.</p>
+
+<ol>
+	<li><b>Create the Code.a Library:</b><ol>
+		<li>Remove all of the object files (*.o) in the <b>Objects</b> directory.
+			<p>If this step is skipped, the files could be used in creating the library.  Remove all of the files by using:</p>
+			<p class="code">rm Objects/*.o</p>
+			</li>
+			
+		<li>Change to the <b>Code</b> directory.</li>
+		
+		<li>Remove more object files.
+			<p>This directory contains all of the files that need to be compiled and copies of the object files.  The object files need to be removed here as well.</p>
+			<p class="code">rm *.o;rm */*.o</p>
+			<p>This will remove all of the object files in this directory and its subdirectories.  Removing the object files will force the compiler to recompile every file and copy the object file to the <b>Objects</b> directory.</p>
+			</li>
+		
+		<li>Create the <b>Code.a</b> library.
+			<p>The following command will create the <b>Code.a</b> library and place it into the <b>Libs</b> directory where it will be used later.</p>
+			<p class="code">make all</p>
+			<p>This will compile all of the files in the <b>Code</b> directory and all of its subdirectories.  The object files that are created are copied to the <b>Objects</b> directory where they are archived into the <b>Code.a</b> library in the <b>Libs</b> directory.</p>
+			</li>
+		
+		</ol></li>
+		
+	<li>Create the system specific libraries.<ol>
+		<li>Change to the <b>EXTERNALS</b> directory.</li>
+
+		<li>Remove all of the object files.  This will force the compiler to recreate them.
+			<p class="code">rm *.o</p>
+			</li>
+			
+		<li>Create the libraries.
+			<p>The command:</p>
+			<p class="code">make all</p>
+			<p>will create two library files, <b>libGsun.a</b> and <b>libGunix.a</b>.  The first file is for running on Sun Solaris operating systems.  The second is for running on a Unix system.  Both libraries are created and placed in the <b>Libs</b> directory.</p>
+			</li>
+	
+		</ol></li>
+		
+	<li>Create the Executables.<ol>
+		<li>Change to the <b>src</b> directory.</li>
+		<li>Create the binaries.
+			<p>This will create two executables, <b>class2ebufr_Solaris</b> and <b>class2ebufr_Unix</b>.  They use the respective library that was created in the previous step.</p>
+			<p class="code">make all</p>
+		</ol></li>
+</ol>
+<hr>
+
+<a name="ebufr2class_convert"></a>
+<h3>Converting EBUFR to CLASS</h3>
+<p>The following assumes that the binary <b>ebufr2class</b> is located in the <b>bin</b> directory.  If it does not exist, see the <a href="ebufr2class_executable">Creating the Executable</a> section of this documentation.</p>
+<p>The program needs to be run in the same directory where the <b>.ebufr</b> files are located.  It is run by:</p>
+<p class="code">ebufr2class ebufr class</p>
+<p>where <b>ebufr</b> is the name of the EBUFR file and <b>class</b> is the CLASS file that will contain all of the data in the ebufr file.  <font class="note">Generally, EBUFR files contain multiple soundings.  All of the files in the EBUFR file will be placed in the one CLASS file.</font></p>
+
+<a name="ebufr2class_executable"></a>
+<h3>Creating the Executable</h3>
+<p>Once the binary has been created, there should not be a need to recreate it unless the system changes or the actual code is changed.  In the case that the binary needs to be recreated, the following steps are to be followed.</p>
+<ol>
+	<li><b>Create the libeb.a Library</b>
+		<p>The <b>libeb.a</b> library contains a number of functions that the <b>ebufr2class</b> utilizes.  It is stored in the <b>Libs</b> directory.</p><ol>
+		<li>Change to the <b>ebufr_subs</b> directory.
+			<p>This directory contains the files that make up the library.</p>
+			</li>
+		<li>Create the library
+			<p>Type the command:</p>
+			<p class="code">make all</p>
+			<p>This will compile the files, creating the object files, and put the object files into the library.</p>
+			</li>
+		</ol>
+		</li>
+		
+	<li>Create the Executables.<ol>
+		<li>Change to the <b>src</b> directory.</li>
+		<li>Create the binary.
+			<p>This will create the executable <b>ebufr2class</b> and will use the library that was created in the previous step.</p>
+			<p class="code">make ebufr2class</p>
+		</ol></li>
+</ol>
+
+<hr>
+<p class="foot">Last Updated: February 10, 2006 - Joel Clawson</p>
+
+</body>
+</html>

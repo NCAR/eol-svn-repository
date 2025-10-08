@@ -1,0 +1,102 @@
+#!/bin/perl -w
+
+# McD
+# --------------------------------------------------------------
+# proc_link_update: processes the form displayed in the edit_link
+#  script.  Performs any inserts/updates/deletes and then returns
+#  to the view_links script.
+#
+# Expected Params:
+#   "editButton" - the button the user clicked, this is
+#     used to determine the action
+#   "type" - the type this link is - "category" or "project"
+#   "linkto" - the "type" id to assocaite this link with
+#   "mode" - "add" or "update", established by the edit_link 
+#     script. 
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI;
+use lib "lib";
+use Utils;
+
+use lib "../mcd_lib";
+use Link;
+use LinkDBA;
+
+require "./view_links";
+
+my $link_dba = LinkDBA->new();
+my $cgi = CGI->new();
+
+my %actions = ( "Update Link" => \&updateLink, 
+								"Add Link" => \&addLink, 
+								"Delete" => \&deleteLink, 
+								"Cancel" => \&cancelLink );
+
+my $action = $cgi->param( "editButton" );
+my $linkto = $cgi->param( "linkto" );
+my $link = getPostedLink(); 
+my $mode = $cgi->param( "mode" );
+my $type = $cgi->param( "type" );
+
+$actions{$action}->();
+
+sub updateLink
+{
+	$link_dba->updateDB( $link );
+
+	view_links( $linkto, $mode, $type, $link->{id} );
+}
+
+sub deleteLink
+{
+	$link_dba->deleteDB( $link );
+	view_links( $linkto, $mode, $type, $link->{id} );
+}
+
+sub addLink
+{
+	$link_dba->insertDB( $link );
+	if( $type eq "project" )
+	{
+		$link_dba->linkToProject( $link, $linkto );
+	}
+	elsif( $type eq "category" )
+	{
+		$link_dba->linkToCategory( $link, $linkto );
+	}
+	
+	view_links( $linkto, $mode, $type, $link->{id} );
+}
+
+sub cancelLink
+{
+	view_links( $linkto, $mode, $type );
+}
+
+sub getPostedLink
+{
+	my $link = Link->new();
+
+	$link->{id} = $cgi->param( "id" );
+	$link->{name} = $cgi->param( "name" );
+	$link->{url} = $cgi->param( "url" );
+
+	my $target = $cgi->param( "target" );
+	
+	if( $target ne "Select" )
+	{
+		$link->{target} = $target;
+	}
+	else
+	{
+		$link->{target} = "_top";
+	}
+	
+
+	return $link;
+}

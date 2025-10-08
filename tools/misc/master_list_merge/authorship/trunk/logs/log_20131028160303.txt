@@ -1,0 +1,1021 @@
+> groovy authorshipConnect.groovy ARCSS ATLAS BEST BSIERP ITEX PacMARS SBI SHEBA
+
+Created log file:	logs/log_20131028160303.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	William S. Reeburgh
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  ARCSS:  106.ARCSS078
+		Zhang, Tingjun, Roger Barry, and David Gilichinsky (U. Colorado, Russian Academy of Sciences)
+Which of these contacts matches this author:	U. Colorado
+
+		1122	null	Roger G. Barry	U. Colorado, NSIDC, World Data Center for Glaciology
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  ARCSS:  106.ARCSS078
+		Zhang, Tingjun, Roger Barry, and David Gilichinsky (U. Colorado, Russian Academy of Sciences)
+Which of these contacts matches this author:	Russian Academy of Sciences
+
+		1123	null	David Gilichinsky	Russian Academy of Sciences
+		1251	null	Dmitry Zamolodchikov	Russian Academy of Sciences
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ATLAS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	R. Dargaville
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	D. Zalmolodchikov
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  ATLAS:  46.800
+		Nolan, M.
+Which of these contacts matches this author:	M. Nolan
+
+		374	ndoesken	Nolan Doesken	Colorado State
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  ATLAS:  56.003
+		Welker, J., C. Bilbrough
+Which of these contacts matches this author:	C. Bilbrough
+
+		1264	null	Carol J. Bilbrough	University of Wyoming
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1264
+
+Unable to find 1264 for data set 56.003
+Unable to find 1264 for data set 56.004
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1264, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1264, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '56.004';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BEST
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	LDEO
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	US Coast Guard
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  BEST:  102.063
+		Cameron, M.
+Which of these contacts matches this author:	M. Cameron
+
+		1005	null	Cameron Homeyer	NCAR/ACD
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  BEST:  102.079
+		Napp, J.
+Which of these contacts matches this author:	J. Napp
+
+		241	cnappo	Carmen J. Nappo	NOAA/ATDD
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  BEST:  102.136
+		Lomas, M. (BIOS)
+Which of these contacts matches this author:	BIOS
+
+		1078	null	Sean Schaeffer	Biosys Engr&Soil Sci-Univ
+		1261	null	null	Bermuda Institute of Ocean Sciences (BIOS)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1261
+
+Unable to find 1261 for data set 102.136
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	K. Aagard
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	USCG-ESU
+
+--------------------------------------------------------------------------------
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1261, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '102.136';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+BSIERP
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Daniel D. Roby
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Michael Dalton
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  BSIERP:  245.B71-001
+		Dalton, Michael and Andre Punt
+Which of these contacts matches this author:	Andre Punt
+
+		1255	null	Andre Punt	University of Washington
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1255
+
+Unable to find 1255 for data set 245.B71-001
+--------------------------------------------------------------------------------
+  BSIERP:  245.B72-001
+		Haynie, Alan
+Which of these contacts matches this author:	Alan Haynie
+
+		1254	null	Alan C. Haynie	NMFS Alaska Fisheries Science Center
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1254
+
+Unable to find 1254 for data set 245.B72-001
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Simone Vincenzi
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Tadayasu Uchiyama
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  BSIERP:  245.B99-001
+		Ortiz, Ivonne, Francis Wiese and Angie Greig
+Which of these contacts matches this author:	Angie Greig
+
+		1256	null	Angie Greig	Alaska Fisheries Science Center, NOAA, NMFS
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1256
+
+Unable to find 1256 for data set 245.B99-001
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1255, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B71-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1254, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B72-001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1256, 'author', 3, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B99-001';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+ITEX
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Totland
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Robinson-Wookey
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+PacMARS
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Samuel W. Stoker
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.016
+		Brown, John S., Ken H. Dunton, Greg Durell, Michael Galginaitis, Jerry M. Neff, George W. Shepard, Robert B. Spies, John H. Trefry (Battelle)
+Which of these contacts matches this author:	John S. Brown
+
+		92	abrown	Audrene Brown	NOAA/Forcast Systems Lab.
+		597	wbrown	William Brown	NCAR
+		638	null	Phillip R. A. Brown	Met Office, Cloud Physics Research
+		924	cbrown	Caroline Brown	Alaska Department of Fish and Game
+		980	devinb	Devin Brown	NCAR/EOL
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Greg Durell
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Michael Galginaitis
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Jerry M. Neff
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	George W. Shepard
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Robert B. Spies
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.016
+		Brown, John S., Ken H. Dunton, Greg Durell, Michael Galginaitis, Jerry M. Neff, George W. Shepard, Robert B. Spies, John H. Trefry (Battelle)
+Which of these contacts matches this author:	Battelle
+
+		1262	null	null	Battelle Memorial Institute
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1262
+
+Unable to find 1262 for data set 255.016
+--------------------------------------------------------------------------------
+  PacMARS:  255.037
+		(Olgoonik Fairweather LLC)
+Which of these contacts matches this author:	Olgoonik Fairweather LLC
+
+		1119	null	Christopher Guay	Pacific Marine Sciences and Technology LLC
+		1244	null	Jeremiah Drage	Hattenburg and Dilley, LLC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.039
+		(Battelle Memorial Institute, Exponent Inc., Florida Institute of Technology, Neff & Associates)
+Which of these contacts matches this author:	Battelle Memorial Institute
+
+		1262	null	null	Battelle Memorial Institute
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1262
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.039
+		(Battelle Memorial Institute, Exponent Inc., Florida Institute of Technology, Neff & Associates)
+Which of these contacts matches this author:	Exponent Inc.
+
+		74	jspots	James Spots	Qualimetrics, Inc.t
+		129	fbrechte	Fred J. Brechtel	Brechtel Mfg. Inc.
+		481	qualimet	James Spots	Qualimetrics, Inc.
+		507	aeromet	null	Aeromet Inc.
+		632	bbaker	Brad Baker	SPEC Inc.
+		709	ndemetriades	Nicholas W. S. Demetriades	Vaisala Inc.
+		806	plawson	Paul Lawson	SPEC, Inc.
+		988	null	Ted Fisher	SPEC Inc.
+		1253	null	Adrian E. Gall	ABR Inc. – Environmental Research & Services
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.039
+		(Battelle Memorial Institute, Exponent Inc., Florida Institute of Technology, Neff & Associates)
+Which of these contacts matches this author:	Florida Institute of Technology
+
+		1012	jtrefry	John H. Trefry	Florida Institute of Technology, Department of Marine and Environmental Systems
+		1199	null	Robert P Trocine	Florida Institute of Technology
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Neff & Associates
+
+--------------------------------------------------------------------------------
+
+Unable to find 1262 for data set 255.039
+--------------------------------------------------------------------------------
+  PacMARS:  255.040
+		Norcross, Brenda L., Brenda A. Holladay, Robert M. Meyer, and Jeffrey A. June
+Which of these contacts matches this author:	Brenda A. Holladay
+
+		1263	null	Brenda A. Holladay	University of Alaska Fairbanks
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1263
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.040
+		Norcross, Brenda L., Brenda A. Holladay, Robert M. Meyer, and Jeffrey A. June
+Which of these contacts matches this author:	Robert M. Meyer
+
+		199	tilden	Tilden Meyers	NOAA/ATDD
+		1005	null	Cameron Homeyer	NCAR/ACD
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+Unable to find 1263 for data set 255.040
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	David Hannay
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.043
+		(LGL Alaska Research Associates Inc.)
+Which of these contacts matches this author:	LGL Alaska Research Associates Inc.
+
+		74	jspots	James Spots	Qualimetrics, Inc.t
+		129	fbrechte	Fred J. Brechtel	Brechtel Mfg. Inc.
+		481	qualimet	James Spots	Qualimetrics, Inc.
+		507	aeromet	null	Aeromet Inc.
+		632	bbaker	Brad Baker	SPEC Inc.
+		709	ndemetriades	Nicholas W. S. Demetriades	Vaisala Inc.
+		806	plawson	Paul Lawson	SPEC, Inc.
+		988	null	Ted Fisher	SPEC Inc.
+		1253	null	Adrian E. Gall	ABR Inc. – Environmental Research & Services
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Jay Brueggeman
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.046
+		(Fairweather Leasing LLC)
+Which of these contacts matches this author:	Fairweather Leasing LLC
+
+		1119	null	Christopher Guay	Pacific Marine Sciences and Technology LLC
+		1244	null	Jeremiah Drage	Hattenburg and Dilley, LLC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.049
+		Day, Robert and Adrian Gall
+Which of these contacts matches this author:	Robert Day
+
+		80	dayers	David Ayers	University of Florida
+		882	nfriday	Nancy Friday	National Marine Mammal Laboratory
+		1263	null	Brenda A. Holladay	University of Alaska Fairbanks
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  PacMARS:  255.049
+		Day, Robert and Adrian Gall
+Which of these contacts matches this author:	Adrian Gall
+
+		209	dgallant	Darren Gallant	UCAR/JOSS
+		311	kgallo	Kevin P. Gallo	NOAA/NESDIS
+		1126	null	Nicole Gallant 	CIRCEM
+		1224	null	A. Gallant	null
+		1253	null	Adrian E. Gall	ABR Inc. – Environmental Research & Services
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1253
+
+Unable to find 1253 for data set 255.049
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1262, 'author', 9, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.016';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1262, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.039';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1263, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.040';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1253, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.049';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SBI
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	D. Maidment
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	L. Pomeroy
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SBI:  62.034
+		(JOSS/Service Group)
+Which of these contacts matches this author:	JOSS
+
+		9	ken	Kenneth W. Scully	UCAR/JOSS
+		29	rmurdock	Ron Murdock	UCAR/JOSS
+		33	ngamage	Nimal Gamage	UCAR/JOSS
+		56	jmoore	Jim Moore	UCAR/JOSS
+		198	cceazan	Chris Ceazan	UCAR/JOSS
+		209	dgallant	Darren Gallant	UCAR/JOSS
+		250	qdaily	Quinn Daily	JOSS
+		259	rsmith	Rebecca Smith	UCAR/JOSS
+		284	rbateman	Richard Bateman	UCAR/JOSS
+		305	dwilkinson	Drew Wilkinson	UCAR/JOSS
+		346	dsullivan	Dan Sullivan	UCAR/JOSS
+		347	pskinner	Patrick Skinner	UCAR/JOSS
+		375	pdressen	Phillip Dressen	JOSS
+		405	sroberts	Steven Roberts	UCAR/JOSS
+		417	ntower	Nick Tower	UCAR/JOSS
+		426	abhatia	Anubhav Bhatia	UCAR/JOSS
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  SBI:  62.034
+		(JOSS/Service Group)
+Which of these contacts matches this author:	Service Group
+
+		342	null	Joseph G. Verfaillie	Global Change Research Group
+		553	cua	null	University of Colorado - ARCSyM group
+		752	swhitlow	Sallie Whitlow	University of New Hampshire - Glacier Research Group
+		804	rlammers	Richard B. Lammers	Institute for the Study of Earth, Oceans, and Space (Water Systems Analysis Group)
+		866	dzona	Donatella Zona	Department of Biology and Global Change Research Group, San Diego State University
+		1197	null	Cove S. Sturtevant	Global Change Research Group
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	USCG
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SBI:  62.187
+		Moore, Kent (University of Toronto)
+Which of these contacts matches this author:	Kent Moore
+
+		56	jmoore	Jim Moore	UCAR/JOSS
+		991	null	Fred Moore	NOAA
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	University of Toronto
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SBI:  62.188
+		(NCEP)
+Which of these contacts matches this author:	NCEP
+
+		189	skatz	Sidney Katz	NCEP/EMC
+		363	kmitchell	Kenneth Mitchell	NCEP/EMC(NOAA/NWS)
+		364	jschemm	Jae-Kyung E. Schemm	CPC/NCEP/NWS/NOAA
+		384	hjuang	Hann-Ming (Henry) Juang	NCEP
+		429	ylin	Ying Lin	NCEP/EMC
+		556	ncep/emc	null	NCEP Environmental Modeling Center
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  SBI:  62.219
+		Lane, P., D. Sorarrain-Pilz, S. L. Smith, and L. Llinas
+Which of these contacts matches this author:	D. Sorarrain-Pilz
+
+		1252	null	Dora Sorarrain-Pilz	Rosenstiel School of Marine and Atmospheric Science (RSMAS)
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1252
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	L. Llinas
+
+--------------------------------------------------------------------------------
+
+Unable to find 1252 for data set 62.219
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	P. S. Fratantoni
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	D. J. Torres
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	K. Tateyama
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	H. Melling
+
+--------------------------------------------------------------------------------
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1252, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '62.219';
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+SHEBA
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.119
+		Orr, B., M. Shupe, T. Uttal
+Which of these contacts matches this author:	B. Orr
+
+		211	vmorris	Victor Morris	Pacific Northwest National Lab
+		280	lahlquist	Lorraine Ahlquist	Unknown
+		1053	null	M. Torre Jorgenson	null
+		1206	null	James Morrison	null
+		1260	null	Brad Orr	null
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1260
+
+Unable to find 1260 for data set 13.119
+--------------------------------------------------------------------------------
+  SHEBA:  13.124
+		Intrieri, J. and B. McCarty
+Which of these contacts matches this author:	B. McCarty
+
+		1259	null	Brandi J. McCarty	University of Colorado - CIRES
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1259
+
+Unable to find 1259 for data set 13.124
+Unable to find 1259 for data set 13.125
+--------------------------------------------------------------------------------
+  SHEBA:  13.401
+		(Univ. of Alaska - Geophysical Institute)
+Which of these contacts matches this author:	Univ. of Alaska - Geophysical Institute
+
+		40	mwetzel	Melanie Wetzel	Desert Research Institute
+		119	nbates	Nick R. Bates	Bermuda Institute of Ocean Sciences
+		155	jhudson	Jim Hudson	Desert Research Institute
+		221	rstorvold	Rune Storvold	Geophysical Institute, UAF
+		239	vromanovsky	Vladimir E. Romanovsky	Geophysical Institute UAF
+		242	jlobert	Jurgen Lobert	Scripps Institute
+		264	ijnsdttir	Ingibjorg S. Jonsdottir	Botanical Institute
+		266	sbret-harte	Syndonia Bret-Harte	Institute of Arctic Biology
+		279	ccopass	Catharine D. Copass	Institute of Arctic Biology
+		303	null	Donald A. (Skip) Walker	Institute of Arctic Biology
+		318	rweber	Rodney J. Weber	Georgia Institute of Tech
+		427	hyabuki	Hironori Yabuki	Institute Observat. Research
+		449	mit/ll	null	Massachusetts Institute of Technology/Lincoln Laboratory
+		455	nmimt	null	New Mexico Institute of Mines and Technology
+		489	mit	Phil Rosenkranz	Massachussets Institute of Technology
+		504	ori/tokyo	null	Ocean Research Institute, Univ. of Tokyo
+		505	mpi	null	Max Plaank Institute
+		509	sio	null	Scripps Institute of Oceanography
+		523	dri	null	Desert Research Institute
+		537	whoi	null	Woods Hole Oceanographic Institute
+		561	gatech	null	Georgia Institute of Technology
+		563	caltec	null	California Institute of Technology
+		569	metri	null	Meteorological Research Institute
+		570	k-jist	null	Kwanji Institute of Science and Engineering
+		577	nier	null	National Institute of Environmental Research
+		578	kist	null	Korean Institute of Science and Technology
+		579	null	null	Institute of Low Temperature Science, Hokkaido University
+		595	omayol	Olga L. Mayol-Bracero	Institute for Tropical Ecosystem Studies (ITES)
+		600	sschonberg	Susan Schonberg	University of Texas at Austin Marine Science Institute
+		612	rpickart	Robert S. Pickart	Woods Hole Oceanographic Institute
+		646	heicken	Hajo Eicken	Geophysical Institute/University of Alaska
+		665	tsavunen	Tarja Savunen	Finnish Meteorological Institute
+		681	vgrubisic	Vanda Grubisic	Desert Research Institute
+		694	gmayr	Georg Mayr	Institute for Meteorology and Geophysics
+		703	akitoh	Akio Kitoh	Meteorological Research Institute - Japan Meteorological Agency
+		734	ehunter	Eli Hunter	Institute for Marine and Coastal Sciences, Rutgers University
+		758	null	Thomas J. Weingartner	University of Alaska - Institute of Marine Science
+		775	null	James T. Randerson	California Institute of Technology
+		776	abalser	Andrew W. Balser	U. of Alaska Fairbanks - Institute of Arctic Biology
+		788	dhelmig	Detlev Helmig	Institute of Alpine and Arctic Research (INSTAAR)
+		804	rlammers	Richard B. Lammers	Institute for the Study of Earth, Oceans, and Space (Water Systems Analysis Group)
+		828	mlomas	Michael Lomas	Bermuda Institute of Ocean Sciences
+		901	agadian	Alan Gadian	Institute of Atmospheric Sciences
+		931	jfochesatto	Javier Fochesatto	Geophysical Institute and College of Natural Sciences and Mathematics
+		935	ewelty	Ethan Welty	Institute of Arctic and Alpine Research
+		939	null	Astrid E. J. Ogilvie	Institute of Arctic and Alpine Research
+		941	gspreen	Gunnar Spreen	Jet Propulsion Laboratory, California Institute of Technology
+		952	jfrancis	Jennifer Francis	Institute of Marine and Coastal Sciences, Rutgers University
+		963	cimss	null	Cooperative Institute for Meteorological Satellite Studies
+		1001	ablanchard	Arnold Blanchard	Institute of Marine Science
+		1006	bbluhm	Bodil A. Bluhm	Institute of Marine Science
+		1012	jtrefry	John H. Trefry	Florida Institute of Technology, Department of Marine and Environmental Systems
+		1068	null	Kenichi Matsuoka	Norwegian Polar Institute
+		1079	null	W. Tad Pfeffer	Institute of Arctic and Alpine Research
+		1103	null	Steven V. Muller	Institute of Arctic and Alpine Research 
+		1105	null	Paul A. Mayewski	Institute for the Study of Earth,  Oceans and Space
+		1124	null	William A. Gould	International Institute of Tropical Forestry
+		1131	null	Nan D. Lederer	Institute of Arctic and Alpine Research
+		1142	null	Hiroshi Furutani	Atmosphere and Ocean Research Institute (AORI)
+		1165	null	Katrin Iken 	Institute of Marine Science
+		1199	null	Robert P Trocine	Florida Institute of Technology
+		1223	null	Walker O. Smith	Virginia Institute of Marine Science
+		1225	null	Erika J. Edwards	U. Alaska-Fairbanks, Institute of Arctic Biology
+		1226	null	Amber Moody	U. Alaska-Fairbanks, Institute of Arctic Biology
+		1237	null	Dmitry Nicolsky	University of Alaska Fairbanks - Geophysical Institute
+		1238	null	Dmitri Sergueev	University of Alaska Fairbanks - Geophysical Institute
+		1239	null	Gennady Tipenko	University of Alaska Fairbanks - Geophysical Institute
+		1261	null	null	Bermuda Institute of Ocean Sciences (BIOS)
+		1262	null	null	Battelle Memorial Institute
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.404
+		(Univ. of Wisconsin - SSEC)
+Which of these contacts matches this author:	Univ. of Wisconsin - SSEC
+
+		32	wfeltz	Wayne Feltz	CIMSS/SSEC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	T. Siferd
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	U. Washington - CARG
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	D. Wiley
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	W. B. Tucker
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	J. Pinto
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	J. Curry
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.805
+		Fowler, C., T. Arbetter, J. Key, J. Maslanik, S. Drobot, R. Kwok
+Which of these contacts matches this author:	C. Fowler
+
+		1265	null	Charles Fowler	University of Colorado
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1265
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	T. Arbetter
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	S. Drobot
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	R. Kwok
+
+--------------------------------------------------------------------------------
+
+Unable to find 1265 for data set 13.805
+Unable to find 1265 for data set 13.806
+Unable to find 1265 for data set 13.807
+Unable to find 1265 for data set 13.808
+Unable to find 1265 for data set 13.809
+Unable to find 1265 for data set 13.810
+Unable to find 1265 for data set 13.811
+--------------------------------------------------------------------------------
+  SHEBA:  13.815
+		Yu, Y.
+Which of these contacts matches this author:	Y. Yu
+
+		184	rshirooka	Ryuichi Shirooka	IORGC
+		335	tmurayama	Toshiyuki Murayama	Tokyo Univ Mercantile Marine
+		348	kkim	Ki-Hyun Kim	Sejong University
+		364	jschemm	Jae-Kyung E. Schemm	CPC/NCEP/NWS/NOAA
+		367	syuter	Sandra E. Yuter	Department of Atmos. Science
+		403	jyu	Jian Zhen Yu	Hong Kong University of Science and Technology
+		562	null	Toshiyuki Murayama	Tokyo University of Mercantile Marine
+		683	ihiroyuki	Iwasaki Hiroyuki	Gunma University
+		840	hkim	Hyun Mee Kim	Yonsei University
+		1052	null	Yuri Shur	Dept. of Civil and Environmental Engineering
+		1069	null	Yu-Ping Chin	School of Earth Sciences
+		1140	null	Hideyuki Honda	null
+		1233	null	Yuan Sui	EOL
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	T. Horst
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	S. Roode
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.819
+		(JAMSTEC)
+Which of these contacts matches this author:	JAMSTEC
+
+		777	ttakizawa	Takatoshi Takizawa	JAMSTEC
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.823
+		Perovich, D., T. Grenfell, B. Light, J. Richter-Menge, T. Tucker, H. Eicken
+Which of these contacts matches this author:	B. Light
+
+		451	nasa/msfc	null	NASA/Marshall Space Flight Center
+		452	nasa/gsfc	null	NASA/Goddard Space Flight Center
+		1046	null	David W Kicklighter	The Ecosystems Center
+		1257	null	Bonnie Light	University of Washington
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1257
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	T. Tucker
+
+--------------------------------------------------------------------------------
+
+Unable to find 1257 for data set 13.823
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	W. Tucker
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.824
+		Perovich, D., J. Richter-Menge, W. Tucker, B. Elder, B. Bosworth
+Which of these contacts matches this author:	B. Bosworth
+
+		1258	null	B. Bosworth	null
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1258
+
+Unable to find 1258 for data set 13.824
+Unable to find 1257 for data set 13.825
+Unable to find 1257 for data set 13.826
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	K. Stamnes
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	H. Eide
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.832
+		Miller, Erik R.
+Which of these contacts matches this author:	Erik R. Miller
+
+		55	damiller	David Miller	University of Connecticut
+		152	domiller	Douglas Miller	Pennsylvania State University
+		649	pmiller	Patricia A Miller	NOAA/FSL
+		940	ghmiller	Gifford H. Miller	INSTAAR and Department of Geological Sciences
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1260, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.119';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1259, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.124';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1259, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.125';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1265, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.805';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1265, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.806';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1265, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.807';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1265, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.808';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1265, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.809';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1265, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.810';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1265, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.811';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1257, 'author', 3, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.823';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1258, 'author', 5, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.824';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1257, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.825';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1257, 'author', 3, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.826';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

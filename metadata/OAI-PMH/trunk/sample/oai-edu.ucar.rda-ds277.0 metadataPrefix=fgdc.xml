@@ -1,0 +1,130 @@
+<metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+						xsi:schemaLocation="http://www.fgdc.gov/schemas/metadata
+																http://www.fgdc.gov/schemas/metadata/fgdc-std-001-1998.xsd">
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>National Centers for Environmental Prediction/National Weather Service/NOAA/U.S. Department of Commerce, and National Climatic Data Center/NESDIS/NOAA/U.S. Department of Commerce</origin>
+				<pubdate>19860304</pubdate>
+				<title>NCEP Version 2.0 OI Global SST and NCDC Version 3.0 Extended Reconstructed SST Analyses</title>
+				<pubinfo>
+					<pubplace>Boulder, CO</pubplace>
+					<publish>Research Data Archive at the National Center for Atmospheric Research, Computational and Information Systems Laboratory</publish>
+				</pubinfo>
+				<onlink>http://rda.ucar.edu/datasets/ds277.0/</onlink>
+			</citeinfo>
+		</citation>
+		<descript>
+			<abstract>
+				The NCEP OI is a weekly and monthly 1x1 global analysis dataset that is available for November 1981
+				through a current date. The analyses are determined by blending marine surface observations (ICOADS and
+				others) and satellite AVHRR data using an OI method.
+
+				The NCDC V3ERSST [http://www.ncdc.noaa.gov/oa/climate/research/sst/sst.html] is a monthly 2x2 global
+				analysis for 1854 through a current date. EOF methods are used to create these grids using marine
+				surface data (ICOADS).
+
+				Various climate indicies (e.g. SOI) are available from the  Climate Prediction Center
+				[http://www.cpc.ncep.noaa.gov/data/indices/]
+
+				Recent weekly OI SST plots and other products are available at  NOAA OI SST Analysis page
+				[http://www.emc.ncep.noaa.gov/research/cmb/sst_analysis/]
+
+				Go to Merged Hadley - OI.v2 SST and Sea Ice Concentration dataset [http://cdp.ucar.edu/MergedHadleyOI]
+				for a new surface boundary dataset for uncoupled simulations with the Community Atmosphere Model (CAM).
+			</abstract>
+			<purpose>.</purpose>
+		</descript>
+		<timeperd>
+			<timeinfo>
+				<rngdates>
+					<begdate>18540101</begdate>
+					<enddate>20140628</enddate>
+				</rngdates>
+			</timeinfo>
+			<current>ground condition</current>
+		</timeperd>
+		<status>
+			<progress>In work</progress>
+			<update>Yes</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc>-180</westbc>
+				<eastbc>-2</eastbc>
+				<northbc>90</northbc>
+				<southbc>-90</southbc>
+			</bounding>
+		</spdom>
+		<keywords>
+			<theme>
+				<themekt>GCMD</themekt>
+				<themekey>EARTH SCIENCE > Oceans > Ocean Temperature > Sea Surface Temperature</themekey>
+			</theme>
+			<theme>
+				<themekt>GCMD</themekt>
+				<themekey>EARTH SCIENCE > Oceans > Sea Ice > Sea Ice Concentration</themekey>
+			</theme>
+		</keywords>
+		<accconst>None</accconst>
+		<useconst>None</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntperp>
+					<cntper>Zaihua Ji</cntper>
+					<cntorg>UCAR/CISL Research Data Archive</cntorg>
+				</cntperp>
+				<cntaddr>
+					<addrtype>physical</addrtype>
+					<address>1850 Table Mesa Drive</address>
+					<city>Boulder</city>
+					<state>Colorado</state>
+					<postal>80303</postal>
+					<country>U.S.A.</country>
+				</cntaddr>
+				<cntaddr>
+					<addrtype>mailing</addrtype>
+					<address>P.O. Box 3000</address>
+					<city>Boulder</city>
+					<state>Colorado</state>
+					<postal>80307-3000</postal>
+					<country>U.S.A.</country>
+				</cntaddr>
+				<cntaddr>
+					<addrtype>shipping</addrtype>
+					<address>UCAR Shipping and Receiving</address>
+					<address>3090 Center Green Drive</address>
+					<city>Boulder</city>
+					<state>Colorado</state>
+					<postal>80301</postal>
+					<country>U.S.A.</country>
+				</cntaddr>
+				<cntvoice>(303)-497-1819</cntvoice>
+				<cntemail>zji@ucar.edu</cntemail>
+			</cntinfo>
+		</ptcontac>
+	</idinfo>
+	<metainfo>
+		<metd>20140629</metd>
+		<metc>
+			<cntinfo>
+				<cntperp>
+					<cntper>Bob Dattore</cntper>
+					<cntorg>UCAR/CISL Research Data Archive</cntorg>
+				</cntperp>
+				<cntaddr>
+					<addrtype>mailing</addrtype>
+					<address>P.O. Box 3000</address>
+					<city>Boulder</city>
+					<state>Colorado</state>
+					<postal>80307-3000</postal>
+					<country>U.S.A.</country>
+				</cntaddr>
+				<cntvoice>303-497-1825</cntvoice>
+				<cntemail>dattore@ucar.edu</cntemail>
+			</cntinfo>
+		</metc>
+		<metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+		<metstdv>FGDC-STD-001-1998</metstdv>
+	</metainfo>
+</metadata>

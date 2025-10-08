@@ -1,0 +1,58 @@
+Database Architecture Information
+---------------------------------
+Dan Sullivan
+May 7, 2004
+
+
+Below is a breakdown of each table a project usese for its master list.  Several sets of
+tables (one for each project) are located in the ml database on hurricane.
+
+headPROJECT: 
+The headPROJECT contains the 'headings' for the project.  These are really the top level 
+categories, the categories the user first sees in the left hand frame.  
+Originally, I thought there would be headings then sub-categories under these headings, 
+but later I found out most of the time there are no sub-categories. 
++-------------+-------------+------+-----+---------+----------------------------------------------------+
+| Field       | Type        | Null | Key | Default | Comments
++-------------+-------------+------+-----+---------+----------------------------------------------------+
+| id          | int(11)     |      | PRI | NULL    | auto_increment primary key, set to 0 (zero) 
+| name        | varchar(50) | YES  |     | NULL    | name of the heading
+| abrv        | varchar(20) | YES  |     | NULL    | abreviation, used to 'jump' to the category using
+|             |             |      |     |         |  <a name="abrv"> tag, must be unique per project
+| is_category | int(11)     | YES  |     | 0       | set to 1 if this is a category, i.e. there is a               
+|             |             |      |     |         |  corresponding entry in the catPROJECT table
+| proj_id     | int(11)     | YES  |     | NULL    | set to NULL, this is obsolete
++-------------+-------------+------+-----+---------+----------------------------------------------------+
+
+
+catPROJECT: 
+This table maintains all of the categories to which datasets are associated.
+The heading_id field in a sense can mean two different things.  It can mean the heading under 
+which the category is located (or is a sub-category of).  It can also mean the heading to 
+which it corresponds, or is basically the identical of (has the same name).
++------------+-------------+------+-----+---------+-----------------------------------------------------+
+| Field      | Type        | Null | Key | Default | Comments
++------------+-------------+------+-----+---------+-----------------------------------------------------+
+| id         | int(11)     |      | PRI | NULL    | auto_increment primary key, set to 0 (zero)
+| name       | varchar(50) | YES  |     | NULL    | name of the category               
+| abrv       | varchar(20) | YES  |     | NULL    | category abbreviation, similar to abrv in headPROJECT               
+| heading_id | int(11)     | YES  |     | NULL    | the associated heading in headPROJECT               
++------------+-------------+------+-----+---------+-----------------------------------------------------+
+
+dsPROJECT:
+The dataset table, contains the needed information about each dataset.
++----------------+--------------+------+-----+---------+------------------------------------------------+
+| Field          | Type         | Null | Key | Default | Comments
++----------------+--------------+------+-----+---------+------------------------------------------------+
+| id             | int(11)      |      | PRI | NULL    | auto_increment Primary Key 
+| data_set       | varchar(200) | YES  |     | NULL    | the title of the dataset
+| link           | varchar(200) | YES  |     | NULL    | the url to either CODIAC or an remote location
+| date           | date         | YES  |     | NULL    | date added to the system
+| document       | varchar(200) | YES  |     | NULL    | the documentation link
+| category       | int(11)      |      |     | 0       | the associated category, references id in catPROJECT
+| in_progress    | int(11)      | YES  |     | 0       | if set to 1, this dataset is 'in progress'
+| map_url        | varchar(200) | YES  |     | NULL    | -| 
+| table_url      | varchar(200) | YES  |     | NULL    |  | These fields were never implemented
+| instrument_url | varchar(200) | YES  |     | NULL    | -|
++----------------+--------------+------+-----+---------+------------------------------------------------+
+

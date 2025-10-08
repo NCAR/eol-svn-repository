@@ -1,0 +1,36 @@
+This script is depricated. Please use archAC.py in the future.
+
+JAG 12/8/09
+
+
+******************************
+
+
+archcam.ppp script notes
+archcam.fwd.ppp script notes
+archcam.down.ppp script notes
+(note that ppp refers to the 3-digit RAF project #)
+
+Archcam.ppp was written by Ron Ruth to archive .jpg camera images to the
+Mass Store. It has the capability to create hour-long tar files before
+archiving. See the documentation at the top of the script for details.
+
+I (Janine) created archcam.fwd.ppp and archcam.down.ppp because the
+original script needed to be edited in multiple places to change from
+processing forward-looking images to processing downward-looking images.
+Diff archcam.ppp with the fwd or down script to see the changes.
+
+To run these scripts, you would use a line like:
+/net/work/bin/scripts/mass_store/archive_camera/archcam.116.fwd -a -f RF01 -t -v -d
+to test, and when ready for production mode, use:
+/net/work/bin/scripts/mass_store/archive_camera/archcam.116.fwd -a -f RF01 -t -p
+
+Documentation is online at: 
+http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/raf-documentation/how-tps/processing-digital-camera-imagery
+
+This is a c-shell script. As of version 6.14 csh enforces the notion that
+numbers that start with a 0 are octal.  Thus any date before day 100 with
+an 8 or a 9 in it fails with the "badly formed number" error if processed by
+csh. csh points to tsch at EOL, and tcsh on tsunami has NOT been upgraded,
+so this script only works if run on tsunami. Also it must be run as user
+dmg.

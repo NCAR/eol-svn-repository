@@ -1,0 +1,47 @@
+# $Id$
+# $Log$
+The following code/scripts are used to
+convert from E-Bufr to pqcf format:
+
+process_precip.c, ep2pq.f
+
+
+The following code/scripts are used to
+perform qc steps:
+
+pqc.c - main qc program - gross limit checks,
+
+pqcf_sort - formerly known as pqcf.specs -
+          this cosort spec sorts data by lat/lon
+          then time for accum program (jac2.c).
+
+jac2.c    - Check accumulation data and ensure
+          complete.
+
+(See 15min programs below which would 
+ execute here.)
+
+ebdayfs.sc - script to divide data into days.
+        runsplt.in is the input file.
+
+-----------
+
+snm.c  - puts in network and station names - not 
+     yet used. Want to use Dave Rollins new
+     c++ based program to access updated/correct
+     database values.
+
+p2e.f - converts pqcf to Ebufr format.
+
+---------15 min programs---------
+
+pck.c - Writes a list of potential hrly stns
+        that show up in 15 min data. These
+        stns should be removed. Use jac.c or
+        sck.c to remove hrly stns from 15min
+        file. This only applies to 15min data
+        not hrly ncdc data. Note that the
+        jac and sck program modify the 15min
+        data by pushing the times up 15mins.
+        This was just something they found had
+        to be done. 

@@ -1,0 +1,89 @@
+<html>
+<head>
+    <title>How To: Execute the ESC Sounding Cleaner</title>
+    <link rel="stylesheet" type="text/css" href="/css/howto.css" />
+</head>
+<body>
+<h1 class="title">How To: Execute the ESC Sounding</h1>
+
+<a name="top"</a>
+<h2>Contents</h2>
+<ol>
+   <li><a href="#about">About</a></li>
+   <li><a href="#setup">Setup</a></li>
+   <li><a href="#execute">Execution</a></li>
+</ol>
+<hr />
+
+<a name="about"></a>
+<h2>About</h2>
+<p>This document contains the information required to clean a single ESC formatted sounding file by nullifying <i>screwed up</i> records.</p>
+<p>The software described in this document is written in Java 1.5 with the use of generics.  Java 1.5 or newer is required for the software to run.</p>
+<p><a href="#top">Top</a></p>
+<hr />
+
+<a name="setup"></a>
+<h2>Setup</h2>
+<p>There are two ways to execute the QC software:  Ant and the Command Line.</p>
+
+<h3>Ant Setup</h3>
+<p>If you already know Ant is setup properly for you or you do not plan on using Ant, this part can be skipped.</p>
+<p>Ant is a Java based build tool that can be used to do a number of different tasks.  To use Ant, you need to setup your environment so it can be used.  The setup is not dependent on the format checker software and can be found at:</p>
+<p><a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use/#environment">http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use/#environment</a></p>
+
+<h3>Command Line Setup</h3>
+<p>The only setup required for the command line is that Java 1.5 be on the environment path.  (You can also call the Java command using the full path to the binary if you don't want to add it to the path.)</p>
+
+<p><a href="#top">Top</a></p>
+<hr />
+
+<a name="execute"></a>
+<h2>Execution</h2>
+<p>You will need to know the following information to successfully run the format checker software.</p>
+<ul>
+    <li>The location of the <a href="/software/java/api/library/utilities">utilities.jar</a> library.</li>
+    <li>The location of the <a href="/software/java/api/library/upper_air">upper_air.jar</a> library.</li>
+    <li>The location of the <a href="/software/java/api/upper_air/esc_sounding_cleaner">esc_sounding_cleaner.jar</a> binary library.</li>
+</ul>
+
+<h3>Ant Execution</h3>
+<p>Ant is a Java based build tool that can be used to do many different tasks. If you have used Ant before, you can skip the setup and jump to the classpath setup. If you haven't, you will need to set up your environment to be able to use it. The instructions on Ant can be found at <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use">How To Setup and Use Ant</a>.
+<h4>Define the Classpath</h4>
+<p>The format checker requires the following jar files to be in the classpath.</p>
+<ul>
+    <li>utilties.jar</li>
+    <li>upper_air.jar</li>
+    <li>esc_sounding_cleaner.jar</li>
+</ul>
+<p>If you don't know how to define the classpath, you can find the instructions <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use/#classpath">here</a>.</p>
+
+<h4>Create the Target</h4>
+<p>To run the format checker from Ant, the build file must contain a target that defines how to run the tool.</p>
+<pre>
+    &lt;target name="clean-sounding"&gt; &lt;-- The nam eof the target to be called on the command line through Ant--&gt;
+        &lt;java classname="dmg.ua.sounding.clean.ESCSoundingCleaner" fork="yes"&gt; &lt;-- The class to be run --&gt;
+            &lt;arg value="output/original.cls" /&gt;      &lt;-- The name of the file to be cleaned. --&gt;
+            &lt;arg value="output/cleaned.cls" /&gt;       &lt;-- The name of the cleaned sounding file.. --&gt;
+            &lt;arg value="output/cleaned.log" /&gt;       &lt;-- The name of the log file to contain the cleanning messages. --&gt;
+            &lt;classpath refid="classpath" /&gt;          &lt;-- The classpath containing the classes required by the checker. --&gt;
+       &lt;/java&gt;
+   &lt;target&gt;
+</pre>
+
+<h4>Execute the Target</h4>
+<p>From the same directory where the <code>build.xml</code> file is stored, you can now call the checker using Ant.</p>
+<p class="code">ant clean-sounding</p>
+<p class="note">If you used a different name for the target, you will need to replace <i>check-sounding</i> with the actual target name.</p>
+
+
+<h3>Command Line Execution</h3>
+<p>To run the format checker from the command line or a script, run:</p>
+<p class="code">java -cp /net/work/bin/auto_qc/esc_sounding_cleaner.jar:/net/work/lib/java/upper_air.jar:/net/work/lib/java/utilities.jar dmg.ua.sounding.clean.ESCSoundingCleaner output/original.cls output/cleaned.cls output/cleaned.log</p>
+<p>You will need to update the paths in the -cp (classpath) argument and update the arguments passed to the class to match the data you are checking.</p>
+
+<p><a href="#top">Top</a></p>
+<hr />
+
+<p class="foot">Last Updated: March 19, 2008 - jclawson</p>
+</body>
+</html>

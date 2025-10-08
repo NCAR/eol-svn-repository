@@ -1,0 +1,20 @@
+Software is case sensitive so "Filter_CFDC" and "FILTER_CFDC" are not
+considered the same parmeter. They are unique and both definitions must
+be in the gcmd_*.txt file as well as the All_uniq_data_types_*_*.txt files. 
+LEC - 8 April 2020
+
+-----------------------------------------------------------------------------
+Output from grep -in Filter_CFDC *
+-----------------------------------------------------------------------------
+All_uniq_data_types_GV_category.txt:1611:Category = unknown, Filter_CFDC, long_name = "FILTER, CFDC" ;,  units = "ON PARTICLES=0; ON FILTER=1" ;, 1 , xxx,
+All_uniq_data_types_GV_category.txt:1167:Category = "Raw" ;, FILTER_CFDC, long_name = "CFDC Filter (ON=1)" ;,  units = "bool" ;, 2 , xxx,
+
+All_uniq_data_types_GV_count.txt:178:1, Filter_CFDC, long_name = "FILTER, CFDC" ;, units = "ON PARTICLES=0; ON FILTER=1" ;, Category = unknown, , xxx,
+All_uniq_data_types_GV_count.txt:755:2, FILTER_CFDC, long_name = "CFDC Filter (ON=1)" ;, units = "bool" ;, Category = "Raw" ;, , xxx,
+
+All_uniq_data_types_GV_parm.txt:738:Filter_CFDC, long_name = "FILTER, CFDC" ;, units = "ON PARTICLES=0; ON FILTER=1" ;, Category = unknown, 1 , xxx,
+All_uniq_data_types_GV_parm.txt:721:FILTER_CFDC, long_name = "CFDC Filter (ON=1)" ;, units = "bool" ;, Category = "Raw" ;, 2 , xxx,
+
+gcmd_gv.txt:723:FILTER_CFDC     long_name = "CFDC Filter (ON=1)" ;      units = "bool" ;        Category = "Raw" ;      1       xxx
+
+Note that gcmd_gv.txt does not have Filter_CFDC parameter definition. 

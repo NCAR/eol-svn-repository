@@ -1,0 +1,4 @@
+#!/bin/sh
+
+perl -d:DProf txt2ames.pl PVM.config
+dprofpp

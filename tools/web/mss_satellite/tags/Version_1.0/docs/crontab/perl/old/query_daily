@@ -1,0 +1,108 @@
+#!/bin/perl -w
+
+#----------------------------------------------------
+# query_daily: 
+#		This script is run as a cronjob on hurricane.  Each
+#		day it queries mass store to see what new data has 
+#		been added for the previous day.  It only looks at
+#		the previous day so will not catch any additions for
+#		previous years.
+#----------------------------------------------------
+
+use lib "/home/suldan/mass_store/perl";
+use DayRecord;
+use FileRecord;
+use Table;
+use DBI;
+
+#my $date = $ARGV[0];
+
+my $d = `date +%j`;
+$d = $d - 1;
+my $y = `date +%y`;
+$y = 2000 + $y;
+my $date = $y . $d;
+print( $date, "\n" );
+
+my $year = substr( $date, 0, 4 );
+my $path = "/JOSS/DATA/RAW/SATELLITE/GOES";
+my @sat = ( "G10", "G08" );
+my @res = ( "1KM", "4KM" );
+
+my $dbh = connectToDB();
+$id = getLastId();
+
+print( @sat );
+print( @res );
+foreach $satellite (@sat)
+{
+	foreach $resolution (@res )
+	{
+		my $prev_tm = 0;
+		$id++;
+		my $day = DayRecord->new();
+		my $fileTable = Table->new();
+		my $totSize = 0;
+
+		$day->{id} = $id;
+		$day->{satellite} = $satellite;
+		$day->{resolution} = $resolution;
+		$day->{date} = $date;
+		$day->{path} = "$path/$satellite/$resolution/$year/$date";
+
+		my @files = `/opt/dcs/bin/msls -l $day->{path}`;
+		$day->{nfiles} = @files - 1;
+		for( my $x = 1; $x < @files; $x++ )
+		{
+			my $file = $files[$x];
+			my $fileRec = FileRecord->new();
+			$fileRec->{day_id} = $id;
+			chop( $file );
+			my @data = split( / +/, $file );
+			my @dt_tm = split( /\./, $data[8] );
+
+			$fileRec->{date} = $dt_tm[1];
+			$fileRec->{time} = $dt_tm[2];
+			$fileRec->{size} = $data[4] / 1000;
+			$totSize += $fileRec->{size};
+			$fileRec->{path} = $day->{path} . "/" . $data[8];
+			$fileTable->addRecord( $fileRec );
+
+			if( $fileRec->{time} - $prev_tm > 100 )
+			{
+				$day->{missing} = 1;
+			}
+			$prev_tm = $fileRec->{time};
+		}	
+
+		if( $prev_tm < 2300 )
+		{
+			$day->{missing} = 1;
+		}
+
+		$day->{nfiles} = $fileTable->{count};
+		$day->{size} = $totSize;
+	
+		$day->write( *STDOUT );
+		$day->addToDB( $dbh );
+		$fileTable->write( *STDOUT );
+		$fileTable->addToDB( $dbh );
+	}
+}
+$dbh->disconnect();
+
+sub connectToDB
+{
+	return DBI->connect( "DBI:mysql:database=suldan;host=thunder",
+												"suldan", "hithere", {RaiseError=>1} ) || die( "Unable to Connect to database" );
+}
+
+sub getLastId
+{
+	my $sql = "SELECT MAX(id) FROM DayTable";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute;
+	my @row = $sth->fetchrow();
+	$sth->finish();
+	return $row[0];
+}

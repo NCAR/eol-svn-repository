@@ -1,0 +1,40 @@
+#!/bin/perl -w
+
+use strict;
+
+my @ids = @ARGV;
+
+$ENV{MSPATH} = "/usr/empress8.20/rdbms";
+$ENV{MSQLSELCOLSEP} = "";
+my $db_path = "/storm/codiac/codiac_db";
+
+for( my $x = 0; $x < @ids; $x++ )
+{
+	my $sql = "\"SELECT dir_path, file_name from on_line_phys_dir WHERE l_dds_id=\'$ids[$x]\'\"";
+
+	my @files = `/usr/empress8.20/rdbms/bin/empcmd $db_path/phys_dir_db $sql`;
+
+	if( defined( $files[2] ) )
+	{
+		print( $ids[$x], ":\n" );
+		for( my $y = 2; $y < @files; $y++ )
+		{
+			my @data = split( //, $files[$y] );
+			$data[0] = trim( $data[0] );
+			$data[1] = trim( $data[1] );
+			print( $data[0], "\t", $data[1], "\n" );
+		}
+	}	
+	else
+	{
+		print( $ids[$x], ": No Files Found\n" );
+	}
+	print( "\n" );
+}
+sub trim
+{
+	my $str = shift;
+	$str =~ s/^\s+//;
+	$str =~ s/\s+$//;
+	return $str;
+}

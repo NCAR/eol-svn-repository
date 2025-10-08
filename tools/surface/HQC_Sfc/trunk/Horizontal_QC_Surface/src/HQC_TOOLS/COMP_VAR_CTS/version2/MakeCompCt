@@ -1,0 +1,14 @@
+SHELL = /bin/sh
+
+#CC=purify acc -g
+#CC=acc -p
+#CC=CC
+CC=cc
+##CFLAGS = -g
+
+compute_var_cts: compute_var_cts.o
+	$(LINK.c) -o compute_var_cts compute_var_cts.o -l m
+	chmod 0755 compute_var_cts
+
+clean:
+	rm *.o

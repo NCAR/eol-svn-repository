@@ -1,0 +1,45 @@
+#! /usr/bin/perl -w
+
+package AddDatasetAssociationEditorCGI;
+use strict;
+use lib "..";
+use EditorCGI;
+our @ISA = ("EditorCGI");
+
+&main();
+
+sub main {
+    my $self = AddDatasetAssociationEditorCGI->new();
+    $self->buildPage("Dataset Association Info");
+}
+
+sub buildPageBody {
+    my ($self) = @_;
+    my $product = $self->getDataset();
+
+    printf("<form action=\"add_dataset_association_action\" method=\"POST\" onSubmit=\"javascript: return validateDatasetSourceAssociation(this);\">\n");
+    printf("   <table class=editTable>\n");
+    printf("      <tr class=editHeading><td colspan=2>Add Dataset Association</td></tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Dataset:</th>\n");
+    printf("         <td>%s (%s)</td>\n",$product->getName(),$product->getId());
+    printf("      </tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Source Dataset:</th>\n");
+    printf("         <td><input type=text name=source size=15 maxlength=15 /></td>\n");
+    printf("      </tr>\n");
+    printf("      <tr><td class=editSpacer colspan=2></td></tr>\n");
+    
+    printf("      <tr>\n");
+    printf("         <th>Note:</th>\n");
+    printf("         <td>If the source dataset is not already in the database, put it in using the DLN before putting it in here.</td>\n");
+    printf("      </tr>\n");
+    printf("      <tr><td class=editSpacer colspan=6></td></tr>\n");
+
+    $self->printButtonRow("Add",2);
+    printf("   </table>\n");
+    printf("   <input type=hidden name=dataset value=\"%s\" />\n",$product->getId());
+    printf("</form>\n");
+}
+
+

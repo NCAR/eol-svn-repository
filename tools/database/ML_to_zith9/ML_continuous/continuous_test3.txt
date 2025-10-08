@@ -1,0 +1,14 @@
+insert into dataset (dataset_id, name, url, doc_url, date_expected, date_updated, author_pi, preliminary_flag) values ("ML.TEST9", "TEST basic ML dataset", "http://thisisjustatest","http://thisisjustatest", NULL, NULL, "",0);
+insert into dataset_project (dataset_id, project_id, in_progress_flag, hide_flag) values ("ML.TEST9", "BEST", 0, 0);
+insert into dataset (dataset_id, name, url, doc_url, date_expected, date_updated, author_pi, preliminary_flag) values ("ML.TEST10", "TEST hide flag", "","", NULL, NULL, "",0);
+insert into dataset_project (dataset_id, project_id, in_progress_flag, hide_flag) values ("ML.TEST10", "BEST", 0, 1);
+insert into dataset (dataset_id, name, url, doc_url, date_expected, date_updated, author_pi, preliminary_flag) values ("ML.TEST11", "TEST preliminary", "http://thisisjustatest5","", NULL, NULL, "",1);
+insert into dataset_project (dataset_id, project_id, in_progress_flag, hide_flag) values ("ML.TEST11", "BEST", 0, 0);
+insert into dataset (dataset_id, name, url, doc_url, date_expected, date_updated, author_pi, preliminary_flag) values ("ML.TEST12", "TEST ongoing", "http://thisisjustatest6","http://thisisjustatest7", NULL, NULL, "",0);
+insert into dataset_project (dataset_id, project_id, in_progress_flag, hide_flag) values ("ML.TEST12", "RELAMPAGO", 1, 0);
+insert into dataset_classification (dataset_id, class_id) values ("ML.TEST9", 8);
+insert into dataset_classification (dataset_id, class_id) values ("ML.TEST9", 63);
+insert into dataset_classification (dataset_id, class_id) values ("ML.TEST9", 20);
+insert into dataset_classification (dataset_id, class_id) values ("ML.TEST9", 34);
+insert into classification (class_id, name, type_id) values (450, "Test Site 1", 3);
+insert into classification (class_id, name, type_id) values (451, "Test Event 1", 2);

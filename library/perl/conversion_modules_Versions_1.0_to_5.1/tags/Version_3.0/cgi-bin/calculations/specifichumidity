@@ -1,0 +1,128 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------
+# <p>The SpecificHumidity script is a CGI script that provides a web
+# interface for the specific humidity calculation in the conversion
+# modules.</p>
+#
+# @author Joel Clawson
+# @version 3.0 (Version number used to match conversion version.)
+# <p>Refactored the original web interface into individual conversion
+# scripts and a super WebInterface module that the scripts inherit
+# from.</p>
+# <p>Updated to Version 3 of the conversion modules.</p>
+#
+# @author Joel Clawson
+# @version 1.0 Original Creation.
+##Module-----------------------------------------------------------
+package SpecificHumidity;
+use strict;
+use lib "..";
+use lib "/work/software/conversion_modules/Version3";
+use DpgCalculations qw(:DEFAULT);
+use DpgConversions qw(:DEFAULT);
+use WebInterface;
+our @ISA = ("WebInterface");
+
+main();
+
+##------------------------------------------------------------------
+# @signature void main()
+# <p>Run the script that creates the specific humidity calculations web 
+# interface.</p>
+##------------------------------------------------------------------
+sub main {
+    my $self = SpecificHumidity->new();
+    $self->makePage();    
+}
+
+##------------------------------------------------------------------
+# @signature String createForm()
+# <p>Create the HTML that defines the input form for the calculation.</p>
+# @output $form The HTML code.
+##------------------------------------------------------------------
+sub createForm {
+    my $self = shift;
+    my $form = "<table><tbody>\n";
+
+    # Make the pressure row
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Pressure:",$self->textfield("pressure"),$self->getPressureUnits("press_unit"));
+
+    # Make the Dew Point row.
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>\n","Dew Point:",$self->textfield("dewpt"),$self->getTemperatureUnits("dewpt_unit"));
+
+    # Make the Specific Humidity row
+    $form .= sprintf("<tr class=result_line><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Specific Humidity:",$self->getValue(),"g/kg");
+
+    $form .= sprintf("<tr><td class=submit colspan=3>%s</td></tr>\n",$self->submit("Calculate"));
+
+    $form .= "</tbody></table>\n";
+
+    return $form;
+}
+
+##------------------------------------------------------------------
+# @signature String getCGI()
+# <p>Get the name of the script to call when the form is submitted.</p>
+# @output $cgi The script name.
+##------------------------------------------------------------------
+sub getCGI { return "calculations/specifichumidity"; }
+
+##------------------------------------------------------------------
+# @signature String getEquationPage()
+# <p>Get the name of the web page that contains the equations for
+# the calculation.</p>
+# @output $page The equation web page.
+##------------------------------------------------------------------
+sub getEquationPage { "equations_calc.html#specifichumidity"; }
+
+##------------------------------------------------------------------
+# @signature String getInstructions()
+# <p>Get the HTML containing the instructions on how to use the 
+# script.</p>
+# @output $instr The HTML instructions.
+##------------------------------------------------------------------
+sub getInstructions {
+    my $self = shift;
+    my $instr = "<p>Insert the pressure and dew point values along with the appropriate units of the values.  Press the <b>Calculate</b> button.  The value will appear in the table between the name and unit.</p>\n";
+    $instr .= "<p>The warnings have been turned off for the calculation.  If no result appears, it is because a value was entered into one of the fields that does not allow the calculation to complete correctly.</p>\n";
+    $instr .= "<p class=warning>The calculation requires the pressure and vapor pressure to be in millibars.  Any other units that are chosen will convert the value to the appropriate unit for the calculation.</p>\n";
+    return $instr;
+}
+
+##------------------------------------------------------------------
+# @signature String getOnSubmit()
+# <p>Get the javascript command to run when the form is submitted.</p>
+# @output $js The javascript command.
+##------------------------------------------------------------------
+sub getOnSubmit { return "javascript: return (checkValue('Dew Point',dewpt) && checkValue('Pressure',pressure));"; }
+
+##------------------------------------------------------------------
+# @signature String getTitle()
+# <p>Get the title of the script.</p>
+# @output $title The script title.
+##------------------------------------------------------------------
+sub getTitle { return "Calculate Specific Humidity"; }
+
+##------------------------------------------------------------------
+# @signature String getValue()
+# <p>Get the calculated value or the &amp;nbsp; character when it
+# cannot be calculated.</p>
+# @output $value The float formated value.
+##------------------------------------------------------------------
+sub getValue {
+    my $self = shift;
+    if (defined($self->param("dewpt")) && defined($self->param("pressure"))) {
+	my $value = calculateSpecificHumidity(convertPressure($self->param("pressure"),
+							      $self->param("press_unit"),
+							      "mbar"),
+					      convertTemperature($self->param("dewpt"),
+								 $self->param("dewpt_unit"),
+								 "C"),
+					      0);
+	
+	if (defined($value)) { return sprintf("%f",$value); }
+    }
+    return "&nbsp;";
+}
+

@@ -1,0 +1,32 @@
+Version1 - contains a copy of the original "Lia Pennington"
+	version of the check_QCF_file s/w modified to compile
+        under CC.  See the top of check_QCF_file.c for a list
+        of mods made.
+
+Version2 - contains an updated version of the check_QCF_file s/w
+	that has been modified to catch "NaN"'s in the QCF record
+	and that does not accept 'N' as a valid Squall/Gust Indicator
+	QC flag.  This agrees with the hourly surface composite
+	documentation that is published on CD.
+
+Version3 - Verifies that if the Calculated Sea Level Pressure
+        is missing the flag must be 'I'. Since this is
+        always a calculated value, it can only have flags of
+        U, G, D, B, I.
+
+Version4 - Does not issue warnings for missing elevations.  Does issue
+	warnings for negative zero values. Issues each complete warning,
+	including the record number, on a single line.
+
+Version5 - Oct 2000 - Checks records with either 2- or 4-digit years,
+	but not both in the same file.
+
+Version6 - Mar 2003/Jul 2005 - Includes two modifications:
+   On 21 Mar 2003 jag - 
+   Increased acceptable visibility to 160000m (just under 100SM).
+   Visibilities of up to 90SM are commonly seen in the West, an
+   area which is now showing up in our projects (i.e. IHOP).
+   On 18 Jul 2005 jag
+   Increased acceptable visibility to 160934.41 (100SM).
+   Visibilities of 100SM can occur in the West, an
+   area which is now showing up in our projects (i.e. NAME).

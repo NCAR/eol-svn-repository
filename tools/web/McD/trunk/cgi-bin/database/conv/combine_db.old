@@ -1,0 +1,393 @@
+#!/bin/perl -w
+
+use DBI;
+
+#---------------------------------------------------------------------
+# combine_db: This script combines the ml and data_loading_notes 
+#  databases into the single mcd database.
+#
+# Notes:
+#   -create the cat_dump.sql file before executing this script:
+#     > mysqldump -h hurricane -u stormdba -p -t ml category >! cat_dump.sql
+#   -add the users and projects to the database:
+#    > cat project.dat mysql -h hurricane -u stormdba -p mcd
+#    > cat user.dat mysql -h hurricane -u stormdba -p mcd
+#   password: codiac
+#
+# Author: Dan Sullivan
+# Date: July 24, 2003
+#
+#---------------------------------------------------------------------
+
+my $new = connectToDB( "mcd", "hurricane", "stormdba", "codiac" );
+my $dln = connectToDB( "data_loading_notes", "thunder", "suldan", "hithere" );
+my $ml = connectToDB( "ml", "hurricane", "stormdba", "codiac" );
+
+# Maps the ml dataset id number to the new dataset id number
+my %ml_to_new;
+
+my %new_projects = ( "BAMEX" => 1, 
+										 "IHOP"=>2, 
+										 "NAME"=>3, 
+										 "SALLJEX"=>4, 
+										 "VOCALS"=>5, 
+										 "CEOP"=>6, 
+										 "GAPP"=>7, 
+										 "SMEX02"=>8, 
+										);
+my %new_users = ( "Becky" => "rSmith",
+									"Dan" => "dSullivan",
+ 									"Darren" => "dgallant",
+									"Don" => "dStott",
+									"Drew" => "dWilkinson",
+									"Greg" => "gStoss",
+									"Janine" => "jGoldstein",
+									"Joel" => "jclawson",
+									"Linda" => "lCully",
+									"Other" => "Other",
+									"Pat" => "pSkinner",
+									"Phillip" => "pDressen",
+									"Quinn" => "qDaily",
+									"Richard" => "rBateman",
+									"Scot" => "sloehrer",
+									"SFW" => "swilliams",
+									"unassigned" => "unassigned" );
+
+my %dln_projects = ( "ATLAS" =>1, 
+										 "CASES-99" => 2, 
+										 "SHEBA" => 3,
+										 "IHOP" => 5,
+										 "SBI" => 6,
+										 "ITEX" => 7,
+										 "CEOP" => 8,
+										 "SALLJEX" => 9,
+										 "SMEX02" => 10,
+										 "GAPP" => 11, 
+										 "NAME" => 12 
+										);
+my %dln_loaders;
+my %dln_contacts;
+my %dln_checkers;
+
+clearTables();
+getDLNUsers();
+addMLCategories();
+
+# Projects with a master list
+foreach my $proj ("IHOP", "BAMEX", "NAME", "SALLJEX", "VOCALS")
+{
+	print( "Processing $proj\n" );
+
+	my @dln_dss;
+	my @ml_dss;
+
+	@ml_dss = getMLDatasets( $new_projects{$proj} ); 
+	addMLDatasets( $proj, @ml_dss );
+
+	if( exists $dln_projects{$proj} )
+	{
+		@dln_dss = getDLNDatasets( $dln_projects{$proj} );
+		updateDLNDatasets( $proj, @dln_dss );
+	}
+}
+
+# Projects with no master list, but in DLN
+foreach my $proj( "CEOP", "GAPP", "SMEX02" )
+{
+	print( "Processing $proj\n" );
+	my @dln_dss = getDLNDatasets( $dln_projects{$proj} );
+	addDLNDatasets( $proj, @dln_dss );
+}
+
+sub getDLNUsers
+{
+	%dln_loaders = getDLNUserTable( "Loaders" );
+	%dln_contacts = getDLNUserTable( "Contacts" );
+	%dln_checkers = getDLNUserTable( "Checkers" );
+}
+
+sub getDLNUserTable
+{
+	my $table = shift;
+	my %users;
+	my $sql = "SELECT * FROM $table";
+	my $sth = $dln->prepare( $sql );
+	$sth->execute();
+
+	while( (my $row = $sth->fetchrow_hashref()) )
+	{
+		if( exists $new_users{ $row->{name} } )
+		{ $users{$row->{id}} = $new_users{$row->{name}}; } 
+		else
+		{ die( "$row->{name} does not exist in new_users hash\n" ); }
+	}
+
+	return %users;	
+}
+
+sub addMLCategories
+{
+	open( IN, "<cat_dump.sql" ) || die( "cat_dump.sql does not exist!\n" ) ;
+
+	$new->do( "DELETE FROM category" );
+	while( !eof( IN ) )
+	{
+		my $sql = <IN>;
+		if( $sql =~ /^INSERT/ )
+		{	
+			$new->do( $sql ) || die( "Unable to insert categories from cat_dump.sql\n" );
+		}
+	}
+}
+
+sub addMLDatasets
+{
+	my $proj = shift;  # the project name e.g. IHOP
+	my @dss = @_;
+
+	foreach my $ds (@dss)
+	{
+		$status = "NULL";
+		$status = "\'in_progress\'" if( $ds->{in_progress} == 1 );
+		$remote_url = "NULL";
+		$remote_url = $new->quote( $ds->{url} ) if( $ds->{url} && $ds->{url} ne "" );
+	
+		my $sql = "INSERT INTO dataset (id, storm_id, title, date, remote_url) " . 
+								"VALUES (".
+								"0, " . 																# id
+								$new->quote( $ds->{storm_id} ) . ", " .						
+								$new->quote( $ds->{title} ) . ", " .						
+								"CURDATE()" . ", " .						
+								$new->quote( $ds->{url} ) .
+								")";
+
+		#print( $sql, "\n" );
+		$new->do( $sql ) || die( "addMLDatasets: Unable to add master list dataset\n" );
+
+		my $new_id = $new->{'mysql_insertid'};
+
+		addMLView( $new_id, $ds );
+		addDsProjLink( $new_id, $proj );
+		addDsCatLink( $ds->{id}, $new_id );
+	}
+}
+
+sub addMLView
+{
+	my $ds_id = shift;
+	my $ds = shift;
+
+	my $status = "NULL";
+	$status = "\'in_progress\'" if( $ds->{in_progress} == 1 );
+	my $hide = "NULL";
+	$hide = 1 if( $ds->{hide} );
+
+	my $sql = "INSERT INTO mlview (dataset, date, hide, doc_url, status) " . 
+							"VALUES (" .
+							"$ds_id, " . 																# id
+							$new->quote( $ds->{date} ) . ", " .						
+							"$hide, " .
+							$new->quote( $ds->{doc_url} ) . ", " .						
+							"$status " .														
+							")";
+
+	#print( $sql, "\n" );
+	$new->do( $sql ) || die( "addMLView: Unable to add mlview\n" );
+}
+
+sub addDsProjLink
+{
+	my $ds = shift;
+	my $proj = shift; # the project name e.g. IHOP
+	$proj = $new_projects{$proj}; 
+	my $sql = "INSERT INTO dsproj VALUES ( $ds, $proj )";
+
+	#print( $sql, "\n" );
+	$new->do( $sql ) || die( "Unable to add dataset project link" );
+}
+
+sub addDsCatLink
+{
+	my $old_id = shift;
+	my $new_id = shift;
+
+	my $sql = "SELECT category FROM dscatlink WHERE dataset=$old_id";
+	my $sth = $ml->prepare( $sql );
+	$sth->execute();
+
+	my @row = $sth->fetchrow();
+	if( @row )
+	{
+		my $sql = "INSERT INTO dscat VALUES( $new_id, $row[0] )";
+		$new->do( $sql ) || die( "addDsCatLink: unable to add dscat\n" );
+	}
+	else
+	{
+		print( "No category for dataset: old=$old_id  new=$new_id\n" );
+	}
+}
+
+sub updateDLNDatasets
+{
+	my $proj = shift;
+	my @dss = @_;
+
+	foreach my $ds (@dss)
+	{
+		my $ds_id = getNewDsId( $ds->{storm_id}, $new_projects{$proj} );
+
+		if( $ds_id )
+		{
+			addDLNView( $ds_id, $ds );	
+		}
+		else
+		{
+			addDLNDatasets( $proj, $ds );
+		}
+	}
+}
+
+sub getNewDsId
+{
+	my $storm_id = shift;
+	my $proj = shift;
+	my $id = undef();
+
+	if( $storm_id ne "99.999" )
+	{
+		my $sql = "SELECT dataset.id FROM dataset, dsproj WHERE dsproj.project = $proj AND " .
+								"dataset.storm_id = " . $new->quote( $storm_id )  . " AND dsproj.dataset = dataset.id";
+
+		my $sth = $new->prepare( $sql );
+		$sth->execute();
+		my @row = $sth->fetchrow();
+		$id = $row[0]  if( @row );
+	}
+
+	return $id
+}
+
+sub addDLNDatasets
+{
+	my $proj = shift;
+	my @dss = @_;
+
+	foreach my $ds (@dss)
+	{
+		my $remote_url = NULL;
+		$remote_url = $new->quote( $ds->{ext_link} ) if( $ds->{ext_link} && $ds->{ext_link} ne "" );
+
+		my $sql = "INSERT INTO dataset (id, storm_id, title, date, remote_url) " . 
+								"VALUES (".
+								"0, " . 	
+								$new->quote( $ds->{storm_id} ) . ", " .						
+								$new->quote( $ds->{title} ) . ", " .						
+								"CURDATE()" . ", " .						
+								$remote_url . 
+								")";
+
+		$new->do( $sql ) || die( "addDLNDatasets: Unable to add dataset\n" ) ;
+		my $new_id = $new->{'mysql_insertid'};
+		
+		addDLNView( $new_id, $ds );
+		addDsProjLink( $new_id, $proj );
+	}
+
+}
+
+sub addDLNView
+{
+	my $ds_id = shift;
+	my $ds = shift;
+
+	my $loaded = 0;
+	$loaded = 1 if( $ds->{checked} );
+
+	my $sql = "INSERT INTO dlnview (dataset, date, loader, checker, int_contact, ext_contact, ext_email, " . 
+							"ingest, archive, notes, documented, checked, loaded ) " . 
+							"VALUES (" .
+							"$ds_id, " . 
+							$new->quote( $ds->{date} ) . ", " .  
+							$new->quote( $dln_loaders{$ds->{loader_id}} ) . ", " .  
+							$new->quote( $dln_checkers{$ds->{checker_id}} ) . ", " .  
+							$new->quote( $dln_contacts{$ds->{int_contact_id}} ) . ", "  . 
+							$new->quote( $ds->{ext_contact} ) . ", " .  
+							$new->quote( $ds->{ext_email} ) . ", " .  
+							$new->quote( $ds->{ingest} ) . ", " .  
+							$new->quote( $ds->{archive} ) . ", " .  
+							$new->quote( $ds->{notes} ) . ", " .  
+							$ds->{readme} . ", " .  
+							$ds->{checked} . ", " .  
+							$loaded . 
+							")";
+	#print( $sql, "\n" );
+	$new->do( $sql ) || die( "addDLNView: unable to add dlnview\n" );
+
+}
+
+sub getDLNDatasets
+{
+	my $proj_id = shift;
+	my @dss;
+
+	my $sql = "SELECT * FROM Notes WHERE proj_id=$proj_id";
+	my $sth = $dln->prepare( $sql );
+	$sth->execute();
+
+	while( (my $row = $sth->fetchrow_hashref() ) )
+	{
+		$dss[scalar(@dss)] = $row;
+	}	
+
+	return @dss;
+}
+
+sub getMLDatasets
+{
+	my $proj_id = shift;
+	my @dss;
+
+	my $sql = "SELECT * FROM dataset WHERE project=$proj_id";
+	my $sth = $ml->prepare( $sql );
+	$sth->execute();
+
+	while( (my $row = $sth->fetchrow_hashref() ) )
+	{
+		$dss[scalar(@dss)] = $row;
+	}	
+
+	return @dss;
+}
+
+sub copyDscatlink
+{
+	my @ml_dss = shift;
+
+	foreach my $ds (@ml_dss)
+	{
+		my $sql = "SELECT * FROM dscatlink WHERE dataset=$ds->{id}";
+		my $sth = $ml->prepare( $sql );
+		$sth->execute();	
+		while( (my $row = $sth->fetchrow_hashref()) )
+		{
+			my $sql = "INSERT INTO dscatlink VALUES( $row->{category}, $ml_to_new{ $ds->{id} } )";
+			$new->do( $sql ) || die( "doing: ", $new->errstr );
+		}
+	}	
+	
+}
+
+sub clearTables
+{
+	$new->do( "DELETE FROM dataset" );
+}
+
+sub connectToDB
+{
+  my $db = shift;
+  my $host = shift;
+  my $user = shift;
+  my $passw = shift;
+  return DBI->connect( "DBI:mysql:database=$db;host=$host",
+                        $user, $passw, { RaiseError=>1} ) || die( "Unable to connect to database: $db" );
+}

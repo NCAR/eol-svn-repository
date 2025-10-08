@@ -1,0 +1,67 @@
+Date: Wed, 17 Jan 2001 10:40:26 -0500
+From: Sid Katz <skatz@ncep.noaa.gov>
+
+>
+> Dear Professor Roebber,
+>
+>    The missing radar data most likely resulted from an interrupted
+> data feed (i.e. radar data not reaching us at all for a number of
+> hours - the data are piped through to us via the OSO gateway).  It
+> happens every now and then - for example, on 1 Dec 2001, when I
+> noticed that there was no multi-sensor analysis for an hour,  I
+> looked into the radar data file we were receiving, and found that
+> there was simply no radar data at all for that hour.
+>
+>    There is something like 1/4 time of one person (me) working on
+> the maintenance/upgrade of this product, and back in 1999 this was
+> done by an off-site person (Mike Baldwin) who had a job in Oklahoma,
+> so as you can imagine there is usually not much human QC done on
+> the product.  If something goes wrong within the past 5 days or so,
+> and if we do have the data, I usually try to repair the damage, but
+> for something that's more than 2 years old, and for which we didn't
+> receive the data, it is really not possible to re-make the analysis,
+> I am sorry.  We do have plans to push this to operational status in
+> the future, things should improve significantly then.
+>
+>    I use the stage2/stage4 data for precipitation assimilation, and
+> every now and then would run into a missing hour.  What I do is to
+> use the gauge-only data instead (and when both are missing - it does
+> happen - I have to fall back to a 'no precip obs available' option).
+> I looked into that day and noticed that there were gauge-only data
+> for those hours, maybe you'd like to consider using that.
+>
+> Ying
+>
+> --
+> Ying Lin
+> NCEP/EMC/Mesoscale Modeling Branch
+> ylin@ncep.noaa.gov
+
+>Date: Thu, 23 Mar 2000
+>Janine,
+>
+>The experts at Office of Hydrology have spoken.  I suspect that CPC may have
+>to develop some type of technique to identify possible accumulator sites and
+>notify O/H as soon as possible so that they can correct their software.  I
+>will confer with Ken Mitchell and Steve Williams about possible remedies.  I
+>am sorry that I don't have any positive news about this development.
+>
+>Sid...
+>
+>>         Sid,
+>>
+>>         This is the dilema of processing/archive data from cooperators networks!
+>>
+>>         I'm surprised that the list isn't much larger.  We've had hundreds of
+>>         reporting locations change from incremental to accumulator and back to
+>>         incremental...and others, especially in West Virgina and Western
+>>         portions of Pennsylvania change a couple of times and they've now
+>>         settled on accumulators.
+>>
+>>         Anyone using this data must be aware of the dynamic changes in the
+>>         network of sites that are processed by HADS...and be aware of the
+>>         potential lag time from when a change is implemted to when we become
+>>         aware of the change.  This is far, far from a stable environment.
+>>
+>>         Larry C.
+

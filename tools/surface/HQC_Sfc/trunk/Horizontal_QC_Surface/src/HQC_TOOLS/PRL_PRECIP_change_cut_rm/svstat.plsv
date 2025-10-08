@@ -1,0 +1,90 @@
+#!/usr/bin/perl 
+
+#-------------------------------------------------------
+# stat_precip.pl - This perl script/program reads records
+#   from the finalprecip.stats file produced by the s/w
+#   that summarizes the precip QC statistics (statPQCF).
+# 
+# 96 Apr lec
+#   Created.
+#-------------------------------------------------------*/
+$debug = 0;
+
+#-----------------------------
+# First get and print the time
+#-----------------------------
+($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+printf "\nSTAT_PRECIP.pl began at $year/$mon/$mday $hour:$min:$sec\n";
+
+#---------------------------------------
+# Open the input and output files.
+# Update to read name from input 
+# line and create output file name.
+#
+# Input names are finalprecip.stats files.
+# Output names should be totalprcp.stats.
+#----------------------------------------
+print "Processing input file: $ARGV[0]\n";
+
+print "Output file name is: totalprcp.stats\n";
+
+open (INFILE, "$ARGV[0]") || die "Can NOT open input file for reading";
+open (OUTFILE, ">totalprcp.stats") || die "Can NOT open output file for reading";
+
+
+#---------------------------------------------------------
+# For the open file, read all records, pick out info of
+# interest.
+#---------------------------------------------------------
+while ($line = <INFILE>) 
+   { 
+   #----------------------------------
+   # Read a line from file. Parse it.
+   #----------------------------------
+   $line_part1 = substr( $line, 0, 10);
+
+   if ($debug)
+      {  
+      printf "Read line: $line\n";
+      printf "line_part1=:xxx$line_part1xxx"; 
+      }  
+
+   if ( $line_part1 eq "Total Bad" )
+      {
+      $bad = substr( $line, 18, 6);
+      $tot_bad = $tot_bad + $bad;
+      } 
+   elsif ( $line_part1 eq "Total dub" )
+      {
+      $dub = substr( $line, 22, 6);
+      $tot_dub = $tot_dub + $dub; 
+      }
+   elsif ( $line_part1 eq "Total goo" )
+      {  
+      $good = substr( $line, 19, 6); 
+      $tot_good = $tot_good + $good; 
+      }  
+   elsif ( $line_part1 eq "Total num" )
+      {  
+      $count = substr( $line, 32, 10); 
+      $tot_ct = $tot_ct + $count; 
+      }  
+
+   }  # while data in file
+
+printf OUTFILE "Tot_Count Tot_Good Tot_Dub Tot_Bad   %Good  %flagged %Dub  %Bad\n\n";
+
+printf OUTFILE "%d %d %d %d", $tot_ct, $tot_good, $tot_dub, $tot_bad;
+
+if ($tot_ct != 0)
+   {
+   printf OUTFILE "%f %f %f %f",
+     $tot_good/$tot_ct, ($tot_dub+$tot_bad)/$tot_ct, $tot_dub/$tot_ct, $tot_bad/$tot_ct;
+   }
+
+
+($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+printf "STAT_PRECIP.pl ended at $year/$mon/$mday $hour:$min:$sec\n";
+
+close(INFILE);
+close(OUTFILE);

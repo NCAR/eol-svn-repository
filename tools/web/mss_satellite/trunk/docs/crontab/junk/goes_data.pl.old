@@ -1,0 +1,112 @@
+#!/usr/bin/perl -w
+
+
+open( OUT, ">goes_stat.txt" ) || die( "cannot open file" );
+
+$m = `date +%H:%M:%S`;
+print( OUT $m );
+print( $m );
+
+$topdir = "/JOSS/DATA/RAW/SATELLITE/GOES/G10/4KM/2002";
+
+@daily_dir = `msls -1 $topdir`;
+#$size = @daily_dir;
+#print( OUT "All Files in $topdir...\n" );
+print( "All Files in $topdir...\n" );
+#print( OUT @daily_dir );
+print( @daily_dir );
+print( OUT "\n" );
+print( "\n" );
+
+#print( "\nSize: $size\n" );
+
+$size = 0;
+foreach $line (@daily_dir)
+{
+	chop( $line );
+	@dirs = split( /\t/, $line );
+
+	foreach $dir (@dirs)
+	{
+		print( OUT "Directory Path: $topdir/$dir\n" );
+		print( "Directory Path: $topdir/$dir\n" );
+		$dir2 = $topdir . "/" . $dir;	
+		$usage = `msdu -s $dir2`;
+		chop($usage);
+		$usage = trim( $usage );
+		$bytes = substr( $usage, 0, index( $usage, " " ) ) * 512;	
+		print( OUT "Usage: $bytes Bytes In this Directory\n" );
+		print( "Usage: $bytes Bytes In this Directory\n" );
+	
+		@files = `msls $dir2`;
+		$num = showFiles( @files );
+		print( OUT "\nTotal Number of Files: $num\n" );
+		print( "\nTotal Number of Files: $num\n" );
+		print( OUT "-----------------------------------------------\n" );
+		print( "-----------------------------------------------\n" );
+	}
+}
+
+print( OUT "\nNumber of Files: $size\n" );
+print( "\nNumber of Files: $size\n" );
+#foreach $dir ( @daily_dir )
+#{
+#	chop( $dir );
+#	print( "Directory Path: $topdir/$dir\n" );
+#
+#	$dir = $topdir . "/" . $dir;
+#
+#	$usage = `msdu -s $dir`;
+#	chop($usage);
+#	$usage = trim( $usage );
+#	$bytes = substr( $usage, 0, index( $usage, " " ) ) * 512;	
+#	print( "Usage: $bytes Bytes\n" );
+#
+#	@files = `msls $dir`;
+#	$num_files = @files;
+#	print( "Files: $num_files total files in directory.\n" );
+#	showFiles( @files ); 	
+
+	
+#}
+
+sub showFiles
+{
+	@lines = @_;
+	$track = 0;
+	$num_files = 0;
+	foreach $line (@lines )
+	{
+		chop( $line );
+		@files = split( /\t/, $line );
+
+		foreach $file (@files )
+		{
+			$track = ( $track == 2 )? 0 : $track + 1;
+			
+			if( $track == 2)
+			{
+				print( OUT "$file\n" );
+				print( "$file\n" );
+			}
+			else
+			{
+				print( OUT "$file   " );
+				print( "$file   " );
+			}
+			$num_files++;
+		}
+	}
+
+	return $num_files;
+}
+
+sub trim
+{
+	local $str = $_[0];
+	chop( $str );
+
+	$str =~ s/^\s+//;
+	$str =~ s/\s+$//;
+	return $str;
+}

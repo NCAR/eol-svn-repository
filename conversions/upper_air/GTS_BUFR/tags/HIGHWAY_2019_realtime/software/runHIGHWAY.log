@@ -1,0 +1,1135 @@
+
+GTSBUFR_Radiosonde_Converter_RealTime.pl began on Tue Aug 27 13:15:46 2019
+ARGV Values: PROJECT: HIGHWAY (projectName = HIGHWAY), Input RAW_DIR: ../output_preproc_data, OUTPUT_DIR: ../output_esc,  KeepEVSSrecs:  0
+
+----------
+Processing file: HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc) timePeriods out of order! prev_timePeriod = 5134, current timePeriod = 2520
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908092333_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 770
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 386. twice-prev_time = 768 (Dropping Rec between these two times.) Current Time= 772
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1150
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 576. twice-prev_time = 1148 (Dropping Rec between these two times.) Current Time= 1152
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1636
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 819. twice-prev_time = 1634 (Dropping Rec between these two times.) Current Time= 1638
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1920
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 961. twice-prev_time = 1918 (Dropping Rec between these two times.) Current Time= 1922
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3010
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1506. twice-prev_time = 3008 (Dropping Rec between these two times.) Current Time= 3012
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3460
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1731. twice-prev_time = 3458 (Dropping Rec between these two times.) Current Time= 3462
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3872
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1937. twice-prev_time = 3870 (Dropping Rec between these two times.) Current Time= 3874
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4466
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2234. twice-prev_time = 4464 (Dropping Rec between these two times.) Current Time= 4468
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4938
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2470. twice-prev_time = 4936 (Dropping Rec between these two times.) Current Time= 4940
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc) U V Wind components has change GREATER than 1.0! prev_uwind= -0.64, uwind= -2.29, prev_vwind= -6.07, vwind= -7.98 at current_time= 5130, prev_time= 5128
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc) U V Wind components has change GREATER than 1.0! prev_uwind= -2.29, uwind= -4.30, prev_vwind= -7.98, vwind= -10.13 at current_time= 5132, prev_time= 5130
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc) U V Wind components has change GREATER than 1.0! prev_uwind= -4.30, uwind= -5.30, prev_vwind= -10.13, vwind= -10.88 at current_time= 5134, prev_time= 5132
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908100000_ius_sounding_1.preproc) Found Out of Time Order record. Write CURRENT/All recs to output.  current time = 2520 < prev_time= 5134
+
+----------
+Processing file: HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc) timePeriods out of order! prev_timePeriod = 5100, current timePeriod = 2717
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908101128_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 204
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 103. twice-prev_time = 202 (Dropping Rec between these two times.) Current Time= 206
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1216
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 609. twice-prev_time = 1214 (Dropping Rec between these two times.) Current Time= 1218
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1728
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 865. twice-prev_time = 1726 (Dropping Rec between these two times.) Current Time= 1730
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2024
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1013. twice-prev_time = 2022 (Dropping Rec between these two times.) Current Time= 2026
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2366
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1184. twice-prev_time = 2364 (Dropping Rec between these two times.) Current Time= 2368
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3262
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1632. twice-prev_time = 3260 (Dropping Rec between these two times.) Current Time= 3264
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3710
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1856. twice-prev_time = 3708 (Dropping Rec between these two times.) Current Time= 3712
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4726
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2364. twice-prev_time = 4724 (Dropping Rec between these two times.) Current Time= 4728
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908101200_ius_sounding_1.preproc) Found Out of Time Order record. Write CURRENT/All recs to output.  current time = 2717 < prev_time= 5100
+
+----------
+Processing file: HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc) timePeriods out of order! prev_timePeriod = 4714, current timePeriod = 2402
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908102334_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 256
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 129. twice-prev_time = 254 (Dropping Rec between these two times.) Current Time= 258
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 772
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 387. twice-prev_time = 770 (Dropping Rec between these two times.) Current Time= 774
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1130
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 566. twice-prev_time = 1128 (Dropping Rec between these two times.) Current Time= 1132
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1558
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 780. twice-prev_time = 1556 (Dropping Rec between these two times.) Current Time= 1560
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2126
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1064. twice-prev_time = 2124 (Dropping Rec between these two times.) Current Time= 2128
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2920
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1461. twice-prev_time = 2918 (Dropping Rec between these two times.) Current Time= 2922
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3334
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1668. twice-prev_time = 3332 (Dropping Rec between these two times.) Current Time= 3336
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3720
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1861. twice-prev_time = 3718 (Dropping Rec between these two times.) Current Time= 3722
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4688
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2345. twice-prev_time = 4686 (Dropping Rec between these two times.) Current Time= 4690
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_1.preproc) Found Out of Time Order record. Write CURRENT/All recs to output.  current time = 2402 < prev_time= 4714
+
+----------
+Processing file: HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc) timePeriods out of order! prev_timePeriod = 4714, current timePeriod = 2402
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 1, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 30, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 1.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ; Output file name is GTS_BUFR_Nairobi_201908102334_02_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 256
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) DROP REC: NOT writing prev rec to output at record = 129. twice-prev_time = 254 (Dropping Rec between these two times.) Current Time= 258
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 772
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) DROP REC: NOT writing prev rec to output at record = 387. twice-prev_time = 770 (Dropping Rec between these two times.) Current Time= 774
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1128
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) DROP REC: NOT writing prev rec to output at record = 565. twice-prev_time = 1126 (Dropping Rec between these two times.) Current Time= 1130
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1558
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) DROP REC: NOT writing prev rec to output at record = 780. twice-prev_time = 1556 (Dropping Rec between these two times.) Current Time= 1560
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2124
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) DROP REC: NOT writing prev rec to output at record = 1063. twice-prev_time = 2122 (Dropping Rec between these two times.) Current Time= 2126
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2442
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) DROP REC: NOT writing prev rec to output at record = 1222. twice-prev_time = 2440 (Dropping Rec between these two times.) Current Time= 2444
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2920
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) DROP REC: NOT writing prev rec to output at record = 1461. twice-prev_time = 2918 (Dropping Rec between these two times.) Current Time= 2922
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3334
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) DROP REC: NOT writing prev rec to output at record = 1668. twice-prev_time = 3332 (Dropping Rec between these two times.) Current Time= 3336
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3718
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) DROP REC: NOT writing prev rec to output at record = 1860. twice-prev_time = 3716 (Dropping Rec between these two times.) Current Time= 3720
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4270
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) DROP REC: NOT writing prev rec to output at record = 2136. twice-prev_time = 4268 (Dropping Rec between these two times.) Current Time= 4272
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4686
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc ) DROP REC: NOT writing prev rec to output at record = 2344. twice-prev_time = 4684 (Dropping Rec between these two times.) Current Time= 4688
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908110000_ius_sounding_2.preproc) Found Out of Time Order record. Write CURRENT/All recs to output.  current time = 2402 < prev_time= 4714
+
+----------
+Processing file: HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908111150_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 212
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 107. twice-prev_time = 210 (Dropping Rec between these two times.) Current Time= 214
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 674
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 338. twice-prev_time = 672 (Dropping Rec between these two times.) Current Time= 676
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1306
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 654. twice-prev_time = 1304 (Dropping Rec between these two times.) Current Time= 1308
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1764
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908111200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 882. twice-prev_time = 1762 (Dropping Rec between these two times.) Current Time= 1766
+
+----------
+Processing file: HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc) timePeriods out of order! prev_timePeriod = 4508, current timePeriod = 2278
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908112347_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 220
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 111. twice-prev_time = 218 (Dropping Rec between these two times.) Current Time= 222
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 712
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 357. twice-prev_time = 710 (Dropping Rec between these two times.) Current Time= 714
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1054
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 528. twice-prev_time = 1052 (Dropping Rec between these two times.) Current Time= 1056
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1746
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 874. twice-prev_time = 1744 (Dropping Rec between these two times.) Current Time= 1748
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2010
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1006. twice-prev_time = 2008 (Dropping Rec between these two times.) Current Time= 2012
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2784
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1393. twice-prev_time = 2782 (Dropping Rec between these two times.) Current Time= 2786
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3194
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1593. twice-prev_time = 3192 (Dropping Rec between these two times.) Current Time= 3196
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4140
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2066. twice-prev_time = 4138 (Dropping Rec between these two times.) Current Time= 4142
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908120000_ius_sounding_1.preproc) Found Out of Time Order record. Write CURRENT/All recs to output.  current time = 2278 < prev_time= 4508
+
+----------
+Processing file: HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc) timePeriods out of order! prev_timePeriod = 4576, current timePeriod = 2443
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908121130_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 244
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 123. twice-prev_time = 242 (Dropping Rec between these two times.) Current Time= 246
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1128
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 565. twice-prev_time = 1126 (Dropping Rec between these two times.) Current Time= 1130
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1596
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 799. twice-prev_time = 1594 (Dropping Rec between these two times.) Current Time= 1598
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1878
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 940. twice-prev_time = 1876 (Dropping Rec between these two times.) Current Time= 1880
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2184
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1093. twice-prev_time = 2182 (Dropping Rec between these two times.) Current Time= 2186
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc) U V Wind components has change GREATER than 1.0! prev_uwind= -16.64, uwind= -17.76, prev_vwind=  1.46, vwind=  1.24 at current_time= 2374, prev_time= 2372
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc) U V Wind components has change GREATER than 1.0! prev_uwind= -20.55, uwind= -21.75, prev_vwind=  1.44, vwind=  1.52 at current_time= 2382, prev_time= 2380
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2954
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1478. twice-prev_time = 2952 (Dropping Rec between these two times.) Current Time= 2956
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3730
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1866. twice-prev_time = 3728 (Dropping Rec between these two times.) Current Time= 3732
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4274
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2137. twice-prev_time = 4272 (Dropping Rec between these two times.) Current Time= 4276
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908121200_ius_sounding_1.preproc) Found Out of Time Order record. Write CURRENT/All recs to output.  current time = 2443 < prev_time= 4576
+
+----------
+Processing file: HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc) timePeriods out of order! prev_timePeriod = 4990, current timePeriod = 2449
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908122354_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 220
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 111. twice-prev_time = 218 (Dropping Rec between these two times.) Current Time= 222
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1096
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 549. twice-prev_time = 1094 (Dropping Rec between these two times.) Current Time= 1098
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1554
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 778. twice-prev_time = 1552 (Dropping Rec between these two times.) Current Time= 1556
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1818
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 910. twice-prev_time = 1816 (Dropping Rec between these two times.) Current Time= 1820
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2116
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1059. twice-prev_time = 2114 (Dropping Rec between these two times.) Current Time= 2118
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2940
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1471. twice-prev_time = 2938 (Dropping Rec between these two times.) Current Time= 2942
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3370
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1686. twice-prev_time = 3368 (Dropping Rec between these two times.) Current Time= 3372
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4362
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2182. twice-prev_time = 4360 (Dropping Rec between these two times.) Current Time= 4364
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4822
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2412. twice-prev_time = 4820 (Dropping Rec between these two times.) Current Time= 4824
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908130000_ius_sounding_1.preproc) Found Out of Time Order record. Write CURRENT/All recs to output.  current time = 2449 < prev_time= 4990
+
+----------
+Processing file: HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc) timePeriods out of order! prev_timePeriod = 4640, current timePeriod = 2312
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908131114_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1022
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 512. twice-prev_time = 1020 (Dropping Rec between these two times.) Current Time= 1024
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1430
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 716. twice-prev_time = 1428 (Dropping Rec between these two times.) Current Time= 1432
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1696
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 849. twice-prev_time = 1694 (Dropping Rec between these two times.) Current Time= 1698
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2010
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1006. twice-prev_time = 2008 (Dropping Rec between these two times.) Current Time= 2012
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2832
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1417. twice-prev_time = 2830 (Dropping Rec between these two times.) Current Time= 2834
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3604
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1803. twice-prev_time = 3602 (Dropping Rec between these two times.) Current Time= 3606
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4156
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2079. twice-prev_time = 4154 (Dropping Rec between these two times.) Current Time= 4158
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4578
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2290. twice-prev_time = 4576 (Dropping Rec between these two times.) Current Time= 4580
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908131200_ius_sounding_1.preproc) Found Out of Time Order record. Write CURRENT/All recs to output.  current time = 2312 < prev_time= 4640
+
+----------
+Processing file: HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908151119_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1368
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 685. twice-prev_time = 1366 (Dropping Rec between these two times.) Current Time= 1370
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1900
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 951. twice-prev_time = 1898 (Dropping Rec between these two times.) Current Time= 1902
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2210
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1106. twice-prev_time = 2208 (Dropping Rec between these two times.) Current Time= 2212
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2540
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1271. twice-prev_time = 2538 (Dropping Rec between these two times.) Current Time= 2542
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2834
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1418. twice-prev_time = 2832 (Dropping Rec between these two times.) Current Time= 2836
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3360
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1681. twice-prev_time = 3358 (Dropping Rec between these two times.) Current Time= 3362
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3834
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1918. twice-prev_time = 3832 (Dropping Rec between these two times.) Current Time= 3836
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4264
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2133. twice-prev_time = 4262 (Dropping Rec between these two times.) Current Time= 4266
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4906
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908151200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2454. twice-prev_time = 4904 (Dropping Rec between these two times.) Current Time= 4908
+
+----------
+Processing file: HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 0, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908152338_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 410
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 206. twice-prev_time = 408 (Dropping Rec between these two times.) Current Time= 412
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1870
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 936. twice-prev_time = 1868 (Dropping Rec between these two times.) Current Time= 1872
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2564
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908160000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1283. twice-prev_time = 2562 (Dropping Rec between these two times.) Current Time= 2566
+
+----------
+Processing file: HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 3, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 3, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908180000_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908180040_01_SONDE.cls
+
+----------
+Processing file: HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 3, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908181200_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908181117_01_SONDE.cls
+
+----------
+Processing file: HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908191115_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 248
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 125. twice-prev_time = 246 (Dropping Rec between these two times.) Current Time= 250
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 790
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 396. twice-prev_time = 788 (Dropping Rec between these two times.) Current Time= 792
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1190
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 596. twice-prev_time = 1188 (Dropping Rec between these two times.) Current Time= 1192
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1656
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 829. twice-prev_time = 1654 (Dropping Rec between these two times.) Current Time= 1658
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1914
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 958. twice-prev_time = 1912 (Dropping Rec between these two times.) Current Time= 1916
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2224
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1113. twice-prev_time = 2222 (Dropping Rec between these two times.) Current Time= 2226
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2596
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1299. twice-prev_time = 2594 (Dropping Rec between these two times.) Current Time= 2598
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3080
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1541. twice-prev_time = 3078 (Dropping Rec between these two times.) Current Time= 3082
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4468
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2235. twice-prev_time = 4466 (Dropping Rec between these two times.) Current Time= 4470
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4914
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908191200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2458. twice-prev_time = 4912 (Dropping Rec between these two times.) Current Time= 4916
+
+----------
+Processing file: HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908192314_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 206
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 104. twice-prev_time = 204 (Dropping Rec between these two times.) Current Time= 208
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 914
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 458. twice-prev_time = 912 (Dropping Rec between these two times.) Current Time= 916
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1266
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 634. twice-prev_time = 1264 (Dropping Rec between these two times.) Current Time= 1268
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1478
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 740. twice-prev_time = 1476 (Dropping Rec between these two times.) Current Time= 1480
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1754
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 878. twice-prev_time = 1752 (Dropping Rec between these two times.) Current Time= 1756
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2096
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1049. twice-prev_time = 2094 (Dropping Rec between these two times.) Current Time= 2098
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2514
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1258. twice-prev_time = 2512 (Dropping Rec between these two times.) Current Time= 2516
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2906
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1454. twice-prev_time = 2904 (Dropping Rec between these two times.) Current Time= 2908
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3270
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908200000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1636. twice-prev_time = 3268 (Dropping Rec between these two times.) Current Time= 3272
+
+----------
+Processing file: HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908201113_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 850
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 426. twice-prev_time = 848 (Dropping Rec between these two times.) Current Time= 852
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1284
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 643. twice-prev_time = 1282 (Dropping Rec between these two times.) Current Time= 1286
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1796
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 899. twice-prev_time = 1794 (Dropping Rec between these two times.) Current Time= 1798
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2088
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1045. twice-prev_time = 2086 (Dropping Rec between these two times.) Current Time= 2090
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2850
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1426. twice-prev_time = 2848 (Dropping Rec between these two times.) Current Time= 2852
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3382
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1692. twice-prev_time = 3380 (Dropping Rec between these two times.) Current Time= 3384
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3832
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1917. twice-prev_time = 3830 (Dropping Rec between these two times.) Current Time= 3834
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4258
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2130. twice-prev_time = 4256 (Dropping Rec between these two times.) Current Time= 4260
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 5350
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908201200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2676. twice-prev_time = 5348 (Dropping Rec between these two times.) Current Time= 5352
+
+----------
+Processing file: HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908202326_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 498
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 250. twice-prev_time = 496 (Dropping Rec between these two times.) Current Time= 500
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2114
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1058. twice-prev_time = 2112 (Dropping Rec between these two times.) Current Time= 2116
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2870
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1436. twice-prev_time = 2868 (Dropping Rec between these two times.) Current Time= 2872
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3314
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1658. twice-prev_time = 3312 (Dropping Rec between these two times.) Current Time= 3316
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3804
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1903. twice-prev_time = 3802 (Dropping Rec between these two times.) Current Time= 3806
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 5086
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2544. twice-prev_time = 5084 (Dropping Rec between these two times.) Current Time= 5088
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 5720
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2861. twice-prev_time = 5718 (Dropping Rec between these two times.) Current Time= 5722
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 6298
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 3150. twice-prev_time = 6296 (Dropping Rec between these two times.) Current Time= 6300
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 7158
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 3580. twice-prev_time = 7156 (Dropping Rec between these two times.) Current Time= 7160
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 7838
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908210000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 3920. twice-prev_time = 7836 (Dropping Rec between these two times.) Current Time= 7840
+
+----------
+Processing file: HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908211124_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1656
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 829. twice-prev_time = 1654 (Dropping Rec between these two times.) Current Time= 1658
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1946
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 974. twice-prev_time = 1944 (Dropping Rec between these two times.) Current Time= 1948
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2278
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1140. twice-prev_time = 2276 (Dropping Rec between these two times.) Current Time= 2280
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3112
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1557. twice-prev_time = 3110 (Dropping Rec between these two times.) Current Time= 3114
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3512
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1757. twice-prev_time = 3510 (Dropping Rec between these two times.) Current Time= 3514
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4444
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2223. twice-prev_time = 4442 (Dropping Rec between these two times.) Current Time= 4446
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4872
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908211200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2437. twice-prev_time = 4870 (Dropping Rec between these two times.) Current Time= 4874
+
+----------
+Processing file: HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908220009_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 222
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 112. twice-prev_time = 220 (Dropping Rec between these two times.) Current Time= 224
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 662
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 332. twice-prev_time = 660 (Dropping Rec between these two times.) Current Time= 664
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 992
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 497. twice-prev_time = 990 (Dropping Rec between these two times.) Current Time= 994
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1392
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 697. twice-prev_time = 1390 (Dropping Rec between these two times.) Current Time= 1394
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1626
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 814. twice-prev_time = 1624 (Dropping Rec between these two times.) Current Time= 1628
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1926
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 964. twice-prev_time = 1924 (Dropping Rec between these two times.) Current Time= 1928
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2742
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1372. twice-prev_time = 2740 (Dropping Rec between these two times.) Current Time= 2744
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3158
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1580. twice-prev_time = 3156 (Dropping Rec between these two times.) Current Time= 3160
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4108
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908220000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2055. twice-prev_time = 4106 (Dropping Rec between these two times.) Current Time= 4110
+
+----------
+Processing file: HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908231121_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 214
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 107. twice-prev_time = 212 (Dropping Rec between these two times.) Current Time= 216
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 858
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 429. twice-prev_time = 856 (Dropping Rec between these two times.) Current Time= 860
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1450
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 725. twice-prev_time = 1448 (Dropping Rec between these two times.) Current Time= 1452
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1722
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 861. twice-prev_time = 1720 (Dropping Rec between these two times.) Current Time= 1724
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2036
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1018. twice-prev_time = 2034 (Dropping Rec between these two times.) Current Time= 2038
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2468
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1234. twice-prev_time = 2466 (Dropping Rec between these two times.) Current Time= 2470
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2844
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1422. twice-prev_time = 2842 (Dropping Rec between these two times.) Current Time= 2846
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3184
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1592. twice-prev_time = 3182 (Dropping Rec between these two times.) Current Time= 3186
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3696
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908231200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1848. twice-prev_time = 3694 (Dropping Rec between these two times.) Current Time= 3698
+
+----------
+Processing file: HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908232324_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 288
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 145. twice-prev_time = 286 (Dropping Rec between these two times.) Current Time= 290
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1054
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 528. twice-prev_time = 1052 (Dropping Rec between these two times.) Current Time= 1056
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1522
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 762. twice-prev_time = 1520 (Dropping Rec between these two times.) Current Time= 1524
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2420
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1211. twice-prev_time = 2418 (Dropping Rec between these two times.) Current Time= 2422
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2802
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1402. twice-prev_time = 2800 (Dropping Rec between these two times.) Current Time= 2804
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3824
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1913. twice-prev_time = 3822 (Dropping Rec between these two times.) Current Time= 3826
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 5446
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2724. twice-prev_time = 5444 (Dropping Rec between these two times.) Current Time= 5448
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 5964
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908240000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2983. twice-prev_time = 5962 (Dropping Rec between these two times.) Current Time= 5966
+
+----------
+Processing file: HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908241117_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 260
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 131. twice-prev_time = 258 (Dropping Rec between these two times.) Current Time= 262
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 776
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 389. twice-prev_time = 774 (Dropping Rec between these two times.) Current Time= 778
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1166
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 584. twice-prev_time = 1164 (Dropping Rec between these two times.) Current Time= 1168
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1670
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 836. twice-prev_time = 1668 (Dropping Rec between these two times.) Current Time= 1672
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1968
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 985. twice-prev_time = 1966 (Dropping Rec between these two times.) Current Time= 1970
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2322
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1162. twice-prev_time = 2320 (Dropping Rec between these two times.) Current Time= 2324
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3268
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1635. twice-prev_time = 3266 (Dropping Rec between these two times.) Current Time= 3270
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3730
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1866. twice-prev_time = 3728 (Dropping Rec between these two times.) Current Time= 3732
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 5206
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908241200_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2604. twice-prev_time = 5204 (Dropping Rec between these two times.) Current Time= 5208
+
+----------
+Processing file: HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeReleaseNumber . Input Line: { "key" : "radiosondeReleaseNumber", "value" : 1, "units" : "Numeric" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! observerIdentification . Input Line: { "key" : "observerIdentification", "value" : "....", "units" : "CCITT IA5" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeCompleteness . Input Line: { "key" : "radiosondeCompleteness", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeConfiguration . Input Line: { "key" : "radiosondeConfiguration", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! radiosondeGroundReceivingSystem . Input Line: { "key" : "radiosondeGroundReceivingSystem", "value" : 62, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonManufacturer . Input Line: { "key" : "balloonManufacturer", "value" : 4, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonType . Input Line: { "key" : "balloonType", "value" : 8, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! weightOfBalloon . Input Line: { "key" : "weightOfBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonShelterType . Input Line: { "key" : "balloonShelterType", "value" : null, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! typeOfGasUsedInBalloon . Input Line: { "key" : "typeOfGasUsedInBalloon", "value" : 0, "units" : "CODE TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! amountOfGasUsedInBalloon . Input Line: { "key" : "amountOfGasUsedInBalloon", "value" : 0.3, "units" : "kg" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! balloonFlightTrainLength . Input Line: { "key" : "balloonFlightTrainLength", "value" : 30, "units" : "m" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! radome . Input Line: { "key" : "radome", "value" : 0, "units" : "FLAG TABLE" },
+
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) UNKNOWN input element type! reasonForTermination . Input Line: { "key" : "reasonForTermination", "value" : 1, "units" : "CODE TABLE" }
+
+ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc) Found Regular Sounding. This is NOT a PIBAL. Found at least one Temp, Press, or nonCoordGeoPotHt.
+(2)Input file name: HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ; Output file name is GTS_BUFR_Nairobi_201908242321_01_SONDE.cls
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 760
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 381. twice-prev_time = 758 (Dropping Rec between these two times.) Current Time= 762
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1146
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 574. twice-prev_time = 1144 (Dropping Rec between these two times.) Current Time= 1148
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1584
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 793. twice-prev_time = 1582 (Dropping Rec between these two times.) Current Time= 1586
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 1844
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 923. twice-prev_time = 1842 (Dropping Rec between these two times.) Current Time= 1846
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 2142
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1072. twice-prev_time = 2140 (Dropping Rec between these two times.) Current Time= 2144
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3078
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1540. twice-prev_time = 3076 (Dropping Rec between these two times.) Current Time= 3080
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 3958
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 1980. twice-prev_time = 3956 (Dropping Rec between these two times.) Current Time= 3960
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 4544
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2273. twice-prev_time = 4542 (Dropping Rec between these two times.) Current Time= 4546
+Key is extendedVerticalSoundingSignificance. Value is 65536! DROP THIS Mandatory Level Rec! Reset writePrevRecToOuput to zero. DROP REC! current_time = 5002
+WARNING: ParseRawFile( HIGHWAY_HKNC_201908250000_ius_sounding_1.preproc ) DROP REC: NOT writing prev rec to output at record = 2502. twice-prev_time = 5000 (Dropping Rec between these two times.) Current Time= 5004
+
+GTSBUFR_Radiosonde_Converter_RealTime.pl ended on Tue Aug 27 13:16:00 2019

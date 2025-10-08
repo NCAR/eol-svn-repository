@@ -1,0 +1,121 @@
+<html>
+<head>
+    <title>How To: Auto QC</title>
+    <link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css" />
+</head>
+<body>
+<h1>How To: Auto QC</h1>
+
+<a name="top"></a><h2>Contents</h2>
+<ol>
+    <li><a href="#about">About</a></li>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#execution">Execution</a></li>
+    <li><a href="#classes">Class List</a></li>
+</ol>
+<hr />
+
+<a name="about"></a>
+<h2>About</h2>
+<p>This document contains the information required to for automatically quality controlling ESC soundings.</p>
+<p>The software described in this document is written in Java 1.5 with the use of generics. Java 1.5 or newer is required for the software to run.</p>
+
+<p><a href="#top">Top</a></p>
+<hr />
+
+
+<a name="setup"></a>
+<h2>Setup</h2>
+<p>There are two ways to execute the QC software:  Ant and the Command Line.</p>
+
+<h3>Ant Setup</h3>
+<p>If you already know Ant is setup properly for you or you do not plan on using Ant, this part can be skipped.</p>
+<p>Ant is a Java based build tool that can be used to do a number of different tasks.  To be able to use Ant, you need to setup your environment so it can be used.  The setup is not dependent for the Auto QC software and can be found at:</p>
+<p><a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use/#environment">http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use/#environment</a></p>
+
+<h3>Command Line Setup</h3>
+<p>The only setup required for the command line is that Java 1.5 be on the environment path. (You can also call the java commmand using the full path to the binary if you don't want it added to the path.)</p>
+
+<p><a href="#top">Top</a></p>
+<hr />
+
+<a name="execution"></a>
+<h2>Execution</h3>
+<p>You will need to know the following information to successfully run the Auto QC software.</p>
+<ul>
+   <li>The name of the class containing the main function.  See the <a href="#classes">class list</a> for the list of classes.</li>
+   <li>The location of the <a href="http://dmg.eol.ucar.edu/software/java/api/library/utilities">utilities.jar</a> library.</li>
+   <li>The location of the <a href="http://dmg.eol.ucar.edu/software/java/api/library/upper_air">upper_air.jar</a> library.</li>
+   <li>The location of the <a href="http://dmg.eol.ucar.edu/software/java/api/upper_air/autoqc">autoqc.jar</a> binary library.</li>
+</ul>
+
+<h3>Ant Execution</h3>
+<p>Ant is a Java based build tool that can be used to do many different tasks.  If you have used Ant before, you can skip the setup and jump to the classpath setup.  If you haven't, you will need to set up your environment to be able to use it.  The instructions on Ant can be found at <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use">How To Setup and Use Ant</a>.</p>
+
+<h4>Define the Classpath</h4>
+<p>The auto QC requires the following jar files to be in the classpath.</p>
+<ul>
+   <li>utilities.jar</li>
+   <li>upper_air.jar</li>
+   <li>autoqc.jar</li>
+</ul>
+<p>If you don't know how to define the classpath, you can find the instructions <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use/#classpath">here</a>.</p>
+
+<h4>Create the Target</h4>
+<p>To run the Auto QC from Ant, the build file must contain a target that defines how to run the tool.  Here is an example for the Dropsonde QC.</p>
+<pre>
+    &lt;target name="autoqc"&gt; &lt;-- The name of the target to be called on the command line when running Ant --&gt;
+        &lt;java classname="dmg.ua.sounding.autoqc.DropsondeESCAutoQC" fork="yes"&gt; &lt;-- The class to be run to create the day files --&gt;
+            &lt;arg value="software/qc.properties" /&gt; &lt;!-- The properties file containing the limits to use during the QC. --&gt;
+            &lt;arg value="output" /&gt;            &lt;!-- The directory where the source files used to create the day files can be found --&gt;
+            &lt;arg value="final" /&gt;             &lt;!-- The directory where the QC files will be stored after they are created --&gt;
+            &lt;arg value="logs" /&gt;              &lt;!-- The directory where teh QC log files will be stored after they are created --&gt;
+            &lt;arg value="\.cls(\.gz)?" /&gt;      &lt;!-- The pattern to match against the file names to include in the QC --&gt;
+            &lt;classpath refid="classpath" /&gt;   &lt;!-- The classpath containing the classes needed for the day file creator to run --&gt;
+        &lt;/java&gt;
+    &lt;/target&gt;
+</pre>
+
+<h4>Execute the Target</h4>
+<p>From the same directory where the <code>build.xml</code> file is stored, you can now call the Auto QC using Ant.</p>
+<p class="code">ant autoqc</p>
+<p class="note">If you used a different name for the target, you will need to replace <i>autoqc</i> with the actual target name.</p>
+
+<h3>Command Line Execution</h3>
+<p>To run the Auto QC from the command line or a script, run:</p>
+<p class="code">java -cp /net/work/bin/autoqc/autoqc.jar:/net/work/lib/java/upper_air.jar:/net/work/lib/java/utilities.jar dmg.ua.sounding.autoqc.DropsondeESCAutoQC qc.properties ../output ../final ../logs \.cls</p>
+<p>You will need to update the paths in the -cp (classpath) argumetn and updated the arguments passed to the class to match the data you are running the Auto QC for.</p>
+
+<p><a href="#top">Top</a></p>
+<hr />
+
+
+<a name="classes"></a>
+<h2>Class List</h2>
+<table border="1">
+    <tr>
+       <th>Class Names</th>
+       <th>Parameters</th>
+    </tr>
+    <tr>
+       <td>
+          <li>dmg.ua.sounding.autoqc.UpsondeESCAutoQC</li>
+          <li>dmg.ua.sounding.autoqc.DropsondeESCAutoQC</li>
+          <li>dmg.ua.sounding.autoqc.ISSESCAutoQC</li>
+          <li>dmg.ua.sounding.autoqc.NWSESCAutoQC</li>
+       </td>
+       <td>
+          <li>Data Directory (Required): The location of the soundings to be QC'ed.</li>
+          <li>Output Directory (Required): The location where the QC'ed files are to be written.</li>
+          <li>File Pattern (Optional): The pattern to match files in teh data directory to include in the QC.  The default is \.cls(\.gz)?$</li>
+       </td>
+    </tr>
+</table>
+
+<p><a href="#top">Top</a></p>
+<hr />
+
+<p class="foot">Last Updated: April 9, 2008 - jclawson</p>
+
+</body>
+</html>

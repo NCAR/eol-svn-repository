@@ -1,0 +1,43 @@
+<html>
+<head>
+	<title>External FTP Site</title>
+	<script language=javascript>
+		var opts = location.search.split( "&" );
+		var title = opts[0].split( "+" ).join( " " );
+		title = title.substring( 1, title.length);
+		var url = opts[1];
+
+		if( navigator.appName == "Netscape" )
+			window.location = url;	
+	</script>
+</head>
+
+<body>
+	<font size=+2 face="Verdana">External FTP Site</font>
+	<br>
+	<p>
+		You have selected a dataset outside JOSS's computer system to download via FTP.  If you are behind a firewall or
+using a DSL connection and using Internet Explorer you must be in &quot;Passive FTP&quot; mode.  If you are already
+in passive mode click the dataset name below to continue.  If not or unsure follow the instructions
+below.</p>
+<dd><font size=+1 face="Verdana">  
+	<script language=javascript>
+		document.write( "<a href=", url, ">", title, "</a>" );
+	</script>
+</font>
+<br>
+<br><br>
+<font size=+1><u>How to use passive mode in IE: </u>
+<font size=+1>
+<ul>
+	<li>Select <b>Tools</b> from the menu.
+	<li>Select <b>Internet Options...</b>
+	<li>Click on the <b>Advanced</b> tab.
+	<li>Be sure the <b>Use Passive FTP...</b> option is selected.
+	<li>Click <b>OK</b> and proceed to the FTP site by clicking on the link above.
+
+</ul>
+
+Screen shot of Internet Options:<br>
+<img src="images/ftp_screen_shot.gif">
+</body></html>

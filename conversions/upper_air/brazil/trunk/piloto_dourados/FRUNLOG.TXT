@@ -1,0 +1,25 @@
+FirstRunScreens:Start
+ProcessInfInstall:File:C:\WINDOWS\OPTIONS\OEMAUDIT.INF: Section=:OneTime:
+ProcessInfInstall:Failed to open:C:\WINDOWS\OPTIONS\OEMAUDIT.INF: reRet=105
+VcpClose:About to close
+VcpClose:About to End
+VcpClose:About to Terminate
+SpezialGeninstalls:Start
+SpezialGeninstalls:Looking for :C:\WINDOWS\OPTIONS\PREDUP.TAG:
+Intl:INTL:0:
+GetUserInfo:INIT
+DoPreInstallWork:Auditmode :0:
+PrepareRunonce:Failed to open :C:\WINDOWS\OPTIONS\OEMAUDIT.INF:
+ProcessInfInstall:File:C:\WINDOWS\OPTIONS\EndUser.INF: Section=:Options:
+ProcessInfInstall:Failed to open:C:\WINDOWS\OPTIONS\EndUser.INF: reRet=105
+VcpClose:About to close
+VcpClose:About to End
+VcpClose:About to Terminate
+IsKeyEmpty:Start
+Timer:Start OPKRemoveInstalledNetDevice :148568:
+Timer:End OPKRemoveInstalledNetDevice :148568:
+CheckRunonceSetup:Start
+IsKeyEmpty:Start
+IsKeyEmpty:1) Have :Fuso horário:  :RUNDLL32.EXE SHELL32.DLL,Control_RunDLL TIMEDATE.CPL,,/f:
+CheckRunonceSetup:Check for wrapper =
+FirstRunScreens:Exit:0

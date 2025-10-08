@@ -1,0 +1,33 @@
+Application: Zinc (future CODIAC)
+
+Host: hurricane   Database: zinc
+
++----------------+
+| Tables_in_zinc |
++----------------+
+| user           |
++----------------+
+
+user:
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| id           | varchar(31)  |      | PRI |         |       |
+| display_name | varchar(31)  |      | MUL |         |       |
+| email        | varchar(255) |      |     |         |       |
+| active       | tinyint(1)   |      |     | 1       |       |
+| first_name   | varchar(255) | YES  |     | NULL    |       |
+| middle_name  | varchar(255) | YES  |     | NULL    |       |
+| last_name    | varchar(255) | YES  |     | NULL    |       |
+| mr_mrs_etc   | varchar(7)   | YES  |     | NULL    |       |
+| job_title    | varchar(255) | YES  |     | NULL    |       |
+| affiliation  | varchar(255) | YES  |     | NULL    |       |
+| address      | text         | YES  |     | NULL    |       |
+| city         | varchar(255) | YES  |     | NULL    |       |
+| state        | char(2)      | YES  |     | NULL    |       |
+| zip          | varchar(31)  | YES  |     | NULL    |       |
+| country      | varchar(255) | YES  |     | NULL    |       |
+| phone        | varchar(63)  | YES  |     | NULL    |       |
+| fax          | varchar(63)  | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+

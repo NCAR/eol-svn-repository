@@ -1,0 +1,46 @@
+### PRODUCTION USAGE ###
+
+To run this code in production mode, add the following to your '~/.my_defaults'
+file: 
+
+    setenv DMG_MYCNF_PATH ~eoldata/.my.cnf
+
+This will set the default database to emdac and all loaded datasets will appear
+on https://data.eol.ucar.edu or https://dmg.eol.ucar.edu/dts/dln.
+
+To run the deployed code, run load_data_proj to create your yaml file, then
+load_a_dataset to load the data to codiac and the dts. See docs/ dir for
+more detailed documentation.
+
+
+### DEVELOPMENT ###
+
+Check out this tree from svn
+> svn co http://svn.eol.ucar.edu/svn/dmg/tools/database/insert_scripts/trunk/
+
+To do development on this code, run the scripts with the '-dev' command line
+option.
+
+When you run with -dev, loaded datasets will appear on
+https://data.dev.eol.ucar.edu. There is no dts website, so login to the
+database directly to see what you loaded.
+
+To deploy your changes for testing:
+
+    deploy dev
+
+To deploy your changes for production:
+
+    deploy install
+
+### SVN INFO ###
+
+If you are not familiar with SVN (subversion), it is an open source revision control system that predates Git. The following commands behave alot light git commands:
+
+svn status
+svn add
+svn update
+svn commit -m "Commit comment"
+
+with the following exception. All changes to files are committed with the next commit. You do not need to svn add files before commit unless they are new/untracked files.
+

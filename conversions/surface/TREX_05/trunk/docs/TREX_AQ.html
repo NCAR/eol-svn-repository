@@ -1,0 +1,190 @@
+<HTML><PRE>
+TITLE:  Tribal Environmental Exchange Network [IPS Meteostar]
+
+
+CONTACTS:
+
+Steve Williams
+NCAR/EOL
+P.O. Box 3000
+Boulder, CO 80307-3000
+
+phone: 303-497-8164
+email: <a href="mailto:sfw@ucar.edu">sfw@ucar.edu</a>
+
+
+1.0  DATA SET OVERVIEW
+
+
+This data set contains 5-minute resolution surface meteorological data
+from the TRibal Environmental eXchange network (TREX) of 4 Climatronics 
+weather stations in the Owens Valley.  These data were provided by 
+IPS Meteostar with the approval of the involved tribes.  The data set
+contains data for all of 2006.  Each file contains the 2006 data for
+a single station.  The data are in comma delimited ASCII.
+
+
+2.0  INSTRUMENT DESCRIPTION
+
+
+2.1  Instrumentation information
+
+All four of these sites use Climatronics instrumentation.  The temperature 
+sensors are aspirated.  Dew Point temperature is calculated from RH and 
+Temperature.  Not sure what the RH sensor method is but it not a very sensitive 
+instrument, especially in low humidity.   The instrumentation is at 10 meters 
+except for pressure and precipitation.  These stations are primarily used for
+air quality purposes.
+
+Photos of each of the stations are available:
+http://trex-network.meteostar.com/cgi-bin/lsr/site_photo.pl
+
+2.2  Station Locations
+
+The station locations are from the NAWS China Lake.
+
+NAME: Lone Pine
+LONG NAME: Lone Pine Paiute/Shoshone Tribe-CA
+CAMS ID: C1018
+EPA Site: 06-027-1018
+LATITUDE: 36.595556
+LONGITUDE: -118.049167
+ELEVATION: 3701 ft
+Maintained by: Lone Pine Paiute/Shoshone Tribe
+
+NAME: Big Pine
+LONG NAME: Big Pine-CA
+CAMS ID: C1033
+EPA Site: 06-027-1033
+LATITUDE: 37.155556
+LONGITUDE: -118.293611
+ELEVATION: 4045 ft
+Maintained by: Tribal Sites Regional Office
+
+NAME: Bishop
+LONG NAME: Bishop Paiute Tribe-CA
+CAMS ID: C1023
+EPA Site: 06-027-1023
+LATITUDE: 37.366667
+LONGITUDE: -118.416667
+ELEVATION: 4226 ft
+Maintained by: Tribal Sites Regional Office
+
+NAME: Fort Independence
+LONG NAME: Fort Independence Met1-CA
+CAMS ID: C1028
+EPA Site: 06-027-1028
+LATITUDE: 36.802778
+LONGITUDE: -118.118889
+ELEVATION: 3799 ft
+Maintained by: Tribal Sites Regional Office
+
+
+3.0  DATA COLLECTION AND PROCESSING
+
+The Texas Commission on Environmental Quality (TCEQ) uses an automated collection 
+system which analyzes all of the data as it is collected. Based on conditions 
+at the site and the state of the instruments, the system may decide to 
+automatically reject data. TCEQ personnel also continuously review the data and 
+may decide to manually reject data.  
+
+    * Rejected data is flagged in various ways depending upon why it was rejected.
+    * The flags show up in the report as three-character-codes.
+    * The following are codes that may be applied to data:
+          o NA - The average cannot be computed until all the measurements are 
+                 received. This average will not be available until 15 minutes
+                 past the next hour.
+          o LST - Lost data. Usually indicates that data was never collected.
+                  This may also be triggered by delays or breakdowns in data
+                  communication between the monitoring sites and the Regional
+                  Offices, or the Central Office in Austin. Try retreiving the
+                  data later.
+          o LIM - Data exceeds automatic criteria for rejection.
+                + For meteorological parameters, this indicates that the
+                  measurements fall outside the EPA guidelines for meteorological
+                  collection of data. This is usually due to a short-term
+                  meteorological condition, such as rapid heating during the day
+                  or extended periods of calm winds.
+                + For pollution parameters, this indicates that the instrument
+                  failed one of it's scheduled automatic calibrations or span checks.
+                  Calibrations are performed periodically to insure that the instrument
+                  is functioning properly and the data collected is valid. If a
+                  calibration is failed, TCEQ field operators will go to the monitoring
+                  station to determine why the automatic calibration failed. Once the
+                  problem has been identified and corrected, a fresh calibration will be
+                  done on the instrument and valid data will start being collected. 
+          o PMA - Preventative maintenance. Indicates the CAMS is undergoing maintenance
+                  and data collected is not valid data.
+          o CAL - Automatic calibration in progress. Calibrations are performed when 
+                  instruments are changed or fail a span check and last from 3 to 6 hours.
+                  Non-scheduled calibrations may be initiated at any time by TCEQ field
+                  operators - usually during the course of instrument repair/replacement
+                  or troubleshooting.
+          o SPN - Automatic span check in progress. This is to check that the instrument
+                  calibration is holding. Span checks are generally performed once a week
+                  on each instrument and last from 2 to 4 hours. Non-scheduled span checks
+                  may be initiated at any time by TCEQ field operators - usually during
+                  the course of troubleshooting.
+          o SPZ - Automatic span check in progress. This is to check that the instrument
+                  calibration is holding. These span checks are generally performed once
+                  a day on instruments and last 30 minutes. These are normally only seen
+                  if the system detects an instrument problem during the span check.
+          o QAS - Quality Assurance audit in progress. TCEQ conducts periodic Quality
+                  Assurance audits on each monitoring site. These audits verify the
+                  instrument's accuracy.
+          o QRE - Data rejected because of failed audit results.
+          o AQI - Data rejected by TCEQ validators. The TCEQ validators have reviewed the
+                  data and determined that it is not valid.
+          o MAL - This indicates a general instrument malfunction. This flag is manually
+                  set by a data validator.
+          o NOL - Instrument is not on line. The instrument is collecting data, but it has
+                   not been calibrated and the data it collects is ignored.
+          o FEW - Not enough five-minute measurements available to create an hourly average.
+                  There must be 45 minutes of data available each hour in order for a valid
+                  hourly average to be created.
+          o NEG - The measurement exceeds a lower limit and has too negative a value. It is
+                  possible to get small negative values under routine conditions, but large
+                  negative numbers indicate a problem in the data collection system.
+          o MUL - This is only seen on NOx monitors. This indicates that the sum of NO and
+                  NO2 measured at a site does not balance with the amount of NOx measured at
+                  a site. This usually indicates a problem in the instrument adjustment.
+          o NOD - Not Detected. The compound was not detected at a concentration that could
+                  be reliably quantitated. This may mean the compound is present but had
+                  interferences present, was below the detection capability of the instrument,
+                  or not present at all.. 
+
+
+NCAR/EOL conducted no processing or quality control on these data.
+
+
+4.0  DATA FORMAT AND FILE NAMING
+
+4.1  File Naming conventions
+
+Files have names like:
+
+Big Pine C1033 2006 Data.txt
+where:
+	Big Pine is the station name
+        C1033 is the CAMS ID
+        2006 is the year
+
+
+4.2  Data Format
+ 
+These data are comma-delimited ASCII.
+
+All times are LST.
+
+The parameters and units are provided in the header of each data file.
+
+
+5.0  DATA REMARKS
+
+
+6.0  REFERENCES
+
+
+None.
+</PRE>
+</HTML>

@@ -1,0 +1,25 @@
+c---------------------------------------------------------------------
+c ARCSyM atmospheric 2d variables
+      real *4 psfc(ix,jx), tsfc(ix,jx),
+     +        t2m(ix,jx), t2m_min(ix,jx),
+     +        t2m_max(ix,jx), t1m_soil(ix,jx),
+     +        soil_wat(ix,jx), rainc(ix,jx),
+     +        rainnc(ix,jx), precip(ix,jx),
+     +        rain(ix,jx), snow(ix,jx),
+     +        swe(ix,jx), tot_cld_frac(ix,jx),
+     +        cld_base(ix,jx), lhf(ix,jx),
+     +        shf(ix,jx), ust(ix,jx),
+     +        swd_sfc(ix,jx), swu_sfc(ix,jx),
+     +        lwd_sfc(ix,jx), lwu_sfc(ix,jx),
+     +        swd_toa(ix,jx), swu_toa(ix,jx),
+     +        lwu_toa(ix,jx)
+      common /arcmip_2d/ psfc, tsfc, t2m,
+     +                   t2m_min, t2m_max, t1m_soil,
+     +                   soil_wat, rainc, rainnc,
+     +                   precip, rain, snow,
+     +                   swe, tot_cld_frac, cld_base,
+     +                   lhf, shf, ust,
+     +                   swd_sfc, swu_sfc, lwd_sfc,
+     +                   lwu_sfc, swd_toa, swu_toa,
+     +                   lwu_toa
+c---------------------------------------------------------------------

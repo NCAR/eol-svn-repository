@@ -1,0 +1,22 @@
+#! /usr/bin/perl -w
+
+package RemoveGroupAssociationActionCGI;
+use strict;
+use lib ".";
+use lib "lib";
+use ActionCGI;
+use Dataset;
+our @ISA = ("ActionCGI");
+
+&main();
+
+sub main {
+    my $self = RemoveGroupAssociationActionCGI->new();
+    $self->buildPage("Remove Group Association Action");
+}
+
+sub processParams {
+    my ($self) = @_;
+
+    $self->{"DB"}->removeGroupAssociation($self->param("group"),$self->param("source"));
+}

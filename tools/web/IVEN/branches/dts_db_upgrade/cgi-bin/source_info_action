@@ -1,0 +1,29 @@
+#! /usr/bin/perl -w
+
+package SourceInfoActionCGI;
+use strict;
+use lib ".";
+use lib "lib";
+use ActionCGI;
+use Dataset;
+our @ISA = ("ActionCGI");
+
+&main();
+
+sub main {
+    my $self = SourceInfoActionCGI->new();
+    $self->buildPage("Source Info Action");
+}
+
+sub processParams {
+    my ($self) = @_;
+    my $dataset = $self->getDataset();
+    $dataset->setUTCOffset($self->param("utc_offset"));
+    $dataset->setDSTFlag($self->param("dst_flag"));
+    $dataset->setCollectionTimeNote($self->param("collection_note"));
+    $dataset->setCollectionTimeNoteId($self->param("collection_note_id"));
+    $dataset->setSourceTimeNote($self->param("source_note"));
+    $dataset->setSourceTimeNoteId($self->param("source_note_id"));
+
+    $self->update($dataset);
+}

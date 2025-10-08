@@ -1,0 +1,176 @@
+<project name="Master List Viewer" default="compile" basedir=".">
+
+  <property name="app.name" value="master_list"/>
+  <property name="src" value="src" />
+  <property name="cgi.viewer" value="cgi-bin" />
+  <property name="web.viewer" value="web"/>
+  <property name="build" value="build"/>
+  <property name="build.classes" value="${build}/classes"/>
+  <property name="deploy.cgi.viewer" value="/net/web/data/cgi-bin/${app.name}"/>
+  <property name="www.cgi.viewer" value="/net/www/cgi-bin/${app.name}"/>
+  <property name="deploy.jsp.viewer" value="/net/web/data/webapps/${app.name}"/>
+  <property name="deploy.jsp.viewer.development" value="/net/www_dev/data/webapps/beta/${app.name}"/>
+  <property name="deploy.html" value="/net/web/data/html/master_lists"/>
+  <property name="lib"  value="lib"/>
+  <property name="catalina.home" value="/usr/local/tomcat/current" />
+  <property name="catalina.base" value="/usr/local/tomcat/instanceAlpha" />
+  <property name="docs" value="docs" />
+  <property name="docs.api" value="${docs}/api" />
+
+
+  <path id="theclasspath">
+  <!-- for the record, this is a major pain -->
+
+    <!-- get the old classpath, if available -->
+    <pathelement path="${classpath}"/>
+
+    <fileset dir="${lib}">
+     <include name="**/*.jar"/>
+    </fileset>
+
+  </path>
+
+  <property name="classpath" refid="theclasspath"/>
+
+
+  <target name="all" depends="compile"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" classpath="${classpath}" destdir="${build.classes}"
+     debug="off"
+     deprecation="on"
+     verbose="no"
+     />
+  </target>
+
+  <target name="viewer-deploy-init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the deploy directories -->
+    <mkdir dir="${deploy.jsp.viewer}"/>
+    <mkdir dir="${deploy.jsp.viewer}/WEB-INF/classes"/>
+    <mkdir dir="${deploy.jsp.viewer}/WEB-INF/lib"/>
+    <mkdir dir="${deploy.cgi.viewer}" />
+    <mkdir dir="${deploy.html}/generated"/>
+  </target>
+
+  <target name="deploy">
+      <echo message="You probably want deploy-index or rarely deploy-static or deploy-all." />
+  </target>
+
+  <target name="deploy-all" depends="compile,viewer-deploy-init,deploy-jsp,deploy-cgi,deploy-static" />
+  <target name="deploy-dev" depends="compile,deploy-jsp-development" />
+
+  <target name="deploy-jsp" depends="compile,viewer-deploy-init">
+    <!-- "static" web and conf files -->
+    <copy todir="${deploy.jsp.viewer}">
+      <fileset dir="${web.viewer}"/>
+    </copy>
+
+    <copy todir="${deploy.jsp.viewer}/WEB-INF/classes">
+      <fileset dir="${build.classes}" />
+    </copy>
+    <copy todir="${deploy.jsp.viewer}/WEB-INF/lib">
+      <fileset dir="${lib}" />
+    </copy>
+  </target>
+
+  <target name="deploy-jsp-development">
+    <mkdir dir="${deploy.jsp.viewer.development}"/>
+    <!-- "static" web and conf files -->
+    <copy todir="${deploy.jsp.viewer.development}">
+      <fileset dir="${web.viewer}"/>
+    </copy>
+    <mkdir dir="${deploy.jsp.viewer.development}/WEB-INF/classes"/>
+    <copy todir="${deploy.jsp.viewer.development}/WEB-INF/classes">
+      <fileset dir="${build.classes}" />
+    </copy>
+    <mkdir dir="${deploy.jsp.viewer.development}/WEB-INF/lib"/>
+    <copy todir="${deploy.jsp.viewer.development}/WEB-INF/lib">
+      <fileset dir="${lib}" />
+    </copy>
+  </target>
+
+  <target name="deploy-cgi">
+    <copy todir="${deploy.cgi.viewer}">
+      <fileset dir="${cgi.viewer}"/>
+    </copy>
+    <chmod perm="ugo+x">
+      <fileset dir="${deploy.cgi.viewer}">
+        <include name="**/*" />
+      </fileset>
+    </chmod>
+    <echo message="did chmod work correctly to install these cgi programs in ${deploy.cgi.viewer} ?" />
+
+    <copy todir="${www.cgi.viewer}">
+       <fileset dir="${cgi.viewer}" />
+    </copy>
+    <chmod perm="ugo+x">
+       <fileset dir="${www.cgi.viewer}">
+           <include name="**/*" />
+       </fileset>
+    </chmod>
+    <echo message="did chmod work correctly to install these cgi programs in ${deploy.cgi.viewer} ?" />
+  </target>
+
+  <target name="deploy-static">
+    <copy todir="${deploy.html}/static">
+      <fileset dir="static"/>
+    </copy>
+    <chmod perm="ugo+r">
+       <fileset dir="${deploy.html}/static">
+           <include name="**/*" />
+       </fileset>
+    </chmod>
+    <chmod perm="g+w">
+       <fileset dir="${deploy.html}/static">
+           <include name="**/*" />
+       </fileset>
+    </chmod>
+  </target>
+
+  <target name="deploy-index">
+    <copy file="${web.viewer}/index.jsp" todir="${deploy.jsp.viewer}" />
+    <chgrp file="${deploy.jsp.viewer}/index.jsp" group="ctm-dmg" />
+    <chmod file="${deploy.jsp.viewer}/index.jsp" perm="664" />
+  </target>
+
+  <target name="javadoc">
+     <!-- Create the Java Doc API -->
+     <mkdir dir="${docs.api}" />
+     <javadoc destdir="${docs.api}" author="true" version="true" use="true"
+             windowtitle="DMG Master List Documentation"
+             doctitle="Data Management Group Master List Documentation"
+             header="DMG Master List"
+             overview="${src}/overview.html">
+        <classpath refid="theclasspath" />
+        <fileset dir="${src}" defaultexcludes="yes">
+           <include name="**/*.java" />
+        </fileset>
+        <link href="http://java.sun.com/javaee/javaserverfaces/1.1_01/docs/api" />
+        <link href="http://java.sun.com/j2se/1.5.0/docs/api" />
+     </javadoc>
+  </target>
+
+<!--
+  <target name="api" depends="javadoc">
+    <copy todir="${deploy.jsp.editor}/${docs.api}">
+      <fileset dir="${docs.api}" />
+    </copy>
+  </target>
+-->
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${docs.api}" />
+  </target>
+
+</project>

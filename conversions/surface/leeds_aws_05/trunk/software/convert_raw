@@ -1,0 +1,11 @@
+#! /usr/bin/csh
+
+echo "Converting data..."
+/usr/bin/nice -5 LeedsAWS_SFC_Converter.pl
+
+if (-e ../output/leedsaws05.0qc.sort) rm ../output/leedsaws05.0qc.sort
+echo "Sorting data..."
+cosort Y2Kqcf_sort_spec <../output/leedsaws05.0qc > ../output/leedsaws05.0qc.sort
+
+echo "Creating the dayfiles..."
+/work/software/library/createdays/Version4_4digitYear/Y2Kcreate_day_files ../output/leedsaws05.0qc.sort ../final/LeedsAWS05_

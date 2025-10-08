@@ -1,0 +1,19 @@
+<fieldset id="project-children" class="xml-fieldsets" all-attr="[name: 'PacMARS']">
+	<legend></legend>
+	<fieldset id="mapserverOptions-children" class="xml-fieldsets" all-attr="[display: 'Mapserver Options']">
+		<legend>Mapserver Options</legend>
+		<div class="fieldcontain" domain-property="displayPreference" all-attr="[textArea: '', display: 'What is the best way to display this data and how should the data be visualized? (i.e. plot chlorophyll on a color scale from blues to greens to yellows to reds or plot biomass with graduated circles in one color)', type: 'String']">
+			<label for="displayPreference" style="width: 100%">
+			What is the best way to display this data and how should the data be visualized? (i.e. plot chlorophyll on a color scale from blues to greens to yellows to reds or plot biomass with graduated circles in one color)	</label>	<textarea name="displayPreference" maxlength="65535" id="displayPreference" ></textarea>
+		</div>
+		<div class="fieldcontain" domain-property="dataRangePreference" all-attr="[textArea: '', display: 'What are the ranges for the data to be plotted? (i.e. biomass 10-19, 20-29, 30-39 with larger circles for larger numbers or evenly spread chlorophyll values across color scale with 25 different colors on a blue-green-yellow-orange-red color scale)', type: 'String']">
+			<label for="dataRangePreference" style="width: 100%">
+			What are the ranges for the data to be plotted? (i.e. biomass 10-19, 20-29, 30-39 with larger circles for larger numbers or evenly spread chlorophyll values across color scale with 25 different colors on a blue-green-yellow-orange-red color scale)	</label>	<textarea name="dataRangePreference" maxlength="65535" id="dataRangePreference" ></textarea>
+		</div>
+		<div class="fieldcontain" domain-property="additionalVisualPreference" all-attr="[textArea: '', display: 'Are there additional ways the data can be visualized? Please list them in order of preference.', type: 'String']">
+			<label for="additionalVisualPreference" style="width: 100%">
+			Are there additional ways the data can be visualized? Please list them in order of preference.	</label>
+			<textarea name="additionalVisualPreference" maxlength="65535" id="additionalVisualPreference" ></textarea>
+		</div>
+	</fieldset> <!-- end of children -->
+</fieldset> <!-- end of children -->

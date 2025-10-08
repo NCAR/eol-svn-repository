@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>How To: Process Trinidad Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/dpg/GENERAL/dpg_howto.css">
+</head>
+
+<body>
+<h1>How To: Process Trinidad Upper Air Sounding Data</h1>
+<h2>Table of Contents</h2>
+<ol>
+	<li><a href="#purpose">Purpose</a></li>
+	<li><a href="#network">Network Information</a></li>
+	<li>Previous Versions<ol>
+		<li><a href="#version_rainex">2005 (RAINEX)</a></li>
+		</ol></li>
+	<li><a href="#directory">Directory Structure</a></li>
+	<li>Processing the Data<ol>
+		<li><a href="#converting">Converting the Data</a></li>
+		<li><a href="#autoqc">QC'ing the Data</a></li>
+		<li><a href="#ebufr">Converting to EBUFR</a></li>
+		<li><a href="#codiac">Inserting into the Database</a></li>
+		</ol></li>
+	<li><a href="software">Software</a></li>
+	<li><a href="documents">Documentation</a></li>
+</ol>
+<hr>
+
+<a name="purpose"></a>
+<h3>Purpose</h3>
+<p>This document contains the instructions on how to process the sounding data from the Trinidad sounding site in the Caribbean into the CLASS format.</p>
+<hr>
+
+<a name="network"></a>
+<h3>Network Information</h3>
+<ul>
+	<li>The ID-Type is 99.</li>
+	<li>The Platform is 347.</li>
+	<li>The station is located in Trinidad (TD).</li>
+</ul>
+<hr>
+
+<h3>Previous Versions</h3>
+
+<a name="version_rainex"></a>
+<h4>RAINEX (2005)</h4>
+<table>
+	<tr><th>Software:</th><td>/work/RAINEX/upper_air/trinidad/software</td></tr>
+	<tr><th>Raw Data:</th><td>/ingest/ncdc</td></tr>
+	<tr><th>Final Data:</th><td>/archive/codiac/rainex/upper_air/soundings/trinidad</td></tr>
+</table>
+<hr>
+
+<a name="directory"></a>
+<h3>Directory Structure</h3>
+<table>
+	<tr><th>trinidad/</th><td>The main directory for the processing.</td></tr>
+        <tr><td>codiac</td><td>The directory where the final day files are before being copied to the final archive.</td></tr>
+        <tr><td>docs</td><td>The directory containing documentation for the Trinidad soundings.</td></tr>
+	<tr><td>final</td><td>The directory where the QC'ed files are placed once they have been created.</td></tr>
+	<tr><td>logs</td><td>The directory where the error/check files from the QC are placed.</td></tr>
+	<tr><td>output</td><td>The directory where the CLASS files are put after they are generated.</td></tr>
+	<tr><td>raw_data</td><td>The directory where the raw data is stored.</td></tr>
+	<tr><td>software</td><td>The directory where the software for the conversion is stored.</td></tr>
+</table>
+<hr>
+
+<h3>Processing the Data</h3>
+
+<a name="convert"></a>
+<h4>Converting the Data</h4>
+<p>The following is how to convert the raw ASCII data into the CLASS format ready to be QC'ed.</p>
+<ol>
+	<li>Copy the raw data into the <b>raw_data</b> directory.</li>
+	<li>Change to the <b>software</b> directory.</li>
+	<li>Edit the <b>Trinidad_SND_Converter.pl</b> script.<ol>
+		<li>Change the function: <b>getProjectName()</b> to return the current project.</li>
+		</ol></li>
+	<li>Run the <b>Trinidad_SND_Converter.pl</b> script.  This will convert the raw data to CLASS format.</li>
+</ol>
+
+<a name="autoqc"></a>
+<h4>QC'ing the Data</h4>
+<p>The following explains how to QC the CLASS formatted sounding data.  This assumes that the auto qc binary is already created.  For more information on the auto qc, see <a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>.</p>
+<ol>
+	<li>Change to the software directory (if you are not already there).</li>
+	<li>Edit the <b>autoqc.pl</b> script.
+		<p>The variable <b>$AUTOQC</b> needs to be changed to point to the correct autoqc program for the current project.</p>
+		</li>
+	<li>Run the <b>autoqc.pl</b> script.
+		<p>This script takes each file in the <b>output</b> directory, runs the auto qc program on it, and creates a new CLASS file that is placed in the <b>final</b> directory and a check/error log file that is placed in the <b>log</b> directory.</p>
+</ol>
+
+<a name="codiac"></a>
+<h4>Inserting into the Database</h4>
+<p>With all of the EBUFR files created, they need to be inserted into the database.  This is a general process and is explained in the document: <a href="/dpg/GENERAL/soundings/howto_insert_ebufred_class_soundings.html">How To: Insert EBUFRed CLASS Sounding Data</a>.</p>
+<hr>
+
+<a name="software"></a>
+<h3>Software</h3>
+<p>The following is a list of the contents of the <b>software</b> directory with a brief explanation of the file.</p>
+<ul>
+	<li><b><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/RAINEX/upper_air/trinidad/software/Trinidad_SND_Converter.pl">Trinidad_SND_Converter.pl</a></b>- Convert the raw data into the CLASS format.</li>
+	<li><b><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/RAINEX/upper_air/trinidad/software/autoqc.pl">autoqc.pl</a></b>- QC the CLASS files.</li>
+</ul>
+<hr>
+
+<a name="documents"></a>
+<h3>Documentation</h3>
+<p>The following are a list of documents that may help with the conversion or are related to the raw data.</p>
+<ul>
+	<li><a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>- The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/dpg/GENERAL/soundings/howto_insert_ebufred_class_soundings.html">How To: Insert EBUFR'ed CLASS Sounding Data into the Database</a>- The instructions on how insert the EBUFR'ed sounding data into the database.</li>
+	<li><a href="#">How To: Process Trinidad Sounding Data</a>- This document.</li>
+	<li><a href="README_RAINEX_Trinidad_sounding.html">README_RAINEX Trinidad_sounding.html</a>- The database readme file for the RAINEX project.</li>
+</ul>
+<hr>
+
+<p class="foot">Last Updated: May 2, 2006 - Joel Clawson</p>
+</body>
+</html>

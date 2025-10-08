@@ -1,0 +1,140 @@
+#!/bin/perl -w
+
+# McD
+# --------------------------------------------------------------
+# edit_ds_cats: displays the form to add/remove a dataset from
+#  the project categories.  This script is not executed directly
+#  the suboutine edit_ds_cats is called from other scripts.
+#
+# edit_ds_cats( $ds_id, $mode )
+#   $ds_id - the dataset id to modify
+#   $mode - the add/update dataset mode, this comes from the 
+#    edit_fields script.
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use State;
+use Utils;
+
+use lib "../mcd_lib";
+use ProjectDBA;
+use MLDatasetDBA;
+use CategoryDBA;
+
+my $ds_dba = MLDatasetDBA->new();
+my $cat_dba = CategoryDBA->new();
+
+my @categories;
+
+sub edit_ds_cats
+{
+	my $ds = shift;
+	my $mode = shift;
+	my $id = $ds->{id};
+	my $state = State->new();
+	$state->setFromParams();
+
+	my @projs = $ds_dba->getProjects( $ds->{id} );
+	my $proj = $projs[0];  #---shortcut----#
+	my $project = $proj->{id};
+	
+	@categories = $ds_dba->getCategories( $ds );
+
+	my @tree = $cat_dba->getTree( $project );
+
+	println( header( -expires=>'-1d' ) );
+
+	println( "<html><head><title>Dataset-Category Edit</title></head>" );
+	println( $css );
+	println( $jscript );
+	println( "<body bgcolor=#e9e9e9 link=white alink=white vlink=white text=black>" );
+	println( "<center>" );
+	println( "<form method=post action=proc_update>" );
+	println( $state->getHidden() );
+	println( "<table border=0 cellpadding=3 cellspacing=8 width=95% bgcolor=#dcdcdc>" );
+		println( "<tr bgcolor=#336699><td colspan=2><font color=white size=+1>Edit/Add Dataset Categories</td></tr>" );
+		println( "<tr>" );
+			println( "<td align=right><b>Project: </b></td>" );
+			println( "<td><b>$proj->{name}</b></td>" );
+				println( "<input type=hidden name=\"project\" value=\"$project\">" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td align=right><b>Title: </b></td>" );
+			println( "<td>$ds->{title}</td>" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td colspan=2 align=center bgcolor=#336699><font color=white><b>Categories</td>" );
+		println( "</tr>" );
+		println( "<tr bgcolor=#e9e9e9>" );
+			println( "<td colspan=2>" );
+				println( "<table border=0 cellpadding=1 cellspacing=1 bgcolor=#e9e9e9>" );
+					println( "<tr>" );
+						println( "<td>" );
+							println( "<table border=0 cellpadding=1 cellspacing=1 bgcolor=#e9e9e9>" );
+								showCats( \@tree, 0);
+							println( "</table>" );
+						println( "</td>" );
+						println( "<td valign=top>" );
+							#println( "<b><br><br>Click the checkboxes to the left to add or remove this dataset from a category. ",
+							#					"A dataset can be in multiple categories!</b>" ); 
+							println( "<br><br><ul>" );
+								println( "<li>To <u>include</u> this dataset in a category check the box next to the category name.<br><br></li>" );
+								println( "<li>To <u>remove</u> this dataset from a category un-check the box next to the category name.<br><br></li>" );
+								println( "<li>A dataset can be in multiple categories!</li>" ); 
+						println( "</td>" );
+					println( "</tr>" );
+				println( "</table>" );
+			println( "</td>" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td colspan=2 align=right>" );
+			println( "<input type=hidden name=\"id\" value=\"$ds->{id}\">" );
+			println( "<input type=hidden name=\"mode\" value=\"$mode\">" );
+			my $url = $state->getUrl();
+			$url = "category_table?project=$project" if( $url eq "" );
+ 			$url = $url . "&hlight=$id";
+			my $onClick = "\"return doSubmit( this.value, this.form, top.opener.parent, \'$url\' )\"";
+			println( "<input type=submit name=\"editButton\" value=\"Done\" onClick=$onClick>" );
+			println( "<input type=reset name=\"editButton\" value=\"Reset\">" );
+		println( "</tr>" );
+		
+			
+	println( "</form></table>" );
+
+	println( "</body></html>" );
+}
+
+sub showCats
+{
+	my @tree = @{ $_[0] };
+	my $depth = $_[1];
+
+	foreach my $node (@tree )
+	{
+		my $checked = "";
+		$checked = "checked" if( datasetInCategory( $node->{category}->{id} ) );
+		println( "<tr><td bgcolor=#e9e9e9 nowrap>", &nbsp( $depth*5 ), 
+							"<input type=checkbox $checked name=\"category\" value=$node->{category}->{id}>", 
+							$node->{category}->{name}, "</td></tr>" );
+
+		showCats( $node->{childern}, $depth+1) if( $node->{childern} );
+	}
+}
+
+sub datasetInCategory
+{
+	my $cat = shift;
+
+	foreach my $c (@categories)
+	{
+		return 1 if( $c == $cat );
+	}
+
+	return 0;
+}
+1;

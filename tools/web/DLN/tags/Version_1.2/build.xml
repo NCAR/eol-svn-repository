@@ -1,0 +1,105 @@
+<project name="DLN" default="compile" basedir=".">
+
+  <property name="app.name" value="dln"/>
+  <property name="catalina.top" value="/usr/local/java"/>
+  <property name="catalina.base" value="${catalina.top}/tomcat/current"/>
+  <property name="dist" value="dist" />
+  <property name="src" value="src"/>
+  <property name="web" value="web"/>
+  <property name="build" value="build"/>
+  <property name="build.classes" value="${build}/classes"/>
+  <property name="deploy.production" value="/net/web/dmg/webapps/${app.name}" />
+  <property name="deploy.test" value="/net/www_dev/dmg/webapps/${app.name}" />
+  <property name="lib"  value="lib"/>
+
+   <path id="theclasspath">
+   <!-- for the record, this is a major pain -->
+
+    <!-- get the old classpath, if available -->
+    <pathelement path="${classpath}"/>
+
+    <!-- Tomcat 4.1.x's stuff is spread out everywhere -->
+    <fileset dir="${catalina.base}/common/lib">
+     <include name="**/*.jar"/>
+    </fileset>
+    <fileset dir="${catalina.base}/common/endorsed">
+     <include name="**/*.jar"/>
+    </fileset>
+    <pathelement location="${catalina.base}/common/classes"/>
+    <!-- these are our 3rd-party installed classes shared amongst any/all webapps -->
+    <fileset dir="${catalina.base}/shared/lib">
+     <include name="**/*.jar"/>
+    </fileset>
+    <pathelement location="${catalina.base}/shared/classes"/>
+
+    <!-- additional local requirements: stuff that can't be put in shared -->
+    <fileset dir="${catalina.top}/bil">
+     <include name="**/*.jar"/>
+    </fileset>
+
+   </path>
+
+  <property name="classpath" refid="theclasspath"/>
+
+
+  <target name="all" depends="compile"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac srcdir="${src}" classpath="${classpath}" destdir="${build.classes}"
+     debug="off"
+     deprecation="on"
+     verbose="no"
+     />
+  </target>
+
+  <target name="deploy-prod" depends="dist">
+     <copy todir="${deploy.production}">
+         <fileset dir="${dist}" />
+     </copy>
+  </target>
+
+  <target name="deploy-test" depends="dist">
+     <copy todir="${deploy.test}">
+         <fileset dir="${dist}" />
+     </copy>
+  </target>
+
+  <target name="dist" depends="compile">
+     <mkdir dir="${dist}" />
+     <copy todir="${dist}">
+         <fileset dir="${web}">
+             <exclude name="**/*~" />
+             <exclude name="**/*.swp" />
+         </fileset>
+     </copy>
+     <copy todir="${dist}/WEB-INF/classes">
+         <fileset dir="${build.classes}" />
+     </copy>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${dist}" />
+  </target>
+
+  <target name="clean-deploy-test">
+     <delete includeemptydirs="true">
+         <fileset dir="${deploy.test}" includes="**/*" defaultexcludes="false" />
+     </delete>
+  </target>
+
+  <target name="clean-deploy-prod">
+     <delete includeemptydirs="true">
+         <fileset dir="${deploy.production}" includes="**/*" defaultexcludes="false" />
+     </delete>
+  </target>
+
+</project>

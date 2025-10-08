@@ -1,0 +1,68 @@
+#! /usr/bin/perl -T -w
+
+##Module--------------------------------------------------------------------
+# <p>The <code>Title</code> module is a <code>CGI</code> module that is used
+# to display the title of the web page to the user and allow them to select
+# a specific month and year to view in the calendar.</p>
+#
+# @author Joel Clawson
+##Module--------------------------------------------------------------------
+package Title;
+use strict;
+use CGI qw(:standard :html3);
+our @ISA = ("CGI");
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+&main();
+
+##--------------------------------------------------------------------------
+# @signature void main()
+# <p>Create the web page for the title.</p>
+##--------------------------------------------------------------------------
+sub main {
+   my $self = Title->new();
+
+   print($self->header());
+   print("<html>\n");
+   print("<head>\n");
+   print("<script language=javascript src=\"/travel/javascript/travel.js\"></script>\n");
+   print("</head>\n");
+   print("<body>\n");
+   print("<form type=POST action=\"calendar\" ");
+   print("target=\"travel_disp\" onSubmit=\"javascript:return checkYear(this);\">\n");
+
+   # Create the Title information
+   print("<table align=center>\n");
+   print("<tr><td><table><tr><td><a href=\"http://www.joss.ucar.edu\">\n");
+   print("        <img border=0 src=\"/joss_icons/JOSS_small_white.gif\"></td>\n");
+   print("    <td valign=middle><h1>JOSS Travel Page</h1></td></tr>\n");
+   print("</table></td>\n");
+
+   # Create the Month selection and set the selected month to the current
+   # month.
+   my @today = localtime();
+   my @months = ("January", "February", "March", "April", "May", "June",
+                 "July", "August", "September", "October", "November", "December");
+
+   print("   <td><select name=\"month\">\n");
+   my $count = 1;
+   foreach my $month (@months) {
+     printf("      <option name=\"%s\" value=%02d", $month, $count);
+     if (($count - 1) == $today[4]) { print(" selected"); }
+     printf(">%s</option>\n", $month);
+     $count++;
+   }
+   print("   </select></td>\n");
+
+   # Create the field for the year and put the current year in the field.
+   printf("  <td><input type=\"text\" name=\"year\" value=\"%04d\" size=4 maxlength=4/></td>\n",
+          $today[5] + 1900);
+   print("  <td><input type=\"submit\" name=\"calendar\" value=\"View Calendar\" /></td>\n");
+   print("</tr>\n</table></td></tr>\n");
+   print("</table>\n</form>\n</body>\n</html>\n");
+}
+
+
+
+

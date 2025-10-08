@@ -1,0 +1,120 @@
+AAA_readme:12. stnqc - Selects a subset of the qcf files to qc manually. It selects
+AAA_readme:             of data collection. Also, there's a julian day fn in this routine
+AAA_readme:13. stnrep - Counts the total number of observations for each day of collection
+KSstnstat.fKS:C 24 Jan 94 lec
+KSstnstat.fKS:C 25 Aug 94 lec
+KSstnstat.fKS:C 27 Mar 95 lec
+KSstnstat.fKS:C 27 Mar 95 lec - Even though only derived parameters (CSLP, DEWPT) can
+KSstnstat.fKS:C 24 Jan 94 lec
+KSstnstat.fKS:C 30 Mar 94 lec
+KSstnstat.fKS:	 integer*2 n, m, getplatform            ! lec - moved form end, potential overwrite?
+getqc.diff:> C 24 Jan 94 lec
+getqcfrec.f:C 25 Aug 94 lec
+getqcfrec2.f:C 26 Aug 94 lec
+getstns.f:C 25 Aug 94 lec
+newvar.f:C 25 Aug 94 lec
+origqcglobal.horig:C 21 Jan 94 lec
+origqcglobal.horig:C 23 Aug 94 lec
+origstnstat.forig:C 24 Jan 94 lec
+origstnstat.forig:C 25 Aug 94 lec
+origstnstat.forig:C 27 Mar 95 lec
+origstnstat.forig:C 27 Mar 95 lec - Even though only derived parameters (CSLP, DEWPT) can
+origstnstat.forig:C 24 Jan 94 lec
+origstnstat.forig:C 30 Mar 94 lec
+origstnstat.forig:	 integer*2 n, m, getplatform            ! lec - moved form end, potential overwrite?
+qc.f:C 21 Jan 94 lec
+qc.f:C 23 Aug 94 lec
+qc.f:C 21 Jan 94 lec
+qc.f:C 23 Aug 94 lec
+qc.f:C 21 Jan 94 lec - Removed correction which changed ISWS precip qc flag
+qc.f:C 27 Sept 94 lec
+qc_2times.f:C program: qc_2times - renamed by lec to indicate s/w that handles both
+qc_2times.f:C 21 Jan 94 lec
+qc_2times.f:C Aug-Sep 94 lec
+qc_2times.f:C 27 Mar 95 lec
+qc_2times.f:      include 'qcglobal.h'             !Contains FIRSTDAY, LASTDAY of collection period.
+qc_2times.f:C 21 Jan 94 lec
+qc_2times.f:C 23 Aug 94 lec
+qc_2times.f:C Sep/Oct 94 lec
+qc_2times.f:C     Sept 94 lec  
+qc_2times.f:C Sept 94 lec
+qc_2times.f:C 21 Jan 94 lec - Removed correction which changed ISWS precip qc flag
+qc_2times.f:C 22 Sep 94 lec - Following AWOS corrections were for awosq and awos1
+qc_2times.f:C 27 Sept 94 lec
+qc_2times.f.noI:C program: qc_2times - renamed by lec to indicate s/w that handles both
+qc_2times.f.noI:C 21 Jan 94 lec
+qc_2times.f.noI:C Aug-Sep 94 lec
+qc_2times.f.noI:      include 'qcglobal.h'             !Contains FIRSTDAY, LASTDAY of collection period.
+qc_2times.f.noI:C 21 Jan 94 lec
+qc_2times.f.noI:C 23 Aug 94 lec
+qc_2times.f.noI:C Sep/Oct 94 lec
+qc_2times.f.noI:C     Sept 94 lec  
+qc_2times.f.noI:C Sept 94 lec
+qc_2times.f.noI:C 21 Jan 94 lec - Removed correction which changed ISWS precip qc flag
+qc_2times.f.noI:C 22 Sep 94 lec - Following AWOS corrections were for awosq and awos1
+qc_2times.f.noI:C 27 Sept 94 lec
+qcdiffs.txt:< C 21 Jan 94 lec
+qcdiffs.txt:< C 21 Jan 94 lec
+qcdiffs.txt:< C 21 Jan 94 lec - Removed correction which changed ISWS precip qc flag
+qcfcom.h:C 25 Aug 94 lec
+qcglobal.h:C 21 Jan 94 lec
+qcglobal.h:C 23 Aug 94 lec
+qcglobal.h:C 16 Aug 95 lec
+qcglobal.h:C 20 Oct 95 lec
+qcglobal.h:C 09 May 96 lec
+qcglobal.h:C 12 Aug 96 lec
+qcglobal.h:C 04/25 Mar 97 lec
+stnbuddy.f:C 25 Aug 94 lec
+stncom.h:C 25 Aug 94 lec
+stnstat.f:C 24 Jan 94 lec
+stnstat.f:C 25 Aug 94 lec
+stnstat.f:C 27 Mar 95 lec
+stnstat.f:C 27 Mar 95 lec - Even though only derived parameters (CSLP, DEWPT) can
+stnstat.f:C 24 Jan 94 lec
+stnstat.f:C 30 Mar 94 lec
+stnstat.f:	 integer*2 n, m, getplatform            ! lec - moved form end, potential overwrite?
+stnstat.f.NoI:C 24 Jan 94 lec
+stnstat.f.NoI:C 25 Aug 94 lec
+stnstat.f.NoI:C 24 Jan 94 lec
+stnstat.f.NoI:C 30 Mar 94 lec
+stnstat.f.NoI:	 integer*2 n, m, getplatform            ! lec - moved form end, potential overwrite?
+stnstat.sc:# 24 Jan 93 lec
+stnstat2.f:C 07 Feb 94 lec
+stnstat2.f:C 25 Aug 94 lec
+stnstat2.f:C 24 Jan 93 lec
+stnstat2.sc:# 24 Jan 93 lec
+stntoss.f:C 25 Aug 94 lec
+svqc_2times.f:C program: qc_2times - renamed by lec to indicate s/w that handles both
+svqc_2times.f:C 21 Jan 94 lec
+svqc_2times.f:C Aug-Sep 94 lec
+svqc_2times.f:      include 'qcglobal.h'             !Contains FIRSTDAY, LASTDAY of collection period.
+svqc_2times.f:C 21 Jan 94 lec
+svqc_2times.f:C 23 Aug 94 lec
+svqc_2times.f:C 20 Sep 94 lec
+svqc_2times.f:C     Sept 94 lec  
+svqc_2times.f:C Sept 94 lec
+svqc_2times.f:C 21 Jan 94 lec - Removed correction which changed ISWS precip qc flag
+svqc_2times.f:C 22 Sep 94 lec - Following AWOS corrections were for awosq and awos1
+svqcglobal.hsv:C 21 Jan 94 lec
+svqcglobal.hsv:C 23 Aug 94 lec
+svqcglobal.hsv:C 16 Aug 95 lec
+svqcglobal.hsv:C 20 Oct 95 lec
+toss.f:C 25 Aug 94 lec
+toss.f:C 14 Sep 94 lec
+toss.f:C 16 Nov 94 lec
+toss.f:     +               vm(m,i).val .ne. -999.99 )       !WIND Dir lec added 21 Nov 94
+toss.f:     +         vh(i,7).val = vh(i,7).val-360.0                          ! lec - added 21 Nov 94
+toss.f:     +         vh(i,7).val = vh(i,7).val+360.0                          ! lec - added 21 Nov 94 
+toss.f:                   vm(i,7).val = vm(i,7).val-360.0                          ! lec - added 21 Nov 94
+toss.f:     +             vm(i,7).val = vm(i,7).val+360.0                          ! lec - added 21 Nov 94
+toss.f_sv:C 25 Aug 94 lec
+toss.f_sv:C 14 Sep 94 lec
+toss20m.f:C 25 Aug 94 lec
+toss20m.f:C 14 Sep 94 lec
+toss20m.f:C 16 Sep 94 lec
+tossNov16.f:C 25 Aug 94 lec
+tossNov16.f:C 14 Sep 94 lec
+tosssc:# 24 Jan 94 lec
+tossscNov16:# 24 Jan 94 lec
+var.f:C 25 Aug 94 lec
+varcom.h:C 24 Jan 94 lec

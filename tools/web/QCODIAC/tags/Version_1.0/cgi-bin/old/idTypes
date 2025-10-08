@@ -1,0 +1,65 @@
+#!/bin/perl
+
+#-----------------------------------------------------
+# idTypes: a simple cgi script to display all of the
+#  entries in the id_type table in the station_db
+#  database.
+#
+# Author: Dan Sullivan
+# Date: April 24, 2003
+#-----------------------------------------------------
+
+use CGI qw(:standard :html3 );
+
+getIdTypes();
+
+sub getIdTypes
+{
+	my $db_path = "/storm/codiac/codiac_db";
+	my $empcmd = "/usr/empress8.20/rdbms/bin/empcmd";
+	$ENV{MSPATH} = "/usr/empress8.20/rdbms";
+	$ENV{MSQLSELCOLSEP} = "";
+
+	my $sort = param( "sort" );
+	my $sql = "";
+
+	if( defined( $sort ) )
+	{
+		$sql = "\"SELECT * FROM id_type ORDER BY '$sort'\"";
+	}
+	else
+	{
+		$sql = "\"SELECT * FROM id_type\"";
+	}
+
+	@records = `$empcmd $db_path/station_db $sql`;
+
+	println( header() );
+	println( "<html><head><title>QUERY CODIAC: ID Types</title></head><body bgcolor=white>" );
+	println( "<center><h3>QUERY CODIAC: ID Types</h3>" );
+
+	println( "<table border=1 cellpadding=1 cellspacing=1>" );
+	println( "<tr>" );
+		println( "<th><a href=idTypes?sort=code>Code/ID</a></th>" );
+		println( "<th><a href=idTypes?sort=desc>Description</a></th>" );
+		println( "<th><a href=idTypes?sort=length>Length (# chars)</a></th>" );
+	println( "</tr>" );
+
+	for( my $x = 2; $x < @records; $x++ )
+	{
+		my @id = split( //, $records[$x] );
+		println( "<tr>" );
+			println( "<td>$id[0]</td>" );
+			println( "<td>$id[1]</td>" );
+			println( "<td>$id[2]</td>" );
+		println( "</tr>" );
+	}
+	println( "</table>" );
+
+	println( "</body></html>" );	
+}
+
+sub println
+{
+	print( @_, "\n" );
+}

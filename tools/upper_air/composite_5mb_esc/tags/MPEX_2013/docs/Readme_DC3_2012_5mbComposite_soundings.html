@@ -1,0 +1,426 @@
+<html>
+<head>
+<title>DC3 2012 Multi-Network Composite 5-mb Resolution Upper Air Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+
+<STYLE TYPE="text/css">
+html {font: 10pt/12pt Helvetica, sans-serif}
+
+a:link { color: Indigo; text-decoration: none }
+a:active { color: Indigo; text-decoration: none }
+a:visited { color: Indigo; text-decoration: none }
+a:hover { color: red; text-decoration: none }
+</STYLE>
+
+<h1 align="center">DC3 2012 Multi-Network Composite 5-mb Resolution  <br /><br />Upper Air Data Set</h1>
+
+<h2>1.0 General Description</h2>
+<p>
+This data set is a composite of radiosondes collected from 7 sounding platforms (see Section 2.3)
+during the Deep Convective Clouds and Chemistry Experiment (DC3) with data collected 
+from  1 May 2012 through 18 July 2012.  This project was conducted in the central United States.
+<br>
+<br>
+This dataset includes a total of 5887 soundings from the following networks:</p>
+
+<ul>
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/353.052/Readme_DC3_SGP_C1_ARM_soundings.html">
+      ARM Radiosonde Data</a>  (238 2-second soundings),</li>
+
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/353.090/Readme_DC3_NCAR_MGAUS_soundings.html"> 
+      NCAR/EOL MGAUS Colorado Sounding Data</a>, (31 1-second soundings)</li>
+
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/353.091/Readme_DC3_NCAR_MISS_soundings.html">
+      NCAR/EOL MISS Colorado Radiosonde Data</a> (27 1-second soundings),</li>
+
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/353.105/readme_DC3_OK-TX_MGAUS.pdf">
+      NSSL MGAUS  Oklahoma-Texas Sounding Data</a> (39 1-second soundings),</li>
+
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/353.040/readme_DC3_2012_nws_sounding.txt">
+      National Weather Service (NWS) High Resolution Radiosonde Data</a> (5520 1-second soundings),</li> 
+
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/353.094/Readme_DC3_Redstone_Arsenal_soundings.html">
+      Redstone Arsenal Radiosonde Data</a> (10 2-second soundings),</li>
+
+ <li><a href="http://data.eol.ucar.edu/datafile/nph-get/353.100/Readme_DC3_UAH_Mobile_soundings.html">
+      University of Alabama Huntsville (UAH) Mobile Alabama Sounding Data</a> (22 1-second soundings),</li>
+
+</ul>
+This data set contains upper-air sounding data interpolated to a constant vertical resolution of 5 hPa in the National Center for Atmospheric Research (NCAR) Earth Observing Laboratory (EOL) Sounding Composite Format.
+</p>
+
+<h3>1.1 Data Set Contact</h3>
+<p>Scot Loehrer<br>
+NCAR/EOL<br>
+loehrer@ucar.edu</p>            
+
+<h2>2.0 Detailed Data Description</h2>
+
+<p>
+The `native' resolution data for every sounding were interpolated to 5 hPa vertical resolution files. The surface data point was kept as the initial level in each sounding. The first interpolated data point was at the next lowest pressure evenly divisible by 5 and then every 5 hPa pressure level beyond that point to either 50 hPa or the lowest pressure level reached by the radiosonde, whichever came first. The first 15 lines of each file (the header information) were kept without change.
+</p>
+
+<p>
+For the interpolation, the software searched for two data points around the desired pressure level. The search was conducted by looking for two valid (i.e. non-missing) data points around the desired pressure level, while also paying attention to the time difference between the two data points as well as their quality control flags. There was a search for the two best possible data points to use in the interpolation. If the desired pressure level was within the original dataset, that data point was used without interpolation.
+</p>
+
+<p>
+There was first a search for values flagged as good within some time range (50 sec for temperature, humidity, and wind and 100 sec for pressure; hereafter termed the ARANGE) and the interpolated data point was flagged as good. Failing that, it searched for values flagged as estimated within the same time range and the interpolated data point was flagged as estimated. Then the search went for good values within a wider time range (100 sec for temperature, humidity, and wind and 200 sec for pressure; hereafter termed the BRANGE) the flag for the interpolated data point here was then degraded (even though two `good' data points were used there was a significant time difference between them) to questionable. Then, in turn, estimated values within the BRANGE were used (flag set to questionable), questionable values within the BRANGE (flag set to bad), good values greater than the BRANGE apart (flag set to bad), estimated values greater than BRANGE apart (flag set to bad), questionable values greater than BRANGE apart (flag set to bad), finally any bad values (flag set to bad). This search was conducted separately for each interpolated variable (pressure, temperature, relative humidity, and the u and v wind components.
+</p>
+
+<p>
+Thus for each interpolated data point, the quality control flag was set to the worst case among the data points used in the interpolation, except, for each time range apart, the quality control flag was degraded one level (i.e. good to questionable, etc).
+</p>
+
+<p>
+The quality control flags should be carefully heeded in these files. While some of the data may look good, it may have been interpolated over large pressure intervals, and thus be suspect.
+</p>
+
+<p>
+For each interpolated data point the dew point was calculated from the temperature and relative humidity (Bolton 1980) and the total wind speed and direction were calculated from the interpolated u and v component values. Also, the altitude and time were interpolated using the same data points used for the pressure interpolation. The ascension rate was recalculated based on the time and altitude values from the two data points used to interpolate the 5 hPa data point. Thus the ascension rate values do not reflect the values based on the interpolated data. The latitude and longitude values were interpolated using the same data points used in the wind component interpolation. 
+</p>
+
+
+<h3>2.1 Detailed Format Description</h3>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite Format (ESC).  ESC is a version of the National Center for Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, meteorological and wind data processors.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center" cellpadding=2 cellspacing=1>
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+
+<p>The seven non-standard header lines may contain any label and contents.  The labels are padded to 35 characters to match the standard header lines. The records included in this data set vary by network.</p>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL codes:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1> 
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of DC3 2012 radiosonde data in ESC format.   The data portion is much longer than 80 characters and, therefore, may wrap around to a second line.  See section 2.1 for an exact format specification
+
+<pre>
+Data Type:                         ARM SGP Radiosonde/Ascending
+Project ID:                        DC3
+Release Site Type/Site ID:         C1: Lamont, Oklahoma
+Release Location (lon,lat,alt):    097 29.40'W, 36 36.60'N, -97.490, 36.610, 315.0
+UTC Release Time (y,m,d,h,m,s):    2012, 06, 10, 23:32:00
+Sonde Id/Sonde Type:               G5114269/Vaisala RS92-SGP with GPS windfinding
+/
+/
+/
+/
+/
+Nominal Release Time (y,m,d,h,m,s):2012, 06, 11, 00:00:00
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat   Ele   Azi    Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg   deg   deg     m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+   0.0  967.7  32.7  20.6  49.0   -3.9    8.7   9.5 156.0   0.0  -97.490  36.610 999.0 999.0   315.0  1.0  1.0  1.0  1.0  1.0 99.0
+   3.4  965.0  31.3  19.6  49.9   -3.0    5.9   6.6 152.9   6.1  -97.490  36.610 999.0 999.0   339.9  1.0  1.0  1.0  1.0  1.0 99.0
+  11.4  960.0  30.8  19.4  50.7   -4.4    9.4  10.4 155.0   6.3  -97.490  36.611 999.0 999.0   386.9  1.0  1.0  1.0  1.0  1.0 99.0
+  21.8  955.0  30.1  19.3  52.4   -5.0   11.9  12.9 157.2   4.1  -97.491  36.612 999.0 999.0   434.0  1.0  1.0  1.0  1.0  1.0 99.0
+  33.0  950.0  29.7  19.2  53.6   -4.9   12.5  13.4 158.5   4.5  -97.492  36.613 999.0 999.0   480.9  1.0  1.0  1.0  1.0  1.0 99.0
+  44.0  945.0  29.3  19.2  54.6   -4.3   12.5  13.2 161.0   4.2  -97.492  36.614 999.0 999.0   528.0  1.0  1.0  1.0  1.0  1.0 99.0
+  55.8  940.0  28.8  19.1  55.9   -3.7   12.1  12.7 163.0   4.8  -97.493  36.616 999.0 999.0   575.4  1.0  1.0  1.0  1.0  1.0 99.0
+  66.9  935.0  28.4  19.2  57.5   -2.9   11.9  12.3 166.3   4.4  -97.493  36.617 999.0 999.0   623.0  1.0  1.0  1.0  1.0  1.0 99.0
+  76.4  930.0  27.9  19.0  58.4   -2.4   12.2  12.4 168.9   5.2  -97.493  36.618 999.0 999.0   670.7  1.0  1.0  1.0  1.0  1.0 99.0
+  86.0  925.0  27.5  19.0  59.8   -2.2   12.3  12.5 169.9   4.7  -97.494  36.619 999.0 999.0   718.5  1.0  1.0  1.0  1.0  1.0 99.0
+  97.6  920.0  27.0  18.9  61.2   -2.2   12.6  12.8 170.1   4.2  -97.494  36.620 999.0 999.0   766.7  1.0  1.0  1.0  1.0  1.0 99.0
+ 108.9  915.0  26.6  18.8  62.6   -2.5   12.9  13.1 169.0   4.3  -97.494  36.621 999.0 999.0   814.5  1.0  1.0  1.0  1.0  1.0 99.0
+ 119.4  910.0  26.1  18.7  63.7   -2.4   12.8  13.0 169.6   5.1  -97.495  36.623 999.0 999.0   863.1  1.0  1.0  1.0  1.0  1.0 99.0
+ 128.5  905.0  25.7  18.7  65.2   -2.0   12.3  12.4 170.9   6.2  -97.495  36.624 999.0 999.0   911.7  1.0  1.0  1.0  1.0  1.0 99.0
+ 137.3  900.0  25.2  18.6  66.5   -1.7   11.9  12.1 171.9   5.6  -97.495  36.625 999.0 999.0   960.7  1.0  1.0  1.0  1.0  1.0 99.0
+ 145.8  895.0  24.8  18.5  68.1   -1.5   11.9  12.0 172.8   4.9  -97.495  36.626 999.0 999.0  1010.1  1.0  1.0  1.0  1.0  1.0 99.0
+ 155.3  890.0  24.3  18.5  69.7   -1.1   12.5  12.5 175.0   5.5  -97.495  36.627 999.0 999.0  1059.5  1.0  1.0  1.0  1.0  1.0 99.0
+ 164.7  885.0  23.9  18.4  71.4   -0.5   13.1  13.1 177.8   5.6  -97.495  36.628 999.0 999.0  1108.6  1.0  1.0  1.0  1.0  1.0 99.0
+ 174.5  880.0  23.5  18.3  72.8   -0.2   13.6  13.6 179.2   5.1  -97.495  36.629 999.0 999.0  1158.2  1.0  1.0  1.0  1.0  1.0 99.0
+:
+:
+:
+</pre>
+
+<h3>2.2 Data Remarks</h3>
+<p> The data are in files by day, so all soundings from all platforms for a particular day are concatenated into a single file ordered by nominal time first and then latitude (south to north) and then longitude.
+
+The file naming convention is:
+DC3_2012_HiRes_yyyymmdd.cls where yyyy is the year, mm is the month, and dd is the day of the month.</p>
+
+
+<h3>2.3 Station List</h3>
+
+<!-- ------------------------------------------------------------------------------------ -->
+<p> <b>2.3.1 Atmospheric Radiation Measurement (ARM)</b></p>
+<!-- ------------------------------------------------------------------------------------ -->
+<p> For more infomation on the DC3 2012 ARM Radiosonde data, see the DC3 dataset 
+titled "ARM Radiosonde Data (ESC Format) [NCAR/EOL]"
+<a href="http://data.eol.ucar.edu/datafile/nph-get/353.052/Readme_DC3_SGP_C1_ARM_soundings.html">
+<b>data set documentation file</b></a>.
+
+<p>This station used G3953511/Vaisala RS92-SGP with GPS windfinding during DC3.</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE</th> <th>STATE</th> <th>LAT</th> <th>LONG</th> <th>ELEV (m)</th> </tr> 
+<tr><td>ARM_SGP</td><td>C1 Lamont, Oklahoma</td><td>OK</td><td>36.61</td><td>-97.49</td><td>315.0</td></tr>
+</table><br>
+
+
+<!-- ------------------------------------------------------------------------------------ -->
+<p><b>2.3.2  National Center for Atmospheric Research (NCAR) EOL Mobile GPS Advanced Upper_Air Sounding (MGAUS)</b></p>
+<!-- ------------------------------------------------------------------------------------ -->
+<p> For more infomation on the DC3 2012 NCAR MGAUS sounding data, see the DC3 dataset titled 
+"EOL MGAUS Colorado Sounding Data (ESC Format)"
+<a href="http://data.eol.ucar.edu/datafile/nph-get/353.090/Readme_DC3_NCAR_MGAUS_soundings.html">
+<b>data set documentation file</b></a>.
+
+<p>This station used Vaisala RS92-SGP radiosondes with GPS windfinding during DC3.</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE</th> <th>STATE</th> <th>LAT</th> <th>LONG</th> <th>ELEV (m)</th> </tr>
+<tr> <td>NCAR</td> <td>Mobile</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> </tr>
+</table><br>
+
+
+<!-- ------------------------------------------------------------------------------------ -->
+<p><b>2.3.3  National Center for Atmospheric Research (NCAR) EOL Mobile MISS</b></p>
+<!-- ------------------------------------------------------------------------------------ -->
+<p> For more infomation on the DC3 2012 NCAR/EOL MISS sounding data, see the DC3 dataset titled 
+"EOL MISS Colorado Sounding Data (ESC Format)"
+
+<a href="http://data.eol.ucar.edu/datafile/nph-get/353.091/Readme_DC3_NCAR_MISS_soundings.html"><b>data set documentation file</b></a>.
+
+<p>This station used Vaisala RS92-SGP radiosondes with GPS windfinding during DC3. </p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE</th> <th>STATE</th> <th>LAT</th> <th>LONG</th> <th>ELEV (m)</th> </tr>
+<tr> <td>NCAR MISS</td> <td>Mobile</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> </tr>
+</table><br>
+
+<!-- ------------------------------------------------------------------------------------ -->
+<p><b>2.3.4 NOAA National Severe Storm Laboratory (NSSL) Mobile GPS Advanced Upper_Air Sounding (MGAUS)
+Oklahoma-Texas Sounding Data</b></p>
+<!-- ------------------------------------------------------------------------------------ -->
+<p> For more infomation on the DC3 2012 NSSL MGAUS sounding data, see the DC3 dataset titled
+"NSSL MGAUS Oklahoma-Texas Sounding Data (ESC Format)"
+
+<a href="http://data.eol.ucar.edu/datafile/nph-get/353.105/readme_DC3_OK-TX_MGAUS.pdf">
+<b>data set documentation file</b></a>.
+
+<p>This station used Vaisala RS92-SGP radiosondes with GPS windfinding during DC3. </p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE</th> <th>STATE</th> <th>LAT</th> <th>LONG</th> <th>ELEV (m)</th> </tr>
+<tr> <td>NSSL MGAUS </td> <td>Mobile</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> </tr>
+</table><br>
+
+<!-- ------------------------------------------------------------------------------------ -->
+<p><b>2.3.5 National Weather Service (NWS) High Resolution Radiosonde Data</b></p>
+<!-- ------------------------------------------------------------------------------------ -->
+<p> For more infomation on the DC3 2012 NWS sounding data, see the DC3 dataset titled 
+"National Weather Service High Resolution Radiosonde Data (ESC Format) [NCAR/EOL]"
+
+<a href="http://data.eol.ucar.edu/datafile/nph-get/353.040/readme_DC3_2012_nws_sounding.txt"><b>data set documentation file</b></a>.   All sites are in the United States. 
+
+<br />
+<br />
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE, STATE /WMO ID</th> <th>&nbsp;&nbsp;Latitude&nbsp;</th> <th>&nbsp;&nbsp;Longitude&nbsp;</th> <th>&nbsp;&nbsp;ELEV (m)</th> <th>SONDE TYPE</th> <th>&nbsp;&nbsp;QC&nbsp;&nbsp;</th> </tr>
+
+<tr><td>KABQ</td><td> Albuquerque, NM /72365</td><td>35.03809</td><td>-106.62280</td><td>1619.0</td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KABR</td><td> Aberdeen, SD /72659</td><td>45.45450</td><td>-98.41416</td><td>398.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KAMA</td><td> Amarillo, TX /72363</td><td>35.23253</td><td>-101.70874</td><td>1095.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KAPX</td><td> Gaylord, MI /72634</td><td>44.90826</td><td>-84.71936</td><td>448.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KBIS</td><td> Bismarck, ND /72764</td><td>46.77166</td><td>-100.76158</td><td>506.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KBMX</td><td> Birmingham, AL /72230</td><td>33.18010</td><td>-86.78269</td><td>174.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KBOI</td><td> Boise, ID /72681</td><td>43.56775</td><td>-116.21092</td><td>873.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KBRO</td><td> Brownsville, TX /72250</td><td>25.91620</td><td>-97.41993</td><td>7.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KBUF</td><td> Buffalo, NY /72528</td><td>42.94003</td><td>-78.72474</td><td>218.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KCHS</td><td> Charleston, SC /72208</td><td>32.89473</td><td>-80.02776</td><td>13.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KCRP</td><td> Corpus Christi, TX/72251</td><td>27.77933</td><td>-97.50495</td><td>15.0</td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KDDC</td><td> Dodge City, KS/72451</td><td>37.76164</td><td>-99.96936</td><td>790.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KDNR</td><td> Denver, CO /72469</td><td>39.76749</td><td>-104.86945</td><td>1611.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KDRT</td><td> Del Rio, TX/72261</td><td>29.37448</td><td>-100.91828</td><td>314.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KDTX</td><td> Detroit/White Lake, MI/72632</td><td>42.69915</td><td>-83.47160</td><td>330.0</td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KDVN</td><td> Quad Cities, IA/74455</td><td>41.61238</td><td>-90.58209</td><td>230.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KEPZ</td><td> Santa Teresa/El Paso,NM/72364</td><td>31.87268</td><td>-106.69709</td><td>1254.0</td><td>Sippican Mark IIA</td><td>&nbsp;</td>
+<tr><td>KFFC</td><td> Peachtree City, GA/72215</td><td>33.35611</td><td>-84.56734</td><td>245.0</td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KFGZ</td><td> Flagstaff, AZ /72376</td><td>35.23057</td><td>-111.82019</td><td>2179.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KFWD</td><td> Fort Worth, TX/72249</td><td>32.83508</td><td>-97.29794</td><td>195.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KGGW</td><td> Glasgow, MT /72768</td><td>48.20600</td><td>-106.62659</td><td>693.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KGJT</td><td> Grand Junction, CO/72476</td><td>39.11974</td><td>-108.52431</td><td>1474.0</td><td>Sippican Mark IIA</td><td>   <font color=green>*<b>QC</b></font></td>
+<tr><td>KGRB</td><td> Green Bay, WI/72645</td><td>44.49755</td><td>-88.11171</td><td>209.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KGSO</td><td> Greensboro, NC /72317</td><td>36.09813</td><td>-79.94300</td><td>276.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KILX</td><td> Lincoln, IL /74560</td><td>40.15120</td><td>-89.33763</td><td>179.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KINL</td><td> Intl Falls, MN/72747</td><td>48.56467</td><td>-93.39739</td><td>357.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KJAN</td><td> Jackson, MS /72235</td><td>32.31999</td><td>-90.08031</td><td>91.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KJAX</td><td> Jacksonville, FL /72206</td><td>30.48332</td><td>-81.70111</td><td>10.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KKEY</td><td> Key West, FL/72201</td><td>24.55311</td><td>-81.78872</td><td>13.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KLBF</td><td> North Platte, NE/72562</td><td>41.13395</td><td>-100.69991</td><td>849.0</td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KLCH</td><td> Lake Charles, LA/72240</td><td>30.12551</td><td>-93.21709</td><td>5.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KLIX</td><td> Slidell, LA /72233</td><td>30.33763</td><td>-89.82507</td><td>10.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KLKN</td><td> Elko, NV /72582</td><td>40.86018</td><td>-115.74146</td><td>1593.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KLZK</td><td> Little Rock, AR/72340</td><td>34.83640</td><td>-92.25976</td><td>173.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KMAF</td><td> Midland, TX /72265</td><td>31.94267</td><td>-102.18986</td><td>874.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KMFL</td><td> Miami, FL /72202</td><td>25.75547</td><td>-80.38355</td><td>4.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KMPX</td><td> Chanhassen/Minneapolis, MN /72649</td><td>44.84900</td><td>-93.56431</td><td>290.0</td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KOAX</td><td> Omaha/Valley, NE /72558</td><td>41.31950</td><td>-96.36633</td><td>351.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KOHX</td><td> Old Hickory/Nashville, TN/72327</td><td>36.24694</td><td>-86.56178</td><td>180.0</td><td>Sippican Mark IIA</td><td><font color=green>*<b>QC</b></font></td>
+<tr><td>KOUN</td><td> Norman, OK /72357</td><td>35.18095</td><td>-97.43787</td><td>345.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KPBZ</td><td> Pittsburgh, PA /72520</td><td>40.53156</td><td>-80.21748</td><td>360.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KRIW</td><td> Riverton, WY /72672</td><td>43.06485</td><td>-108.47667</td><td>1699.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KRNK</td><td> Blacksburg, VA /72318</td><td>37.20589</td><td>-80.41436</td><td>639.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KSGF</td><td> Springfield, MO /72440</td><td>37.23583</td><td>-93.40216</td><td>391.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KSHV</td><td> Shreveport, LA /72248</td><td>32.45176</td><td>-93.84169</td><td>85.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KSLC</td><td> Salt Lake City,UT/72572</td><td>40.77244</td><td>-111.95470</td><td>1289.0</td><td>Sippican Mark IIA</td><td>   <font color=green>*<b>QC</b></font></td>
+<tr><td>KTAE</td><td> Tallahassee, FL /72214</td><td>30.44630</td><td>-84.29963</td><td>53.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KTBW</td><td> Tampa Bay, FL/72210</td><td>27.70529</td><td>-82.40127</td><td>13.0 </td><td>Sippican Mark IIA</td><td>    <font color=green>*<b>QC</b></font></td>
+<tr><td>KTFX</td><td> Great Falls, MT/72776</td><td>47.46056</td><td>-111.38533</td><td>1134.0</td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KTOP</td><td> Topeka, KS /72456</td><td>39.07297</td><td>-95.62983</td><td>268.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KTWC</td><td> Tucson, AZ /72274</td><td>32.22794</td><td>-110.95601</td><td>741.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KUNR</td><td> Rapid City, SD/72662</td><td>44.07301</td><td>-103.21027</td><td>1029.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+<tr><td>KVEF</td><td> Las Vegas, NV/72388</td><td>36.04714</td><td>-115.18464</td><td>697.0 </td><td>Sippican Mark IIA</td><td> &nbsp;</td>
+</table><br>
+
+<p>
+The stations with the "<font size=+1 color=green><b>*QC</b></font>" in the QC column are in or within 100km of the three
+DC3 subregions (Colorado, Oklahoma, and Alabama) and underwent visual quality
+control in addition to the automated quality control that all soundings
+included in this data set underwent.
+</p>
+
+<p>
+We have utilized the processed PTU and GPS data from the RRS sounding systems
+to generate these files.  The raw position, temperature and RH data are
+normalized by linear interpolation into 1 second processed data.  The raw
+pressure data are normalized by least square interpolation into 1 second processed
+data.  The pressure data are smoothed over 11 seconds of corrected pressure and
+the result is applied to the 6th corrected pressure within the 11 second
+spread.  The temperature data are smoothed over 9 seconds of uncorrected
+temperature and the result is applied to the 5th uncorrected temperature
+within the 9 second spread.  There must be at least 2 good raw temperature
+elements with the 9 second spread.
+</p>
+
+<p>
+The following corrections were applied by the RRS sounding system.
+</p>
+
+<p>
+<b>Pressure correction</b> - pressure correction is used to compensate for offsets of
+the radiosonde pressure sensor as compared to the station's pressure sensor.
+The pressure offset is determined during the radiosonde baseline operations.
+The correction is applied to the uncorrected pressure prior to pressure
+smoothing.
+</p>
+
+<p>
+This correction is defined as  <b>Pc = Pu * (Pstn/Psonde)</b>,  where <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Pc</b> is the corrected pressure <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Pu</b> is the uncorrected pressure <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Pstn</b> is the station pressure <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Psonde</b> is the radiosonde surface pressure <br />
+</p>
+
+<p>
+<b>Temperature correction</b> - temperature correction is used to compensate for
+solar radiation.  The correction is applied to the smoothed temperature.
+These corrections are proprietary to Sippican.
+</p>
+
+<!-- ------------------------------------------------------------------------------------ -->
+<p><b>2.3.6  Redstone Arsenal Radiosonde Data
+</b></p>
+<!-- ------------------------------------------------------------------------------------ -->
+<p> For more infomation on the DC3 2012 Redstone Arsenal sounding data, see the DC3 dataset titled 
+"Redstone Arsenal Radiosonde Data (ESC Format)"
+
+<a href=" http://data.eol.ucar.edu/datafile/nph-get/353.094/Readme_DC3_Redstone_Arsenal_soundings.html"> <b>data set documentation file</b></a>.
+
+<p>This station used Vaisala RS92-SGPD radiosondes with GPS windfinding during DC3. </p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE</th> <th>STATE</th> <th>LAT</th> <th>LONG</th> <th>ELEV (m)</th> </tr>
+<tr> <td>74001</td> <td>Redstone</td> <td>AL</td> <td>34.603</td> <td>-86.632</td> <td>174.0</td> </tr>
+</table><br>
+
+<!-- ------------------------------------------------------------------------------------ -->
+<p><b>2.3.7 University of Alabama Huntsville (UAH) Mobile Radiosondes
+</b></p>
+<!-- ------------------------------------------------------------------------------------ -->
+<p> For more infomation on the DC3 2012 UAH sounding data, see the DC3 dataset titled
+"UAH Mobile Alabama Sounding Data (ESC Format)"
+
+<a href="http://data.eol.ucar.edu/datafile/nph-get/353.100/Readme_DC3_UAH_Mobile_soundings.html">
+<b>data set documentation file</b></a>.
+
+<p>This station used the International Met Systems or iMet-3150 radiosonde package.
+The iMet-1-AB radiosonde was capable of measuring temperature, relative humidity, 
+pressure, and derived wind speeds based on GPS.  </p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr> <th>ID</th> <th>SITE</th> <th>STATE</th> <th>LAT</th> <th>LONG</th> <th>ELEV (m)</th> </tr>
+<tr> <td>UAH Mobile</td> <td>UAH Mobile</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> <td>Varied</td> </tr>
+</table><br>
+
+
+<!-- This is the QC section appropriate for Upsondes  -->
+
+<h2>3.0 Quality Control Processing</h2>
+
+See the documentation files above for information on the quality control processing 
+conducted on each network.
+
+<h2>4.0 References</h2>
+
+</body>
+</html>

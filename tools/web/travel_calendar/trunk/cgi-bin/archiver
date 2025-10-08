@@ -1,0 +1,123 @@
+#! /usr/bin/perl -T -w
+
+##Module---------------------------------------------------------------------
+# <p>The <code>Archiver</code> module is the tool used to archive/unarchive
+# employees in the <code>EmployeeList</code> and <code>TravelList</code>
+# modules.  Archived employees are still in the lists, but are not viewable
+# on the web pages.  It is to be used to hide former employees without deleting
+# their travel information.</p>
+#
+# <p>The following is a list of CGI parameters that the archiver recognizes
+# and the values that they can be given.<ul>
+#   <li><code>archive</code>: ('Archive Employee', 'Unarchive Employee')  This
+# is used to tell the archiver module if it should be trying to archive an
+# employee or unarchive one.</li>
+# </ul></p>
+#
+# @warning This functionality has not been implemented yet.
+#
+# @author Joel Clawson
+##Module---------------------------------------------------------------------
+package Archiver;
+use strict;
+use lib ".";
+use EmployeeList;
+use CGI qw(:standard :html3);
+our @ISA = ("CGI");
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+&main();
+
+##---------------------------------------------------------------------------
+# @signature void main()
+# <p>Create the appropriate archive/unarchive form.</p>
+##---------------------------------------------------------------------------
+sub main() {
+  my $self = Archiver->new();
+  if (defined($self->param("archive"))) {
+     print($self->header());
+     print("<html>\n");
+
+     print("<body>\n");
+     print("<form type=POST action=broker>\n");
+
+     my $emps = EmployeeList->new();
+     if ($self->param("archive") eq "Archive Employee") {
+	 # The Archive Form
+	 print("<h1>Archive an Employee</h1>\n");
+	 print("<p>This will archive the selected employee in the list.  It ");
+	 print("frees their travel id and color to be able to be used by ");
+	 print("someone else.  It will prevent their name from showing up in");
+	 print(" the list and their travel information from being displayed ");
+	 print("in the calendar.</p>\n");
+	 
+	 $self->getActiveEmployees();
+	 print("<br>".$self->submit("archive", "Archive"));
+     } else {
+	 # The Unarchive Form
+	 print("<h1>Unarchive an Employee</h1>\n");
+	 print("<p>This will unarchive the selected employee in the list. It");
+	 print("will open the employee form to reinsert the employee into ");
+	 print("the list and calendar.</p>\n");
+
+	 $self->getArchivedEmployees();
+	 print("<br>".$self->submit("archive", "Unarchive"));
+     }
+
+     print("<input type=button value=\"Close\" onclick=\"javascript:window.close();\">\n");
+
+     print("</form>\n</body>\n");
+     print("</html>\n");
+  }
+}
+
+##---------------------------------------------------------------------------
+# @signature void getActiveEmployees()
+# <p>Create the dropdown box of active employees who can be archived.</p>
+##---------------------------------------------------------------------------
+sub getActiveEmployees {
+    my $self = shift;
+    my $emps = EmployeeList->new();
+
+    my @names = ();
+    foreach my $id ($emps->employee_list()) {
+	push(@names, sprintf("%s, %s (%s)", $emps->getLastName($id),
+			     $emps->getFirstName($id), $id));
+    }
+
+    print("<select name=id>\n");
+    foreach my $emp (sort @names) {
+	$emp =~ /\((.+)\)/;
+	printf("<option value=%s>%s</option>\n", $1, $emp);
+    }
+    print("</select>\n");
+}
+
+##--------------------------------------------------------------------------
+# @signature void getArchivedEmployees()
+# <p>Create the dropdown box of archived employees who can be unarchived.</p>
+##--------------------------------------------------------------------------
+sub getArchivedEmployees {
+    my $self = shift;
+    my $emps = EmployeeList->new();
+
+    my @names = ();
+    foreach my $id ($emps->archive_list()) {
+	push(@names, sprintf("%s, %s (%s)", $emps->getLastName($id),
+			     $emps->getFirstName($id), $id));
+    }
+
+    print("<select name=id>\n");
+    foreach my $emp (sort @names) {
+	$emp =~ /\((.+)\)/;
+	printf("<option value=%s>%s</option>\n", $1, $emp);
+    }
+    print("</select>\n");
+}
+
+
+
+
+
+

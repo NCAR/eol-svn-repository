@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for postproc_CoopStnList s/w.
+#
+
+CC=acc
+CFLAGS = 
+
+procCoopStnList: postproc_CoopStnList.o
+	$(LINK.c) -o postproc_CoopStnList postproc_CoopStnList.o 
+	chmod 0755 postproc_CoopStnList
+
+clean:
+	rm *.o

@@ -1,0 +1,38 @@
+# /usr/bin/perl -w
+use strict;
+
+&main();
+
+
+
+
+sub main {
+    chdir("bnl_qc") or die("Can't change to bnl_qc directory");
+
+    opendir(my $DIR, ".") or die("Can't open bnl_qc");
+
+    my %months;
+
+    # Determine which months have data to be put into tar files.
+    foreach my $file (readdir($DIR)) {
+        if ($file !~ /^\.{1,2}/) {
+	    $months{substr($file, 4, 6)}{substr($file, 0, 3)} = 1;
+        }
+    }
+    closedir($DIR);
+
+    # Loop through each month with data and create a tar file.
+    foreach my $month (keys(%months)) {
+        # Determine which stations have data for the month.
+        my @stations = keys(%{$months{$month}});
+        # Determine the name of the tar file.  This allows for
+        # single station months to include the station id in the tar file
+        # name.
+		# /net/ftp/pub/data/download/bnl (new FTP area 2012)
+        my $tarfile = scalar(@stations) > 1 ? sprintf("/net/ftp/pub/data/download/bnl/%s.tar", $month) : sprintf("/net/ftp/pub/data/download/bnl/%s_%s.tar", $stations[0], $month);
+        # Create the tar file.
+        system("tar -cf $tarfile *_$month*.cls");
+        # Gzip the tar file.
+        system("gzip $tarfile");
+    }
+}

@@ -1,0 +1,63 @@
+/*********************************************************************
+ * This function takes a string containing search results, the 
+ * customSearcher object being used, and the total # of results.
+ * It returns the same string but all links open in a new dhtml window.
+ *********************************************************************/
+
+function buildResults(text, cs, total)
+{
+
+	//loop counter
+	var current = 0;	
+
+	//insertionPoints will split the search results html at a point where onclick="" can be added
+	var insertionPoints = new Array();
+	insertionPoints = (text.split("href=\""));
+
+	//String to rebuild the Search results html in. 
+	var cleanedResults = "";
+	cleanedResults = "Search query: " + document.getElementById('inputElement').value + "<br>" + "There are " + total + " results in pages 1 - " + (cs.cursor.currentPageIndex + 1) + "<br>" + "You are currently on Page: " + (cs.cursor.currentPageIndex + 1) + "<br>" + "<br>" ;
+
+	//holds Search results split on "http"
+	var trashURLs = new Array();
+	
+	//list of URLs for the search results once they have been cleaned.
+	var URLs = new Array();
+
+	//create trashURLs
+	trashURLs = (text.split("http"));
+	
+	//Pull just the URL out of trashURLs and insert it into URLs
+	for(current=0;current<trashURLs.length;current=current+1)
+	{
+	URLs[current] = "http" + trashURLs[current].substr(0, trashURLs[current].indexOf('"'));
+	}
+	
+	
+
+	//Add an onclick tag to the insertionPoints array. This onclick will open the URL in a dhtmlwindow
+	for(current=0;current<insertionPoints.length;current=current+1)
+	{
+	//extract the datasetId to use for the window title
+	if(URLs[current+1] != null){
+	datasetId = ((URLs[current+1]).split("="))[1];
+		//make sure there isn't a trailing '/' left on the datasetId
+		if (datasetId != null){
+			var dLength = datasetId.length;
+			if (datasetId.substr(dLength-1, 1) == '/'){
+				datasetId = datasetId.substr(0, dLength-1);
+			}
+		}
+	}
+	//add in code to open the result in a dhtml window when clicked.
+	insertionPoints[current] = insertionPoints[current].substr(0, (insertionPoints[current].length - 1)) + " onclick=\" browseBox = dhtmlwindow.open('browseBox', 'iframe',' " + URLs[current+1] + "', '" + "ARCSS data sets" + "', 'width=' + browseWidth + 'px,height=' + browseHeight + 'px,left=' + browseLeft + 'px,top=' + browseTop + 'px,resize=1,scrolling=1');\" ";
+	}
+
+	//Build the cleanedResults string from the insertionPoints array.
+	for(current=0;current<(insertionPoints.length -1);current=current+1)
+	{
+	cleanedResults = cleanedResults + String(insertionPoints[current]) + insertionPoints[current+1].substr(0, insertionPoints[current+1].indexOf('>'));
+	}
+	return cleanedResults;	
+
+}

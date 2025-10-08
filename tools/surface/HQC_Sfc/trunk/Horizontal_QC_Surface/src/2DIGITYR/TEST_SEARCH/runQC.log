@@ -1,0 +1,39 @@
+
+---- Horizontal Quality Control (HQC) ----
+Processing began on Apr 17 1996 09:15:42
+QC Initialization file name (e.g., QCinit.inp): QCinit.inp
+
+PARAMETER INITIALIZATION:: 
+
+Project Name (proj_name): TEST SEARCH              
+Distance fn method (pmethod): 1
+Area of Influence in km (1/min_weight):  300.000
+Data Frequency (data_freq): 5
+Current year of data: 1995
+First day of Project (proj_begin_date): 950401
+Last day of Project  (proj_end_date): 950630
+First day to QC (begin_date) : 950401
+Last day to QC (end_date)    : 950401
+Input file pathname: /raid/NEWQC/src/TEST_SEARCH/0000_
+Sigma file pathname: /raid/VORTEX95/SOLAR_SIGMAFILES/
+
+Precipitation Gross Limits (Unlikely, Dubious): 6.000000 3.000000
+
+Alpha_sq Indices: 0=stn pres, 1=slp, 2=cslp, 3=temp, 4=dw pt, 5=wnd sp, 6=wnd dir
+alpha_sq[ 0][0] = 0.25 alpha_sq[ 0][1] = 0.04
+alpha_sq[ 1][0] = 0.25 alpha_sq[ 1][1] = 0.04
+alpha_sq[ 2][0] = 1.00 alpha_sq[ 2][1] = 0.16
+alpha_sq[ 3][0] = 1.00 alpha_sq[ 3][1] = 0.25
+alpha_sq[ 4][0] = 1.00 alpha_sq[ 4][1] = 0.25
+alpha_sq[ 5][0] = 16.00 alpha_sq[ 5][1] = 5.06
+alpha_sq[ 6][0] = 4.84 alpha_sq[ 6][1] = 1.49
+proj_begin_date, proj_end_date, begin_date, end_date: 950401 950630 950401 950401
+proj_begin_YYYYJJJ, proj_end_YYYYJJJ, begin_YYYYJJJ, end_YYYYJJJ: 1995091 1995181 1995091 1995091
+
+Current julian date is: 1995091 950401
+Processing file: /raid/NEWQC/src/TEST_SEARCH/0000_950401.0qc
+
+HQC - main_qc() completed with 0 searches for sigmasq values.
+NOTE: Each search may have required searching forward through up to 31 files.(Not including the day being HQC'd)
+
+Processing completed on Apr 17 1996 09:15:42

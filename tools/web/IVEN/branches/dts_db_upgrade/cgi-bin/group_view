@@ -1,0 +1,117 @@
+#! /usr/bin/perl -w
+
+package GroupViewCGI;
+use strict;
+use lib ".";
+use ViewCGI;
+our @ISA = ("ViewCGI");
+
+&main();
+
+sub main {
+    my $self = GroupViewCGI->new();
+    $self->buildPage("View: ".$self->getGroup()->getName());
+}
+
+sub buildContent {
+    my ($self) = @_;
+
+    $self->printHeader();
+    $self->printNoteTable();
+    $self->printSourceTable();
+}
+
+sub getStatusLink {
+    my ($self,$link) = @_;
+    my $real = $link;
+    $link =~ s/^\/work\/([^\/]+)/\/dpg\/$1\/iven/;
+    return $link =~ /^\/dpg/ ? sprintf("<a href=\"%s\">%s</a>",$link,$real) : $real;
+}
+
+sub printHeader {
+    my ($self) = @_;
+    my $group = $self->getGroup();
+    my $status = $self->getStatusMap()->{$group->getStatusId()};
+
+    printf("<table class=datasetHeader>\n");
+    printf("   <tr>\n");
+    printf("      <td class=status><span class=title>Status:</span> <font class=%s>%s</font></td>\n",
+	   $status->getStyle(),$status->getName());
+    printf("      <td class=title>%s</td>\n",$group->getName());
+    printf("      <td class=processor>&nbsp;</td>\n");
+    printf("   </tr>\n");
+    printf("</table>\n");
+}
+
+sub printSourceTable {
+    my ($self) = @_;
+    my $group = $self->getGroup();
+
+    printf("<center>\n");
+    printf("   <table class=statusTable>\n");
+    printf("      <tr class=statusHeading>\n");
+    printf("         <td>\n");
+    printf("            <table>\n");
+    printf("               <tr>\n");
+    printf("                  <td class=left>&nbsp;</td>\n");
+    printf("                  <td class=center>Group Dataset</td>\n");
+    printf("                  <td class=right><a href=\"javascript: addGroupDataset('%s');\"><img src=%s/a_dataset.gif alt=\"Add Dataset\"></a></td>\n",
+	   $group->getId(),$self->{"IMAGES"});
+    printf("               </tr>\n");
+    printf("            </table>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("      <tr class=statusRow>\n");
+    printf("         <td>\n");
+    printf("            <table class=statusLinkTable>\n");
+    
+    foreach my $source ($group->getDatasets()) {
+	printf("               <tr class=%s>\n",$source->isExcluded() ? "excludeRow" : "dsRow");
+	printf("                  <td class=edit><a href=\"javascript: editSource('%s');\"><img src=%s/edit.gif></a></td>\n",
+	       $source->getId(),$self->{"IMAGES"});
+	printf("                  <td class=name>%s</td>\n",($source->getDatasetType() eq "Composite" || $source->getDatasetType() eq "Processed") ?
+	       sprintf("<a href=\"dataset_view?project=%s&id=%s\">%s</a>",$self->uriEscape($self->getProject()->getId()),
+		       $self->uriEscape($source->getId()),$source->getName()) : $source->getName());
+	printf("                  <td class=note><div class=shortNote id=note%s><div class=expander><a href=\"javascript: noteExpander('note%s','shortNote')\"><img id=note%sImg src=%s/e_notes.gif></a></div>%s</div></td>\n",$source->getNoteId(),$source->getNoteId(),$source->getNoteId(),$self->{"IMAGES"},$source->getNote());
+	printf("                  <td class=edit><div><a href=\"javascript: validateGroupSourceDelete('%s','%s');\">Remove</a></div><div><a href=\"javascript: %sGroup('%s','%s');\">%s</a></div></td>\n",
+	       $group->getId(),$source->getId(),$source->isExcluded() ? "include" : "exclude",$group->getId(),$source->getId(),$source->isExcluded() ? "Include" : "Exclude");
+	printf("               </tr>\n");
+    }
+
+    printf("            </table>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("</center>\n");
+}
+
+sub printNoteTable {
+    my ($self) = @_;
+    my $group = $self->getGroup();
+
+    printf("<center>\n");
+    printf("   <table class=statusTable>\n");
+    printf("      <tr class=statusHeading>\n");
+    printf("         <td>\n");
+    printf("            <table>\n");
+    printf("               <tr>\n");
+    printf("                  <td class=left>&nbsp;</td>\n");
+    printf("                  <td class=center>Group Notes</td>\n");
+    printf("                  <td class=right><a href=\"javascript: editProduct('edit_group?project=%s&id=%s');\"><img src=%s/e_product.gif alt=\"Edit Group\"></a></td>\n",
+	   $self->uriEscape($self->getProject()->getId()),$self->uriEscape($group->getId()),$self->{"IMAGES"});
+    printf("               </tr>\n");
+    printf("            </table>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("      <tr class=statusRow>\n");
+    printf("         <td>\n");
+    printf("            <table class=statusLinkTable>\n");
+    printf("                 <td>%s</td>\n",$group->getNote());
+    printf("               </tr>\n");
+    printf("            </table>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("   </table>\n");
+    printf("</center>\n");
+}
+
+

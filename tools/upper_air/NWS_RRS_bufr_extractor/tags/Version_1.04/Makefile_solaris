@@ -1,0 +1,14 @@
+all: decoder grabbufr dumpdata splitdump
+
+decoder:
+	f95 -o decoder BUFR_1_07.f RRS_Decoder_1_04.f
+
+dumpdata:
+	f95 -o dumpdata BUFR_1_07.f DumpData.f
+
+grabbufr:
+	f95 -o unixbufr BUFR_1_07.f unixbufr.f
+
+splitdump:
+	f95 -o splitdump BUFR_1_07.f split_dump.f
+

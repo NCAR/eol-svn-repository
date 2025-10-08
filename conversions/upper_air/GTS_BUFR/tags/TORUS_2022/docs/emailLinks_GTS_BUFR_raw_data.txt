@@ -1,0 +1,27 @@
+Linda,
+
+In terms of GTS BUFR data files there can be two types:
+
+KALY_202203060000_iuk_sounding.bufr
+KALY_202203060000_ius_sounding.bufr
+
+If you have a choice you should use the *_ius_sounding.bufr files. The file structures are the same but the ius files contain the full sounding while the iuk files contain just the data up to 100mb.
+
+There may be some occasions (likely not in the US) where only the iuk files are available so in that case we would have to use them, but if both are present we should use the ius.
+
+Scot
+
+On Tue, Mar 8, 2022 at 3:27 PM Linda Cully <cully@ucar.edu> wrote:
+Thanks! Think I wrote all of that. I'll get started on this sometime tomorrow...probably.
+LEC
+
+On Tue, Mar 8, 2022 at 3:12 PM Linda Echo-Hawk <echohawk@ucar.edu> wrote:
+Hi Linda,
+
+Here are links to the software and "how to" for GTS BUFR processing:
+
+GTS_BUFR software: http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FGTS_BUFR%2Ftrunk%2Fsoftware%2F&#ae599a702263514ee3bde21cca133111d
+
+https://internal.eol.ucar.edu/content/how-process-gts-bufr-binary-sounding-data-esc-format
+
+LindaE

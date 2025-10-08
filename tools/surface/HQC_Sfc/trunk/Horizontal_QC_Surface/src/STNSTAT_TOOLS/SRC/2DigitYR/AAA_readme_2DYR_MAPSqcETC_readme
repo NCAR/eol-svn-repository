@@ -1,0 +1,152 @@
+This set of s/w is the original (plus some updated
+s/w) created by Ken Scully (circa 1992) for the original
+MAPS QC. It includes statistics programs to print QCF
+stats such as stnstat. The stnstat program was used
+to process stats for all the 2 digit year QCF files in
+GCIP. See the stnstat_4DYR tar file for the best s/w
+to produce stats for 4 digit year QCF records. This
+original code is mostly historical like the notes that
+follow here.
+LEC
+September 2002
+-------------------------------------------------
+
+The s/w, etc in this gids1 dir have been placed under CVS control.
+The module (checkout) name for CVS is gids1_QC. It also includes
+some of the exe area scripts and files. The files were copied to
+another area before the CVS control vars were added. 
+
+---------------------------------
+
+The Makefile for the qc program will also build 15 other programs
+created by Ken Scully.  Only the var.f program has problems 
+building. The MAXSTNS var is used but undefined in the .h files.
+MAXSTNS is defined in the qcglobal.h file which redefines some 
+other vars defined in var.h.
+
+Also, program llxyc will not build until the libcfest.a exists.
+Try building readmaps first. Program stnlst requires a symbol
+'getstring' from llxyc...so order is important when trying to 
+rebuild these programs.
+
+The qc program builds OK.
+
+The MAXSTNS parameter is set to various numbers in different
+programs and .h files (e.g., 750, 1000, 1500).  Update it
+in  stnstatcom.h and qcglobal.h
+
+
+
+----------------------------------------------------------
+Programs in the qc area:
+
+1. qc - program that performs quality control checks for
+        surface data against Maps Analyses. 
+
+   To execute: correct qc_config file must be in execution area.
+   There are several qc_config files. One for each type of data (hrly, etc.).
+   Run qc by executing the qcsc script.
+
+   Warning: The original qc code will not handle data with more than
+            one time in it. NCDC SAO data has two times.
+
+2. prtstn - prints station master file. To execute: prtstn2
+   
+   Looks for qc_stns file in execution area.
+
+3. stnbuddy - Prints the station master file and lists its closest
+              five stations. Calls ll2xy.
+
+   Looks for qc_stns file in execution area.
+
+4. stnstat - Prints kickout statistics by station/day. Lists only
+             the worst xxx stations for each parameter. 
+   To execute:
+       stnstat [-debug] <-hrly/-hourly/-nom/-nominal> 
+
+   Expects qc_stns file in execution area. Calls addstats, prtstats
+   which are fns located in stnstat.f file.
+
+5. stnstat2 - Print kickout statistics by station/day. List only the
+              worst xxx stations for each parameter. Very similar to
+              stnstat.f program.
+
+6. gridswap - Actual program name is gridswapt. This program tests
+              gripswap routines. User is prompted for lat/lon, etc.a
+              The gripswap routines are those fns which perform the
+              conversions between x,y and lat,lon...both ways. These
+              fns are: X_GRID(LAT,LON), Y_GRID(LAT,LON), LAT_XY(X,Y),
+              LON_XY(X,Y) which are used in the qc program.
+
+ 
+7. gridswap_db - Actual program name is gridswapdpt. This program 
+              tests the double precison gridswap routines. Very similar
+              to gridswap.
+
+8. ll2xy - Converts lat/lon to X/Y in km. (Fortran)
+
+9. llxyc - Test program (ONLY) for ll2xy and xy2ll. (C)
+
+10. readmaps - Fortran program that reads in a MAPS surface analyses
+         in packed ASCII format and prints them out.  Use this program
+         to read the maps data or a portion of a maps file.  MAPS stores 
+         the following 9 variables:
+
+         1=MAPS sea-level pressure (mb), 
+         2=potential temperature (deg K),
+         3=u component (m/s), 
+         4=v component (m/s)
+         5=dew point temperature (deg K), 
+         6=dew point depression (deg C),
+         7=altimeter change in 3 hours (mb/3h),
+         8=NWS sea-level pressure (mb), 
+         9=altimeter (mb)
+
+         The packed ASCII format is a number between 0 and 9999
+         which is a fraction of the range between the max and min
+         values for the field.
+ 
+         The unpacking algorithm is:
+                value = range * IG / 10000. + min
+
+         This program assume that there are 9 variables, 81 grid points
+         in the X direction and 62 grid points in the Y direction.
+ 
+11. stnlst - Prints a listing of all networks and stations from a qcf file.
+
+12. stnqc - Selects a subset of the qcf files to qc manually. It selects
+         records that have a lot of kickouts in a day (>BRATIO and > QRATIO).
+         MAXSTNS = 750; BRATIO = .15; QRATIO = .24; FIRSTDAY=32; LASTDAY=75)
+
+    Warning: some of the above parameters must be changed for diff time span
+             of data collection. Also, there's a julian day fn in this routine
+             which may not handle leap yr properly in some situations. (C)
+
+13. stnrep - Counts the total number of observations for each day of collection
+             for each station.  Uses the hourly composite format with nominal
+             date/time. Read warning for stnqc program. (C)
+
+14. stripqc - This fortran program strips qcf header and trailer records from the
+             qcf file for merging.
+
+15. toss -  This fortran program prints toss reports. There are several line 
+            options:  
+                      toss [-h | -m] [-b | -d | -bd] [-debug] -sXXXX
+
+              where -debug     option will print variable info as processing
+                               is done.
+                    -h         print hourly report
+                    -m         print 5 minute report
+                    -b         use only "bad" qc flags
+                    -d         use only "doubtful" qc flags
+                    -bd        use both "bad" and "doubtful" qc flags
+                    -sXXXX     print report for station id = XXXX
+
+             This s/w expects several of the qc programs output files to
+             exist in the execution area: prttoss.var, prttoss.toss,
+             qc_stns, qc_config.
+
+16. var - This fortran program prints variance reports. It requires the
+          name of the variance file to operated on. This program accumulates
+          statistics by day, hour, station, variance limit, etc. 
+          The qc_stns and qc_config files must exist in execution area.

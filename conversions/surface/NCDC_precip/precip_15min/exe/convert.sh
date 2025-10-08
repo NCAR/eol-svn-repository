@@ -1,0 +1,1 @@
+./sck ../out/all.snam

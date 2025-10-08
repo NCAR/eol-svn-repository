@@ -1,0 +1,16 @@
+
+On examination, these "-999.99 U" values were found for net rad at 5 times in the CEOP SGP sfc final output. 
+The code had set the values to Missing, when the calculated values equaled zero, or negative zero. This was in error.
+And the flags weren't changed, so these stood out.
+The code was changed to only change negative zeros to zero, but not change the values.
+The final output file was changed by hand to change these five values to "0.00 U".
+
+6/11/04, ds
+
+   date    time     date    time    CSE ID      site ID        station ID        lat        lon      elev  stn pres ftemp_air f dew pt  f rel hum fspec hum f wnd spd f wnd dir f U wind  f V wind  f precip  f  snow   f short in f shortout f long in  f long out f  net rad f skintemp f par_in   f par_out  f
+---------- ----- ---------- ----- ---------- --------------- --------------- ---------- ----------- ------- ------- - ------- - ------- - ------- - ------- - ------- - ------- - ------- - ------- - ------- - ------- - -------- - -------- - -------- - -------- - -------- - -------- - -------- - -------- -
+2003/04/06 11:30 2003/04/06 11:30 GAPP       SGP             E22_Cordell       35.35400   -98.97700  465.00 -999.99 M -999.99 M -999.99 M -999.99 M -999.99 M -999.99 M -999.99 M -999.99 M -999.99 M -999.99 M -999.99 M    -2.51 U     0.82 U   369.89 U   366.56 U  -999.99 U  -999.99 M  -999.99 M  -999.99 M
+2003/05/28 12:00 2003/05/28 12:00 GAPP       SGP             E9_Ashton         37.13300   -97.26600  386.00  976.10 G   13.88 G   10.58 U   80.50 G    8.17 U    3.83 G  207.40 G    1.76 U    3.40 U    0.00 G -999.99 M    65.13 U    18.94 U   335.61 U   381.79 U  -999.99 U  -999.99 M  -999.99 M  -999.99 M
+2003/06/04 12:00 2003/06/04 12:00 GAPP       SGP             E1_Larned         38.20200   -99.31600  632.00  940.50 G   14.52 G   14.27 U   98.40 G   10.82 U    3.84 G  186.90 G    0.46 U    3.81 U    0.00 G -999.99 M     9.48 U     2.39 U   387.55 U   394.65 U  -999.99 U  -999.99 M  -999.99 M  -999.99 M
+2003/08/31 00:30 2003/08/31 00:30 GAPP       SGP             E9_Ashton         37.13300   -97.26600  386.00  970.60 G   20.55 G   19.97 U   96.50 G   15.09 U    5.16 G  355.70 G    0.39 U   -5.15 U    0.00 G -999.99 M     9.73 U     2.79 U   414.19 U   421.13 U  -999.99 U  -999.99 M  -999.99 M  -999.99 M
+2003/09/03 12:30 2003/09/03 12:30 GAPP       SGP             E20_Meeker        35.56400   -96.98800  309.00  982.80 G   20.12 G -999.99 M  100.20 G -999.99 M    0.76 G  312.50 G    0.56 U   -0.51 U    0.00 G -999.99 M    -0.29 U     0.85 U   412.68 U   411.54 U  -999.99 U  -999.99 M  -999.99 M  -999.99 M

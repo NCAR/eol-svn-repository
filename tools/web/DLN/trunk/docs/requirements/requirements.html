@@ -1,0 +1,161 @@
+<html>
+<body>
+<h1>DLN Requirements<h1>
+
+<h2>Required Information</h2>
+<h3>Project</h3>
+<ul>
+   <li>Project ID</li>
+   <li>Active Flag</li>
+   <li>Dataset Prefix</li>
+</ul>
+
+<h3>Dataset</h3>
+<ul>
+   <li>Dataset ID</li>
+   <li>Title</li>
+   <li>List of Associated Projects</li>
+   <li>Dataset Type</li>
+   <li>List of Remote URLs</li>
+   <li>External Contact</li>
+   <li>Internal Contact</li>
+   <li>Entry Date</li>
+   <li>Entry Contact</li>
+   <li>Readme Flag</li>
+   <li>Master List Flag</li>
+   <li>Set General Dataset Notes</li>
+   <li>Ingester</li>
+   <li>Ingest Status</li>
+   <li>Ingest Location</li>
+   <li>Ingest Type</li>
+   <li>Set Ingest Notes</li>
+   <li>Data to Archive Location</li>
+   <li>Archive Location</li>
+   <li>Loader</li>
+   <li>Load Status</li>
+   <li>Set Load Notes</li>
+   <li>Approver</li>
+   <li>Approve Status</li>
+   <li>Set Approve Notes</li>
+</ul>
+
+<h3>Notes</h3>
+<ul>
+   <li>Note Id</li>
+   <li>Author</li>
+   <li>Timestamp</li>
+   <li>Text</li>
+</ul>
+
+<h3>Other Needs</h3>
+<ul>
+   <li>List of Users that can be assigned a task (must be able to handle users that are no longer active)</li>
+   <li>List of Statuses that can be assigned to a task.</li>
+   <li>List of Ingest Types that can be assigned to an ingest task.</li>
+</ul>
+
+<h2>Required Views</h2>
+<ul>
+   <li>List of all projects<ul>
+      <li>Displays the project id, dataset prefix, and active flag</li>
+      <li>Allows for changing the activation of one of the projects</li>
+      </ul></li>
+   <li>List of datasets for a project<ul>
+      <li>Displays all datasets associated with the project (even if the dataset has not been entered in the DTS database).</li>
+      <li>Displays the dataset id, title, type, task contacts</li>
+      <li>Displays flags for the status of each task, for the readme flag, and if the dataset is in the master list for the project.</li>
+      <li>Allows for opening the editor for a dataset.</li>
+      <li>Allows for sorting by the dataset id, title, type, task contact.</li>
+      <li>Has a filter for displaying resolved/not resolved datasets for each status.</li>
+      <li>Has a filter for displaying documented/not documented datasets.</li>
+      <li>Has a filter for displaying dataset in/not in the master list.</li>
+      <li>Has a filter for displaying datasets with a specififed dataset type.</li>
+      </ul></li>
+   <li>List of datasets for a user (by task [ingest,load,approve])<ul>
+      <li>Displays the dataset id, title, type, project list, and contacts for the unselected tasks.</li>
+      <li>Displays flags for the status of each task, for the readme flag, and if the dataset is in the master list for each project.</li>
+      <li>Allows for opening the editor for a dataset.</li>
+      <li>Allows for sorting by the dataset id, title, type, project, or task contact.</li>
+      <li>Has the same filters as the <i>List of datasets for a project</i> view.</li>
+      </ul></li>
+   <li>View of dataset information<ul>
+      <li>Displays the dataset id, title, project list, dataset type, entry date and contact, ingest location, data to archive location, archived location, external contact, internal contact, ingest contact, ingest status, load contact, load status, approve contact, approve status, list of remote URLS, readme flag, master list flag for each project, and the notes for the dataset.</li>
+      <li>Allows for the moving the previous or next entry in the list of datasets.</li>
+      <li>Allows for opening the editor for the dataset.</li>
+      </ul></li>
+</ul>
+
+<h2>Required Functionality</h2>
+<ul>
+   <li>General Functionality<ul>
+      <li>Dataset ids must be unique as defined by the data archive system.</li>
+      <li>All changes to a dataset must be applied to all projects associated with the dataset.</li>
+      </ul></li>
+   <li>Activate/Deactivate a Project<ul>
+      <li>Changes the active flag in the DTS database to make the project appear/disappear from project lists in the DTS.</li>
+      </ul></li>
+   <li>Activate/Deactivate a User<ul>
+      <li>Changes the active flag in the DTS database to make the user appear/disappear from selection lists in the DTS.</li>
+      </ul></li>
+   <li>Create a new Dataset<ul>
+      <li>Defines the following fields for a dataset (all fields are in the DTS database unless specified otherwise):<ul>
+         <li>Dataset ID - Unique id to define the database access for the dataset (in data archive system)</li>
+         <li>Title - The displayed name of the dataset (in data archive system)</li>
+         <li>Project List - The list of projects associated with the dataset (in data archive system)</li>
+         <li>Dataset Type - The type of dataset (source, processed, ...)</li>
+         <li>Internal Contact - The internal contact for questions on the dataset (in data archive system)</li>
+         <li>Entry Date - The date the dataset was entered into the DTS system.</li>
+         <li>Entry Contact - The user who entered the dataset into the DTS system.</li>
+         <li>Readme Flag - A flag that specifies if one or more documents exist for the dataset.</li>
+         <li>General Dataset Notes - The set of notes for the dataset that are not associated with a specific task.</li>
+         <li>Ingest Contact - The person who is in charge of ingesting the data for the dataset.</li>
+         <li>Ingest Status - The status of the ingest task.</li>
+         <li>Ingest Location - The directory path on the system where the ingested data was placed.</li>
+         <li>Ingest Notes - The set of notes that are for the ingest task.</li>
+         <li>Load Contact - The person who is in charge of loading the data on the data archive system.</li>
+         <li>Load Status - The status of the load task.</li>
+         <li>Data to Archive Location - The directory path of the data to be loaded into the data archive system.</li>
+         <li>Archive Location - The directory path where the final archived data is stored for the data archive system.</li>
+         <li>Load Notes - The set of notes that are for the load task.</li>
+         <li>Approve Contact - The person who is in charge of approving the final state of the dataset.</li>
+         <li>Approve Status - The status of the approve task.</li>
+         <li>Approve Notes - The set of notes that are for the approve task.</li>
+         </ul></li>
+      <li>Inserts values into the data archive system database:<ul>
+         <li>Defaults the lat/lon box to the maximum sized box defined by the projects selected for the dataset.</li>
+         <li>Defaults the start/end date to the maximum date range defined by the projects selected for the dataset.</li>
+         <li>Defaults the hidden flag to true</li>
+         <li>Assigns the dataset_id, name, and internal contact from the values entered in the form.</li>
+         <li>Associates the dataset to the selected project(s).</li>
+         </ul></li>
+      <li>Inserts values into the DTS database:<ul>
+         <li>Enters the values not in the data archive system into the DTS database.</li>
+         <li>Creates new notes and associates them with the dataset.</li>
+         <li>Only creates entries in tables that have values. (i.e. If a dataset is not loaded it won't create a load entry in the database.)</li>
+         </ul></li>
+      </ul></li>
+   <li>Clone a Dataset<ul>
+      <li>Initializes the dataset fields from the source dataset for the clone except for the dataset id (which must be a new unique value).</li>
+      <li>Inserts the values into the data archive system database and the DTS database like in <i>Create a new Dataset</i> section above.</li>
+      </ul></li>
+   <li>Edit a Dataset<ul>
+      <li>Defines the same fields as listed in the <i>Create a new Dataset</i> section above.</li>
+      <li>Cannot change the dataset id for the dataset.</li>
+      <li>Updates the values in the data archive system database.</li>
+      <li>Updates the values in the DTS database</li>
+      </ul>
+   <li>Delete a Dataset<ul>
+      <li>Completely removes the dataset from both the DTS database and the data archive system database.</li>
+      </ul></li>
+</ul>
+
+<h2>Purposely Omitted Functionality</h2>
+<ul>
+   <li>Adding, Editing, Deleting Projects (This is done in other tools)</li>
+   <li>Adding, Editing, Deleting Users (This is done in other tools)</li>
+   <li>Adding, Editing, Deleting Statuses (This is done on the command line at this time)</li>
+   <li>Adding, Editing, Deleting Ingest Types (This is done on the command line at this time)</li>
+</ul>
+
+</body>
+</html>

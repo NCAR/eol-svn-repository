@@ -1,0 +1,26 @@
+Linda,
+
+Release Site Type/Site ID looks great now.
+
+I am still seeing mandatory level observations (CORRECTED In JULY 2024) in the output_esc files 
+and yes if we remove them from the IUS they should also be removed from the IUK. (DONE)
+
+To clarify what I was saying about how we would remap the nominal times (if we need to) 
+I will do by way of example with the Bjornoya soundings on 5 March:
+
+actual time        - nominal time (in parens I have how these currently map)
+202403050510 - 0600 (0600)
+202403050711 - 0800 (0600)
+202403050910 - 1000 (0900)
+202403051111 - 1200 (1200)
+202403051310 - 1400 (1200)
+202403051511 - 1600 (1500)
+202403051710 - 1800 (1800)
+202403052310 - 0000 on 20140306 (0000)
+
+So it's just take the actual release hour and add one and 
+set the minutes to 00 to get the "true" nominal time. Again, not a big deal unless 
+having dup nominal times causes us significant issues somewhere else in our process).
+
+Thanks.
+Scot

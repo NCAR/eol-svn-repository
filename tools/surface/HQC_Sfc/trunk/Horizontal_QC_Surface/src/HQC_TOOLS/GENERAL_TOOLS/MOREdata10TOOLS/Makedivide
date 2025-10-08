@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for divide data program.
+#
+
+CC=acc
+##CFLAGS = -g
+
+divide_data: divide_data.o
+	$(LINK.c) -o divide_data divide_data.o
+	chmod 0755 divide_data
+
+clean:
+	rm *.o

@@ -1,0 +1,210 @@
+#!/bin/perl
+
+##Module----------------------------------------------------------------------- 
+# <p>Displays the information for a single dataset.  Displays the administrative
+#  information for a dataset along with the status information.  Also determines
+#  if a dataset is an extraction and flags it as such for the user.
+#
+# @author Dan Sullivan 
+##Module----------------------------------------------------------------------- 
+
+use strict;
+use lib "lib";
+use Utils;
+use State;
+use CGI;
+use DatasetDBA;
+
+require "./menu";
+
+my $state = State->new();
+my $cgi = CGI->new();
+
+$state->setFromParams( $cgi );
+
+dataset_view( $state, $cgi );
+
+sub dataset_view
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	println( $cgi->header() );
+	println( "<html>" );
+		println( "<head>" );
+		println( "<title>Iven Dataset View</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+	println( "<body>" );
+
+	my $project = menu( $state, $cgi );
+
+	my $ds;
+	$ds = DatasetDBA::getFromDB( $state->{dataset}, $state->{product}, $state->{project} );
+
+	println( "<br>" );
+
+	println( "<table border=0 cellpadding=0 cellspacing=0 width=100%>" );
+		if( $ds->{is_extraction} )
+		{
+			println( "<tr bgcolor=#FFFFCC>" );
+				println( "<td colspan=3 align=center>" );
+					println( "<font color=#900000 size=+1><b>Extraction</font></b>" );
+				println( "</td>" );
+			println( "</tr>" );
+		}
+		println( "<tr>" );
+			println( "<td width=33%>" );
+				my $new_url = $state->getUrlString( "view" => $PRODUCT, "product" => $ds->{pdname} );
+				println( "<b><font>Status: </b> $status_hash{$ds->{status}}" );
+				println( "<img src=$img_src/question.gif alt=\"Question(s) about data\">" ) if( $ds->{questions} );
+				println( "<br><b><font>Product: </b> <a href=$new_url>$ds->{pdname}</a></font>" );
+			println( "</td>" );
+			println( "<td width=33% align=center>" );
+				if( $state->{view} == $DATASET )
+				{ println( "<b><u><font size=+2>$ds->{dsname}</font></b></u>" ); }
+				else
+				{ println( "<b><u><font size=+2>$ds->{extname}</font></b></u>" ); }
+			println( "</td>" );
+			println( "<td width=33% align=right>" );
+				println( "<b>Processing: </b> $ds->{user_processing_object}->{fname} $ds->{user_processing_object}->{lname}" );
+			println( "</td>" );
+		println( "</tr>" );
+		if( $ds->{is_extraction} )
+		{
+			my $url = $state->getUrlString( "view"=>$PRODUCT, "product"=>$ds->{extraction_object}->{pdsource} );
+			println( "<tr>" );
+				println( "<td colspan=3>" );
+					println( "<b>Source Product: </b><a href=$url>$ds->{extraction_object}->{pdsource}</a>" );
+				println( "</td>" );
+			println( "</tr>" );
+		}
+	println( "</table>" );
+	println( "<br>" );
+
+	println( "<center><table border=0 cellspacing=1 cellpadding=2 class=notesTable width=85%>" );
+		println( "<tr class=notesHeading>" );
+			println( "<td>" );
+				println( "<table border=0 cellpadding=0 cellspacing=0 width=100%>" );
+					println( "<tr class=notesHeading>" );
+						println( "<td width=10%>" );
+							println( "&nbsp;" );
+						println( "</td>" );
+						println( "<td align=center width=80%>General Notes</td>" );
+						my $url = $state->getUrlStringJS( "edit"=>$EDATASET_ADMIN, "eproduct"=>$ds->{pdname}, "edataset"=>$ds->{dsname}, "mode"=>"update" );
+						println( "<td align=right width=10%><a href=\"javascript: dsAdminEditWin( " . quote( $url ) . " )\"><img src=$img_src/e_dataset.gif border=0 alt=\"Edit Notes\"></a></td>" );
+					println( "</tr>" );
+				println( "</table>" );
+			println( "</td>" );
+		println( "</tr>" );
+		println( "<tr class=notesRow><td><div class=bigScroll>$ds->{admin_notes}</div></td></tr>" );
+	println( "</table></center>" );
+	println( "<br><br>" );
+
+	println( "<center><table border=0 cellspacing=1 cellpadding=2 width=85% class=statusTable>" );
+
+		println( "<tr class=statusHeading>" );
+			println( "<td width=100%>" );
+				println( "<table border=0 cellpadding=0 cellspacing=0 width=100%>" );
+					println( "<tr class=statusHeading>" );
+						println( "<td width=10%>&nbsp;</td>" );
+						println( "<td width=80% align=center>Dataset Status</td>" );
+						my $url_status = $state->getUrlStringJS( "edit"=>$EDATASET_STATUS, "eproduct"=>$ds->{pdname}, "edataset"=>$ds->{dsname} );
+						println( "<td align=right width=10%><a href=\"javascript: dsAdminEditWin( " . quote( $url_status ) . " )\"><img src=$img_src/e_status.gif border=0 alt=\"Edit Status\"></a></td>" );
+					println( "</tr>" );
+				println( "</table>" );
+			println( "</td>" );
+		println( "</tr>" );
+		println( "<tr class=statusRow>" );
+			println( "<td>" );
+			println( "<table border=0 cellpadding=2 width=100% class=statusLinkTable>" );
+				println( "<tr>" );
+					println( "<td align=right><b>Raw Data: </b></td>" );
+					println( "<td>" . getStatusLink( $ds->{raw_data}, $project ) . "</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td align=right width=20% nowrap><b>Raw Data Readme: </b></td>" );
+					println( "<td>" . getStatusLink( $ds->{readme}, $project ) . "</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td align=right><b>Final Data: </b></td>" );
+					println( "<td>" . getStatusLink( $ds->{final_data}, $project ) . "</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td align=right><b>Station List: </b></td>" );
+					println( "<td>" . getStatusLink( $ds->{station_info}, $project ) . "</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td align=right><b>Software: </b></td>" );
+					println( "<td>" . getStatusLink( $ds->{software}, $project ) . "</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td align=right><b>How To: </b></td>" );
+					println( "<td>" . getStatusLink( $ds->{how_to}, $project ) . "</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td align=right><b>Plots: </b></td>" );
+					println( "<td>" . getStatusLink( $ds->{plots}, $project ) . "</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td align=right><b>Id Type: </b></td>" );
+					my $id_type = "";
+					$id_type = $ds->{id_type} if( defined( $ds->{id_type} ) );
+					println( "<td>$id_type</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td align=right><b>Platform Type: </b></td>" );
+					my $platform_type = "";
+					$platform_type = $ds->{platform_type} if( defined( $ds->{platform_type} ) );
+					println( "<td>$platform_type</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td align=right nowrap><b>Code in BEST_SW:</b></td>" );
+					my $best_sw = "<font color=red>NO</font>";
+					$best_sw = "<font color=blue>YES</font>" if( $ds->{best_sw} );
+					println( "<td><b>$best_sw</b></td>" );
+				println( "</tr>" );
+
+			println( "</table>" );  #end dir listing table
+			println( "</td>" );
+		println( "<tr class=statusHeading><td>Processing Notes</td></tr>" );
+		println( "<tr class=statusRow>" );
+			println( "<td>" );
+				println( $ds->{status_notes} );
+			println( "</td>" );
+		println( "</tr>" );
+	println( "</tr>" );
+	println( "</table>" );  #end of status table
+
+	println( "</body></html>" );
+}
+
+sub getStatusLink
+{
+	my $path = shift;
+	my $project = shift;
+	my $source = $project->{link_source};
+	my $target = $project->{link_target};
+
+	if( $path =~ /^$source/ )
+	{
+		my $url = $target . substr( $path, length( $source ), length($path)-length($source) );
+		$path = "<a href=$url>$path</a>";
+	}
+	elsif( $path =~ /^http:/ )
+	{
+		$path = "<a href=$path>$path</a>";
+	}
+	return $path;
+}
+1;

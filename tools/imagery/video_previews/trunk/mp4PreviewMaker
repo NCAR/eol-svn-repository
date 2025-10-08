@@ -1,0 +1,108 @@
+#!/bin/bash
+
+: '
+
+Title:
+mp4PreviewMaker
+
+Author:
+Christian Sibo, UCAR - EOL
+
+Date:
+07/20/2011
+
+Execution:
+Bash Shell
+
+Description:
+Script to find each .mp4 within the current directory and every subdirectory therein 
+and use ffmpeg to save a .png image of 1 frame per video second to the ffmpeg_temp folder
+then rebuild a *_preview.mp4 of those .png"s as a time-lapse video for quick preview through codiac.
+
+3rd Party Programs Required:
+ffmpeg
+--http://www.ffmpeg.org/ffmpeg.html
+--Free Use LGPL License
+
+Parameters:
+ffmpeg -i $mp4 -r $X -f image2 $dir/ffmpeg_temp/%05d.png
+--$X = framerate of saved images. Default is 1 to create a _preview.mp4 of 1 fps. Realtime ~ 30 fps
+--$mp4 = input .mp4 to be converted
+--$dir = current directory of the input video
+
+ffmpeg -i $dir/ffmpeg_temp/%05d.png -b $Y ${mp4%.mp4}_preview.mp4
+--$Y = bitrate of reconstituted video. Conversion will not work if bitrate is set too low
+--$mp4 = input .mp4 to be converted
+--$dir = current directory of the temporary .png"s
+--${mp4/$Z/} = With what you want the previews to be appended. If you change $Z then you must change
+the first if-then and second ffmpeg lines accordingly.
+
+Operation:
+Save script to lowest directory containing all the directories you desire converted
+and execute. Each conversion from video discovery to end of rebuild takes ~1min real time
+for each 9min video time at 1fps image grab.
+
+Error Prevention:
+This script can detect any X.mp4 that has an X_preview.mp4 in the same directory and will skip both
+during the coversion process. To disable this or change the search parameters for the definition of a 
+video already converted, see Parameters above.
+
+Script Errors:
+-Several rm errors will occur throughout the execution for removal of ffmpeg_temp or 
+png"s within ffmpeg_temp. These are normal, redundant operations. 
+-Some find errors may occur with "no such file or folder exists." This is normal.
+-Several lines starting with "NOT CONVERTING..." will be displayed as a log of videos
+or folders skipped due to having already been converted or not existing
+
+ffmpeg Errors:
+-Incompatible data format: The .mp4 trying to be converted is in some fashion incompatible with ffmpeg"s
+default codecs or is corrupted
+-Bitrate too low: The bitrate parameter listed above is set too low. The bitrate param is measured
+in Bytes, not KB. 
+-No ffmpeg_temp/%05d.png: The temp folder or images are missing. Check to make sure it is being created
+in the same directory as the input video and that the images are being saved and retrieved from that
+same location/ffmpeg_temp/
+'
+
+#Main for loop to iterate through the directories under the current
+for dir in $(find ./ -type d) ; do
+    #removes latent temp folder for neatness' sake
+   rm -rf $dir/ffmpeg_temp
+   #makes the temp folder for saving the images
+   mkdir $dir/ffmpeg_temp
+   #secondary for loop to find each .mp4 in the current $dir
+   for mp4 in $dir/*.mp4 ; do
+       #check if $mp4 is an original video that already has a $mp4_preview.mp4 in this directory
+       #ie. $mp4 has already been converted
+       if [ $(find $dir -wholename ${mp4%.mp4}_preview.mp4) ]; then
+	   echo NOT CONVERTING $mp4 , Preview detected
+       else
+	   #set up variables for the next error check
+	   #saves a len for $mp4's filename
+	   original=${#mp4}
+	   #saves a string for $mp4's filename with _previewreplaces with nothing
+     	   bub=${mp4/_preview/}
+	   #convertes the string to a len
+	   altered=${#bub}
+	   #check if $mp4 is a preview of an original video
+	   if [ $original != $altered ]; then
+	       echo NOT CONVERTING $mp4 , Preview detected
+	   else
+	       echo Extracting Images of $mp4 ...
+	       #save the images from teh original video
+	       ffmpeg -i $mp4 -r 1 -f image2 $dir/ffmpeg_temp/%05d.png
+	       echo Converting back to an mp4 ...
+	       #build a new video from teh images
+	       ffmpeg -i $dir/ffmpeg_temp/%05d.png -b 500000 ${mp4%.mp4}_preview.mp4
+	       #delete all the images form the temp folder for reuse on next video
+	       rm  $dir/ffmpeg_temp/*.png
+       
+	   fi
+        fi
+   done
+   #removes the temp folder once all the videos within this directory have been converted
+   rm -rf $dir/ffmpeg_temp
+done   
+#remove erroneous files
+rm -rf ./ffmpeg_temp
+rm ./*.mp4.mp4

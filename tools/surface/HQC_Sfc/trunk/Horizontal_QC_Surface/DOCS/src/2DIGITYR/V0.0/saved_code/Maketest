@@ -1,0 +1,9 @@
+SHELL = /bin/sh
+
+#CC=purify acc -g
+CC=acc
+##CFLAGS = -g
+
+test_gQC: test_gQC.o gQC.o process_qcfrec.o date.o
+	$(LINK.c) -o test_gQC test_gQC.o gQC.o process_qcfrec.o date.o -l m
+	chmod 0755 test_gQC

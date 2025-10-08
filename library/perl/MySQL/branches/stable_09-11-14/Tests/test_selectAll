@@ -1,0 +1,28 @@
+#! /usr/bin/perl -w
+
+use strict;
+use lib "/h/eol/stroble/scripts/MySQL/lib";
+use MySqlDatabase;
+use MySqlDataset;
+
+my $database = MySqlDatabase->new("stroble","tempass");
+$database->setHost("localhost");
+$database->connect();
+
+my @rows = $database->selectAll("dataset", "dataset_id", "dataset_id LIKE \"20.%\"");
+
+if ($rows[0] eq "") {
+    for (my $i = 1; $i <= $#rows; $i++)
+    {
+	print "$i: " . $rows[$i][0] . "\n";
+    }
+    print "Compare to 20.% in GUIMaint (for metlot) 'Choose' tab\n";
+}
+else
+{
+    print "Selection FAILED!\n";
+    print $rows[0];
+}
+
+
+$database->disconnect();

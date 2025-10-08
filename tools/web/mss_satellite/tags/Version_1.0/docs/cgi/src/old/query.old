@@ -1,0 +1,483 @@
+#!/bin/perl 
+
+#----------------------------------------------------
+#query:
+#	This is a CGI script that allows users to view exactly
+#	what GOES data JOSS has on mass store.  The suldan
+#	MySQL database contains all of the data which is 
+#	updated on a daily basis through a cronjob
+#	(/home/suldan/mass_store/perl/query_daily).
+#
+#How it works...
+#	Each time a user submits a query this script is 
+#	executed at least twice.  First to set up the frameset
+#	and then to display the Daily results of the query in
+#	the top frame.  The user can then select individual days
+#	to view all the files for that day, executing the script
+#	again.
+#----------------------------------------------------
+
+
+use CGI qw(:standard :html3);
+use DBI;
+use lib "lib";
+use Table;
+use DayRecord;
+use FileRecord;
+use Util;
+
+#--main----------------------------------------------
+
+my %action = ( "Submit Query" => \&showFrames,
+								"getdaily" => \&displayDaily,
+								"getfiles" => \&displayFiles );
+
+
+my $act = param( "Action" );
+
+$action{$act}->();
+
+#--subroutines---------------------------------------
+
+# Show the frameset and set up the top frame to display the
+#		the daily results 
+sub showFrames
+{
+	println( header() );
+
+	# Get the url for the tope frame according to how the user filled
+	#	 out the fields
+	my $top_src = getQueryResult();
+
+	println( "<html><head><title>Query Result</title></head>" );
+
+	println( "<frameset rows=\"50%,50%\" cols=\"*\" framespacing=5 border=1>" );
+		println( "<frame name=top border=2 frameborder=1 src=\"$top_src\" marginwidth=0 marginheight=0>" );
+		println( "<frame name=bottom border=2 frameborder=1 src=\"$def_bottom\" marginwidth=0 marginheight=0>" );
+	println( "</frameset>" );
+	println( "</html>" );
+}
+
+# Return the url for the top frame using the values the user entered in the 
+# 	form
+sub getQueryResult
+{
+	# Get the start and end julian date 
+	my $start_yr = param( "jdate_frm_yr" );
+	my $start_dy = param( "jdate_frm_dy" );
+	my $end_yr = param( "jdate_to_yr" );
+	my $end_dy = param( "jdate_to_dy" );
+
+	$start = $start_yr . $start_dy;
+	$end = $end_yr . $end_dy;
+
+	# Check to see if user chose julian date or calendar date
+	if( $start eq "YYYYJJJ" )
+	{
+		my $year = param( "year_frm" );
+		my $month = param( "month_frm" );
+		my $day = param( "day_frm" );
+		my $date = $year . sprintf( "%2.2d", $month ) . sprintf( "%2.2d", $day );
+	
+		$start = getJulian( $date );	
+	}
+
+	if( $end eq "YYYYJJJ" )
+	{
+		my $year = param( "year_to" );
+		my $month = param( "month_to" );
+		my $day = param( "day_to" );
+		my $date = $year . sprintf( "%2.2d", $month ) . sprintf( "%2.2d", $day );
+	
+		$end = getJulian( $date );	
+	}
+
+	# Get the start and end time
+	my $start_tm = undef;
+	my $end_tm = undef;
+	my $hr_start = param( "hour_frm" );
+	my $mn_start = param( "minute_frm" );
+	my $hr_end = param( "hour_to" );
+	my $mn_end = param( "minute_to" );
+
+	if( $hr_start ne "HH" && $mn_start ne "MM" )
+	{
+		$start_tm = $hr_start . $mn_start;	
+	}
+	if( $hr_end ne "HH" && $mn_end ne "MM" )
+	{
+		$end_tm = $hr_end . $mn_end;	
+	}
+
+	# Get the satellite and resolution
+	my $sat = param( "satellite" );
+	my $res = param( "resolution" );
+
+	# Get the max and min number of files to display
+	my $min_files = param( "min_files" );
+	my $max_files = param( "max_files" );
+
+	# Form the src url for the top frame
+	my $src = $my_url . "?Action=getdaily&jdate_frm=$start&jdate_to=$end&satellite=$sat&resolution=$res";
+
+	if( $start_tm )
+	{
+		$src = $src. "&time_frm=$start_tm";
+	}
+	if( $end_tm )
+	{
+		$src = $src. "&time_to=$end_tm";
+	}
+
+	if( $min_files ne "0" )
+	{
+		$src = $src . "&min_files=$min_files";
+	}
+	if( $max_files ne "ALL" )
+	{
+		$src = $src . "&max_files=$max_files";
+	}
+
+	# Determine which display mode (all records, only missing data, or
+	#		only no missing data)
+	my $miss_data = param( "miss_data" );
+	if( $miss_data eq "missing" )
+	{
+		$src = $src . "&missing=1";
+	}
+	elsif( $miss_data eq "no_missing" )
+	{
+		$src = $src . "&missing=0";
+	}
+
+	return $src;
+}
+
+# Display the daily results of the query. Creates the needed SQL
+#		statement, queries the database and displays the results in
+#		an html table.
+sub displayDaily
+{
+	my $col1 = "#FFFFFF";
+	my $col2 = "#EBEBF5";
+	my $col = $col1;
+
+	my $dbh = connectToDatabase();
+
+	my $start = param( "jdate_frm" );
+	my $end = param( "jdate_to" );
+
+	my $sat = param( "satellite" );
+	my $res = param( "resolution" );
+
+	my $time_frm = param( "time_frm" );
+	my $time_to = param( "time_to" );
+
+	my $min_files = param( "min_files" );
+	my $max_files = param( "max_files" );
+
+	my $show_missing = 1;
+
+	my $sql = "SELECT * FROM DayTable WHERE date >= $start and date <= $end";
+
+	if( $sat ne "All" )
+	{
+ 		$sql = $sql . " and satellite = \'$sat\'";
+	}
+
+	if( $res ne "All" )
+	{
+		$sql = $sql . " and resolution=\'$res\'";	
+	}
+
+	if( $min_files )
+	{
+		$sql = $sql . " and nfiles >= $min_files";
+		$show_missing = 0;
+	}
+	if( $max_files )
+	{
+		$sql = $sql . " and nfiles <= $max_files";
+		$show_missing = 0;
+	}	
+
+	my $missing = param( "missing" );
+	if( defined( $missing ) )
+	{
+		$sql = $sql . " and missing=$missing";
+		$show_missing = 0;
+	}
+
+	$sql = $sql . " ORDER BY date ASC, satellite ASC, resolution ASC";
+
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute;
+	my @row;
+	my $rec;
+
+	println( header() );
+	println( "<html><head><title>Query Results</title></head><body bgcolor=#FFFFFF>" );
+	println( "<center><b><font size=+2>Mass Store Query Results</b></font><br>" );
+	print( "<font size=+1><b>Start:</b> " . getCalendar( $start ) );
+
+	if( defined( $time_frm ) )
+	{  print( " ", substr( $time_frm, 0, 2 ), ":", substr( $time_frm, 2 , 2 ) ); }
+	else
+	{  print( " 00:00" ); }	
+
+  print( "&nbsp;&nbsp;<b>End:</b> ". getCalendar( $end ) ); 
+
+	if( defined( $time_to ) )
+	{  print( " ", substr( $time_to, 0, 2 ), ":", substr( $time_to, 2 , 2 ) ); }
+	else
+	{  print( " 23:59" ); }	
+
+	println( "<b>&nbsp;&nbsp;Satellite:</b> $sat&nbsp;&nbsp;<b>Resolution:</b> $res</b><br></font>" );	
+
+	print( "<b>Min. Files/Day: </b>" );
+	if( defined( $min_files ) )
+	{
+		print( $min_files );
+	}
+	else
+	{
+		print( 0 );
+	}
+	print( "&nbsp;&nbsp;&nbsp;&nbsp;<b>Max. Files/Day: </b>" );
+	if( defined( $max_files ) )
+	{
+		print( $max_files );
+	}
+	else
+	{
+		print( "ALL" );
+	}
+	print( "&nbsp;&nbsp;&nbsp;&nbsp;<b>Display: </b>" );
+	if( !defined( $missing ) )
+	{
+		print( "All Matches" );
+	}
+	elsif( $missing == 1 )
+	{
+		print( "Days With Missing Data" );
+	}
+	elsif( $missing == 0 )
+	{
+		print( "Days Without Missing Data" );
+	}
+	print( "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=http://www.joss.ucar.edu/~suldan/mass_store/queryMS.html target=_top>Back To Form</a>" );
+	println( "<br>" );
+
+	print( DayRecord->getTableHeader() );
+
+	my $prev_day = 0;
+	my $tot_size = 0;
+	my $tot_files = 0;
+	while( (@row) = $sth->fetchrow )
+	{
+		$rec = DayRecord->new();
+		$rec->{id} = $row[0];
+		$rec->{date} = $row[1];
+		$rec->{satellite} = $row[2];
+		$rec->{resolution} = $row[3];
+		$rec->{nfiles} = $row[4];
+		$rec->{size} = $row[5];
+		$rec->{path} = $row[6];
+		$rec->{missing} = $row[7];
+
+		$tot_size += $rec->{size};
+		$tot_files += $rec->{nfiles};
+
+		if( $col eq $col2 ) { $col = $col1; } else { $col=$col2; }
+		my $link = "<a href=" . $my_url . "?Action=getfiles&day_id=$rec->{id}";
+		if( $rec->{date} == $start && $time_frm )
+		{ $link = $link . "&time_frm=$time_frm"; }
+		if( $rec->{date} == $end && $time_to )
+		{ $link = $link . "&time_to=$time_to"; }
+
+		$link = $link . " target=bottom>";
+
+		if( !$prev_day )
+		{
+			$prev_day = $rec->{date};
+		}
+		else
+		{
+			if( $rec->{date} - $prev_day > 1 && $show_missing )
+			{
+				print( getMissingDay() );
+			}
+			$prev_day = $rec->{date};
+		}
+		print( $rec->getHtmlRow( $col, $link ) );
+	}
+	println( "</table>" );
+	println( "<b>Total Disk Usage:</b>" . commify( $tot_size ) . " KB<br>" );
+	println( "<b>Total # of Files:</b>" . commify( $tot_files ) . "<br>" );
+	$sth->finish();
+	$dbh->disconnect();
+
+	println( "</body></html>" );
+}
+
+# Display all of the information for each file of the given day
+# 	specified by the day_id.
+sub displayFiles
+{
+	my $col1 = "#FFFFFF";
+	my $col2 = "#EBEBF5";
+	my $col = $col1;
+	my $dbh = connectToDatabase();
+	my $day_id = param( "day_id" );
+	my $time_frm = param( "time_frm" );
+	my $time_to = param( "time_to" );
+	my $prev_tm = 0;
+
+	my $sql = "SELECT * FROM FileTable WHERE day_id=$day_id";
+
+	if( $time_frm )
+	{
+		$sql = $sql . " and time > $time_frm";
+	}
+	if( $time_to )
+	{
+		$sql = $sql . " and time < $time_to";
+	}
+
+	$sql = $sql . " ORDER BY time ASC";
+
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @row = $sth->fetchrow();
+	my $rec;
+	my $table = Table->new();
+
+	println( header() );
+	println( "<html><head><title>Query Results</title></head><body bgcolor=#FFFFFF>" );
+#	print( "<center><font size=+1><b>Day: </b>" . getCalender($row[1]) );
+	print( "<center><font size=+1><b>Day: </b>", getCalendar($row[1]) );
+
+	if( defined( $time_frm ) )
+	{  print( "&nbsp;&nbsp;", substr( $time_frm, 0, 2 ), ":", substr( $time_frm, 2 , 2 ) ); }
+	else
+	{  print( "&nbsp;&nbsp;00:00" ); }	
+	if( defined( $time_to ) )
+	{  print( "-", substr( $time_to, 0, 2 ), ":", substr( $time_to, 2 , 2 ) ); }
+	else
+	{  print( "-23:59" ); }	
+
+	println( FileRecord->getTableHeader() );
+
+	while( @row )
+	{
+		$rec = FileRecord->new();
+		$rec->{day_id} = $row[0];
+		$rec->{date} = $row[1];
+		$rec->{time} = sprintf( "%4.4d", $row[2] );		
+		$rec->{size} = $row[3];		
+		$rec->{path} = $row[4];		
+
+		if( $col eq $col2 ) { $col = $col1; } else { $col = $col2; }
+
+		if( $rec->{time} - $prev_tm > 100 )
+		{  print( getMissingData() ); }
+
+		$prev_tm = $rec->{time};
+
+		print( $rec->getHtmlRow( $col ) );
+		@row = $sth->fetchrow();
+	}
+
+	if( $prev_tm < 2300 )
+	{  print( getMissingData() ); }
+
+	$sth->finish();
+	$dbh->disconnect();
+
+	println( "</table></body></html>" );
+}
+
+# Return a data base handle connected to the suldan MySQL database
+sub connectToDatabase
+{
+	return DBI->connect("DBI:mysql:database=suldan;host=thunder",
+											"suldan", "hithere", { RaiseError=>1} ) || die( "Unable to Connecto to database" );
+}
+
+# Convert the calendar date in the YYYY-MM-DD format to a Julian
+#		date in the YYYYJJJ format
+sub getJulian
+{
+	my $date = shift;
+	my $year = substr( $date, 0, 4 );
+	my $month = substr( $date, 4, 2 );
+	my $day = substr( $date, 6, 2 );
+	my $off = 0;
+	my $jday;
+	if( $year % 4 == 0 )
+	{ $off = 1; }
+
+	if( $month == 1 )
+	{
+		$jday = $day;
+	}
+	elsif( $month == 2 )
+	{
+		$jday = $day + 31;
+	}
+	elsif( $month == 3 )
+	{
+		$jday = $day + 59 + $off;	
+	}
+	elsif( $month == 4 )
+	{
+		$jday = $day + 90 + $off;	
+	}
+	elsif( $month == 5 )
+	{
+		$jday = $day + 120 + $off;	
+	}
+	elsif( $month == 6 )
+	{
+		$jday = $day + 151 + $off;	
+	}
+	elsif( $month == 7 )
+	{
+		$jday = $day + 181 + $off;	
+	}
+	elsif( $month == 8 )
+	{
+		$jday = $day + 212 + $off;	
+	}
+	elsif( $month == 9 )
+	{
+		$jday = $day + 243 + $off;	
+	}
+	elsif( $month == 10 )
+	{
+		$jday = $day + 273 + $off;	
+	}
+	elsif( $month == 11 )
+	{
+		$jday = $day + 304 + $off;	
+	}
+	elsif( $month == 12 )
+	{
+		$jday = $day + 334 + $off;	
+	}
+
+	return ( $year . sprintf( "%3.3d", $jday ) );	
+}
+
+# Return a table row showing possible missing days exist
+sub getMissingDay
+{
+	return "<tr><td bgcolor=#FFFFFF height=5><font size=-3>&nbsp;</td><td bgcolor=#FFFF66 colspan=7 height=5 align=center><font size=-3>??? Missing Day(s) ???</td></tr>";
+}
+
+# Return a table row showing possible missing data exists
+sub getMissingData
+{
+	return "<tr><td bgcolor=#FFFF66 colspan=5 height=5 align=center><font size=-3>??? Missing Data ???</td></tr>";
+}
+

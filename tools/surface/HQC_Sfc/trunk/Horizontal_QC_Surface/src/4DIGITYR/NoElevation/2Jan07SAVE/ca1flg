@@ -1,0 +1,663 @@
+compute_sigmasq_4DYR.c:               printf ("qcfptr->statn, qcfptr->hour_nom, qcfptr->minute_nom: %-s  %d %d\n",
+compute_sigmasq_4DYR.c:                        qcfptr->statn, qcfptr->hour_nom, qcfptr->minute_nom);
+compute_sigmasq_4DYR.c:               if ( qcfptr->hour_nom > current_hr) break;
+compute_sigmasq_4DYR.c:               if ((qcfptr->hour_nom == current_hr) && (qcfptr->minute_nom > current_min)) break;
+compute_sigmasq_4DYR.c:               if ((qcfptr->hour_nom == current_hr) && (qcfptr->minute_nom == current_min))
+compute_sigmasq_4DYR.c:                  sprintf (current_stn, "%-10s:%-15s\0",qcfptr->qnet,qcfptr->statn);
+compute_sigmasq_4DYR.c:                  printf ("(BEFORE)qcfptr->staprs, stn_data[ORIG], stn_numdata[stn_no][stnprs]:: %f %f %d\n", 
+compute_sigmasq_4DYR.c:                          qcfptr->staprs, stn_data[stn_no][stnprs][writeover_position], 
+compute_sigmasq_4DYR.c:                  if (qcfptr->staprs >0.00)
+compute_sigmasq_4DYR.c:                  stn_data[stn_no][stnprs][writeover_position] = qcfptr->staprs;
+compute_sigmasq_4DYR.c:                  printf ("(AFTER)qcfptr->staprs, stn_data[ORIG], stn_numdata[stn_no][stnprs]:: %f %f %d\n",
+compute_sigmasq_4DYR.c:                          qcfptr->staprs, stn_data[stn_no][stnprs][writeover_position], 
+compute_sigmasq_4DYR.c:                  if (qcfptr->seaprs >0.00)
+compute_sigmasq_4DYR.c:                  stn_data[stn_no][slp][writeover_position] = qcfptr->seaprs;
+compute_sigmasq_4DYR.c:                  if (qcfptr->cmpsea >0.00)
+compute_sigmasq_4DYR.c:                  stn_data[stn_no][cslp][writeover_position] = qcfptr->cmpsea;
+compute_sigmasq_4DYR.c:                  if (qcfptr->temp >-999.00)
+compute_sigmasq_4DYR.c:                  stn_data[stn_no][temp][writeover_position] = qcfptr->temp;
+compute_sigmasq_4DYR.c:                  if (qcfptr->dewpnt >-999.00)
+compute_sigmasq_4DYR.c:                  stn_data[stn_no][dewpt][writeover_position] = qcfptr->dewpnt;
+compute_sigmasq_4DYR.c:                  if (qcfptr->wndspd >-999.00)
+compute_sigmasq_4DYR.c:                  stn_data[stn_no][windsp][writeover_position] = qcfptr->wndspd;
+compute_sigmasq_4DYR.c:                  if (qcfptr->wnddir >-999.00)
+compute_sigmasq_4DYR.c:                  stn_data[stn_no][winddir][writeover_position] = qcfptr->wnddir;
+convert_QCF_time_4DYR.c:   printf ("   qcfptr->yr,mon,day,hr,min:: %04d%02d%02d %02d:%02d\n",
+convert_QCF_time_4DYR.c:           qcfptr->year_nom, qcfptr->month_nom, qcfptr->day_nom, qcfptr->hour_nom,
+convert_QCF_time_4DYR.c:           qcfptr->minute_nom);  
+convert_QCF_time_4DYR.c:   qcfptr->minute_nom = qcfptr->minute_nom + num_min_to_add;
+convert_QCF_time_4DYR.c:   if (qcfptr->minute_nom <60)
+convert_QCF_time_4DYR.c:     current_min = qcfptr->minute_nom;
+convert_QCF_time_4DYR.c:     qcfptr->hour_nom = qcfptr->hour_nom + hour;
+convert_QCF_time_4DYR.c:     qcfptr->minute_nom = current_min - hour*60;    /* find remainder minutes */
+convert_QCF_time_4DYR.c:     current_hr = qcfptr->hour_nom;
+convert_QCF_time_4DYR.c:         qcfptr->hour_nom, qcfptr->minute_nom);
+convert_QCF_time_4DYR.c:     qcfptr->hour_nom = current_hr - days*24;    /* find remainder hours */
+convert_QCF_time_4DYR.c:     sprintf (date_YYYYMMDD, "%04d%02d%02d\0", qcfptr->year_nom,
+convert_QCF_time_4DYR.c:              qcfptr->month_nom, qcfptr->day_nom);
+convert_QCF_time_4DYR.c:     qcfptr->year_nom  = atoi (year_str);
+convert_QCF_time_4DYR.c:     qcfptr->month_nom = atoi (month_str);
+convert_QCF_time_4DYR.c:     qcfptr->day_nom   = atoi (day_str);
+convert_QCF_time_4DYR.c:   printf ("   qcfptr->yr,mon,day,hr,min:: %04d%02d%02d %02d:%02d\n",
+convert_QCF_time_4DYR.c:           qcfptr->year_nom, qcfptr->month_nom, qcfptr->day_nom, qcfptr->hour_nom,
+convert_QCF_time_4DYR.c:           qcfptr->minute_nom);
+convert_QCF_time_4DYR.c:   if ( num_min_to_subtract < qcfptr->minute_nom)
+convert_QCF_time_4DYR.c:      qcfptr->minute_nom = qcfptr->minute_nom - num_min_to_subtract;
+convert_QCF_time_4DYR.c:   minutes = qcfptr->hour_nom*60 + qcfptr->minute_nom;
+convert_QCF_time_4DYR.c:      sprintf (date_YYYYMMDD, "%04d%02d%02d\0", qcfptr->year_nom,
+convert_QCF_time_4DYR.c:               qcfptr->month_nom, qcfptr->day_nom);
+convert_QCF_time_4DYR.c:      qcfptr->year_nom  = atoi (year_str);
+convert_QCF_time_4DYR.c:      qcfptr->month_nom = atoi (month_str);
+convert_QCF_time_4DYR.c:      qcfptr->day_nom   = atoi (day_str);
+convert_QCF_time_4DYR.c:      minutes = (24 + qcfptr->hour_nom)*60 + qcfptr->minute_nom;
+convert_QCF_time_4DYR.c:   qcfptr->minute_nom  = data_freq*real_minutes;
+convert_QCF_time_4DYR.c:   qcfptr->hour_nom =  hour;
+convert_QCF_time_4DYR.c:   printf ("   qcfptr->yr,mon,day,hr,min:: %04d%02d%02d %02d:%02d\n", 
+convert_QCF_time_4DYR.c:           qcfptr->year_nom, qcfptr->month_nom, qcfptr->day_nom, qcfptr->hour_nom, 
+convert_QCF_time_4DYR.c:           qcfptr->minute_nom); 
+convert_QCF_time_4DYR.c:         qcfrec_year = qcfptr->year_nom;
+convert_QCF_time_4DYR.c:         if (!strncmp (qcfptr->qnet, "AWOS1", 5))
+convert_QCF_time_4DYR.c:            if (qcfptr->squall <= 0.0)
+convert_QCF_time_4DYR.c:               qcfptr->sg = ' '; /* reset to Blank for -999.99 or 0.0 */
+convert_QCF_time_4DYR.c:         printf ("\n---CURRENT TIME: qcfptr->hour_nom, qcfptr->minute_nom: %d %d\n",
+convert_QCF_time_4DYR.c:                 qcfptr->hour_nom, qcfptr->minute_nom);
+convert_QCF_time_4DYR.c:         sprintf (current_stn, "%-10s:%-15s\0",qcfptr->qnet,qcfptr->statn);
+convert_QCF_time_4DYR.c:            lon_diff_min = (reference_lon - qcfptr->lon)*DEG_TO_MIN;
+convert_QCF_time_4DYR.c:                           qcfptr->qnet, network_freq[jj].network);
+convert_QCF_time_4DYR.c:                  if (!strncmp (qcfptr->qnet, network_freq[jj].network, 10))
+convert_QCF_time_4DYR.c:                  printf ("ERROR: Unknown network type: %-s\n", qcfptr->qnet);
+convert_QCF_time_4DYR.c:            stn_lons[stn_no]      = qcfptr->lon;
+convert_QCF_time_4DYR.c:            printf ("reference_lon, qcfptr->lon, lon_diff_min: %f %f %f \n",
+convert_QCF_time_4DYR.c:                     reference_lon, qcfptr->lon, lon_diff_min);
+convert_QCF_time_4DYR.c:         old_day_nom = qcfptr->day_nom;     /* save for comparison */
+convert_QCF_time_4DYR.c:               printf ("After decrement(): qcfptr->yr,mon,day,hr,min:: %04d%02d%02d %02d:%02d\n",
+convert_QCF_time_4DYR.c:                       qcfptr->year_nom, qcfptr->month_nom, qcfptr->day_nom, qcfptr->hour_nom, 
+convert_QCF_time_4DYR.c:                       qcfptr->minute_nom);
+convert_QCF_time_4DYR.c:               printf ("After increment(): qcfptr->yr,mon,day,hr,min:: %04d%02d%02d %02d:%02d\n",
+convert_QCF_time_4DYR.c:                       qcfptr->year_nom, qcfptr->month_nom, qcfptr->day_nom, qcfptr->hour_nom,
+convert_QCF_time_4DYR.c:                       qcfptr->minute_nom);
+convert_QCF_time_4DYR.c:               printf ("STU: After increment(): qcfptr->yr,mon,day,hr,min:: %04d%02d%02d %02d:%02d\n",
+convert_QCF_time_4DYR.c:                       qcfptr->year_nom, qcfptr->month_nom, qcfptr->day_nom, qcfptr->hour_nom,
+convert_QCF_time_4DYR.c:                       qcfptr->minute_nom);
+convert_QCF_time_4DYR.c:               printf ("After increment(): qcfptr->yr,mon,day,hr,min:: %04d%02d%02d %02d:%02d\n",
+convert_QCF_time_4DYR.c:                       qcfptr->year_nom, qcfptr->month_nom, qcfptr->day_nom, qcfptr->hour_nom,
+convert_QCF_time_4DYR.c:                       qcfptr->minute_nom);
+convert_QCF_time_4DYR.c:            printf ("Compare old_day_nom, qcfptr->day_nom, hour_nom: %d %d, %d\n",
+convert_QCF_time_4DYR.c:                    old_day_nom, qcfptr->day_nom, qcfptr->hour_nom);
+convert_QCF_time_4DYR.c:            if (qcfptr->day_nom != old_day_nom)
+convert_QCF_time_4DYR.c:               index = (qcfptr->hour_nom*60 + min)/data_freq;
+convert_QCF_time_4DYR.c:               index = ((24+qcfptr->hour_nom)*60 + min)/data_freq;
+convert_QCF_time_4DYR.c:                        outpathname, qcfptr->year_nom, qcfptr->month_nom,
+convert_QCF_time_4DYR.c:                        qcfptr->day_nom, qcfptr->hour_nom, qcfptr->minute_nom, file_suffix);
+convert_QCF_time_4DYR.c:                        outpathname, qcfptr->year_nom, qcfptr->month_nom,
+convert_QCF_time_4DYR.c:                        qcfptr->day_nom, qcfptr->hour_nom, qcfptr->minute_nom, file_suffix);
+convert_QCF_time_4DYR.c:            if (qcfptr->minute_nom >= 60)
+convert_QCF_time_4DYR.c:                        qcfptr->minute_nom, recs_processed);
+convert_QCF_time_4DYR.c:            if (qcfptr->hour_nom >= 24)
+convert_QCF_time_4DYR.c:                        qcfptr->hour_nom, recs_processed);
+main_qc_4DYR.c:            current_hr = qcfptr->hour_nom;
+main_qc_4DYR.c:            current_min = qcfptr->minute_nom;
+main_qc_4DYR.c:            while ( (qcfptr->hour_nom == current_hr) && (qcfptr->minute_nom == current_min))
+main_qc_4DYR.c:               sprintf (current_stn, "%-10s:%-15s\0",qcfptr->qnet,qcfptr->statn);
+main_qc_4DYR.c:               printf ("qcfptr->statn, stn_no: %-sxxx %d\n", qcfptr->statn, stn_no);
+main_qc_4DYR.c:               printf ("qcfptr->lat, lon: %7.2f %7.2f\n", qcfptr->lat, qcfptr->lon);
+main_qc_4DYR.c:               A[stn_no][0] = qcfptr->lat;
+main_qc_4DYR.c:               A[stn_no][1] = qcfptr->lon;
+main_qc_4DYR.c:               if (qcfptr->staprs >0.00 && qcfptr->staflg != 'B') /*HERE*/
+main_qc_4DYR.c:                  theta_o[stnprs][stn_no] = qcfptr->staprs;
+main_qc_4DYR.c:               if (qcfptr->seaprs >0.00 && qcfptr->seaflg != 'B')
+main_qc_4DYR.c:                  theta_o[slp][stn_no] = qcfptr->seaprs;
+main_qc_4DYR.c:               if (qcfptr->cmpsea >0.00 && qcfptr->cmpflg != 'B')
+main_qc_4DYR.c:                  theta_o[cslp][stn_no] = qcfptr->cmpsea;
+main_qc_4DYR.c:               if (qcfptr->temp >-999.00 && qcfptr->tmpflg != 'B')
+main_qc_4DYR.c:                  theta_o[temp][stn_no] = qcfptr->temp;
+main_qc_4DYR.c:               if (qcfptr->tmpflg == 'B') /*HERE*/
+main_qc_4DYR.c:                          qcfptr->temp, qcfptr->tmpflg, current_hr, current_min);
+main_qc_4DYR.c:               if (qcfptr->dewpnt >-999.00 && qcfptr->dewflg != 'B')
+main_qc_4DYR.c:                  theta_o[dewpt][stn_no] = qcfptr->dewpnt;
+main_qc_4DYR.c:               if (qcfptr->wndspd >-999.00 && qcfptr->spdflg != 'B')
+main_qc_4DYR.c:                  theta_o[windsp][stn_no] = qcfptr->wndspd;
+main_qc_4DYR.c:               if (qcfptr->wnddir >-999.00 && qcfptr->dirflg != 'B')
+main_qc_4DYR.c:                  theta_o[winddir][stn_no] = qcfptr->wnddir;
+main_qc_4DYR.c:               if (!strncmp(current_qcfptr->statn,"               \0",15)) continue;
+main_qc_4DYR.c:               if (!strncmp(current_qcfptr->qnet,"DATSAV2M\0",8)) continue;
+main_qc_4DYR.c:               if (!strncmp(current_qcfptr->qnet,"GLERLM\0",6)) continue;
+main_qc_4DYR.c:               if (!strncmp(current_qcfptr->qnet,"DATSAV2M\0",8) ||
+main_qc_4DYR.c:			       !strncmp(current_qcfptr->qnet,"GLERLM\0",6)  )
+main_qc_4DYR.c:				          current_qcfptr->qnet, current_qcfptr->statn);
+main_qc_4DYR.c:               sprintf (current_stn, "%-10s:%-15s\0",current_qcfptr->qnet,current_qcfptr->statn);
+main_qc_4DYR.c:                     ll2xydrv( current_qcfptr->lat, 
+main_qc_4DYR.c:                               current_qcfptr->lon, 
+main_qc_4DYR.c:                    theta_obs = current_qcfptr->staprs;
+main_qc_4DYR.c:                    qcflag = current_qcfptr->staflg;
+main_qc_4DYR.c:                    theta_obs = current_qcfptr->seaprs;
+main_qc_4DYR.c:                    qcflag = current_qcfptr->seaflg;
+main_qc_4DYR.c:                    theta_obs = current_qcfptr->cmpsea;
+main_qc_4DYR.c:                    qcflag = current_qcfptr->cmpflg;
+main_qc_4DYR.c:                    theta_obs = current_qcfptr->temp;
+main_qc_4DYR.c:                    qcflag = current_qcfptr->tmpflg;
+main_qc_4DYR.c:                    theta_obs = current_qcfptr->dewpnt;
+main_qc_4DYR.c:                    qcflag = current_qcfptr->dewflg;
+main_qc_4DYR.c:                    theta_obs = current_qcfptr->wndspd;
+main_qc_4DYR.c:                    qcflag = current_qcfptr->spdflg;
+main_qc_4DYR.c:                    theta_obs = current_qcfptr->wnddir;
+main_qc_4DYR.c:                    qcflag = current_qcfptr->dirflg;
+main_qc_4DYR.c:                            current_qcfptr->staflg = qcflag;
+main_qc_4DYR.c:                               current_qcfptr->staflg = qcflag;
+main_qc_4DYR.c:                               current_qcfptr->staflg = source_qcflag;
+main_qc_4DYR.c:                            current_qcfptr->seaflg = qcflag;
+main_qc_4DYR.c:                               current_qcfptr->seaflg = qcflag; 
+main_qc_4DYR.c:                               current_qcfptr->seaflg = source_qcflag;
+main_qc_4DYR.c:                            current_qcfptr->cmpflg = qcflag;
+main_qc_4DYR.c:                               current_qcfptr->cmpflg = qcflag; 
+main_qc_4DYR.c:                               current_qcfptr->cmpflg = source_qcflag;
+main_qc_4DYR.c:                            current_qcfptr->tmpflg = qcflag;
+main_qc_4DYR.c:                               current_qcfptr->tmpflg = qcflag; 
+main_qc_4DYR.c:                               current_qcfptr->tmpflg = source_qcflag;
+main_qc_4DYR.c:                            current_qcfptr->dewflg = qcflag;
+main_qc_4DYR.c:                               current_qcfptr->dewflg = qcflag; 
+main_qc_4DYR.c:                               current_qcfptr->dewflg = source_qcflag;
+main_qc_4DYR.c:                            current_qcfptr->spdflg = qcflag;
+main_qc_4DYR.c:                               current_qcfptr->spdflg = qcflag; 
+main_qc_4DYR.c:                               current_qcfptr->spdflg = source_qcflag;
+main_qc_4DYR.c:                            if (current_qcfptr->wndspd < 10.0 && qcflag =='B')
+main_qc_4DYR.c:                               current_qcfptr->dirflg = 'D';
+main_qc_4DYR.c:                               current_qcfptr->dirflg = qcflag;
+main_qc_4DYR.c:                            if (current_qcfptr->wndspd >= 10.0 && qcflag == 'B')
+main_qc_4DYR.c:                               current_qcfptr->dirflg = qcflag; 
+main_qc_4DYR.c:                               current_qcfptr->dirflg = source_qcflag; 
+main_qc_4DYR.c:               source_qcflag = current_qcfptr->prcflg;
+main_qc_4DYR.c:               if (current_qcfptr->prcflg != 'M' && current_qcfptr->prcflg != 'N' &&
+main_qc_4DYR.c:                   current_qcfptr->prcflg != 'X' && current_qcfptr->prcflg != 'C' &&
+main_qc_4DYR.c:                   current_qcfptr->prcflg != 'B' )
+main_qc_4DYR.c:                  if (current_qcfptr->precip < -990.00)
+main_qc_4DYR.c:                     current_qcfptr->prcflg = 'M';
+main_qc_4DYR.c:                  else if (current_qcfptr->precip >= bmax || current_qcfptr->precip< 0.0)
+main_qc_4DYR.c:                     current_qcfptr->prcflg = 'B';
+main_qc_4DYR.c:                  else if (current_qcfptr->precip >= dmin && current_qcfptr->prcflg != 'E')
+main_qc_4DYR.c:                     current_qcfptr->prcflg = 'D';
+main_qc_4DYR.c:                     if (current_qcfptr->prcflg != 'E' && current_qcfptr->prcflg != 'D' ) 
+main_qc_4DYR.c:                        current_qcfptr->prcflg = 'G';
+main_qc_4DYR.c:               if (current_qcfptr->precip >0.0 && current_qcfptr->prcflg == 'G' &&
+main_qc_4DYR.c:                   current_qcfptr->clamt1 == 0)
+main_qc_4DYR.c:               if (current_qcfptr->precip >0.0 && current_qcfptr->prcflg == 'G' &&
+main_qc_4DYR.c:                   current_qcfptr->clamt1 == 0 )
+main_qc_4DYR.c:                  current_qcfptr->prcflg = 'D';
+main_qc_4DYR.c:               if (current_qcfptr->c1flg == 'U' || current_qcfptr->c1flg == 'E')
+main_qc_4DYR.c:                  if (current_qcfptr->c2flg == 'M')current_qcfptr->c2flg = 'N';
+main_qc_4DYR.c:                  if (current_qcfptr->c3flg == 'M')current_qcfptr->c3flg = 'N';
+main_qc_4DYR.c:                  if (current_qcfptr->ca2flg == 'M')current_qcfptr->ca2flg = 'N';
+main_qc_4DYR.c:                  if (current_qcfptr->ca3flg == 'M')current_qcfptr->ca3flg = 'N';
+main_qc_4DYR.c:               if (current_qcfptr->sqlflg == 'M' && current_qcfptr->spdflg != 'M')
+main_qc_4DYR.c:               if (current_qcfptr->sqlflg == 'M' && current_qcfptr->spdflg != 'M')
+main_qc_4DYR.c:                  current_qcfptr->sqlflg = 'N';
+main_qc_4DYR.c:               if ((current_qcfptr->dewpnt > current_qcfptr->temp) &&
+main_qc_4DYR.c:                   (current_qcfptr->dewpnt > -999.00 && current_qcfptr->temp > -999.00))
+main_qc_4DYR.c:                  if (current_qcfptr->tmpflg == 'G') current_qcfptr->tmpflg = 'D';
+main_qc_4DYR.c:                  if (current_qcfptr->dewflg == 'G') current_qcfptr->dewflg = 'D';
+main_qc_4DYR.c:               if (current_qcfptr->wndspd <0.0 && current_qcfptr->wndspd > -999.00)
+main_qc_4DYR.c:                  current_qcfptr->spdflg = 'B';
+main_qc_4DYR.c:               if (current_qcfptr->wndspd <0.0 && current_qcfptr->wndspd > -999.00)
+main_qc_4DYR.c:               if ( current_qcfptr->wnddir > -999.00 && 
+main_qc_4DYR.c:                    (current_qcfptr->wnddir <0.0 || current_qcfptr->wnddir >360.0))
+main_qc_4DYR.c:                  current_qcfptr->dirflg = 'B'; 
+main_qc_4DYR.c:               if ( current_qcfptr->wnddir > -999.00 && 
+main_qc_4DYR.c:                    (current_qcfptr->wnddir <0.0 || current_qcfptr->wnddir >360.0))
+main_qc_4DYR.c:               if ( current_qcfptr->wndspd == 0.0)
+main_qc_4DYR.c:                  current_qcfptr->wnddir = 0.0;
+main_qc_4DYR.c:                  current_qcfptr->dirflg = current_qcfptr->spdflg;
+main_qc_4DYR.c:               if (current_qcfptr->cmpflg !='M' && current_qcfptr->cmpflg !='N' &&
+main_qc_4DYR.c:                   current_qcfptr->cmpflg !='X' && current_qcfptr->cmpflg !='U' &&
+main_qc_4DYR.c:                   current_qcfptr->cmpflg !='I' && current_qcfptr->cmpflg !='C' &&
+main_qc_4DYR.c:                   current_qcfptr->cmpflg !='E' )
+main_qc_4DYR.c:                  if (current_qcfptr->staflg !='M' && current_qcfptr->staflg !='N' &&
+main_qc_4DYR.c:                      current_qcfptr->staflg !='X' && current_qcfptr->staflg !='C' &&
+main_qc_4DYR.c:                      current_qcfptr->staflg !='I' && current_qcfptr->staflg !='B' )
+main_qc_4DYR.c:                     if (current_qcfptr->staflg != 'E' && current_qcfptr->staflg != 'D') /*HERE*/
+main_qc_4DYR.c:                        current_qcfptr->staflg = current_qcfptr->cmpflg;
+main_qc_4DYR.c:                        if (current_qcfptr->cmpflg =='B')
+main_qc_4DYR.c:                           current_qcfptr->staflg = current_qcfptr->cmpflg;
+main_qc_4DYR.c:               else if (current_qcfptr->seaflg !='M' && current_qcfptr->seaflg !='N' &&
+main_qc_4DYR.c:                        current_qcfptr->seaflg !='X' && current_qcfptr->seaflg !='C' &&
+main_qc_4DYR.c:                        current_qcfptr->seaflg !='U' && current_qcfptr->seaflg !='E')
+main_qc_4DYR.c:                  if (current_qcfptr->staflg !='M' && current_qcfptr->staflg !='N' &&
+main_qc_4DYR.c:                      current_qcfptr->staflg !='X' && current_qcfptr->staflg !='C' &&
+main_qc_4DYR.c:                      current_qcfptr->staflg !='I' && current_qcfptr->staflg !='B' )
+main_qc_4DYR.c:                     if (current_qcfptr->staflg != 'E' && current_qcfptr->staflg != 'D') /*HERE*/
+main_qc_4DYR.c:                        current_qcfptr->staflg = current_qcfptr->seaflg;
+main_qc_4DYR.c:                        if (current_qcfptr->seaflg =='B')
+main_qc_4DYR.c:                           current_qcfptr->staflg = current_qcfptr->seaflg;
+main_qc_4DYR.c:                            current_qcfptr->staflg, current_qcfptr->seaflg  );  
+main_qc_4DYR.c:                 qcfptr->hour_nom, qcfptr->minute_nom, saved_hour_nom, saved_minute_nom);
+main_qc_4DYR.c:         if ((qcfptr->hour_nom != saved_hour_nom ||
+main_qc_4DYR.c:             qcfptr->minute_nom != saved_minute_nom) &&
+main_qc_4DYR.c:             strncmp(qcfptr->statn,"               \0",16) )
+main_qc_4DYR.c:                    qcfptr->qnet, qcfptr->statn, 
+main_qc_4DYR.c:                    qcfptr->hour_nom, qcfptr->minute_nom,
+main_qc_4DYR_Version0-Oct2003.c:            current_hr = qcfptr->hour_nom;
+main_qc_4DYR_Version0-Oct2003.c:            current_min = qcfptr->minute_nom;
+main_qc_4DYR_Version0-Oct2003.c:            while ( (qcfptr->hour_nom == current_hr) && (qcfptr->minute_nom == current_min))
+main_qc_4DYR_Version0-Oct2003.c:               sprintf (current_stn, "%-10s:%-15s\0",qcfptr->qnet,qcfptr->statn);
+main_qc_4DYR_Version0-Oct2003.c:               printf ("qcfptr->statn, stn_no: %-sxxx %d\n", qcfptr->statn, stn_no);
+main_qc_4DYR_Version0-Oct2003.c:               printf ("qcfptr->lat, lon: %7.2f %7.2f\n", qcfptr->lat, qcfptr->lon);
+main_qc_4DYR_Version0-Oct2003.c:               A[stn_no][0] = qcfptr->lat;
+main_qc_4DYR_Version0-Oct2003.c:               A[stn_no][1] = qcfptr->lon;
+main_qc_4DYR_Version0-Oct2003.c:               if (qcfptr->staprs >0.00)
+main_qc_4DYR_Version0-Oct2003.c:                  theta_o[stnprs][stn_no] = qcfptr->staprs;
+main_qc_4DYR_Version0-Oct2003.c:               if (qcfptr->seaprs >0.00)
+main_qc_4DYR_Version0-Oct2003.c:                  theta_o[slp][stn_no] = qcfptr->seaprs;
+main_qc_4DYR_Version0-Oct2003.c:               if (qcfptr->cmpsea >0.00)
+main_qc_4DYR_Version0-Oct2003.c:                  theta_o[cslp][stn_no] = qcfptr->cmpsea;
+main_qc_4DYR_Version0-Oct2003.c:               if (qcfptr->temp >-999.00)
+main_qc_4DYR_Version0-Oct2003.c:                  theta_o[temp][stn_no] = qcfptr->temp;
+main_qc_4DYR_Version0-Oct2003.c:               if (qcfptr->dewpnt >-999.00)
+main_qc_4DYR_Version0-Oct2003.c:                  theta_o[dewpt][stn_no] = qcfptr->dewpnt;
+main_qc_4DYR_Version0-Oct2003.c:               if (qcfptr->wndspd >-999.00)
+main_qc_4DYR_Version0-Oct2003.c:                  theta_o[windsp][stn_no] = qcfptr->wndspd;
+main_qc_4DYR_Version0-Oct2003.c:               if (qcfptr->wnddir >-999.00)
+main_qc_4DYR_Version0-Oct2003.c:                  theta_o[winddir][stn_no] = qcfptr->wnddir;
+main_qc_4DYR_Version0-Oct2003.c:               if (!strncmp(current_qcfptr->statn,"               \0",15)) continue;
+main_qc_4DYR_Version0-Oct2003.c:               if (!strncmp(current_qcfptr->qnet,"DATSAV2M\0",8)) continue;
+main_qc_4DYR_Version0-Oct2003.c:               if (!strncmp(current_qcfptr->qnet,"GLERLM\0",6)) continue;
+main_qc_4DYR_Version0-Oct2003.c:               if (!strncmp(current_qcfptr->qnet,"DATSAV2M\0",8) ||
+main_qc_4DYR_Version0-Oct2003.c:			       !strncmp(current_qcfptr->qnet,"GLERLM\0",6)  )
+main_qc_4DYR_Version0-Oct2003.c:				          current_qcfptr->qnet, current_qcfptr->statn);
+main_qc_4DYR_Version0-Oct2003.c:               sprintf (current_stn, "%-10s:%-15s\0",current_qcfptr->qnet,current_qcfptr->statn);
+main_qc_4DYR_Version0-Oct2003.c:                     ll2xydrv( current_qcfptr->lat, 
+main_qc_4DYR_Version0-Oct2003.c:                               current_qcfptr->lon, 
+main_qc_4DYR_Version0-Oct2003.c:                    theta_obs = current_qcfptr->staprs;
+main_qc_4DYR_Version0-Oct2003.c:                    qcflag = current_qcfptr->staflg;
+main_qc_4DYR_Version0-Oct2003.c:                    theta_obs = current_qcfptr->seaprs;
+main_qc_4DYR_Version0-Oct2003.c:                    qcflag = current_qcfptr->seaflg;
+main_qc_4DYR_Version0-Oct2003.c:                    theta_obs = current_qcfptr->cmpsea;
+main_qc_4DYR_Version0-Oct2003.c:                    qcflag = current_qcfptr->cmpflg;
+main_qc_4DYR_Version0-Oct2003.c:                    theta_obs = current_qcfptr->temp;
+main_qc_4DYR_Version0-Oct2003.c:                    qcflag = current_qcfptr->tmpflg;
+main_qc_4DYR_Version0-Oct2003.c:                    theta_obs = current_qcfptr->dewpnt;
+main_qc_4DYR_Version0-Oct2003.c:                    qcflag = current_qcfptr->dewflg;
+main_qc_4DYR_Version0-Oct2003.c:                    theta_obs = current_qcfptr->wndspd;
+main_qc_4DYR_Version0-Oct2003.c:                    qcflag = current_qcfptr->spdflg;
+main_qc_4DYR_Version0-Oct2003.c:                    theta_obs = current_qcfptr->wnddir;
+main_qc_4DYR_Version0-Oct2003.c:                    qcflag = current_qcfptr->dirflg;
+main_qc_4DYR_Version0-Oct2003.c:                         current_qcfptr->staflg = qcflag;
+main_qc_4DYR_Version0-Oct2003.c:                         current_qcfptr->seaflg = qcflag;
+main_qc_4DYR_Version0-Oct2003.c:                         current_qcfptr->cmpflg = qcflag;
+main_qc_4DYR_Version0-Oct2003.c:                         current_qcfptr->tmpflg = qcflag;
+main_qc_4DYR_Version0-Oct2003.c:                         current_qcfptr->dewflg = qcflag;
+main_qc_4DYR_Version0-Oct2003.c:                         current_qcfptr->spdflg = qcflag;
+main_qc_4DYR_Version0-Oct2003.c:                         if (current_qcfptr->wndspd < 10.0 && qcflag =='B')
+main_qc_4DYR_Version0-Oct2003.c:                            current_qcfptr->dirflg = 'D';
+main_qc_4DYR_Version0-Oct2003.c:                            current_qcfptr->dirflg = qcflag;
+main_qc_4DYR_Version0-Oct2003.c:               if (current_qcfptr->prcflg != 'M' && current_qcfptr->prcflg != 'N' &&
+main_qc_4DYR_Version0-Oct2003.c:                   current_qcfptr->prcflg != 'X' && current_qcfptr->prcflg != 'C')
+main_qc_4DYR_Version0-Oct2003.c:                  if (current_qcfptr->precip < -990.00)
+main_qc_4DYR_Version0-Oct2003.c:                     current_qcfptr->prcflg = 'M';
+main_qc_4DYR_Version0-Oct2003.c:                  else if (current_qcfptr->precip >= bmax || current_qcfptr->precip< 0.0)
+main_qc_4DYR_Version0-Oct2003.c:                     current_qcfptr->prcflg = 'B';
+main_qc_4DYR_Version0-Oct2003.c:                  else if (current_qcfptr->precip >= dmin && current_qcfptr->prcflg != 'E')
+main_qc_4DYR_Version0-Oct2003.c:                     current_qcfptr->prcflg = 'D';
+main_qc_4DYR_Version0-Oct2003.c:                     if (current_qcfptr->prcflg != 'E') current_qcfptr->prcflg = 'G';
+main_qc_4DYR_Version0-Oct2003.c:               if (current_qcfptr->precip >0.0 && current_qcfptr->prcflg == 'G' &&
+main_qc_4DYR_Version0-Oct2003.c:                   current_qcfptr->clamt1 == 0)
+main_qc_4DYR_Version0-Oct2003.c:               if (current_qcfptr->precip >0.0 && current_qcfptr->prcflg == 'G' &&
+main_qc_4DYR_Version0-Oct2003.c:                   current_qcfptr->clamt1 == 0)
+main_qc_4DYR_Version0-Oct2003.c:                  current_qcfptr->prcflg = 'D';
+main_qc_4DYR_Version0-Oct2003.c:               if (current_qcfptr->c1flg == 'U' || current_qcfptr->c1flg == 'E')
+main_qc_4DYR_Version0-Oct2003.c:                  if (current_qcfptr->c2flg == 'M')current_qcfptr->c2flg = 'N';
+main_qc_4DYR_Version0-Oct2003.c:                  if (current_qcfptr->c3flg == 'M')current_qcfptr->c3flg = 'N';
+main_qc_4DYR_Version0-Oct2003.c:                  if (current_qcfptr->ca2flg == 'M')current_qcfptr->ca2flg = 'N';
+main_qc_4DYR_Version0-Oct2003.c:                  if (current_qcfptr->ca3flg == 'M')current_qcfptr->ca3flg = 'N';
+main_qc_4DYR_Version0-Oct2003.c:               if (current_qcfptr->sqlflg == 'M' && current_qcfptr->spdflg != 'M')
+main_qc_4DYR_Version0-Oct2003.c:               if (current_qcfptr->sqlflg == 'M' && current_qcfptr->spdflg != 'M')
+main_qc_4DYR_Version0-Oct2003.c:                  current_qcfptr->sqlflg = 'N';
+main_qc_4DYR_Version0-Oct2003.c:               if ((current_qcfptr->dewpnt > current_qcfptr->temp) &&
+main_qc_4DYR_Version0-Oct2003.c:                   (current_qcfptr->dewpnt > -999.00 && current_qcfptr->temp > -999.00))
+main_qc_4DYR_Version0-Oct2003.c:                  if (current_qcfptr->tmpflg == 'G') current_qcfptr->tmpflg = 'D';
+main_qc_4DYR_Version0-Oct2003.c:                  if (current_qcfptr->dewflg == 'G') current_qcfptr->dewflg = 'D';
+main_qc_4DYR_Version0-Oct2003.c:               if (current_qcfptr->wndspd <0.0 && current_qcfptr->wndspd > -999.00)
+main_qc_4DYR_Version0-Oct2003.c:                  current_qcfptr->spdflg = 'B';
+main_qc_4DYR_Version0-Oct2003.c:               if (current_qcfptr->wndspd <0.0 && current_qcfptr->wndspd > -999.00)
+main_qc_4DYR_Version0-Oct2003.c:               if ( current_qcfptr->wnddir > -999.00 && 
+main_qc_4DYR_Version0-Oct2003.c:                    (current_qcfptr->wnddir <0.0 || current_qcfptr->wnddir >360.0))
+main_qc_4DYR_Version0-Oct2003.c:                  current_qcfptr->dirflg = 'B'; 
+main_qc_4DYR_Version0-Oct2003.c:               if ( current_qcfptr->wnddir > -999.00 && 
+main_qc_4DYR_Version0-Oct2003.c:                    (current_qcfptr->wnddir <0.0 || current_qcfptr->wnddir >360.0))
+main_qc_4DYR_Version0-Oct2003.c:               if ( current_qcfptr->wndspd == 0.0)
+main_qc_4DYR_Version0-Oct2003.c:                  current_qcfptr->wnddir = 0.0;
+main_qc_4DYR_Version0-Oct2003.c:                  current_qcfptr->dirflg = current_qcfptr->spdflg;
+main_qc_4DYR_Version0-Oct2003.c:               if (current_qcfptr->cmpflg !='M' && current_qcfptr->cmpflg !='N' &&
+main_qc_4DYR_Version0-Oct2003.c:                   current_qcfptr->cmpflg !='X' && current_qcfptr->cmpflg !='U' &&
+main_qc_4DYR_Version0-Oct2003.c:                   current_qcfptr->cmpflg !='I' && current_qcfptr->cmpflg !='C')
+main_qc_4DYR_Version0-Oct2003.c:                  if (current_qcfptr->seaflg !='M' && current_qcfptr->seaflg !='N' &&
+main_qc_4DYR_Version0-Oct2003.c:                      current_qcfptr->seaflg !='X' && current_qcfptr->seaflg !='C')
+main_qc_4DYR_Version0-Oct2003.c:                     current_qcfptr->seaflg = current_qcfptr->cmpflg;
+main_qc_4DYR_Version0-Oct2003.c:                  if (current_qcfptr->staflg !='M' && current_qcfptr->staflg !='N' &&
+main_qc_4DYR_Version0-Oct2003.c:                      current_qcfptr->staflg !='X' && current_qcfptr->staflg !='C' &&
+main_qc_4DYR_Version0-Oct2003.c:					  current_qcfptr->staflg !='I') 
+main_qc_4DYR_Version0-Oct2003.c:                     current_qcfptr->staflg = current_qcfptr->cmpflg;
+main_qc_4DYR_Version0-Oct2003.c:               else if (current_qcfptr->seaflg !='M' && current_qcfptr->seaflg !='N' &&
+main_qc_4DYR_Version0-Oct2003.c:                        current_qcfptr->seaflg !='X' && current_qcfptr->seaflg !='C' &&
+main_qc_4DYR_Version0-Oct2003.c:                        current_qcfptr->seaflg !='U')
+main_qc_4DYR_Version0-Oct2003.c:                  if (current_qcfptr->staflg !='M' && current_qcfptr->staflg !='N' &&
+main_qc_4DYR_Version0-Oct2003.c:                      current_qcfptr->staflg !='X' && current_qcfptr->staflg !='C' &&
+main_qc_4DYR_Version0-Oct2003.c:					  current_qcfptr->staflg !='I')
+main_qc_4DYR_Version0-Oct2003.c:                     current_qcfptr->staflg = current_qcfptr->seaflg;
+main_qc_4DYR_Version0-Oct2003.c:                 qcfptr->hour_nom, qcfptr->minute_nom, saved_hour_nom, saved_minute_nom);
+main_qc_4DYR_Version0-Oct2003.c:         if ((qcfptr->hour_nom != saved_hour_nom ||
+main_qc_4DYR_Version0-Oct2003.c:             qcfptr->minute_nom != saved_minute_nom) &&
+main_qc_4DYR_Version0-Oct2003.c:             strncmp(qcfptr->statn,"               \0",16) )
+main_qc_4DYR_Version0-Oct2003.c:                    qcfptr->qnet, qcfptr->statn, 
+main_qc_4DYR_Version0-Oct2003.c:                    qcfptr->hour_nom, qcfptr->minute_nom,
+main_qc_4DYR_VersionNov2003-Apr2004.c:            current_hr = qcfptr->hour_nom;
+main_qc_4DYR_VersionNov2003-Apr2004.c:            current_min = qcfptr->minute_nom;
+main_qc_4DYR_VersionNov2003-Apr2004.c:            while ( (qcfptr->hour_nom == current_hr) && (qcfptr->minute_nom == current_min))
+main_qc_4DYR_VersionNov2003-Apr2004.c:               sprintf (current_stn, "%-10s:%-15s\0",qcfptr->qnet,qcfptr->statn);
+main_qc_4DYR_VersionNov2003-Apr2004.c:               printf ("qcfptr->statn, stn_no: %-sxxx %d\n", qcfptr->statn, stn_no);
+main_qc_4DYR_VersionNov2003-Apr2004.c:               printf ("qcfptr->lat, lon: %7.2f %7.2f\n", qcfptr->lat, qcfptr->lon);
+main_qc_4DYR_VersionNov2003-Apr2004.c:               A[stn_no][0] = qcfptr->lat;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               A[stn_no][1] = qcfptr->lon;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (qcfptr->staprs >0.00)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  theta_o[stnprs][stn_no] = qcfptr->staprs;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (qcfptr->seaprs >0.00)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  theta_o[slp][stn_no] = qcfptr->seaprs;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (qcfptr->cmpsea >0.00)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  theta_o[cslp][stn_no] = qcfptr->cmpsea;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (qcfptr->temp >-999.00)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  theta_o[temp][stn_no] = qcfptr->temp;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (qcfptr->dewpnt >-999.00)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  theta_o[dewpt][stn_no] = qcfptr->dewpnt;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (qcfptr->wndspd >-999.00)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  theta_o[windsp][stn_no] = qcfptr->wndspd;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (qcfptr->wnddir >-999.00)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  theta_o[winddir][stn_no] = qcfptr->wnddir;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (!strncmp(current_qcfptr->statn,"               \0",15)) continue;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (!strncmp(current_qcfptr->qnet,"DATSAV2M\0",8)) continue;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (!strncmp(current_qcfptr->qnet,"GLERLM\0",6)) continue;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (!strncmp(current_qcfptr->qnet,"DATSAV2M\0",8) ||
+main_qc_4DYR_VersionNov2003-Apr2004.c:			       !strncmp(current_qcfptr->qnet,"GLERLM\0",6)  )
+main_qc_4DYR_VersionNov2003-Apr2004.c:				          current_qcfptr->qnet, current_qcfptr->statn);
+main_qc_4DYR_VersionNov2003-Apr2004.c:               sprintf (current_stn, "%-10s:%-15s\0",current_qcfptr->qnet,current_qcfptr->statn);
+main_qc_4DYR_VersionNov2003-Apr2004.c:                     ll2xydrv( current_qcfptr->lat, 
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->lon, 
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    theta_obs = current_qcfptr->staprs;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    qcflag = current_qcfptr->staflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    theta_obs = current_qcfptr->seaprs;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    qcflag = current_qcfptr->seaflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    theta_obs = current_qcfptr->cmpsea;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    qcflag = current_qcfptr->cmpflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    theta_obs = current_qcfptr->temp;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    qcflag = current_qcfptr->tmpflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    theta_obs = current_qcfptr->dewpnt;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    qcflag = current_qcfptr->dewflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    theta_obs = current_qcfptr->wndspd;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    qcflag = current_qcfptr->spdflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    theta_obs = current_qcfptr->wnddir;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    qcflag = current_qcfptr->dirflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                            current_qcfptr->staflg = qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->staflg = qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->staflg = source_qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                            current_qcfptr->seaflg = qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->seaflg = qcflag; 
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->seaflg = source_qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                            current_qcfptr->cmpflg = qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->cmpflg = qcflag; 
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->cmpflg = source_qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                            current_qcfptr->tmpflg = qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->tmpflg = qcflag; 
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->tmpflg = source_qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                            current_qcfptr->dewflg = qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->dewflg = qcflag; 
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->dewflg = source_qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                            current_qcfptr->spdflg = qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->spdflg = qcflag; 
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->spdflg = source_qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                            if (current_qcfptr->wndspd < 10.0 && qcflag =='B')
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->dirflg = 'D';
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->dirflg = qcflag;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                            if (current_qcfptr->wndspd >= 10.0 && qcflag == 'B')
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->dirflg = qcflag; 
+main_qc_4DYR_VersionNov2003-Apr2004.c:                               current_qcfptr->dirflg = source_qcflag; 
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (current_qcfptr->prcflg != 'M' && current_qcfptr->prcflg != 'N' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                   current_qcfptr->prcflg != 'X' && current_qcfptr->prcflg != 'C')
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  if (current_qcfptr->precip < -990.00)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                     current_qcfptr->prcflg = 'M';
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  else if (current_qcfptr->precip >= bmax || current_qcfptr->precip< 0.0)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                     current_qcfptr->prcflg = 'B';
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  else if (current_qcfptr->precip >= dmin && current_qcfptr->prcflg != 'E')
+main_qc_4DYR_VersionNov2003-Apr2004.c:                     current_qcfptr->prcflg = 'D';
+main_qc_4DYR_VersionNov2003-Apr2004.c:                     if (current_qcfptr->prcflg != 'E') current_qcfptr->prcflg = 'G';
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (current_qcfptr->precip >0.0 && current_qcfptr->prcflg == 'G' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                   current_qcfptr->clamt1 == 0)
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (current_qcfptr->precip >0.0 && current_qcfptr->prcflg == 'G' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                   current_qcfptr->clamt1 == 0)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  current_qcfptr->prcflg = 'D';
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (current_qcfptr->c1flg == 'U' || current_qcfptr->c1flg == 'E')
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  if (current_qcfptr->c2flg == 'M')current_qcfptr->c2flg = 'N';
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  if (current_qcfptr->c3flg == 'M')current_qcfptr->c3flg = 'N';
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  if (current_qcfptr->ca2flg == 'M')current_qcfptr->ca2flg = 'N';
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  if (current_qcfptr->ca3flg == 'M')current_qcfptr->ca3flg = 'N';
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (current_qcfptr->sqlflg == 'M' && current_qcfptr->spdflg != 'M')
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (current_qcfptr->sqlflg == 'M' && current_qcfptr->spdflg != 'M')
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  current_qcfptr->sqlflg = 'N';
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if ((current_qcfptr->dewpnt > current_qcfptr->temp) &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                   (current_qcfptr->dewpnt > -999.00 && current_qcfptr->temp > -999.00))
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  if (current_qcfptr->tmpflg == 'G') current_qcfptr->tmpflg = 'D';
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  if (current_qcfptr->dewflg == 'G') current_qcfptr->dewflg = 'D';
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (current_qcfptr->wndspd <0.0 && current_qcfptr->wndspd > -999.00)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  current_qcfptr->spdflg = 'B';
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (current_qcfptr->wndspd <0.0 && current_qcfptr->wndspd > -999.00)
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if ( current_qcfptr->wnddir > -999.00 && 
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    (current_qcfptr->wnddir <0.0 || current_qcfptr->wnddir >360.0))
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  current_qcfptr->dirflg = 'B'; 
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if ( current_qcfptr->wnddir > -999.00 && 
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    (current_qcfptr->wnddir <0.0 || current_qcfptr->wnddir >360.0))
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if ( current_qcfptr->wndspd == 0.0)
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  current_qcfptr->wnddir = 0.0;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  current_qcfptr->dirflg = current_qcfptr->spdflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               if (current_qcfptr->cmpflg !='M' && current_qcfptr->cmpflg !='N' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                   current_qcfptr->cmpflg !='X' && current_qcfptr->cmpflg !='U' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                   current_qcfptr->cmpflg !='I' && current_qcfptr->cmpflg !='C' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                   current_qcfptr->cmpflg !='E' )
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  if (current_qcfptr->staflg !='M' && current_qcfptr->staflg !='N' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                      current_qcfptr->staflg !='X' && current_qcfptr->staflg !='C' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                      current_qcfptr->staflg !='I' && current_qcfptr->staflg !='B' )
+main_qc_4DYR_VersionNov2003-Apr2004.c:                     if (current_qcfptr->staflg != 'E')
+main_qc_4DYR_VersionNov2003-Apr2004.c:                        current_qcfptr->staflg = current_qcfptr->cmpflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                        if (current_qcfptr->cmpflg =='B')
+main_qc_4DYR_VersionNov2003-Apr2004.c:                           current_qcfptr->staflg = current_qcfptr->cmpflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:               else if (current_qcfptr->seaflg !='M' && current_qcfptr->seaflg !='N' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                        current_qcfptr->seaflg !='X' && current_qcfptr->seaflg !='C' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                        current_qcfptr->seaflg !='U' && current_qcfptr->seaflg !='E')
+main_qc_4DYR_VersionNov2003-Apr2004.c:                  if (current_qcfptr->staflg !='M' && current_qcfptr->staflg !='N' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                      current_qcfptr->staflg !='X' && current_qcfptr->staflg !='C' &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:                      current_qcfptr->staflg !='I' && current_qcfptr->staflg !='B' )
+main_qc_4DYR_VersionNov2003-Apr2004.c:                     if (current_qcfptr->staflg != 'E')
+main_qc_4DYR_VersionNov2003-Apr2004.c:                        current_qcfptr->staflg = current_qcfptr->seaflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                        if (current_qcfptr->seaflg =='B')
+main_qc_4DYR_VersionNov2003-Apr2004.c:                           current_qcfptr->staflg = current_qcfptr->seaflg;
+main_qc_4DYR_VersionNov2003-Apr2004.c:                 qcfptr->hour_nom, qcfptr->minute_nom, saved_hour_nom, saved_minute_nom);
+main_qc_4DYR_VersionNov2003-Apr2004.c:         if ((qcfptr->hour_nom != saved_hour_nom ||
+main_qc_4DYR_VersionNov2003-Apr2004.c:             qcfptr->minute_nom != saved_minute_nom) &&
+main_qc_4DYR_VersionNov2003-Apr2004.c:             strncmp(qcfptr->statn,"               \0",16) )
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    qcfptr->qnet, qcfptr->statn, 
+main_qc_4DYR_VersionNov2003-Apr2004.c:                    qcfptr->hour_nom, qcfptr->minute_nom,
+process_qcfrec_4DYR.c:   qcfptr->year_nom = 0;
+process_qcfrec_4DYR.c:   qcfptr->month_nom = 0;
+process_qcfrec_4DYR.c:   qcfptr->day_nom = 0;
+process_qcfrec_4DYR.c:   qcfptr->hour_nom = 0;
+process_qcfrec_4DYR.c:   qcfptr->minute_nom = 0;
+process_qcfrec_4DYR.c:   qcfptr->year = 0;
+process_qcfrec_4DYR.c:   qcfptr->month = 0;
+process_qcfrec_4DYR.c:   qcfptr->day = 0;
+process_qcfrec_4DYR.c:   qcfptr->hour = 0;
+process_qcfrec_4DYR.c:   qcfptr->minute = 0;
+process_qcfrec_4DYR.c:   strncpy( qcfptr->qnet, "          \0",11);
+process_qcfrec_4DYR.c:   strncpy( qcfptr->statn,"               \0",16);
+process_qcfrec_4DYR.c:   qcfptr->lat = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->lon = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->occur = 0;
+process_qcfrec_4DYR.c:   qcfptr->staelv = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->staprs = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->staflg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->seaprs = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->seaflg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->cmpsea = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->cmpflg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->temp = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->tmpflg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->dewpnt = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->dewflg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->wndspd = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->spdflg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->wnddir = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->dirflg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->precip = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->prcflg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->sg = ' ';
+process_qcfrec_4DYR.c:   qcfptr->squall = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->sqlflg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->prswea = -999;
+process_qcfrec_4DYR.c:   qcfptr->pwflg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->visib = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->visflg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->celht1 = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->celfg1 = 15;
+process_qcfrec_4DYR.c:   qcfptr->c1flg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->clamt1 = 15;
+process_qcfrec_4DYR.c:   qcfptr->ca1flg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->celht2 = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->celfg2 = 15;
+process_qcfrec_4DYR.c:   qcfptr->c2flg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->clamt2 = 15;
+process_qcfrec_4DYR.c:   qcfptr->ca2flg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->celht3 = -999.99;
+process_qcfrec_4DYR.c:   qcfptr->celfg3 = 15;
+process_qcfrec_4DYR.c:   qcfptr->c3flg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->clamt3 = 15;
+process_qcfrec_4DYR.c:   qcfptr->ca3flg = 'M';
+process_qcfrec_4DYR.c:   qcfptr->year_nom = qcfptr1->year_nom;
+process_qcfrec_4DYR.c:   qcfptr->month_nom = qcfptr1->month_nom;
+process_qcfrec_4DYR.c:   qcfptr->day_nom = qcfptr1->day_nom;
+process_qcfrec_4DYR.c:   qcfptr->hour_nom = qcfptr1->hour_nom;
+process_qcfrec_4DYR.c:   qcfptr->minute_nom = qcfptr1->minute_nom;
+process_qcfrec_4DYR.c:   qcfptr->year = qcfptr1->year;
+process_qcfrec_4DYR.c:   qcfptr->month = qcfptr1->month;
+process_qcfrec_4DYR.c:   qcfptr->day = qcfptr1->day;
+process_qcfrec_4DYR.c:   qcfptr->hour = qcfptr1->hour;
+process_qcfrec_4DYR.c:   qcfptr->minute = qcfptr1->minute;
+process_qcfrec_4DYR.c:   strncpy( qcfptr->qnet, qcfptr1->qnet,11);
+process_qcfrec_4DYR.c:   strncpy( qcfptr->statn, qcfptr1->statn,16);
+process_qcfrec_4DYR.c:   qcfptr->lat = qcfptr1->lat;
+process_qcfrec_4DYR.c:   qcfptr->lon = qcfptr1->lon;
+process_qcfrec_4DYR.c:   qcfptr->occur = qcfptr1->occur;
+process_qcfrec_4DYR.c:   qcfptr->staelv = qcfptr1->staelv;
+process_qcfrec_4DYR.c:   qcfptr->staprs = qcfptr1->staprs;
+process_qcfrec_4DYR.c:   qcfptr->staflg = qcfptr1->staflg;
+process_qcfrec_4DYR.c:   qcfptr->seaprs = qcfptr1->seaprs;
+process_qcfrec_4DYR.c:   qcfptr->seaflg = qcfptr1->seaflg;
+process_qcfrec_4DYR.c:   qcfptr->cmpsea = qcfptr1->cmpsea;
+process_qcfrec_4DYR.c:   qcfptr->cmpflg = qcfptr1->cmpflg;
+process_qcfrec_4DYR.c:   qcfptr->temp   = qcfptr1->temp;
+process_qcfrec_4DYR.c:   qcfptr->tmpflg = qcfptr1->tmpflg;
+process_qcfrec_4DYR.c:   qcfptr->dewpnt = qcfptr1->dewpnt;
+process_qcfrec_4DYR.c:   qcfptr->dewflg = qcfptr1->dewflg;
+process_qcfrec_4DYR.c:   qcfptr->wndspd = qcfptr1->wndspd;
+process_qcfrec_4DYR.c:   qcfptr->spdflg = qcfptr1->spdflg;
+process_qcfrec_4DYR.c:   qcfptr->wnddir = qcfptr1->wnddir;
+process_qcfrec_4DYR.c:   qcfptr->dirflg = qcfptr1->dirflg;
+process_qcfrec_4DYR.c:   qcfptr->precip = qcfptr1->precip;
+process_qcfrec_4DYR.c:   qcfptr->prcflg = qcfptr1->prcflg;
+process_qcfrec_4DYR.c:   qcfptr->sg     = qcfptr1->sg;
+process_qcfrec_4DYR.c:   qcfptr->squall = qcfptr1->squall;
+process_qcfrec_4DYR.c:   qcfptr->sqlflg = qcfptr1->sqlflg;
+process_qcfrec_4DYR.c:   qcfptr->prswea = qcfptr1->prswea;
+process_qcfrec_4DYR.c:   qcfptr->pwflg  = qcfptr1->pwflg;
+process_qcfrec_4DYR.c:   qcfptr->visib  = qcfptr1->visib;
+process_qcfrec_4DYR.c:   qcfptr->visflg = qcfptr1->visflg;
+process_qcfrec_4DYR.c:   qcfptr->celht1 = qcfptr1->celht1;
+process_qcfrec_4DYR.c:   qcfptr->celfg1 = qcfptr1->celfg1;
+process_qcfrec_4DYR.c:   qcfptr->c1flg  = qcfptr1->c1flg;
+process_qcfrec_4DYR.c:   qcfptr->clamt1 = qcfptr1->clamt1;
+process_qcfrec_4DYR.c:   qcfptr->ca1flg = qcfptr1->ca1flg;
+process_qcfrec_4DYR.c:   qcfptr->celht2 = qcfptr1->celht2;
+process_qcfrec_4DYR.c:   qcfptr->celfg2 = qcfptr1->celfg2;
+process_qcfrec_4DYR.c:   qcfptr->c2flg  = qcfptr1->c2flg;
+process_qcfrec_4DYR.c:   qcfptr->clamt2 = qcfptr1->clamt2;
+process_qcfrec_4DYR.c:   qcfptr->ca2flg = qcfptr1->ca2flg;
+process_qcfrec_4DYR.c:   qcfptr->celht3 = qcfptr1->celht3;
+process_qcfrec_4DYR.c:   qcfptr->celfg3 = qcfptr1->celfg3;
+process_qcfrec_4DYR.c:   qcfptr->c3flg  = qcfptr1->c3flg;
+process_qcfrec_4DYR.c:   qcfptr->clamt3 = qcfptr1->clamt3;
+process_qcfrec_4DYR.c:   qcfptr->ca3flg = qcfptr1->ca3flg;
+process_qcfrec_4DYR.c:            qcfptr->year_nom, qcfptr->month_nom, qcfptr->day_nom,
+process_qcfrec_4DYR.c:            qcfptr->hour_nom, qcfptr->minute_nom );
+process_qcfrec_4DYR.c:            qcfptr->year, qcfptr->month, qcfptr->day,
+process_qcfrec_4DYR.c:            qcfptr->hour, qcfptr->minute );
+process_qcfrec_4DYR.c:            qcfptr->qnet,  qcfptr->statn, 
+process_qcfrec_4DYR.c:            qcfptr->lat,   qcfptr->lon, 
+process_qcfrec_4DYR.c:            qcfptr->occur, qcfptr->staelv);
+process_qcfrec_4DYR.c:            qcfptr->staprs, qcfptr->staflg, 
+process_qcfrec_4DYR.c:            qcfptr->seaprs, qcfptr->seaflg,
+process_qcfrec_4DYR.c:            qcfptr->cmpsea, qcfptr->cmpflg );
+process_qcfrec_4DYR.c:            qcfptr->temp,   qcfptr->tmpflg, 
+process_qcfrec_4DYR.c:            qcfptr->dewpnt, qcfptr->dewflg,
+process_qcfrec_4DYR.c:            qcfptr->wndspd, qcfptr->spdflg,
+process_qcfrec_4DYR.c:            qcfptr->wnddir, qcfptr->dirflg );
+process_qcfrec_4DYR.c:            qcfptr->precip, qcfptr->prcflg,
+process_qcfrec_4DYR.c:            qcfptr->sg,     qcfptr->squall, qcfptr->sqlflg,
+process_qcfrec_4DYR.c:            qcfptr->prswea, qcfptr->pwflg,
+process_qcfrec_4DYR.c:            qcfptr->visib,  qcfptr->visflg );
+process_qcfrec_4DYR.c:    qcfptr->celht1, qcfptr->celfg1, qcfptr->c1flg, qcfptr->clamt1, qcfptr->ca1flg,
+process_qcfrec_4DYR.c:    qcfptr->celht2, qcfptr->celfg2, qcfptr->c2flg, qcfptr->clamt2, qcfptr->ca2flg,
+process_qcfrec_4DYR.c:    qcfptr->celht3, qcfptr->celfg3, qcfptr->c3flg, qcfptr->clamt3, qcfptr->ca3flg);
+process_qcfrec_4DYR.c:            &qcfptr->year_nom, &junk[0], &qcfptr->month_nom, &junk[1],
+process_qcfrec_4DYR.c:            &qcfptr->day_nom,  &junk[2], &qcfptr->hour_nom,  &junk[3],
+process_qcfrec_4DYR.c:            &qcfptr->minute_nom, &junk[4],
+process_qcfrec_4DYR.c:            &qcfptr->year, &junk[0], &qcfptr->month, &junk[1],
+process_qcfrec_4DYR.c:            &qcfptr->day,  &junk[2], &qcfptr->hour,  &junk[3],
+process_qcfrec_4DYR.c:            &qcfptr->minute, &junk[4] );
+process_qcfrec_4DYR.c:   fgets (qcfptr->qnet, 11, in_stream);
+process_qcfrec_4DYR.c:   qcfptr->qnet[10] = '\0';
+process_qcfrec_4DYR.c:   fgets (qcfptr->statn, 16, in_stream); 
+process_qcfrec_4DYR.c:   qcfptr->statn[15] = '\0';
+process_qcfrec_4DYR.c:           &qcfptr->lat,    &qcfptr->lon, 
+process_qcfrec_4DYR.c:           &qcfptr->occur,  &qcfptr->staelv,
+process_qcfrec_4DYR.c:           &qcfptr->staprs, &qcfptr->staflg,
+process_qcfrec_4DYR.c:           &qcfptr->seaprs, &qcfptr->seaflg, 
+process_qcfrec_4DYR.c:           &qcfptr->cmpsea, &qcfptr->cmpflg, 
+process_qcfrec_4DYR.c:           &qcfptr->temp,   &qcfptr->tmpflg,
+process_qcfrec_4DYR.c:           &qcfptr->dewpnt, &qcfptr->dewflg,
+process_qcfrec_4DYR.c:           &qcfptr->wndspd, &qcfptr->spdflg,
+process_qcfrec_4DYR.c:           &qcfptr->wnddir, &qcfptr->dirflg,
+process_qcfrec_4DYR.c:           &qcfptr->precip, &qcfptr->prcflg,
+process_qcfrec_4DYR.c:           &junk[0], &qcfptr->sg, &junk[1],
+process_qcfrec_4DYR.c:           &qcfptr->squall, &qcfptr->sqlflg,
+process_qcfrec_4DYR.c:           &junk[2], &qcfptr->prswea, &junk[3], &qcfptr->pwflg,
+process_qcfrec_4DYR.c:           &qcfptr->visib,  &qcfptr->visflg,
+process_qcfrec_4DYR.c:           &qcfptr->celht1, &qcfptr->celfg1, &qcfptr->c1flg,
+process_qcfrec_4DYR.c:           &qcfptr->clamt1, &qcfptr->ca1flg,
+process_qcfrec_4DYR.c:           &qcfptr->celht2, &qcfptr->celfg2, &qcfptr->c2flg,
+process_qcfrec_4DYR.c:           &qcfptr->clamt2, &qcfptr->ca2flg,
+process_qcfrec_4DYR.c:           &qcfptr->celht3, &qcfptr->celfg3, &qcfptr->c3flg,
+process_qcfrec_4DYR.c:           &qcfptr->clamt3, &qcfptr->ca3flg );
+process_qcfrec_4DYR.c:            qcfptr->year_nom, qcfptr->month_nom, qcfptr->day_nom,
+process_qcfrec_4DYR.c:            qcfptr->hour_nom, qcfptr->minute_nom );
+process_qcfrec_4DYR.c:            qcfptr->year, qcfptr->month, qcfptr->day,
+process_qcfrec_4DYR.c:            qcfptr->hour, qcfptr->minute );
+process_qcfrec_4DYR.c:            qcfptr->qnet,  qcfptr->statn,
+process_qcfrec_4DYR.c:            qcfptr->lat,   qcfptr->lon,
+process_qcfrec_4DYR.c:            qcfptr->occur, qcfptr->staelv);
+process_qcfrec_4DYR.c:            qcfptr->staprs, qcfptr->staflg,
+process_qcfrec_4DYR.c:            qcfptr->seaprs, qcfptr->seaflg,
+process_qcfrec_4DYR.c:            qcfptr->cmpsea, qcfptr->cmpflg );
+process_qcfrec_4DYR.c:            qcfptr->temp,   qcfptr->tmpflg,
+process_qcfrec_4DYR.c:            qcfptr->dewpnt, qcfptr->dewflg,
+process_qcfrec_4DYR.c:            qcfptr->wndspd, qcfptr->spdflg,
+process_qcfrec_4DYR.c:            qcfptr->wnddir, qcfptr->dirflg );
+process_qcfrec_4DYR.c:            qcfptr->precip, qcfptr->prcflg,
+process_qcfrec_4DYR.c:            qcfptr->sg,     qcfptr->squall, qcfptr->sqlflg,
+process_qcfrec_4DYR.c:            qcfptr->prswea, qcfptr->pwflg,
+process_qcfrec_4DYR.c:            qcfptr->visib,  qcfptr->visflg );
+process_qcfrec_4DYR.c:    qcfptr->celht1, qcfptr->celfg1, qcfptr->c1flg, qcfptr->clamt1, qcfptr->ca1flg,
+process_qcfrec_4DYR.c:    qcfptr->celht2, qcfptr->celfg2, qcfptr->c2flg, qcfptr->clamt2, qcfptr->ca2flg,
+process_qcfrec_4DYR.c:    qcfptr->celht3, qcfptr->celfg3, qcfptr->c3flg, qcfptr->clamt3, qcfptr->ca3flg);

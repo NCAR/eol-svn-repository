@@ -1,0 +1,47 @@
+<project name="Upper Air High Resolution Sounding Composite" default="compile" basedir=".">
+
+    <!-- Project specific constants that need to be changed for each project. -->
+    <property name="project" value="CAESAR_HighRes" />
+    <property name="project.dir" value="/net/work/Projects/CAESAR/data_processing/upper_air/composites/hires" />
+
+    <!-- Local constants used by the composite generator -->
+    <property name="data.dir" location="data" />
+    <property name="dayfile.dir" location="database" />
+
+    <!-- Define the class path containing necessary jar files for processing. -->
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <fileset dir="/net/work/lib/java">
+            <include name="utilities.jar" />
+            <include name="upper_air.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/dayfiles">
+            <include name="upper_air_dayfile.jar" />
+        </fileset>
+    </path>
+
+    <!-- Define the class path containing necessary jar files for testing besides the processing. -->
+    <path id="test-classpath">
+        <fileset dir="/net/work/lib/java/vendor">
+            <include name="junit.jar" />
+        </fileset>
+        <pathelement path="${build.classes}" />
+        <pathelement path="${build.tests}" />
+        <path refid="classpath" />
+    </path>
+
+    <!-- Target to copy the data to the local work directory to be included in the composite. -->
+    <!-- The copying input data to form the composite was hand done for CAESAR 2024. -->
+
+
+    <!-- Target to create the composite day files from the copied data files. -->
+    <target name="dayfiles">
+        <java classname="dmg.ua.sounding.dayfile.ESCDayFileCreator" fork="yes">
+            <arg value="-Z" />
+            <arg value="${project}_" />
+            <arg value="${data.dir}" />
+            <arg value="${dayfile.dir}" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+</project>

@@ -1,0 +1,154 @@
+#!/usr/bin/perl
+#
+# Script: Codiac Project Statistics Query CGI Web Utility
+# Author: Phillip Dressen
+# Last Revision: 6/9/03
+# Contact: drphil@ucar.edu
+#
+
+############################################################################
+##                                                                        ##
+## Usage: Use a web browser to access the URL associated with this script ##
+## URL: http://www.joss.ucar.edu/cgi-bin/dpg/qcodiac/projStats            ##
+##                                                                        ##
+## Notes for Editing this script:                                         ##
+## Hopefully there is not much need to edit this script.                  ##
+## The intention is that the listing of projects to query is produced     ##
+## from a query and so there should not be any need to physically update  ##
+## that list here. The only foreseeable change that may occur, is the     ##
+## sql query information may need to change if codiac ever changes.       ##
+############################################################################
+
+# Include the Perl CGI tools
+use CGI;
+## use Number::Format;
+
+# Create CGI Object
+$cgi = new CGI;
+### $format = new Number::Format(-thousands_sep => ',');
+
+# Assign Search Parameters to variables
+if( $cgi->param('project') ) {
+	@projs = $cgi->param('project');
+}
+
+#########################
+## Databases Variables ##
+#########################
+$db_path = "/storm/codiac/codiac_db";
+$empress = "/usr/empress8.20/rdbms/bin/empcmd";
+$ENV{MSPATH} = "/usr/empress8.20/rdbms";
+
+## Get Projects Avaiable for Query ##
+$sql = "\"SELECT DISTINCT id FROM project WHERE id NOT LIKE \'COMET_CASE%\' ORDER BY id\""; 
+@files = `$empress $db_path/project_db $sql`;
+
+print $cgi->header, $cgi->start_html('Codiac Project Statistics'), "<h1 align=center> CODIAC Project Statistics </h1> \n", 
+		"<h4 align=center> (Ctrl + click - To Select Multiple Projects in Search) </h4>";
+
+print $cgi->start_form, "<h5 align=center><select name=project size=8 multiple align=\"center\">";
+for( $x = 2; $x < @files; $x++ ) {
+    @entry = split( ' ', $files[$x] );
+ 
+    print "<option>", $entry[0];
+}   
+print "</select></h5>", "<h5 align=center>", $cgi->submit('Get Statistics'), "</h5>", $cgi->endform;
+
+## Display any information for queried projects ##
+if( $cgi->param('project') ) {
+	print "<table width=\"89%\" border=\"2\" cellspacing=\"2\" cellpadding=\"24\" height=\"270\" align=\"center\" bgcolor=#e9e9e9 >";
+	print 	"<tr bgcolor=#336699>",
+			"<td> <b> <font align=center color=white>Project Name</font> </b> </td> \n", 
+			"<td> <b> <font align=center color=white>Number of Datasets</font> </b> </td> \n",
+			"<td> <b> <font align=center color=white>Number of Online Files</font> </b> </td> \n",
+			"<td> <b> <font align=center color=white>Total Size of Online Files (Bytes)</font> </b> </td> \n",
+			"<td> <b> <font align=center color=white>Number of Offline Files</font> </b> </td> \n",
+			"<td> <b> <font align=center color=white>Total Size of Offline Files (Bytes)</font> </b> </td> \n",
+			"<tr>";
+}
+
+for($i = 0; $i < @projs; $i++) {
+	$proj = @projs[$i];
+
+
+	print "<tr><td> $proj </td>";
+
+	$sql = "\"SELECT COUNT(storm_id) FROM dataset_project WHERE project_id=\'$proj\'\"";
+	@files = `$empress $db_path/project_db $sql`;
+    @entry = split( ' ', $files[2] );
+    print "<td> <div align=right>";
+
+    @num = split( //, $entry[0]);
+    for($y = 0; $y < @num; $y++) {  
+        if(((@num - $y) % 3) == 0 && ($y) != 0) {
+            print ",";
+        }
+        print $num[$y];
+    }
+    print "</div> </td>";
+
+	$sql = "\"SELECT COUNT(file_name) FROM on_line_phys_dir WHERE l_dds_id MATCH (SELECT storm_id FROM \\\"$db_path/project_db\\\":dataset_project WHERE project_id=\'$proj\')\"";
+    @files = `$empress $db_path/phys_dir_db $sql`;
+    @entry = split( ' ', $files[2] );
+    print "<td> <div align=right>";
+
+    @num = split( //, $entry[0]);
+    for($y = 0; $y < @num; $y++) {  
+        if(((@num - $y) % 3) == 0 && ($y) != 0) {
+            print ",";
+        }
+        print $num[$y];
+    }
+    print "</div> </td>";
+
+    $sql = "\"SELECT SUM(data_amt) FROM on_line_phys_dir WHERE l_dds_id MATCH (SELECT storm_id FROM \\\"$db_path/project_db\\\":dataset_project WHERE project_id=\'$proj\')\"";
+    @files = `$empress $db_path/phys_dir_db $sql`;
+    @entry = split( ' ', $files[2] );
+    print "<td> <div align=right>";
+
+	@num = split( //, 1024 * $entry[0]);
+
+	for($y = 0; $y < @num; $y++) {
+		if(((@num - $y) % 3) == 0 && ($y) != 0) {
+			print ",";
+		}
+		print $num[$y];
+	}
+	print "</div> </td>";
+
+    $sql = "\"SELECT SUM(num_files) FROM off_line_phys_dir WHERE l_dds_id MATCH (SELECT storm_id FROM \\\"$db_path/project_db\\\":dataset_project WHERE project_id=\'$proj\')\"";
+    @files = `$empress $db_path/phys_dir_db $sql`;
+    @entry = split( ' ', $files[2] );
+    print "<td> <div align=right>";
+
+    @num = split( //, $entry[0]);
+    for($y = 0; $y < @num; $y++) {  
+        if(((@num - $y) % 3) == 0 && ($y) != 0) {
+            print ",";
+        }
+        print $num[$y];
+    }
+    print "</div> </td>";
+
+    $sql = "\"SELECT SUM(data_amt) FROM off_line_phys_dir WHERE l_dds_id MATCH (SELECT storm_id FROM \\\"$db_path/project_db\\\":dataset_project WHERE project_id=\'$proj\')\"";
+    @files = `$empress $db_path/phys_dir_db $sql`;
+    @entry = split( ' ', $files[2] );
+    print "<td> <div align=right>";
+
+    @num = split( //, 1024 * $entry[0]);
+    for($y = 0; $y < @num; $y++) {  
+        if(((@num - $y) % 3) == 0 && ($y) != 0) {
+            print ",";
+        }
+        print $num[$y];
+    }
+    print "</div> </td>";
+
+	print "</tr>";
+}
+
+if( $cgi->param('project') ) {
+	print "</table>";
+}
+
+print $cgi->end_html;

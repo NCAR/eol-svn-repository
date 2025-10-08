@@ -1,0 +1,118 @@
+#!/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>Processes the input from the edit_proj_notes form.  This script determines
+#  the action the user requested (by which button was pressed) and performs
+#  the needed database operations.  This script only allows the user to
+#  update a project's notes field, not add or delete projects.</p>
+#
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Utils;
+use Project;
+use ProjectDBA;
+use State;
+use CGI;
+
+# The possible actions the user can request, or the buttons that can be clicked
+my %actions = ( "Update Notes" => \&update,
+								"Cancel" => \&cancel
+							);
+
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+proc_proj_notes( $state, $cgi );
+
+
+sub proc_proj_notes
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	# Determine the requested action and call the needed function
+	my $action = $cgi->param( "action" );
+	$actions{$action}->($state, $cgi);
+	
+}
+
+#------------------------------------------------------------------------------
+# Returns a Project object populated with the values entered into the form
+#------------------------------------------------------------------------------
+sub getFromParams
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $pj = Project->new();
+
+	$pj->{pjname} = $state->{project};
+	$pj->{admin_notes} = $cgi->param( "admin_notes" );
+
+	return $pj;
+}
+
+#------------------------------------------------------------------------------
+# Cancels the edit, does nothing.
+#------------------------------------------------------------------------------
+sub cancel
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $onLoad = "\"top.opener.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Action Canceled" );	
+}
+
+#------------------------------------------------------------------------------
+# Updates the project's notes field in the database.
+#------------------------------------------------------------------------------
+sub update
+{
+	my $state = shift;
+	my $cgi = shift;
+	
+	my $pj = getFromParams( $state, $cgi );
+
+	ProjectDBA::updateDBNotes( $pj );
+
+	$state->{proc_edit} = undef();
+	my $url = $state->getUrlString();
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Project Notes Updated" );	
+}
+
+#------------------------------------------------------------------------------
+# Displays the return page for all the actions.  This includes the provided 
+#  message, value for the onLoad parameter of the body tag, and the 'Close
+#  Window' button.
+#------------------------------------------------------------------------------
+sub showStatus
+{
+	my $state = shift;
+	my $cgi = shift;
+	my $onLoad = shift;
+	my $msg = shift;
+
+
+	println( $cgi->header() );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>$msg</title>" );
+	println( "</head>" );
+	println( "<body onLoad=$onLoad>" );
+	println( "<center><br><br><br>" );
+	println( "<b>$msg</b>" );
+	println( "<br>" );
+	println( "<input type=submit value='Close Window' onClick=\"window.close()\">" );
+
+	println( "</body></html>" );
+}
+
+1;

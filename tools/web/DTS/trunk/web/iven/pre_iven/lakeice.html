@@ -1,0 +1,218 @@
+<HTML>
+<body bgcolor=white>
+
+<TITLE>Dataset Processing Inventory </TITLE>
+
+<center><H1><u>Dataset Processing Inventory</u></H1></center>
+<br>
+<center><H2>Updated: 19 March 1999 </H2></center>
+<br>
+<H3><b>LakeICE</b></H3>
+<br>
+<b>TOI: 28 Nov 1997 through 25 Jan 1998 </b>
+<br>
+
+<b>AOI:  Great Lakes
+<ul>
+   <li>  LAT:  37 to 55 (N)
+   <li>  LON: -73 to -104(W) 
+</ul>
+</b>
+<br>
+<b>CODIAC ID Prefix: 14.xxx </b>
+<br>
+<b>LakeICE Charge #: 401110</b>
+<br>
+<p>
+<b>Products: </b>
+<ul>
+   <li><a>5 Minute Surface Composite (Basically, 5-min ASOS)
+          (CODIAC ID 14.003) </a>
+   <li><a>20 Minute Surface Composite (Basically, 20-min AWOS) 
+          (CODIAC ID 14.004) </a>
+   <li><a>Hourly Surface Composite (At least: Hourly ASOS, Some 5-Min ASOS,
+                             NCDC DATSAV2 Nominals and Specials,
+                             and Canadian DATSAV2. Plus available
+                             GCIP datasets.) (CODIAC ID 14.005) </a>
+   <li><a>15-min Precip Composite  </a>
+   <li><a>Hourly Precip Composite  </a>
+   <li><a>Final Station List       </a>
+</ul>
+<br>
+<p>
+NOTE: All data will HQC'd together. It is then very important that if
+     5-Min and Hourly ASOS for same stns are in the HQC'd composite 
+     that they have exactly the same lat/lon values. This will ensure 
+     that expected values are correctly computed.
+</p>
+<br>
+<p>
+NOTE: Times given below are only ESTIMATES of processing time. 
+      Actual times depend on data and metadata being in-house 
+      and being complete, etc.  A time estimate of 7 WEEKS was given 
+      for Composite formation, HQC, Station list formation, Ebufring, 
+      etc. (see sheet dated 15 August 1997 entitled
+      "Time Estimates for Data Processing for LakeICE").
+</p>
+<br>
+<br>
+<!-- ================================================= -->
+<h3><u>5 Minute Surface Composite Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> ASOS (LakeICE only)</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> See /ingest/modem/capture/asossao. 3 wks (LakeICE pays).
+            (No 5 minute AWOS collected.) </td>
+   </tr>
+</table>
+
+<!-- ================================================= -->
+<h3><u>20 Minute Surface Composite Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> AWOS (LakeICE only)</td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> 3 Types of AWOS collected:
+           <ul>
+              <li>Artais (2wks LakeIce pays). /ingest/modem/capture/artais.
+              <li>Handar (2wks LakeIce pays). /ingest/modem/capture/handar.
+              <li>Qualimetrics (3wks LakeIce pays). /ingest/modem/capture/qual*.
+                  Qual gathered from PC. Note that there were many empty dirs
+                  from Qual. data collection.
+           </ul>
+       </td>
+   </tr>
+</table>
+
+
+<!-- ================================================= -->
+<h3><u>Hourly Surface Composite Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> ASOS Hourly </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> See /ingest/modem/capture/asossao.
+            3 weeks. GCIP pays. </td>
+   </tr>
+
+   <tr><td> ASOS 5 minute</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> See /ingest/modem/capture/asossao.
+            (Consider the ASOS 5min data
+            @ t=55mins for stations not
+            in hourly.)
+      </td>
+   </tr>
+
+   <tr><td>NCDC DATSAV2 (US) Hourly </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Received from NCDC in Late Dec 1998. This data is
+            now being converted. Some station list problems are
+            being resolved. This data does include Canadian and
+            US sites, Stationary and Mobile.
+            Ordered from NCDC on 8 Apr98 3 wks (GCIP pays)
+            This data will now be in DATSAV2 format not SAO METAR.
+            (Nom & Specials) Tape received from Wayne Faas
+            contained only 1 station. SFW will request rest of data.
+            SFW has requested several times. W.Faas says OK now
+            we can have data, yet they will not send either by
+            tape or FTP. This dataset has been promised for early Dec 98.
+       </td>
+   </tr>
+
+   <tr><td>Canadian DATSAV2 Hourly </td> 
+       <td> <font color=blue> DONE </font>     </td>
+       <td> See notes for NCDC DATSAV2(US) above. This dataset is 
+            currently being converted. Data received Late Dec. 1998.
+            Ordered from NCDC on 8 Apr98 3 wks     (LakeICE pays 1wk)
+            This data will now be in DATSAV2 format.  (GCIP pays 2 wks)
+       </td> 
+   </tr>
+
+   <tr><td>HPCN Hourly </td> 
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Include if available. /ingest/hpcn    2 wks (GCIP pays) </td> 
+   </tr>
+
+   <tr><td> Great Lakes Buoy(NDBC)  Hourly </td> 
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Include if available. /ingest - 2 wks (GCIP pays) </td> 
+   </tr>
+
+   <tr><td>NOAA Profiler NPN sfc Hourly </td> 
+       <td><font color=blue> DONE </font> </td>
+       <td> Include if available. Downloaded from NCDC on 13 Nov 98. 
+            Ordered from NCDC on 8 Apr98 - 2 wks (ESOP AOI only) (GCIP pays)
+       </td> 
+   </tr>
+
+   <tr><td>ISWS/ICN Hourly </td> 
+       <td> <font color=blue> DONE </font>     </td>
+       <td>Include if available.
+           /data/ftp/isws on storm  2 wks (GCIP pays) </td> 
+   </tr>
+
+   <tr><td> U of WI AWON Hourly </td> 
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Less Critical. See /data10/ESOP98/AWON - 2 wks (GCIP pays)</td> 
+   </tr>
+
+   <tr><td>MI State Univ AWSN Hourly </td> 
+       <td> <font color=blue> Not Received</font>     </td>
+       <td> SL tried to order. (U of WI has become non-responsive to SL.
+            SL is unable to contact and we may
+            not get this dataset. This dataset is less critical.)   </td> 
+   </tr>
+
+</table>
+
+<!-- ================================================= -->
+<h3><u>NPN Profiler Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>NOAA NPN Winds Hourly </td> 
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Downloaded form NCDC on 13 Nov 98 
+            Ordered from NCDC on 8 Apr98 2-3wks 
+            (Only doing GCIP/ESOP area)
+            (Only See comments for NCDC SAO's. (GCIP will pay)
+       </td> 
+   </tr>
+
+   <tr><td>NOAA Hourly Profiler Control, Moments,
+     Spectrum, and RASS </td> 
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Linked via CODIAC only. No data order.
+       </td> 
+   </tr>
+
+   <tr><td>NPN RASS Hourly </td> 
+       <td> <font color=blue> DONE </font>     </td>
+       <td> LEC downloaded from NCDC 2 Dec 1998.
+            Data are located on thunder at /raid/8/lakeice/NPN_RASS.
+            These data have been turned over to GS to
+            ensure that these are the correct data.
+       </td> 
+   </tr>
+
+</table>
+
+<b>-------------------End Lake-ICE-----------------------</b>
+</HTML>

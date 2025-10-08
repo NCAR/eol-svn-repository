@@ -1,0 +1,1361 @@
+#!/bin/perl -w
+
+#-----------------------------------------------------------------
+# master_maint: This CGI script is the editor for the Arctic 
+#  Master List application.  This script handles all aspects of
+#  the editor.  Displays the top frame to specify sort preferences,
+#  displays table of datasets, processes user input, etc. 
+#
+# Author: Dan Sullivan
+# Date: August, 2002
+#
+# Updates:
+#  August, 2003:
+#   - Added two new fields: Spatial Resolution and Method of Obs.
+#   - Removed the start/end date, will use the dates in CODIAC
+#-----------------------------------------------------------------
+use lib "./lib";
+use strict;
+use DBI;
+use CGI qw(:standard :html3 );
+use Field;
+use Row;
+use Table;
+use Util;
+
+#---------------------Initialize some variables-------------------
+
+my $yellow = "#FFFFCC";
+my $dbh = connectToDB();
+my $table = Table->new();
+my $today = get_today();
+
+my %actions = ( "display", \&display,
+								"showTopFrame", \&showTopFrame,
+								">>", \&getUpdate,
+								"Add Dataset", \&addDataset,
+								"Update Dataset", \&updateDataset,
+								"Delete", \&deleteDataset,
+								"editFields", \&editFields,
+								"updateField", \&getUpdateField,
+								"Add Field", \&addField2,
+								"Update Field", \&updateField,
+								"Delete Field", \&deleteField,
+								"Cancel", \&display,
+								"cancel", \&editFields,
+								"getAddProject", \&getAddProject,
+								"Add Project", \&addProject,
+								"getReadme", \&getReadme );
+
+my %dropData = ( "DataType", [],
+									"Discipline", [],
+									"Site", [],
+									"Platform", [],
+									"SpatRes", [] 
+								);
+
+my %fields = (	"DataType", "data_type",
+								"Discipline", "discipline",
+								"Site", "site",
+								"Platform", "platform" ,
+								"SpatRes", "spat_res"
+							);
+#-----------------------------------------------------------------
+
+#--------------------Main Program---------------------------------
+
+my $action = param( "Action" );
+
+getProject(); 
+
+getSortParams();
+
+$actions{$action}->();
+
+#-----------------------------------------------------------------
+
+#---------------------Subroutines---------------------------------
+
+#-----------------------------------------------------------------
+# Simply display the data entry form and the table of datasets
+#-----------------------------------------------------------------
+sub display
+{
+	queryDB();
+
+	showTable( -1, undef, "add" );
+}
+
+#-----------------------------------------------------------------
+# Add a new dataset to the database using the information the user
+#  type into the form.
+#-----------------------------------------------------------------
+sub addDataset
+{
+	my $row = getRowEntry();
+
+	my $id = addRowToDB( $row );
+	$row->{id} = -1;
+	
+	queryDB();
+	showTable( $id, $row, "added" );
+}
+
+#-----------------------------------------------------------------
+# Pull all of the needed information for this project from the database
+#-----------------------------------------------------------------
+sub queryDB
+{
+	my $sql = "SELECT List.id, List.storm_id, List.title, List.date, List.author, List.doc_url, List.comments, List.url, List.phase, " .	
+						"List.start_year, List.end_year, " . 
+						"DataType.name, Discipline.name, Platform.name, Site.name, ListProjects.name, List.method_of_obs, SpatRes.name " .
+						"FROM List, DataType, Discipline, Platform, Site, ListProjects, SpatRes " . 
+						"WHERE " . 
+						"DataType.id = List.data_type_id AND " . 
+						"Discipline.id = List.discipline_id AND " .
+						"Platform.id = List.platform_id AND " .
+						"Site.id = List.site_id AND " . 
+						"SpatRes.id = List.spat_res_id AND " . 
+						"ListProjects.id = List.proj_id AND " .
+						"List.proj_id = $table->{proj_id} ";
+
+	$sql = $sql . getOrderBy();
+
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	my @row;
+
+	# Add all of the records to the table object
+	while( (@row = $sth->fetchrow()) )
+	{
+		my $r = setRow( @row );
+		$table->addRow( $r );	
+	} 
+
+	$sth->finish();
+
+	# Get the data from the DataType, Discipline, Platform, and Site tables and SpatRes
+	getAllDropData();
+
+	#matchDropData();
+}
+
+sub getOrderBy
+{
+	my $order = "ORDER BY";
+	my $field = $table->{sort_field};
+	my $sec_sort = "List.storm_id";
+
+	if( $field eq "data_type" )
+	{
+		$order = $order . " DataType.name";
+	}
+	elsif( $field eq "platform" )
+	{
+		$order = $order . " Platform.name";
+	}
+	elsif( $field eq "discipline" )
+	{
+		$order = $order . " Discipline.name";
+	}
+	elsif( $field eq "site" )
+	{
+		$order = $order . " Site.name";
+	}
+	elsif( $field eq "spat_res" )
+	{
+		$order = $order . " SpatRes.name";
+	}
+	else
+	{
+		$order = $order . " List.$field";
+	}
+
+	$order = $order . " " . $table->{sort_dir};
+
+	if( $field eq "storm_id" )
+	{
+		$sec_sort = "List.date";
+	}
+
+	$order = $order . ", " . $sec_sort . " ASC";
+
+	return $order;
+}
+#-----------------------------------------------------------------
+# Queries the given table and stores the information in the 
+#  respective array of the %dropData hash table. 
+# Since the DataType, Discipline, and Platform tables all have the
+#  same field types and names this is possible.
+# I used the term Drop Down Data because this information appears
+#  in the drop down boxes of the form and I couldn't think of anything
+#  better.  I often refer to these as fields also.  
+#-----------------------------------------------------------------
+sub getDropDownData
+{
+	my $table_name = shift;
+
+	# Query the database
+	my $sql = "SELECT id, name FROM $table_name WHERE proj_id = " . $table->{proj_id} . " OR proj_id is NULL ORDER BY name";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	my @row;
+	my $c = 0;
+	
+	my $unknown_name;
+
+	# Set the first item of the drop down box to 'SELECT'
+	$dropData{$table_name}->[$c++] = "-1";
+	$dropData{$table_name}->[$c++] = "SELECT";
+
+	# Add each namd an value to the array
+	while( (@row = $sth->fetchrow()) )
+	{
+		if( $row[0] == $unknown_id )			# Save the 'unknown' value until the end to place
+		{                                 #    it at the bototm of the drop down box
+			$unknown_name = $row[1];
+		}
+		else
+		{
+			$dropData{$table_name}->[$c++] = $row[0];	
+			$dropData{$table_name}->[$c++] = $row[1];	
+		}
+	}
+
+	# Set the 'unknown' value at the end
+	$dropData{$table_name}->[$c++] = $unknown_id;	
+	$dropData{$table_name}->[$c++] = $unknown_name;
+
+	$sth->finish();
+}
+
+#-----------------------------------------------------------------
+# Show the table.
+#-----------------------------------------------------------------
+sub showTable
+{
+	my $hlite = shift;			# The id number of the row to highlite
+	my $row = shift;				# The row to display in the form, when updating a dataset
+	my $mode = shift;
+	#my $mode = "update";		# The mode we're in add/update
+	my $done = 0; 					# true/false finished displaying the rows
+
+	if( $hlite == -1 || !defined( $hlite ) )
+	{
+		$done = 1;
+	}
+
+	# Get a blank row if not updating a dataset
+	if( !defined( $row ) ) 
+	{ 
+		$row = getBlankRow(); 
+		$mode = "add";
+	}
+
+	# Show the html header
+	showHeader();
+
+	println( "<center><table border=1 width=100%>" );
+	showModeStatusBar( $mode );
+
+	#println( "<hr>" );
+	# Show the data entry form
+	println( "<tr><td>" );
+	showEntryForm( $row, $mode );
+	println( "</td></tr></table>" );
+
+	# Show the table header
+	showTableHeader();
+
+	# Display each row in the table
+
+	my @rows = @{$table->{array}};
+	my $count = 0;
+
+	foreach my $r (@rows)
+	{
+		if( $table->{dis_count} ne "ALL" && $count >= $table->{dis_count} && $done == 1 )
+		{
+			last;	
+		}
+		$count++;
+ 	
+		if( $r->{id} == $hlite )
+		{
+			if( $mode eq "add" || $mode eq "added" )
+			{ showRow( $r, $yellow, "<a name=mark_here></a>" ); }
+			else
+			{ showRow( $r, $yellow ); }
+			$done = 1;
+		}
+		else
+		{
+			showRow( $r, "#FFFFFF" );
+		}
+	}	
+
+	println( "</table></body></html>" );
+}
+
+#-----------------------------------------------------------------
+# Standard header to display for each action
+#-----------------------------------------------------------------
+sub showHeader
+{
+	println( header() );
+	println( "<html><head><title>Master List Maintenance</title>" );
+	println( "<script language=javascript src=http://www.joss.ucar.edu/dpg/arctic_ml/master.js></script>" );
+	println( "</head><body bgcolor=white onLoad=\"jumpAnchor()\">" );
+}
+
+sub showModeStatusBar
+{
+	my $mode = shift;
+
+	println( "<tr><td align=center bgcolor=$mode_col{$mode}><b><font color=$mode_font{$mode} size=+1>$mode_title{$mode}</td></tr>" );
+}
+#-----------------------------------------------------------------
+# Displays the data entry form.
+#-----------------------------------------------------------------
+sub showEntryForm
+{
+	my $row = shift;		# The row to place in the form
+	my $mode = shift;		# update or add mode??
+
+	println( "<table border=0 cellpadding=3 cellspacing=3>" );
+	println( "<form method=post action=$my_url>" );
+		println( $tr );	
+			println( $td3 . "<b>Date:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "date" )}->htm_tag() );
+			println( $tde );
+		println( $tre );	
+		println( $tr );
+			println( $td3 . "<b>Storm Id:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "storm_id" )}->htm_tag() );
+				println( "<b>Title:</b>" );
+				println( ${$row->getFieldByName( "title" )}->htm_tag() );
+			println( $tde );
+			println( $td3 . "<b>Data Type:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "data_type" )}->htm_tag() );
+			println( $tde );
+			println( $td );
+				println( nbsp(4) . "<b>OR" . nbsp(4) . "</b>". ${$row->getFieldByName( "data_type_new" )}->htm_tag() );
+			println( $tde );
+		println( $tre );	
+		println( $tr );	
+			println( $td3 . "<b>URL:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "url" )}->htm_tag() );
+			println( $tde );
+			println( $td3 . "<b>Discipline:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "discipline" )}->htm_tag() );
+			println( $tde );
+			println( $td );
+				println( nbsp(4) . "<b>OR" . nbsp(4) . "</b>". ${$row->getFieldByName( "discipline_new" )}->htm_tag() );
+			println( $tde );
+		println( $tre );	
+		println( $tr );	
+			println( $td3 . "<b>Author/PI:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "author" )}->htm_tag() );
+			println( $tde );
+			println( $td3 . "<b>Platform:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "platform" )}->htm_tag() );
+			println( $tde );
+			println( $td );
+				println( nbsp(4) . "<b>OR" . nbsp(4) . "</b>". ${$row->getFieldByName( "platform_new" )}->htm_tag() );
+			println( $tde );
+		println( $tre );	
+		println( $tr );
+			println( $td3 . "<b>Documentation URL:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "doc_url" )}->htm_tag() );
+			println( $tde );
+			println( $td3 . "<b>Site:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "site" )}->htm_tag() );
+			println( $tde );
+			println( $td );
+				println( nbsp(4) . "<b>OR" . nbsp(4) . "</b>". ${$row->getFieldByName( "site_new" )}->htm_tag() );
+			println( $tde );
+		println( $tre );
+		println( $tr );
+			println( $td3 . "<b>Phase:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "phase" )}->htm_tag() );
+			println( $tde );
+			println( $td3 . "<b>Spatial Res.:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "spat_res" )}->htm_tag() );
+			println( $tde );
+			println( $td );
+				println( nbsp(4) . "<b>OR" . nbsp(4) . "</b>". ${$row->getFieldByName( "spat_res_new" )}->htm_tag() );
+			println( $tde );
+		println( $tre );
+		println( $tr );
+			println( $td3 . "<b>Method Of Obs.:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "method_of_obs" )}->htm_tag() );
+			println( $tde );
+			println( "<td colspan=3 align=right>" );
+				println( "&nbsp;" );	
+			println( $tde );
+		println( $tre );
+		println( $tr );
+			println( $td3 . "<b>Comments:</b>" . $tde );
+			println( $td );
+				println( ${$row->getFieldByName( "comments" )}->htm_tag() );
+			println( $tde );
+			println( "<td colspan=3 align=right>" );
+				showButtons( $row, $mode );
+			println( $tde );
+		println( $tre );
+	println( "</form></table>" );
+}
+
+#-----------------------------------------------------------------
+# Displays the needed buttons for the entry form.
+#-----------------------------------------------------------------
+sub showButtons
+{
+	my $row = shift;
+	my $mode = shift;
+
+	# Display the 'add' buttons if adding a dataset
+	if( $mode eq "add" || $mode eq "added" )
+	{
+		println( "<input type=submit name=Action value=\"Add Dataset\"></input>" );
+		#println( "<input type=reset name=Action value=\"Clear\"></input>" );
+		println( "<input type=submit name=Action value=\"Clear\" onClick=\"clearForm( this.form ); return false\">" );
+	}
+	else		# Display the 'update' buttons if updating a dataset
+	{
+		println( "<input type=submit name=Action value=\"Update Dataset\"></input>" );
+		println( "<input type=submit name=Action value=\"Add Dataset\"></input>" );
+		println( "<input type=submit name=Action value=\"Delete\"></input>" );
+		println( "<input type=submit name=Action value=\"Cancel\"></input>" );
+	}
+
+	# Display the needed hidden fields
+	println( "<input type=hidden name=row_id value=$row->{id}></input>" );
+	println( "<input type=hidden name=project value=$table->{proj_id}></input>" );
+	println( "<input type=hidden name=proj_name value=$table->{proj_name}>" );
+	println( "<input type=hidden name=sort_field value=$table->{sort_field}>" );
+	println( "<input type=hidden name=sort_dir value=$table->{sort_dir}>" );
+	println( "<input type=hidden name=dis_count value=$table->{dis_count}>" );
+}
+
+#-----------------------------------------------------------------
+# Show the standard heading to the table of records.
+#-----------------------------------------------------------------
+sub showTableHeader()
+{
+	my $td = "<td nowrap>";
+	println( "<center><table border=1 cellpadding=2 cellspacing=2>" );
+		println( $tr );
+			println( $td . nbsp(1) . $tde );
+			println( $td . "<b>Date</b>" . $tde );
+			println( $td . "<b>Storm Id</b>" . $tde );
+			println( $td . "<b>Title</b>" . $tde );
+			println( $td . "<b>Author/PI</b>" . $tde );
+			println( $td . "<b>Data Type</b>" . $tde );
+			println( $td . "<b>Discipline</b>" . $tde );
+			println( $td . "<b>Platform</b>" . $tde );
+			println( $td . "<b>Site</b>" . $tde );
+			println( $td . "<b>Spatial Res</b>" . $tde );
+			println( $td . "<b>Phase</b>" . $tde );
+			println( $td . "<b>Documentation</b>" . $tde );
+			println( $td . "<b>Method Of Obs.</b>" . $tde );
+			println( $td . "<b>Comments</b>" . $tde );
+		println( $tre );
+}
+
+#-----------------------------------------------------------------
+# Display the row as part of the table (called in showTable for
+#  each record)
+#-----------------------------------------------------------------
+sub showRow
+{
+	my $row = shift;
+	my $color = shift;
+	my $anchor = shift;
+	my $td = "<td>";
+
+	# If the field is undefined or blank display a no-break-space in
+	#  the table - this makes things look nice
+	for( my $x = 0; $x < $row->{count}; $x++ )
+	{
+		my $field = ${$row->getFieldByIndex( $x )};
+		if( !defined( $field->{value} ) || $field->{value} eq "" )
+		{
+			$field->{value} = "&nbsp;";
+		}	
+	}
+
+	# Display the row of data
+	println( "<tr bgcolor=$color>" );
+
+		if( defined( $anchor ) )
+		{ println( $anchor ); }
+
+		println( $td ); showSelectButton( $row ); println( $tde );
+		println( "<td nowrap>" . ${$row->getFieldByName( "date" )}->print_val() );	
+		println( $td . ${$row->getFieldByName( "storm_id" )}->print_val() );	
+		println( "<td nowrap>" . ${$row->getFieldByName( "title" )}->print_val() );	
+		println( "<td nowrap>" . ${$row->getFieldByName( "author" )}->print_val() );	
+		println( $td . ${$row->getFieldByName( "data_type" )}->print_val() );	
+		println( $td . ${$row->getFieldByName( "discipline" )}->print_val() );	
+		println( $td . ${$row->getFieldByName( "platform" )}->print_val() );	
+		println( $td . ${$row->getFieldByName( "site" )}->print_val() );	
+		println( $td . ${$row->getFieldByName( "spat_res" )}->print_val() );	
+		println( "<td nowrap>" . ${$row->getFieldByName( "phase" )}->print_val() );	
+		println( $td . ${$row->getFieldByName( "documentation" )}->print_val() );	
+		println( "<td nowrap>" . ${$row->getFieldByName( "method_of_obs" )}->print_val() );	
+		println( "<td nowrap>" . ${$row->getFieldByName( "comments" )}->print_val() );	
+	println( "</tr>" );	
+}
+
+#-----------------------------------------------------------------
+# Displays the '>>' select button be each dataset so the user 
+#  can select that dataset to update/delete it.
+#-----------------------------------------------------------------
+sub showSelectButton
+{
+	my $row = shift;
+	println( "<form method=post action=$my_url>" );
+		println( "<input type=submit name=Action value=&gt;&gt;></input>" );
+		println( "<input type=hidden name=row_id value=$row->{id}></input>" );
+		println( "<input type=hidden name=project value=$table->{proj_id}></input>" );
+		println( "<input type=hidden name=proj_name value=$table->{proj_name}>" );
+		println( "<input type=hidden name=sort_field value=$table->{sort_field}>" );
+		println( "<input type=hidden name=sort_dir value=$table->{sort_dir}>" );
+		println( "<input type=hidden name=dis_count value=$table->{dis_count}>" );
+	println( "</form>" );
+}
+
+sub setRow
+{
+	my @arr = @_;
+	my $row = getBlankRow();
+
+	$row->{id} = $arr[0];
+
+	${$row->getFieldByName( "storm_id" )}->{value} = $arr[1]; 
+	${$row->getFieldByName( "title" )}->{value} = $arr[2];
+	${$row->getFieldByName( "date" )}->{value} = $arr[3];
+	${$row->getFieldByName( "author" )}->{value} = $arr[4];
+	${$row->getFieldByName( "doc_url" )}->{value} = $arr[5];
+	${$row->getFieldByName( "comments" )}->{value} = $arr[6];
+	${$row->getFieldByName( "url" )}->{value} = $arr[7];
+	${$row->getFieldByName( "phase" )}->{value} = $arr[8];
+	${$row->getFieldByName( "start_year" )}->{value} = $arr[9];
+	${$row->getFieldByName( "end_year" )}->{value} = $arr[10];
+	${$row->getFieldByName( "data_type" )}->{value} = $arr[11];
+	${$row->getFieldByName( "discipline" )}->{value} = $arr[12];
+	${$row->getFieldByName( "platform" )}->{value} = $arr[13];
+	${$row->getFieldByName( "site" )}->{value} = $arr[14];
+	${$row->getFieldByName( "method_of_obs" )}->{value} = $arr[16];
+	${$row->getFieldByName( "spat_res" )}->{value} = $arr[17];
+
+
+
+	# Set the link to the title field to the 'url' the user enters 
+	if( $arr[7] ne "" && defined( $arr[7] ) )
+	{
+		${$row->getFieldByName( "title" )}->{link} = $arr[7];
+	}
+
+	# Set the link to the documentation field to the doc_url the
+  #  user enters
+	if( $arr[5] ne "" && defined( $arr[5] ) )
+	{
+		${$row->getFieldByName( "documentation" )}->{link} = $arr[5];
+	}
+	elsif( $arr[1] ne "99.999" )
+	{
+		${$row->getFieldByName( "documentation" )}->{link} = "$my_url?Action=getReadme&storm_id=$arr[1]";
+	}
+	else
+	{	
+		${$row->getFieldByName( "documentation" )}->{value} = "";
+	}
+
+	return $row;	
+}
+
+#-----------------------------------------------------------------
+# Get a default, blank row.
+#-----------------------------------------------------------------
+sub getBlankRow
+{
+	my $row = Row->new(-1);
+	my $field;
+	
+	$field = Field->new( "storm_id", "text", "" );
+	$field->{size} = 8;
+	$field->{onChange} = "setLink( this.form )";
+	$row->addField( $field );
+
+	$field = Field->new( "title", "text", "" );
+	$field->{size} = 40;
+	$row->addField( $field );
+
+	$field = Field->new( "date", "date", $today );
+	$row->addField( $field );
+
+	$field = Field->new( "author", "text", "" );
+	$field->{size} = 25;
+	$row->addField( $field );
+
+	$field = Field->new( "doc_url", "text", "" );
+	$field->{size} = 55;
+	$row->addField( $field );
+
+	# This field is only used to display the table, it is not
+	#  used to read in anything from the form 
+	$field = Field->new( "documentation", "text", "Documentation" );
+	$row->addField( $field );
+
+	$field = Field->new( "data_type", "select", "-1" );
+	$field->{othertagmods} = $dropData{"DataType"};
+	$row->addField( $field );
+
+	$field = Field->new( "discipline", "select", "-1" );
+	$field->{othertagmods} = $dropData{"Discipline"}; 
+	$row->addField( $field );
+
+	$field = Field->new( "platform", "select", "-1" );
+	$field->{othertagmods} = $dropData{"Platform"}; 
+	$row->addField( $field );
+
+	$field = Field->new( "site", "select", "-1" );
+	$field->{othertagmods} = $dropData{"Site"}; 
+	$row->addField( $field );
+
+	$field = Field->new( "spat_res", "select", "-1" );
+	$field->{othertagmods} = $dropData{"SpatRes"}; 
+	$row->addField( $field );
+
+	$field = Field->new( "data_type_new", "text", "New" );
+	$field->{size} = 15;
+	$row->addField( $field );
+
+	$field = Field->new( "discipline_new", "text", "New" );
+	$field->{size} = 15;
+	$row->addField( $field );
+
+	$field = Field->new( "platform_new", "text", "New" );
+	$field->{size} = 15;
+	$row->addField( $field );
+
+	$field = Field->new( "site_new", "text", "New" );
+	$field->{size} = 15;
+	$row->addField( $field );
+
+	$field = Field->new( "spat_res_new", "text", "New" );
+	$field->{size} = 15;
+	$row->addField( $field );
+
+	$field = Field->new( "comments", "text", "" );
+	$field->{size} = 60;
+	$row->addField( $field );
+
+	$field = Field->new( "url", "text", "http://www.joss.ucar.edu/cgi-bin/codiac/dss?" );
+	$field->{size} = 55;
+	$row->addField( $field );
+
+	$field = Field->new( "phase", "text", "" );
+	$field->{size} = 15;
+	$row->addField( $field );
+
+	$field = Field->new( "start_year", "text", "" );
+	$field->{size} = 4;
+	$field->{maxlength} = 4;
+	$row->addField( $field );
+
+	$field = Field->new( "end_year", "text", "" );
+	$field->{size} = 4;
+	$field->{maxlength} = 4;
+	$row->addField( $field );
+
+	$field = Field->new( "method_of_obs", "text", "" );
+	$field->{size} = 60;
+	$field->{maxlength} = 200;
+	$row->addField( $field );
+
+	return $row;
+}
+
+#-----------------------------------------------------------------
+# Connect to the database
+#-----------------------------------------------------------------
+sub connectToDB
+{
+	return DBI->connect( "DBI:mysql:database=master_list;host=thunder",
+												"suldan", "hithere", { RaiseError=>1} ) || die( "Unable to connect to database" );
+}
+
+#-----------------------------------------------------------------
+# Get the project the user wants to edit
+#-----------------------------------------------------------------
+sub getProject
+{
+	my $project = param( "project" );
+	my $pname = param( "project_name" );
+
+	if( !defined( $pname ) && defined( $project ) )
+	{
+		my $sql = "SELECT name from ListProjects WHERE id = $project";
+		my $sth = $dbh->prepare( $sql );
+		$sth->execute();
+		my @row = $sth->fetchrow();
+ 
+		if( @row ) { $pname = $row[0]; }
+	}
+	$table->{proj_id} = $project;
+	$table->{proj_name} = $pname;
+}
+
+sub getSortParams
+{
+	$table->{sort_field} = param( "sort_field" );
+	if( !defined( $table->{sort_field} ) )
+	{
+		$table->{sort_field} = "date";
+	}
+
+	$table->{sort_dir} = param( "sort_dir" );
+	if( !defined( $table->{sort_dir} ) )
+	{
+		$table->{sort_dir} = "DESC";  
+	}
+
+	$table->{dis_count} = param( "dis_count" );
+	if( !defined( $table->{dis_count} ) )
+	{
+		$table->{dis_count} = "ALL";  
+	}
+}
+#-----------------------------------------------------------------
+# Return today's date in the YYYY-MM-DD format
+#-----------------------------------------------------------------
+sub get_today
+{
+	my @date = []; 
+	$date[0] = `date +%m`;
+	$date[1] = `date +%d`;
+	$date[2] = "20" . `date +%y`;
+
+	chop( $date[0] );
+	chop( $date[1] );
+	chop( $date[2] );
+
+	return "$date[2]-$date[0]-$date[1]";
+}
+
+#-----------------------------------------------------------------
+# Reads in the data the user entered into the html form
+#-----------------------------------------------------------------
+sub getRowEntry
+{
+	my $row = getBlankRow();
+
+	# Read in the parameter for each field
+	for( my $x = 0; $x < $row->{count}; $x++ )
+	{
+		${$row->getFieldByIndex( $x )}->read_param();
+	}
+
+	$row->{id} = param( "row_id" );
+
+	# Determine whether or not the user selected an existing
+	#  category from the drop down box or added a one - for each field
+	setFields( $row, "data_type", "DataType"  );
+	setFields( $row, "discipline", "Discipline"  );
+	setFields( $row, "platform", "Platform"  );
+	setFields( $row, "site", "Site"  );
+	setFields( $row, "spat_res", "SpatRes"  );
+
+	return $row;
+}
+
+#-----------------------------------------------------------------
+# Adds a new row to the database
+#-----------------------------------------------------------------
+sub addRowToDB
+{
+	my $row = shift;
+
+	my $data_type = ${$row->getFieldByName( "data_type" )}->{value};
+	my $discipline = ${$row->getFieldByName( "discipline" )}->{value};
+	my $platform = ${$row->getFieldByName( "platform" )}->{value};
+	my $site = ${$row->getFieldByName( "site" )}->{value};
+	my $spat_res = ${$row->getFieldByName( "spat_res" )}->{value};
+	my $start_year = ${$row->getFieldByName( "start_year" )}->{value};
+	my $end_year = ${$row->getFieldByName( "end_year" )}->{value};
+	
+	if( !defined( $data_type ) ) { $data_type = "NULL"; }
+	if( !defined( $discipline ) ) { $discipline = "NULL"; }
+	if( !defined( $platform ) ) { $platform = "NULL"; }
+	if( !defined( $site ) ) { $site = "NULL"; }
+	if( !defined( $spat_res ) ) { $spat_res = "NULL"; }
+	if( !defined( $start_year ) || $start_year eq "" ) { $start_year = "NULL"; }
+	if( !defined( $end_year ) || $end_year eq "" ) { $end_year = "NULL"; }
+
+	# Perfrom the sql query necessary to add the record to the db
+	my $sql = "INSERT INTO List ( id, storm_id, title, date, author, doc_url, data_type_id, " .
+						"discipline_id, platform_id, site_id, proj_id, comments, url, start_year, end_year, phase, method_of_obs, spat_res_id ) ".
+						" VALUES ( 0, " . 
+						$dbh->quote( ${$row->getFieldByName( "storm_id" )}->{value} ) . ", " .
+						$dbh->quote( ${$row->getFieldByName( "title" )}->{value} ) . ", " .
+						$dbh->quote( ${$row->getFieldByName( "date" )}->{value} ) . ", " .
+						$dbh->quote( ${$row->getFieldByName( "author" )}->{value} ) . ", " .
+						$dbh->quote( ${$row->getFieldByName( "doc_url" )}->{value} ) . ", " .
+						$data_type . ", " . $discipline . ", " . $platform . ", " . $site . ", " . $table->{proj_id} . ", " . 
+						$dbh->quote( ${$row->getFieldByName( "comments" )}->{value} ) . ", " . 
+						$dbh->quote( ${$row->getFieldByName( "url" )}->{value} ) . ", " . 
+						$start_year . ", " . 
+						$end_year . ", " . 
+						$dbh->quote( ${$row->getFieldByName( "phase" )}->{value} ) . ", " .
+						$dbh->quote( ${$row->getFieldByName( "method_of_obs" )}->{value} ) . ", " .
+						$spat_res . 
+						") ";
+
+	$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+
+	# Determine the id number of new row
+	$sql = "SELECT MAX(id) FROM List";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @row = $sth->fetchrow();
+	$sth->finish();
+
+	return $row[0];
+}
+
+sub setFields
+{
+	my $row = shift;
+	my $name = shift;
+	my $table = shift;
+	my $new_name = $name . "_new";
+
+
+	if( ${$row->getFieldByName( $name )}->{value} == -1 )
+	{
+		if( ${$row->getFieldByName( $new_name )}->{value} eq "New"  ||
+				${$row->getFieldByName( $new_name )}->{value} eq ""  ) 
+		{
+			${$row->getFieldByName( $name )}->{value} = $unknown_id;
+		}
+		else
+		{
+			my $id = addField( $table, ${$row->getFieldByName( $new_name)}->{value} );	
+			${$row->getFieldByName( $name )}->{value} = $id;
+		}	
+	}	
+}
+
+sub addField
+{
+	my $table_name = shift;
+	my $name = shift;
+
+	my $sql = "INSERT INTO $table_name ( id, name, description, proj_id ) VALUES ( NULL," . 
+						$dbh->quote( $name ) . ", NULL, $table->{proj_id} )";
+
+	$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+
+	$sql = "SELECT MAX(id) FROM $table_name";
+
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	my @row = $sth->fetchrow();
+	$sth->finish();
+
+	return $row[0];
+}
+
+sub getUpdate
+{
+	queryDB();
+
+	my $id = param( "row_id" );
+	
+	my $row = $table->getRowById( $id );
+
+	showTable( $row->{id}, $row, "update" );	
+}
+
+sub updateDataset
+{
+	my $row = getRowEntry();
+
+	updateDB( $row );
+
+	queryDB();
+
+	showTable( $row->{id}, undef, "add" );
+}
+
+sub updateDB
+{
+	my $row = shift;
+
+	my $sql = "UPDATE List SET " . 
+						"storm_id = " . $dbh->quote( ${$row->getFieldByName( "storm_id" )}->{value} ) . ", " .
+						"title = " . $dbh->quote( ${$row->getFieldByName( "title" )}->{value} ) . ", " .
+						"date = " . $dbh->quote( ${$row->getFieldByName( "date" )}->{value} ) . ", " .
+						"author = " . $dbh->quote( ${$row->getFieldByName( "author" )}->{value} ) . ", " .
+						"doc_url = " . $dbh->quote( ${$row->getFieldByName( "doc_url" )}->{value} ) . ", " .
+						"data_type_id = " . ${$row->getFieldByName( "data_type" )}->{value} . ", " .
+						"discipline_id = " . ${$row->getFieldByName( "discipline" )}->{value} . ", " .
+						"platform_id = " . ${$row->getFieldByName( "platform" )}->{value} . ", " . 
+						"site_id = " . ${$row->getFieldByName( "site" )}->{value} . ", " . 
+						"comments = " . $dbh->quote( ${$row->getFieldByName( "comments" )}->{value} ) . ", " .  
+						"url = " . $dbh->quote( ${$row->getFieldByName( "url" )}->{value} ) . ", " .  
+						"phase = " . $dbh->quote( ${$row->getFieldByName( "phase" )}->{value} ) . ", " .
+						"method_of_obs = " . $dbh->quote( ${$row->getFieldByName( "method_of_obs" )}->{value} ) . ", " .
+						"spat_res_id = " . ${$row->getFieldByName( "spat_res" )}->{value} . 
+						" WHERE id = $row->{id}";
+
+	$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+}
+
+sub deleteDataset
+{
+	my $id = param( "row_id" );
+
+	my $sql = "DELETE FROM List WHERE id=$id";
+	$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+
+	queryDB();
+
+	showTable( -1, undef, "add" );
+}
+
+sub editFields
+{
+	# Get the data from the DataType, Discipline, and Platform tables
+	getAllDropData();
+
+	showFields();
+}
+
+sub showFields
+{
+	my $dtype = ( defined( $_[0] ) )? $_[0] : -1;	
+	my $disc = ( defined( $_[1] ) )? $_[1] : -1;	
+	my $plat = ( defined( $_[2] ) )? $_[2] : -1;	
+	my $site = ( defined( $_[3] ) )? $_[3] : -1;	
+	my $spat_res = ( defined( $_[4] ) )? $_[4] : -1;	
+
+
+	showHeader();
+	#printTitle( "Edit Fields: $table->{proj_name}" );
+
+	println( "<center><h1>Edit Fields: $table->{proj_name} </h1></center>" );
+
+	println( "<center><table border=0 cellpadding=3 cellspacing=3>" );
+		displayFieldForm( "DataType", $dtype );
+		displayFieldForm( "Discipline", $disc );
+		displayFieldForm( "Platform", $plat );
+		displayFieldForm( "Site", $site );
+		displayFieldForm( "SpatRes", $spat_res );
+	println( "</table></center>" );
+	println( "</body></html>" );
+}
+
+sub displayFieldForm
+{
+	my $tname = shift;
+	my $val = shift;
+	my $name = "";
+	my $desc = "";
+	my $mode = "new";
+
+	my $field = Field->new( $tname, "select", getText( $tname, $val ) );
+	$field->{othertagmods} = $dropData{$tname};
+	$field->{onChange} = "field( this.form.$tname, \'$tname\', \'$table->{proj_id}\', \'$my_url\' )"; 
+
+	if( $val != -1 )
+	{
+		my $sql = "SELECT name, description FROM $tname WHERE id = $val";
+		my $sth = $dbh->prepare( $sql );
+		$sth->execute();
+		my @row = $sth->fetchrow();
+		$name = $row[0];
+		$desc = ( defined( $row[1] ) )? $row[1] : "";		 
+		$mode = "update";
+	}
+
+	println( "<tr>" );
+		println( "<td><b><font size=+1>$tname:</font></b></td>" );
+	println( "</tr><tr>" );
+		println( "<td valign=top><form>" . $field->htm_tag() . "</form></td>" );
+		println( "<form method=post action=$my_url>" );
+		println( "<td valign=top><b>Name: </b></td>" );
+		println( "<td valign=top><input type=text size=30 name=" . $tname . "_name value=\"$name\"></input></td>" );
+		println( "<td valign=top><b>Description: </b></td>" );
+		println( "<td valign=top><textarea name=" . $tname . "_desc rows=2 cols=50>$desc</textarea></td>" );
+	println( "</tr><tr>" );
+		println( "<td colspan=5 align=right>" );
+			showFieldButtons( $mode, $tname, $val );
+		println( "</td>" );
+	println( "</form></tr>" );	
+}
+
+sub showFieldButtons
+{
+	my $mode = shift;
+	my $tname = shift;
+	my $id = shift;
+
+	if( $mode eq "update" )
+	{
+		println( "<input type=submit name=Action value=\"Update Field\">" );
+		println( "<input type=submit name=Action value=\"Add Field\">" );
+		println( "<input type=submit name=Action value=\"Delete Field\">" );
+		println( "<input type=submit name=Action value=\"cancel\">" );
+	}
+	else
+	{
+		println( "<input type=submit name=Action value=\"Add Field\">" );
+		println( "<input type=submit name=Action value=\"Clear\">" );
+	}
+
+	# Hidden fields
+	println( "<input type=hidden name=table_name value=$tname>" );
+	println( "<input type=hidden name=project value=$table->{proj_id}>" );
+	println( "<input type=hidden name=proj_name value=$table->{proj_name}>" );
+	println( "<input type=hidden name=field_id value=$id>" );
+	println( "<input type=hidden name=sort_field value=$table->{sort_field}>" );
+	println( "<input type=hidden name=sort_dir value=$table->{sort_dir}>" );
+	println( "<input type=hidden name=dis_count value=$table->{dis_count}>" );
+}
+
+sub getUpdateField
+{
+	# Get the data from the DataType, Discipline, and Platform tables
+	getAllDropData();
+
+
+	my $dtype = param( "DataType_id" );
+	my $desc = param( "Discipline_id" );
+	my $plat = param( "Platform_id" );
+	my $site = param( "Site_id" );
+	my $spat_res = param( "SpatRes_id" );
+
+	showFields( $dtype, $desc, $plat, $site, $spat_res );
+}
+
+sub updateField
+{
+	my $tname = param( "table_name" );
+	my $fname = param( $tname . "_name" );
+	my $fdesc = param( $tname . "_desc" );
+	my $fid = param( "field_id" );
+
+	my $sql = "UPDATE $tname SET name = " . $dbh->quote( $fname ) . ", description = " . $dbh->quote( $fdesc ) . 
+						" WHERE id = $fid";
+
+	$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+
+	# Get the data from the DataType, Discipline, and Platform tables
+	getAllDropData();
+
+	showFields();
+}
+
+sub getText
+{
+	my $tname = shift;
+	my $id = shift;
+	my @arr = @{$dropData{$tname}};
+	my $ret = "";
+
+	for( my $x = 0; $x < @arr; $x+=2 )
+	{
+		if( $arr[$x] eq $id )
+		{	
+			$ret = $arr[$x+1];
+			last;
+		}
+	}
+	return $ret;
+}
+
+sub deleteField
+{
+	my $fid = param( "field_id" );
+	my $tname = param( "table_name" );
+
+	# Set all datasets with this field id number to 'unknown'
+	my $sql = "UPDATE List SET " . $fields{$tname} . "_id = $unknown_id WHERE $fields{$tname}_id = $fid";
+	$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+
+	# Delete the field from the database
+	$sql = "DELETE FROM $tname WHERE id = $fid";
+	$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+
+	# Get the data from the DataType, Discipline, and Platform tables
+	getAllDropData();
+
+	showFields();
+}
+
+sub addField2
+{
+	my $tname = param( "table_name" );
+	my $fname = param( $tname . "_name" );
+	my $fdesc = param( $tname . "_desc" );
+
+	my $sql = "INSERT INTO $tname ( id, name, description, proj_id ) VALUES ( 0, " . 
+						$dbh->quote( $fname ) . ", " . $dbh->quote( $fdesc ) . ", $table->{proj_id} )";
+
+	$dbh->do( $sql ) || die( "doing: ", $sql->errstr );
+
+	# Get the data from the DataType, Discipline, and Platform tables
+	getAllDropData();
+
+	showFields();
+
+}
+
+sub printTitle
+{
+	my $title = shift;
+
+	println( "<center><table bgcolor=#999999 width=75%>" );
+		println( "<tr><td align=center><font size=6 color=white><b>$title</b></font></tr></td>" );
+	println( "</table></center>" );
+}
+
+sub getAddProject
+{
+	showHeader();
+
+	println( "<script language=javascript>" );
+		println( "parent.topFrame.location=\'$my_url?Action=showTopFrame\';" );
+	println( "</script>" );	
+	my @projs = getProjectNames();
+
+	println( "<center><table border=0 cellpadding=4 cellspacing=4>" );
+	println( "<tr><td colspan=4 align=center><b><font size=+1>Current Projects</font></b></td>" );
+	my $c = 0;
+	for( my $x = 0; $x < @projs; $x+=2 )
+	{
+		if( $c == 0 || ($c % 4) == 0 )
+		{
+			println( "</tr><tr>" );
+		}
+		$c++;
+		println( "<td align=center>$projs[$x+1]</td>" );
+	}
+	println( "</tr></table>" );
+
+	println( "<br><font size=+1><b>Add Project</font></b><br>" );
+	println( "<form method=post action=$my_url><b>Project Name:</b><input type=text name=new_proj size=15></input>" );
+#	println( "<input type=submit name=Action value=\"Add Project\" onClick=\"parent.topFrame.location=\'$my_url?Action=showTopFrame\';\"></input></form>" );
+	println( "<input type=submit name=Action value=\"Add Project\"></input></form>" );
+}
+
+sub addProject
+{
+	my $name = param( "new_proj" );
+
+	my $sql = "INSERT INTO ListProjects (id, name, notes) VALUES (0, " . $dbh->quote( $name ) . ", NULL)";
+	$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+
+	getAddProject();
+}
+
+sub getProjectNames
+{
+	my $sql = "SELECT id, name FROM ListProjects";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	my @names;
+	my $count = 0;
+	my @row;
+
+	while( (@row = $sth->fetchrow()) )
+	{
+		$names[$count++] = $row[0];
+		$names[$count++] = $row[1];
+	}
+
+	$sth->finish();
+	return @names;
+}
+sub showTopFrame
+{
+	println( header() );
+	println( "<html><head><title>Master List Maintenance</title>" );
+	println( "<script language=javascript src=http://www.joss.ucar.edu/dpg/arctic_ml/master.js></script>" );
+	println( "</head><body bgcolor=#999999 text=#FFFFFF>" );
+
+	my @projs = getProjectNames();
+	
+	println( "<center>" );
+	println( "<table border=0 width=100% cellpadding=5>" );
+		println( "<form>" );
+		println( "<tr>" );
+			println( "<td width=33%>&nbsp</td>" );
+			println( "<td width=33% align=center><font size=+2><b>Master List Maintenance</b></font></td>" );	
+			println( "<td width=33% align=center>" );
+				println( "<input type=submit name=Action value=\"Edit Fields\" onClick=\"editFields( this.form, \'$my_url\' ); return false;\">" ); 
+				println( "<input type=submit name=Action value=\"Add Project\" onClick=\"addProject( \'$my_url\' ); return false;\">" ); 
+			println( "</td>" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td colspan=3 align=center>" );
+				showSortOptions();
+			println( "<b>Project: </b>" );
+			println( "<select name=project onChange=\"showTable( this.form, \'$my_url\' )\">" );
+				println( "<option value=-1>CHOOSE</option>" );
+			for( my $x = 0; $x < @projs; $x+=2 )
+			{
+				println( "<option value=$projs[$x]>$projs[$x+1]</option>" );
+			}
+			println( "</select>" . nbsp(8) );
+			println( "<input type=submit name=Action value=\"Show Table\" onClick=\"showTable( this.form, \'$my_url\' ); return false;\">" );
+			println( "</td></tr></form>" );
+		println( "</table>" );
+
+	println( "</body></html>" );
+}
+
+
+#-----------------------------------------------------------------
+#  Queries the Codiac database using the empcmd command.  Pulls
+#   the readme file path and file name from the database and directs
+#   the user's browser to the read me file on the web.
+#-----------------------------------------------------------------
+sub getReadme
+{
+	my $storm_id = param( "storm_id" );
+	my $result = "";
+
+	if( $storm_id =~ /^([\w.]+)$/ )
+	{
+		$storm_id = $1;
+	}
+	else
+	{
+		$storm_id = undef;	
+	}
+
+	if( defined( $storm_id ) && $storm_id ne "" && length( $storm_id ) <= 10 )
+	{
+		$ENV{MSPATH} = "/usr/empress8.20/rdbms";
+		$ENV{PATH} = "";
+		$result = `/usr/empress8.20/rdbms/bin/empcmd /storm/codiac/codiac_db/catalog_db "select dir_path, file_name from dataset where storm_id='$storm_id'" | /usr/bin/tail -1`;
+
+		chop( $result );
+	}
+
+	if( $result ne "" )
+	{
+		my @arr = split( / +/, $result );
+		my $readme = $arr[0] . "/" . $arr[1];
+		my $link = "http://www.joss.ucar.edu/" .substr( $readme, 5, length( $readme ) - 4 );
+		print( "Location: $link\n\n" );
+	}
+	else
+	{
+		println( header() );
+		println( "<html><head><title>Codiac Id not Found</title></head><body bgcolor=white>" );
+		println( "<h2>Sorry, the readme directory path and file name have not been entered into Codiac.</h2>" );
+		println( "</body></html>" );
+	}	
+}
+
+sub getAllDropData
+{
+	getDropDownData( "DataType" );
+	getDropDownData( "Discipline" );
+	getDropDownData( "Platform" );
+	getDropDownData( "Site" );
+	getDropDownData( "SpatRes" );
+}
+
+sub matchDropData
+{
+	matchData( "Discipline", "discipline" );
+	matchData( "Platform", "platform" );
+	matchData( "DataType", "data_type" );
+	matchData( "Site", "site" );
+}
+
+sub matchData
+{
+	my $tname = shift;
+	my $cname = shift;
+
+	my @vals = @{$dropData{$tname}};
+
+	my @rows = @{$table->{array}};
+	foreach my $r (@rows)
+	{
+		for( my $x = 0; $x < @vals; $x+=2 )
+		{
+			if( $vals[$x] == ${$r->getFieldByName( $cname )}->{value} )
+			{
+				${$r->getFieldByName( $cname )}->{value} = $vals[$x+1]; 
+				last;
+			}
+		}
+	}
+}
+
+sub showSortOptions
+{
+	println( "<b>Sort By: </b>" );
+	println( "<select name=sort_field>" );
+		println( "<option value=date>Date</option>" );
+		println( "<option value=storm_id>Storm Id</option>" );
+		println( "<option value=title>Title</option>" );
+		println( "<option value=author>Author</option>" );
+		println( "<option value=date_type>Data Type</option>" );
+		println( "<option value=discipline>Discipline</option>" );
+		println( "<option value=platform>Platform</option>" );
+		println( "<option value=site>Site</option>" );
+		println( "<option value=spat_res>Spatial Res.</option>" );
+		println( "<option value=phase>Phase</option>" );
+		println( "<option value=comments>Comments</option>" );
+		println( "<option value=method_of_obs>Method Of Obs.</option>" );
+	println( "</select>" . nbsp(5) );
+
+	println( "<b>Direction: </b>" );
+	println( "<select name=sort_dir>" );
+		println( "<option value=DESC>Descending</option>" );
+		println( "<option value=ASC>Ascending</option>" );
+	println( "</select>" . nbsp(5) );
+
+	println( "<b>Display: </b>" );
+	println( "<select name=dis_count>" );
+		println( "<option value=ALL>ALL</option>" );
+		println( "<option value=0>0</option>" );
+		println( "<option value=5>5</option>" );
+		println( "<option value=10>10</option>" );
+		println( "<option value=20>20</option>" );
+		println( "<option value=50>50</option>" );
+		println( "<option value=75>75</option>" );
+		println( "<option value=100>100</option>" );
+		println( "<option value=100>150</option>" );
+		println( "<option value=100>200</option>" );
+		println( "<option value=100>250</option>" );
+		println( "<option value=100>300</option>" );
+		println( "<option value=100>350</option>" );
+	println( "</select>" . nbsp(5) );
+}

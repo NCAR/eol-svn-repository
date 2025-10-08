@@ -1,0 +1,1017 @@
+"ebrr.doc"
+Documentation file for the EBUFR Read Routines (EBRR)
+$Id: ebrr.doc,v 1.2 1992/11/20 17:12:01 john Exp $
+
+University Corporation for Atmospheric Research
+Office of Field Project Support
+(UCAR/OFPS)
+
+
+===========
+0. PREFACE
+
+0.1. Notice
+
+ * Copyright (C) 1992 by UCAR
+ *      University Corporation for Atmospheric Research
+ *
+ * Permission to use, copy, modify, and distribute this software and its
+ * documentation for any purpose and without fee is hereby granted, provided
+ * that the above copyright notice and this permission notice appear in all
+ * copies and in all supporting documentation, and that the name of UCAR
+ * not be used in advertising or publicity pertaining to distribution of
+ * the software in source or compiled form, whether alone or as part of
+ * another program, without specific, written prior permission.
+ *
+ * Any modifications that you make to this software must be explicitly
+ * identified as such and include your name and the date of modification.
+ *
+ * In addition, UCAR gives you permission to link the compiled version of
+ * this software with other programs, and to distribute those without any
+ * restriction coming from the use of this file.
+ *
+ * Although this software is provided in the hope that it will be useful,
+ * UCAR makes no representations about the suitability of this software
+ * for any purpose. This software and any accompanying written materials
+ * are provided "as is" without warranty of any kind. UCAR expressly
+ * disclaims all warranties of any kind, either express or implied,
+ * including but not limited to the implied warranties of merchantibility
+ * and fitness for a particular purpose. UCAR does not indemnify any
+ * infringement of copyright, patent, or trademark through use or
+ * modification of this software.
+ *
+ * UCAR does not normally provide maintenance or updates for its software.
+
+0.2. Point of Contact
+
+Having said Section 0.1, we here at UCAR/OFPS welcome any comments,
+suggestions, or questions. However, we cannot guarantee that we
+will respond to your correspondence, or that any further information
+we may provide will be helpful. In the future, all correspondence
+will be addressed to a generic EMail account. Presently, though,
+the point of contact for the E-BUFR Read Routines is:
+
+Wayne Brazille (brazille@ncar.ucar.edu)
+Tel (303) 497-8167
+UCAR/OFPS
+P.O. Box 3000
+Boulder CO 80307-3000
+
+
+==================
+TABLE OF CONTENTS
+
+0. PREFACE
+0.1. Notice
+0.2. Point of Contact
+
+1. INTRODUCTION
+1.1. What is E-BUFR?
+1.2. What is the library for?
+1.3. Terminology
+1.4. Using this document
+
+2. THE LIBRARY
+2.1. Outline
+2.2. Required Routines
+2.3. Optional Routines
+2.4. The Example Program
+2.5. Variables
+
+3. USAGE NOTES
+
+4. SYMBOL TABLE
+4.1. The Table
+4.2. Discussion
+
+5. PORTING THE LIBRARY
+5.1. Machine Specific Code
+5.2. ANSI Deviations
+5.3. Assumptions
+5.4. Parameter Values
+
+6. DETAILS FOR PROGRAMMERS
+6.1. General FYI
+6.2. Subprograms
+6.3. To Do
+
+7. REFERENCES
+
+8. BUGS / LOCAL COMMENTS
+
+
+================
+1. INTRODUCTION
+
+1.1. What is E-BUFR?
+
+E-BUFR (Enhanced-BUFR) is an enhancement of the WMO FM-94 BUFR
+code standard. (While E-BUFR also allows for data in the GRIB
+format, we will focus only on BUFR here.) BUFR was designed
+to transmit large amounts of data as compactly as possible.
+Such a goal requires methods that make it complex and
+computationally expensive to use BUFR in an archive setting.
+E-BUFR was designed to facilitate archival activities such
+as sorting, merging, and selecting subsets of data.
+
+In addition, data is encoded into (or decoded from) BUFR based
+on tables published by the World Meteorological Organization (WMO).
+There are also provisions for the use of locally defined tables,
+making a generic BUFR decoder difficult. E-BUFR is a self-
+documenting format, meaning that it includes all necessary
+information needed to decode the data into its original form.
+
+The key to the E-BUFR enhancements is the use of a logical record
+structure which includes a fixed position record key for easy
+archiving, and a variable length binary section for data. But
+contrary to popular belief, this binary format is NOT machine
+dependent. E-BUFR (and BUFR) is specifically designed to be
+machine independent. All data values are converted to positive
+integers, and then encoded in bits. All information necessary
+to transform the data values back into real numbers are included
+in the data file.
+
+1.2. What is the library for?
+
+The E-BUFR Read Routines (EBRR) are a library of routines designed
+to simplify the process of reading and interpreting an E-BUFR file.
+The EBRR are an attempt to make it easy for a non-professional
+programmer to read an E-BUFR file. However, it is assumed that
+the user is familiar with basic programming techniques in the
+FORTRAN language. At minimum, an introductory university-level
+course in FORTRAN programming would be most helpful.
+
+The EBRR are written in near-ANSI FORTRAN 77 (which should be easy
+to port to your machine). The user is required only to create a
+loop that calls two subroutines in order to retrieve data. Besides
+the two required routines, there are two optional routines
+that provide information which may be useful to the user in
+data interpretation.
+
+The EBRR automatically read and interpret the header records,
+storing any information needed to later decode the data records.
+Optional mechanisms are provided for the user to access any
+descriptive information contained in the header records, but
+the user cannot "see" the control information of the header
+records.
+
+There is also an example program that uses the library to read
+an E-BUFR file and write the decoded data to the screen. This
+program should be easy to modify for your own use.
+
+Various utilities using a subset of the EBRR have been written or
+are under development by UCAR/OFPS in both FORTRAN and C. Examples
+are conversion to netCDF and conversion to CMF. The EBDUMP utility
+allows manual inspection of an entire E-BUFR file, including the
+header records inaccessible to EBRR users. There is also a
+library of generic encoding routines that has been used to convert
+various formats into E-BUFR.
+
+1.3. Terminology
+
+It is important that you don't get confused by the terminology
+used in this document. If you are familiar with BUFR, then
+there won't be much new to you. If you are familiar with E-BUFR,
+then there shouldn't be anything new to you. This section is
+placed here, instead of as a glossary appendix, in order to
+encourage you to read it before you continue.
+
+A "record" is a single logical record of an EBUFR file.  On VMS-type
+systems, this may or may not correspond to a physical record of the
+file.
+
+An "entity" is a group of one or more records (up to 128, in the
+EBUFR standard) that, together, contain information as a unit.
+
+A "section" or "BUFR section" is a portion of an entity that is
+formatted as one of the sections of a standard BUFR message.
+Many types of entities contain BUFR sections of types 3 and 4
+(descriptor and data, respectively).
+
+A "descriptor" is a BUFR data descriptor, defining the type of
+data in the appropriate section. A descriptor is referred to
+by three numbers: F, X, and Y (sometimes referred to as
+F, XX, and YYY to denote the width of their character
+representations).
+
+There are 9 types of E-BUFR records used to encode BUFR data.
+Types 0-8 are designated as "header" records and contain
+information describing the dataset and how to decode the
+data. Type 9 records contain the actual BUFR-encoded data.
+Each E-BUFR record has a header and a data part. Among other
+things, The header part tells what kind of record it is,
+and the data part contains the information for that record.
+The header part of a record makes it possible to sort,
+merge, and select subsets of E-BUFR encoded data. Both header
+records and data records contain header and data parts.
+It is important not to get confused about this point.
+
+E-BUFR data records contain some important information in
+their header parts. This is the date and time of the
+observation and the Common Location Identifier (CLI).
+(Other date/time fields may also appear in the data part.)
+The CLI indicates where the observation took place. It
+includes latitude, longitude, and a CLI unique identifier
+number (the "CLI byte"). This number is used to distinguish
+between different observing stations that have the same
+latitude and longitude.
+
+In BUFR, there are data descriptors known as "code tables"
+and "flag tables". A code table is a simple lookup table;
+it establishes a correlation between a number and a string
+of descriptive text. A flag table allows one to specify
+that more than string of descriptive text applies at the
+same time. Thus, flag tables allow a number to represent
+some combination of descriptive texts.
+
+1.4. Using this document
+
+Chapter 2 discusses the basics of using the EBRR. Chapter 3 is
+a collection of hints and comments for effective use of the
+EBRR. Chapter 4 lists all the variables and COMMON blocks of
+the EBRR, including variables used internally by the EBRR.
+Chapter 5 provides information for the installation of the
+EBRR. Chapter 6 is for experienced programmers, describing
+the implementation and maintenance of the EBRR. Chapter 8
+lists any known bugs and/or local comments. (There are no
+known bugs at the time of this writing, and so Chapter 8 is
+included primarily to provide a place for local comments.)
+
+All of Chapter 5 is a must read for the system administrator,
+or whomever is installing the EBRR. Once the library is installed,
+the user need only read Chapter 2 to get started, but should also
+read Chapter 3. The adventurous user may not even do that, and
+plunge head-first into the example program, although it is not
+recommended. It is also recommended that you check Chapter 8
+for any notes your system administrator or installer may
+have left.
+
+
+===============
+2. THE LIBRARY
+
+Once the E-BUFR Read Routines have been installed on your system,
+you may delve into the world of E-BUFR. This chapter discusses
+writing programs with the EBRR only; you should contact your
+system administrator for information on how to compile and run
+your programs. Section 2.1 presents an outline of how to use
+the EBRR; Section 2.2 describes the two basic routines,
+2.3 describes the optional routines, 2.4 describes the example
+program, and 2.5 describes variables that the user may
+wish to access. It is strongly suggested that you also read
+Chapter 3 before attempting to use the routines.
+(I personally feel that the best way to learn these routines
+is by using them. In that spirit, I recommend that you study
+the example program, modify it, and perhaps write your own.)
+
+A few general notes about the subprogram interface definitions
+described below: if ERR is returned as TRUE, then you can
+assume that the appropriate error message has been written to
+the file whose unit number is specified by msuint. Each
+routine provides directions for dealing with errors. If you
+use the include files provided and define other variables to
+match the subprogram interfaces below, then everything should
+be okay. The Read Routines expect arrays to be of the sizes
+indicated in the interface definitions, and no provisions
+are made to supply a different maximum size value.
+
+2.1. Outline
+
+This section outlines how to use the two required routines
+of the EBRR library.
+
+First, you must include the include files in the order
+shown in the outline below. If your compiler does not
+support include files, then you must insert the contents of
+the include files in your main program, in the order shown
+below. You may need to contact your system administrator
+or the person who installed the EBRR in order to find out
+where the include files are on your system.
+
+Then, you must open the E-BUFR input file and the
+message file, and set EOF to .FALSE. and  FSTTIM to .TRUE.
+EOF and FSTTIM must be LOGICAL variables in your main program.
+After these initializations, you must not change their values
+until you are ready to process a new E-BUFR input file.
+
+The logical variable CHKALL denotes whether you want to check
+every E-BUFR record for errors and store certain header
+information. If CHKALL is .FALSE., then the EBRR will simply
+ignore these header records. If CHKALL is .TRUE., then the EBRR
+will fill the COMMON block sets of ebhdr and ebidn (see Section
+2.5), as well as checking each record for error.
+
+Next, call getobs() to read all the data for the next observation.
+The first call to getobs() will also read all the E-BUFR header
+records, store necessary control information, and then read
+the first data record. If no errors occurred, call getval()
+for each data item in datum (numdat holds the number of data
+items). This will provide you with the value for each data
+field in the observation, one at a time.
+
+You will notice that the example program has extra flourishes, such
+as using the optional routines, but here is the general outline:
+
+c---outline-top-----
+include 'ebufr_parm.inc'
+
+c local parameter statements go here
+
+include 'ebufr_obs.inc'
+include 'ebufr_vars.inc'
+
+c local variables go here
+integer iunit,msunit,numdat,i
+logical eof,fsttim,chkall,err
+character*32 cval
+
+include 'ebufr_data.inc'
+
+c local data statements go here
+c I don't use data statements for eof,fsttim,chkall since I may want
+c   to create a giant loop that processes several input files; these
+c   have to be reset before each file
+
+eof=.false.
+fsttim=.true.
+chkall=.true.
+
+open(infile,unit=iunit)
+open(msgfile,unit=msunit)
+c while not end of file
+c  call getobs
+c  for each data value, call getval
+c end while
+10 continue
+call getobs(iunit,msunit,datum,fmt,numdat,xout,yout,err,eof,fsttim,chkall)
+if (err) then
+ stop
+end if
+if (eof) then
+ goto 30
+end if
+do 20,i=1,numdat,1
+   call getval (datum(i),xout(i),yout(i),fmt(i),rval,cval,valtyp,msunit,ERR)
+   if (err) then
+    stop
+   end if
+   if (valtyp .eq. 'R') then
+     write (*,'(F)') rval
+   else if (valtyp .eq. 'C') then
+     write (*,'(A32)') cval
+   else if (valtyp .eq. 'M') then
+     write (*,'(A)') 'missing'
+   end if
+20 continue
+goto 5
+30 continue
+close(iunit)
+close(msunit)
+stop
+end
+c---outline-bottom-----
+
+2.2. Required Routines
+
+This section contains the interface definitions for the two
+routines you are required to call in order to get any usable
+data.
+
+SUBROUTINE GETOBS (iunit,msunit,datum,fmt,numdat,
+                   xout,yout,ERR,EOF,FSTTIM,CHKALL)
+integer iunit,msunit,numdat
+logical ERR,EOF,FSTTIM,CHKALL
+character*32 datum(MAXDAT)
+character*8 fmt(MAXDAT)
+integer xout(MAXDAT),yout(MAXDAT)
+c
+c GETOBS - GET next OBServation
+c
+c Returns the data for the next observation from an EBUFR file. The first
+c time it is called, all EBUFR header records are read and all control
+c variables are initialized.
+c
+c In:
+c  iunit - unit number of EBUFR input file
+c  msunit - unit number of file to which to write error message
+c  eof - end of file flag (must be set to FALSE on the first call)
+c  fsttim - TRUE if this is the first time getobs() is being called for iunit
+c  chkall - TRUE if you want to check the header records for errors and fill
+c           the common blocks ebidn*;
+c           FALSE if you want to completely ignore header records;
+c           setting it to FALSE may make your program run slightly faster
+c
+c Out:
+c  datum - array of strings containing data values
+c  fmt - array of FORMAT strings with which to read data
+c  numdat - number of data items (top index of datum,fmt,xout,yout arrays)
+c  xout - array of X descriptors for data
+c  yout - array of Y descriptors for data
+c  err - error flag
+c  eof - end of file flag
+c  fsttim - set to .FALSE. if no errors occurred
+c
+c Commons changed:
+c  ebidn* - info from EBUFR header records (types 0,1,3)
+c  ebhdr* - info from header to EBUFR record, i.e. nominal date,time,etc
+c You can also assume that GETOBS changes every COMMON block
+c  defined in "ebufr_vars.inc", however these are internal variables for
+c  the Read Routines and the average user does not need to access them.
+c
+c ebidn*,ebhdr* are defined in "ebufr_obs.inc" (and Chapter 4)
+c MAXDAT is defined in "ebufr_parm.inc"
+c
+c Errors are fatal. You should stop processing the current input file.
+c
+
+SUBROUTINE GETVAL (datum,x,y,fmt,rval,cval,valtyp,msunit,ERR)
+integer msunit,x,y
+real rval
+character*1 valtyp
+character*8 fmt
+character*32 datum,cval
+logical ERR
+c
+c GETVAL - GET decoded VALue from "raw" character string data
+c
+c Returns a decoded data value appropriately scaled and referenced.
+c
+c In:
+c  datum - character string holding the datum value
+c  x - X descriptor of datum
+c  y - Y descriptor of datum
+c  fmt - character string with FORMAT with which to read datum
+c  msunit - unit number of file to which to write error message
+c
+c Out:
+c  rval - contains datum value if datum was numeric, code table,
+c         or flag table value
+c  cval - contains datum value if datum was character string
+c  valtyp - indicates type of data; R means real value in rval, C means
+c           character string in cval, M means missing data
+c  err - error flag
+c
+c Errors are destructive --- outgoing data is probably garbage. An
+c  error in getval() probably also indicates an error in the
+c  EBUFR file which was undetected by getobs(). Therefore, you should
+c  stop processing the current input file, even though getobs() will
+c  probably discover the error when it is called next.
+c
+
+2.3. Optional Routines
+
+This section describes the two optional routines. They are fairly
+simple and hopefully self-explanatory. The example program
+illustrates how to use them.
+
+SUBROUTINE GETNUS (x,y,namstr,unistr,msunit,err)
+integer x,y,msunit
+character*64 namstr
+character*24 unistr
+logical err
+c
+c GETNUS - GET Name and Unit Strings for a descriptor
+c
+c Returns strings containing the Name and Units for a given BUFR parameter.
+c
+c In:
+c  x - X descriptor for info desired
+c  y - Y descriptor for info desired
+c  (F descriptor assumed 0)
+c  msunit - unit number of file to which to write error message
+c
+c Out:
+c  namstr - character string containing Name of X Y descriptor
+c  unistr - character string containing Units of X Y descriptor
+c  err - error flag
+c
+c An error indicates that the descriptor specified by X Y is unknown.
+c
+
+SUBROUTINE GETCFS (xin,yin,valin,valstr,ct,msunit,err)
+integer xin,yin,ct,msunit
+real valin
+character*160 valstr(*)
+logical err
+c
+c GETCFS - GET Code or Flag table String for a given value
+c
+c Returns the descriptive string(s) associated with a code or flag table value.
+c
+c In:
+c  xin - X descriptor for info desired
+c  yin - Y descriptor for info desired
+c   (F descriptor assumed 0)
+c  valin - real number
+c  msunit - unit number of file to which to write error message
+c
+c Out:
+c  valstr - array of character strings with all applicable descriptions of valin
+c  ct - number of strings in valstr
+c  err - error flag
+c
+c Flag table values may correspond to more than one applicable description.
+c All description strings returned in valstr apply simultaneously.
+c Code tables only have one possible description for each value.
+c
+c An error indicates that the input parameters were bad, or the descriptor
+C  specified by X Y is unknown.
+c
+
+2.4. The Example Program
+
+The example program is "exampl.f", and is included with the EBRR
+library package. Contact your system administrator in order to
+obtain access to the source code for this program. When run, the
+example program asks for an E-BUFR filename to read, and
+whether to write to a file or the screen. (EXAMPL writes quite
+a bit of information. Even the smallest E-BUFR files may
+generate large amounts of output.)
+
+EXAMPL is meant to be fairly straightforward and well documented.
+It illustrates how to read and interpret an entire E-BUFR file,
+not just the data sections. I don't think that I can add anything
+here that is not said in the comments of the source code.
+
+EXAMPL is suitable (and, indeed, meant) for modification to
+create your own program which converts from EBUFR to some other
+format. OFPS has used EXAMPL in this manner for several in-house
+EBUFR conversion programs.
+
+The example program ("exampl.f") contains a call to the Sun
+function STANDARD_ARITHMETIC. This is a fix for optimized code
+(options "-fast -O3") and should probably be removed for
+other systems.
+
+If you stray from the example program in the slightest, you
+should read Chapter 3.
+
+The bare-bones program ("bare.f") is a stripped-down version
+of EXAMPL, without comments or optional stuff. (I find it easier
+to read uncluttered code.)
+
+2.5. Variables
+
+There are two sets of COMMON blocks that the typical user will
+want to access: the ebhdr and ebidn block sets. The ebhdr set
+contains variables that store information from the header
+section of the current E-BUFR data record. This information
+describes the time and place of the observation. The ebidn
+set contains variables that (optionally) store information
+from the E-BUFR header records. This information describes
+the entire dataset in general (e.g. version numbers or
+descriptive text). Note that there is a difference between an
+E-BUFR header record and the header section of an E-BUFR record.
+
+The ebhdr set consists of the COMMON blocks ebhdr1 and ebhdr2.
+The ebidn set conists of the COMMON blocks ebidn0, ebidn1,
+ebidn2, and ebidn3. They are defined in the include file
+"ebufr_obs.inc", and also in Chapter 4 below. Note that the
+include file also contains the COMMON statement itself, as
+well as the variable definitions.
+
+The include file "ebufr_obs.inc" also contains definitions
+for some variables that are not in COMMON blocks. These are
+the variables that you pass to GETOBS and GETVAL. The
+variable names are datum, fmt, xout, and yout. See Chapter 4
+for more information.
+
+
+===============
+3. USAGE NOTES
+
+The include files must be included or inserted in the order
+shown in the outline in Section 2.1 and the example program.
+
+(An include file is simply a file which is inserted into your
+program by the compiler before any actual compilation occurs.
+It is exactly the same as if you typed in the entire contents
+of the include file at the spot where the include line
+appears in your program.)
+
+If at any point you see words of the form "$word...$", you
+can just ignore it. These words are keywords for RCS (Revision
+Control System). Common examples are "$Id...$" and "$Log...$".
+(In fact the Id keyword should appear near the top of this
+file.)
+
+The E-BUFR Read Routines use alot of memory. This is because
+we have to reserve enough space for the maximum amount of
+information possible. Changing values in "ebufr_parm.inc"
+and recompiling the library may help some. Contact your
+system administrator, or whoever installed the EBRR library,
+about this situation if you think it may be a problem.
+
+As mentioned in Chapter 2, you must reset the following
+variables before processing each input file:
+ EOF to .FALSE.
+ FSTTIM to .TRUE.
+
+Note the difference in parameters between the Read Routines.
+For example, both GETOBS and GETVAL have parameters named
+"datum". However, one is an array and one is not.
+
+
+================
+4. SYMBOL TABLE
+
+4.1. The Table
+
+This section contains an alphabetical listing of every symbol
+(PARAMETER names too) used by the E-BUFR Read Routines, as well
+as the COMMON block definitions. It is included to help you
+resolve conflicts between your local variable names and those
+of the EBRR. The only variables that the average user might
+access directly are those in the ebhdr and ebidn common
+block sets, so don't worry too much about descriptions of
+the other variables.
+
+Type		Name	Description
+-----		-----	------------
+integer		bgedn	BUFR/GRIB edition number used
+integer		center	originating center
+character*3	clibyt	number to differentiate between stations w/same lat,lon
+character*2	clday	nominal day of the current observation
+character*2	clhour	nominal hour of the current observation
+real		cllat	latitude of the current observation
+real		cllon	longitude of the current observation
+character*2	clmin	nominal minutes of the current observation
+character*2	clmon	nominal month of the current observation
+character*4	clyear	nominal year of the current observation
+character*2	clsec	nominal seconds of the current observation
+character*32	code(5,MAXENT,MAXTBL)
+			table of string descriptions for code and flag tables
+integer		curdes	number of descriptors currently known about
+			(current size of xtab,ytab,name1,name2,scale,ref,nbits)
+integer		dattyp	type of data encoded (0 means BUFR, 1 means GRIB)
+character*32	datum(MAXDAT)
+			array of character strings containing data for
+			current observation
+integer		ebday	from BUFR Section 1
+integer		ebedn	E-BUFR edition number
+integer		ebhour	from BUFR Section 1
+integer		ebi	temporary variable used in "ebufr_data.inc"
+integer		ebmin	from BUFR Section 1
+integer		ebmon	from BUFR Section 1
+character*80	ebtext(MAXTXT)
+			array of character strings containing descriptive
+			text for the dataset (E-BUFR type 3 record)
+integer		ebyear	from BUFR Section 1
+integer		editn	BUFR specification edition number
+integer		f(MAXDES)
+			table of F descriptors used in the data
+logical		flag(MAXTBL)
+			flag(i): TRUE means that code(*,*,i) is a flag table
+				 FALSE means it's a code table
+character*8	fmt(MAXDAT)
+			array of FORMAT strings needed to read datum
+integer		HDRSIZ	size of the EBUFR header on each record
+integer		MAXDAT	max number of data values in a single observation
+integer		MAXDES	max number of BUFR descriptors
+integer		MAXENT	max number of entries in a single code or flag table
+integer		MAXLEN	max length of an EBUFR record
+integer		MAXREC	max number of records allowed to make up an entity
+integer		MAXSEQ	max number of sequence descriptors
+integer		MAXSIZ	max size of the entity-holding array
+integer		MAXSQL	max number of descriptors in a sequence table
+integer		MAXTBL	max number of code tables
+integer		MAXTXT	max number of textual description lines
+integer		msgtyp	BUFR message type
+integer		mtedn	BUFR/GRIB Master Table edition number
+character*32	name1(MAXDES)
+			element i holds the first part of the name string
+			for the descriptor F=0 X=xtab(i) Y=ytab(i)
+character*32	name2(MAXDES)
+			element i holds the last part of the name string
+			for the descriptor F=0 X=xtab(i) Y=ytab(i)
+integer		nbits(MAXDES)
+			element i holds the number of bits (width) for
+			the descriptor F=0 X=xtab(i) Y=ytab(i)
+integer		nument(MAXTBL)
+integer		numfxy	number of items actually in f,x,y
+integer		numseq	number of sequence tables known (size of xseq,yseq)
+integer		numtbl	number of code or flag tables known (size of code,flag)
+integer		numtxt	number of items in ebtext
+integer		ref(MAXDES)
+			element i holds the reference value for
+			the descriptor F=0 X=xtab(i) Y=ytab(i)
+integer		scale(MAXDES)
+			element i holds the scale value for
+			the descriptor F=0 X=xtab(i) Y=ytab(i)
+character*6	seqent(MAXSQL,MAXSEQ)
+			seqent(*,i) is list of descriptors in sequence table i
+integer		seqlen(MAXSEQ)
+			seqlen(i) is number of descriptors in sequence table i
+			(the table is seqent(j,i) where j=1..seqlen(i) )
+integer		subtyp	(locally defined) BUFR message subtype
+character*24	units(MAXDES)
+			element i holds the units string for
+			the descriptor F=0 X=xtab(i) Y=ytab(i)
+integer		update	Update sequence number
+integer		ver	Version number of local tables (0 for BUFR standard)
+integer		x(MAXDES)
+			table of X descriptors used in the data
+integer		xout(MAXDAT)
+			table of X descriptors seen in this observation
+integer		xseq(MAXSEQ)
+			table of X descriptors for sequence tables
+integer		xtab(MAXDES)
+			table of X descriptors that are defined
+			(in EBUFR type 7 records or predefined)
+integer		xtbl(MAXTBL)
+			table of X descriptors for code/flag tables
+integer		y(MAXDES)
+			table of Y descriptors used in the data
+integer		yout(MAXDAT)
+			table of Y descriptors seen in this observation
+integer		yseq(MAXSEQ)
+			table of Y descriptors for sequence tables
+integer		ytab(MAXDES)
+			table of Y descriptors that are defined
+			(in EBUFR type 7 records or predefined)
+integer		ytbl(MAXTBL)
+			table of Y descriptors for code/flag tables
+
+Common statements in "ebufr_obs.inc":
+(these are the variables the user will want to access directly)
+
+common /ebhdr1/ clyear,clmon,clday,clhour,clmin,clsec
+common /ebhdr2/ cllat,cllon,clibyt
+common /ebidn0/ ebedn,dattyp,bgedn,mtedn
+common /ebidn1/ editn,center,update,msgtyp,subtyp,ver
+common /ebidn2/ ebyear,ebmon,ebday,ebhour,ebmin
+common /ebidn3/ numtxt,ebtext
+
+Common statements in "ebufr_vars.inc":
+(these are internal variables for use the EBRR)
+
+common /ebufr/ f,x,y,numfxy
+common /desc1/curdes,xtab,ytab,scale,ref,nbits
+common /desc2/name1,name2,units
+common /code1/code
+common /code2/numtbl,nument,xtbl,ytbl,flag
+common /seq1/seqent
+common /seq2/xseq,yseq,seqlen
+
+4.2. Discussion
+
+The f,x,y arrays hold the BUFR F, X, and Y values for the
+descriptors that are used in the data. If a descriptor is
+used more than once, then it appears in f,x,y more than once.
+
+The xtab and ytab arrays hold the BUFR X and Y values for all
+descriptors known to the program. These are about 20 predefined
+descriptors plus all the descriptors used in the data. A
+descriptor appears only once no matter how often it is used.
+The BUFR F is always 0 for data descriptors, and it is not stored.
+
+The sequence descriptor stuff (BUFR F=3) is not currently
+implemented. The variables and common blocks are actually
+commented out in the include file.
+
+The following are all parameter values, defined in "ebufr_parm.inc":
+
+ HDRSIZ MAXDAT MAXDES MAXENT MAXLEN MAXREC
+ MAXSEQ MAXSIZ MAXSQL MAXTBL MAXTXT
+
+
+=======================
+5. PORTING THE LIBRARY
+
+For Un*x users, a Makefile is included which will:
+ * compile the library
+ * place the appropriate object files in an archive file in current directory
+ * compile and link the example program (target "exampl")
+
+For other operating systems, you will need to compile (do not link)
+every FORTRAN source file in the distribution package. The example
+program needs to be linked with every other object file produced.
+Users will need to be able to link all these objects files in with
+their programs (but must not link in exampl.o with their own main
+program). The example program ("exampl.f") contains a call to
+the Sun function STANDARD_ARITHMETIC. This is a fix for optimized
+code (options "-fast -O3") and should probably be removed for
+other systems.
+
+The rest of this chapter provides information to help you get the
+E-BUFR Read Routines running on your system. It is recommended
+that you place any local notes or comments that would help
+users access the library in Chapter 8.
+
+5.1. Machine Specific Code
+
+While the E-BUFR format is not machine dependent, a small portion
+of the programs that read and write E-BUFR must be machine
+dependent. This is because E-BUFR is a binary format, and
+different machines or operating systems have different methods
+of reading binary information.
+
+The subroutine rdrec() is machine/operating system dependent.
+It depends on the fgetc() function, which returns one byte
+from the input, ignoring any record structure defined by
+newline or return characters. fgetc() is available on the
+Sun; you may need to substitute an appropriate function for
+your system.
+
+To do fgetc() in ANSI, you would have to implement your own
+fgetc() that uses a buffering system and knows about newlines
+that mark the end of a record, etc.
+
+The function nxtbts() is also machine dependent. It relies
+on a function called ibits(). The file "nxtbts.f" works
+for VMS and Sun FORTRAN. Changing the name IBITS to BITS
+*may* allow it to work for Unisys ASCII FORTRAN.
+
+ibits() is a function that checks whether a certain bit is
+on or off. To do this ANSI, you would have to use
+math (multiplying and dividing by powers of 2) and know
+what the underlying number representation is (e.g. 2's
+complement). See the code for returning descriptive text
+from a flag table in getcfs() for a starting point.
+
+Both rdrec() and nxtbts() should work as is under Ultrix.
+
+5.2. ANSI Deviations
+
+ * Lowercase is used almost exclusively. If your compiler
+   complains, this change can be automated by many text
+   editors or your favorite utility program.
+ * Variables do not follow the implicit declaration rules,
+   but they all should be declared explicitly, so no
+   changes should be needed. FYI: I use the -u flag on
+   the Sun compiler to remove all implicit definitions.
+ * The rdrec() and nxtbts() routines mentioned in Section 5.1.
+ * Include files are used. Include files are simply inserted
+   into the source code by the compiler when the line
+   "include 'filename'" appears. It is a shortcut method
+   and can be substituted by you manually replacing each
+   include line with the contents of the include file.
+
+5.3. Assumptions
+
+Most of these assumptions result from the very low-level
+routines on which the EBRR are based (e.g. bfsec*.f, nxtbts.f,
+etc.).
+
+ * Integers are 32 bits.
+ * An ASCII character set is being used.
+ * Field widths for BUFR descriptors used in the data are <= 32 bits.
+ * The first character of an encoded ASCII data string is not '$'.
+ * Variables are automatically initialized to zero at the start
+   of the program. I've tried to explicitly initialize what I could
+   find that needed it, but since I'm retrofitting routines here
+   I may not have found everything that needs to be initialized.
+   If your compiler has an option to initialize everything to zero,
+   use it. Otherwise, if you encounter strange problems when
+   programs access a variable, first make sure that it gets
+   initialized properly.
+ * The E-BUFR file does not use sequence descriptors (F=3).
+ * This library was developed and tested under Sun OS 4.1.1.
+
+5.4. Parameter Values
+
+In the include file "ebufr_parm.inc", it is possible to
+lower the values some to try and reduce the amount of memory
+used. Possible suggestions are:
+
+ MAXLEN=90 for UCAR/OFPS surface data
+ MAXLEN=2000 for UCAR/OFPS soundings data
+ MAXDES=100
+ MAXTBL=10
+ MAXENT=15 (must be at least 512 if present weather is used)
+ MAXDAT=50 for UCAR/OFPS surface data
+ MAXDAT=2200 for UCAR/OFPS soundings data
+ MAXSEQ and MAXSQL are currently unused and their values
+  do not matter.
+
+In general,
+
+ MAXLEN >= size + HDRSIZ, where size is the size in bytes of the
+   BUFR data encoded in one observation.
+ MAXDES >= numdf + curdes, where curdes is defined in
+   "ebufr_data.inc" and numdf is the number of data fields in
+   one observation.
+
+In my early testing, I was only able to reduce core dumps from
+12 Mb to 9 Mb.
+
+
+===========================
+6. DETAILS FOR PROGRAMMERS
+
+6.1. General FYI
+
+The EBRR were written by Wayne Brazille and and extended by
+John Allison at UCAR/OFPS. Contact us at the address given
+at the top of this document.
+
+The E-BUFR Read Routines library actually consists of two sets
+of routines. One set is taken from the EBDUMP utility written by
+Mark Bradford at UCAR/OFPS. EBDUMP was the original E-BUFR
+generic reading program, written in ANSI FORTRAN 77. The other
+set is a layer added on top of the original routines in order
+to make them easy to use for members of the scientific community
+who are not very experienced programming.
+
+The original EBDUMP routines do not use include files, and are
+ANSI standard FORTRAN 77, except for the machine specific
+rdrec() and nxtbts(), mentioned in Section 5.1. They are:
+
+ bd.f bferr.f bfinfo.f bfsec0.f bfsec1.f bfsec3.f bfsec4.f
+ elmnt.f getrec.f nxtbts.f rdrec.f
+
+The additional layer consists of the four include files,
+nine subprograms, and the example program:
+
+ ebufr_parm.inc ebufr_obs.inc ebufr_vars.inc ebufr_data.inc
+ getobs.f getval.f getnus.f getcfs.f getnom.f rdhrec.f
+ lddesc.f ldtbls.f ebread.f exampl.f
+
+When reading an E-BUFR file that uses delayed replication
+(such as the soundings data from UCAR/OFPS), the EBRR will
+replicate the data in the datum array in the order in which
+it is read from the input file.
+
+6.2. Subprograms
+
+You can ignore getnus() and use bfinfo() instead. It gives you more
+information. getnus() is present so that users don't get confused by
+that extra information. getnus() simply calls bfinfo(). You can ignore
+getcfs() and access the common arrays if you want. But getcfs() works
+well.
+
+integer function bfinfo(xarg,yarg,oscale,oref,onbits,oname1,oname2,ounits)
+integer xarg,yarg,oscale,oref,onbits
+character*32 oname1,oname2
+character*24 ounits
+c
+c In:
+c xarg - X descriptor for data desired
+c yarg - Y descriptor for data desired
+c (F descriptor assumed to be 0)
+c
+c Out:
+c oscale - BUFR scale factor for X Y
+c oref - BUFR reference value
+c onbits - bit width of descriptor
+c oname1,oname2 - 2 line string with Name of descriptor X Y
+c ounits - string with Units of descriptor X Y
+c
+c Returns 0 for normal exit, 91 if element unknown.
+c
+
+rdhrec() is the function to modify if you want to do something more with
+any type of EBUFR record. Type 0,1 are identification records giving
+version numbers. Type 3 contains any textual information that the dataset
+producer wishes to add. Types 4,5 are unused. Type 6 defines the descriptor
+classes used (e.g. Class 4 is Location (time), 7 is Location (vertical)).
+Type 2 defines the data descriptors used if each observation uses the
+same data. Type 7 defines the data descriptors themselves (i.e. scale,
+reference, name, etc.). Type 8 defines the code and flag tables. Type 9
+is the data. Type 9 is handled by getobs(). The others are handled by
+rdhrec(). Types 10 and above are either unused or used for GRIB data.
+See the reference on E-BUFR for more information.
+
+The function bd() is not a function statement since that would:
+ * require it to appear in every file that used it, or
+ * require it to appear in an include that everyone includes.
+But there are no universal include files. The EBDUMP base routines were
+written in ANSI standard (except rdrec() and nxtbts()), while the
+overlaying routines were later added and used include files. I have
+not had a chance to make everything ANSI; it might end up looking
+messy. It seems that the only places were bd() is called is from
+getobs() and getval(). While it would be easy enough to write bd()
+as a function statement twice, it may confuse later expansion by users.
+
+6.3. To Do
+
+Work on reading sequence descriptors (F=3). Currently, though,
+UCAR/OFPS does not produce any E-BUFR data files that use
+sequence descriptors and so the EBRR does not address the
+issue. The function bfsec4() is the place to start. There
+are some comments in the code about this.
+
+Perhaps implement rdrec() and nxtbts() in some ANSI standard
+way. See Section 5.1.
+
+
+==============
+7. REFERENCES
+
+"E-BUFR Version 0 Technical Reference Manual", December 1991,
+    UCAR/OFPS/STORM Project Office, Boulder, CO.
+
+_Manual_on_Codes_, 1988, World Meteorological Organization,
+    Geneva, Switzerland. WMO Publication 306, Supplement No. 3 (VIII.1991).
+    Section FM 94-IX Ext., pages I-Bi--43 to I-Bi--174.
+
+Readme file for EBDUMP, Version 1.0, 1991 June 17
+    By Mark Bradford, OFPS/STORM Project Office, UCAR, Boulder, CO
+
+=========================
+8. BUGS / LOCAL COMMENTS
+
+There are no known bugs at the time of this writing. Use this
+space to add local comments.
+
+===(end of file)=====

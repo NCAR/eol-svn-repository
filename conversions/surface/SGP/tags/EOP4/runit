@@ -1,0 +1,13 @@
+#!/bin/tcsh
+
+del g.log h.log
+( CEOP_stm_refsite_SGP.pl > g.log) >& h.log
+
+del e.log f.log
+( CEOP_twr_refsite_SGP.pl > e.log) >& f.log
+
+del c.log d.log
+( CEOP_flx_refsite_SGP.pl > c.log ) > & d.log
+
+del a.log b.log
+( CEOP_sfc_refsite_SGP.pl > a.log ) > & b.log

@@ -1,0 +1,16 @@
+#! /bin/csh -f
+# Before run this script, create dataset### input file,
+# and hand-generate cfg file.
+
+set archid = 112.033
+
+set projid = `echo $archid |cut -d'.' -f1`
+set datasetid = `echo $archid |cut -d'.' -f2`
+
+/net/work/bin/scripts/insert/insert_proj_dataset add_dataset=dataset$datasetid
+cd /net/work/cfg-files/HIPPO_$projid
+/net/work/bin/scripts/insert/insert_multiple_files cfg-$archid
+/usr/local/codiac/bin/lsdsfiles $archid
+
+# Still check and test order by hand!!!
+# Create DTS entry and add to ML.

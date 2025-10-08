@@ -1,0 +1,54 @@
+c------------------------------------------------------------
+c
+c 2d variables - surface
+c
+      real psfc_may(ix,jx,nt),     ! surface pressure (hPa)
+     +     tsfc_may(ix,jx,nt),     ! surface temperature (K)
+     +     t2m_may(ix,jx,nt),      ! 2m air temperature (K)
+     +     t2m_min_may(ix,jx,nt),  ! minimum 2m air temperature (K)
+     +     t2m_max_may(ix,jx,nt),  ! maximum 2m air temperature (K)
+     +     t1m_soil_may(ix,jx,nt), ! 1m soil temperature (K)
+     +     soil_wat_may(ix,jx,nt), ! volumetric soil water content
+                                   ! from surface to depth of 1 m (fraction)
+     +     precip_may(ix,jx,nt),   ! accumulated precipitation (mm)
+     +     rain_may(ix,jx,nt),     ! accumulated rain (mm)
+     +     snow_may(ix,jx,nt),     ! accumulated snow (mm)
+     +     swe_may(ix,jx,nt),      ! snow water equivalent (mm)
+     +     tot_cld_frac_may(ix,jx,nt), ! cloud fraction (fraction)
+     +     cld_base_may(ix,jx,nt), ! cloud base (m)
+     +     lhf_may(ix,jx,nt),      ! surface latent heat flux (W/m^2)
+     +     shf_may(ix,jx,nt),      ! surface sensible heat flux (W/m^2)
+     +     ust_may(ix,jx,nt),      ! friction velocity (m/s)
+     +     swd_sfc_may(ix,jx,nt),  ! surface downward shortwave radiation (W/m^2)
+     +     swu_sfc_may(ix,jx,nt),  ! surface upward shortwave radiation (W/m^2)
+     +     lwd_sfc_may(ix,jx,nt),  ! surface downward longwave radiation (W/m^2)
+     +     lwu_sfc_may(ix,jx,nt),  ! surface upward longwave radiation (W/m^2)
+     +     swd_toa_may(ix,jx,nt),  ! top of atmosphere downward shortwave radiation (W/m^2)
+     +     swu_toa_may(ix,jx,nt),  ! top of atmosphere upward shortwave radiation (W/m^2)
+     +     lwu_toa_may(ix,jx,nt)   ! top of atmosphere upward longwave radiation (W/m^2)
+c
+c 3d variables - pressure level
+c
+      real u_may(ix,jx,nprs,nt),       ! zonal component of wind (m/s)
+     +     v_may(ix,jx,nprs,nt),       ! meridional component of wind (m/s)
+     +     w_may(ix,jx,nprs,nt),       ! vertical velocitiy (m/s)
+     +     t_may(ix,jx,nprs,nt),       ! air temperature (K)
+     +     z_may(ix,jx,nprs,nt),       ! height (m)
+     +     rh_may(ix,jx,nprs,nt),      ! relative humidity (%)
+     +     spechum_may(ix,jx,nprs,nt), ! specific humidity (kg/kg)
+     +     cld_may(ix,jx,nprs,nt),     ! cloud water mixing ratio (kg/kg)
+     +     ice_may(ix,jx,nprs,nt),     ! ice water mixing ratio (kg/kg)
+     +     cld_frac_may(ix,jx,nprs,nt) ! cloud fraction (fraction)
+c
+c define common block for variables to read from to netCDF file
+c
+      common /may_netcdf/ psfc_may, tsfc_may, t2m_may,
+     +   t2m_min_may, t2m_max_may, t1m_soil_may,
+     +   soil_wat_may, precip_may, rain_may, snow_may,
+     +   swe_may, tot_cld_frac_may, cld_base_may,
+     +   lhf_may, shf_may, ust_may, swd_sfc_may,
+     +   swu_sfc_may, lwd_sfc_may, lwu_sfc_may,
+     +   swd_toa_may, swu_toa_may, lwu_toa_may, u_may,
+     +   v_may, w_may, t_may, z_may, rh_may,
+     +   spechum_may, cld_may, ice_may, cld_frac_may
+c------------------------------------------------------------

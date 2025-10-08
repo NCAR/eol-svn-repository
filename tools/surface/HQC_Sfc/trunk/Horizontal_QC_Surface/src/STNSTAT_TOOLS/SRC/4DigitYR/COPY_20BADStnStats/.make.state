@@ -1,0 +1,37 @@
+.MAKE_VERSION:	VERSION-1.0
+./libqc.a(getqcftime2_4DYR.o):	qcfcom_4DYR.h debug.h 
+	f77 -O3  -c -o getqcftime2_4DYR.o getqcftime2_4DYR.f
+	ar rv ./libqc.a getqcftime2_4DYR.o
+	rm -f getqcftime2_4DYR.o
+./libqc.a(getplatform.o):	qcglobal.h platform.h qcfcom_4DYR.h 
+	f77 -O3  -c -o getplatform.o getplatform.f
+	ar rv ./libqc.a getplatform.o
+	rm -f getplatform.o
+.BUILT_LAST_MAKE_RUN:
+stnstat_4DYR20:	/usr/lib/libdl.so.1 /usr/lib/libc.so /opt/SUNWspro/SC4.0/lib/libcx.a /usr/lib/libm.so /opt/SUNWspro/SC4.0/lib/libsunmath.a /opt/SUNWspro/lib/libF77.so 
+	f77 -O3  -o stnstat_4DYR20 stnstat_4DYR20.o ./libqc.a
+libqc.a:
+	ar ruv libqc.a 
+./libqc.a(getqcfrec_4DYR.o):	qcglobal.h qcfcom_4DYR.h debug.h ioerr.h 
+	f77 -O3  -c -o getqcfrec_4DYR.o getqcfrec_4DYR.f
+	ar rv ./libqc.a getqcfrec_4DYR.o
+	rm -f getqcfrec_4DYR.o
+./libqc.a(getqcfrec2_4DYR.o):	qcglobal.h qcfcom_4DYR.h debug.h ioerr.h 
+	f77 -O3  -c -o getqcfrec2_4DYR.o getqcfrec2_4DYR.f
+	ar rv ./libqc.a getqcfrec2_4DYR.o
+	rm -f getqcfrec2_4DYR.o
+./libqc.a(getstncode.o):	qcglobal.h qcfcom_4DYR.h stncom.h 
+	f77 -O3  -c -o getstncode.o getstncode.f
+	ar rv ./libqc.a getstncode.o
+	rm -f getstncode.o
+./libqc.a(getbtime_4DYR.o):	debug.h 
+	f77 -O3  -c -o getbtime_4DYR.o getbtime_4DYR.f
+	ar rv ./libqc.a getbtime_4DYR.o
+	rm -f getbtime_4DYR.o
+./libqc.a(getqcftime_4DYR.o):	qcfcom_4DYR.h 
+	f77 -O3  -c -o getqcftime_4DYR.o getqcftime_4DYR.f
+	ar rv ./libqc.a getqcftime_4DYR.o
+	rm -f getqcftime_4DYR.o
+.BUILT_LAST_MAKE_RUN:
+stnstat_4DYR20.o:	qcglobal.h stnstatcom.h debug.h ioerr.h qcfcom_4DYR.h stncom.h platform.h parmnames.h 
+	f77 -O3  -c  stnstat_4DYR20.f

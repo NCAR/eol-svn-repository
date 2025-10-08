@@ -1,0 +1,99 @@
+#! /usr/bin/perl -w
+
+package JediOrderCount;
+use strict;
+use CGI qw(:standard :html3);
+use lib "/net/work/lib/perl/mysql";
+use MySqlDatabase;
+our @ISA = ("CGI");
+
+$CGI::DISABLE_UPLOADS = 1;
+$ENV{"PATH"} = "";
+
+#my $database = MySqlDatabase->new("zediview","look-123");
+my $database = MySqlDatabase->new("zithview","look-999");
+
+&main();
+
+sub main {
+    my $self = JediOrderCount->new();
+    $database->connect();
+
+    print($self->header());
+
+    my $prefix_only = defined($self->param("prefixOnly")) ? $self->param("prefixOnly") : 0;
+    my $sort_order = defined($self->param("sort")) ? $self->param("sort") : "total";
+
+    if (!defined($self->param("proj"))) {
+	printf("<html>\n");
+	printf("<head>\n");
+	printf("   <title>Dataset Order Count</title>\n");
+	printf("</head>\n");
+	printf("<body>\n");
+	printf("  <h1>Dataset Order Count</h1>\n");
+	printf("  <h3>No project was defined.  Cannot display order count!</h3>\n");
+	printf("</body>\n");
+	printf("</html>\n");	
+    } else {
+	printf("<html>\n");
+	printf("<head>\n");
+	printf("   <title>%s Dataset Order Count</title>\n",$self->param("proj"));
+	printf("</head>\n");
+	printf("<body>\n");
+	printf("  <h1>%s Dataset Order Count %s</h1>\n",$self->param("proj"),$prefix_only ? "Prefix Only" : "");
+
+	my $prefix = $self->load_prefix($self->param("proj"));
+	$self->load_datasets($self->param("proj"),$prefix,$prefix_only,$sort_order);
+
+	printf("</body>\n");
+	printf("</html>\n");
+    }
+
+
+    $database->disconnect();
+}
+
+sub load_datasets {
+    my ($self,$project,$prefix,$prefixOnly,$sort_order) = @_;
+
+#    my $sql = sprintf("SELECT dataset.dataset_id as id, dataset.name as title, COUNT(*) as total, COUNT(DISTINCT email) as uniq FROM dataset JOIN codiac_web_orders ON dataset.dataset_id=codiac_web_orders.dataset_id WHERE dataset.hide=0 AND dataset.dataset_id IN (SELECT dataset_id FROM dataset_project WHERE project_id='%s' %s) GROUP BY id ORDER BY %s DESC",$project,$prefixOnly ? sprintf(" AND dataset_id like '%d.%s'",$prefix,"%") : "",$sort_order);
+    my $sql = sprintf("SELECT dataset.archive_ident as id, dataset.title as title, COUNT(*) as total, COUNT(DISTINCT email) as uniq FROM dataset JOIN codiac_web_order_log ON dataset.archive_ident=codiac_web_order_log.archive_ident WHERE dataset.visible=1 AND dataset.id IN (SELECT dataset_id FROM dataset_project JOIN project ON dataset_project.project_id = project.id JOIN dataset ON dataset_project.dataset_id = dataset.id WHERE project.name='%s' %s) GROUP BY id ORDER BY %s DESC",$project,$prefixOnly ? sprintf(" AND dataset.archive_ident like '%d.%s'",$prefix,"%") : "",$sort_order);
+
+    my $data = $database->{"database"}->selectall_arrayref($sql);
+
+    printf("<table border=1>\n");
+    printf("  <tr>\n");
+    printf("    <th><a href=\"dataset_order_count?proj=%s&prefixOnly=%d&sort=id\">Dataset Id</a></th>\n",$project,$prefixOnly);
+    printf("    <th><a href=\"dataset_order_count?proj=%s&prefixOnly=%d&sort=title\">Dataset Title</a></th>\n",$project,$prefixOnly);
+    printf("    <th><a href=\"dataset_order_count?proj=%s&prefixOnly=%d&sort=total\">Total Orders</a><sup><a href='#pound'>#</a><a href='#star'>*</a></sup></th>\n",$project,$prefixOnly);
+    printf("    <th><a href=\"dataset_order_count?proj=%s&prefixOnly=%d&sort=uniq\">Unique Orders</a><sup><a href='#pound'>#</a><a href='#plus'>+</a></sup></th>\n",$project,$prefixOnly);
+    printf("  </tr>\n");
+
+    foreach my $row (@$data) {
+	printf("  <tr>\n");
+	printf("     <td align=center>%s</td>\n",@$row[0]);
+	printf("     <td><a href='http://data.eol.ucar.edu/codiac/dss/id=%s'>%s</a></td>\n",@$row[0],@$row[1]);
+	printf("     <td align=center>%d</td>\n",@$row[2]);
+	printf("     <td align=center>%d</td>\n",@$row[3]);
+	printf("  <tr>\n");
+    }
+
+
+    printf("</table>\n");
+
+    printf("<a name='pound'></a>\n<p><b>#</b> The order count includes the number of test orders that were done to ensure the dataset was inserted correctly into the database.</p>\n");
+    printf("<a name='star'></a>\n<p><b>*</b> The total order column is the complete number of individual orders for the dataset.</p>\n");
+    printf("<a name='plus'></a>\n<p><b>+</b> The unique order column is the number of orders by unique email addresses.  This may not truly be unique people ordering the data as someone may have used slightly or significantly different email addresses that will be counted separately.</p>\n");
+}
+
+sub load_prefix {
+    my ($self,$project) = @_;
+
+    my $prefix = ($database->select("dataset_prefix_project","dataset_id_prefix",
+				    sprintf("project_id='%s'",$project)))[1];
+
+    printf("<h2>%s Prefix: %d</h2>",$project,$prefix);
+    printf("<p>The following list is a list of all datasets associated with the %s project.  %s has a general dataset prefix of %d and any datasets initially associated with %s were given that prefix.  All the other datasets with prefixes other than %d are associated with %s, but were either associated initially with a different project or are an operational (ongoing) dataset.  Any of the dataset counts with prefixes other than %d may have been ordered for a time period that may not be included in the %s time period.</p>\n",$project,$project,$prefix,$project,$prefix,$project,$prefix,$project);
+
+    return $prefix;
+}

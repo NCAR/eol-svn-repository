@@ -1,0 +1,73 @@
+Date: 07/02/2014
+Author: Yuan Sui
+
+Scripts: 
+	- acronyms_list.py
+	- output_character_numbser.py
+	- output_summary.py
+	- acronyms_clenup.py
+	- classification.py
+ 	- classification_dataset.py
+ 	- platform.py
+	- platform_dataset.py
+	- login.py
+	- dataset_helper.py
+
+How to run the scirpts:
+python dataset_helper.py <args>
+or 
+python dataset_helper.py help
+
+Requirement: Some scripts need to be run on riesling
+
+Related projects: 'ACADIS', 'AMTS', 'ARC-MIP', 'ARCSS', 'ATLAS', 'BARROW', 'BASE', 'BEST','BSIERP', 'BOREAS', 'ITEX', 'PacMARS', 'SBI', 'SHEBA'
+
+Args:
+[acronyms]
+	Export list of acronyms from summary in Arctic datasets from zith9
+	Output: output_acronyms.csv
+	Output file contains: Acronyms, archive_ident_id
+
+[char_number]
+	Find all datasets with the count of characters in summary < 140 from zith9
+	Output: output_character_number.csv
+	Output file contains: projects, archive_ident_id, dataset_title, count_of_char
+
+[default_value]
+	Find all datasets with default date, longitude or latitude from zith9
+	Output: output_default.csv
+	Output file contains: projects, archive_ident_id, dataset_title, columns_with_defalut_value, default_values
+
+[summary]
+	Export summary for each dataset in zith9
+	Output: output_summary.csv
+	Output file contains: projects, archive_ident_id, dataset_title, summary
+
+[acronyms_clean]
+	Acronyms cleanup script
+	Output: spell_out_list.csv, acronyms_list.csv
+	see Instructions to Use acronym_cleanup.pdf for more details
+
+[classification_tree]
+	Export txt file contains archive_ident, title, classification. Can be imported into Tree.
+	Output: classification_tree.txt
+	Output file can be opened in Tree directly
+
+[classification]
+	Export all datasets with their corresponding classifications and platforms
+	*******Need to run platform first********
+	Output: output_classification.csv
+	Output file contains: archieve_idnet_id, title, classification, platform
+
+[platform_tree]
+	Export txt file contains archive_ident, title, platform. Can be imported into Tree
+	Output: platform_tree.txt
+	Output file can be opened in Tree directly
+
+[platform]
+	Export csv file contains archive_ident, platform, title
+	Output: output_platform.csv
+	Output file contains: archive_ident_id, dataset_title, platform
+
+[clean]
+	Remove all the output files under ./outputs

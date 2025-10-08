@@ -1,0 +1,125 @@
+#! /usr/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>Displays the dependencies between products established by the extractions.
+#  <font color=red>WARNING: </font> This view is currently not working correctly
+#  updates are needed!</p>
+#
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Utils;
+use ProjectDBA;
+use ExtractionDBA;
+use State;
+use CGI;
+
+require "./menu";
+
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+thread_view( $state, $cgi );
+
+sub thread_view
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	println( $cgi->header() );
+
+	println( "<head>" );
+		println( "<title>Iven Dependency View</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+
+	println( "<body>" );
+
+	menu( $state, $cgi );
+	my $proj = ProjectDBA::buildThreadView( $state->{project} );
+
+	my $count = 1;
+
+	println( "<br><center>" );	
+	if( !@{$proj->{threads}} || @{$proj->{threads}} == 0 )
+	{
+		println( "<br>" );
+		println( "<font size=+1>No Dependencies Found</font>" );
+	}
+	foreach my $thread (@{$proj->{threads}})
+	{
+		showDependency( $state, $thread, $count++ );
+		println( "<br>" );	
+	}
+
+	println("</body></html>" );
+}
+
+sub traverse
+{
+	my $list = shift;
+	my $count = shift;
+	my $state = shift;
+
+	if( !defined( $list ) )
+	{
+		return;
+	}
+	else
+	{
+		println( "<tr class=dsRow>" );
+			println( "<td>" );
+				for( my $x = 0; $x < $count; $x++ )
+				{
+					print( "<img src=$img_src/blank.gif border=0 width=14 height=14>" );
+				}
+				if( $count != 0 )
+				{ print( "<img src=$img_src/thread.gif border=0 width=14 height=14>" ); }
+				
+				my $url = $state->getUrlString( "view"=>$PRODUCT, "product"=>$list->{val}->{pdname} );	
+				print( "&nbsp;", "<a href=$url>$list->{val}->{pdname}</a>" );
+			println( "</td>" );
+			println( "<td align=center>" );
+				println( $status_hash{$list->{val}->{status}} );
+			println( "</td>" );
+			println( "<td>" );	
+			my $exts = ExtractionDBA::getByProduct( $list->{val}->{pdname}, $state->{project} );
+
+			foreach my $ex (@$exts)
+			{
+				my $url = $state->getUrlString( "view"=>$DATASET, "dataset"=>$ex->{dsname}, "product"=>$list->{val}->{pdname} );	
+				println( "<a href=$url>$ex->{dsname}</a>", "<br>" );
+			}
+			println( "</td>" );
+			
+
+
+		println( "</tr>" );
+
+
+		traverse( $list->{next}, $count+1, $state );
+	}
+}
+
+sub showDependency
+{
+	my $state = shift;
+	my $thread = shift;
+	my $count = shift;
+
+	println( "<table border=0 cellpadding=3 cellspacing=1 class=productTable width=75%>" );
+		println( "<tr class=productTitle><td colspan=3>Dependency #$count</td></tr>" );
+		println( "<tr class=productHead2>" );
+			println( "<td width=50%>Product Name</td>" );
+			println( "<td width=10%>Status</td>" );
+			println( "<td width=40%>Related Extraction(s)</td>" );
+		println( "</tr>" );
+
+		traverse( $thread->{head}, 0, $state );
+	println( "</table>" );
+}
+1;

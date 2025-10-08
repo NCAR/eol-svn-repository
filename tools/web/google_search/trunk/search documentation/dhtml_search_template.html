@@ -1,0 +1,108 @@
+<html>
+  <head>
+<link rel="stylesheet" href="css/dhtmlwindow.css" type="text/css" />
+
+<script src="dhtmlwindow.js"></script>
+
+<script src="http://www.google.com/jsapi?key=ABQIAAAA3tbucVxlGNFBYLARMRuqahTL2tmjYYlVN2mt_K7dcvt5qRSuIhQA2YAv3guoDXdWwxvpZ5k2fFwMhQ"></script>
+
+<h1 id="popupwin"></h1> <!--fixes IE/Safari bug when opening dhtml window-->
+
+<input type="hidden" name="filter" value="0" />
+
+<script type="text/javascript">
+google.load('search', '1');
+var box;
+var searchControl;
+function OnLoad() {
+	
+	//create a search control, this is the searchbox, including text field and button.
+	searchControl = new google.search.SearchControl();
+
+	//Set the size of the results returned. LARGE can be replaced with SMALL 
+	searchControl.setResultSetSize(google.search.Search.LARGE_RESULTSET);
+
+	//Tell the Searcher to open links in the same window.
+	searchControl.setLinkTarget(document.getElementById("content"));
+
+	//Create a variable that holds a WebSearch() object, this is the standard google search.
+	var customSearcher = new google.search.WebSearch();
+
+	//Set the site restriction. This string is unique to the ARCSS custom search. 
+	customSearcher.setSiteRestriction("005203271943822719354:vjvukaqsjk4");
+	
+	//Tells the Searcher to not omit any results (google sometimes omits results it deems similar)
+	customSearcher.setRestriction(google.search.Search.RESTRICT_EXTENDED_ARGS, {"filter":"0"});
+
+	//the options variable can be given multiple settings, allowing one var to be passes to .addSearcher() in addition 		//to the searcher.  
+	var options = new google.search.SearcherOptions();
+	
+	//The Web Search has three different views that are selectable one the page. The first is not expanded and shows 1
+	//result. The Second and third are both expanded, which is set in the command below. Once set to expanded you can 
+	//then set the resultset size. Which is done above, as an attribute of searchControl.
+	options.setExpandMode(google.search.SearchControl.EXPAND_MODE_OPEN);
+	
+	//This sets the root div tag where the search results will appear. 
+	options.setRoot(document.getElementById("content"));
+	searchControl.addSearcher(customSearcher, options);
+
+	//Set the callback window target.
+	searchControl.setSearchCompleteCallback(window, Window);
+	//searchControl.setSearchStartingCallback(this, OnLoad);
+
+	//Sets a String to return when No results are found.
+	searchControl.setNoResultsString("No Results");
+
+
+	//this variable holds drawOptions, similar to the options above it can contain multiple options settings that will
+	//later be passed as one parameter.
+	var drawOptions = new google.search.DrawOptions();
+	//drawOptions.setDrawMode(google.search.SearchControl.DRAW_MODE_TABBED);
+
+	//Tell the searhcer to draw itself and tell it where to attach
+	searchControl.draw(document.getElementById("searchControl_div"), drawOptions);
+
+
+	//Set the initial search parameter to be searched on load.
+	searchControl.execute("sturm");
+
+
+	}
+	google.setOnLoadCallback(OnLoad);
+
+function Window() {
+	
+	//Create a new blank div container
+	newDiv1 = document.createElement("div");
+	
+	//The div container "content" contains the search results for your custom search.
+	//This line sets the contents of the newly created newDiv1 to be a copy of "contents"
+	newDiv1.innerHTML = document.getElementById("content").innerHTML;
+	
+	//window.name contains an incremented value to give the new div container a unique id.
+	window.name = window.name + 1;
+	
+	//convert window.name to a string so it can be used as an id
+	var name = String(window.name);
+
+	//set the id of the new div container.
+	newDiv1.id=(name);
+	
+	//insert the div container into the body of the html page.
+	document.body.insertBefore(newDiv1, document.getElementById("content"));
+	
+	//create the dhtml window displaying the newly created div container with the copied search results.
+	box = dhtmlwindow.open('docwin', 'div', name, 'Search Results', 'width=950px,height=550px,left=165px,top=90px,resize=1,scrolling=1');	
+
+}
+</script>
+</head>
+<body>
+
+<div id="searchControl_div" >Loading...</div>
+<div id="content" style="display:none">Loading...</div>
+
+<script type="text/javascript">
+</script>
+</html>
+</body>

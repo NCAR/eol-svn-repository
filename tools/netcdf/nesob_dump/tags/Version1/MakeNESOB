@@ -1,0 +1,29 @@
+SHELL = /bin/sh
+#
+#    Makefile for s/w that converts
+#    NESOB data to QCF format.
+#
+#	 for willy
+#
+#    29 jul 97, ds 
+
+LIBPATH=/usr/local/lib
+
+CC=gcc
+##CC=cc
+CFLAGS = -g
+
+nesob_dump: nesob_dump.o vardata.o dumplib.o
+	$(CC) $(CFLAGS) -o nesob_dump nesob_dump.o vardata.o dumplib.o -L$(LIBPATH) -lnetcdf
+
+MakeQCF_record: MakeQCF_record.o
+	$(CC) $(CFLAGS) -o MakeQCF_record MakeQCF_record.o -L$(LIBPATH) -lnetcdf
+	
+makeqcf: makeqcf.o vardata.o dumplib.o
+	$(CC) $(CFLAGS) -o makeqcf makeqcf.o vardata.o dumplib.o -L$(LIBPATH) -lnetcdf
+	
+process_nesob: process_nesob.o vardata.o dumplib.o
+	$(CC) $(CFLAGS) -o process_nesob vardata.o dumplib.o -L$(LIBPATH) -lnetcdf
+	
+clean:
+	rm *.o

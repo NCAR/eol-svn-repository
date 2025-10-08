@@ -1,0 +1,280 @@
+#! /usr/bin/perl 
+
+##Module-----------------------------------------------------------------------
+# <p>Processes the input from the edit_ds_admin form.  The edit_ds_admin form
+#  allows the user to add a dataset, delete a dataset and update the 
+#  'administrative' fields of the dataset.  These include the dataset name,
+#   who is writing the conversion, etc.  This script determines which 'action'
+#   the user wants to perform or the button he/she pushed, and updates the
+#   database accordingly.  This script can call the edit_extraction script
+#   if the user clicks the 'Set Extraction' button.</p>
+#  
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Dataset;
+use DatasetDBA;
+use State;
+use CGI;
+use Utils;
+
+# The possible actions the user can request, or the buttons he/she can click
+my %actions = ( "Add as Dataset" => \&addDataset,
+								"Add New Dataset" => \&addDataset,
+								"Add as Extraction" => \&addExtraction,
+								"Add New Extraction" => \&addExtraction,
+								"Set Extraction" => \&setExtraction,
+								"Update Dataset" => \&update,
+								"Delete Dataset" => \&delete,
+								"Cancel" => \&cancel
+							);
+
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+proc_ds_admin( $state, $cgi );
+
+sub proc_ds_admin
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	# Call the appropriate function associated with the requested action
+	my $action = $cgi->param( "action" );
+	$actions{$action}->($state, $cgi);
+	
+}
+
+#------------------------------------------------------------------------------
+# Returns a Dataset object populated with the values entered into the form
+#------------------------------------------------------------------------------
+sub getFromParams
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $ds = Dataset->new();
+
+	$ds->{dsname} = $cgi->param( "dsname" );
+	$ds->{pdname} = $cgi->param( "pdname" );
+	$ds->{pjname} = $state->{project};
+	$ds->{storm_id} = $cgi->param( "storm_id" );
+	$ds->{user_processing} = $cgi->param( "user_processing" );
+	$ds->{status} = $cgi->param( "status" );
+	$ds->{admin_notes} = $cgi->param( "admin_notes" );
+
+	foreach my $i ("exclude", "questions" )
+	{
+		my $p = $cgi->param( $i );
+		if( $p )
+		{
+			$ds->{$i} = 1;
+		}
+		else
+		{
+			$ds->{$i} = 0;
+		}
+	}
+
+	return $ds;
+}
+
+#------------------------------------------------------------------------------
+# Adds a new dataset to the database
+#------------------------------------------------------------------------------
+sub addDataset
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	# Get the dataset from the form
+	my $ds = getFromParams( $state, $cgi );
+
+	# Insert the dataset
+	DatasetDBA::insertDB( $ds );
+
+	# We are no longer editting
+	$state->{proc_edit} = undef();
+
+	# Modify the state values if needed
+	if( $state->{view} == $PRODUCT || $state->{view} == $DATASET )
+	{
+		$state->{product} = $ds->{pdname};
+	}
+	if( $state->{view} == $DATASET )
+	{
+		$state->{dataset} = $ds->{dsname};
+	}
+	my $url = $state->getUrlString();
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "New Dataset Added" );	
+}
+
+#------------------------------------------------------------------------------
+# Add a new extraction to the database.  First adds the needed entry to the datasets table
+#  and then calls the edit_extraction script to get the desired product source from the
+#  user.
+#------------------------------------------------------------------------------
+sub addExtraction
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $ds = getFromParams( $state, $cgi );
+
+	DatasetDBA::insertDB( $ds );
+
+	$state->{proc_edit} = undef();
+	#my $url = $state->getUrlString( edit=>$EEXTRACTION, edataset=>$ds->{dsname}, eproduct=>$ds->{pdname} );
+	require "./edit_extraction";
+	edit_extraction( $state, $cgi, $ds );
+
+}
+
+#------------------------------------------------------------------------------
+# Updates the datasets table, in case the user made an modifications and then
+#  calls the edit_extraction script to allow the user to associate the
+#  product source for the extraction. 
+#------------------------------------------------------------------------------
+sub setExtraction
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $ds = getFromParams( $state, $cgi );
+
+	# Get the original dataset and product names, just in case the
+	#  user updated the dataset or product in the form
+	my $source_dsname = $cgi->param( "source_dsname" );
+	my $source_pdname = $cgi->param( "source_pdname" );
+
+	# Update the dataset
+	DatasetDBA::updateDBAdmin( $ds, $source_dsname, $source_pdname );
+
+	$state->{proc_edit} = undef();
+	if( $state->{view} == $PRODUCT || $state->{view} == $DATASET )
+	{
+		$state->{product} = $ds->{pdname};
+	}
+	if( $state->{view} == $DATASET )
+	{
+		$state->{dataset} = $ds->{dsname};
+	}
+
+	# Display the form to edit the extraction
+	require "./edit_extraction";
+	edit_extraction( $state, $cgi, $ds );
+}
+
+#------------------------------------------------------------------------------
+# Cancels the action, do nothing.
+#------------------------------------------------------------------------------
+sub cancel
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $onLoad = "\"top.opener.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Action Canceled" );	
+}
+
+#------------------------------------------------------------------------------
+# Updates the dataset with the values entered in the form
+#------------------------------------------------------------------------------
+sub update
+{
+	my $state = shift;
+	my $cgi = shift;
+	
+	my $ds = getFromParams( $state, $cgi );
+
+	# Get the original dataset and product names
+	my $source_dsname = $cgi->param( "source_dsname" );
+	my $source_pdname = $cgi->param( "source_pdname" );
+
+	# Update the dataset
+	DatasetDBA::updateDBAdmin( $ds, $source_dsname, $source_pdname );
+
+	$state->{proc_edit} = undef();
+	if( $state->{view} == $PRODUCT || $state->{view} == $DATASET )
+	{
+		$state->{product} = $ds->{pdname};
+	}
+	if( $state->{view} == $DATASET )
+	{
+		$state->{dataset} = $ds->{dsname};
+	}
+
+	my $url = $state->getUrlString();
+
+	if( $state->{view} == $PROJECT )
+	{ $url = $url . "&pdanchor=" . uri_escape( $ds->{pdname} ); }
+
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Dataset Updated" );	
+}
+
+#------------------------------------------------------------------------------
+# Delete the dataset from the database.
+#------------------------------------------------------------------------------
+sub delete
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $ds = getFromParams( $state, $cgi );
+	$ds->{dsname} = $cgi->param( "source_dsname" );
+	$ds->{pdname} = $cgi->param( "source_pdname" );
+
+	DatasetDBA::deleteFromDB( $ds );
+
+	$state->{proc_edit} = undef();
+
+	if( $state->{view} == $DATASET )
+	{
+		$state->{view} = $PRODUCT;
+	}	
+
+	my $url = $state->getUrlString();
+
+	if( $state->{view} == $PROJECT )
+	{ $url = $url . "&pdanchor=" . uri_escape( $ds->{pdname} ); }
+
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Dataset has been Deleted" );	
+
+}
+
+#------------------------------------------------------------------------------
+# Displays the return page for all the actions, this consists of the
+#  'Close Window' button and the provided message
+#------------------------------------------------------------------------------
+sub showStatus
+{
+	my $state = shift;
+	my $cgi = shift;
+	my $onLoad = shift;
+	my $msg = shift;
+
+	println( $cgi->header() );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>$msg</title>" );
+	println( "</head>" );
+	println( "<body onLoad=$onLoad>" );
+	println( "<center><br><br><br>" );
+	println( "<b>$msg</b>" );
+	println( "<br>" );
+	println( "<input type=submit value='Close Window' onClick=\"window.close()\">" );
+
+	println( "</body></html>" );
+}
+
+1;

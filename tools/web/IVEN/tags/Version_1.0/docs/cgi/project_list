@@ -1,0 +1,84 @@
+#!/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>Displays the IVEN 'Home' page.  Gives the user the list of projects in 
+#  the system and a link to each project page.</p>
+#
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+
+use strict;
+
+use lib "lib";
+use ProjectDBA;
+use Utils;
+use State;
+use CGI;
+
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+project_list( $state, $cgi );
+
+
+sub project_list
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	$state->{view} = $PROJECT;
+	my $projects = ProjectDBA::getAllProjects();
+
+	println( $cgi->header() );
+	println( "<html>" );
+		println( "<head>" );
+			println( "<title>JOSS Inventory Pages</title>" );
+			println( $jscript );
+			println( $css );
+		println( "</head>" );
+	println( "<br><br>" );
+	println( "<center>" );
+		println( "<table border=0 cellpadding=20 cellspacing=20 width=75% bgcolor=#ebebeb>" );
+			println( "<tr>" );
+				println( "<td align=center><font size=+4 color=#3300CC style=Verdana><b>Welcome to Iven</font></b><br><font style=Verdana>The JOSS Inventory and Status Page Application</font></td>" );
+			println( "</tr>" );
+		println( "</table>" );
+	println( "<br><br>" );
+	println( "<font color=red><b>Note: This is the development version.  Please use this one: <a href=/cgi-bin/dpg/iven/project_list>IVEN</a></font></b>." );
+	println( "<br><br>" );
+
+	println( "<table border=0 cellpadding=5 cellspacing=1 width=55% class=projectListTable>" );
+		println( "<tr class=projectListHeading><td width=100%>" );
+			println( "Available Projects: " );
+		println( "</td></tr>" );
+
+		foreach my $proj (@$projects)
+		{
+			my $pview = $state->getUrlString( "project" => $proj->{pjname} );
+			my $edit = $state->getUrlStringJS( "eproject" => $proj->{pjname}, "edit" => $EPROJECT_FIELDS, "mode" => "update" );
+
+			println( "<tr class=projectListProject>" );
+				println( "<td width=100%>" );
+					println( "<table border=0 cellpadding=3 cellspacing=0 width=100%>" );
+						println( "<tr>" );
+							println( "<td width=80%><font size=+1><a href=$pview>$proj->{pjname}</a></td>" );
+							println( "<td  width=20% align=right><a href=\"javascript: dsAdminEditWin( '$edit' );\"><img border=0 src=$img_src/e_project.gif></a></td>" );
+						println( "</tr>" );
+						println( "<tr>" );
+							println( "<td width=100% colspan=2>$proj->{full_name}</td>" );
+						println( "</tr>" );
+					println( "</table>" );
+				println( "</td>" );
+			println( "</tr>" );
+		}
+
+	println( "</table>" );
+	println( "<br>" );
+	my $url = $state->getUrlStringJS( "mode" => "add", "edit" => $EPROJECT_FIELDS );
+	println( "<b><a href=\"javascript: dsAdminEditWin( \'$url\' );\">Add New Project</a></b>" );
+
+	println( "</body></html>" );
+}
+
+1;

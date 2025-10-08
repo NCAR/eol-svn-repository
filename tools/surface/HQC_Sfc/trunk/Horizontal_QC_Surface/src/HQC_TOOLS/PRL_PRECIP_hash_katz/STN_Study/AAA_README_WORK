@@ -1,0 +1,22 @@
+The hash table form failed to find 4 or 5
+stns because (I think) that I did a split
+on the fields and one intermediate field
+was missing. I should substr exactly what
+I want and rerun the hash searching program.
+
+LEC
+
+
+nwsli.uniq - file supplied by Sid Katz as station list.
+stnids - file of uniq stn ids created from the hourly
+         and daily gage data.
+det_miss_stnids.pl - The final program used to determine
+         missing station ids. Station IDs in the data
+         but not in the supplied station list (nwsli.uniq)
+
+
+IDs_4chars.txt - same as count_4chars.txt. This file was
+         sent to Sid Katz on 20 August 1998.
+
+missingIDs.txt - 2293 station not found in nwsli.uniq. This
+         file was sent to Sid Katz on 20 August 1998.

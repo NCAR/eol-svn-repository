@@ -1,0 +1,71 @@
+<title>README file for NL EASE-Grid Geolocation tar file</title>
+<h2>README file for NL EASE-Grid Geolocation tar file</h2>
+<hr>
+<p>The enclosing tar file contains ancillary data for data sets defined in
+the NL (Northern Hemisphere, "low", i.e. 25 km resolution) EASE-Grid.  The
+tar file includes the following:</p>
+
+<ul>
+<li>IDL (Interactive Data Language) program <a
+href="easeconv.pro">easeconv.pro</a> and help file <a
+href="easeconv_help.html">easeconv_help.html</a> (for dataset users with IDL): this program contains routines to convert between
+latitude/longitude and row/column coordinates.
+
+<li>C source code <a href="ezlhconv.c">ezlhconv.c</a> and header file
+<a href="ezlhconv.h">ezlhconv.h</a> (for dataset users with knowledge
+of C programming): subroutines in these files can be called from the
+user's main program, to convert between latitude/longitude and
+row/column coordinates.  
+
+<li>FORTRAN source code <a href="ezlhconv.f">ezlhconv.f</a> (for
+dataset users with knowledge of FORTRAN programming):  subroutines in
+these files can be called from the user's main program, to convert
+between latitude/longitude and row/column coordinates.
+
+<li>For dataset users who only have need of the latitude and longitude of
+the center of any cell in the grid, geolocation data files contain flat,
+binary arrays of 4-byte integers containing the latitude or longitude of
+the respective grid cell, in hundred-thousandth degrees.  The user
+should divide the stored integer value by 100,000. to yield decimal
+degrees, with 1 meter precision.  The user is expected to know which
+byte-ordering convention is required by their system.  Files are provided
+in both unix (a.k.a. "big-endian" or "MSB") and PC (a.k.a "little-endian"
+or "LSB") byte orders.  The NL EASE-Grid has dimensions 721x721 pixels.</p>
+
+File naming convention for geolocation files is:</p>
+
+ggpppooo.GZ</p>
+
+<ul>
+<li>gg: grid name {NL, NH, SL, SH, ML, MH}
+<li>ppp: parameter {LAT, LON}
+<li>ooo: byte-order, {MSB, LSB}
+<li>.GZ extension indicates the files are compressed using GNU gzip.
+</ul>
+</p>
+Depending on the coverage area (this varies for different grids),
+scaled latitudes range from -90.00000 to 90.00000, and scaled
+longitudes range from -180.00000 to 180.00000, with missing data
+(i.e. corners of grids with hemispheric coverage) indicated by scaled
+value 14316.55765.</p>
+
+<li><a href="N200correct.mpp">N200correct.mpp</a> (Northern Hemisphere map
+projection parameters (.mpp) file) and the <a href="Nl.gpd">Nl.gpd</a>
+(25-km grid parameter definition (.gpd) file): contain projection and grid
+resolution information specifying a 25-km grid resolution, for the full
+hemisphere, Lambert's equal-area projection.  This information is required
+for users who want to use the generic software packages in NSIDC's <a
+href="ftp://baikal.colorado.edu/pub/NSIDC/README">Scientific Programmer's
+Software Library</a>.
+
+</ul>
+</p>
+
+For detailed answers to your EASE-Grid questions please see <a
+href="http:www-nsidc.colorado.edu/NASA/GUIDE/EASE/ease_maps_info.html">All
+about EASE-Grid</a>.  Another useful publication for users seeking
+broader understanding of the gridding procedures is <a
+href="http:www-nsidc.colorado.edu/NASA/GUIDE/docs/reference_documents/ppgc.html">Points,
+Pixels, Grids, and Cells</a>.  Please direct all other questions about
+the contents of this directory to NSIDC's <a
+href="http:www-nsidc.colorado.edu/cgi-bin/user-form-mail.pl">User Services Office</a>.

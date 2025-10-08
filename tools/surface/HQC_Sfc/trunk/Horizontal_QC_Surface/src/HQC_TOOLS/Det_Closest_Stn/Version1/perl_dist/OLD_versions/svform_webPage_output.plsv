@@ -1,0 +1,219 @@
+#!/usr/bin/perl 
+
+#-------------------------------------------------------------------
+# form_webPage_output.pl - This perl program creates a colorized
+#   web page from the output of the det_closest_stn.c s/w.
+#   Currently this code runs on the *stationCD.out form of the
+#   station list. It's really just looking for the station name
+#   in the first 15 chars followed by the station lat and lon
+#   in the next columns.
+#
+#   Execute: form_webPage_output.pl input_station_list [AOIs]
+#
+#   Required Inputs:
+#
+#
+#   Output:
+#      A web page containing colorized levels for the distances
+#      comparing each station in the input station list.
+#
+# Execute: form_webPage_output.pl input_station_list AOI_distance
+#--------------------------------------------------------------------
+#
+# May 2004 lec
+#   Created Version 1.0.
+#-------------------------------------------------------
+$number_lines_in_file = 0;
+$number_lines_processed = 0;
+
+#-----------
+# Initialize
+#-----------
+%stnInfo = ();
+
+
+##################################################
+#----------------------------------------------
+# create_web_page()
+#
+# This subroutine takes the output file generated
+# by C program det_closest_stn and converts it
+# into a nicer/color coded web page format for
+# easy viewing.
+#
+# Assume input file name for each distance are
+# of the form Closest_stns_LIST_xxxKM.out.
+#----------------------------------------------
+sub create_web_page {
+   my ($station_info_file, $distanceKM) = @_;
+
+   if ($debug) { print "Enter create_web_page with distanceKM = $distanceKM\n";}
+
+   #-----------
+   # Initialize
+   #-----------
+   %stnInfo = ();
+   $number_lines_processed = 0;
+
+   open (DIST_INPUT_FILE, "<Closest_stns_LIST_$distanceKM.out") || die "Can NOT open Closest_stns_LIST_$distanceKM.htm for reading";
+   open (DIST_OUTPUT_FILE, ">webPage_$distanceKM.htm") || die "Can NOT open webPage_$distanceKM.htm for writing";
+
+   #-----------------------------
+   # Put in standard information.
+   #-----------------------------
+   printf DIST_OUTPUT_FILE "<HTML>\n";
+   printf DIST_OUTPUT_FILE "<!-- ================================================= -->\n";
+   printf DIST_OUTPUT_FILE "<body bgcolor=white>\n";
+   printf DIST_OUTPUT_FILE "<TITLE>Stations within $distanceKM KM AOI of Current_Station</TITLE>\n";
+   printf DIST_OUTPUT_FILE "<center>\n";
+   printf DIST_OUTPUT_FILE "<H1>Stations within $distanceKM KM AOI of Current_Station</H1>\n";
+   printf DIST_OUTPUT_FILE "</center>\n";
+   printf DIST_OUTPUT_FILE "<br>\n";
+   printf DIST_OUTPUT_FILE "<b>Key:<br>\n";
+   printf DIST_OUTPUT_FILE "<font color=red>&nbsp;&nbsp;&nbsp;Red = Closest Station;</font><br>\n";
+   printf DIST_OUTPUT_FILE "<font color=orange>&nbsp;&nbsp;&nbsp;Orange</font> = Station within 10KM;<br>\n";
+   printf DIST_OUTPUT_FILE "<font color=yellowgreen>&nbsp;&nbsp;&nbsp;Yellow</font> = Station within 25KM;<br>\n";
+   printf DIST_OUTPUT_FILE "<font color=green>&nbsp;&nbsp;&nbsp;Green</font> = Station within 50KM;<br>\n";
+   printf DIST_OUTPUT_FILE "<font color=blue>&nbsp;&nbsp;&nbsp;Blue</font> = Station within 75KM;<br>\n";
+   printf DIST_OUTPUT_FILE "<font color=purple>&nbsp;&nbsp;&nbsp;Purple</font> = Station within 100KM;<br>\n";
+   printf DIST_OUTPUT_FILE "&nbsp;&nbsp;&nbsp;Black = Station futher than 100KM;</b><br>\n";
+   printf DIST_OUTPUT_FILE "<br><br>\n";
+   printf DIST_OUTPUT_FILE "<b>Station List Processed: <a href='./$station_info_file'>$station_info_file</a><br>\n";
+   printf DIST_OUTPUT_FILE "<br><br>\n";
+   printf DIST_OUTPUT_FILE "<hr>\n";
+
+   while ($input_line = <DIST_INPUT_FILE>)
+      {
+      $number_lines_processed++;
+
+      if ($debug) { print "Line: $number_lines_processed; Input_line=xxx $input_line xxx\n";}
+       
+      if ( $number_lines_processed != 1 && $number_lines_processed != 2 && $number_lines_processed != 3 &&
+           $input_line ne "" && $input_line ne "\n" )
+         {
+         #Pick out current stn
+         @line_parts = split /::/, $input_line;
+         $current_stn = $line_parts[0];
+         @compared_stations = split /,/, $line_parts[1];
+
+         printf DIST_OUTPUT_FILE "<b>Current_Station (lat/lon location): &nbsp;&nbsp;&nbsp;<font color=blue>$current_stn</font></b><br>\n";
+
+         undef %stnInfo; # Clean out hash.
+
+         foreach $station_combo (@compared_stations)
+            {
+            @stn_parts = split /\(/, $station_combo;
+            $station_name = $stn_parts[0];    
+            $station_dist = $stn_parts[1];
+            chop($station_dist); chop($station_dist); # Chop off last 2 junk chars
+
+            if ($station_name[0] ne "[")
+               {
+               if (exists $stnInfo{$station_dist} )
+                  {
+                  #-------------------------------------------------------
+                  # A station at this distance already exists in the hash. 
+                  # We have found a colocated station!
+                  #-------------------------------------------------------
+                  if ($debug) { print "$station_name EXISTS in the stnInfo Hash.CO-LOCATED Stns!\n";}
+                  }
+               else
+                  {
+                  #--------------------------------
+                  # This is a new stn. Add to list.
+                  #--------------------------------
+                  if ($debug) { print "$station_name with distance $station_dist is NEW ID. Add to stnInfo Hash.\n";}
+                  $stnInfo{ $station_dist } = $station_name;
+
+                  } # if exists
+               } # if Found line
+
+            } # foreach station
+
+         #--------------------------------------------------
+         # Print out this main station's compared stations
+         # in "sorted by distance" order.
+         #--------------------------------------------------
+         $num = 0;
+         foreach $DIST (sort keys %stnInfo)
+            {
+            $num++;
+
+            if ($debug)
+               {
+               print  "stnInfo:: $DIST - $stnInfo{$DIST}  ";
+               print "\n";
+               }
+ 
+            if ($num == 1) #First is always "Found xx stations within...."
+               { printf DIST_OUTPUT_FILE "&nbsp;&nbsp;&nbsp;<font color=black>$stnInfo{$DIST}$DIST</font><br><br>\n"; }
+            else
+               {
+               if ($num ==2) {printf DIST_OUTPUT_FILE "&nbsp;&nbsp;&nbsp;<b><font color=red>$stnInfo{$DIST} :: $DIST KM</font></b><br>\n";}
+               elsif ($DIST<=10) 
+                 {printf DIST_OUTPUT_FILE "&nbsp;&nbsp;&nbsp;<font color=orange>$stnInfo{$DIST} :: $DIST KM</font><br>\n";}
+               elsif ($DIST<=25) 
+                 {printf DIST_OUTPUT_FILE "&nbsp;&nbsp;&nbsp;<font color=yellowgreen>$stnInfo{$DIST} :: $DIST KM</font><br>\n";}
+               elsif ($DIST<=50) 
+                 {printf DIST_OUTPUT_FILE "&nbsp;&nbsp;&nbsp;<font color=green>$stnInfo{$DIST} :: $DIST KM</font><br>\n";}
+               elsif ($DIST<=75) 
+                 {printf DIST_OUTPUT_FILE "&nbsp;&nbsp;&nbsp;<font color=blue>$stnInfo{$DIST} :: $DIST KM</font><br>\n";}
+               elsif ($DIST<=100) 
+                 {printf DIST_OUTPUT_FILE "&nbsp;&nbsp;&nbsp;<font color=purple>$stnInfo{$DIST} :: $DIST KM</font><br>\n";}
+               else 
+                 {printf DIST_OUTPUT_FILE "&nbsp;&nbsp;&nbsp;<font color=black>$stnInfo{$DIST} :: $DIST KM</font><br>\n";}
+               }
+
+            } # foreach  distance
+   
+            printf DIST_OUTPUT_FILE "<hr><br>\n";
+
+         } # Not a comment line
+      } # while data in input file
+
+   print "\nTotal number lines processed in file Closest_stns_LIST_$distanceKM.out: $number_lines_processed\n";
+
+   #-----------------------------
+   # Put in standard information.
+   #-----------------------------
+   printf DIST_OUTPUT_FILE "</HTML>\n";
+
+   close (DIST_INPUT_FILE);
+   close (DIST_OUTPUT_FILE);
+
+   } # create_web_page()
+
+
+##################################################
+# form_webPage_output.pl - MAIN processing.
+# Example : 
+#  form_webPage_output.pl EAOP99EsfcNoShip.NAM 20
+##################################################
+printf "\nform_webPage_output.pl of file $ARGV[0] began on ";print scalar localtime; printf "\n";
+
+#----------------------------------
+# Set the output information level.
+#----------------------------------
+$debug=0;
+
+$station_info_file = $ARGV[0];
+$distanceKM = $ARGV[1];
+
+#-----------------------------------------------------
+# Call Det_Closest_station for requested AOI km limit.
+#-----------------------------------------------------
+if ($debug) {print "\nCall det_closest_stn $station_info_file $distanceKM.\n";}
+system ("det_closest_stn $station_info_file $distanceKM");
+system ("mv Closest_stns_LIST.out Closest_stns_LIST_$distanceKM.out");
+
+#---------------------------------------------
+# Create web page from det_closest_stn output.
+# Assume form of input/output file names.
+#---------------------------------------------
+if ($debug)
+   { print "Call create_web_page( $distanceKM ).\n"; }
+
+create_web_page ($station_info_file, $distanceKM);
+
+printf "\nform_webPage_output.pl of file $ARGV[0] ended on ";print scalar localtime;
+printf "\n";

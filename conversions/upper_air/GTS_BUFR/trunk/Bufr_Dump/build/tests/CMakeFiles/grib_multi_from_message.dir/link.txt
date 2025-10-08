@@ -1,0 +1,1 @@
+/bin/cc  -pipe -pedantic -O2 -g -DNDEBUG      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined CMakeFiles/grib_multi_from_message.dir/grib_multi_from_message.c.o  -o grib_multi_from_message -Wl,-rpath,/opt/local/bufr/build/lib ../lib/libeccodes.so /usr/lib64/libm.so /usr/lib64/libjasper.so /usr/lib64/libjpeg.so -lpthread 

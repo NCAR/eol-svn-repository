@@ -1,0 +1,313 @@
+<html>
+<head>
+<title>How To: Process NSSL Mobile Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Process NSSL Mobile Upper Air Sounding Data</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#network">Network Information</a></li>
+        <li><a href="#version">Previous Versions</a>
+            <ol>
+                <li><a href="#version:MPEX">2013 (MPEX)</a> - first created.</li>
+            </ol>
+        </li>
+        <li><a href="#directory">Directory Structure</a></li>
+        <li><a href="#process">Processing the Data</a>
+            <ol> 
+			<li><a href="#setup">Initial Processing Setup</a></li>     		
+            <li><a href="#convert">Converting the Data</a></li>
+            <li><a href="#autoqc">Auto QC</a></li>
+ 			<li><a href="#visual_qc">Visual QC</a></li>
+            <li><a href="#finalize">Finalization</a></li>   
+			<li><a href="#5mb-extract">5mb Extraction</a></li>      		
+            </ol>
+        </li>
+        <li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+	<p>This document contains instructions for converting NSSL Mobile High Resolution
+	Radiosonde Data into the EOL Sounding Composite (ESC) format.</p>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+    <li>The ID-Type is 99.</li>
+	<li>The Platform is 415  Radiosonde, Vaisala RS92-SGP</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions</h2>
+<div class="block">
+
+    <a name="version:MPEX"></a><h3>MPEX (2013)</h3>
+    <table class="version">
+	<tr><th>Software:</th><td><a
+	href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNSSL_Mobile%2F#_conversions_upper_air_NSSL_Mobile_">http://svn.eol.ucar.edu/svn/dmg/upper_air/NSSL_Mobile/tags/MPEX_2013</a></td></tr>
+    <tr><th>Raw Data:</th><td>/net/work/Projects/MPEX/data_processing/upper_air/NSSL_Mobile/raw_data</td></tr>
+    <tr><th>Final Data:</th><td>/net/work/Projects/MPEX/data_processing/upper_air/NSSL_Mobile/dayfiles</td></tr>
+    </table>
+
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">ARM/</h3>
+    <table class="directories">
+		<tr><th>5mb/</th><td>The directory where the extracted 5mb pressure
+		sounding files are stored.</td></tr>
+		<tr><th>build/</th><td>The auto-generated directory for the compiled
+		Java classes.</td></tr>
+		<tr><th>dayfiles/</th><td>The directory where the generated day files
+		are stored.  This is the final processed data that will be put on
+		line.</td></tr>
+	    <tr><th>docs/</th><td>The directory containing documentation about the
+	    processing and the data.</td></tr> 
+	    <tr><th>final/</th><td>The directory where the QC'ed files are placed once
+	    they have been created.</td></tr> 
+	    <tr><th>logs/</th><td>The directory where the error/check files from the QC
+	    are placed.</td></tr>
+	    <tr><th>output/</th><td>The directory where the CLASS files are put after
+	    they are generated.</td></tr> 
+	    <tr><th>raw_data/</th><td>The directory where the raw data is
+	    stored.</td></tr>
+	    <tr><th>software/</th><td>The directory where the software for the
+	    conversion is stored.</td></tr>
+	    <tr><th>src/</th><td>Unused directory - required for autoqc to run.</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+
+<a name="process"></a><h2>Processing the Data</h2>
+<div class="block"> 
+    <a name="setup"></a><h3>Initial Processing Setup</h3>
+	<ol>
+	<li>Copy the raw data into the <span
+	class="directoryName">raw_data</span> directory. Check the assumptions made
+	in the script regarding things such as file names and locations.  The raw
+	data consists of 111 *.txt files with no header information.
+	<ul>
+    <li><i>For MPEX:</i>
+        <ul><li><span class="beware">BEWARE:</span> 
+		The raw data was run through a preprocessor before conversion.  
+		Use the RemoveDescending.pl script to pre-process data. The purpose 
+		of the script is to remove the descending sounding data at the end 
+		of the files.  The raw data file was read into an array which was 
+		reversed. The NSSL raw data had a column for comments. Starting 
+		at the end of the file, each line was checked and if it contained 
+		the comment "descent" it was removed from the array. Once good 
+		data was found, the loop ends and the remaining records are 
+		written out to a new raw data file.
+		</ul>
+	</ul>
+	</li>         
+    </ol>  
+
+    <a name="convert"></a><h3>Converting the Data</h3>
+ 	<p class="note">This step runs Perl code and should work on basically any
+	machine. However, to run the autoQC and any other processing/data prep done
+	by the build.xml (Ant) file, you must run on any machine with the proper
+	Ant and Java setup, such as tikal.</p>       
+	<p>Converting NSSL Mobile High Resolution Radiosonde data into
+	the ESC format consists of the following steps.</p>
+
+	<ol>	
+	<li><p>Change to the <span class="directoryName">software</span> directory.</p></li>
+	<li><p>Edit the <span
+	class="softwareName">NSSL_Mobile_Radiosonde_Converter.pl</span> script.</p>
+	<ul>
+		<li><span class="beware">BEWARE: </span>The converter looks for the
+		data records on the first line of the raw data file.</li>     
+		<li>Search for "HARD-CODED" to find and change the hard-coded
+		project-specific values in the script to be correct for your project.
+		For example, change the function: <code>getProjectName</code> to the
+		current project.</li>
+		<li>Code was added to the converter (from the Ron Brown Converter)
+		to derive the ascent rate values from the altitude and time data.  The
+		ascent rate flag was also set.</li>
+		<li><i>For MPEX:</i>
+		<ul>
+		    <li>Raw data files are ascii format with no headers, and the 
+			converter expects data to begin on line 1 of the raw data file.</li>
+			<li>Header lat/lon/altitude info is obtained from the first line 
+			of the data (surface data).</li>
+			<li>Release time is obtained from the file name.</li>
+			<li>The data records do not have a "time" column.  The record 
+			time variable is initialized to zero and incremented after the 
+			record is complete. Scot has indicated that this is 1-second data.</li>
+			<li>Code was added to set all values to missing when pressure is 
+			100.0, PTH is -99.0 and lat/lon is 999.000, as instructed by Scot.</li>
+			<li>Code was added to prepend a negative sign onto the longitude 
+			data.  Scot indicated that the longitude data should be negative (W).</li>
+			<li>Code was added to set the ascension rate flag (QdZ code) at 
+			the surface to missing.</li>
+			<li>In addition the the descending lines that were removed with 
+			the preprocessor, there were some files that ended with lines of
+			all "missing" values.  Scot requested that these be removed, so
+			code was added to remove these up to the point where good data
+			was found.</li>
+		</ul>
+	</ul>
+	</li>
+	<li>Run the <span
+	class="softwareName">NSSL Mobile_Radiosonde_Converter.pl</span> script.  This
+	will convert data to the ESC format.</li> 
+	<li>Run the format checker using the ant command:
+    <p class="code">ant check-format-ESC</p></li>
+	<li>Check the log file (generated by the format checker) in the <span
+	class="directoryName">output</span> directory to determine if any format
+	issues need to be addressed before proceeding with AutoQC.</li>
+	</ol>
+
+
+<a name="autoqc"></a><h3>Auto QC</h3>
+	<p class="note">This step works best on tikal, but can be done on any
+	machine with the proper Ant and Java setup.</p>
+
+	<p>These steps execute the automatic QC on the processed files in the <span
+	class="directoryName">output</span> directory, generate log files in the
+	<span class="directoryName">logs</span> directory, and place the QC'ed data
+	files into the <span class="directoryName">final</span> directory, as
+	specified by the <span class="softwareName">build.xml</span> file.  The
+	final part of the automated process is to run the format checker on
+	the QC'ed files.  To run the sounding Automatic Quality Control
+	Processing:</p>
+    <ol>
+	   <li>Stay in/Change to the top level processing directory where the Ant
+	   <span class="softwareName">build.xml</span> file is located.</li>
+	   <li>Check the <span class="softwareName">build.xml</span> file for the
+	   <code>autoqc</code> target for the following:
+           <ol>
+			   <li>A command to copy the properties file to the build
+			   directory. There is typically a copy of the autoqc properties
+			   file (e.g., "us_plains_autoqc.properties") in the
+			   software directory.</li>   		   
+			   <li>The java command(s) will be executed on the expected data
+			   in the expected locations (i.e., ensure that the directory names
+			   in the build.xml file are correct and what you want.)</li>
+			   <li>You have updated the project name in the build.xml,
+			   if included in the build.xml file.</li>
+		   </ol>
+	   <li>Perform the auto QC by executing the ant command: 
+	   <p class="code">ant autoqc</p></li>  
+	   <li>After all issues have been resolved, notify the Scientific Staff
+	   (Scot) that the data is ready for Visual QC. Also inform him of any
+	   issues noted so that he will be aware of them.</li>
+    </ol>
+
+
+<a name="visual_qc"></a><h3>Visual QC</h3>
+	<p>Once the auto QC is completed, email the scientific staff (i.e., Scot
+	Loehrer) so that they can perform a visual QC on the data and give final
+	approval of the processed data set, as required. Note that the visual qc is
+	not performed on all sounding datasets.</p>
+
+
+
+<a name="finalize"></a><h3>Finalization</h3>
+	<p>After the visual QC is completed, the data set is ready to be finalized
+	(i.e, prep'd for CODIAC).  
+       <ol>
+		 <li> Update this "How To" document to indicate the latest project
+		 this conversion was executed for and include any notes about upgrades
+		 made specifically for that project, as required. A copy of this
+		 document is generally found in the <span
+		 class="directoryName">/docs</span> directory. Place a copy of the
+		 updated doc in <span
+		 class="directoryName">/net/web/dmg/html/software/conversions/upper_air/NSSL Mobile</span>
+		 directory. The s/w repository page points to this doc in that web
+		 location, so this must be updated.  The s/w repository page is located
+		 <a
+		 href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/encyclopedia/repository-dmg-subversion-listing"
+		 target='_top'><b>here</b></a>. </li>
+
+		 <li>Update the dataset description (or EMDAC) document for this
+		 conversion. Work with the scientific staff to create an EMDAC
+		 document. Generally, start with an existing "similar" document and
+		 simply update it for this project and dataset.  Generally, a copy of
+		 the EMDAC doc can be found in the <span
+		 class="directoryName">/docs</span> area.</li>
+
+		<li>The next processing step is to create day files that can/will be
+		loaded into the EMDAC/CODIAC database, along with the EMDAC dataset
+		description document.  The dayfiles creation step will generate day
+		files sorted by nominal release date followed by station location as
+		required by CODIAC. It's very important that the output dayfiles be in
+		this expected sort order so that CODIAC can access all the soundings
+		within a single dayfile. Do the following steps to create the day
+		files.</li>
+    <ol>
+	   <li>Ensure that you are in the same (top) directory as the build.xml
+	   file. Create the day files using the ant command:
+	   <p class="code">ant dayfiles</p> 
+	   
+	   This will create a file for each day
+	   where at least one sounding exists in the <span
+	   class="directoryName">database</span> directory or whichever directory
+	   is specified as the output directory in the build.xml file. If this
+	   dataset is to be put online "as is", these ar the dayfiles to load into
+	   CODIAC.</li>
+       </li>
+    </ol>
+    </ol>
+
+
+<a name="5mb-extract"></a><h3>5mb Extraction</h3>
+	<p>If the converted soundings are also going to be placed into a 5mb
+	composite, the soundings need to have the proper 5mb pressure level
+	soundings generated.  This is done through the following steps:</p>
+    <ol>
+        <li>Generate the 5mb pressure level data files using the ant command:
+            <p class="code">ant 5mb-extract</p>
+			This will generate a 5 mb sounding file for each sounding in the
+			<span class="directoryName">final</span> directory and place
+			it in the <span class="directoryName">5mb</span>.  It will also run
+			some final checks to make sure the format is correct. Beware that
+			the file directories listed in the build.xml file are what you
+			expect and want.</li>
+    </ol>
+	<p>The generated 5mb data files will then be available when the composite
+	is generated.</p>
+
+</div>
+<a href="#">Top</a><hr>
+
+<a name="documents"></a><h2>Documentation</h2>
+<p>The following are a list of documents that may help with the conversion or
+are related to the raw data.</p>
+<ul>
+	<li><a href="/software/tools/upper_air/autoqc">How To: AUTO QC Sounding Data</a>:  The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/software/tools/upper_air/esc_format_checker">How To: ESC Format Checker</a>:  The instructions and API for working with the ESC format checker program.</li>
+    <li><a href="#">How To: Process NSSL Mobile Sounding Data</a>:  This document.</li>
+
+</ul>
+<a href="#">Top</a>
+
+<hr />
+<p class="foot">
+<script type="text/javascript">
+    document.write("Last Updated: " + document.lastModified + " - Linda Echo-Hawk");
+</script>
+</p>
+<hr />
+
+<br />
+</body>
+</html>
+
+
+

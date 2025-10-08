@@ -1,0 +1,13 @@
+SHELL = /bin/sh
+#    Makefile for 
+#
+
+CC=acc
+##CFLAGS = -g
+
+create_hpcn_stn: create_hpcn_stn.o
+	$(LINK.c) -o create_hpcn_stn create_hpcn_stn.o
+	chmod 0755 create_hpcn_stn
+
+clean:
+	rm *.o

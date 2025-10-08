@@ -1,0 +1,231 @@
+#!/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>Displays the html form to add a new dataset or update the administrative 
+#  attributes of a dataset.  The user is given a blank form if adding a new
+#  dataset or a populated from to update the dataset.  The admin attributes
+#  of a dataset consist of the dataset name, the associated product, the
+#  user writing the conversion, etc.</p>
+#
+# <b>Expected Params: </b>
+#  <dd>project - part of State
+#  <dd>mode - 'add' or 'update'
+#  <dd>eproduct - mandatory if mode is 'update', optional if mode is 'add'
+#  <dd>edataset - the dataset to edit of mode == 'update' 
+#
+# @author Dan Sullivan
+#
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Utils;
+use State;
+use DatasetDBA;
+use ProductDBA;
+use UserDBA;
+use CGI;
+
+require "common";
+
+# Expected params:
+#  project - mandatory, part of state
+#  edataset - if updating
+#  eproduct - if known
+#  mode - add/update
+
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+edit_ds_admin( $state, $cgi );
+
+sub edit_ds_admin
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $mode = $cgi->param( "mode" );
+	$mode = "add" if( !$mode );
+	my $project = $state->{project};
+	my $edataset = $cgi->param( "edataset" );
+	my $eproduct = $cgi->param( "eproduct" );
+
+	my $ds = Dataset->new();
+
+	if( $mode eq "add" )
+	{
+		$ds->{pdname} = $eproduct;
+	}
+	else # update
+	{
+		$ds = DatasetDBA::getFromDB( $edataset, $eproduct, $project );
+	}
+
+	my $products_box = getProductsDropDown( $project, $eproduct );	
+	my $users_box = getUserDropDown( $ds->{user_processing} );	
+	my $status_box = getStatusDropDown( $ds->{status} );
+
+	my $title = "Edit Dataset";
+	$title = "Add Dataset" if( $mode eq "add" );
+
+	println( $cgi->header( -expires=>"-1d" ) );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>Iven Edit: Dataset Admin</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+
+	my $ncols = 2;	
+	println( "<table cellpadding=5 cellspacing=0 width=100% class=editTable>" );
+	println( "<form action=proc_ds_admin method=\"POST\">" );
+		println( "<tr class=editHeading><td colspan=$ncols>$title</td></tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Project:</b></td>" );
+			println( "<td>$project</td>" );
+		println( "</tr>" );
+		
+		println( "<tr>" );	
+			println( "<td align=right><b>Product:</b></td>" );
+			println( "<td>$products_box</td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Dataset Name:</b></td>" );
+			println( "<td><input type=input size=80 maxlength=100 value=\"$ds->{dsname}\" name=dsname></td>" );
+		println( "</tr>" );
+
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( "<tr>" );
+			println( "<td align=right><b>Storm Id:</b></td>" );
+			println( "<td><input type=input size=16 maxlength=16 value=\"$ds->{storm_id}\" name=storm_id></td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Processing:</b></td>" );
+			println( "<td>$users_box</td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Status:</b></td>" );
+			println( "<td>$status_box</td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td align=right><b>Exclude:</b></td>" );
+			println( "<td>" );
+				my $checked = "";
+				$checked = "checked" if( $ds->{exclude} );
+				println( "<input type=checkbox name=exclude $checked>" );
+
+				$checked = "";
+				$checked = "checked" if( $ds->{questions} );
+				println( &nbsp(4) );
+				println( "<b>Questions/Flag: </b>" );
+				println( "<input type=checkbox name=questions $checked>" );
+			println( "</td>" );
+		println( "</tr>" );
+
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( "<tr><td colspan=$ncols><b>Notes: </b></td></tr>" );	
+
+		println( "<tr><td colspan=$ncols>" );
+			println( "<textarea name=admin_notes rows=15 cols=75>" );
+				println( html_encode( $ds->{admin_notes} ) );
+			println( "</textarea>" );
+		println( "</td</tr>" );
+
+		println( "<tr><td class=spacer colspan=$ncols></td></tr>" );	
+
+		println( getButtons( $mode, $ncols ) );
+	
+		my $hidden = $state->getHiddenFieldString( "proc_edit"=>$EDATASET_ADMIN );
+
+		if( $mode eq "update" )
+		{
+			println( "<input type=hidden name=source_dsname value=\"$ds->{dsname}\">" );
+			println( "<input type=hidden name=source_pdname value=\"$ds->{pdname}\">" );
+		}
+
+		println( $hidden );
+
+	println( "</table>" );
+	println( "</form>" );
+	println( "</html>" );
+	
+}
+
+sub getProductsDropDown
+{
+	my $pjname = shift;
+	my $pd_select = shift;
+	my $select = "<select name=pdname>";
+
+	my $prods = ProductDBA::getByProject( $pjname );
+
+	foreach my $pd (@$prods)
+	{
+		my $selected = "";
+		$selected = "selected" if( $pd_select && $pd->{pdname} eq $pd_select );
+		$select = $select . "<option value=\"$pd->{pdname}\" $selected>$pd->{pdname}</option>";
+	}
+	$select = $select . "</select>";
+
+	return $select;
+}
+
+sub getUserDropDown
+{
+	my $sel_user = shift;
+	$sel_user = "unassigned" if( !$sel_user || $sel_user eq ""  );
+
+	my $users = UserDBA::getAllUsers( "fname" );
+
+	my $select = "<select name=user_processing>";
+
+	foreach my $us (@$users)
+	{
+		my $selected = "";
+		$selected = "selected" if( $sel_user && $sel_user eq $us->{uid} );
+		$select = $select . "<option value=\"$us->{uid}\" $selected>$us->{fname}</option>";		
+	}
+	$select = $select . "</select>";
+
+	return $select;
+}
+
+sub getButtons
+{
+	my $mode = shift;
+	my $ncols = shift;
+	my $btns;
+
+	if( $mode eq "add" )
+	{
+	  $btns = "<tr class=editHeading><td colspan=$ncols align=right>" . 
+							"<input type=submit name=action value=\"Add as Dataset\">" . &nbsp(2) .
+							"<input type=submit name=action value=\"Add as Extraction\">". &nbsp(2) .
+							"<input type=submit name=action value=\"Cancel\">" . 
+						"</td></tr>";
+	}
+	else
+	{
+	  $btns = "<tr class=editHeading><td colspan=$ncols align=right>" . 
+							"<input type=submit name=action value=\"Update Dataset\">" . &nbsp(2) .
+							"<input type=submit name=action value=\"Set Extraction\">" . &nbsp(2) .
+							"<input type=submit name=action value=\"Delete Dataset\" onClick=\"return confirm( 'This will delete the dataset from IVEN' ); \">" . &nbsp(2) .
+							"<input type=submit name=action value=\"Cancel\">". 
+						"</td></tr><tr class=editHeading><td colspan=$ncols align=right>" .
+							"<input type=submit name=action value=\"Add New Dataset\">". &nbsp(2) .
+							"<input type=submit name=action value=\"Add New Extraction\">" . 
+						"</td></tr>";
+	}  
+
+	return $btns;
+}
+
+1;

@@ -1,0 +1,95 @@
+<project name="ml_merge" default="deploy" basedir=".">
+
+  <property name="app.name" value="ml_merge" />
+  <property name="src" value="cgi"/>
+  <property name="web" value="html"/>
+  <property name="deploy"  value="/net/web/dmg/cgi-bin/${app.name}"/>
+  <property name="deploy.html" value="/net/web/dmg/html/software/tools/web/${app.name}" />
+
+  <!-- Test Location -->
+  <property name="deploy.test" value="/net/web/dmg/cgi-bin/${app.name}-test"/>
+  <property name="deploy.test.html" value="/net/web/dmg/html/software/tools/web/${app.name}-test" />
+
+
+  <target name="clean">
+    <delete dir="${deploy}" />
+    <delete dir="${deploy.html}" />
+  </target>
+
+  <target name="clean-deploy">
+    <delete dir="${deploy}" />
+    <delete dir="${deploy.html}" />
+    <!-- "static" web and conf files -->
+    <copy todir="${deploy}">
+      <fileset dir="${src}"/>
+    </copy>
+    <chmod perm="775">
+       <fileset dir="${deploy}">
+          <include name="**/*" />
+       </fileset>
+    </chmod>
+    <copy todir="${deploy.html}">
+      <fileset dir="${web}" />
+    </copy>
+  </target>
+
+
+  <!-- pick which deploy method to use -->
+  <target name="deploy" depends="deploy-copy"/>
+
+  <target name="deploy-copy">
+    <!-- "static" web and conf files -->
+    <copy todir="${deploy}">
+      <fileset dir="${src}"/>
+    </copy>
+    <chmod perm="775">
+       <fileset dir="${deploy}">
+          <include name="**/*" />
+       </fileset>
+    </chmod>
+    <copy todir="${deploy.html}">
+      <fileset dir="${web}" />
+    </copy>
+  </target>
+
+  <!-- Deploy for Testing Only -->
+  <target name="clean-test">
+    <delete dir="${deploy.test}" />
+    <delete dir="${deploy.test.html}" />
+  </target>
+
+  <target name="clean-deploy-test">
+    <delete dir="${deploy.test}" />
+    <delete dir="${deploy.test.html}" />
+    <!-- "static" web and conf files -->
+    <copy todir="${deploy.test}">
+      <fileset dir="${src}"/>
+    </copy>
+    <chmod perm="775">
+       <fileset dir="${deploy.test}">
+          <include name="**/*" />
+       </fileset>
+    </chmod>
+    <copy todir="${deploy.test.html}">
+      <fileset dir="${web}" />
+    </copy>
+  </target>
+
+  <target name="deploy-test" depends="deploy-test-copy"/>
+
+  <target name="deploy-test-copy">
+    <!-- "static" web and conf files -->
+    <copy todir="${deploy.test}">
+      <fileset dir="${src}"/>
+    </copy>
+    <chmod perm="775">
+       <fileset dir="${deploy.test}">
+          <include name="**/*" />
+       </fileset>
+    </chmod>
+    <copy todir="${deploy.test.html}">
+      <fileset dir="${web}" />
+    </copy>
+  </target>
+
+</project>

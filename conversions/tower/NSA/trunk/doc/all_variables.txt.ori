@@ -1,0 +1,55 @@
+NSA CEOP parameters taken from netCDF files -
+
+-----------------------------------------------------------------------------------------------------------------
+gndrad
+
+up_short_hemisp:            "Upwelling Shortwave Hemispheric Irradiance, Pyranometer"       W/m2
+up_long_hemisp:             "Upwelling Longwave Hemispheric Irradiance, Pyrgeometer"        W/m2
+sfc_ir_temp                 "Surface Infra-Red Temperature"                                 degrees C
+net:                        "Net Radiation"                                                 W/m2
+
+-----------------------------------------------------------------------------------------------------------------
+mettiptwr
+(height = 2 meters)
+
+atmos_pressure:             "Barometric Pressure"                                           hPa
+wind_spd_mean:              "Mean Wind Speed"                                       		m/s
+wind_dir_vec_avg:           "Vector-averaged Wind Direction"                        		deg  
+temp_mean:                  "Mean Air Temperature or Hardware Error"                deg C (array by height)
+relh_mean:                  "Mean Relative Humidity"                                %     (array by height)
+dew_pt_temp_mean:           "Mean Dew Point Temperature"                            deg C (array by height)
+
+-----------------------------------------------------------------------------------------------------------------
+mettwr
+(height = 40, 20, 10, 2 meters) 
+
+atmos_pressure:             "Barometric Pressure"                                           hPa
+wind_spd_mean:              "Mean Wind Speed"                                       m/s   (array by height)
+wind_dir_vec_avg:           "Vector-averaged Wind Direction"                        deg   (array by height)
+temp_mean:                  "Mean Air Temperature or Hardware Error"                deg C (array by height)
+relh_mean:                  "Mean Relative Humidity"                                %     (array by height)
+dew_pt_temp_mean:           "Mean Dew Point Temperature"                            deg C (array by height)
+
+-----------------------------------------------------------------------------------------------------------------
+org
+
+precip_rate:                "ORG Precipitation Rate"                                        mm/hr
+
+-----------------------------------------------------------------------------------------------------------------
+skyrad
+
+down_short_hemisp:          "Downwelling Shortwave Hemispheric Irradiance, Pyranometer"         W/m2
+down_long_hemisp_shaded:    "Downwelling Longwave Hemispheric Irradiance, Shaded Pyrgeometer"   W/m2
+
+-----------------------------------------------------------------------------------------------------------------
+snodep
+
+snow_depth:                 "Snow Depth"                                                    m
+
+-----------------------------------------------------------------------------------------------------------------
+visib
+
+precip_rate:				"Precipitation Rate" 											mm/hr
+cumulative_snow:			"Cumulative Snow" 												mm
+
+-----------------------------------------------------------------------------------------------------------------

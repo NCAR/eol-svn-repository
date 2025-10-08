@@ -1,0 +1,289 @@
+# subroutines to process the mss retrieval cgi scripts
+#***************************************
+#!/usr/bin/perl
+require 'constants.pl';
+
+# the constants!!
+%constants = &get_constants();
+#***************************************
+sub parse_request {
+
+   local($request_name) = $_[0];
+   local(%request, @tmp, $i, $key);
+
+   # parse the request file & return the information
+   open(REQUEST, "$request_name") || die "cannot open $request_name";
+
+   while(<REQUEST>) {
+
+      chop;
+      #s/\s+//g;
+      @tmp = split(/\;/, $_);
+      $request{'name'} = $tmp[0];
+      $request{'affiliation'} = $tmp[1];
+      $request{'address'} = $tmp[2];
+      $request{'city'} = $tmp[3];
+      $request{'state'} = $tmp[4];
+      $request{'zip'} = $tmp[5];
+      $request{'phone'} = $tmp[6];
+      $request{'num_files'} = $tmp[7];
+      $request{'file'} = $tmp[8];
+      $request{'local_dest'} = $tmp[9];
+      $request{'compression'} = $tmp[10];
+      $request{'media'} = $tmp[11];
+      $request{'email'} = $tmp[12];
+      $request{'date'} = $tmp[13];
+      $request{'time'} = $tmp[14];
+
+   } # endwhile
+
+   close(REQUEST);
+
+   return %request;
+
+}
+#***************************************
+sub hpss_copy {
+
+  my $hpss_fname = shift;
+  my $local_fname = shift;
+  my $command;
+  my $error_code = $constants{'exit_code'};
+
+  my $message = "Data transfer successful!";
+
+  # the hsi executable
+  my $hsi_exe = $constants{'hsi_exe'};
+
+  # get the file from the hpss
+  $command = "$hsi_exe get $local_fname : $hpss_fname";
+  my $status = system($command);
+ 
+  if ( $status != 0 ) {
+    $error = $?>>8;
+    print $exit_code->{$error}."\n";
+    $message = "Data transfer unsuccessful..";
+    return($message, 0); 
+  } # endif
+
+  # make sure that the local file exists and
+  # get it's size 
+  if ( -e $local_fname ) {
+    my $fsize = (stat("$local_fname"))[7];
+    # convert it to MB
+    $fsize = $fsize/1000000;
+    # make sure that it's world readable
+    # so it can be downloaded :-)
+    chmod(0755, $local_fname);
+    return($message, $fsize);
+  } else {
+    print STDERR "Error: $local_fname does not exist...\n";
+    $message = "Data transfer unsuccessful..";
+    return($message, 0); 
+  } # endif
+
+}
+#***************************************
+sub mss_copy {
+
+   # routine to copy the mss files!
+
+   local($mss_fname, $local_fname) = @_;
+   local($msls_stat, $cmd_part1, $cmd_part2, $cmd_part3 );
+   local($status, $file_size, @tmp);
+
+   $status = "Data Transfer successful :-)";
+
+   # the necessary environment variables
+   $ENV{'LD_LIBRARY_PATH'} = $constants{'ld_library_path'};
+   # we don't need this anymore due to DCS upgrade 5/2001
+   #$ENV{'DP_SERVICE_HOST'} = $constants{'dp_service_host'};
+
+   # the msls executable
+   $msls_exe = $constants{'msls_exe'};
+
+   # first do a msls to verify that the file exists
+   #$msls_stat = system($msls_exe, $mss_fname);
+   $msls_stat = `$msls_exe -l $mss_fname`;
+
+   if ( $msls_stat != 0 ) {  # this file not on mass store
+
+     $status = "$mss_fname: File does not exist.";
+     $file_size = 0;
+
+   } else {
+
+      # now, get the size of the file
+      $msls_stat =~ s/^\s//g;
+      @tmp = split(/\s+/, $msls_stat);
+      $file_size = $tmp[4]*.000001; # in megabytes
+
+      # copy the file!!
+      $cmd_part1 = $constants{'msrcp_exe'};
+      $cmd_part2 = "mss:$mss_fname";
+      $cmd_part3 = "$constants{'local_dest'}/$local_fname";
+      $cmd_part3 = "$constants{'local_dest'}/$local_fname";
+      $msrcp_stat = system($cmd_part1, $cmd_part2, $cmd_part3);
+      #$msrcp_stat = 0;  # for testing purposes
+      if ( $msrcp_stat != 0 ) { # copy error
+         $status = "Data transfer unsuccessful :-(";
+      } # endif
+
+   } # endif
+
+   return ($status, $file_size);
+
+}
+#***************************************
+sub get_fnames {
+
+   # routine to return a list of filenames
+   # from a string of filenames separated
+   # by a comma
+
+   local($list) = $_[0];
+
+   # remove any spaces
+   $list =~ s/\s+//g;
+
+   # return the filenames
+   return split(/\,/, $list);
+
+}
+#***************************************
+sub user_email {
+
+   # assemble the final email message if the
+   # data will be ftp
+   local(%status) = @_;
+   local($msg, $i, $key, $value);
+   local($ftp_path) = $constants{'ftp_path'};
+   local($compression) = 0;
+   local(@tmp);
+
+   # now, construct the email message
+   $msg = "Your transfer is complete!  ".
+                 "Your files are in $ftp_path.\n\n".
+                 "Here is a summary of your transfer:\n".
+		 "Note: Hold down the shift key while clicking\n".
+		 "on the link.\n\n";
+
+   foreach $key (keys %status) {
+      $msg.="File:\t$key\n".
+	    "Status:\t$status{$key}\n\n"; 
+   }
+
+   $msg.="This data will be available for transfer for 1 week.\n\n";
+
+   $msg.="__________________________________\n\n";
+   $msg.="Instructions for download if the above listed files are not\n".
+         "displayed as a link:\n\n".
+         "   1.  ftp ftp.eol.ucar.edu\n".
+         "   2.  login as anonymous (password=email address)\n".
+         "   3.  cd pub/wwwmss\n".
+         "   4.  bin\n";
+   $i = 5;
+   foreach $key (keys %status) {
+      if ( $status{$key} =~ /\ssuccess/ ) { # only print the successful ones
+	 @tmp = split(/\//, $key);
+         $msg.="   $i.  get $tmp[$#tmp]\n";
+         $i++;
+         if ( $key =~ /gz/ ) { $compression = 1; }
+      }
+   } # end foreach
+
+   # the data archive link
+   $msg .= "Please refer to the EOL Research Data and Deployment Archive for project documentation: http://www.eol.ucar.edu/data/data#project_view_data";
+   #$msg.="Please refer to the <a href='http://www.eol.ucar.edu/data/data#project_view_data'>EOL Research Data and Deployment Archive</a> for project documentation";
+   #$msg.="for project documentation"; 
+
+   if ( $compression ) { 
+
+      $msg.="\nYour files were Gzipped.  Once transferred to your site, \n".
+      "these files can be uncompressed using the utility 'gunzip', \n".
+      "the Windows utility 'WinZip' or Aladdin Systems' 'Expander'.\n\n".
+      "gzip/gunzip (freeware) is available at the URL:\n\n". 
+      "   http://www.gzip.org/\n\n". 
+      "WinZip (shareware) can be downloaded from the URL:\n\n". 
+      "   http://www.winzip.com/\n\n". 
+      "Expander (freeware version) is available at the URL:\n\n".
+      "   http://www.stuffit.com/win/expander/\n\n"; 
+
+   } # endif
+
+# acknowledge our sponsors!
+$msg.="\nThese data were provided by NCAR/EOL under sponsorship of the National Science Foundation\n";
+
+   return $msg;
+
+}
+#***************************************
+sub datareq_email {
+
+   local($request, $status) = @_;
+   local($key, $msg);
+   local($ftp_path) = $constants{'ftp_path'};
+
+   # the email that is delivered to the data@atd.ucar.edu
+   # for a non ftp transfer
+   $msg = "The following mass store data request has been processed:\n\n";
+   $msg.= "Name:\t\t$request->{'name'}\n\n".
+          "Address:\t$request->{'address'}\n".
+          "\t\t$request->{'city'}, $request->{'state'}  $request->{'zip'}\n\n".
+	  "Phone:\t\t$request->{'phone'}\n\n".
+	  "Email:\t\t$request->{'email'}\n\n".
+	  "Media:\t\t$request->{'media'}\n\n";
+   foreach $key (keys %$status) {
+      $msg.="File:\t\t$key\n".
+	    "Status:\t\t$status->{$key}\n\n";
+   } # end foreach
+
+   return $msg;
+
+}
+#***************************************
+sub error_email {
+
+    local($fname, $error_fname) = @_;
+    local($msg);
+
+    $msg = "Warning...an error was detected in $fname.\n".
+	   "Please investigate the problem.  The request\n".
+	   "has been temporarily moved to:\n".
+	   "  $error_fname\n";
+
+    return $msg;
+
+}
+#***************************************
+sub is_running {
+
+  # figure out if the program is already running
+  # figure out if the program is already running
+  my $program = shift;
+  my $uid = $<;         # user id
+  my $pid = $$;         # process id
+
+  my $command = "/usr/bin/pgrep -f -l -u $uid $program";
+  my @procs = `$command`;       # a list of currently running processes
+  my $i;
+
+  my @procs_only = ();
+  for ($i=0; $i <= $#procs; $i++) {
+    # get rid of the new line
+    $procs[$i] =~ s/\n//g;
+    push (@procs_only, $procs[$i]) if ( $procs[$i] =~ /\/usr\/bin\/perl/ );
+  } # end for
+
+  # there is a process already running
+  # so return true
+  return 1 if ( $#procs_only > 0 );
+
+  # can't find another process, return false
+  return 0;
+
+
+
+}
+
+1;

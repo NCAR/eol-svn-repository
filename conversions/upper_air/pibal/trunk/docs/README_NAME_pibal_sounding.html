@@ -1,0 +1,278 @@
+<html>
+<head>
+<title>PIBAL Wind Only Sounding Data from PACS-SONET Data Set</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">PIBAL Wind Only Sounding Data from PACS-SONET Data Set</h1>
+
+<h2>1.0 General Description</h2>
+<p>This is one of the upper air data sets developed for the North American Monsoon Experiment (NAME).  This data set includes the high resolution vertical (30 second to 480 seconds after release and 60 second from 480 seconds after release to the end of the sounding) pilot ballon (PIBAL) data from the Pan American Climate Studies-Sounding Network (PACS-SONET).  For information on PACS-SONET visit the <a
+href="http://www.nssl.noaa.gov/projects/pacs/">PACS-SONET home page</a>.  For NAME this network included data from 21 locations throughout Mexico
+and the Southwestern United States.  This data set includes only wind and height information.</p>
+<p>This dataset was provided and quality controlled by the National Oceanic and Atmospheric Administration National Severe Storms Laboratory (NOAA/NSSL).  NCAR/EOL has not done any additional quality checking of these data.</p>
+
+<h2>2.0 Detailed Data Description</h2>
+<h3>2.1 Detailed Format Description</h3>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite Format (ESCF).  ESCF is a version of the NCAR CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, meteorological and wind data processors, and the operator's name and comments.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+<p>The seven non-standard header lines may contain any label and contents.  The labels are padded to 35 characters to match the standard header lines. Records for this dataset include the following three non-standard header lines.</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=1 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory  (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL Sounding Composite Format codes:</p>
+
+<table border=1 align="center">
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of NAME PIBAL data in the EOL Sounding Composite format.   The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  See section 2.1 for an exact format specification
+
+<pre>
+Data Type:                         Pibal
+Project ID:                        NAME
+Release Site Type/Site ID:         CA Catavina BC
+Release Location (lon,lat,alt):    114 47.40'W, 29 50.40'N, -114.790, 29.840, 554.0
+UTC Release Time (y,m,d,h,m,s):    2004, 07, 16, 14:32:00
+Assumed Ascension Rate:            3.61 m/s
+Balloon Data:                      Size: 30 grams
+/
+/
+/
+/
+Nominal Release Time (y,m,d,h,m,s): 2004, 07, 16, 14:32:00
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat    Ele   Azi   Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg    deg   deg    m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+  30.0 9999.0 999.0 999.0 999.0    1.5    0.9   1.8 240.0 999.0 9999.000 999.000 999.0 999.0   662.3  9.0  9.0  9.0 99.0 99.0  9.0
+  60.0 9999.0 999.0 999.0 999.0    1.6    1.3   2.1 230.7   3.6 9999.000 999.000 999.0 999.0   770.6  9.0  9.0  9.0 99.0 99.0 99.0
+  90.0 9999.0 999.0 999.0 999.0    2.5    1.1   2.8 246.1   3.6 9999.000 999.000 999.0 999.0   878.9  9.0  9.0  9.0 99.0 99.0 99.0
+ 120.0 9999.0 999.0 999.0 999.0    4.7   -0.9   4.7 280.7   3.6 9999.000 999.000 999.0 999.0   987.2  9.0  9.0  9.0 99.0 99.0 99.0
+ 150.0 9999.0 999.0 999.0 999.0    6.2   -3.3   7.0 298.0   3.6 9999.000 999.000 999.0 999.0  1095.5  9.0  9.0  9.0 99.0 99.0 99.0
+</pre>
+
+<h3>2.2 Station List</h3>
+
+<table border=1 align="center">
+<tr><th>ID</th><th>SITE</th><th>STATE</th><th>COUNTRY</th><th>LONG</th><th>LAT</th><th>ELEV (m)</th></tr>
+<tr><td>BT</td><td>Bahia Tortugas BC</td><td>&nbsp;</td><td>MX</td><td>-114.90</td><td>27.70</td><td>18.0</td></tr>
+<tr><td>CA</td><td>Catavina BC</td><td>&nbsp;</td><td>MX</td><td>-114.79</td><td>29.84</td><td>554.0</td></tr>
+<tr><td>CH</td><td>Choix SIN</td><td>&nbsp;</td><td>MX</td><td>-108.31</td><td>26.72</td><td>250.0</td></tr>
+<tr><td>CN</td><td>Ciudad Constitucion BCS</td><td>&nbsp;</td><td>MX</td><td>-111.68</td><td>25.09</td><td>50.0</td></tr>
+<tr><td>DU</td><td>Durango DGO</td><td>&nbsp;</td><td>MX</td><td>-104.60</td><td>24.00</td><td>1885.0</td></tr>
+<tr><td>GB</td><td>Gila Bend AZ</td><td>AZ</td><td>US</td><td>-112.70</td><td>32.96</td><td>262.0</td></tr>
+<tr><td>GY</td><td>Empalme SON</td><td>&nbsp;</td><td>MX</td><td>-100.76</td><td>27.95</td><td>12.0</td></tr>
+<tr><td>HB</td><td>Huatabampo SON</td><td>&nbsp;</td><td>MX</td><td>-109.61</td><td>26.84</td><td>17.0</td></tr>
+<tr><td>IM</td><td>Isla Maria NAY</td><td>&nbsp;</td><td>MX</td><td>-106.54</td><td>21.76</td><td>2.0</td></tr>
+<tr><td>JI</td><td>Jimenex CHIH</td><td>&nbsp;</td><td>MX</td><td>-104.86</td><td>27.13</td><td>1380.0</td></tr>
+<tr><td>LE</td><td>Lerdo (Torreon) DGO</td><td>&nbsp;</td><td>MX</td><td>-103.46</td><td>25.45</td><td>1130.0</td></tr>
+<tr><td>LH</td><td>Lake Havasu City AZ</td><td>AZ</td><td>US</td><td>-114.36</td><td>34.57</td><td>197.0</td></tr>
+<tr><td>LP</td><td>La Paz BCS</td><td>&nbsp;</td><td>MX</td><td>-110.24</td><td>24.15</td><td>15.0</td></tr>
+<tr><td>LR</td><td>Loreto BCS</td><td>&nbsp;</td><td>MX</td><td>-111.33</td><td>26.10</td><td>7.0</td></tr>
+<tr><td>MA</td><td>Matehuala SLP</td><td>&nbsp;</td><td>MX</td><td>-100.82</td><td>23.65</td><td>1544.0</td></tr>
+<tr><td>P55</td><td>Puerto Penasco SON</td><td>&nbsp;</td><td>MX</td><td>-113.55</td><td>31.31</td><td>3.0</td></tr>
+<tr><td>P56</td><td>Topolobampo SIN</td><td>&nbsp;</td><td>MX</td><td>-108.98</td><td>25.60</td><td>12.0</td></tr>
+<tr><td>SC</td><td>Silver City NM</td><td>NM</td><td>US</td><td>-108.29</td><td>32.78</td><td>1856.0</td></tr>
+<tr><td>SJ</td><td>San Jose del Cabo BCS</td><td>&nbsp;</td><td>MX</td><td>-109.62</td><td>23.06</td><td>95.0</td></tr>
+<tr><Td>SR</td><td>Santa Rosalia BCS</td><td>&nbsp;</td><td>MX</td><td>-112.29</td><td>27.50</td><td>33.0</td></tr>
+<tr><td>TE</td><td>Tesopaco SON</td><td>&nbsp;</td><td>MX</td><td>-109.35</td><td>27.81</td><td>440.0</td></tr>
+</table>
+
+2.3 Data Remarks
+
+
+The following is a portion of the document "The Design and Evolution
+of the PACS-SONET Observing System in Latin America" by Douglas et al.
+
+        2.2.1 Pilot balloon observations
+
+        The use of pilot balloons for determining winds above the surface has 
+        been carried out for more than 100 years, and is still widespread in 
+        some regions  today.  In principle it is straightforward, though many 
+        details must be considered to make the highest quality observations. 
+        The main advantage of pilot balloon observations is that they are 
+        inexpensive. Typically, a 30 gm pilot balloon launch, excluding labor 
+        costs, is only 5-10% the cost of a radiosonde launch.  In addition, 
+        they require a relatively simple instrument 
+        (a meteorological theodolite), require no electric power, and the 
+        observer does not need to be computer-literate.
+
+	The main uncertainty in the winds calculated from pilot balloon 
+        observations does not result from errors in measuring the angles - 
+        such errors can usually be detected and corrected by data editing 
+        procedures.  Rather it is a consequence of turbulence in the 
+        atmosphere which causes the balloon's ascent rate to deviate from the 
+        assumed value.  On a hot, windy afternoon the vertical motions 
+        associated with turbulence one km above the surface can be 1-2m/s or 
+        even more, introducing departures of 25-50% from the assumed ascent 
+        rate.  This source of error was recognized, and the PACS-SONET 
+        observations were scheduled for early morning or late afternoon, 
+        when boundary layer turbulence is generally weak.  For monthly mean 
+        values, this source of error should be fairly small, since the 
+        turbulence fluctuations are random, and the average ascent rate should
+        be close to the assumed rate for an average composed of approximately 
+        30 observations.
+        
+	2.2.2 The original network configuration
+
+	The original PACS-SONET configuration, consisted of 12 pilot balloon 
+        sites. The stations were established during April and May of 1997 in 
+        Mexico, Nicaragua, Costa Rica, Panama, Colombia, Ecuador and Peru, 
+        together with one radiosonde station on Cocos Island in the eastern 
+        Pacific Ocean.  The intended duration of the observations was 6 months,
+        ideally extending through October, and close to the end of the rainy 
+        season in much of Central America.  The pilot balloon soundings were 
+        made twice-daily at all sites. This permits an assessment of the 
+        uncertainties inherent in climatological upper-air wind analyses that 
+        are generally based upon only once-daily soundings.
+
+        2.2.3 CHANGES TO PACS-SONET IN RESPONSE TO THE 1997-8 EL NIÑO
+
+        Shortly after the first stations were established in April 1997, 
+        it became apparent that a significant warm event in the eastern and 
+        central Pacific was developing.  By mid-summer, the extreme magnitude 
+        of the event had become apparent.  This led to two conclusions: 
+        1) the observations being made during the summer of 1997 would be very
+        anomalous over Central America, thus putting into question the 
+        extrapolation of potential scientific findings to other years, and 2) 
+        there existed the possibility of obtaining an unprecedented data set 
+        to describe the evolution of the windfield associated with the 
+        developing El Niño.  Therefore, the observational plan was modified 
+        to:  1) extend the observational period at many stations through the 
+        end of October 1998, 2) establish additional pilot balloon stations in
+        Ecuador and Peru to better sample conditions in the region of 
+        anticipated heavy rainfall, and 3) include the installation of several
+        hundred inexpensive raingauges in coastal Ecuador and Peru. The last 
+        activity was necessary to assure  adequate measurement of daily 
+        rainfall for comparison with pilot balloon and satellite observations.
+        The financial, logistical, and technical difficulties involved in 
+        establishing and expanding the network (ultimately to 17 pilot balloon
+        sites) is described in this section.  
+
+
+	2.2.4 Extension of the observing period
+
+        Because the warm season rainfall over Central America was observed to 
+        be well below normal, and it was apparent that El Niño was modifying 
+        the normal conditions, it was considered desirable to make 
+        observations during a more normal warm season.  This would not only 
+        more closely satisfy the original objectives of the project, but also 
+        provide an excellent comparison with the 1997 El Niño summer.  Thus, 
+        plans were made to extend the observation program until the end of 
+        October 1998, which is close to the end of the rainy season over 
+        Central America.  Thus, two complete rainy seasons will have been 
+        observed by PACS-SONET. The principal difficulty in extending the 
+        observations for another year was related to the cost of the 
+        additional observations.  To manage this, we had to reduce the
+        observations from twice- to once-daily. However, even this created 
+        considerable budgetary difficulties, due to the short notice that was 
+        given to the funding agency.
+        
+	After about 45 mostly successful launches, we experienced difficulties
+        with the operation of the radiosonde system on Cocos Island.  Based on
+        these difficulties, it was decided to eliminate the radiosonde 
+        observations there; a step that saved some $20-25,000.  The 
+        elimination was deemed justifiable, since the loss of winds from the 
+        majority of the radiosonde sites in the Caribbean, Central America and
+        northern South America (due to the shutdown of the Omega system on 
+        Sept 30, 1997) had already left huge gaps in the radiosonde network.  
+        Thus, the Cocos observations would not have been especially useful to
+	estimate typical NCEP analysis uncertainty over this data void, since 
+        any difference between the analyses and the Cocos observations could 
+        be ascribed to the lack of neighboring stations to help initialize 
+        the analyses.  Also, given the anomalous year, the Cocos soundings 
+        would not describe a "normal" boundary layer downwind of the zone of 
+        cold ocean temperatures along the Equator (the oceanic "cold tongue"),
+        which was an additional PACS-SONET objective.
+
+
+       2.2.5 Increasing the number of pilot balloon stations
+
+       By October 1997 it was apparent that the El Niño event was comparable 
+       to one during 1982-3, and that heavy rains might again affect the 
+       northern region of Peru.  During the 1982-3 event there were no regular
+       radiosonde or other wind sounding systems anywhere in the coastal 
+       region of Peru (north of Lima), or in any part of Ecuador.  This lack of
+       atmospheric soundings has limited the meteorological interpretation and
+       explanation of the distribution of heavy rainfall associated with the 
+       1982-3 event.  Since such strong El Niño events are quite rare, we 
+       deemed it wise not to pass up this opportunity for sampling a rare 
+       phenomenon, especially since a basic sounding network was already in 
+       place in Ecuador and Peru.
+       
+       During the 1982-3 El Niño there was a large north-south gradient in the
+       rainfall along the Peruvian coast, with Piura, Peru receiving more than
+       2000 mm over the 6 month period of rains, while Trujillo, only 300 km 
+       to the south, received no rainfall.  To measure the north-south 
+       variations in the windfield we decided to establish additional pilot 
+       balloon stations at Tumbes, Trujillo, Chiclayo and Ancon2.  
+       (Ancon2 was to partially replace the lost winds from the Lima 
+       Omega-based radiosonde station.)  A site was also established at 
+       Iquitos, in the Amazon Basin, which when coupled with the wind 
+       observations along the coast, and at San Cristobal in the Galapagos 
+       Islands, would better describe east-west windfield variations.  In 
+       Ecuador, additional sites were established on the coast at Ancon 
+       (near Salinas), and at Portoviejo. 
+       
+<h2>3.0 References</h2>
+
+       Douglas, M., Fernandez, W., and Pena, M., 1996:"The Design And
+       Evolution of the PACS-SONET Observing System in Latin America",
+       PACS-SONET Preprint
+
+</body>
+</html>

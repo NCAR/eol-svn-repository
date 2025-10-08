@@ -1,0 +1,1 @@
+/bin/cc  -pipe -pedantic -O2 -g -DNDEBUG      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined CMakeFiles/grib_optimize_scaling.dir/grib_optimize_scaling.c.o  -o grib_optimize_scaling -Wl,-rpath,/opt/local/bufr/build/lib ../lib/libeccodes.so /usr/lib64/libm.so /usr/lib64/libjasper.so /usr/lib64/libjpeg.so -lpthread 

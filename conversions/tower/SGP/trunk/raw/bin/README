@@ -1,0 +1,68 @@
+---------------------------------------
+copy_raw.pl
+  Script to copy the raw netcdf files
+  and uncompress them. This file needs
+  to be edited to reflect the correct
+  source and destination directories
+---------------------------------------
+count_data_points.pl
+  Script to count the number of data points
+  in a raw data file (.dat)
+  options:
+     -i: name of data file (.dat)
+  output:
+     # of data points
+---------------------------------------
+find_var.pl
+  Script to make sure that a given variable
+  exists for each netcdf file in a given
+  directory...this is to make sure that
+  all the variables exist in all the netcdf
+  files before processing the CEOP data
+  options:
+    -d: base directory (where the cdf files reside)
+    -n: name of parameter
+    -o: name of output file
+---------------------------------------
+list_DQR_vars.pl
+  List and sort the variable names from a DQR file
+  (ie: NSA_GNDRAD_flagging.txt)
+  options:
+    -i: name of input (DQR) file
+---------------------------------------
+list_all_vars.pl
+  Script to list all the variables (along with the
+  description and units) from a netcdf file
+  options:
+  -i: name of netcdf file
+  -o: name of output file
+---------------------------------------
+list_times.pl
+  Script to list the times from
+  a .dat file (used to detect
+  errors such as duplicate records)
+  options:
+  -i: input file (.dat) 
+  -o: output file
+  -o: [true or false] limit output (print only begin & end time)
+---------------------------------------
+list_variables.pl
+  Script to read in the list of variables
+  from an input file (-i option) and creates 
+  a list of variable description and units
+  Input parameters:
+   -i: input file 
+   -o: name of the output file that contains
+       the variable descriptions and units         
+   -t: title (ie: gndrad, skyrad, mettwr...etc)
+list_variables.2005.inp
+  Sample input file for list_variables.pl
+---------------------------------------
+translate_cdf.pl
+  Script to translate the raw cdf files to the
+  format that the conversion software uses.
+  This script needs to be run on a solaris machine
+  The file needs to be edited to reflect the list
+  of variables that should be extracted from the
+  netcdf file
+---------------------------------------

@@ -1,0 +1,12 @@
+
+my $str = "a";
+my $str2 = "1";
+
+if( $str =~ /\D/ )
+{ print( "yes non-digits\n" ); }
+else
+{ print( "no non-digits\n" ); }
+if( $str2 =~ /\D/ )
+{ print( "yes non-digits\n" ); }
+else
+{ print( "no non-digits\n" ); }

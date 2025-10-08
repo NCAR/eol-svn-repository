@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>NATTAP 2005</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="nattap.css">
+</head>
+
+<body>
+<h1>NATTAP 2005</h1>
+
+<p>NATTAP 2005 is the current name for the database and tools that will be used for managing our data through its life-cycle.  It currently contains the DPG project pages, the Data Tracking System (DTS), the Master List (ML), and the Inventory Processing Tool (IVEN).  Each tool (except for the DPG project pages) has its own database.  The purpose of NATTAP is to combine these tools into a single entity (this can include multiple views) to make our life easier by maintaining the data once and in a single place.
+<p>The 2005 is used to denote the year of the proposed upgrade to prevent it from being confused with the earlier (and presumably later) definitions for NATTAP in general.
+
+<p>This will probably be a multiple step process.  It should also be noted that this is not a completely decoupled process.  The database will drive the interfaces and the interfaces will drive the database as well.  The steps are provided to give a starting point and a process that may be able to be followed to complete the upgrade in a timely and satisfactory manner.
+<ol>
+	<li><h3>Defining a Unified Database</h3>
+		<ol><li>Defining all of the tables that should be included in NATTAP.
+			<li>Upgrading the current tools to use this new database.
+			</ol>
+	<li><h3>New Interface(s) to the Database</h3>
+		<ol><li>Upgrading/Redesigning the old tools to better handle the new database and make things cleaner and easier to use.
+			</ol>
+</ol>
+
+<h2>How These Documents (are intended to) Work</h2>
+<p>These pages are intended to be used as a reference and discussion center so NATTAP can be designed best to suit our needs currently and flexible enough to make additional changes in the future easier.
+<p>Each topic should have a discussion area for it.  In this area, participants should use the stylesheet with their name (i.e. class="joel") in the HTML tag.  This will define the color for the user and will provide a means to see who wrote the section.  Here are the currently defined participants:<ul>
+<li class="don">don</li>
+<li class="janine">janine</li>
+<li class="joel">joel</li>
+<li class="linda">linda</li>
+</ul>
+
+<h2>General Data Management Discussion</h2>
+<p>This area is for general discussion of topics that are general to NATTAP or do not fit with an individual topic.
+<p class="joel">It would be a good idea to convert all of our tools into a single language whether it is Perl CGI or Java Server Pages (JSP).  Currently, the DTS is in JSP, the ML is in static HTML and CGI, and IVEN is in CGI.  I would think it would be better to go to CGI for two reasons.<ol>
+	<li>Our current group is very familiar with Perl and would be able to make changes as necessary without solely relying on the creator of the tool to perform maintainence.  Going to JSP would require more learning on everyones part.  I do not know if JSP would be faster or not than CGI which could cause a change of mind in that direction.
+	<li>JSP requires Tomcat to be installed and working on the server.  It is currently setup on hurricane and was on gale before it was taken down.  I do not know if it is on any others at this time.  The biggest issues in my experience with Tomcat is that <ol>
+		<li>Every change to the program requires a restart to the server.  This is extremely annoying and really slows down debugging.  (This could have just been something wacky with my server, but it was how the instructions told me to set it up.)
+		<li>Tomcat requires the application to be under a <i>webapps</i> directory under the Tomcat installation.  This is a pain (and can be seen by having to type in the dpg login everytime the DTS is started since it has a different .htaccess file because of its different location).
+		</ol>
+	</ol>
+
+<h2>Discussion and Description Pages</h2>
+<p>These pages will contain the discussions about a specific aspect of NATTAP.  This will prevent the pages from becoming too long, especially once the discusstion begins to take place.
+
+<ul>
+	<li><a href="database.html">The NATTAP Database</a></li>
+	<li><a href="data_tracking_system.html">The Data Tracking System</a></li>
+	<li><a href="master_list.html">The Master List</a></li>
+	<li><a href="processing_inventory.html">The Processing Inventory</a></li>
+	<li><a href="dpg_project_page.html">The DPG Project Page</a></li>
+</ul>
+
+</body>
+</html>

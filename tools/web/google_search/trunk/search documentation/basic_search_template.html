@@ -1,0 +1,64 @@
+<html>
+  <head>
+  <!-- Include dhtml resources -->
+  <link rel="stylesheet" href="css/dhtmlwindow.css" type="text/css" />
+  <script src="js/dhtmlwindow.js"></script>
+
+  <!-- Include Google API -->
+<script src="http://www.google.com/jsapi?key=ABQIAAAA3tbucVxlGNFBYLARMRuqahTL2tmjYYlVN2mt_K7dcvt5qRSuIhQA2YAv3guoDXdWwxvpZ5k2fFwMhQ"></script>
+<!--Note that this is the Arcss Key -->
+
+
+<!--fixes IE/Safari bug when opening dhtml window-->
+<h1 id="popupwin"></h1> 
+
+<!-- Begin using Ajax Api to generate search tools -->
+<script type="text/javascript">
+google.load('search', '1');
+
+function OnLoad() {
+	//Create a new Search Control (This is the Object that holds the text field and submit button)
+	var searchControl = new google.search.SearchControl();
+	
+	//Create an object to hold search results
+	//WebSearch() is the standard search for pages on the web.
+	var webSearcher = new google.search.WebSearch();
+
+	//Now that you have a basic search engine you can limit the results to match your Google Custom Search Engine.
+	webSearcher.setSiteRestriction("005203271943822719354:vjvukaqsjk4"); //This is the Arcss Custom Search
+
+	//The searcher must now be added to the searchControl, but some options must be set first.
+	var options = new google.search.SearcherOptions();
+	
+	//setRoot() sets the div tag where the search results will be drawn.
+	options.setRoot(document.getElementById("content"));
+
+	//Now the searcher can be added to the search control.
+	searchControl.addSearcher(webSearcher, options);
+
+	//Tell the searchControl to draw itself
+	searchControl.draw(document.getElementById("other_content"));
+
+	//Execute an initial search (optional)
+	searchControl.execute("search terms");
+}
+	google.setOnLoadCallback(OnLoad);
+</script>
+
+</head>
+
+<!-- body of html -->
+<body>
+
+<table width="100%">
+	<tr>
+		<td valign="top" width="50%">
+			<div id="content">Loading...</div>
+		</td>
+		<td valign="top" width="50%">
+			<div id="other_content">Loading...</div>
+		</td>
+	</tr>
+</table>
+
+</body>

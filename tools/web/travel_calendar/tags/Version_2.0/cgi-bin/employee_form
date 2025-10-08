@@ -1,0 +1,165 @@
+#! /usr/bin/perl -T -w
+
+##Module---------------------------------------------------------------------
+# <p>The <code>EmployeeForm</code> module is a <code>CGI</code> module that
+# generates the form for adding/editing employee information.</p>
+# <p>The form adds all the known travel ids into hidden fields called 
+# 'used_id.'  These are used by the javascript function to determine if the
+# travel id is unique to the list.</p>
+# <p>The form also knows a list of colors and removes all the colors that
+# are in use.  This limits the number of active employees that can be in
+# the list at any given time.</p>
+#
+# <p>The following is a list of CGI parameters that are recognized by the 
+# module and their values.<ul>
+#   <li><code>id</code>: (String)  This is a travel id for an employee.  It is
+# used to display their information in the form so it can be editted.</li>
+# </ul></p>
+#
+# @author Joel Clawson
+##Module---------------------------------------------------------------------
+package EmployeeForm;
+use strict;
+use lib ".";
+use EmployeeList;
+use CGI qw(:standard :html3);
+our @ISA = ("CGI");
+
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+&main();
+
+##--------------------------------------------------------------------------
+# @signature void main()
+# <p>Create the employee form and print it to the web page.</p>
+##--------------------------------------------------------------------------
+sub main() {
+  my $self = EmployeeForm->new();
+
+  print($self->header());
+  print("<html>\n");
+
+  print($self->generateForm());
+
+  print("</html>\n");
+}
+
+##--------------------------------------------------------------------------
+# @signature String generateForm()
+# <p>Create the HTML for the form.</p>
+# @output The HTML containing the form.
+##--------------------------------------------------------------------------
+sub generateForm {
+  my $self = shift;
+  my $output = "";
+
+  # Load the javascript files
+  $output .= "<head>\n<title>Employee Information</title>\n";
+  $output .= "<script type=\"text/javascript\" src=\"/travel/javascript/travel.js\"></script>\n";
+  $output .= "<script type=\"text/javascript\" src=\"/travel/javascript/overlib.js\"></script>\n";
+  $output .= "</head>\n";
+
+  $output .= "<body>\n";
+  $output .= "<div id=\"overDiv\" style=\"position:absolute; visibility:hidden; z-index:1000;\"></div>\n";
+  $output .= "<form method=POST ";
+  $output .= "action=\"broker\" ";
+  $output .= " enctype=\"application/x-www-form-urlencoded\"";
+  $output .= " onsubmit=\"javascript: return processData(this);\"";
+  $output .= ">\n";
+
+  my $emps = EmployeeList->new();
+  $self->param("color", "");
+
+  # Load the form if the 'id' value was passed into forcing an employee edit
+  if (defined($self->param("id"))) {
+     my $id = $self->param("id");
+     $self->param("fname", $emps->getFirstName($id));
+     $self->param("lname", $emps->getLastName($id));
+     $output .= $self->hidden("orig_id", $id)."\n";
+
+     # If it came from the unarchive, remove the part of the id that is 
+     # for archive information.
+     if ($id =~ /^arch\d{3}_(.+)$/) { 
+	 $self->param("id", $1);
+     } else {
+	 $self->param("color", $emps->getColor($id));
+     }
+  }
+
+  # Fill the hidden 'used_id' field with the list of used travel ids
+  foreach my $uid ($emps->employee_list()) {
+      if (!(defined($self->param("id")) && $self->param("id") eq $uid)) {
+         $output .= $self->hidden("used_id", $uid)."\n";
+      }
+  }
+
+  # Generate the form
+  $output .= "<h1>Employee Information</h1>\n";
+
+  $output .= "<table>\n";
+  $output .= "<tr><th>First Name:</th>\n   <td>";
+  $output .= $self->textfield("fname", "", 0, 50)."</td></tr>\n";
+  $output .= "<tr><th>Last Name:</th>\n   <td>";
+  $output .= $self->textfield("lname", "", 0, 50)."</td></tr>\n";
+  $output .= "<tr><th onmouseover=\"javascript:return overlib('Unique Id for<br>the Calendar');\" onmouseout=\"javascript:return nd();\">Travel ID:</th>\n   <td>";
+  $output .= $self->textfield("id", "", 8, 8)."</td></tr>\n";
+  $output .= "<tr><th>Color:</th>\n   <td>";
+  $output .= "<select name=\"color\">";
+  $output .= $self->getAvailableColors($self->param("color"));
+  $output .= "</select></td></tr>\n";
+  $output .= "</table>\n";
+
+  $output .= $self->submit("employee", "Submit")."\n";
+  $output .= "<input type=\"button\" name=\"employee\" value=\"Cancel\" ";
+  $output .= "onClick=\"javascript:window.close();\">\n";
+
+  $output .= "</form>\n</body>\n";
+
+  return $output;
+}
+
+##--------------------------------------------------------------------------
+# @signature String getAvailableColors(String color)
+# <p>Create the HTML for the drop down box of available colors.</p>
+# @input $color The color that is used by the edited employee. Should be
+# an empty string if it is not an employee edit.
+# @output $cols The HTML for the color drop down box.
+##--------------------------------------------------------------------------
+sub getAvailableColors {
+  my $self = shift;
+  my $cols = "";
+
+  my @colors = ("blue", "brown", "cadetblue", "crimson", "darkblue", 
+                "darkcyan", "darkgreen", "darkmagenta", "darkred", 
+                "darkviolet", "deeppink", "dimgray", "dodgerblue", 
+                "green", "lawngreen", "lightblue", 
+                "magenta", "maroon", "mediumpurple", "navy", "orange", 
+                "orangered", "purple", "red", "royalblue", "seagreen", 
+                "teal", "violet");
+
+  # Blank out the used colors
+  my $data = EmployeeList->new();
+  foreach my $id ($data->employee_list()) {
+     my $used = $data->getColor($id);
+     foreach my $cols (@colors) {
+       if ($used eq $cols) { $cols = ""; }
+     }
+  }
+
+  # Add the current color to the list and remove the blanked colors
+  push(@colors, $_[0]);
+  @colors = sort(@colors);
+  while ($colors[0] eq "") { shift @colors; }
+
+  # Generate the HTML for the drop down box and select the color in use
+  foreach my $color (sort @colors) {
+    if ($color eq $_[0]) {
+       $cols .= "<option value=".$color." selected>".$color."</option>\n";
+    } else {
+       $cols .= "<option value=\"".$color."\">".$color."</option>\n";
+    }
+  }
+
+  return $cols;
+}

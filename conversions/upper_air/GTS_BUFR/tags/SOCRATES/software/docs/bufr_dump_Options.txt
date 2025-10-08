@@ -1,0 +1,42 @@
+> bufr_dump
+
+NAME    bufr_dump
+
+DESCRIPTION
+        Dump the content of a BUFR file in different formats.
+
+USAGE
+        bufr_dump [options] file file ...
+
+OPTIONS
+        -j s/f/a
+                JSON mode (JavaScript Object Notation).
+                Options: s->structure, f->flat (only data), a->all attributes
+                Default mode is structure.
+        -O      Octet mode. WMO documentation style dump.
+        -d      Print all data values.
+        -u      Print only some values.
+        -t      Print type information.
+        -f      Force. Force the execution not to fail on error.
+        -H      Print octet content in hexadecimal format.
+        -a      Dump aliases.
+        -w key[:{s/d/i}]{=/!=}value,key[:{s/d/i}]{=/!=}value,...
+                Where clause.
+                Messages are processed only if they match all the key/value constraints.
+                A valid constraint is of type key=value or key!=value.
+                For each key a string (key:s), a double (key:d) or an integer (key:i)
+                type can be specified. Default type is string.
+        -s key[:{s/d/i}]=value,key[:{s/d/i}]=value,...
+                Key/values to set.
+                For each key a string (key:s), a double (key:d) or an integer (key:i)
+                type can be defined. By default the native type is set.
+        -7      Does not fail when the message has wrong length
+        -V      Version.
+--------------------------------------------------
+
+bufr_dump ../../raw_data/201803071000.paraparaumu_nz_sounding.bufr > output.txt
+where output.txt contains the ASCII dump of the input BUFR file.
+
+bufr_dump -V
+ecCodes Version 0.16.0
+

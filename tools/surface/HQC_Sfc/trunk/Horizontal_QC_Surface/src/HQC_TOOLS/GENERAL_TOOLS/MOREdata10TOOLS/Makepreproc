@@ -1,0 +1,14 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for preproc_hrly s/w.
+#
+
+CC=acc
+CFLAGS = 
+
+prochrly: preproc_hrly.o
+	$(LINK.c) -o preproc_hrly preproc_hrly.o 
+	chmod 0755 preproc_hrly
+clean:
+	rm *.o

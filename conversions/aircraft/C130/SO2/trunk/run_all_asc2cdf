@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# LRT #
+for filename in `ls -1 ./RF*VOCALS*txt`
+do
+   sed 's/NaN/-32767/g' $filename > $filename.2
+   ncfile=`echo $filename | sed 's/txt/nc/'`
+   asc2cdf -a $filename.2 $ncfile
+done
+
+reorder

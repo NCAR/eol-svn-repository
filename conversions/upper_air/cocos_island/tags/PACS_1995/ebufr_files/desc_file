@@ -1,0 +1,609 @@
+                                                        0 00 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 00 001 CCITTIA5                    +000 +0000000000 +024      Table A: entry
+                                                        0 00 002 CCITTIA5                    +000 +0000000000 +256      Table A: data category description, line 1
+                                                        0 00 003 CCITTIA5                    +000 +0000000000 +256      Table A: data category description, line 2
+                                                        0 00 005 CCITTIA5                    +000 +0000000000 +024      BUFR Edition number
+                                                        0 00 010 CCITTIA5                    +000 +0000000000 +008      F descriptor to be added or defined
+                                                        0 00 011 CCITTIA5                    +000 +0000000000 +016      X descriptor to be added or defined
+                                                        0 00 012 CCITTIA5                    +000 +0000000000 +024      Y descriptor to be added or defined
+                                                        0 00 013 CCITTIA5                    +000 +0000000000 +256      Element name, line 1
+                                                        0 00 014 CCITTIA5                    +000 +0000000000 +256      Element name, line 2
+                                                        0 00 015 CCITTIA5                    +000 +0000000000 +192      Units name
+                                                        0 00 016 CCITTIA5                    +000 +0000000000 +008      Units scale sign
+                                                        0 00 017 CCITTIA5                    +000 +0000000000 +024      Units scale
+                                                        0 00 018 CCITTIA5                    +000 +0000000000 +008      Units reference sign
+                                                        0 00 019 CCITTIA5                    +000 +0000000000 +080      Units reference value
+                                                        0 00 020 CCITTIA5                    +000 +0000000000 +024      Element data width
+                                                        0 00 030 CCITTIA5                    +000 +0000000000 +040      Descriptor defining sequence
+                                                        0 00 250 CCITTIA5                    +000 +0000000000 +256      Code/Flag Description 5
+                                                        0 00 251 CCITTIA5                    +000 +0000000000 +256      Code/Flag Description 4
+                                                        0 00 252 CCITTIA5                    +000 +0000000000 +256      Code/Flag Description 3
+                                                        0 00 253 CCITTIA5                    +000 +0000000000 +256      Code/Flag Description 2
+                                                        0 00 254 CCITTIA5                    +000 +0000000000 +256      Code/Flag Description 1
+                                                        0 00 255 CCITTIA5                    +000 +0000000000 +024      Code Figure/Flag
+                                                        0 01 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 01 001 Numeric                     +000 +0000000000 +007      WMO block number
+                                                        0 01 002 Numeric                     +000 +0000000000 +010      WMO station number
+                                                        0 01 003 Numeric                     +000 +0000000000 +003      WMO Region number
+                                                        0 01 004 Numeric                     +000 +0000000000 +003      WMO Region sub-area
+                                                        0 01 005 Numeric                     +000 +0000000000 +017      Buoy/platform identifier
+                                                        0 01 006 CCITTIA5                    +000 +0000000000 +064      Aircraft identifier
+                                                        0 01 007 Code table                  +000 +0000000000 +010      Satellite Identifier
+                                                        0 01 008 CCITTIA5                    +000 +0000000000 +064      Aircraft Registration Number
+                                                        0 01 011 CCITTIA5                    +000 +0000000000 +072      Ship's call sign
+                                                        0 01 012 Degree true                 +000 +0000000000 +009      Direction of motion of moving observing platform
+                                                        0 01 013 m/s                         +000 +0000000000 +010      Speed of motion of moving observing platform
+                                                        0 01 014 m/s                         +002 +0000000000 +010      Platform drift speed (high precision)
+                                                        0 01 021 Numeric                     +000 +0000000000 +014      Synoptic feature identifier
+                                                        0 01 031 Code table                  +000 +0000000000 +016      Generating Center
+                                                        0 01 032 Code table                  +000 +0000000000 +008      Generating Application
+                                                        0 01 063 CCITTIA5                    +000 +0000000000 +064      ICAO location indicator
+                                                        0 01 192 Numeric                     +000 +0000000000 +017      WBAN Station Number
+                                                        0 01 193 Code table                  +000 +0000000000 +003      Source of Data
+                                                        0 01 194 CCITTIA5                    +000 +0000000000 +024      Station Identifier
+                                                        0 01 245 CCITTIA5                    +000 +0000000000 +080      STORM Network Identifier
+                                                        0 01 248 CCITTIA5                    +000 +0000000000 +280      Station Identifier
+                                                        0 01 249 CCITTIA5                    +000 +0000000000 +280      Additional Information/Comments, line 1
+                                                        0 01 250 CCITTIA5                    +000 +0000000000 +760      Additional Information/Comments, line 2
+                                                        0 01 251 CCITTIA5                    +000 +0000000000 +120      STORM Station Identifier
+                                                        0 01 252 CCITTIA5                    +000 +0000000000 +008      Station Occurance
+                                                        0 01 253 CCITTIA5                    +000 +0000000000 +080      STORM Station Identifier
+                                                        0 01 254 CCITTIA5                    +000 +0000000000 +080      STORM Network Identifier
+                                                        0 01 255 Code table                  +000 +0000000000 +004      Type of Surface Weather Station
+                                                        0 02 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 02 001 Code table                  +000 +0000000000 +002      Type of station
+                                                        0 02 002 Flag table                  +000 +0000000000 +004      Type of instrumentation for wind measurement
+                                                        0 02 003 Code table                  +000 +0000000000 +004      Type of measuring equipment used
+                                                        0 02 004 Code table                  +000 +0000000000 +004      Type of instrumentation for evaporation measurement or type of crop for which evapo-transpiration is reported
+                                                        0 02 005 Degree                      +002 +0000000000 +007      Precision of temperature obs.
+                                                        0 02 011 Code table                  +000 +0000000000 +008      Radiosonde type
+                                                        0 02 012 Code table                  +000 +0000000000 +004      Radiosonde computational method
+                                                        0 02 013 Code table                  +000 +0000000000 +004      Solar and infrared radiation correction
+                                                        0 02 014 Code table                  +000 +0000000000 +007      Tracking technique/status of system
+                                                        0 02 015 Code table                  +000 +0000000000 +004      Radiosond completeness
+                                                        0 02 021 Flag table                  +000 +0000000000 +009      Satellite instrument data used in processing
+                                                        0 02 022 Flag table                  +000 +0000000000 +008      Satellite data-processing technique used
+                                                        0 02 023 Code table                  +000 +0000000000 +004      Cloud motion computational method
+                                                        0 02 024 Code table                  +000 +0000000000 +004      Integrated mean humidity computational method
+                                                        0 02 025 Flag table                  +000 +0000000000 +025      Satellite channel(s) used in computation
+                                                        0 02 026 m                           +002 +0000000000 +012      Cross track resolution
+                                                        0 02 027 m                           +002 +0000000000 +012      Along track resolution
+                                                        0 02 031 Code table                  +000 +0000000000 +005      Method of current measurement
+                                                        0 02 032 Code table                  +000 +0000000000 +002      Indicator for digitization
+                                                        0 02 033 Code table                  +000 +0000000000 +003      Method of salinity/depth measurement
+                                                        0 02 034 Code table                  +000 +0000000000 +005      Drogue type
+                                                        0 02 035 m                           +000 +0000000000 +009      Cable length
+                                                        0 02 036 Code table                  +000 +0000000000 +002      Buoy type
+                                                        0 02 041 Code table                  +000 +0000000000 +006      Method for estimating reports related to synoptic features
+                                                        0 02 061 Code table                  +000 +0000000000 +003      Aircraft navigational system
+                                                        0 02 062 Code table                  +000 +0000000000 +004      Type of aircraft data relay system
+                                                        0 02 063 Degree                      +002 -0000018000 +016      Aircraft Roll Angle
+                                                        0 02 070 Code table                  +000 +0000000000 +004      Original specification of latitude/longitude
+                                                        0 02 101 Code table                  +000 +0000000000 +004      Type of antenna
+                                                        0 02 102 m                           +000 +0000000000 +008      Antenna height above tower base
+                                                        0 02 103 Flag table                  +000 +0000000000 +002      Radome
+                                                        0 02 104 Code table                  +000 +0000000000 +004      Antenna polarisation
+                                                        0 02 105 dB                          +000 +0000000000 +006      Maximum antenna gain
+                                                        0 02 106 Degree                      +001 +0000000000 +006      3-dB beamwidth
+                                                        0 02 107 dB                          +000 +0000000000 +006      Sidelobe suppression
+                                                        0 02 108 dB                          +000 +0000000000 +006      Crosspol descrimination (on axis)
+                                                        0 02 109 Degree/s                    +002 +0000000000 +012      Antenna speed (azimuth)
+                                                        0 02 110 Degree/s                    +002 +0000000000 +012      Antenna speed (elevation)
+                                                        0 02 111 Degree                      +001 +0000000000 +010      Radar Incidence Angle
+                                                        0 02 112 Degree                      +001 +0000000000 +012      Radar target azimuth angle
+                                                        0 02 113 Numeric                     +000 +0000000000 +004      Number of azimuth looks
+                                                        0 02 114 m**2                        +000 +0000000000 +015      Antenna effective surface area
+                                                        0 02 121 Hz                          -008 +0000000000 +007      Mean frequency
+                                                        0 02 122 Hz                          -006 -0000000128 +008      Frequency agility range
+                                                        0 02 123 W                           -004 +0000000000 +007      Peak power
+                                                        0 02 124 W                           -001 +0000000000 +007      Average power
+                                                        0 02 125 Hz                          -001 +0000000000 +008      Pulse repetition frequency
+                                                        0 02 126 s                           +007 +0000000000 +006      Pulse width
+                                                        0 02 127 Hz                          -006 +0000000000 +007      Receiver intermediate frequency
+                                                        0 02 128 Hz                          -005 +0000000000 +006      Intermediate frequency bandwidth
+                                                        0 02 129 dB                          +000 -0000000150 +005      Minimum detectable signal
+                                                        0 02 130 dB                          +000 +0000000000 +007      Dynamic range
+                                                        0 02 131 Flag table                  +000 +0000000000 +002      Sensitivity time control
+                                                        0 02 132 Degree                      +002 +0000000000 +006      Azimuth pointing accuracy
+                                                        0 02 133 Degree                      +002 +0000000000 +006      Elevation pointing accuracy
+                                                        0 02 134 Degree                      +002 +0000000000 +016      Antenna Beam Azimuth
+                                                        0 02 135 Degree                      +002 -0000009000 +015      Antenna elevation
+                                                        0 02 192 Code table                  +000 +0000000000 +002      Anemometer indicator
+                                                        0 03 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 04 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 04 001 Year                        +000 +0000000000 +012      Year
+                                                        0 04 002 Month                       +000 +0000000000 +004      Month
+                                                        0 04 003 Day                         +000 +0000000000 +006      Day
+                                                        0 04 004 Hour                        +000 +0000000000 +005      Hour
+                                                        0 04 005 Minute                      +000 +0000000000 +006      Minute
+                                                        0 04 006 Second                      +000 +0000000000 +006      Second
+                                                        0 04 008 Minutes                     +000 -0000002048 +012      Time period or displacement in minutes
+                                                        0 04 011 Year                        +000 -0000001024 +011      Time increment
+                                                        0 04 012 Month                       +000 -0000001024 +011      Time increment
+                                                        0 04 013 Day                         +000 -0000001024 +011      Time increment
+                                                        0 04 014 Hour                        +000 -0000001024 +011      Time increment
+                                                        0 04 015 Minute                      +000 -0000002048 +012      Time increment
+                                                        0 04 016 Second                      +000 -0000004096 +013      Time increment
+                                                        0 04 021 Year                        +000 -0000001024 +011      Time period or displacement
+                                                        0 04 022 Month                       +000 -0000001024 +011      Time period or displacement
+                                                        0 04 023 Day                         +000 -0000001024 +011      Time period or displacement
+                                                        0 04 024 Hour                        +000 -0000002048 +012      Time period or displacement
+                                                        0 04 025 Minute                      +000 -0000002048 +012      Time period or displacement
+                                                        0 04 026 Second                      +000 -0000004096 +013      Time period or displacement
+                                                        0 04 031 Hour                        +000 +0000000000 +008      Duration of time relating to following value
+                                                        0 04 043 Day                         +000 +0000000000 +009      Day of the year
+                                                        0 04 247 Second                      +001 -0000012000 +017      Time displacement - high resolution
+                                                        0 04 248 Year                        +000 +0000000000 +012      Nominal Year
+                                                        0 04 249 Month                       +000 +0000000000 +004      Nominal Month
+                                                        0 04 250 Day                         +000 +0000000000 +006      Nominal Day
+                                                        0 04 251 Hour                        +000 +0000000000 +005      Nominal Hour
+                                                        0 04 252 Minute                      +000 +0000000000 +006      Nominal Minute
+                                                        0 04 253 Second                      +000 +0000000000 +006      Nominal Second
+                                                        0 04 254 Second                      +000 +0000000000 +013      Time increment
+                                                        0 04 255 Hour                        +001 -0000000110 +008      Local/Universal time increment
+                                                        0 05 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 05 001 Degree                      +005 -0009000000 +025      Latitude (high accuracy)
+                                                        0 05 002 Degree                      +002 -0000009000 +015      Latitude (coarse accuracy)
+                                                        0 05 011 Degree                      +005 -0009000000 +025      Latitude increment (high accuracy)
+                                                        0 05 012 Degree                      +002 -0000009000 +015      Latitude increment (coarse accuracy)
+                                                        0 05 021 Degree true                 +002 +0000000000 +016      Bearing or azimuth
+                                                        0 05 022 Degree true                 +002 +0000000000 +016      Solar azimuth
+                                                        0 05 031 Numeric                     +000 +0000000000 +012      Row number
+                                                        0 05 033 m                           -001 +0000000000 +016      Pixel size on horizontal - 1
+                                                        0 05 040 Numeric                     +000 +0000000000 +024      Orbit number
+                                                        0 05 041 Numeric                     +000 +0000000000 +008      Scan line number
+                                                        0 05 042 Numeric                     +000 +0000000000 +006      Channel number
+                                                        0 05 043 Numeric                     +000 +0000000000 +008      Field of view number
+                                                        0 05 052 Numeric                     +000 +0000000000 +005      Channel number increment
+                                                        0 05 053 Numeric                     +000 +0000000000 +005      Field of view number increment
+                                                        0 06 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 06 001 Degree                      +005 -0018000000 +026      Longitude (high accuracy)
+                                                        0 06 002 Degree                      +002 -0000018000 +016      Longitude (coarse accuracy)
+                                                        0 06 011 Degree                      +005 -0018000000 +026      Longitude increment (high accuracy)
+                                                        0 06 012 Degree                      +002 -0000018000 +016      Longitude increment (coarse accuracy)
+                                                        0 06 021 m                           -001 +0000000000 +013      Distance
+                                                        0 06 031 Numeric                     +000 +0000000000 +012      Column number
+                                                        0 06 033 m                           -001 +0000000000 +016      Pixel size on horizontal - 2
+                                                        0 07 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 07 001 m                           +000 -0000000400 +015      Height of station
+                                                        0 07 002 m                           -001 -0000000040 +016      Height or altitude
+                                                        0 07 003 m**2/s**2                   -001 -0000000400 +017      Geopotential
+                                                        0 07 004 Pa                          -001 +0000000000 +014      Pressure
+                                                        0 07 005 m                           +000 -0000000400 +012      Height increment
+                                                        0 07 006 m                           +000 +0000000000 +015      Height above station
+                                                        0 07 021 Degree                      +002 -0000009000 +015      Elevation
+                                                        0 07 022 Degree                      +002 -0000009000 +015      Elevation
+                                                        0 07 061 m                           +002 +0000000000 +014      Depth below land surface
+                                                        0 07 062 m                           +001 +0000000000 +017      Depth below sea surface
+                                                        0 07 192 Meters                      +000 +0000000000 +014      Maximum height passing quality control low
+                                                        0 07 202 Meters                      +000 +0000000000 +014      Maximum height passing quality control high
+                                                        0 07 253 m                           +001 -0000000400 +019      Height or altitude - high resolution
+                                                        0 07 254 m                           +001 -0000000400 +017      Station Elevation
+                                                        0 08 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 08 001 Flag table                  +000 +0000000000 +007      Vertical sounding significance
+                                                        0 08 002 Code table                  +000 +0000000000 +006      Vertical significance (surface observations)
+                                                        0 08 003 Code table                  +000 +0000000000 +006      Vertical significance (satellite observations)
+                                                        0 08 004 Code table                  +000 +0000000000 +003      Phase of aircraft flight
+                                                        0 08 011 Code table                  +000 +0000000000 +006      Horizontal significance
+                                                        0 08 012 Code table                  +000 +0000000000 +002      Land/sea qualifier
+                                                        0 08 021 Code table                  +000 +0000000000 +005      Time significance
+                                                        0 08 022 Numeric                     +000 +0000000000 +016      Total number (with respect to accumulation or average)
+                                                        0 08 023 Code table                  +000 +0000000000 +006      First order statistics
+                                                        0 08 024 Code table                  +000 +0000000000 +006      Difference statistics
+                                                        0 08 253 Code table                  +000 +0000000000 +004      Elevation Type Indicator
+                                                        0 08 254 Code table                  +000 +0000000000 +005      Observation Type
+                                                        0 08 255 Code table                  +000 +0000000000 +003      Precipitation Measurement Qualification
+                                                        0 09 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 10 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 10 001 m                           +000 -0000000400 +015      Height of land surface
+                                                        0 10 002 m                           -001 -0000000040 +016      Height
+                                                        0 10 003 m**2 s**-2                  -001 -0000000400 +017      Geopotential
+                                                        0 10 004 Pa                          -001 +0000000000 +014      Pressure
+                                                        0 10 050 m                           +002 +0000000000 +016      Std. Dev. altitude
+                                                        0 10 051 Pa                          -001 +0000000000 +014      Pressure reduced to mean sea-level
+                                                        0 10 052 Pa                          -001 +0000000000 +014      Altimeter setting (QNH)
+                                                        0 10 060 Pa                          -001 -0000001024 +011      Pressure change
+                                                        0 10 061 Pa                          -001 -0000000500 +010      3-hour pressure change
+                                                        0 10 062 Pa                          -001 -0000001000 +010      24-hour pressure change
+                                                        0 10 063 Code table                  +000 +0000000000 +004      Characteristic of pressure tendency
+                                                        0 10 194 Code table                  +000 +0000000000 +004      Tropopause Status
+                                                        0 10 255 Pa                          -001 +0000000000 +014      Pressure reduced to mean sea-level using the GEMPAK algorithm
+                                                        0 11 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 11 001 Degree true                 +000 +0000000000 +009      Wind direction
+                                                        0 11 002 m/s                         +001 +0000000000 +012      Wind speed
+                                                        0 11 003 m/s                         +001 -0000004096 +013      u-component
+                                                        0 11 004 m/s                         +001 -0000004096 +013      v-component
+                                                        0 11 005 Pa/s                        +001 -0000000512 +010      w-component
+                                                        0 11 006 m/s                         +002 -0000004096 +013      w-component
+                                                        0 11 011 Degree true                 +000 +0000000000 +009      Wind direction at 10 m
+                                                        0 11 012 m/s                         +001 +0000000000 +012      Wind speed at 10 m
+                                                        0 11 013 Degree true                 +000 +0000000000 +009      Wind direction at 5 m
+                                                        0 11 014 m/s                         +001 +0000000000 +012      Wind speed at 5 m
+                                                        0 11 021 1/s                         +009 -0000065536 +017      Relative vorticity
+                                                        0 11 022 1/s                         +009 -0000065536 +017      Divergence
+                                                        0 11 023 m**2/s                      -002 -0000065536 +017      Velocity potential
+                                                        0 11 031 Code table                  +000 +0000000000 +004      Degree of turbulence
+                                                        0 11 032 m                           -001 -0000000040 +016      Height of base of turbulence
+                                                        0 11 033 m                           -001 -0000000040 +016      Height of top of turbulence
+                                                        0 11 034 m/s                         +001 -0000001024 +011      Vertical gust velocity
+                                                        0 11 035 m/s**2                      +002 -0000008192 +014      Vertical gust acceleration
+                                                        0 11 036 m/s                         +001 +0000000000 +010      Maximum derived equivalent vertical gust
+                                                        0 11 041 m/s                         +001 +0000000000 +012      Maximum wind speed (gusts)
+                                                        0 11 042 m/s                         +001 +0000000000 +012      Maximum wind speed (10-min mean wind)
+                                                        0 11 050 m/s                         +001 +0000000000 +012      Std. Dev. wind speed
+                                                        0 11 061 m/s                         +001 +0000000000 +012      Absolute wind shear in 1 km layer below
+                                                        0 11 062 m/s                         +001 +0000000000 +012      Absolute wind shear in 1 km layer above
+                                                        0 11 192 Meters/Second               +001 -0000001500 +012      Wind speed - low mode
+                                                        0 11 193 Degrees                     +000 +0000000000 +009      Wind direction - low mode
+                                                        0 11 194 m/s                         +002 -0000004096 +013      Estimated Vertical
+                                                        0 11 195 Meters/Second               +001 -0000001500 +012      V wind component - low mode
+                                                        0 11 196 Meters/Second               +001 -0000000130 +009      W wind component - low mode
+                                                        0 11 202 Meters/Second               +001 -0000001500 +012      Wind speed - high mode
+                                                        0 11 203 Degrees                     +000 +0000000000 +009      Wind direction - high mode
+                                                        0 11 204 Meters/Second               +001 -0000001500 +012      U wind component - high mode
+                                                        0 11 205 Meters/Second               +001 -0000001500 +012      V wind component - high mode
+                                                        0 11 206 Meters/Second               +001 -0000000130 +009      W wind component - high mode
+                                                        0 11 255 Code table                  +000 +0000000000 +002      Squall/Gust Flag
+                                                        0 12 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 12 001 K                           +001 +0000000000 +012      Temperature/dry-bulb temperature
+                                                        0 12 002 K                           +001 +0000000000 +012      Wet-bulb temperature
+                                                        0 12 003 K                           +001 +0000000000 +012      Dew-point temperature
+                                                        0 12 004 K                           +001 +0000000000 +012      Dry-bulb temperature at 2 m
+                                                        0 12 005 K                           +001 +0000000000 +012      Wet-bulb temperature at 2 m
+                                                        0 12 006 K                           +001 +0000000000 +012      Dew-point temperature at 2 m
+                                                        0 12 007 K                           +001 +0000000000 +012      Virtual temperature
+                                                        0 12 011 K                           +001 +0000000000 +012      Maximum temperature, at height and over period specified
+                                                        0 12 012 K                           +001 +0000000000 +012      Minimum temperature, at height and over period specified
+                                                        0 12 013 K                           +001 +0000000000 +012      Ground minimum temperature, past 12 hours
+                                                        0 12 014 K                           +001 +0000000000 +012      Maximum temperature at 2 m, past 12 hours
+                                                        0 12 015 K                           +001 +0000000000 +012      Minimum temperature at 2 m, past 12 hours
+                                                        0 12 016 K                           +001 +0000000000 +012      Maximum temperature at 2 m, past 24 hours
+                                                        0 12 017 K                           +001 +0000000000 +012      Minimum temperature at 2 m, past 24 hours
+                                                        0 12 030 K                           +001 +0000000000 +012      Soil temperature
+                                                        0 12 061 K                           +001 +0000000000 +012      Skin temperature
+                                                        0 12 062 K                           +001 +0000000000 +012      Equivalent black body temperature
+                                                        0 12 063 K                           +001 +0000000000 +012      Brightness temperature
+                                                        0 12 193 K                           +001 +0000000000 +012      Daily Minimum Temperature of water in pan.
+                                                        0 12 194 K                           +001 +0000000000 +012      Daily Maximum Temperature of water in pan.
+                                                        0 12 195 K                           +001 +0000000000 +012      Daily Maximum Temperature.
+                                                        0 12 196 K                           +001 +0000000000 +012      Daily Minimum Temperature.
+                                                        0 12 197 k                           +001 +0000000000 +012      Soil temperature / daily maximum
+                                                        0 12 198 k                           +001 +0000000000 +012      Soil temperature / daily minimum
+                                                        0 12 199 k                           +001 +0000000000 +012      Daily mean temperature
+                                                        0 12 200 K                           +001 +0000000000 +012      Temperature Water
+                                                        0 12 201 k                           +001 +0000000000 +012      Heating Degree Days
+                                                        0 12 202 k                           +001 +0000000000 +012      Potential Temperature
+                                                        0 12 203 k                           +001 +0000000000 +012      Equivalent Potential Temperature
+                                                        0 12 204 k                           +001 +0000000000 +012      Soil Temperatute at depth and over period specified.
+                                                        0 13 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 13 001 kg/kg-1                     +005 +0000000000 +014      Specific humidity
+                                                        0 13 002 kg/kg-1                     +005 +0000000000 +014      Mixing ratio
+                                                        0 13 003 %                           +000 +0000000000 +007      Relative humidity
+                                                        0 13 004 Pa                          -001 +0000000000 +010      Vapour pressure
+                                                        0 13 005 kg/m**3                     +003 +0000000000 +007      Vapour density
+                                                        0 13 006 m                           -001 -0000000040 +016      Mixing heights
+                                                        0 13 011 kg/m**2 (mm)                +001 -0000000001 +014      Total precipitation/total water equivalent
+                                                        0 13 012 m                           +002 -0000000002 +012      Depth of fresh snow
+                                                        0 13 013 m                           +002 -0000000002 +016      Total snow depth
+                                                        0 13 014 kg/m**2/s (mm/s)            +004 +0000000000 +012      Rainfall/water equivalent of snow (averaged rate)
+                                                        0 13 015 m/s                         +007 +0000000000 +012      Snowfall (averaged rate)
+                                                        0 13 016 kg/m**2  (mm)               +000 +0000000000 +007      Precipitable water
+                                                        0 13 019 kg/m**2  (mm)               +001 -0000000001 +014      Total precipitation past 1 hour
+                                                        0 13 020 kg/m**2  (mm)               +001 -0000000001 +014      Total precipitation past 3 hours
+                                                        0 13 021 kg/m**2  (mm)               +001 -0000000001 +014      Total precipitation past 6 hours
+                                                        0 13 022 kg/m**2  (mm)               +001 -0000000001 +014      Total precipitation past 12 hours
+                                                        0 13 023 kg/m**2  (mm)               +001 -0000000001 +014      Total precipitation past 24 hours
+                                                        0 13 031 kg/m**2  (mm)               +000 +0000000000 +007      Evapotranspiration
+                                                        0 13 032 kg/m**2  (mm)               +001 +0000000000 +008      Evaporation/evapotranspiration
+                                                        0 13 041 Code table                  +000 +0000000000 +004      Pasquill-Gifford stability category
+                                                        0 13 095 m/s                         +002 +0000000000 +013      Stream Flow
+                                                        0 13 193 m                           +003 +0000000000 +007      Daily evaporation. 24 hr amount.
+                                                        0 13 194 m                           +002 -0000000002 +012      Daily Snowfall in a 24 hour period.
+                                                        0 13 195 m/s                         +002 +0000000000 +013      Stream Flow
+                                                        0 13 196 m                           +000 +0000000000 +012      Stage Level
+                                                        0 13 197 g/g                         +005 +0000000000 +014      Soil Moisture (Gravimetric)
+                                                        0 13 198 kg/m**2  (mm)               +001 -0000000001 +014      Total Precipitation past 1 minute
+                                                        0 13 199 kg/m**2  (mm)               +001 -0000000001 +014      Accumulated Total Precipitation in gage
+                                                        0 13 254 %                           +001 +0000000000 +010      Relative humidity
+                                                        0 14 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 14 001 J/m**2                      -003 -0000002048 +012      Long-wave radiation, integrated over 24 hours
+                                                        0 14 002 J/m**2                      -003 -0000002048 +012      Long-wave radiation, integrated over period specified
+                                                        0 14 003 J/m**2                      -003 -0000002048 +012      Short-wave radiation, integrated over 24 hours
+                                                        0 14 004 J/m**2                      -003 -0000002048 +012      Short-wave radiation, integrated over period specified
+                                                        0 14 011 J/m**2                      -003 -0000002048 +012      Net long-wave radiation, integrated over 24 hours
+                                                        0 14 012 J/m**2                      -003 -0000002048 +012      Net long-wave radiation, integrated over period specified
+                                                        0 14 013 J/m**2                      -003 -0000002048 +012      Net short-wave radiation, integrated over 24 hours
+                                                        0 14 014 J/m**2                      -003 -0000002048 +012      Net short-wave radiation, integrated over period specified
+                                                        0 14 015 J/m**2                      -004 -0000016384 +015      Net radiation, integrated over 24 hours
+                                                        0 14 016 J/m**2                      -004 -0000016384 +015      Net radiation, integrated over the period specified
+                                                        0 14 017 J/m**2                      -003 -0000002048 +012      Instantaneous long-wave radiation
+                                                        0 14 018 J/m**2                      -003 -0000002048 +012      Instantaneous short-wave radiation
+                                                        0 14 020 J/m**2                      -004 +0000000000 +015      Global solar radiation integrated over 24 hours
+                                                        0 14 021 J/m**2                      -004 +0000000000 +015      Global radiation integrated over period specified
+                                                        0 14 022 J/m**2                      -004 +0000000000 +015      Diffuse solar radiation integrated over 24 hours
+                                                        0 14 023 J/m**2                      -004 +0000000000 +015      Diffuse solar radiation integrated over the period specified
+                                                        0 14 024 J/m**2                      -004 +0000000000 +015      Direct solar radiation integrated over 24 hours
+                                                        0 14 025 J/m**2                      -004 +0000000000 +015      Direct solar radiation integrated over the period specified
+                                                        0 14 031 Minute                      +000 +0000000000 +011      Total sunshine
+                                                        0 14 032 Hour                        +000 +0000000000 +010      Total sunshine
+                                                        0 14 192 J/m**2                      -003 -0000002048 +012      Reflected Shortwave Radiation, integerated over period specified
+                                                        0 14 193 %                           +000 +0000000000 +007      Daily Possible Sunshine
+                                                        0 15 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 15 001 Dobson                      +000 +0000000000 +010      Ozone
+                                                        0 19 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 19 001 Code table                  +000 +0000000000 +006      Type of synoptic feature
+                                                        0 19 002 m                           -002 +0000000000 +012      Effective radius of feature
+                                                        0 19 003 m/s                         +000 +0000000000 +008      Wind speed threshold
+                                                        0 19 004 m                           -002 +0000000000 +012      Effective radius with respect to wind speeds above threshold
+                                                        0 20 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 20 001 m                           -001 +0000000000 +013      Horizontal visibility
+                                                        0 20 002 m                           -001 +0000000000 +007      Vertical visibility
+                                                        0 20 003 Code table                  +000 +0000000000 +009      Present weather
+                                                        0 20 004 Code table                  +000 +0000000000 +005      Past weather (1)
+                                                        0 20 005 Code table                  +000 +0000000000 +005      Past weather (2)
+                                                        0 20 010 %                           +000 +0000000000 +007      Cloud cover (total)
+                                                        0 20 011 Code table                  +000 +0000000000 +004      Cloud amount
+                                                        0 20 012 Code table                  +000 +0000000000 +006      Cloud type
+                                                        0 20 013 m                           -001 -0000000040 +011      Height of base of cloud
+                                                        0 20 014 m                           -001 -0000000040 +011      Height of top of cloud
+                                                        0 20 015 Pa                          -001 +0000000000 +014      Pressure at base of cloud
+                                                        0 20 016 Pa                          -001 +0000000000 +014      Pressure at top of cloud
+                                                        0 20 017 Code table                  +000 +0000000000 +004      Cloud top description
+                                                        0 20 031 m                           +002 +0000000000 +007      Ice deposit (thickness)
+                                                        0 20 032 Code table                  +000 +0000000000 +003      Rate of ice accretion
+                                                        0 20 033 Flag table                  +000 +0000000000 +004      Cause of ice accretion
+                                                        0 20 034 Code table                  +000 +0000000000 +005      Sea ice concentration
+                                                        0 20 035 Code table                  +000 +0000000000 +004      Amount and type of ice
+                                                        0 20 036 Code table                  +000 +0000000000 +005      Ice situation
+                                                        0 20 037 Code table                  +000 +0000000000 +005      Ice development
+                                                        0 20 038 Degree true                 +000 +0000000000 +012      Bearing of ice edge
+                                                        0 20 039 m                           -001 +0000000000 +013      Ice distance
+                                                        0 20 041 Code table                  +000 +0000000000 +004      Airframe icing
+                                                        0 20 051 %                           +000 +0000000000 +007      Amount of low clouds
+                                                        0 20 052 %                           +000 +0000000000 +007      Amount of middle clouds
+                                                        0 20 053 %                           +000 +0000000000 +007      Amount of high clouds
+                                                        0 20 061 m                           +000 +0000000000 +012      Runway visual range (RVR)
+                                                        0 20 062 Code table                  +000 +0000000000 +005      State of the ground (with or without snow)
+                                                        0 20 063 Code table                  +000 +0000000000 +010      Special phenomena
+                                                        0 20 192 CCITTIA5                    +000 +0000000000 +256      Surface meteorological raw data
+                                                        0 20 193 Code table                  +000 +0000000000 +004      Daily occurance of weather
+                                                        0 20 194 Code table                  +000 +0000000000 +005      Ground Cover
+                                                        0 20 254 Code table                  +000 +0000000000 +004      Ceiling
+                                                        0 20 255 feet                        -002 +0000000000 +010      Layer Height
+                                                        0 21 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 21 001 dB                          +000 -0000000064 +007      Horizontal reflectivity
+                                                        0 21 002 dB                          +000 -0000000064 +007      Vertical reflectivity
+                                                        0 21 003 dB                          +001 -0000000005 +007      Differentail reflectivity
+                                                        0 21 005 dB                          +000 -0000000065 +006      Linear depolarisation ratio
+                                                        0 21 006 dB                          +000 -0000000065 +006      Circular depolarisation ratio
+                                                        0 21 011 m/s                         +000 -0000000128 +008      Doppler mean velocity in X-direction
+                                                        0 21 012 m/s                         +000 -0000000128 +008      Doppler mean velocity in Y-direction
+                                                        0 21 013 m/s                         +000 -0000000128 +008      Doppler mean velocity in Z-direction
+                                                        0 21 014 m/s                         +001 -0000004096 +013      Doppler mean velocity radial
+                                                        0 21 017 m/s                         +001 -0000004096 +008      Doppler velocity spectral width
+                                                        0 21 021 m                           -003 +0000000000 +004      Echo tops
+                                                        0 21 031 kg/m**2                     +000 +0000000000 +007      Vertically integrated liquid-water content (VIL)
+                                                        0 21 036 m/s                         +007 +0000000000 +012      Radar rainfall intensity
+                                                        0 21 041 m                           -002 +0000000000 +008      Bright-band height
+                                                        0 21 051 dB                          +000 -0000000256 +008      Signal power above on mW
+                                                        0 21 192 Decibels                    +001 +0000000000 +011      Signal power (0th moment) East/High
+                                                        0 21 193 Decibels                    +001 +0000000000 +011      Signal power (0th moment) East/Low
+                                                        0 21 194 Decibels                    +001 +0000000000 +011      Signal power (0th moment) North/High
+                                                        0 21 195 Decibels                    +001 +0000000000 +011      Signal power (0th moment) North/Low
+                                                        0 21 196 Decibels                    +001 +0000000000 +011      Signal power (0th moment) Vertical/High
+                                                        0 21 197 Decibels                    +001 +0000000000 +011      Signal power (0th moment) Vertical/Low
+                                                        0 21 202 Meters/Second               +002 -0000003200 +013      Mean velocity (1st moment) East/High
+                                                        0 21 203 Meters/Second               +002 -0000003200 +013      Mean velocity (1st moment) East/Low
+                                                        0 21 204 Meters/Second               +002 -0000003200 +013      Mean velocity (1st moment) North/High
+                                                        0 21 205 Meters/Second               +002 -0000003200 +013      Mean velocity (1st moment) North/Low
+                                                        0 21 206 Meters/Second               +002 -0000003200 +013      Mean velocity (1st moment) Vertical/High
+                                                        0 21 207 Meters/Second               +002 -0000003200 +013      Mean velocity (1st moment) Vertical/Low
+                                                        0 21 212 (Meters/Second)**2          +001 +0000000000 +013      Velocity variance (2nd moment) East/High
+                                                        0 21 213 (Meters/Second)**2          +001 +0000000000 +013      Velocity variance (2nd moment) East/Low
+                                                        0 21 214 (Meters/Second)**2          +001 +0000000000 +013      Velocity variance (2nd moment) North/High
+                                                        0 21 215 (Meters/Second)**2          +001 +0000000000 +013      Velocity variance (2nd moment) North/Low
+                                                        0 21 216 (Meters/Second)**2          +001 +0000000000 +013      Velocity variance (2nd moment) Vertical/High
+                                                        0 21 217 (Meters/Second)**2          +001 +0000000000 +013      Velocity variance (2nd moment) Vertical/Low
+                                                        0 21 220 Numeric                     +001 +0000000000 +011      Diagnostic spectrum
+                                                        0 21 221 Numeric                     +000 +0000000000 +007      Number of spectral averages in RSD
+                                                        0 21 222 Code table                  +000 +0000000000 +003      Beam/mode combination code of RSD
+                                                        0 21 223 Numeric                     +000 +0000000000 +006      Range gate number of RSD
+                                                        0 22 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 22 001 Degree true                 +000 +0000000000 +009      Direction of waves
+                                                        0 22 002 Degree true                 +000 +0000000000 +009      Direction of wind waves
+                                                        0 22 003 Degree true                 +000 +0000000000 +009      Direction of swell waves
+                                                        0 22 004 Degree true                 +000 +0000000000 +009      Direction of current
+                                                        0 22 011 s                           +000 +0000000000 +006      Period of waves
+                                                        0 22 012 s                           +000 +0000000000 +006      Period of wind waves
+                                                        0 22 013 s                           +000 +0000000000 +006      Period of swell waves
+                                                        0 22 021 m                           +001 +0000000000 +010      Height of waves
+                                                        0 22 022 m                           +001 +0000000000 +010      Height of wind waves
+                                                        0 22 023 m                           +001 +0000000000 +010      Height of swell waves
+                                                        0 22 031 m/s                         +002 +0000000000 +013      Speed of current
+                                                        0 22 042 K                           +001 +0000000000 +012      Sea temperature
+                                                        0 22 043 K                           +002 +0000000000 +015      Sea temperature
+                                                        0 22 044 m/s                         +001 +0000000000 +014      Sound velocity
+                                                        0 22 050 K                           +002 +0000000000 +008      Standard Deviation sea surface temperature
+                                                        0 22 061 Code table                  +000 +0000000000 +004      State of the sea
+                                                        0 22 062 Part per thousand           +002 +0000000000 +014      Salinity
+                                                        0 22 063 m                           +000 +0000000000 +014      Total water depth
+                                                        0 22 193 J                           +000 +0000000000 +012      Wave Energy Spectra
+                                                        0 22 194 M                           +001 +0000000000 +012      Tide Height
+                                                        0 22 195 Si                          +001 +0000000000 +012      Water conductivity
+                                                        0 23 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 23 001 Code table                  +000 +0000000000 +003      Accident early notification - article applicable
+                                                        0 23 002 Code table                  +000 +0000000000 +005      Activity or facility involved in incident
+                                                        0 23 003 Code table                  +000 +0000000000 +003      Type of release
+                                                        0 23 004 Code table                  +000 +0000000000 +003      Countermeasures taken near border
+                                                        0 23 005 Code table                  +000 +0000000000 +002      Course of incident
+                                                        0 23 006 Code table                  +000 +0000000000 +003      Incident situation
+                                                        0 23 007 Code table                  +000 +0000000000 +003      Characteristic of release
+                                                        0 23 008 Code table                  +000 +0000000000 +002      State of current release
+                                                        0 23 009 Code table                  +000 +0000000000 +002      State of expected release
+                                                        0 23 016 Code table                  +000 +0000000000 +002      Possibility of significant chemical toxic health effect
+                                                        0 23 017 m**3/s                      +006 +0000000000 +020      Flow discharge of major recipient
+                                                        0 23 018 Code table                  +000 +0000000000 +003      Release behavior over time
+                                                        0 23 019 m                           +000 -0000015000 +017      Actual release height
+                                                        0 23 021 m                           +000 -0000015000 +017      Effective release height
+                                                        0 23 022 m                           +000 +0000000000 +024      Distance of release point or site of incident
+                                                        0 23 023 m/s                         +001 +0000000000 +012      Main transport speed in the atmosphere
+                                                        0 23 024 m/s                         +002 +0000000000 +013      Main transport speed in water
+                                                        0 23 025 m/s                         +002 +0000000000 +013      Main transport speed in ground water
+                                                        0 23 027 Degree true                 +000 +0000000000 +009      Main transport direction in the atmosphere
+                                                        0 23 028 Degree true                 +000 +0000000000 +009      Main transport direction in water
+                                                        0 23 029 Degree true                 +000 +0000000000 +009      Main transport direction in ground water
+                                                        0 23 031 Code table                  +000 +0000000000 +002      Possibility that plume will encounter precipitation in State in which incident occurred
+                                                        0 23 032 Code table                  +000 +0000000000 +002      Plume will encounter change in wind direction and/or speed flag
+                                                        0 24 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 24 001 Bq                          -011 +0000000000 +028      Estimate of amount of radio-activity released up to specified time
+                                                        0 24 002 Bq                          -011 +0000000000 +028      Estimated maximum potential release
+                                                        0 24 003 Code table                  +000 +0000000000 +005      Composition of release
+                                                        0 24 004 CCITTIA5                    +000 +0000000000 +016      Element name
+                                                        0 24 005 Numeric                     +000 +0000000000 +009      Isotope mass
+                                                        0 24 011 mSv                         +002 +0000000000 +032      Dose
+                                                        0 24 012 mSv                         +002 +0000000000 +032      Trajectory dose (defined location and expected time of arrival)
+                                                        0 24 013 mSv                         +002 +0000000000 +032      Gamma dose in air along the main transport path (defined location and time period)
+                                                        0 24 021 Bq/m**3                     +002 +0000000000 +032      Air concentration (of named isotope type including gross beta)
+                                                        0 24 022 Bq/l                        +002 +0000000000 +032      Concentration in precipitation (of named isotope type)
+                                                        0 25 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 25 001 m                           -001 +0000000000 +006      Range-gate length
+                                                        0 25 002 Numeric                     +000 +0000000000 +004      Number of gates averaged
+                                                        0 25 003 Numeric                     +000 +0000000000 +008      Number of integrated pulses
+                                                        0 25 004 Code table                  +000 +0000000001 +002      Echo processing
+                                                        0 25 005 Code table                  +000 +0000000000 +002      Echo integration
+                                                        0 25 006 Code table                  +000 +0000000000 +003      Z to R conversion
+                                                        0 25 007 Numeric                     +000 +0000000000 +012      Z to R conversion factor
+                                                        0 25 008 Numeric                     +002 +0000000000 +009      Z to R conversion exponent
+                                                        0 25 009 Flag table                  +000 +0000000000 +004      Calibration method
+                                                        0 25 010 Code table                  +000 +0000000000 +004      Clutter treatment
+                                                        0 25 011 Code table                  +000 +0000000000 +002      Ground occultation correction (screening)
+                                                        0 25 012 Code table                  +000 +0000000000 +002      Range attenuation correction
+                                                        0 25 013 Flag table                  +000 +0000000000 +002      Bright-band correction
+                                                        0 25 015 Flag table                  +000 +0000000000 +002      Radome attenuation correction
+                                                        0 25 016 dB/m                        +050 +0000000000 +006      Clean-air attenuation correction
+                                                        0 25 017 Flag table                  +000 +0000000000 +002      Precipitation attenuation correction
+                                                        0 25 018 Numeric                     +007 +0000000000 +006      A to Z law for attenuation factor
+                                                        0 25 019 Numeric                     +002 +0000000000 +007      A to Z law for attenuation exponent
+                                                        0 25 020 Code table                  +000 +0000000000 +002      Mean-speed estimation
+                                                        0 25 021 Flag table                  +000 +0000000000 +008      Wind computation enhancement
+                                                        0 25 030 dB                          +000 -0000000032 +008      Signal to noise ratio
+                                                        0 27 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 27 001 Degree                      +005 -0009000000 +025      Latitude (high accuracy)
+                                                        0 27 002 Degree                      +002 -0000009000 +015      Latitude (coarse accuracy)
+                                                        0 27 003 Degree                      +002 -0000009000 +015      Alternate latitude
+                                                        0 27 020 Numeric                     +000 +0000000000 +016      Satellite location counter
+                                                        0 28 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 28 001 Degree                      +005 -0018000000 +026      Longitude (high accuracy)
+                                                        0 28 002 Degree                      +002 -0000018000 +016      Longitude (coarse accuracy)
+                                                        0 28 003 Degree                      +002 -0000018000 +016      Alternate longitude
+                                                        0 29 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 29 001 Code table                  +000 +0000000000 +003      Projection type
+                                                        0 29 002 Code table                  +000 +0000000000 +003      Co-ordinate grid type
+                                                        0 30 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 30 001 Numeric                     +000 +0000000000 +004      Pixel value (4 bits)
+                                                        0 30 021 Numeric                     +000 +0000000000 +012      Number of pixels per row
+                                                        0 30 022 Numeric                     +000 +0000000000 +012      Number of pixels per column
+                                                        0 30 031 Code table                  +000 +0000000000 +004      Picture type
+                                                        0 30 032 Flag table                  +000 +0000000000 +016      Combination with other data
+                                                        0 31 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 31 001 Numeric                     +000 +0000000000 +008      Delayed descriptor replication factor
+                                                        0 31 002 Numeric                     +000 +0000000000 +016      Extended delayed descriptor replication factor
+                                                        0 31 011 Numeric                     +000 +0000000000 +008      Delayed descriptor and data repetition factor
+                                                        0 31 012 Numeric                     +000 +0000000000 +016      Extended delayed descriptor and data repetition factor
+                                                        0 31 021 Code table                  +000 +0000000000 +006      Associated field significance
+                                                        0 31 031 Flag table                  +000 +0000000000 +001      Data Present Indicator
+                                                        0 33 001 Flag table                  +000 +0000000000 +001      Quality Information as a 1 bit flag
+                                                        0 33 002 Flag table                  +000 +0000000000 +002      Quality Information as a 2 bit flag
+                                                        0 33 003 Code table                  +000 +0000000000 +003      Quality Information as a 3 bit code
+                                                        0 33 004 Code table                  +000 +0000000000 +004      Quality Information as a 4 bit code
+                                                        0 33 007 %                           +000 +0000000000 +007      % Confidence
+                                                        0 33 192 Code table                  +000 +0000000000 +003      Surface data quality control byte
+                                                        0 33 193 Code table                  +000 +0000000000 +004      CMF Data Quality Flag
+                                                        0 33 202 Numeric                     +000 +0000000000 +004      Consensus numbers East/High
+                                                        0 33 203 Numeric                     +000 +0000000000 +004      Consensus numbers East/Low
+                                                        0 33 204 Numeric                     +000 +0000000000 +004      Consensus numbers North/High
+                                                        0 33 205 Numeric                     +000 +0000000000 +004      Consensus numbers North/Low
+                                                        0 33 206 Numeric                     +000 +0000000000 +004      Consensus numbers Vertical/High
+                                                        0 33 207 Numeric                     +000 +0000000000 +004      Consensus numbers Vertical/Low
+                                                        0 33 208 Code table                  +000 +0000000000 +006      Quality control indicators - low mode
+                                                        0 33 210 Code table                  +000 +0000000000 +004      Quality control summary values - low mode
+                                                        0 33 254 Code table                  +000 +0000000000 +004      STORM-FEST Sounding Composite Quality Control Flag
+                                                        0 33 255 Code table                  +000 +0000000000 +004      STORM Quality Control Flag
+                                                        0 55 001 v/m                         +000 +0000000000 +012      Electric Field
+                                                        0 55 002 KA                          +002 +0000000000 +024      Lightning peak current
+                                                        0 55 003 numeric                     +000 +0000000000 +004      Lightning return strokes
+                                                        0 55 004 v/m                         +000 +0000000000 +012      Electric Field change
+                                                        0 56 001 g/m^3                       +004 +0000000000 +012      Liquid water content
+                                                        0 56 002 CNTS                        +004 +0000000000 +012      Cloud/precipitation particle spectra
+                                                        0 62 000 0                           +000 +0000000000 +000      Dummy parameter used for referential integrity checks.
+                                                        0 62 001 Code table                  +000 +0000000000 +002      Bad status on input QIO
+                                                        0 62 002 Numeric                     +000 +0000000000 +004      No data received
+                                                        0 62 003 Numeric                     +000 +0000000000 +004      Data reception errors
+                                                        0 62 004 Numeric                     +000 +0000000000 +004      Some data failed limit checks
+                                                        0 62 005 Numeric                     +000 +0000000000 +004      Data arrived on wrong port
+                                                        0 62 006 Numeric                     +000 +0000000000 +004      Data arrived too late
+                                                        0 62 007 Numeric                     +000 +0000000000 +004      Data arrived too early
+                                                        0 62 008 Numeric                     +000 +0000000000 +004      Status block available
+                                                        0 62 009 Numeric                     +000 +0000000000 +004      Spectral data available
+                                                        0 62 010 Numeric                     +000 +0000000000 +004      Count of 6-minute periods to compute average
+                                                        0 62 011 Numeric                     +000 +0000000000 +004      LRU failures caused no data
+                                                        0 62 012 Numeric                     +000 +0000000000 +004      LRU failures caused degraded data
+                                                        0 62 013 Numeric                     +000 +0000000000 +004      No turnoff schedule on profiler
+                                                        0 62 014 Numeric                     +000 +0000000000 +004      Hub down
+                                                        0 62 015 Code table                  +000 +0000000000 +004      Landline not selected
+                                                        0 62 016 Numeric                     +000 +0000000000 +004      Profiler in maintenance mode
+                                                        0 62 017 Numeric                     +000 +0000000000 +004      Data periods received OK
+                                                        0 62 018 Numeric                     +000 +0000000000 +004      Data periods NOT received OK
+                                                        0 62 019 Numeric                     +000 +0000000000 +006      Total number of 6-minute radar data blocks
+                                                        0 62 020 Flag table                  +000 +0000000000 +009      GOES Status flags
+                                                        0 62 021 Code table                  +000 +0000000000 +002      Profiler in checkout mode flag
+                                                        0 62 028 Code table                  +000 +0000000000 +003      Partial/degraded/full
+                                                        0 62 029 Code table                  +000 +0000000000 +005      Auxiliary data type
+                                                        0 62 101 Decibels                    +001 +0000000000 +011      Receiver noise level East/High
+                                                        0 62 102 Decibels                    +001 +0000000000 +011      Receiver noise level East/Low
+                                                        0 62 103 Decibels                    +001 +0000000000 +011      Receiver noise level North/High
+                                                        0 62 104 Decibels                    +001 +0000000000 +011      Receiver noise level North/Low
+                                                        0 62 105 Decibels                    +001 +0000000000 +011      Receiver noise level Vertical/High
+                                                        0 62 106 Decibels                    +001 +0000000000 +011      Receiver noise level Vertical/Low
+                                                        0 62 107 Decibels                    +001 +0000000000 +011      Minimum spectral value
+                                                        0 62 108 Decibels                    +001 +0000000000 +011      Maximum spectral value
+                                                        0 62 109 Kilowatts                   +000 +0000000000 +005      Power amplifier forward power
+                                                        0 62 110 Numeric                     +000 +0000000000 +007      System noise
+                                                        0 62 111 Decibels                    +001 +0000000000 +009      Transmitted power
+                                                        0 62 112 Volts                       +000 +0000000000 +009      Lowest AC line voltage
+                                                        0 62 113 Volts                       +000 +0000000000 +009      Highest AC line voltage
+                                                        0 62 114 Volts                       +000 +0000000000 +009      Current AC line voltage
+                                                        0 62 115 Dbm                         +001 +0000000000 +010      Driver output power
+                                                        0 62 116 Degrees kelvin              +001 +0000000000 +012      Inside temperature
+                                                        0 62 117 Degrees kelvin              +001 +0000000000 +012      Outside temperature
+                                                        0 62 118 Kilowatts                   +001 +0000000000 +008      Antenna forward power
+                                                        0 62 119 Kilowatts                   +001 +0000000000 +007      Antenna reflected power
+                                                        0 62 120 Numeric                     +002 +0000000000 +009      Antenna VSWR
+                                                        0 62 121 Flag table                  +000 +0000000000 +014      Data loss indicator flags
+                                                        0 62 122 Flag table                  +000 +0000000000 +007      Radar data block available flags
+                                                        0 62 127 Numeric                     +000 +0000000000 +009      Count of blocks not found
+                                                        0 62 132 Flag table                  +000 +0000000000 +004      Availability flags
+                                                        0 62 139 Flag table                  +000 +0000000000 +008      Miscellaneous statuses
+                                                        0 62 140 Flag table                  +000 +0000000000 +008      LRU status byte 1
+                                                        0 62 141 Flag table                  +000 +0000000000 +008      LRU status byte 2
+                                                        0 62 142 Flag table                  +000 +0000000000 +008      LRU status byte 3
+                                                        0 62 143 Flag table                  +000 +0000000000 +008      LRU status byte 4
+                                                        0 62 144 Flag table                  +000 +0000000000 +008      Power amplifier status byte 1
+                                                        0 62 145 Flag table                  +000 +0000000000 +008      Power amplifier status byte 2
+                                                        0 62 146 Flag table                  +000 +0000000000 +008      Site shelter status byte 1
+                                                        0 62 147 Flag table                  +000 +0000000000 +008      Site shelter status byte 2
+                                                        0 62 148 Flag table                  +000 +0000000000 +008      Exciter/sp/SKY status
+                                                        0 62 149 Flag table                  +000 +0000000000 +008      System power supply status
+                                                        0 62 150 Flag table                  +000 +0000000000 +008      Antenna status
+                                                        0 62 151 Flag table                  +000 +0000000000 +008      On-line test status
+                                                        0 62 152 Flag table                  +000 +0000000000 +008      GOES error codes byte 1
+                                                        0 62 153 Flag table                  +000 +0000000000 +008      GOES error codes byte 2
+                                                        0 62 154 Numeric                     +000 +0000000000 +008      Number of messages received ok
+                                                        0 62 155 Numeric                     +000 +0000000000 +008      Number of messages received -- bad communications
+                                                        0 62 156 Numeric                     +000 +0000000000 +008      Number of messages received -- bad values
+                                                        0 62 157 CCITTIA5                    +000 +0000000000 +160      Date/time of last error since reboot
+                                                        0 62 158 Numeric                     +000 +0000000000 +008      Error code of last error since reboot
+                                                        0 62 159 Numeric                     +000 +0000000000 +004      Amplification byte count
+                                                        0 62 160 Numeric                     +000 +0000000000 +097      UNISYS encoded error information (amplification data)
+                                                        0 62 162 Numeric                     +000 +0000000000 +004      Number of radar data blocks properly received
+                                                        0 62 163 Code table                  +000 +0000000000 +002      Data source (GOES or landline)

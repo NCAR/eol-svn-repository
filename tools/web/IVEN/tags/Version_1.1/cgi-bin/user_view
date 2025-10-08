@@ -1,0 +1,171 @@
+#! /usr/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>Displays datasets by the user processing.  This view allows the user of
+#  the Iven application to view the status of a person's processing for a
+#  project. Displays each dataset a selected user is processing and its status.
+#  </p>
+#
+# <b>Expected Params: </b>
+#  <dd>user - part of the State object.
+# <br>
+# 
+# @author Dan Sullivan
+#
+##Module-----------------------------------------------------------------------
+
+
+use strict;
+use lib "lib";
+use State;
+use Utils;
+use UserDBA;
+use CGI;
+
+require "./common";
+require "./menu";
+
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+user_view( $state, $cgi );
+
+##-----------------------------------------------------------------------------
+# @signature void user_view( State $state, CGI $cgi )
+#  <p>Functioned called by the controller to display datasets by user.</p>
+#
+# @input $state the current State
+# @input $cgi instance of CGI to use
+#
+##-----------------------------------------------------------------------------
+sub user_view
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	println( $cgi->header() );
+	println( "<html>" );
+		println( "<head>" );
+		println( "<title>Iven Product view</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+	println( "<body>" );
+	menu( $state, $cgi );
+
+	my $user = UserDBA::buildUserView( $state->{user}, $state->{project} );
+
+	my $bar = getStatusBar( $user->{datasets} );
+	println( "<br>" );
+
+	println( "<center>" );
+	println( "<table border=0 cellpadding=0 cellspacing=0 width=98%>" );
+		println( "<tr>" );
+			println( "<td width=15%>" );
+				println( "&nbsp;" );
+			println( "</td>" );
+			println( "<td width=70% align=center>" );
+				println( "<font size=+2><u><b>$user->{fname} $user->{lname}</b></u></font>" );
+			println( "</td>" );
+			println( "<td width=15% align=right>" );
+				println( "<a href=\"mailto: $user->{email}\">$user->{email}</a>" );
+			println( "</td>" );
+		println( "</tr>" );
+	println( "</table>" );
+	println( "</center>" );
+
+	println( "<br>" );
+	println( "$bar" );
+
+	my $ncols = 4;
+	println( "<center>" );
+	println( "<table border=0 cellpadding=4 cellpadding=1 width=98% class=productTable>" );
+
+		println( "<tr class=productHead>" );
+			println( "<td width=2%>&nbsp;</td>" );
+			println( "<td width=25%>Dataset</td>" );
+			println( "<td width=8%>Status</td>" );
+			println( "<td width=55%>" );
+				println( "<table border=0 cellpadding=0 cellspacing=0 width=100%>" );
+					println( "<tr class=productHead>" );
+						println( "<td width=10%>&nbsp;</td>" );	
+						println( "<td width=80% align=center>Notes</td>" );	
+						println( "<td width=10% align=right>" );	
+							my $size = @{$user->{datasets}};
+							println( "<a id=\"notes_a\" href=\"javascript: expandText( 'notes', $size, '$img_src/s_notes.gif' )\">" .
+								"<img id=\"notes_img\" border=0 src=$img_src/e_notes.gif></a>" );
+						println( "</td>" );
+					println( "</tr>" );
+				println( "</table>" );
+			println( "</td>" );
+		println( "</tr>" );
+		my $dcount = 0;
+		foreach my $ds (@{$user->{datasets}})
+		{
+			my $trclass = "dsRow";
+			$trclass = "excludeRow" if( $ds->{exclude} );
+
+			my $url = $state->getUrlString( "view" => $DATASET, "dataset" => $ds->{dsname}, "product" => $ds->{pdname} );
+			#println( "<tr class=$trclass onmouseover=\"cursorOver(this)\" onmouseout=\"cursorOut(this)\">" );	
+			println( "<tr class=$trclass>" );
+				my $edit_url = $state->getUrlString( "edit"=>$EDATASET_ADMIN, "eproduct"=>$ds->{pdname}, 
+																							"edataset"=>$ds->{dsname}, "mode"=>"update" );
+				println( "<td width=2% valign=top>" );
+					println( "<a href=\"javascript: dsAdminEditWin( \'$edit_url\' )\">" );
+						println( "<img src=$img_src/edit.gif border=0 alt=\"Edit Dataset\">" );
+					println( "</a>" );
+					if( $ds->{is_extraction} )
+					{ println( "<br><img src=$img_src/ext.gif alt=\"Extraction from $ds->{extraction_object}->{pdsource}\">" ) } 
+					println( "<br><img src=$img_src/question.gif alt=\"Question(s) about data\">" ) if( $ds->{questions} );
+				println( "</td>" );
+				println( "<td width=25%>" );
+					println( "<a href=$url>$ds->{dsname}</a>" );
+				println( "</td>" );
+				println( "<td width=8%>" );
+					println( $status_hash{$ds->{status}} );
+				println( "</td>" );
+				println( "<td width=55%>" );
+					println( "<div id=\"notes_$dcount\" style=\"position:relative;height:100px;overflow:auto;\">" );
+						println( "$ds->{admin_notes}" );
+					println( "</div>" );
+				println( "</td>" );
+			println( "</tr>" );	
+			$dcount++;
+		}
+	println( "</table>" );
+	println( "</center>" );
+	println( "</body></html>" );
+}
+
+# Returns the needed html code to display the status bar for the user.
+sub getStatusBar
+{
+	my $datasets = shift;
+
+	my ($done, $tbd, $na, $exclude, $total) = getDatasetStats( $datasets );
+	my $proc = $total - $exclude;
+	my $perc = 0;
+
+	$perc = $done/$proc * 100 if( $proc != 0 );
+	my $bar = 	"<table><tr>" .
+						"<td>" .
+							"<b>Progress: </b>" . 
+						"</td>" .  
+						"<td width=200>" .
+							"<table width=100%><tr><td bgcolor=#C4D4EC style=\"height:12px\">" . 
+								"<div style=\"height:8px; width:$perc%; font-size:3px; background-color:#04944C\"></div>" . 
+							"</td></tr></table>" . 
+						"</td>" . 
+						"<td>" . 
+							sprintf( "<b>(%2.2s of %2.2s) </b>", $done, $proc ) . 
+						"</td>" . 
+						"<td>" .
+							&nbsp(2) . "<b>Excluded: </b> $exclude" .
+						"</td>" .
+					"</tr></table>";	
+
+	return $bar;
+}
+
+1;

@@ -1,0 +1,386 @@
+<html>
+<head>
+<title>NCEP/EMC Processing</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/howto.css">
+</head>
+
+<body>
+<div class="howto_title">How To Download and Archive NCEP/EMC Precipitation Data</div>
+<hr>
+<table width=100%>
+<tr><td class="nowrap">
+<h1>Table of Contents</h1><ol>
+	<li><a href="#setup">Setup to Processing and Background</a><ol>
+		<li><a href="#setup_about">About the Data</a></li>
+		<li><a href="#setup_types">Types of Data</a></li>
+		<li><a href="#setup_datasets">The NCEP Datasets</a></li>
+		<li><a href="#setup_locations">Data Locations</a></li>
+		</ol></li>
+	<li><a href="#scripts">Ant</a><ol>
+                <li><a href="#ant_setup">Setup</a></li>
+		<li><a href="#ant_main">Main Commands</a></li>
+		    <li><a href="#ant_aux">Auxiliary Commands</a></li>
+		</ol></li>
+        <li><a href="api">Java API</a></li>
+	<li><a href="#process">The Process</a><ol>
+		<li><a href="#process_download">Downloading the Data</a></li>
+		<li><a href="#process_archive">Archiving the Data</a></li>
+		<li><a href="#process_uncompress">Uncompressing the Data</a></li>
+		<li><a href="#process_database">Putting the Data in the Database</a></li>
+		</ol></li>
+	<li><a href="#notes">Other Notes</a></li>
+</ol>
+</td><td class="nopanic">
+<h1 class="nopanic_title">Don't Panic</h1>
+<p>If you want to jump right in and find how to run the script for the month, go <a href="#ant_main">here</a>.</p>
+<p>If you are looking for the Sid Katz data, you have come to right place.  It has been renamed so it reflects the data and not the person who it comes from.</p>
+</td></tr>
+</table>
+<hr>
+
+<a name="setup"></a><h2>Setup and Processing</h2>
+<a name="setup_about"></a><h3>About the Data</h3>
+<p>The <a href="http://www.ncep.noaa.gov">National Center for Environmental Prediction 
+  (NCEP)</a> <a href="http://www.emc.ncep.noaa.gov">Environment Modeling Center 
+  (ECM)</a> provides precipitation data that EOL downloads, archives, and places 
+  into the database. The process is run every month, around the second week of 
+  the month, once Janine receives an e-mail saying the data is ready. The data 
+  can be found on the NCEP server <a href="ftp://ftpprd.ncep.noaa.gov/pub/gcp/precip/JOSS">ftpprd.ncep.noaa.gov/pub/gcp/precip/JOSS</a>.</p>
+<p class="important">This is the Sid Katz data.</p>
+
+<a name="setup_types"></a><h3>The Types of Data</h3>
+<p>There are six types of files that JOSS downloads.  They are:<ul>
+	<li><b>Ceopavn Files</b>-  There are two files per day that follow the pattern <code>ceopavn.YYYYMMDDHH</code>.</li>
+	<li><b>Daily Precipitation Files</b>- There is a single file that follows the pattern <code>prcp.dly.mmmYYYY</code>.  The file contains the gage files for each day of the month.</li>
+	<li><b>Hourly Precipitation Files</b>- There is a single file that follows the pattern <code>prcp.hrly.mmmYYYY</code>.  The file contains the gage files for each day of the month.</li>
+	
+  <li><b>Snapshot Imagery Files</b>- There is a single file that follows the pattern 
+    <code>snapshot.mmmYYYY</code>. The file contains GIF imagery.</li>
+	<li><b>ST2 4 KM Files</b>- There is a single file for each day of the month that follows the pattern <code>ST2_4km.YYYYMMDD</code>.  The files contain GRIB data files.</li>
+	<li><b>Stage IV Files</b>- There is a single file that follows the pattern <code>stage4.mmmYYYY</code>.  The file contains data files and GIF imagery.</li>
+	</ul>
+<p>The following list explains the character replacement in the above file patterns.<ul>
+	<li><b>DD</b>- The day of the month for the data in the file.</li>
+	<li><b>HH</b>- The hour of the day for the data in the file.  The hour is either 00 or 12.</li>
+	<li><b>MM</b>- The month of the data in the file.</li>
+	<li><b>YYYY</b>- The year of the data in the file.</li>
+	<li><b>mmm</b>- The first three letters of the month (all lowercase) for the data in the file.</li>
+	</ul>
+
+<a name="setup_datasets"></a><h3>The NCEP Datasets</h3>
+<p>The following is the list of datasets where the NCEP/ECM data is loaded.  The first part is the dataset id number and the name of the dataset.  The second part is which files are inserted into that dataset and which of the downloaded files they came from.</p>
+<ul>
+	<li><dt><a href="http://data.eol.ucar.edu/codiac/dss?21.004">21.004</a> Precipitation NCEP/EMC Gage Only Hourly Dataset</dt><dd>One file for each day of the month (gage.hrly.prcp.*).  The files come from the hourly precipitation file.</dd></li>
+	<li><dt><a href="http://data.eol.ucar.edu/codiac/dss?21.005">21.005</a> Precipitation NCEP/EMC Gage Only Daily Dataset</dt>
+    <dd>One file for each day of the month (gage.dly.prcp.*). The files come from 
+      the daily perception file.</dd>
+  </li>
+	<li><dt><a href="http://data.eol.ucar.edu/codiac/dss?21.087">21.087</a> Precipitation NCEP/EMC Preview Imagery</dt><dd>Several GIF files for each day with hourly, six hourly, and daily time periods.  The files come from the snapshot imagery file and the stage IV file.</dd></li>
+	<li><dt><a href="http://data.eol.ucar.edu/codiac/dss?21.088">21.088</a> Precipitation NCEP/EMC 4KM Gridded Data (GRIB) Gage Only Analysis (GG)</dt><dd>Several compressed (.Z) GRIB files for each day with hourly, six hourly, and daily time periods.  The files come from the ST2 4 KM day files.</dd></li>
+	<li><dt><a href="http://data.eol.ucar.edu/codiac/dss?21.089">21.089</a> Precipitation NCEP/EMC 4KM Gridded Data (GRIB) Multi-Sensor Analysis (ML)</dt>
+    <dd>Several compressed (.Z) GRIB files for each day with hourly, six hourly, 
+      and daily time periods. The files come from the ST2 4 KM day files.</dd>
+  </li>
+	<li><dt><a href="http://data.eol.ucar.edu/codiac/dss?21.090">21.090</a> Precipitation NCEP/EMC 4KM Gridded Data (GRIB) Radar Est. no bias removed (RD)</dt>
+    <dd>Several compressed (.Z) GRIB files for each day with hourly, six hourly, 
+      and daily time periods. The files come from the ST2 4 KM day files.</dd>
+  </li>
+      <li>
+	<dt><a href="http://data.eol.ucar.edu/codiac/dss?21.091">21.091</a> Precipitation NCEP/EMC 4KM Gridded Data (GRIB) Gage-Only 24h accumulated RFC</dt>
+	<dd>One compressed (.Z) GRIB file for each day of the month.  The files come from the ST2 4 KM day files.  This dataset was replaced by 21.095 when the files changed from rfc4 to rfc8 in Oct 2006.</dd></li>
+      <li><dt><a href="http://data.eol.ucar.edu/codiac/dss?21.092">21.092</a> Precipitation NCEP/EMC 4KM Gridded Data (GRIB) Radar Est. w/bias removal UN</dt><dd>Several compressed (.Z) GRIB files for each day with hourly, six hourly, and daily time periods.  The files come from the ST2 4 KM day files.</dd></li>
+      <li><dt><a href="http://data.eol.ucar.edu/codiac/dss?21.093">21.093</a> Precipitation NCEP/EMC 4KM Gridded Data (GRIB) Stage IV Data</dt><dd>Several compressed (.Z) GRIB files for each day with hourly, six hourly, and daily time periods.  The files come from the Stage IV file.</dd></li>
+      <li>
+	<dt><a href="http://data.eol.ucar.edu/codiac/dss?21.095">21.095</a> Precipitation NCEP/EMC 4KM Gridded Data (GRIB) Gage-Only 24h accumulated RFC</dt>
+	<dd>One compressed (.Z) GRIB file for each day of the month.  The files come from the ST2 4 KM day files.  This is a replacement for 21.091 that began Oct 2006.</dd></li>
+</ul>
+
+<a name="setup_locations"></a><h3>Data Locations</h3>
+<table border=2>
+<tr><th>/export/archive/data/eop/katz_data</th><td>The directory where the data is stored for the database.</td></tr>
+<tr><th>/net/web/data/eop/katz_data</th><td>The directory where the imagery is stored for the database so it can be viewed online.</td></tr>
+<tr><th>/work/operational/precip/NCEP_EMC/archive</th><td>The directory where tar balls are stored before they are moved to the mass store.</td></tr>
+<tr><th>/work/operational/precip/NCEP_EMC/build</th><td>The directory where the Java class files are stored.</td></tr>
+<tr><th>/work/operational/precip/NCEP_EMC/docs</th><td>The directory where documentation is stored for the NCEP/EMC data.</td></tr>
+<tr><th>/work/operational/precip/NCEP_EMC/ingest</th><td>The directory where the data is downloaded and expanded.  It is divided into year/month directories.</td></tr>
+<tr><th>/work/operational/precip/NCEP_EMC/lib</th><td>The directory where the modules are stored.</td></tr>
+<tr><th>/work/operational/precip/NCEP_EMC/logs</th><td>The directory where the logs from the scripts/modules are placed.  It is divided into year directories.</td></tr>
+<tr><th>/work/operational/precip/NCEP_EMC/src</th><td>The directory where the Java source files are stored.</td></tr>
+<tr><th>mss:/DSS/DS507.5/updates</th><td>The mass store directory where the katz tar ball is stored for Chi-Fan.</td></tr>
+<tr><th>mss:/JOSS/DATA/RAW/BY_PROJECT/CEOP</th><td>The mass store directory where the ceopavn tar balls are stored.  It is divided into year directories.</td></tr>
+</table>
+<hr>
+
+<a name="scripts"></a><h2>Ant</h2>
+<a name="ant_setup"></a><h3>Setup</h3>
+<p>If you haven't used Ant before, you will need to setup some environment variables for it to work correctly.</p>
+
+<p>In your <code>.my_defaults</code> file in your home directory, you need to assign the following variables for it to work correctly.</p>
+<div class="code">setenv ANT_HOME /usr/local/java/ant</div>
+<div class="code">setenv JAVA_HOME /usr</div>
+<div class="code">setenv CLASSPATH /net/work/lib/java/vendor/activation.jar:/net/work/lib/java/vendor/mail.jar</div>
+<div class="code">set path=($ANT_HOME/bin $JAVA_HOME/bin $path)</div>
+
+<p>Make sure to source your .my_defaults files before trying to run it.</p>
+<div class="code">source ~/.my_defaults</div>
+<p class="important">This configuration is for <code>csh</code> on the EOL systems.  If you have something different, the setup will be slightly different.</p>
+
+<a name="ant_main"></a><h3>The Main Commands</h3>
+<p>The main commands are the set of ant commands that automatically perform the processing of the NCEP/EMC data.  They are meant to be run once a month and perform all of the steps required to process the data.  They are not meant for any partial processing.  Each command will determine your user name to use for emailing purposes and request the processing month and year for the data.</p>
+<p>The <code>ant run</code> command will perform the processing for all of the NCEP/EMC data from the downloading, to the database insert, to the mass store archival for both the general month precip files and the CEOP precip files.  This command should always be the first command attempted for the month.  It should be used as follows:</p>
+<p class="important">Run these commands from /net/work/operational/precip/NCEP_EMC</p>. 
+<div class="code">ant run</div>
+<p>The <code>ant run-noceop</code> command will perform all of the processing for all of the non-CEOP data (i.e. all of the basic monthly data for the katz tarball).  It should be used only when there is a problem with the CEOP data that will not allow the full <code>run</code> command to complete successfully.</p>
+<div class="code">ant run-noceop</div>
+<p>The <code>ant run-ceop-only</code> command will perform all of the processing for the CEOP data only.  It should be used only when there is a problem with the non-CEOP data that will not allow the full <code>run</code> command to complete successfully.</p>
+<div class="code">ant run-ceop-only</div>
+<p>The <code>make-ceop-tarball</code> and <code>copy-ceop-tarball-to-mss</code> commands will perform the remainder of the CEOP tar ball processing if there is a problem with the downloading of the CEOP files.  Since these files are unrecoverable, the remaining steps can be performed immediately.  It will finish the archival with whatever data downloaded correctly.</p>
+<div class="code">ant make-ceop-tarball</div>
+<div class="code">ant copy-ceop-tarball-to-mss</div>
+
+<a name="ant_aux"></a>
+<h3>Full Command List</h3>
+<p>The auxiliary commands are to be used when an error has occurred during one of the run commands.  It allows the user to pick up the processing at a specific point after correcting the problem to finish the processing.</p>
+
+<h4>compile</h4>
+<p>The <code>compile</code> command is an auxiliary command that is called by any process that requires a Java call.  If an error occurs while this command is begin processed, there is an error in the Java source code.</p>
+
+<h4>copy-ceop-tarball-to-mss</h4>
+<p>The <code>copy-ceop-tarball-to-mss</code> command is the auxiliary command to copy the CEOP tarball in the local archive to the mass store archive location.</p>
+
+<h4>copy-month-tarball-to-mss</h4>
+<p>The <code>copy-month-tarball-to-mss</code> command is the auxiliary command to copy the katz monthly tarball in the local archive to the mass store archive location.  This will generate the log file (tarball listing) and email Chi-Fan that the tarball is on the mass store.</p>
+
+<h4>download-ceop-only</h4>
+<p>The <code>download-ceop-only</code> command is an auxiliary command that is to be used to download only the CEOP data files.</p>
+
+<h4>download-noceop</h4>
+<p>The <code>download-noceop</code> command is an auxiliary command that is to be used to download only the monthly non-CEOP data files.</p>
+
+<h4>init</h4>
+<p>The <code>init</code> command is a purely auxiliary command that never needs to be called as a command.  It is used by other commands to initialize the system.</p>
+
+<h4>init-date</h4>
+<p>The <code>init-date</code> command is the auxiliary command that is called by all of the other commands that require the user to input the month and year for processing.  It performs the parsing of the input and setting up of variables required to complete the processing.</p>
+
+<h4>insert-month-files</h4>
+<p>The <code>insert-month-files</code> command is the auxiliary command that inserts the files into the database.  This will either insert all of the files (and update the dataset dates) or is will not change the database at all.  On successful completion, the command will email Sid Katz that the data for the month is ready.</p>
+
+<h4>make-ceop-tarball</h4>
+<p>The <code>make-ceop-tarball</code> command is the an auxiliary command that is to be used to create the CEOP tarball in the local archive directory.  It will remove all of the CEOP files (and empty directories) after the files have been put into the tarball.</p>
+
+<h4>make-month-tarball</h4>
+<p>The <code>make-month-tarball</code> command is the auxiliary command that is to be used to create the monthly katz tarball in the local archive.</p>
+
+<h4>move-to-final-archive</h4>
+<p>The <code>move-to-final-archive</code> command is the auxiliary command that moves all of the untarred data into the appropriate directories in the final data archive for the database.  This will remove all of the empty directories after the data has been moved.</p>
+
+<h4>run</h4>
+<p>The <code>run</code> command is the full processing of the NCEP/EMC data.  It calls the following ordered commands and can be picked up at the point of failure.</p>
+      <ol>
+	<li>compile</li>
+	<li>init-date</li>
+	<li>-test-previous-month</li>
+	<li>download-files</li>
+	<li>make-ceop-tarball</li>
+	<li>make-month-tarball</li>
+	<li>uncompress-month-files</li>
+	<li>move-to-final-archive</li>
+	<li>insert-month-files</li>
+	<li>copy-ceop-tarball-to-mss</li>
+	<li>copy-month-tarball-to-mss</li>
+      </ol>
+
+<h4>run-ceop-only</h4>
+<p>The <code>run-ceop-only</code> command is processing for only the CEOP NCEP/EMC data.  It calls the following ordered commands and can be picked up at the point of failure.</p>
+      <ol>
+	<li>compile</li>
+	<li>init-date</li>
+	<li>download-ceop-only</li>
+	<li>make-ceop-tarball</li>
+	<li>copy-ceop-tarball-to-mss</li>
+      </ol>
+
+<h4>run-noceop</h4>
+<p>The <code>run-noceop</code> command is processing for only the monthly non-CEOP NCEP/EMC data.  It calls the following ordered commands and can be picked up at the point of failure.</p>
+      <ol>
+	<li>compile</li>
+	<li>init-date</li>
+	<li>download-noceop</li>
+	<li>make-month-tarball</li>
+        <li>uncompress-month-files</li>
+	<li>move-to-final-archive</li>
+        <li>insert-month-files</li>
+	<li>copy-month-tarball-to-mss</li>
+      </ol>
+
+<h4>-test-previous-month</h4>
+<p>The <code>-test-previous-month</code> command is a purely internal command used only by the full <code>run</code> command.  It is used for testing to see if the previous month was processed and archived.  It cannot be called from the command line.</p>
+
+<h4>uncompress-month-files</h4>
+<p>The <code>uncompress-month-files</code> command is the auxiliary command that untars all of the downloaded precip files into the files that will be put into the database.  The command will remove the original tar files once they have been untarred.</p>
+
+<a name="process"></a><h2>The Process</h2>
+<p>The following is a detailed version of the steps to process the NCEP precipitation data.  It explains the steps taken by the scripts and modules and how it can be done manually if that was needed.</p>
+
+<a name="process_download"></a><h3>Downloading the Data</h3>
+<p>The first step to the processing is downloading the data from the NCEP server. 
+  The server name, login information, and directory where the data can be retrieved 
+  are:</p>
+<div class="code">ftpprd.ncep.noaa.gov</div>
+<div class="code">anonymous (e-mail address)</div>
+<div class="code">/pub/gcp/precip/JOSS</div>
+
+<ol>
+	<li><p class="command">Log on to the server and change to the data directory.</p>
+		<p>Using the above information, the user will log on to the server and change to the data directory.</p>
+		</li>
+	<li><p class="command">Create Month Directory</p>
+		<p>The directory where the files should be downloaded should be created in the pattern of mmmYYYY where the <b>mmm</b> is the first three letters of the month (all lowercase) and <b>YYYY</b> is the year.  All of the files should be stored in this directory except the ceopavn.  (The ceopavn can be put into this directory, but need to be removed before the katz tar ball is created.)</p>
+	<li><p class="command">Download the Hourly Precipitation file.</p>
+		<p>Get the file: <code>prcp.hrly.mmmYYYY</code> where <b>mmm</b> is the first three letters of the month (all lowercase) and <b>YYYY</b> is the year.  The file will be placed in the current working directory of the user.</p>
+		</li>
+	<li><p class="command">Download the Daily Precipitation file.</p>
+		<p>Get the file: <code>prcp.dly.mmmYYYY</code> where <b>mmm</b> is the first three letters of the month (all lowercase) and <b>YYYY</b> is the year.  The file will be placed in the current working directory of the user.</p>
+		</li>
+	<li><p class="command">Download the Snapshot file.</p>
+		<p>Get the file: <code>snapshot.mmmYYYY</code> where <b>mmm</b> is the first three letters of the month (all lowercase) and <b>YYYY</b> is the year.  The file will be placed in the current working directory of the user.</p>
+		</li>
+	<li><p class="command">Download the Stage IV file.</p>
+		<p>Get the file: <code>stage4.mmmYYYY</code> where <b>mmm</b> is the first three letters of the month (all lowercase) and <b>YYYY</b> is the year.  The file will be placed in the current working directory of the user.</p>
+		</li>
+	<li><p class="command">Download the Stage II 4 KM files.</p>
+		<p>Get the file: <code>ST2_4km.YYYYMM*</code> where <b>YYYY</b> is the year and <b>MM</b> is the month.  There should be one file for each day of the month.  The files will be placed in the current working directory of the user.</p>
+		</li>
+	<li><p class="command">Download the Ceopavn files.</p>
+		<p>Get the file: <code>ceopavn.YYYYMM*</code> where <b>YYYY</b> is the year and <b>MM</b> is the month.  There should be two files for each day of the month (00 and 12 hours).  The files will be placed in the current working directory of the user.</p>
+		</li>
+	<li><p class="command">Close the Connection</p>
+		<p>Terminate the connection to the server.</p>
+		</li>
+</ol>
+<p>Here are some other general notes about the downloading of the data.</p>
+<ul>
+	<li>The downloading process is slow.  The files are pretty large ranging from around 5 MB for some of the day files to 60 MB for some of the month files.  Do not be surprised if this takes over an hour while using the module.</li>
+</ul>
+
+<a name="process_archive"></a><h3>Archiving the Data</h3>
+<p>Archiving the data is the process of creating tar balls of the downloaded files and placing them on the mass store.  Two files are created.  One for the ceopavn data and one for all of the other data.</p>
+<p class="important">As of 4/2007, the mass store copy and dependent commands are moved to the end of the processing.  This is to prevent possible confusion and duplicate emails if there is a problem with the data.</p>
+<ol>
+	<li><p class="command">Create the Ceopavn Tar Ball</p>
+		<p>Create the tar ball using the following command as a pattern.</p>
+		<div class="code">tar -cvf ceopavn.YYYYMM.tar ceopavn.*</div>
+		<p>The <b>YYYY</b> is the year of the data and the <b>MM</b> is the month.  A path for the file name may also be specified since the command should be run in the directory where the files are located.  (This prevents directories from being added into the tar ball.</p>
+		</li>
+	<li><p class="command">Remove the Ceopavn Files</p>
+		<p>Remove all of the files that were placed into the tar ball.  They are no longer needed since they are not put into the database.  JOSS only archives them on the mass store as a backup.</p>
+		</li>
+	<li><p class="command">Put the Ceopavn Tar Ball on the Mass Store</p>
+		<p>Copy the tar ball onto the mass store using the following command:</p>
+		<div class="code">/opt/dcs/bin/msrcp -pe 32767 -wpwd PWD ceopavn.YYYYMM.tar mss:/JOSS/DATA/RAW/BY_PROJECT/CEOP/YYYY/ceopavn.YYYYMM.tar</div>
+		<p>The <b>YYYY</b> is the year and <b>MM</b> is the month for the file.  The <b>PWD</b> needs to be replaced with the JOSS mass store password.</p>
+		</li>
+	<li><p class="command">Create the Katz Tar Ball</p>
+		<p>Create the tar ball using the following command pattern.</p>
+		
+    <div class="code">tar -cvf katz_mmmYYYY.tar mmmYYYY/ > mmmYYYY.log</div>
+    <p>This should be run from the directory above the directory where the files 
+      are located. The <b>mmmYYYY</b> directory should be included in this tar 
+      ball. The <b>mmm</b> is the first three letters of the month (all lowercase) 
+      and the <b>YYYY</b> is the year. The log file is created for the e-mail 
+      that is explained in two more steps.</p>
+		</li>
+	<li><p class="command">Put the Katz Tar Ball on the Mass Store</p>
+		<p>Copy the file to the mass store using the following command:</p>
+		<div class="code">/opt/dcs/bin/msrcp -pe 32767 katz_mmmYYYY.tar mss:/DSS/DS507.5/updates/katz_mmmYYYY.tar</div>
+		</li>
+	<li>
+    <p class="command">E-mail Chi-Fan the Log File</p>
+    <p>E-mail Chi-Fan the log file created during the tar ball creation. The information 
+      about what to send and his e-mail address can be found in the code of the 
+      <b>NcepArchive.pm</b> module. (It will not be placed here to prevent the 
+      address from being found by search engines and spammers.)</p>
+		</li>
+</ol>
+
+<a name="process_uncompress"></a><h3>Uncompressing the Data</h3>
+<p>Uncompressing the data is the process of either untarring, uncompressing, or both the files that were downloaded so they can be inserted into the database.</p>
+<ol>
+	<li><p class="command">Untar and Uncompress the Hourly Precipitation Files</p>
+		<p>Untar the hourly precip file that was downloaded using the following command:</p>
+		<div class="code">tar -xvf prcp.hrly.mmmYYYY</div>
+		<p>This will generate a day file for each day of the month.  These need to be uncompressed using the following command.</p>
+		<div class="code">uncompress gage.hrly.prcp.*</div>
+		<p>The tar ball that was downloaded can be removed if all of the files were extracted and uncompressed cleanly.</p>
+		</li>
+	<li><p class="command">Untar and Uncompress the Daily Precipitation Files</p>
+		<p>This is the same as the hourly, except that the <b>hrly</b> is replaced with <b>dly</b>.</p>
+		</li>
+	<li><p class="command">Untar the Snapshot Files</p>
+		<p>Untar the snapshot file that was downloaded using the following command.</p>
+		
+    <div class="code">tar -xvf snapshot.mmmYYYY</div>
+		<p>This will generate a tar file for each day of the month that will also need to be untarred using the following command.</p>
+		
+    <div class="code">tar -xvf ST2_vu.*</div>
+		<p>This will extract a lot of GIF images.  The snapshot file and the individual day files can be removed if the untarring worked correctly.</p>
+		</li>
+	<li><p class="command">Untar the Stage IV Files</p>
+		<p>Untar the stage IV file that was downloaded using the following command.</p>
+		
+    <div class="code">tar -xvf stage4.mmmYYYY</div>
+		<p>This will generate a tar file for each day of the month that will also need to be untarred using the following command.</p>
+		
+    <div class="code">tar -xvf ST4*</div>
+		<p>The will extract compressed data files and GIF images.  The stage IV file and the day tar balls can be removed if the untarring worked correctly.</p>
+		</li>
+	<li><p class="command">Untar the Stage II 4 KM Files</p>
+		
+    <p>Untar the ST2_4km files that were downloaded using the following command.</p>
+		
+    <div class="code">tar -xvf ST2_4km*</div>
+		<p>This will generated a number of different type of GRIB files.  The tar balls can removed if the untarring worked correctly.</p>
+		</li>
+</ol>
+<p>The module extracts each type of file into the base month directory in the <b>ingest</b> directory where the files were downloaded.  The database scripts assume that the files exist and are in the base directory.  So if the database scripts are going to be used, the files must be placed in those directories.  The following is how the directories should be defined for the database scripts to work properly:</p>
+
+<a name="process_database"></a><h3>Putting the Data in the Database</h3>
+<p>Putting the data into the database also includes copying the files from the ingest area where they were uncompressed to the archive location for the database.  The process the modules use is to copy the file to the archive location, insert the file into the database while updating the dates in the dataset, and then removing the file from the ingest area.</p>
+<p class="important">There is too much data for this to be done easily without a script.  If something happened that caused the script not to work, talk to someone who is familiar with the process to straighten things out.  This should not cause any inconsistencies in the database.</p>
+
+<hr>
+
+<a name="notes"></a><h2>Other Notes</h2>
+<h3>Java Upgrade / RFC4 -> RFC8</h3>
+<p>In Oct 2006, the rfc4 files were changed to rfc8 and a new dataset was created (21.095).  This caused a bunch of changes which ultimately led to the use of Ant and Java from the Perl modules.  The new Java version requires closer monitoring by the user since the data has frequent issues that cannot be handled automatically.  There is less logging to files, but more screen output.  The Java version does not send emails to the user and monitors on problems.  It only will only send the required emails to the end users (cc'ed to the user and monitors).</p>
+
+<h3>Uncompressing the Data in the Archive Module</h3>
+<p>In the most logical, and probably ideal, sense of the processing, the uncompressing 
+  should be done during the inserting of the files into the database. The files 
+  should be uncompressed, moved to the final archive directory, and then inserted 
+  into the database. Unfortunately, this is not the most feasible. The uncompressing 
+  is a slow and intensive process and should not be done on <b>hurricane</b> with 
+  the rest of the database stuff, but on <b>tornado</b>. To prevent multiple connections 
+  between the two machines in the script, it was decided that the uncompressing 
+  should happen separately from the rest of the database processing.</p>
+<p>The decision to put the functionality into the <b>NcepArchive.pm</b> module was on the idea that the uncompression was a part of the actual archive process and fit in with the name of the module.  It could have been a module of its own, but this was what was decided at the time the modules were created in an attempt to keep things as simple as possible.  (It was thought that an NcepUncompress module may not be obvious exactly what the functionality would be.)</p>
+
+<h3>File Dates</h3>
+<p>As of December 2004, the dates for the files of some of the datasets have changed 
+  on how they are inserted into the database. The dates were originally put into 
+  the database as the begin date and covered the time the file specified. Now 
+  the dates are the end dates and the begin date is determined from the time period 
+  covers up to and including the date given in the file name. This was decided 
+  after looking at the <a href="/data/gcip_eop/docs/katz_stageII_readme.txt">readme</a> 
+  file. (This did not effect the hourly and daily gage datasets.)</p>
+
+<h3>Off-line Datasets</h3>
+<p>As of August 2004, the off-line tape datasets are no longer being updated.  This is because all of the data is available in on-line datasets (see the <a href="#setup_datasets">dataset list</a>) and no one was ordering the tapes.  To simplify the process and prevent doing work that was not needed, the data is no longer being put on to tapes.  (The decision was made by Steve Williams and Janine Goldstein.)
+
+<hr>
+<div class="foot">Last Updated by Joel Clawson on 2007/09/27</div>
+
+</body>
+</html>

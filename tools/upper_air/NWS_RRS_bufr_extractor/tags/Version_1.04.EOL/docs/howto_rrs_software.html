@@ -1,0 +1,144 @@
+<html>
+<head>
+  <title>How To: RRS Software</title>
+  <link rel="stylesheet" type="text/css" href="/references/soundings/howto.css">
+</head>
+
+<body>
+  <h1>How To: NWS Radiosonde Replacement System (RRS) Software</h1>
+  <h2 class="header">From NCDC</h2>
+
+  <a name="toc"></a>
+  <h2>Table of Contents</h2>
+  <ul>
+     <li><a href="#purpose">Purpose</a></li>
+     <li><a href="#background">Background</a><ul>
+        <li><a href="bufr_fmt">The Buffer Format</a></li>
+	<li><a href="directory">Directory Structure</a></li>
+        </ul></li>
+     <li><a href="#software">Software</a><ul>
+        <li><a href="#repos">The Repository</a></li>
+        <li><a href="#files">The Files</a></li>
+	<li><a href="#changing">Changing the Files</a></li>
+	<li><a href="#make">Making the Binaries</a></li>
+	</ul></li>
+     <li><a href="#docs">Documentation</a></li>
+  </ul>
+
+
+  <a name="purpose"></a>
+  <h2>Purpose</h2>
+  <p>The purpose of this document is to describe the National Weather Service (NWS) Radiosonde Replacement System (RRS) software.  It will provide some background on the RRS, how to generate the binaries for accessing the text data from the buffer format, and how to change the provided code from NCDC to be able to read from the command line and not require any input from the user once the binary has began to run.</p>
+
+  
+  <a name="background"></a>
+  <h2>Background</h2>
+  <p>In the summer of 2005, the NWS began to replace their old MircoArt sounding sites with a GPS sounding system that is being called the Radiosonde Replacement System (RRS).  See the <a href="http://www.nws.noaa.gov/rrs/">Radiosonde Replacement System Home Page</a> for more specific details.</p>
+  <p>NCDC will continue to provide us with the data on either a realtime or monthly basis.  (At the time of the writing of this document, Scot has requested the realtime option, but it has been coming in monthly.)  The data are put into the <em>/ingest/NCDC</em> directory with the file names WWWWW_YYYYMMDDHH where WWWWW is the five digit WBAN number for the station, YYYY is the four digit year of the sounding, MM is the two digit month of the sounding, DD is the two digit day of the sounding, and HH is the two digit hour of the sounding.  All of the date/time values are the nominal time of release.  The files are in a buffer format and require the RRS software described in this document to read.</p>
+  <p>The RRS files are archived here.  See <a href="/projects/operational/sounding/NWS/docs/howto_nws_inventory.html">How To: NWS Sounding Inventory</a> for more information on the specifics for inventorying this data.</p>
+
+  <a name="bufr_fmt"></a>
+  <h3>The Buffer Format</h3>
+  <p>Each buffer file contains a single sounding containing seven separate text data files.  They are:</p>
+  <ul>
+     <li><b>WWWWW_YYYYMMDDHH_1Meta.txt</b>- Contains the metadata for the sounding (release time, release location, ascension number, etc.)</li>
+     <li><b>WWWWW_YYYYMMDDHH_2rPTU.txt</b>- Contains the raw 1 second PTU data (contains raw pressures, raw relative humidities, and raw temperatures)</li>
+     <li><b>WWWWW_YYYYMMDDHH_3GPSu.txt</b>- Contains the raw unsmoothed 1 second GPS wind data (contains GPS latitude and longitude and U and V wind components)</li>
+     <li><b>WWWWW_YYYYMMDDHH_4GPSs.txt</b>- Contains the raw smoothed 1 second GPS wind data (contains the GPS latitude and longitude and U and V wind components)</li>
+     <li><b>WWWWW_YYYYMMDDHH_5pPTU.txt</b>- Contains the processed 1 second PTU data (contains pressure, relative humidity, temperature, dew point, and geopotential height)</li>
+     <li><b>WWWWW_YYYYMMDDHH_6pGPS.txt</b>- Contains the processed 1 second GPS wind data (contains the GPS latitude and longitude and U and V wind components)</li>
+     <li><b>WWWWW_YYYYMMDDHH_7Lvls.txt</b>- Contains the standard and significant level data (contains pressure, relative humidity, temperature, dew point, geopotential height, wind speed, and wind direction)</li>
+  </ul>
+  <p>A full description of each column for each file can be found <a href="rrs_decoder.hdg">here</a>.  It contains the listing of each column for each file, the units of measurement for each column, and a longer explanation for each column.  It references code tables and other related references that can be found in their <a href="NWS_RRS_reference.doc">software development documentation</a>.</p>
+
+  <a name="directory"></a>
+  <h2>Directory Structure</h2>
+  <p>The following table is the list of directories in the <em>HOME</em> directory for the RRS software.  It is:</p>
+  <p class="code">/work/operational/sounding/NWS/RRS</p>
+  <table>
+     <tr><th class="dir">bin</th>
+         <td>The directory where all of the generated binaries are stored for running.</td>
+	 </tr>
+     <tr><th class="dir">docs</th>
+         <td>The directory for holding all of the documentation files for the RRS software.</td>
+	 </tr>
+     <tr><th class="dir">src</th>
+         <td>The directory for holding the source files and the Makefiles for generating the binaries.</td>
+	 </tr>
+  </table>
+  
+
+  <a name="software"></a>
+  <h2>Software</h2>
+  <p>NCDC provides us with the software for converting the buffer files into its separate text files.  All of the code is written in FORTRAN and has been compiled using the f95 compiler.  It does not compile using f77.  On the Fedora Core 4 version of f95, the compliation generates several warnings (mainly on a use of GOTO), but compiled successfully; the Solarais machines did not have these warnings.</p>
+  <p>There are four programs that are distributed:</p>
+  <ul>
+     <li><b>grabbufr/unixbufr</b>- Converts the distributed buffer files into a buffer file that can be used on the system.  (grabbufr - Linux; unixbufr - Solaris)</li>
+     <li><b>decoder</b>- Extracts the seven text files from the buffer file created by grabbufr/unixbufr.</li>
+     <li><b>dumpdata</b>- Generates a data dump for each value of the seven text files on the buffer file generated by grabbufr/unixbufr.</li>
+     <li><b>splitdump</b>- Splits the output generated by dumpdata into separate files for each file type.</li>
+  </ul>
+
+  <a name="repos"></a>
+  <h3>The Repository</h3>
+  <p>All of the software (and documentation) for the RRS software is under revision control using subversion.  The repository can be found at:</p>
+  <p class="code">http://svn.eol.ucar.edu/svn/dmg/tools/upper_air/NWS_RRS_bufr_extractor</p>
+  <p>For more information on subversion, see <a href="/references/howto/tools/subversion.html">How To: Subversion</a> for help on using the tool.</p>
+
+  
+  <a name="files"></a>
+  <h3>The Files</h3>
+  <p>There are five FORTRAN files provided by NCDC, one FORTRAN file that is a change of one provided by NCDC to handle command line input, and two make files that were created here.</p>
+  <ul>
+     <li><b>BUFR.f</b>- This file is used by every binary.</li>
+     <li><b>DumpData.f</b>- The file for the dumpdata program.</li>
+     <li><b>grabbufr.f</b>- The file for the Linux version of grabbufr/unixbufr.</li>
+     <li><b>Makefile_linux</b>- The Makefile to be used to generate the Linux executables.</li>
+     <li><b>Makefile_solaris</b>- The Makefile to be used to generate the Solaris executables.</li>
+     <li><b>RRS_Decoder.f</b>- The modified file for the decoder program.</li>
+     <li><b>RRS_Decoder.NCDC.f</b>- The file for the decoder program, unchanged from NCDC.</li>
+     <li><b>split_dump.f</b>- The file for the splitdump program.</li>
+     <li><b>unixbufr.f</b>- The file for the Solaris version of grabbufr/unixbufr.</li>
+  </ul>
+
+
+  <a name="changing"></a>
+  <h3>Changing the Files</h3>
+  <p>The distributed version of the decoder program requires input from the user once it begins running.  It requires the user to provide the file to be converted, the type of files to be generated (Metadata, PTU, GPS, etc.), and requires the user to press enter to terminate execution.  This is very annoying from a scripting perspective as it prevents the script from running until it is finished and must wait on user input.</p>
+  <p>To make our life easier, the RRS_Decoder.f file is changed to read from the command line and not through the execution of the program.  Luckily, NCDC has most of the code already written and we just need to uncomment out the command line section and comment the program read.</p>
+  <p>The following is the list of changes that typically have to be made to get the command line read to work correctly.  <font class="note"><b>Note:</b> All line numbers refer to FORTRAN line numbers and not the line number of the file itself.</font></p>
+  <ul>
+     <li>Around line 25 is the section for reading from the command line.  There is a section of comments specifiying this as well.  Uncomment this entire section.  (Usually starts with a <code>iargc()</code> call.)</li>
+     <li>Line 30 is the print out to the user and read to get the file name.  This needs to be commented out.  Since Line 30 exists, a new line 30 needs to be created to replace the commented one.  (I usually just print an empty string to the screen using the original line 30 as a guide.)</li>
+     <li>Line 70 is the print out to the user and read to get the list of files to be generated.  This needs to be commented out along with the rest of the print out and data read lines.  Line 70 does not need to be recreated to work correctly.</li>
+     <li>Line 150 is the print out and read to tell the user that it is finished and requests for "ENTER" to be pressed to end the program.  This needs to be commented out.  Line 150 needs to be recreated in the same way that line 30 was.</li>
+  </ul>
+
+  <p class="note"><b>NOTE:</b> Some versions of the code also will ask the user for the units of measurement for the temperature.  If this exists, this needs to be commented out as well and have the variable set to the code for &deg;C.</p>
+
+
+  <a name="make"></a>
+  <h3>Making the Binaries</h3>
+  <p>After any changes have been made to the files (or to the system), the binaries will need to be recreated.  There are Makefiles for each system that the binaries may be run on.  They should be executed using the command:</p>
+  <ul>
+     <li>Solaris Machine (tornado): <p class="code">make -f Makefile_solaris</p></li>
+     <li>Linux Machine: <p class="code">make -f Makefile_linux</p></li>
+  </ul>
+  <p>To see the individual commands used to create each binary, look in the Makefiles.</p>
+
+  <a name="docs"></a>
+  <h2>Documentation</h2>
+  
+  <ul>
+    <li><a href="/projects/operational/sounding/NWS/docs/howto_nws_inventory.html">How To: NWS Sounding Inventory</a> - The how to document on inventorying all of the NWS sounding data.</li>
+    <li><a href="howto_rrs_software.html">How To: RRS Software</a>- This document.</li>
+    <li><a href="/references/howto/tools/subversion.html">How To: Subversion</a>- The how to on using subversion.</li>
+    <li><a href="NWS_RRS_reference.doc">NWS RRS Software Design Document</a>- A Word document containing the reference information for the RRS software.  It includes code tables and other similar references.  It is several hundred pages long.</li>
+    <li><a href="http://www.nws.noaa.gov/rrs/">Radiosonde Replacement System Home Page</a>- http://www.nws.noaa.gov/rrs/</li>
+    <li><a href="README.NCDC">README.NCDC</a>- The Readme document provided by NCDC on how to create the RRS software.</li>
+    <li><a href="rrs_decoder.hdg">RRS Header Definition</a>- The document provided by NCDC describing the header fields for all of the generated text files.</li>
+  </ul>
+
+<body>
+
+</html>

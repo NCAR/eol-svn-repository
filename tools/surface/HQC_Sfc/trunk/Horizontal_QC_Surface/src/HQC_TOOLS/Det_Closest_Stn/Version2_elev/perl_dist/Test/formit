@@ -1,0 +1,5 @@
+/bin/rm web*.htm web.log
+form_webPage_output_elev.pl BAMEX_stn_list.ID 200 10 > web.log
+cp BAMEX_stn_list.ID /web/dmg/html/projects/trex/HQC/FiveMinute_RUN7/.
+cp webPage_200.htm /web/dmg/html/projects/trex/HQC/FiveMinute_RUN7/test.htm
+

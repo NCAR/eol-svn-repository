@@ -1,0 +1,88 @@
+#!/usr/bin/perl -w
+
+# Monthly stage of ATLAS METAR files to Mass Store
+# mark, 2005 mar 1
+
+$|=1;
+
+$RM='/bin/rm';
+$LS='/bin/ls';
+$MSRCP='/local/dcs/dcs-3.3/bin/msrcp -wpwd jossdata -pe 32767';
+$MSLS='/local/dcs/dcs-3.3/bin/msls';
+$TAR='/bin/tar';
+$BZIP='/usr/bin/bzip2';
+
+$srcdir='/ingest/ldm/data/atlas';
+$tmpdir='/tmp';
+$msdir='/JOSS/DATA/RAW/BY_PROJECT/ATLAS/METAR';
+
+$monitor="eol-cds-ingest\@ucar.edu";
+$subject="ATLAS METAR file save";
+
+open STDOUT, "|/bin/mail -s '$subject' $monitor" or die
+    "Couldn't redirect stdout, $!";
+open STDERR, ">&STDOUT" or die "Couldn't dup stdout, $!";
+select STDERR; $|=1;
+select STDOUT; $|=1;
+
+use FindBin qw($Script $Bin);
+use Sys::Hostname;
+$host=hostname();
+print "I am $Bin/$Script running on $host\n\n";
+
+$LOG="$Script.log";
+
+sub log_msg {
+    my ($msg)=@_;
+    my ($sec,$min,$hour,$mday,$mon,$year) = localtime(time);
+    my $timestamp=sprintf("%04d%02d%02d %02d%02d%02d", $year+1900, $mon+1,
+        $mday, $hour, $min, $sec);
+    open(LOG, ">>$LOG") or die "couldn't open $LOG, $!";
+    print LOG "$timestamp $msg";
+    close(LOG);
+}
+
+($sec,$min,$hour,$mday,$mon,$year) = localtime(time - 60*86400);
+$twomonths=sprintf("%04d%02d", $year+1900, $mon+1);
+
+
+&log_msg("Sending METAR files older than $twomonths\n");
+print("Sending METAR files older than $twomonths\n");
+
+opendir(DIR,$srcdir) or die "Couldn't open $srcdir, $!";
+@dirs=sort(readdir(DIR));
+closedir(DIR);
+@dirs=grep(/^\d{6}$/,@dirs);
+
+foreach $dir (@dirs) {
+    next unless ($dir < $twomonths);
+    print "Sending $dir\n";
+    chdir($srcdir) or die "Couldn't chdir to $srcdir, $!";
+    $src="$tmpdir/atlas.metar.$dir.tar";
+    $dest="$msdir/atlas.metar.$dir.tar.bz2";
+    $result=system("$TAR cf $src $dir");
+    if ($result) {
+	print "ERROR $result in tar.\n";
+        next;
+    }
+    $result=system("$BZIP $src");
+    if ($result) {
+	print "ERROR $result in bzip2.";
+	next;
+    }
+    log_msg("Sending $src to $dest...");
+    $result=system("$MSRCP $src.bz2 mss:$dest");
+    log_msg("status $result\n");
+    if ($result) {
+	print "ERROR in msrcp.";
+	print "After: ",`$LS -l $src.bz2`;
+	print "MSLS: ",`$MSLS -l $dest`;
+    } else {
+	print "Removing originals (NOT REALLY: TEST MODE)\n";
+	unlink("$src.bz2");
+        #system("$RM -r $dir");
+    }
+}
+
+exit(0);
+

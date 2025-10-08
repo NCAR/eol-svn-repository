@@ -1,0 +1,18 @@
+update dataset set name="PERSIANN 1 degree x 1 degree Tropical Rainfall Data" where dataset_id="ML.514";
+update dataset set name="PERSIANN 1 degree x 1 degree Tropical Rainfall Data" where dataset_id="ML.590";
+update dataset set name="Galapagos Island Profiler Real-time data only (NOAA/AL)" where dataset_id="ML.621";
+update dataset set name="Cape Grim Zurich Drop Freezing Technique Data" where dataset_id="ML.6491";
+update dataset set author_pi="(ETH Zurich)" where dataset_id="ML.6491";
+update dataset set name="Universidad de Cordoba Streamflow Data" where dataset_id="ML.6519";
+update dataset set name="PERSIANN 1 degree x 1 degree Tropical Rainfall Data" where dataset_id="ML.746";
+insert into dataset (dataset_id, name, url, doc_url, date_expected, date_updated, author_pi, preliminary_flag) values ("ML.TEST1", "TEST basic ML dataset", "http://thisisjustatest","http://thisisjustatest", NULL, NULL, "",0);
+insert into dataset_project (dataset_id, project_id, in_progress_flag, hide_flag) values ("ML.TEST1", "BEST", 0, 0);
+insert into dataset (dataset_id, name, url, doc_url, date_expected, date_updated, author_pi, preliminary_flag) values ("ML.TEST2", "TEST hide flag", "","", NULL, NULL, "",0);
+insert into dataset_project (dataset_id, project_id, in_progress_flag, hide_flag) values ("ML.TEST2", "BEST", 0, 1);
+insert into dataset (dataset_id, name, url, doc_url, date_expected, date_updated, author_pi, preliminary_flag) values ("ML.TEST3", "TEST preliminary", "http://thisisjustatest2","", NULL, NULL, "",1);
+insert into dataset_project (dataset_id, project_id, in_progress_flag, hide_flag) values ("ML.TEST3", "BEST", 0, 0);
+insert into dataset (dataset_id, name, url, doc_url, date_expected, date_updated, author_pi, preliminary_flag) values ("ML.TEST4", "TEST ongoing", "http://thisisjustatest3","http://thisisjustatest4", NULL, NULL, "",0);
+insert into dataset_project (dataset_id, project_id, in_progress_flag, hide_flag) values ("ML.TEST4", "RELAMPAGO", 1, 0);
+insert into dataset_classification (dataset_id, class_id) values ("ML.TEST1", 8);
+insert into dataset_classification (dataset_id, class_id) values ("ML.TEST1", 63);
+insert into dataset_classification (dataset_id, class_id) values ("ML.TEST1", 20);

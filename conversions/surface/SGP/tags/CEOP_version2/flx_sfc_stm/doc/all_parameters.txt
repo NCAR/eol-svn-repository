@@ -1,0 +1,93 @@
+#-----------------------------
+# files in
+#-----------------------------
+# files come from STDIN
+
+#--------------------------------------------------------------------------------------
+# All Sites
+#--------------------------------------------------------------------------------------
+# 	lat
+#	lon
+#	alt
+#--------------------------------------------------------------------------------------
+# EBBR
+#--------------------------------------------------------------------------------------
+# These are the variables which we are interested in, and which have been extracted
+# from the netCDF file by nesob_dump.  
+#       time_offset:    the times of the observations
+#       e:              latent heat flux
+#       h:              sensible heat flux
+#       c_shf1:         corrected soil heat flux 1			(at 5cm depth)
+#		g1:				soil heat flow at the surface 1
+#--------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------
+# MFR_IRT
+#--------------------------------------------------------------------------------------
+# These are the variables which we are interested in, and which have been extracted
+# from the netCDF file by nesob_dump.
+#       time_offset:    the times of the observations
+#		sfc_ir_temp:	effective surface (skin) temperature
+#		site_id= 		"sgp"
+#       facility_id= 	"C1 : Central_Facility"
+#--------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------
+# SIRS
+#--------------------------------------------------------------------------------------
+# These are the variables which we are interested in, and which have been extracted
+# from the netCDF file by nesob_dump.
+#       time_offset:    			the times of the observations
+# 		up_long_hemisp: 			Upwelling Longwave Hemispheric Irradiance
+#		down_long_hemisp_shaded:	Downwelling Longwave Hemispheric Irradiance
+#		up_short_hemisp:			Upwelling Shortwave Hemispheric Irradiance
+#		down_short_hemisp:			Downwelling Shortwave Hemispheric Irradiance
+#--------------------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------
+# SMOS
+#--------------------------------------------------------------------------------------
+# These are the variables which we are interested in, and which have been extracted
+# from the netCDF file by nesob_dump.
+#       time_offset:    the times of the observations
+#		wspd:			wind speed
+#		wdir:			wind direction
+#		temp:			air temperature
+#		rh:				relative humidity
+#		bar_pres:		baometric pressure (hPa converted to kPa)
+#		precip:			precipitation total (mm)
+#--------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------
+# MET (replaced SMOS in 10/2009)
+#--------------------------------------------------------------------------------------
+# These are the variables which we are interested in, and which have been extracted
+# from the netCDF file by nesob_dump.
+#       time_offset:    the times of the observations
+#		wspd_vec_mean:	wind speed
+#		wdir_vec_mean:	wind direction
+#		temp_mean:		air temperature
+#		rh_mean:		relative humidity
+#		atmos_pressure:	barometric pressure (hPa converted to kPa)
+#		tbrg_precip_total_corr:	precipitation total (mm)
+#--------------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------
+# SWATS
+#--------------------------------------------------------------------------------------
+# These are the variables which we are interested in, and which have been extracted
+# from the netCDF file by nesob_dump.
+#       time_offset:    the times of the observations
+#		depth:			Sensor Depth below surface
+#		tsoil_W:		Soil Temperature, West Profile
+#		watcont_W:		Volumetric Water Content, West Profile (m3/m3)
+#		tsoil_E:		Soil Temperature, East Profile
+#		watcont_E:		Volumetric Water Content, East Profile (m3/m3)
+#		facility_id= 	"E9 : Ashton"
+#--------------------------------------------------------------------------------------
+
+
+

@@ -1,0 +1,12 @@
+This directory contains the modules used by the master_maint and master_query scripts.
+The Row.pm and Table.pm modules were developed for the original data loading notes page
+but were generic enough to be used by this application - so don't be confused if the
+comments within them refer to the 'data notes'.
+
+The EQuery.pm module is a nice tool which allows the user to query the CODIAC Empress database
+using the empcmd utility.  This module is also used in the QCODIAC tool, the latest version
+can be found here: /web/docs/dpg/BEST_SW/GENERAL_TOOLS/EQuery
+
+
+-Dan May, 2004
+

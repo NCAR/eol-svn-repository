@@ -1,0 +1,27 @@
+c---------------------------------------------------------------------
+c ARCSyM atmospheric 2d variables (SHEBA column)
+      real *4 lat_col(ic,jc,mt), lon_col(ic,jc,mt),
+     +        psfc_col(ic,jc,mt), tsfc_col(ic,jc,mt),
+     +        t2m_col(ic,jc,mt), t2m_min_col(ic,jc,mt),
+     +        t2m_max_col(ic,jc,mt), t1m_soil_col(ic,jc,mt),
+     +        soil_wat_col(ic,jc,mt), rainc_col(ic,jc,mt),
+     +        rainnc_col(ic,jc,mt), precip_col(ic,jc,mt),
+     +        rain_col(ic,jc,mt), snow_col(ic,jc,mt),
+     +        swe_col(ic,jc,mt), tot_cld_frac_col(ic,jc,mt),
+     +        cld_base_col(ic,jc,mt), lhf_col(ic,jc,mt),
+     +        shf_col(ic,jc,mt), ust_col(ic,jc,mt),
+     +        swd_sfc_col(ic,jc,mt), swu_sfc_col(ic,jc,mt),
+     +        lwd_sfc_col(ic,jc,mt), lwu_sfc_col(ic,jc,mt),
+     +        swd_toa_col(ic,jc,mt), swu_toa_col(ic,jc,mt),
+     +        lwu_toa_col(ic,jc,mt)
+      common /arcmip_col_2d/ lat_col, lon_col,
+     +                       psfc_col, tsfc_col, t2m_col,
+     +                       t2m_min_col, t2m_max_col, t1m_soil_col,
+     +                       soil_wat_col, rainc_col, rainnc_col,
+     +                       precip_col, rain_col, snow_col,
+     +                       swe_col, tot_cld_frac_col, cld_base_col,
+     +                       lhf_col, shf_col, ust_col,
+     +                       swd_sfc_col, swu_sfc_col, lwd_sfc_col,
+     +                       lwu_sfc_col, swd_toa_col, swu_toa_col,
+     +                       lwu_toa_col
+c---------------------------------------------------------------------

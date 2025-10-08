@@ -1,0 +1,208 @@
+<HTML>
+<body bgcolor=white>
+
+<TITLE>Dataset Processing Inventory </TITLE>
+
+<center><H1><u>Dataset Processing Inventory</u></H1></center>
+<br>
+<center><H2>Updated: 20 March 2003 </H2></center>
+<br>
+<H3><b>GCIP/EOP</b></H3>
+<br>
+<b>TOI: The EOP began in October 1995 and runs for approx. 5 years.</b>
+<br>
+
+<b>AOI:
+<ul>
+   <li>  LAT: 28 to 50 (N)
+   <li>  LON: -80 to -115 (W)
+</ul>
+</b>
+
+<br>
+<b>CODIAC ID Prefix: 21xx </b>
+<br>
+<b>GCIP Charge #.</b>
+<br>
+<p>
+<b>Products: 
+<ul>
+   <li> NCEP (Sid Katz) data (GRIB4KM, GIF, precip)
+   <li> OKMESO 15min precip and 5 minute surface (Password Protected)
+   <li> SWATS (SM/ST Soil) Data - DONE
+   <li> USGS Hydrology Datasets
+   <li> Walker Branch Watershed Tower Stand Alone
+   <li> Tilden Data
+</ul>
+</b>
+</p>
+<br>
+<p>
+<!-- ================================================= -->
+<h3><u>Surface Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+<!-- ================================================= -->
+   <tr><td>NCEP Datasets ("Sid Katz" data)  </td>
+       <td> <font color=blue> Done through 30 September 2002</font>     </td>
+       <td>
+        Note: We do not process any of this data for the EOP.
+              We do process the gage data for the ESOPs.
+        <br>
+     <ul>
+       <li>Daily Gage Data   (Online:  960101-09/2002)
+       <li>Hourly Gage Data  (Online:  950111-09/2002)
+       <li>Preview GIFs      (Offline: 971201-09/2002)
+       <li>4KM GRIB files    (Offline: 960501-09/2002)
+       <li>DTU Catalogue of All available datasets.
+       <li>Station Information
+      </ul>
+      <p>
+       Old Notes: the station list is missing thousands of stations
+       that are in the precip data.  When we process the gage data for the ESOPs
+       we drop all stations that are not in the station list (nwsli.uniq).
+       We also drop all records that are duplicated, since we can
+       not tell which record is the best. For the EOP, all data is
+       provided asis.
+      </p>
+      <br>
+       </td>
+   </tr>
+ 
+<!-- ================================================= -->
+
+   <tr><td>OKMESO Datasets  </td> 
+       <td> <font color=blue> DONE.  See CODIAC.</font>     </td>
+       <td>  
+       <ul>
+          <li>OKMESO 15min Precip (Derived - DONE for 19980101 - 19990831).
+          <li>OKMESO 15min Surface (Orig OCS Format - leaf wetness, etc.)
+                                            (DONE for 19980101 - 19990831).
+          <li>OKMESO 5min Surface (Derived - DONE for 19980101 - 19990831).
+          <li>OKMESO 5min Surface (Orig OCS Format -
+                                             DONE for 19980101 - 19990831).
+          <li>OKMESO Soil Moisture (DONE for 19980101 - 19990831).
+       </ul>
+       <p>
+Old Notes: the OKMESO data should be ftp'd to us monthly (?)
+        at /data6/ocs.  Our original contact was Justin Greenfield
+        (jgreen@ROSSBY.METR.ou.edu) who ftp's to ingest.joss.ucar.edu
+        (which is storm). His login is "ocs" with password of "OKmeso**".
+        There appears to be a month delay before they ftp the data.
+ 
+        As of Jan 2000, we don't expect to get any more data from
+        Justin in the "old" format. Starting with Dec 1999, expect
+        all data to be in "new" format from Dec 1999 on.
+<p>
+        As of 25 June 2001,  DS says, "
+        The OKMESO ver 3.0 data is for 1998 and 1999, and
+        both years are available to the SGP97, SGP99, and
+        GCIP/EOP groups (with separate passwords as given
+        to each group)."
+<p>
+        Following Loaded onto CODIAC:
+  <ul>
+    <li> OKMESO Matric Potential 1998 data
+    <li> OKMESO DeltaT data
+    <li> OKMESO Interim Soil Moisture 1999 from CD
+    <li> OKMESO Interim Soil Moisture 1999 from updated, ver 1.1 CD
+    <li> OKMESO Interim Soil Moisture 1998 data to replace Matric Potential data
+    <li> OKMESO Interim Soil Moisture 1997 data
+  </ul>
+</p>
+       </td> 
+   </tr>
+<!-- ================================================= -->
+
+  <tr><td> SWATS (SM/ST Soil) Data </td>
+      <td> <font color=blue> DONE</font>     </td>
+      <td> (DS) In-house and on-line "as is" in NetCDF per SFW 6/4/01.
+           If ARS data comes in, may pullout 2 SWATS parms (east/west several depths)
+           and combine with ARS.   See reprocessed data
+            in-house and turned in to 35,000 divided files on CODIAC as EOP dataset.   
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=21.059" 
+            target="_top"> See CODIAC ID 21.059</a>). Cross linked from EOP
+            to SGP97, SGP99, NESOB97.  
+<p>
+            As of 25 June 2001, DS says,
+            "The SWATS data covers from 4/96-9/00, and is in
+            netCDF format. All the data is available to the
+            GCIP/EOP, SGP97, SGP99, GCIP/NESOB-96, and
+            GCIP/NESOB-97 projects. (All together there are
+            about 32,000 files, because the data have been
+            put into day files, by station.)                   
+      </td>
+   </tr>
+ 
+<!-- ================================================= -->
+
+   <tr><td> USGS Streamflow </td>
+       <td> <font color=blue> DONE (961001-010930) </font> </td>
+       <td>
+           (<a href="http://data.eol.ucar.edu/codiac/dss/id=21.012" target="_top">
+              CODIAC ID 21.012</a>).
+
+            USGS Notes: Bill Kirby @ USGS organizes.
+               USGS Contact is John UnRuh (may not work Fridays)
+               jwunruh@usgs.gov 303-236-4882 x291
+               USGS ftp'd data to:
+               ftp ingest.joss.ucar.edu
+               usgs; geo%data
+       </td>
+   </tr>
+ 
+   <tr><td> USGS Rsrvr Daily </td>
+       <td> <font color=blue> DONE (961001-010930) </font> </td>
+       <td> Provide as is
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=21.013" target="_top">
+              CODIAC ID 21.013</a>).
+       </td>
+   </tr>
+
+   <tr><td> USGS COOP Rsvr</td>
+       <td> <font color=blue> DONE - as available (960901-010930) </font> </td>
+       <td> Provide as is
+           (<a href="http://data.eol.ucar.edu/codiac/dss/id=21.014" target="_top">
+              CODIAC ID 21.014</a>) (Month End). Done with all that was provided.
+       </td>
+   </tr>
+ 
+   <tr><td> USGS Stage Only </td>
+       <td> <font color=blue> DONE (as available) </font>     </td>
+       <td> Provide as is
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=21.020" target="_top">
+              CODIAC ID 21.020</a>).
+       </td>
+   </tr>
+
+<!-- ================================================= -->
+
+   <tr><td>Walker Branch Watershed Tower Stand Alone</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>
+           NOAA/ATDD. 30 min data in LST.
+           /data10/ESOP98_EAOP98/walker_branch.
+           Have 1995-1998. Met data high on tower.
+           SL has put out as a stand-alone dataset.
+       </td>
+   </tr>
+<!-- ================================================= -->
+
+   <tr><td>Tilden Data</td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td>
+         Bondville data, Ft. Peck, MT, etc.
+       </td>
+   </tr>
+<!-- ================================================= -->
+
+
+</table>
+<b>-------------------End GCIP/EOP----------------------- </b>
+</HTML>

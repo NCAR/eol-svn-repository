@@ -1,0 +1,20 @@
+#
+sort		# Action
+0		# Record length (Variable)
+1               # Number of input files
+ESOP95sfcstns.txt	# input file
+2		# Number of keys
+ascending       # Key 1 direction lat
+fixed           #       location
+16              #       starting column
+8               #       length
+numeric         #       format
+external        #       value interpretation
+ascending       # Key 2 direction lon
+fixed           #       location
+26              #       starting column
+10              #       length
+numeric         #       format
+external        #       value interpretation
+file            # Output
+ESOP95sfcstns.txt.sort   # Output file name

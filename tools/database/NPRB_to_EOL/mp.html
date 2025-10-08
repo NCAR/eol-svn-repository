@@ -1,0 +1,309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+  <title>A compiler for formal metadata</title>
+  <link rel="P3Pv1" href="http://geology.usgs.gov/w3c/p3p.xml">
+  <link rel="stylesheet" type="text/css" href="mp_files/common.css">
+  <link rel="stylesheet" type="text/css" href="mp_files/local.css">
+</head><body>
+<!-- BEGIN USGS Header Template -->
+<div id="usgscolorband">
+	<div id="usgsbanner">
+		<div id="usgsidentifier"><a href="http://www.usgs.gov/"><img src="mp_files/header_graphic_usgsIdentifier_white.jpg" alt="USGS - science for a changing world" title="U.S. Geological Survey Home Page" height="72" width="178"></a></div>
+		<div id="usgsccsabox">
+			<div id="usgsccsa">
+			  <br><a href="http://www.usgs.gov/">USGS Home</a>
+			  <br><a href="http://www.usgs.gov/ask/">Contact USGS</a>
+			  <br><a href="http://search.usgs.gov/">Search USGS</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="usgstitle">
+	<p>Formal metadata: information and software</p>
+</div>
+<!-- END USGS Header Template -->
+
+
+<p><a href="http://geology.usgs.gov/tools/metadata/">Formal metadata information and software</a></p>
+
+<h1>mp: A compiler for formal metadata</h1>
+
+<p>This program is a compiler to parse formal metadata, checking the
+syntax against the <a href="http://www.fgdc.gov/metadata/csdgm/">
+FGDC Content Standard for Digital Geospatial Metadata</a> and
+generating output suitable for viewing with a web browser or text
+editor.  It runs on Linux and UNIX systems and on PC's running all
+versions of Microsoft Windows (95 and up including XP).  MP generates
+a textual report indicating errors in the metadata, primarily in the
+structure but also in the values of some of the scalar elements (that
+is, those whose values are restricted by the standard).</p>
+
+<p>The compiler, its source code, executables for UNIX (Solaris and Linux)
+and Microsoft Windows, and <a href="http://geology.usgs.gov/tools/metadata/tools/doc/metadata/mp.html">its
+own formal metadata</a> are available through <a href="http://geology.usgs.gov/tools/metadata/"><tt>&lt;http://geology.usgs.gov/tools/metadata/&gt;</tt></a></p>
+
+<p>A separate document shows the
+<a href="http://geology.usgs.gov/tools/metadata/tools/doc/metadata/mp-revision.html">revision history of mp</a>
+(that page is generated automatically by extracting the information from
+Process_Step elements found in mp's metadata).
+</p>
+
+<h2>Getting the software</h2>
+
+<div style="margin: 1em;">
+  <table summary="Download options" style="padding: 8px; background-color: rgb(187, 255, 221);" border="0" cellpadding="4" cellspacing="0">
+    <tbody>
+      <tr valign="top"><td style="white-space: nowrap;">Source:</td><td><a href="http://geology.usgs.gov/tools/metadata/src.tar.gz" title="gzipped tar file">src.tar.gz</a></td><td style="font-size: small;">Gzipped tar file containing source code of all programs and documentation</td></tr>
+      <tr valign="top"><td style="white-space: nowrap;">Executables:</td><td><a href="http://geology.usgs.gov/tools/metadata/mp-2.9.13.zip" title="zip package includes source and documentation">mp-2.9.13.zip</a></td><td style="font-size: small;">Zip package for Microsoft Windows</td></tr>
+      <tr valign="top"><td style="white-space: nowrap;">Web version:</td><td><a href="http://geo-nsdi.er.usgs.gov/validation/" target="_blank" title="Online web form version">Metadata validation service</a></td><td style="font-size: small;">No need to download; this may be all you need</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>Diagram showing mp's function</h2>
+
+<a href="http://geo-nsdi.er.usgs.gov/files.shtml"><img src="mp_files/mp-small.png" alt="diagram showing input and output of mp and related software for processing metadata" border="0"></a>
+
+<h2>Usage</h2>
+
+Basic usage is
+<pre>    <code>mp [options] input_file</code>
+</pre>
+where <tt>input_file</tt> is the name of a text file containing metadata
+encoded as described in the <a href="http://geology.usgs.gov/tools/metadata/tools/doc/encoding.html">encoding format
+document</a> or in SGML conforming to a specific <a href="http://geology.usgs.gov/tools/metadata/tools/doc/csdgm2.dtd">
+Document Type Definition (DTD)</a>.  These command-line options are available:
+<div align="center">
+<table summary="table showing command-line arguments and describing their effects" border="0" cellpadding="2" cellspacing="0" width="80%">
+<tbody><tr><td><code>-c cfile</code></td><td>obtains configuration information from <tt>cfile</tt></td></tr>
+<tr><td><code>-e efile</code></td><td>directs syntax errors to <tt>efile</tt></td></tr>
+<tr><td><code>-t tfile</code></td><td>creates text output in <tt>tfile</tt></td></tr>
+<tr><td><code>-h hfile</code></td><td>creates html output in <tt>hfile</tt></td></tr>
+<tr><td><code>-f ffile</code></td><td>creates FAQ-style html output in <tt>ffile</tt></td></tr>
+<tr><td><code>-s sfile</code></td><td>creates sgml output in <tt>sfile</tt></td></tr>
+<tr><td><code>-d dfile</code></td><td>creates DIF  output in <tt>dfile</tt></td></tr>
+<tr><td><code>-x xfile</code></td><td>creates XML  output in <tt>xfile</tt></td></tr>
+<tr><td><code>-l code</code></td><td>indicates element names are in the <a href="#lang">language</a> identified by <tt>code</tt></td></tr>
+</tbody></table>
+</div>
+Note that these symbols <tt>cfile</tt>, <tt>ffile</tt> and so forth
+represent the full names of files appropriate for your operating
+system, and may include directory path separators (on Windows this
+is the backslash <tt>\</tt> and on Unix the slash <tt>/</tt>).
+<br>
+
+<p>Syntax error messages indicate the nature of discrepancies between
+the input file and the standard, and the line numbers of the relevant
+elements in the input file.  If <code>-e efile</code> is not specified,
+syntax errors are written to <i>stderr</i>, which is usually the console
+(for MS-DOS) or the terminal from which the compiler is launched.</p>
+
+<h2>Input</h2>
+
+mp can read
+<dl style="margin-left: 1em;">
+  <dt><a href="http://geology.usgs.gov/tools/metadata/tools/doc/encoding.html">Indented text</a></dt>
+  <dd>
+    Since the FGDC Content Standard for Digital Geospatial Metadata, as
+    the name implies, specifies only the contents of metadata files and
+    not their encoding, it was necessary to devise a specification for
+    metadata encoding in order to develop and use this compiler.  That
+    encoding format is purely textual and the fidelity of the compiler
+    to this format is fanatical.
+  </dd>
+  <dt>XML or SGML</dt>
+  <dd>
+    The FGDC metadata standard was written before XML existed.  At that
+    time, SGML did exist but its use was not common outside some
+    specific communities such as the publishing community (remember
+    Ventura Publisher?). Since then, XML has become more widely
+    accepted and supported, and mp was modified to read <u>well-formed
+    XML</u> documents that use <a href="http://geology.usgs.gov/tools/metadata/tools/doc/sgmltags.txt">specified element
+    names</a> arranged in accord with the <a href="http://geology.usgs.gov/tools/metadata/tools/doc/fgdc-std-001-1998.dtd">
+    Document Type Definition</a>.
+  </dd>
+</dl>
+
+<div style="color: rgb(153, 0, 0); font-size: larger; font-style: italic;">
+Note: <tt>mp</tt> does <b>not</b> read word-processor documents, it only
+reads plain text, SGML, and XML!
+</div>
+
+<h2>Output</h2>
+
+Aside from the error report, output is generated only in the
+formats you specifically request (meaning that no other output is
+generated by default).  Use the command-line options to specify
+the output file names and formats that you want.
+
+<h2>Examples</h2>
+
+In these examples, the name of the input file is <tt>catfish.met</tt>.
+
+<pre>    <code>mp catfish.met -e catfish.err</code>
+</pre>
+
+A report of errors is written to the file <tt>catfish.err</tt>.
+
+<pre>    <code>mp catfish.met -e catfish.err -h catfish.html</code>
+</pre>
+
+In addition to the error report, an outline-style HTML page is
+created, named <tt>catfish.html</tt>.
+
+<pre>    <code>mp catfish.met -e catfish.err -h catfish.html -f catfish.faq.html</code>
+</pre>
+
+In addition to the error report and outline-style HTML page, a
+FAQ-style HTML page is created, named <tt>catfish.faq.html</tt>.
+<br>
+
+Because the command line can become long and complex, you can
+simplify the process by <a href="http://geology.usgs.gov/tools/metadata/tools/doc/config-simple.html">using a
+configuration file</a>.
+
+<h3>Notes on output formats</h3>
+
+<ul>
+<li><b>Text</b> output, if requested, follows the <a href="http://geology.usgs.gov/tools/metadata/tools/doc/encoding.html">
+encoding format</a>.  This provides a check of the compiler; any such
+program should be able to reproduce its input without significant loss of
+information.<br></li>
+
+<li><b>HTML</b> output, if requested, uses descriptive lists to arrange the elements
+hierarchically.  The <tt>HEAD</tt> element of the metadata contains
+<tt>META</tt> elements corresponding to the <a href="http://geology.usgs.gov/tools/metadata/tools/doc/dublin.html">Dublin
+Core</a>.</li>
+
+<li><b>FAQ-style HTML</b> output, if requested, uses the general arrangement
+of information found in <a href="http://geology.usgs.gov/tools/metadata/tools/doc/ctc/">Metadata in Plain Language</a>
+and re-expresses the metadata in a manner that is easier to read.  This
+format is not parseable in subsequent software processing.  To see how
+mp writes standard metadata elements in this output format, consult
+<ul>
+  <li><a href="http://geology.usgs.gov/tools/metadata/tools/doc/plain.txt">a specially built input file</a>,
+  </li><li><a href="http://geology.usgs.gov/tools/metadata/tools/doc/plain.cfg">the config file used to process it with mp</a>, and
+  </li><li><a href="http://geology.usgs.gov/tools/metadata/tools/doc/plain.faq.html">the FAQ-style output</a> that mp generated for it.
+</li></ul>
+<a href="http://geology.usgs.gov/tools/metadata/tools/doc/dublin.html">Dublin core elements</a> are added to the HEAD
+element as META tags.<p>
+
+<b>NOTE:</b>  mp now provides in its HTML output a link to each of
+the other output formats that you requested when running mp.  These
+links are relative to the current directory by default, and will work
+correctly when someone retrieves a metadata record directly through
+a web server.  However, HTML metadata records retrieved through the
+Clearinghouse gateway interface come tagged with the URL of the gateway,
+consequently these links will not work by default with HTML records
+found through the gateway interface.  To make these links work without
+regard to the retrieval method, place a <tt>BASE</tt> tag into the
+<tt>HEAD</tt> element of the output HTML code.  As you might guess,
+mp can do this for you, but it needs to know the URL where your
+metadata will be available as web pages.  It gets this information
+from a <a href="http://geology.usgs.gov/tools/metadata/tools/doc/config.html">config file</a> entry as follows:
+</p><pre>output:
+  html:
+    base: <i>URL</i>
+</pre>
+So if your web site has a URL like
+<pre>  http://www.our-data.org/metadata/
+</pre>
+that will contain your metadata records, put this into your config file:
+<pre>output:
+  html:
+    base: http://www.our-data.org/metadata/
+</pre>
+Obviously you have to use the <tt>-c config_file</tt> command line option
+for mp, substituting for <tt>config_file</tt> the name of the actual config
+file you'll be using.
+</li>
+
+<li><b>SGML</b> output uses the eight-character tags proposed by
+the FGDC Clearinghouse Working Group.  The SGML output is designed to work
+with a <a href="http://geology.usgs.gov/tools/metadata/tools/doc/dtd.html">SGML Document Type Definition (DTD)</a> that I have
+developed and tested.</li>
+
+<li><b>XML</b> output uses the eight-character tags given in the 1998
+version of the CSDGM.  The XML output is designed to work with a
+<a href="http://geology.usgs.gov/tools/metadata/tools/doc/fgdc-std-001-1998.dtd">XML Document Type Definition (DTD)</a> that
+I have developed and tested. <font color="#990000"><b>NOTE:</b> the DTD won't
+be displayed in the main browser window</font> because it consists of DTD
+entries, all of which begin with &lt; and end with &gt;.  The web browser
+thinks these are some weird kind of HTML tag, so it ignores all of them,
+leaving you with nothing.  To see the DTD, choose Page Source from the
+View menu of the browser.  Or if you choose Save As from the File menu,
+you can open the DTD in a text editor.</li>
+
+<li><a href="http://gcmd.gsfc.nasa.gov/User/difguide/difman.html"><b>Directory
+Interchange Format (DIF)</b></a> output will require editing to fix
+inconsistencies between the DIF and FGDC metadata standards, and to add
+information required by DIF that is not clearly identified in the FGDC
+scheme, such as <tt>Entry_ID</tt>.</li>
+
+</ul>
+
+<a name="lang"></a>
+<h2>Language support</h2>
+
+<div style="margin-left: 2em;">
+<p>mp is able to interpret metadata element names written in several
+languages.  To use this feature, include the <code>-l</code> option
+on the command line or the <code>language</code> option within the
+<code>input</code> section of the <a href="http://geology.usgs.gov/tools/metadata/tools/doc/config.html">config file</a>.
+In each case the language is specified using a 2-letter abbreviation
+from the following table:</p>
+
+<table summary="table relating two-letter language codes to the name of the language they refer to" bgcolor="#eeefff" border="1" cellpadding="4" cellspacing="0">
+  <tbody><tr><td scope="row"><code>en</code></td><td>English (default)</td></tr>
+  <tr><td scope="row"><code>es</code></td><td>Spanish</td></tr>
+  <tr><td scope="row"><code>ca</code></td><td>Catalan</td></tr>
+  <tr><td scope="row"><code>id</code></td><td>Indonesian</td></tr>
+  <tr><td scope="row"><code>fr</code></td><td>French</td></tr>
+</tbody></table>
+
+<p>Translations should be regarded as a work in progress.  I seek help
+with them, especially with languages that are not currently implemented
+and with new profiles and extensions.  A <a href="http://geology.usgs.gov/tools/metadata/tools/doc/names.html">separate
+table</a> shows the current translation of element names in the various
+languages supported.  Feel free to discuss with me any ways you would
+like to help with this effort.</p>
+</div>
+
+<h2>Technical contact:</h2>
+
+<pre>    Peter N. Schweitzer
+    Mail Stop 954, National Center
+    U.S. Geological Survey
+    Reston, VA 20192
+
+    Tel: (703) 648-6533
+    FAX: (703) 648-6252
+    Email: <a href="mailto:pschweitzer@usgs.gov">pschweitzer@usgs.gov</a>
+</pre>
+
+<!-- BEGIN USGS Footer Template -->
+<div id="usgsfooter">
+	<p id="usgsfooterbar">
+		<a href="http://www.usgs.gov/laws/accessibility.html" title="Accessibility Policy (Section 508)">Accessibility</a>
+		<a href="http://www.usgs.gov/foia/" title="Freedom of Information Act">FOIA</a>
+		<a href="http://www.usgs.gov/laws/privacy.html" title="Privacy policies of the U.S. Geological Survey.">Privacy</a>
+		<a href="http://www.usgs.gov/laws/policies_notices.html" title="Policies and notices that govern information posted on USGS Web sites.">Policies and Notices</a>
+	</p>
+
+	<p id="usgsfootertext">
+		<a href="http://www.takepride.gov/"><img src="mp_files/footer_graphic_takePride.jpg" alt="Take Pride in America logo" title="Take Pride in America Home Page" height="58" width="60"></a>
+		<a href="http://usa.gov/"><img src="mp_files/footer_graphic_usagov.jpg" alt="USA.gov logo" title="USA.gov: Government made easy" height="26" width="90"></a>
+		<a href="http://www.doi.gov/">U.S. Department of the Interior</a> |
+		<a href="http://www.usgs.gov/">U.S. Geological Survey</a><br>
+		URL: <a href="http://%28none%29/tools/metadata/tools/doc/mp.html">http://(none)/tools/metadata/tools/doc/mp.html</a><br>
+		Page Contact Information: <a href="http://geology.usgs.gov/peter/">Peter Schweitzer</a><br>
+		Page Last Modified: Friday, 21-Jan-2011 15:00:22 EST</p>
+	
+</div>
+<!-- END USGS Footer Template -->
+
+
+</body></html>

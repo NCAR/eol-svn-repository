@@ -1,0 +1,125 @@
+Our software expects the following fields, in this order.
+Note that a DATE/TIME field preceeds these fields, but 
+since all data files have DATE/TIME as the first field 
+it has been left out of these examples.
+
+AIR TEMP REL HUM  SOIL TMP WIND SP  WIND DIR  SOLAR    PRECIP 
+   F        %        F      MI/HR    DEGREES  W/M**2   INCHES 
+
+------ What follows are the various formats found in the data files, 
+followed by a list of files that use that format.
+
+---
+Air Temp  REL HUM   Soil Tmp  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Rad Flux  Total   
+F@4.9ft      %      F@4in     mi/hr     mi/hr                         Kcal m-2  pcp (in)
+
+co18.ucr, ne03.ucr, ne04.ucr, ne05.ucr, ne06.ucr, ne07.ucr, ne09.ucr, ne10.ucr, ne12.ucr, 
+ne13.ucr, ne17.ucr, ne22.ucr, ne23.ucr, ne25.ucr, ne26.ucr, ne30.ucr, ne46.ucr, ne48.ucr, 
+ne51.ucr, ne52.ucr, ne54.ucr, ne65.ucr, sd20.ucr, sd21.ucr, sd28.ucr, sd64.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Rad Flux  Total       LEAF  
+F@4.9ft      %      F@4in     mi/hr     mi/hr                         Kcal m-2  pcp (in)  WETNESS 
+
+ne61.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Rad Flux  Total     BAROMET 
+F@4.9ft      %      F@4in     mi/hr     mi/hr                         Kcal m-2  pcp (in)     mB   
+
+ne53.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Rad Flux  Total     Air Temp  Air Temp  HEATUNIT
+F@4.9ft      %      F@4in     mi/hr     mi/hr                         Kcal m-2  pcp (in)  F@4.9ft   F@4.9ft   40F DEG 
+
+ne55.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Rad Flux  Total     MaxSoilT  Soil Tmp    LEAF  
+F@4.9ft      %      F@4in     mi/hr     mi/hr                         Kcal m-2  pcp (in)  F@4in     F@4in     WETNESS 
+
+ne14.ucr, ne15.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Rad Flux  Total     SoilTemp  SoilTemp
+F@4.9ft      %      F@4in     mi/hr     mi/hr                         Kcal m-2  pcp (in)  F@2in     F@4in   
+
+ne56.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Rad Flux  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Total     Rad-Hor.  SoilTemp  Soil Tmp
+F@4.9ft      %      F@4in     Kcal m-2  mi/hr     mi/hr                         pcp (in)  langley   F@8in     F@4in   
+
+ne87.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Rad Flux  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Total     Rad-Hor.  SoilTemp  SoilTemp
+F@4.9ft      %      F@4in     Kcal m-2  mi/hr     mi/hr                         pcp (in)  langley   F@8in     F@20in  
+
+ne121.ucr
+
+---
+Air Temp  REL HUM   Rad Flux  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Total     Rad-Hor.  Soil Tmp
+F@4.9ft      %      Kcal m-2  mi/hr     mi/hr                         pcp (in)  langley   F@4in   
+
+sd69.ucr, sd70.ucr, sd81.ucr, sd92.ucr, sd102.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Total     Rad Flux  MaxSoilT  Rad-Hor.  Rad-SE    Rad-S     Rad-SW ,
+F@4.9ft      %      F@4in     mi/hr     mi/hr                         pcp (in)  Kcal m-2  F@4in     langley   langley   langley   langley"
+
+co57.ucr, co58.ucr, co59.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Rad Flux  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Total     Rad-Hor.    LEAF  
+F@4.9ft      %      F@4in     Kcal m-2  mi/hr     mi/hr                         pcp (in)  langley   WETNESS 
+
+ia68.ucr, ia90.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Rad Flux  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Total     Rad-Hor.
+F@4.9ft      %      F@4in     Kcal m-2  mi/hr     mi/hr                         pcp (in)  langley 
+
+ia91.ucr, mo95.ucr, mo101.ucr, ne62.ucr, ne63.ucr, ne82.ucr, ne96.ucr, ne97.ucr, 
+ne98.ucr, ne100.ucr, ne122.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Rad Flux  Total     MaxSoilT  Gust5Sec  BAROMET 
+F@4.9ft      %      F@4in     mi/hr     mi/hr                         Kcal m-2  pcp (in)  F@4in     mi/hr     PRESSURE
+
+mn125.ucr, mn132.ucr, mt130.ucr, mt131.ucr, nd71.ucr, nd72.ucr, nd73.ucr, nd74.ucr, nd75.ucr, nd76.ucr, 
+nd77.ucr, nd83.ucr, nd85.ucr, nd86.ucr, nd88.ucr, nd89.ucr, nd103.ucr, nd104.ucr, nd105.ucr, nd106.ucr, 
+nd107.ucr, nd108.ucr, nd109.ucr, nd110.ucr, nd111.ucr, nd112.ucr, nd113.ucr, nd114.ucr, nd116.ucr, 
+nd117.ucr, nd118.ucr, nd119.ucr, nd120.ucr, nd124.ucr, nd126.ucr, nd127.ucr, nd128.ucr, nd129.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Rad Flux  Total     MaxSoilT  BARAMET   Gust5Sec
+F@4.9ft      %      F@4in     mi/hr     mi/hr                         Kcal m-2  pcp (in)  F@4in     PRESSURE  mi/hr   
+
+nd84.ucr, nd99.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Rad Flux  Total     UVB Flux
+F@4.9ft      %      F@4in     mi/hr     mi/hr                         Kcal m-2  pcp (in)  Kcal m-2
+
+ne01.ucr
+
+---
+Air Temp  REL HUM   Soil Tmp  Wind Sp.  Wind Mag  VECT DIR  VECT SD   Rad Flux  Total     Sam Temp  SamSoilT  SamSoilT
+F@4.9ft      %      F@4in     mi/hr     mi/hr                         Kcal m-2  pcp (in)  F         F@2in     F@4in   
+
+sd19.ucr
+
+---
+Sam Temp  REL HUM   DIRECTIN  Wind Sp.    RAD     Total     SamSoilT  
+F           %-S        AV.    mi/hr       LY      pcp (in)  F@4in    
+
+ks32.ucr, ks33.ucr, ks34.ucr, ks35.ucr, ks36.ucr, ks37.ucr, ks39.ucr, ks40.ucr, ks41.ucr, 
+ks78.ucr, ks79.ucr, ks80.ucr
+
+---
+Sam Temp  REL HUM   DIRECTIN  Wind Sp.    RAD     Total     SamSoilT    LEAF  
+F           %-S        AV.    mi/hr       LY      pcp (in)  F@4in     WETNESS 
+
+ks31.ucr, ks38.ucr, ks93.ucr

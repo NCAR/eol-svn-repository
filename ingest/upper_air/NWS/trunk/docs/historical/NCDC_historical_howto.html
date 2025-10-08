@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type"
+ content="text/html; charset=ISO-8859-1">
+  <title>NCDC Monthly Inventory HOWTO</title>
+  <meta name="author" content="Joel Clawson">
+</head>
+<body>
+<div style="text-align: center;">
+<h1>National Climate Data Center (NCDC)</h1>
+<h2>Monthly Sounding Archiving and Inventory</h2>
+<br>
+<hr style="width: 100%; height: 2px;">
+<div style="text-align: justify;">
+<ol id="mozToc">
+<!--mozToc h3 1 h4 2 h3 3 h4 4 h5 5 h6 6--><li><a href="#mozTocId885677">Background</a></li>
+  <li><a href="#mozTocId878895">Binary Sounding Files</a>
+    <ol>
+      <li><a href="#mozTocId637471">Renaming Files</a></li>
+      <li><a href="#mozTocId835742">Directory Structure Setup</a></li>
+      <li><a href="#mozTocId918701">Archive the Files</a></li>
+    </ol>
+  </li>
+  <li><a href="#mozTocId315616">ASCII Sounding Files</a>
+    <ol>
+      <li><a href="#mozTocId511824">Inventory Setup</a></li>
+      <li><a href="#mozTocId47143">Inventory the Files</a></li>
+    </ol>
+  </li>
+  <li><a href="#mozTocId215428">Other Notes of
+Interest</a></li>
+</ol>
+<hr style="width: 100%; height: 2px;">
+<h3><a name="mozTocId885677" class="mozTocH3"></a>Background</h3>
+<p>This document is an expanded document of the <a
+ href="NWS_upperair_ingest_README">NWS_upperair_ingest_README</a>
+created by Darren Gallant for the ingesting, archiving, and
+inventorying of the NCDC sounding data.&nbsp; It is meant to more fully
+flesh out the process using Darren's scripts and provide a historical
+reference for the process.<br>
+</p>
+<hr style="width: 100%; height: 2px;">
+<h3><a name="mozTocId878895" class="mozTocH3"></a>Binary Sounding Files</h3>
+<p>The binary files are archived using a combination of scripts and
+linux console commands.&nbsp; The binary files are named XXXdddd.Syy
+where XXX is the station id, dddd is the asension number (the first
+digit is the try of the drop), and the yy is the last two digits of the
+year of the data.<span style="font-weight: bold;"><br>
+</span></p>
+<h4><a name="mozTocId637471" class="mozTocH4"></a>Renaming Files</h4>
+<p>The <span style="font-weight: bold;">pgac</span> station (Guam)
+does not provide the binary files with the same naming convention as
+the rest of the sites.&nbsp; It is assumed that this is because the
+coumputers that send the files have a file name length limit which
+causes the last character of the file name to be omitted.&nbsp; This
+last digit is suppose to the last digit of the year the sounding was
+taken.&nbsp; The command to rename the files is:<br>
+</p>
+<div style="text-align: center;"><code>ren "pgac*.S0" "pgac#1.S0Y"</code><br>
+</div>
+<p>The <span style="font-weight: bold;">Y</span> is the final digit of
+the year of the sounding.&nbsp; So, for 2004 data, the <span
+ style="font-weight: bold;">Y</span> would be a 4.<br>
+</p>
+<p><span style="color: rgb(255, 0, 0);"><span style="font-weight: bold;">At
+the end of the processing year, the data needs to be checked to make
+sure that the files are renamed correctly.&nbsp; This ensures that the
+end of the year data does not accidently get archived with the next
+year's data.<br>
+</span></span></p>
+<h4><a name="mozTocId835742" class="mozTocH4"></a>Directory Structure
+Setup</h4>
+<p>Before the binary files can be moved into their archive location,
+the directory structure needs to be created.&nbsp; This can be done
+with the <a href="/work/ncdc/binary_files/create_dir.pl">create_dir.pl</a>
+script.&nbsp; This creates the following directory structure.&nbsp; It
+creates a new directory for each region (alaska, continental_us,
+central_america, and pacific_islands).&nbsp; For each region, it
+creates a directory for each station in the region based on the values
+in a hash for the region defined in the script.&nbsp; The directory
+structure is created in the current working directory, not necessarily
+the binary_files directory that is being used to archive the binary
+files.&nbsp; <span style="color: rgb(0, 0, 153);">It is recommended
+that a directory for the year archive is created as the root directory
+and the script run from that directory.&nbsp; This will keep the binary
+files for a year together and easier to put onto the mass store
+later.&nbsp; This directory structure would follow the following
+pattern $NCDC_HOME/binary_files/$year/$region/$station.<br>
+</span></p>
+<h4><a name="mozTocId918701" class="mozTocH4"></a>Archive the Files</h4>
+<p>Once the directory structure has been created, the binary files can
+be moved to their archive directory.&nbsp; This is done with the <a
+ href="/work/ncdc/binary_files/organize_binary.pl">organize_binary.pl</a>
+script.&nbsp; It gzips each binary file and moves it to the correct
+directory for the region and station defined by a hash at the beginning
+of the script.&nbsp; <span style="color: rgb(255, 0, 0);"><span
+ style="font-weight: bold;">This script will need to updated to handle
+the files for a year.</span></span><br>
+</p>
+<hr style="width: 100%; height: 2px;">
+<p><span style="color: rgb(255, 0, 0);"><span style="font-weight: bold;"></span></span></p>
+<h3><a name="mozTocId315616" class="mozTocH3"></a>ASCII Sounding Files</h3>
+<p>The ASCII files are archived using a combination of scripts and
+linux console commands.&nbsp; The ASCII files are named dddddyy.mm
+where
+ddddd is the station id, yy is the last two digits of the year for the
+data, and the mm is the month of the data.</p>
+<h4><a name="mozTocId511824" class="mozTocH4"></a>Inventory Setup<br>
+</h4>
+<p>Before an inventory of the ASCII files can be done, an input file
+needs to be created.&nbsp; The file is created using the following
+command:<br>
+</p>
+<div style="text-align: center;"><code>ls -lsa ?????YY.??.* &gt;
+out_file</code><br>
+</div>
+<p>where the YY is the year being inventoried and out_file is the name
+of the output file to store the output of the ls command.<br>
+</p>
+<h4><a name="mozTocId47143" class="mozTocH4"></a>Inventory the Files</h4>
+<p>Once the input file is created, the ASCII files can be
+inventoried.&nbsp; This is done with the <a
+ href="/work/ncdc/check_NCDC_inventory.pl">check_NCDC_inventory.pl</a>
+script.&nbsp; The script reads in the output file created in the
+previous step and creates an inventory log file for all of the ASCII
+files gathered for the year.&nbsp; <span style="color: rgb(255, 0, 0);"><span
+ style="font-weight: bold;">The script needs to be updated to handle
+the data to be inventoried, the name of the input file, and the name of
+the inventory output file.<br>
+</span></span></p>
+<hr style="width: 100%; height: 2px;">
+<h3><a name="mozTocId215428" class="mozTocH3"></a>Other Notes of
+Interest</h3>
+<p style="text-align: justify;">Most of this is just for some record of
+note so the information is not lost if Darren's scripts are used to
+inventory the data or if someone is reading his
+NWS_upperair_ingest_README file to clarify some of the issues that I
+(Joel) had when I first began reading and processing the data.<br>
+</p>
+<ul style="text-align: justify;">
+  <li>Darren used the YYMM_thru_YYmm.out convention of naming his
+inventory files.&nbsp; The YY is the year of the inventory. The MM is
+the start month of the inventory (mostly 01).&nbsp; The mm is the last
+month of the inventory (and matched the current month processed).</li>
+  <li>Darren's check_NCDC_inventory.pl script created the previous file
+and used a file he named YYMM_thru_YYmm.dir which has the same naming
+conventions as the *.out file.&nbsp; In the readme, he created the .dir
+file with a dir command.&nbsp; The dir command is an alias he used for
+ls -lsa.&nbsp; There can be some other issues with the ls -lsa command
+and the columns that are outputted.&nbsp; The script may need to be
+changed to match the columns of the current setup for the ls -lsa.</li>
+  <li>Most of Darren's scripts need some amount of editing before being
+run for the month.&nbsp; Some need input/output files redefined for the
+month.&nbsp; Others need to have the new month information added to
+handle the inventory for the month.</li>
+  <li>The order scripts need to be run, are not necessarily in order of
+how they are presented in Darren's readme.&nbsp; This has been
+mentioned previously, but it is important to read the entire document
+and learn the order of the scripts that need to be run before starting
+the processing.&nbsp; (I just mention this because I tend to assume
+that the instructions are in order of how they should be processed and
+messed me up the first time going through the process.)<br>
+  </li>
+</ul>
+<hr style="width: 100%; height: 2px;">Last Update by Joel Clawson on
+2004/10/18<br>
+<p><span style="color: rgb(255, 0, 0);"><span style="font-weight: bold;"><br>
+</span></span></p>
+<br>
+</div>
+</div>
+</body>
+</html>

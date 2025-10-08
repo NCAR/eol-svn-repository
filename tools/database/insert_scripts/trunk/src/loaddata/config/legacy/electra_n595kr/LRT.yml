@@ -1,0 +1,76 @@
+dataset:
+- title_content: titleSep
+- name: <PROJECT>
+- archive_ident: '999.999'
+- title: Low Rate (LRT - 1 sps) Navigation, State Parameter, and Microphysics Flight-Level Data
+- summary: This data set includes airborne measurements obtained from the NSF/NCAR L188 Electra aircraft (Tail Number N595KR) operated by NCAR from 1973-1977. This dataset contains low rate navigation, state parameter, and microphysics flight-level data in netCDF format collected during the <PROJECT> project.
+- begin_date: '1001-01-01 00:00:00'
+- end_date: '7998-12-31 23:59:59'
+- visible: 0
+- auth_reqd: 1
+- eula_reqd: 1
+- version_number: '1.0'
+- quality: 2
+- ingest_location: /scr/raf/Prod_Data/<PROJECT>
+- archive_location: /FS/EOL/<year>/<project>/aircraft/electra_n595kr/NTI
+- filename_pattern: (\E\E\E\E).(\Y\Y\Y\Y\M\M\y\y).[\H\H\m\m\S\S]_{\H\H\m\m\S\S}.PNI.nc
+- startdate_pattern: YYYY-MM-yy HH:mm:SS
+- enddate_pattern: YYYY-MM-yy HH:mm:SS
+- filelength: ''
+- minimum_latitude: '-90.0'
+- maximum_latitude: '90.0'
+- minimum_longitude: '-180.0'
+- maximum_longitude: '180.0'
+- CODIAC_specific_fields: titleSep
+- category_id: 2
+- platform_id: 1084
+- is_eol_data: 1
+- format: 130
+- host: hpss
+- frequency_id: 4
+- spatial_type: point
+- point_of_contact_id_codiac: ''
+- internal_contact_id_codiac: 179
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+- dodsable: 0
+- t_subset: 0
+- event_subset: 1
+- file_subset: 0
+- order_allow_compress: 1
+- DTS_specific_fields: titleSep
+- source_contact_id_dts: 
+- internal_contact_id_dts: 
+- ingest_contact_id_dts: 
+- ingest_status_id_dts: 2
+- load_contact_id_dts: 
+- load_data_location: '*nc'
+- load_status_id_dts: 6
+- approve_contact_id_dts: 
+- approve_status_id_dts: 6
+- author_id_dts: 
+- note_type_id: 4
+- note_text: Loaded with new load_data_proj script
+- optional_fields: titleSep
+- archive_location_2: ''
+- filename_pattern_2: ''
+- startdate_pattern_2: ''
+- enddate_pattern_2: ''
+- filelength_2: ''
+- format_2: ''
+- host_2: ''
+- archive_location_3: ''
+- filename_pattern_3: ''
+- startdate_pattern_3: ''
+- enddate_pattern_3: ''
+- filelength_3: ''
+- format_3: ''
+- host_3: ''
+- description: ''
+- iso_citation_role: ''
+- contact_id_codiac: ''
+- datacite_contributor_type: ''
+- iso_citation_role_2: ''
+- contact_id_codiac_2: ''
+- datacite_contributor_type_2: ''

@@ -1,0 +1,836 @@
+<HTML>
+<body bgcolor=white>
+
+<TITLE>Dataset Processing Inventory </TITLE>
+
+<center><H1><u>Dataset Processing Inventory</u></H1></center>
+<br>
+<center><H2>Updated: 25 July 2002 </H2></center>
+<br>
+<H3><b>GCIP/EAOP99 East (LSA-East)</b></H3>
+<br>
+<b>TOI: 01 Oct 1998 through 30 Sept 1999 (Water Year) </b>
+<br>
+
+<b>AOI:  LSA-East
+<ul>
+   <li>  LAT:  33 to 43 (N)
+   <li>  LON: -76 to -89(W)   (WAS -78)
+</ul>
+</b>
+<h4>
+WARNING: Some charts incorrectly show the LSA-E area of interest
+         to be 30 to 43(N) and -78 to -89(W). Ask SL if in doubt. Also,
+         Florida is NOT included in the EAOP99 (LSA-E) Area of Interest.
+</h4> 
+<br>
+<p>
+NOTE: This is the Ohio-Tennesse River Basin area plus a few more states
+      (i.e., IL, IN, OH, PA, NY, Maryland, VI, WV, KY, TN, NC, GA, AL). SL
+      says some of these states are just barely included in the this basin
+      so data for those states may not be collected. (Verify these statements.)
+</p> 
+<br>
+<b>CODIAC ID Prefix: 37.xxx </b>
+<br>
+<b>GCIP Charge #.</b>
+<br>
+<p>
+<b>Products: </b>
+<ul>
+   <li><a href="http://data.eol.ucar.edu/codiac/dss/id=37.017" target="_top
+">Hourly Surface Composite - DONE </a>
+   <li><a href="http://data.eol.ucar.edu/codiac/dss/id=37.015" target="_top
+">Specials Surface Dataset - DONE </a>
+   <li><a href="http://data.eol.ucar.edu/codiac/dss/id=37.018" target="_top
+">15-min Precip Composite  - DONE </a>
+   <li><a href="http://data.eol.ucar.edu/codiac/dss/id=37.019" target="_top
+">Hourly Precip Composite  - DONE </a>
+   <li><a href="http://data.eol.ucar.edu/codiac/dss/id=37.020" target="_top
+">Daily Precip Composite   - DONE </a>
+   <li><a href="http://data.eol.ucar.edu/codiac/dss/id=37.012" target="_top
+">Daily COOP Surface - DONE   </a>
+   <li><a href="http://data.eol.ucar.edu/codiac/dss/id=37.011" target="_top
+">USGS streamflow - DONE   </a>
+   <li><a href="http://data.eol.ucar.edu/codiac/dss/id=37.009" target="_top
+">USGS reservoir - DONE    </a>
+   <li><a href="http://data.eol.ucar.edu/codiac/dss/id=37.021" target="_top">Final Station List - DONE  </a>
+</ul>
+<br>
+<!-- ================================================= -->
+<h4><u><font color=green> EAOP99-East TBD List as of 19 Feb 2002</font></u></h4>
+<!-- ================================================= -->
+<ol> <font color=green>
+<ul><br></ul>
+<li>For <a href="#15minpcp"> 15min precip Composite</a>:
+    <ul>
+       <li>Review Readme and unhide dataset
+    </ul>
+<ul><br></ul>
+<li>For <a href="#hlypcp"> Hrly precip Composite</a>:
+    <ul>
+       <li>Link to Cook Cty and Imperial Valley pcp.
+       <li>Review Readme and unhide dataset
+    </ul>
+ 
+<ul><br></ul>
+<li>For <a href="#dlypcp">Daily precip Composite</a>:
+    <ul> 
+       <li>Link to Cook Cty and Imperial Valley Daily pcp.
+       <li>Review Readme and unhide dataset
+    </ul> 
+ 
+</ol>
+<br>
+<br>
+<p>
+<a name="HSC"> <a>
+<!-- ================================================= -->
+<h3><u><a href="http://data.eol.ucar.edu/codiac/dss/id=37.017" target=_top">
+Hourly Surface Composite Datasets:</a></u></h3>
+<!-- ================================================= -->
+ 
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>Air Quality (EPA) (AIRS)  </td>
+       <td> <font color=blue> N/A</font>     </td>
+       <td>Can not download hrly data from web.
+           Would have to use Freedom of Information Act!
+           Not worth the effort.
+           <b>Indiana Department of Environmental Mgt AQ Net</b> ~8 sites.
+           Note that there is a 6 month delay before AQ data are available?
+           <b> Kentucky Div for AQ Met </b>has ~10 sites. ~2 sites with
+           weekly rainfall. <b>Pennsylvania Dept of Environmental Protection
+           Met Dat ~75 sites. MO Air Pollution Control Program Network Met.
+           Dept of natural Resources Air quality (MO DNR AQ).
+           Data for all states come from single web site.
+       </td>
+   </tr>
+
+   <tr><td> ASOS </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> See /ingest/modem/capture/asossao </td>
+   </tr>
+
+   <tr><td> AWOS </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Included in sfc data from NCDC.  </td>
+   </tr>
+
+   <tr><td> Coshocton, OH hourly met</td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> (JAG) See SL's email. There's met for the EAOP98 TOI
+            and precip for EAOP99-E TOI. 1 met site with hrly data? Plus there
+            are 10 to 15 precip sites with daily met and daily precip. Hrly pcp
+            also extracted. AKA: USDA/ARS NAEW or USDA/ARS N Appalachian
+            Experimental Watershed 11 precip gages, 21 runoff site,
+            1 met site with soil info.
+       </td>
+   </tr>
+
+   <tr><td> DATSAV3 NCDC </td>
+       <td> <font color=blue> Done </font>     </td>
+       <td> <a href="http://www.joss.ucar.edu/dpg/INGEST/datsav3_ingest/"
+               target="_top"> (See DATSAV3 status page by JAG.)</a>
+       </td>
+   </tr>
+
+   <tr><td> Great Lakes Hourly Met </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Auto ingest. (JAG) GLERL raw data in /ingest/glfs/alt </td>
+   </tr>
+
+   <tr><td> Ill. Climate Network (ICN) </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Hourly Data. Available on-line? SFW has contacted source.
+            Data (ISWS - 19 sites) Check /data/ftp/isws on Storm. 
+            New download at: http://www.sws.uiuc.edu/warm/datalist.asp?
+ 
+            SL says "Online data starts in Oct98.  It includes July
+            through Sept in the data available, but there are no links to
+            them at present." Data does not seem to be available via the web.
+
+            See Don's email regarding this conversion. <i>Some of the data 
+            may contain press and dew pt and if processed appropriately,
+            we could get that data in the output too.</i>  As of 27 June 2001,
+            the web site only carries monthly data.
+       </td>
+   </tr>
+
+   <tr><td> Kellogg LTER in MI  </td>
+       <td> <font color=blue> DONE </font> </td>
+       <td> SL grabbed daily met and pcp. Hourly may not exist.
+            SL has requested hourly.  There are 15 Long-Term Ecological
+            Research Sites thru US.  Coweeta LTER in GA, N Temperate Lakes 
+            LTER in WI, and Kellogg Biological Stn LTER in MI.
+
+            <font color=red> 
+            (JAG) Put out as Stand Alone because of Soil temps. Not Done. </font>
+            CODIAC Doc complete. All Kellogg data is here for the 
+            LSA-E 1999 it is in: /work/LSAE_EAOP99/kellogg.
+            <b>Hrly sfc Done wanted confirmation that using correct winds.
+             but went with best guess. See JAG's Kellogg conversion page.</b>
+       </td>
+   </tr>
+
+   <tr><td> NCARS </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG) North Carolina Agricultural Research Service (NCARS)
+            Weather and Climate Network Operated by NC State Climate Office
+            + NCARS. Research stns and field labs.
+            See /(data10)/LSAE_EAOP99/ncars/.  SL says: During
+            the EAOP-99 period NCARS was in the process of upgrading
+            each site to a fully equipped tower.  So most sites have a
+            format change at some point.  All data from the towers have 
+            twr in the file name. There should be a readme for both the
+            towers and non-towers.  These have lat/lon/elev and
+            instrumentation for each site.
+       </td>
+   </tr>
+
+   <tr><td>NCSU  </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Same as NCARS?YES - so done.    North Carolina State
+            Univ. automated stns.  13 sites. 
+       </td>
+   </tr>
+
+   <tr><td> NPN (Profiler) Hourly Sfc</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> See latest NCDC_PROFILER/raw_data. The data are available.
+       </td>
+   </tr>
+
+   <tr><td>Oak Ridge Nat'l Lab (Hrly/Dly)  </td>
+       <td> <font color=blue> Done </font>     </td>
+       <td> The 1 met site at Oak Ridge is from NOAA/ATDD (network)
+            and should have Walker Crk Branch in full name. Hourly LST data.
+            See /(data10)/ESOP98_EAOP99 (LSA-E)/oak_ridge_net*.
+            Have Nov 1994 to Feb 1999.  Oak Ridge National Lab in DOE ORNL 
+            Reservation in Tenn.  2 precip sites. 2 streamflow sites. 
+            Some soil info.  SL is checking 6 Apr 2001. The 
+            ORNL single met site data is also here for the LSA-E 1999 in:
+            /work/LSAE_EAOP99/oak_ridge. Done by JAG 20 July 2001.See email
+            for any bad values found.
+       </td>
+   </tr>
+
+   <tr><td> PAAWS </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) Purdue Automatic Ag Wx Stn Network
+             9 stns in IN - Hourly Sfc in /(data10)/LSAE-EAOP99/paaws.
+             This dataset has several QC flags included. DS will apply the 
+             Gust QC flag since the HQC will NOT QC the Gust value. 
+             <i>EXPECT TO SEE QC'd GUST VALUES!!! UNHEATED pcp gages set 
+             to dubious ("D") for Oct thru Apr - VERIFY. </i> 
+             See also PAAWS_readme.txt.  <p>See readme from SL dated 24 Jan 2000:
+             "For PAAWS, we will use the wind gust flag supplied
+             by the source (since we do not QC this parameter).
+             When the flag appears, the wind gust will be flagged 
+             as dubious.  The PAAWS flags on wind speed and wind
+             direction will be ignored.
+
+             For PAAWS precipitation, for the months Oct thru Apr
+             all precip values will be flagged as dubious due to 
+             the use of unheated gages in winter conditions."
+       </td>
+   </tr>
+ 
+   <tr><td> NRCS/SMST SCAN hrly sfc</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> In-house. See /work/LSAE_EAOP99/scan. Pay no attention to the "site" files. (JAG)</td>
+   </tr>
+
+   <tr><td> Tilden Meyers' Hourly Met </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> (DS) FluxNet. AmeriFlux </td>
+   </tr>
+
+   <tr><td> TVA Met Hourly Data  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG) Tenn Valley Authority Met Data. 3 Sites.
+       </td>
+   </tr>
+
+   <tr><td> U of KY Farm Hourly Data  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) University of Kentucky Research Farm Data.
+             2 sites (Spindletop and Woodford County).
+             On Web and SL grabs.  (/(data10)/LSAE_EAOP99/ky_farm)
+             1 New stn in Jan 99.
+       </td>
+   </tr>
+
+   <tr><td> USDA/ARS PSWMRL (Same as Mahantango/ARS?)</td> 
+       <td> <font color=blue> N/A </font>     </td>
+       <td> USDA/ARS Pasture Systems and Watershed Management
+            Research Laboratory Data on the East Mahantango Crk
+            watershed (7.3km2) in east-central Penn.
+            1 met site, 4 precip sites, 19 well obs. 
+            <font color=red> Out of AOI?</font>. These people have not responded
+            and we don't expect to ever get this according to SL. SL says to
+            FORGET about this dataset. We can't get.
+       </td>
+   </tr>
+
+   <tr><td>Walker Branch Watershed <i>Tower</i> </td> 
+       <td> <font color=red> EOP Link 21.065 </font>     </td>
+       <td> SL added link to EOP dataset. NOAA/ATDD. 30 min data in LST. 
+            /(data10)/ESOP98_EAOP99 (LSA-E)/walker_branch. 
+           Have 1995-1998. Met data high on tower. SL has put
+           out as stand alone dataset?? Same as Tilden or ORNL? NO.
+           As of 9 July 2001, this dataset was not available according
+           to SL. Will probably just do a link to the web page.</td>
+   </tr>
+
+<!-- ================================================= -->
+<!Unknown datasets considered for HSC but included     -->
+<!-- ================================================= -->
+   <tr bgcolor="#FFFFCC"><th width=200> Datasets Not Included in HSC</th>
+       <th width=100>Reason for exclusion</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray>ARMCART SMOS  </font> </td>
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray> In Southwestern SGP area, 
+            but NOT in EAOP99 (LSA-E) AOI.
+       </font> </td>
+   </tr>
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray>Auburn Univ Meso  </font> </td>
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray> Hourly. Alabama - 13 automated sites.
+       </font> </td>
+   </tr>
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray>Coweeta LTER in GA</font> </td>
+       <td> <font color=gray> N/A </font> </td>
+       <td> <font color=gray> We will not be getting this dataset
+            according to SL 8/23/00. Not Available? </font></td>
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray>GAEMN  </font> </td>
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray> 15m/Hrly.  Georgia Automated Environmental
+           Monitoring Network. Data run by Univ of Georgia. 28 sites.
+       </font> </td>
+   </tr>
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray>GA Forestry Met  </font> </td>
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray> Hourly. Georgia Forestry Commision Met Data.
+            22 sites possibly same as GAEMN.
+       </font> </td>
+   </tr>
+ 
+   <tr bgcolor=#C0C0C0><td> <font color=gray>Ill DOT  </font> </td>
+       <td> <font color=gray> N/A </font> </td>
+       <td> <font color=gray> Illinois Dept of Transportation.  31 sites.
+            Wants $$, SL says  won't get.
+       </font> </td>
+   </tr>
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray> MOCAWS </font> </td>
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray> Hourly. Missouri Commercial Agriculture Wx
+            Stn Net 16 sites. MO is not in AOI.  Only the boot of MO is
+            in AOI.
+       </font> </td>
+   </tr>
+ 
+   <tr bgcolor=#C0C0C0><td> <font color=gray>MODOC  </font> </td>
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray> Hourly. Missouri Dept of Conservation Fire
+            Wx Net 8 sites. Outside of AOI.
+       </font> </td>
+   </tr>
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray>MI State Univ AWS  </font> </td>
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray> Hourly. Michigan State Univ. Automated Wx
+            Station Network Dat. 7 sites.  SL says won't get.
+       </font> </td>
+   </tr>
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray>MSEA  </font> </td>
+       <td> <font color=gray> N/A </font> </td>
+       <td> <font color=gray> Management Systems Evaluation Areas Project
+        Data. 1 site.
+       </font> </td>
+   </tr>
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray>RAMAN  </font> </td>
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray>  Regional Atmospheric Monitoring and
+             Analytical Net. NOAA/Atmospheric Turbulence and Diffusion
+             Div.  ATDD RAMAN. 14 met towers in Cumberland Mtns to
+             Great Smoky Mtns plus some in Great Valley in Eastern Tenn.
+             One site at Oak Ridge, TN. SL said that people who
+             control RAMAM data said that they never give out their data,
+             so we will NOT receive this data.
+       </font> </td>
+   </tr>
+
+   <tr bgcolor=#C0C0C0><td><font color=gray>Univ of TN-Knoxville</font></td>
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray>  SL says U of Tenn AG will not send data
+             for LSA-EAST. As of at least Aug. 99, SL says this network
+             no longer exists. Univ. of TN-Knoxville Agricultural Wx Stn
+             Network.
+       </font> </td>
+   </tr>
+ 
+   <tr bgcolor=#C0C0C0><td> <font color=gray>Univ of WI AWON  </font> </td>
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray> Univ of Wisconsin Ag Wx Obs Net (AWON) Data.
+            18 sites
+       </font> </td>
+   </tr>
+
+   <tr bgcolor=#C0C0C0><td><font color=gray>USDA/ARS Goodwin Crk</font></td>    
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray>  USDA/ARS Goodwin Creek Experimental Watershed
+             Located in Bluff Hills basin of N Mississippi, Southwest
+             of Oxford Mississippi. Been here for 16 yrs 32 precip sites.
+       </font> </td>
+   </tr>
+ 
+   <tr bgcolor=#C0C0C0><td> <font color=gray>USFS Fire Wx Net  </font> </td>
+       <td> <font color=gray>N/A </font> </td>
+       <td> <font color=gray> Hourly. United States Forest Service
+            sites (42 sites) SL says won't get.
+       </font> </td>
+   </tr>
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray> WI DNR FWN </font> </td>  
+       <td> <font color=gray> Out of AOI. </font> </td>  
+       <td> <font color=gray> Wisconsin DNR Fire Wx Net. 20 auto sites. 
+       </font> </td> 
+   </tr>  
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray>WI DNR AQ  </font> </td>  
+       <td> <font color=gray> Out of AOI. </font> </td>  
+       <td> <font color=gray> Wisconsin DNR AQ 29 automtd sites. All AQ ready. 
+       </font> </td> 
+   </tr>  
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray>WI DOT  </font> </td>
+       <td> <font color=gray> Out of AOI. </font> </td>
+       <td> <font color=gray> Wisconsin Dept of Transportation.
+        51 road sensors.  No precip, so not doing.
+       </font> </td>
+   </tr>
+
+   <tr bgcolor=#C0C0C0><td> <font color=gray> WI Tower Flux </font> </td>
+       <td> <font color=gray> Out of AOI.   </font> </td>
+       <td> <font color=gray> Wisconsin Tower Flux Measurement Data.
+            Ken Davis of Univ of MN. 450 m tower in North Cntrl WI 15 km
+            from Park Falls. Since lowest lvl is 30m above ground.
+            precip was bad.
+       </font> </td>
+   </tr>
+ 
+</table>
+<br> <br>
+<a name="15minpcp"> </a>
+<!-- ================================================= -->
+<h3><u>15 Minute Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> 15min Precip Composite </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> JAG verified status 21 August 2001 </td>
+   </tr> 
+ 
+   <tr><td> NCDC 15min Precip  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> DS done by 4 May 2001 </td>
+   </tr>
+ 
+   <tr><td> NCEP 15min Precip </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> None exists. </td>
+   </tr>
+ 
+   <tr><td> IFLOWS 15min Precip </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Do not convert. The raw data is on 3 CD's numbered 005056,005058, 
+       & 005060.  It is also on disk in /work/LSAE_EAOP99/iflows/15min.  There
+       were many <a href="/work/EAOP99E_PROCESSING/IFLOWS/15min/README">problems</a> with this data so it
+       will not be converted.
+       </td>
+   </tr>
+</table>
+
+<br> <br>
+<a name="hlypcp"> </a>
+<!-- ================================================= -->
+<h3><u>Hourly Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+ 
+<table border cols=3>
+        
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td>Precip Extracted from HSC   </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Extract of Hrly pcp from Hrly Sfc Comp (w/o
+            Coshocton_Index. Remove potential duplicates.
+            NCDC and KELLOGG did not have dups, so were not
+            removed.  See 
+      /work/EAOP99E_PROCESSING/COMPOSITES/hrly_pcp/remove_dups_from_extract.pl 
+            for details.) </td>
+   </tr>
+
+   <tr><td>Cook County & Imperial Valley Pcp  </td> 
+       <td> <font color=red> TBD </font>     </td>
+       <td> ~25 sites in IL. Remote Link to ICN. Link to. </td>
+   </tr>
+
+   <tr><td>Coshocton Hourly  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG) Also has daily pcp.
+       </td>
+   </tr>
+ 
+   <tr><td>IFLOWS Hourly  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG)  See /work/EAOP99E_PROCESSING/IFLOWS. 
+       </td>
+   </tr>
+
+   <tr><td>Kellogg Bio. Stn  </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> None. Will get hrly precip from hrly sfc precip extraction.
+           (JAG) See /data10/lter/mi*. There may be the last 2 months missing,
+           but SL says this is probably enough. Go with what we have. And these
+           data are REALLY on /data10!!! All Kellogg data is here for the 
+           LSA-E 1999 it is in: /work/LSAE_EAOP99/kellogg</td> 
+   </tr>
+
+   <tr><td>NCDC Hrly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> DS done by 4 May 2001 </td>
+   </tr>
+
+   <tr><td>NCEP Hrly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>  (JAG)  </td>
+   </tr>
+
+   <tr><td>NC ITN Tower  </td> 
+       <td> <font color=blue> N/A </font>     </td> 
+       <td> Same group as LEF tower. 
+            (Note that the ESOP98 LEF precip is from unheated sensors.)
+            Fits in the "expanded" LSA-E box (i.e. the 
+            real one that does not match any in the various docs,
+            33-44N and 76-90W).  It would not be high priority to
+            include within the composite as it is outside of the
+            basin and it is precip only. 
+            The 1999 data are not yet in house (as of 8/28/2001).
+            Not high priority.
+            <p> As of 28 Nov 2001, SL says, "...the last data 
+            available is 1998, so we could get 3 months if we wanted, 
+            but its not worth the effort.  So we can drop this one from 
+            the composites.  We can make it available as a stand alone 
+            if its available later."
+   </td> </tr>
+
+   <tr><td>SEMCOG Hourly Precip  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG) 100 sites.  No SEMCOG for ESOP98.
+            Data in /(data10)/LSAE-EASOP99/semcog.</td>
+   </tr>
+
+   <tr><td>USACE Hourly Precip  </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> US Army Corps of Engineers believe these data are
+            included in USGS precip. Won't receive seperately.</td>
+   </tr>
+
+   <tr><td>USDA/ARS PSWMRL (Mahantango/ARS)  </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td>
+           USDA/ARS Pasture Systems and Watershed Management Research 
+           Laboratory Data on the East Mahantango Crk watershed (7.3km2) 
+           in east-central Penn. 1 met sites, 4 precip sites, 19 well obs.  
+           SL will not contact. They won't send the data definitely according
+           to SL.
+       </td>
+   </tr>
+
+</table>
+ 
+<br> <br>
+<a name="dlypcp"> </a>
+<!-- ================================================= -->
+<h3><u>Daily Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>Dly Pcp Extracted from HPC   </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Extract of Daily pcp from Hrly Pcp Comp (w/o
+            KELLOGG, NCDC, NCEP/CPC and Coshocton_index, i.e. 
+            remove potential duplicates.)</td>
+
+   <tr><td>ARS Daily pcp  </td>
+       <td> <font color=red> TBD </font>     </td>
+       <td> Extract from Daily sfc 10-15 pcp sites. Ask SFW.
+            Is this the same as Coshocton below?
+            <i>Probably N/A.</i>
+       </td>
+   </tr>
+
+   <tr><td>Cook County & Imperial Valley Pcp  </td>
+       <td> <font color=red> TBD </font>     </td>
+       <td> ~25 sites in IL. Remote Link to ICN. SL will do link. </td>
+   </tr>
+ 
+   <tr><td>Coshocton, OH  (ARS) </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>
+        (JAG) Still need readme description.  There are
+        10 to 15 precip sites with daily met and daily precip.
+       </td>
+   </tr>
+
+   <tr><td>NCDC COOP Dly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> See The converted files are in /work/EAOP99E_PROCESSING/NCDC_COOP/final_out
+            under the ./precip and ./surface directories.
+            The 3 station *.out files are in the final_out directory.
+       </td>
+   </tr>
+ 
+   <tr><td>NCEP Daily Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG) Sid Katz data.  </td>
+   </tr>
+
+   <tr><td>Kellogg Bio. Stn  </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> (JAG) All Kellogg data is here for the LSA-E 1999 it is in:
+            /work/LSAE_EAOP99/kellogg </td>
+   </tr>
+
+   <tr><td>TVA Daily Precip  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (LEC) Comes as 6-hourly. Tenn Valley Authority.
+            Possible 292 gages where 49 are USACE. Stations cover over SE US. 
+            Most of data is 6-hourly. Questions on Flags - TBD which we will
+            not get answers for. The raw 1999 data are in
+            /work/0R/ESOP98_EAOP98/tva/precip_data. The final processed data
+            are in /work/EAOP99E_PROCESSING/TVA_PRECIP/out/precip/final/NO_IFLOWS/tva_19*.dqcf.noiflows.
+            Since we also have IFLOWS data, the final version of this TVA
+            data does not contain IFLOWS stns.
+       </td>
+   </tr>
+
+</table>
+<a name="dlysfc"> </a>
+<!-- ================================================= -->
+<h3><u>Daily Surface Composite Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td>NCDC COOP Dly Sfc  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>The converted files are in
+           /work/EAOP99E_PROCESSING/NCDC_COOP/final_out
+           under the ./precip and ./surface directories.
+           The 3 station *.out files are in the final_out directory.
+       </td>
+   </tr>
+ 
+</table>
+
+<!-- ================================================= -->
+<h3><u>Specials Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td> Specials Surface Composite</td>
+       <td> <font color=blue> Done. </font>     </td>
+       <td> From ASOS and DATSAV3 datasets. Completed 17 Sep 2001 JAG </td>
+   </tr>
+</table>
+ 
+<br> <br>
+
+<!-- ================================================= -->
+<h3><u>Hydrology Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>TVA Streamflow and Resvr   </td>
+       <td> <font color=blue>N/A  </font>     </td>
+       <td> <i>TVA will not release data.</i>  SL says we will never get
+            any TVA hydro data.  75 gages where 33 - TVA,
+            28 -TVA/USGS, 14-USACE.  Possibly 6-hourly data.
+       </td>
+   </tr>
+
+   <tr><td> USACE Streamflow </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Should be included in the USGS data.  </td>
+   </tr>
+
+   <tr><td> USGS IRI </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Not in AOI. This is in MN.</td>
+   </tr>
+
+   <tr><td> USGS Streamflow </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (<a href="http://data.eol.ucar.edu/codiac/dss/id=37.011" 
+              target="_top"> CODIAC ID 37.011</a>)
+
+               USGS Notes: Bill Kirby @ USGS organizes.
+               USGS Contact is John UnRuh (may not work Fridays)
+               jwunruh@usgs.gov 303-236-4882 x291
+               USGS ftp'd data to:
+               ftp ingest.joss.ucar.edu
+               usgs; geo%data
+       </td>
+   </tr>
+
+   <tr><td> USGS Rsrvr Daily </td>
+       <td> <font color=blue>DONE</font>     </td>
+       <td> Provide as is. (LEC) 
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=37.008"  
+              target="_top"> CODIAC ID 37.008</a>)
+       </td>
+   </tr>
+ 
+   <tr><td> USGS COOP Rsvr </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> Provide as is. (Month End). (LEC) 
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=37.009"   
+              target="_top"> CODIAC ID 37.009</a>)
+       </td>
+   </tr>
+ 
+   <tr><td> USGS Stage Only </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Provide as is. (LEC) 
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=37.010"       
+              target="_top"> CODIAC ID 37.010</a>)
+       </td>
+   </tr>
+ 
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Soil Moisture/Temp Datasets:</u></h3>
+<!-- ================================================= -->
+ 
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td> USDA/NRCS Soil Moisture  (SMST)</td>
+       <td> <font color=blue> DONE as standalone Provisional Data. </font>     </td>
+       <td> See <a href="http://data.eol.ucar.edu/codiac/dss/id=37.001"
+            target="_top"> CODIAC ID 37.001</a>.
+   </tr>
+
+   <tr><td>ISWS Soil Moisture  </td>
+       <td> <font color=blue> EOP link 21.079</font>     </td>
+       <td> Bi-monthly. 18 sites. SL will grab from web site.
+         On 10 Jan 2002 SL says the following: 
+         Just checked for the Illinois soil moisture
+         data at the Global Soil Moisture Data Bank and
+         found that they have only through 1996 on that
+         site.
+       </td>
+   </tr>
+ 
+   <tr><td> USDA/NRCS WDT Soil Moisture </td>
+       <td> <font color=blue> N/A</font>     </td>
+       <td> Bi-montly/Mon. Out of AOI. 28 sites. WI Dense
+            Till Data. 
+       </td>
+   </tr>
+
+   <tr><td> Ill Gravediggers Net  </td>
+       <td> <font color=red> TBD </font>     </td>
+       <td> No set schedule. Frost depth info. 
+            Put on CODIAC as standalone. SFW must request?
+       </td>
+   </tr>
+
+   <tr><td> WI Gravediggers Net  </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> No set schedule. Frost depth info. 
+            Thought was seperate dataset, but SL says was
+            in ILL data. So won't get.
+       </td>
+   </tr>
+
+   <tr><td> ISWS Well Data  </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Illinois - 17 shallow and 170 deep ground-water 
+            observation wells. SFW says drop this dataset - Dec 2001.
+       </td>
+   </tr>
+
+   <tr><td> Kellogg Raw Data containing Soil Temperatures </td>
+       <td> <font color=blue> Done</font>     </td>
+       <td> (JAG) On-line "as is". See 
+            <a href="http://data.eol.ucar.edu/codiac/dss/id=37.014"
+            target="_top"> CODIAC ID 37.014</a>
+       </td>
+   </tr>            
+
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Profiler Datasets:</u></h3>
+<!-- ================================================= -->
+ 
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td> NPN (Profiler) Winds</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) 6 min? We now directly download these data from NCDC. </td>
+   </tr>
+</table>
+
+-------------------End GCIP/EAOP-99E-----------------------

@@ -1,0 +1,16 @@
+#! /usr/bin/csh
+
+if (-e galapagos_run.log) rm galapagos_run.log
+
+foreach file (../raw_data/*.dat)
+	if (-e galapagos_run.log) then
+		/usr/bin/nice -5 ./GALAPAGOS.pl $file >>& galapagos_run.log
+	else
+		/usr/bin/nice -5 ./GALAPAGOS.pl $file >& galapagos_run.log
+	endif
+end
+
+./autoqc.pl >>& galapagos_run.log
+
+
+

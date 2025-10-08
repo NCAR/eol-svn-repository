@@ -1,0 +1,274 @@
+#! /usr/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>Displays the 'Project Page' view of the Iven application.  This view 
+#  allows the user to see a general status of the entire project.  It displays
+#  a status table, the project notes, and each product with its datasets.</p>
+#
+# <b>Expected Params: </b>
+# <dd>project - part fo the State object.
+#
+# @author Dan Sullivan 
+##Module-----------------------------------------------------------------------
+
+use strict;
+use CGI;
+
+use lib "lib";
+use Utils;
+use ProjectDBA;
+use State;
+
+require "./common";
+require "./menu";
+
+my $state = State->new();
+my $cgi = CGI->new();
+
+$state->setFromParams( $cgi );
+project_view( $state, $cgi );
+##-----------------------------------------------------------------------------
+# @signature void project_view( State $state, CGI $cgi )
+# <p>The function called by the controller to display the project view.</p>
+#
+# @input $state the current state
+# @input $cgi the CGI instance for the request 
+##-----------------------------------------------------------------------------
+sub project_view
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $pjname = $state->{project};
+
+	my $pdanchor = $cgi->param( "pdanchor" );
+	if( !defined( $pdanchor ) )
+	{ $pdanchor = ""; }
+	
+	my $project = ProjectDBA::buildProjectView( $pjname );
+
+	println( $cgi->header() ); 
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>Iven Project View</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+
+	println( "<body onLoad=\"jumpAnchor()\">" );
+	menu( $state, $cgi );
+	
+	#println( "<center><h1>Iventory and Status Page: $project->{pjname}</h1></center>" );
+
+	println( "<table border=0 cellpadding=0 cellspacing=0 width=98%>" );
+		println( "<tr>" );
+			my $add_purl = $state->getUrlStringJS( "edit"=>$EPRODUCT, "mode"=>"add" );
+			println( "<td width=100% align=right>" );
+				println( "<a href=\"javascript: dsAdminEditWin( " . quote( $add_purl ) . ")\">" );
+					println( "<img src=$img_src/a_product.gif border=0 alt=\"Add Product\">" );
+				println( "</a>" );
+			println( "</td>" );
+		println( "</tr>" );
+	println( "</table>" );
+
+
+	println( "<br>" );
+
+	my $st_table = getStatusTable( $project->{products} );
+	
+	println( "<center>$st_table</center>" );
+	println( "<br>" );
+	println( "<table border=0 width=100% class=notesTable>" );
+		println( "<tr class=notesHeading>" ); 
+			println( "<td width=100%>" );
+				println( "<table border=0 cellpadding=0 cellspacing=0 width=100%>" );
+					println( "<tr>" );
+						println( "<td width=10%>&nbsp;</td>" );
+						println( "<td align=center><font size=+2><b>General Notes:</b></td>" );
+						println( "<td width=10% align=right nowrap>" );
+							my $enotes_url = $state->getUrlStringJS( "edit"=>$EPROJECT_NOTES );
+							println( "<a href=\"javascript: dsAdminEditWin( " . quote( $enotes_url ) . " )\">" );
+								println( "<img src=$img_src/edit_notes.gif border=0 alt=\"Edit Notes\"></a>" );
+							println( &nbsp(2) );
+							println( "<a id=\"gen_notes_a\" " );
+								println( "href=\"javascript: expandText( 'gen_notes', 1, '$img_src/s_notes.gif' )\">" );
+								println( "<img src=$img_src/e_notes.gif border=0 id=\"gen_notes_img\"></a>" );
+						println( "</td>" );
+					println( "</tr>" );
+				println( "</table>" );
+			println( "</td>" );
+		println( "</tr>" );
+		println( "<tr class=notesRow><td><div class=bigScroll id='gen_notes_0'>$project->{admin_notes}</div></td></tr>" );
+	println( "</table>" );
+
+	println( "<br>" );
+	my $ncols = 4;
+	my $ncols_1 = $ncols-1;
+	foreach my $pd (@{$project->{products}})
+	{
+		my $url = $state->getUrlString( "view" => $PRODUCT, "product" => $pd->{pdname} );
+		my $aname = uri_escape( $pd->{pdname} );
+		println( "<center>" );
+		println( "<table cellpadding=4 cellspacing=1 class=productTable width=98%>" );
+
+			println( "<tr class=productTitle><td colspan=$ncols>" );
+				println( "<table border=0 cellpadding=0 cellspacing=0 width=100%>" );
+					println( "<tr class=productTitle>" );
+						println( "<td width=75%>" );
+
+							if( $pd->{pdname} eq $pdanchor )
+							{ println( "<a name=pdanchor></a>" ); }
+
+							println( "<a name=$aname><a href=$url>$pd->{pdname}</a></a>" );
+							if( $pd->{product_link} && $pd->{product_link_url} )
+							{ println( &nbsp(3), "<font class=productLink><a href=$pd->{product_link_url}>($pd->{product_link})</a></font>" ); }
+							if( $pd->{note} )
+							{ println( &nbsp(3), "<font class=productNote>$pd->{note}</font>" ); }
+						println( "</td>" );
+						println( "<td width=25% align=right>" );
+								my $purl = $state->getUrlStringJS( "edit"=>$EPRODUCT, "mode"=>"update", "eproduct"=>$pd->{pdname} );
+								println( "<a href=\"javascript: dsAdminEditWin( " . quote( $purl ) . ");\">" );
+									println( "<img src=$img_src/e_product.gif border=0 alt=\"Edit $pd->{pdname}\"></a>" );
+								println( &nbsp(3) );
+								println( "<font size=-1>" . $status_hash{$pd->{status}} );
+						println( "</td>" );
+					println( "</tr>" );
+				println( "</table>" );
+			println( "</td></tr>" );
+
+
+			println( "<tr class=productHead2>" );
+				println( "<td width=2%>&nbsp;</td>" );
+				println( "<td width=25%>Dataset</td>" );
+				println( "<td width=15%>Processing</td>" );
+				println( "<td width=8%>Status</td>" );
+			println( "</tr>" );
+		foreach my $ds (@{$pd->{datasets}})
+		{
+			my $trclass = "dsRow";
+			#$trclass = "exRow" if( $ds->{is_extraction} );
+			$trclass = "excludeRow" if( $ds->{exclude} );
+
+			my $url = $state->getUrlString( "view" => $DATASET, "dataset" => $ds->{dsname}, "product" => $pd->{pdname} );
+			my $edit_url = $state->getUrlStringJS( "edit"=>$EDATASET_ADMIN, "mode"=>"update", "edataset"=>$ds->{dsname}, "eproduct"=>$pd->{pdname} );
+			println( "<tr class=$trclass onmouseover=\"cursorOver(this)\" onmouseout=\"cursorOut(this)\">" );	
+				println( "<td width=2%>" );
+					println( "<a href=\"javascript: dsAdminEditWin(  " . quote( $edit_url ) . " )\">" );
+						println( "<img src=$img_src/edit.gif border=0 alt=\"Edit $ds->{dsname}\"></a>" );
+
+					if( $ds->{is_extraction} )
+					{ println( "<br><img src=$img_src/ext.gif alt=\"Extraction from $ds->{extraction_object}->{pdsource}\">" ); }
+
+				println( "</td>" );
+				println( "<td width=25%><a href=$url>$ds->{dsname}</a></td>" );
+				println( "<td width=15%>$ds->{user_processing_object}->{fname} $ds->{user_processing_object}->{lname}</td>" );
+				println( "<td width=8%>" );
+					println( $status_hash{$ds->{status}} );
+					println( "<img src=$img_src/question.gif alt=\"Question(s) about data\">" ) if( $ds->{questions} );
+				println( "</td>" );
+			println( "</tr>" );	
+		}
+
+		println( "</table><br>" );
+		println( "</center>" );
+	}
+
+	println( "</body>" );
+	println( "</html>" );
+
+}
+
+
+sub getStatusTable
+{
+	my $products = shift;
+	my $table;
+
+	$table = "<table class=productTable border=0 cellpading=5 cellspacing=1 width=65%>";
+	$table = $table . "<tr class=productHead><td colspan=5>Product Status</td></tr>";
+	$table = $table . 
+		"<tr class=dsRow>" .
+			"<td align=center width=42%><b>Name</td>" . 
+			"<td align=center width=8%><b>Status</td>" . 
+			"<td align=center width=40%><b>Dataset Progress</td>" . 
+			"<td align=center width=5%><b>Excluded</td>" . 
+			"<td align=center width=5%><b>Total</td>" . 
+		"</tr>";
+	
+	foreach my $prod (@$products)
+	{
+		my ($done, $tbd, $na, $exclude, $total) = getDatasetStats( $prod->{datasets} );
+		my $proc = $total - $exclude;
+		my $perc = 0;
+
+		$perc = $done/$proc * 100 if( $proc != 0 );
+		my $bar = 	"<table><tr>" . 
+							"<td width=200>" .
+								"<table width=100%><tr><td bgcolor=#C4D4EC style=\"height:12px\">" .
+										"<div style=\"height:8px; width:$perc%; font-size:3px; background-color:#04944C\">" .
+										"</div>" .
+									"</td></tr></table>" . 
+							"</td>" . 
+							"<td nowrap>" . 
+								sprintf( "<b>(%2.2s of %2.2s) </b>", $done, $proc ) . 
+							"</td>" . 
+						"</tr></table>";	
+
+		$table = $table . 
+			"<tr class=dsRow>" .
+				"<td>" .
+				 "<a href=#" . uri_escape( $prod->{pdname} ) . ">$prod->{pdname}</a>" .  
+				"</td>" .
+				"<td align=right>" .
+				 $status_hash{$prod->{status}} . 
+				"</td>" .
+				"<td>" .
+					$bar . 
+				"</td>" .
+				"<td align=right>" .
+					$exclude . 
+				"</td>"  .
+				"<td align=right>" .
+					$total . 
+				"</td>"  .
+			"</tr>"; 
+	}
+	
+	$table = $table. "</table>";
+}
+
+sub getProductStats
+{
+	my $prod = shift;
+	my $done = 0;
+	my $tbd = 0;
+	my $na = 0;
+	my $exclude = 0;
+	my $total = 0;
+
+	foreach my $ds (@{$prod->{datasets}})
+	{
+		$total++;
+		if( $ds->{status} eq "done" )
+		{
+			$done++;
+		}
+		elsif( $ds->{status} eq "tbd" || $ds->{status} eq "in_progress")
+		{
+			$tbd++;
+		}
+		elsif( $ds->{status} eq "na" || $ds->{status} eq "dnd")
+		{
+			$na++;
+		}
+
+		if( $ds->{exclude} )
+		{
+			$exclude++;
+		}
+	}
+
+	return ($done, $tbd, $na, $exclude, $total );
+}
+
+1; 

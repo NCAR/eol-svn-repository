@@ -1,0 +1,41 @@
+Date: 07/02/2014
+Author: Yuan Sui
+
+Scripts: 
+	- change_fileowner.sh
+	- change_permission.sh
+	- count.py
+	- html_insert.py
+	- html_insert_helper.sh
+
+How to run the scirpts:
+./change_fileowner.sh
+./change_permission.sh
+./count.py
+python html_insert.py <directory> (recommended to run from html_insert_helper.sh)
+./html_insert_helper.sh or ./html_insert_helper.sh > Output.txt
+
+
+[change_fileowner.sh]
+	- This script is used to recursively change the ownership of all the files under input directory
+	- Pre-request: The runner should have permmsion to change the fileownerships
+
+[change_permission.sh]
+	- This script is used to recursively change the permission of all the files and directories under input directory
+	- The permmsion of files will be changed to "-rw-rw-r--"
+	- The permission of directories will be changed to "drwxrwsr-x"
+	- Pre-request: The runner should have permmsion to change the fileownerships
+
+[count.py]
+	- This script is used to count how many files have been updated after running html_insert_helper.sh
+	- Pre-request: ./html_insert_helper.sh > Output.txt
+	- Output.txt is under the same directory as count.py
+
+[html_insert.py]
+	- This file is used to recursively insert google analytics code into .html or .htm file under required directory. Each directory will generate a log file (*_logfile.csv) under /net/work/HTML_INSERT
+	- Need rilling_files.list under same directory. The script will skipped all the file listed in rilling_files.list
+
+[html_insert_helper.sh]
+	- This script is used to find all the sub files or sub directory under input directory name, and run html_insert.py on each of them
+	- It will also generate error_summary_log.csv under /net/work/HTML_INSERT, which only included failed updates in the previous run.
+	- All symlinks will be skipped

@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for postproc_squallflg s/w.
+#
+
+CC=acc
+CFLAGS = 
+
+procncdc: postproc_squallflg.o
+	$(LINK.c) -o postproc_squallflg postproc_squallflg.o 
+	chmod 0755 postproc_squallflg
+
+clean:
+	rm *.o

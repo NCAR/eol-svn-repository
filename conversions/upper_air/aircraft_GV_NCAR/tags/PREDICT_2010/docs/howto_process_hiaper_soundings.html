@@ -1,0 +1,184 @@
+<html>
+<head>
+<title>How To: Process HIAPER Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Process HIAPER Upper Air Sounding Data</h1>
+<a name="toc"></a><h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+	<li><a href="#purpose">Purpose</a></li>
+	<li><a href="#network">Network Information</a></li>
+	<li>Previous Versions<ol>
+		<li><a href="#version:trex">2006 (T-REX)</a></li>
+		</ol></li>
+	<li><a href="#directory">Directory Structure</a></li>
+	<li>Processing the Data<ol>
+		<li><a href="#converting">Converting the Data</a></li>
+		<li><a href="#autoqc">QC'ing the Data</a></li>
+		<li><a href="#dayfiles">Creating the Day Files</a></li>
+		<li><a href="#codiac">Inserting into the Database</a></li>
+		</ol></li>
+	<li><a href="#software">Software</a></li>
+	<li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+    <p>This document contains the instructions on how to process the sounding data from the HIAPER aircraft into the EOL Sounding Composite (ESC) format.</p>
+</div>
+<a href="#">Top</a><hr>
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+	<li>The ID-Type is 99.</li>
+	<li>The Platform is 350 (Aircraft, HIAPER).</li>
+	<li>The station is mobile (Aircraft).</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr />
+
+<h2>Previous Versions</h2>
+<div class="block">
+
+    <a name="version:trex"></a><h3>T-REX (2006)</h3>
+    <table class="version">
+	<tr><th>Software:</th><td>/work/TREX/upper_air/hiaper/software</td></tr>
+	<tr><th>Raw Data:</th><td>/ingest/trex/upper_air/dropsonde</td></tr>
+	<tr><th>Final Data:</th><td>/export/archive/data/trex/upper_air/soundings/hiaper/</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr>
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">hiaper/</h3>
+    <table class="directories">
+	<tr><th>docs/</th><td>The directory containing documentation about the processing and the data.</td></tr>
+	<tr><th>ebufr/</th><td>The directory where the EBUFR files are placed once they have been created.</td></tr>
+	<tr><th>final/</th><td>The directory where the QC'ed files are placed once they have been created.</td></tr>
+	<tr><th>logs/</th><td>The directory where the error/check files from the QC are placed.</td></tr>
+	<tr><th>output/</th><td>The directory where the CLASS files are put after they are generated.</td></tr>
+	<tr><th>raw_data/</th><td>The directory where the raw data is stored.</td></tr>
+	<tr><th>software/</th><td>The directory where the software for the conversion is stored.</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<h2>Processing the Data</h2>
+<div class="block">
+    <a name="convert"></a><h3>Converting the Data</h3>
+    <div class="block">
+        <p>The following is how to convert the raw ASCII data into the CLASS format ready to be QC'ed.</p>
+        <ol>
+	    <li>Copy the raw data into the <span class="directoryName">raw_data</span> directory.</li>
+	    <li>Change to the <span class="directoryName">software</span> directory.</li>
+	    <li>Edit the <span class="softwareName">HIAPER_Converter.pl</span> script.
+                <ol>
+		    <li>Change the project variable: <code>PROJECT</code> to the current project in the <code>new</code> function.</li>
+                </ol>
+            </li>
+	<li>Run the <span class="softwareName">HIAPER_Converter.pl</span> script.  This will convert the raw data to the CLASS format.</li>
+        </ol>
+    </div>
+
+    <a name="autoqc"></a><h3>QC'ing the Data</h3>
+    <div class="block">
+        <p>The following explains how to QC the ESC formatted sounding data.  This assumes that the auto qc binary is already created.  For more information on the auto qc, see <a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>.</p>
+        <ol>
+	    <li>Change to the <span class="directoryName">software</span> directory (if you are not already there).</li>
+	    <li>Edit the <span class="softwareName">autoqc.pl</span> script.
+                <p>The variable <code>$AUTOQC</code> needs to be changed to point to the correct autoqc program for the current project.</p>
+            </li>
+	    <li>Run the <span class="softwareName">autoqc.pl</span> script.
+		<p>This script takes each file in the <span class="directoryName">output</span> directory, runs the auto qc program on it, and creates a new ESC file that is placed in the <span class="directoryName">final</span> directory and a check/error log file that is placed in the <span class="directoryName">log</span> directory.</p>
+        </ol>
+    </div>
+
+    <a name="dayfiles"></a><h3>Creating the Day Files</h3>
+    <div class="block">
+        <h4>ESC Formatted Files</h4>
+        <div class="block">
+            <p>The following explains how to generate ESC format day files.</p>
+            <ol>
+                <li>Change to the <span class="directoryName">software</span> directory (if you are not already there).</li>
+                <li>Edit the <span class="softwareName">make_dayfiles</span> script.
+                    <ol>
+                        <li>Change the directories to the directories where the generated files should be placed and where the source files for the day files are located.</li>
+                        <li>Change the first parameter to the <span class="softwareName">make_esc_dayfiles</span> script to be the list of
+ files to use to make the day files.</li>
+                        <li>Update, if necessary, the final parameter ot the <span class="softwareName">make_esc_dayfiles</span> script to
+ be the appropriate prefix for the day files to be generated.  This includes the directory where the fiels are to be placed.</li>
+                    </ol>
+                </li>
+                <li>Run the <span class="softwareName">make_dayfiles</span> script.
+                    <p>The script takes the nominal time from the header of the ESC files and puts them in a day file using that date.  The files are put into the natural sort order of the file names using the unix <span class="softwareName">sort</span> command.</p>
+                </li>
+            </ol>
+        </div>
+      
+
+        <h4>EBUFR Formatted Files</h4>
+        <div class="block">
+            <p>The following explains how to EBUFR the QC'ed ESC files.  This assumes that the class2ebufr binary file has been generated.  For more information on the EBUFR process, see <a href="/dpg/GENERAL/soundings/howto_ebufr_class_soundings.html">How To: EBUFR CLASS Sounding Data</a>.</p>
+            <ol>
+	        <li>Change to the <span class="directoryName">software</span> directory (if you are not already there).
+                <li>Make sure the EBUFR configuration files are in the directory.  There should be five (class_file, code_08_021, code_33_254, control_scf.txt, desc_file).  The program will crash without these files.</li>
+	        <li>Make sure there is a copy of the executable (or a symbolic link to it) in the directory.</li>
+	        <li>Edit the <span class="softwareName">control_scf.txt</span> file.
+                    <ol>
+                        <li>On the 12th line, (two lines above the "END FILE" line) the project name needs to be edited to match the current project.  The rest of the files should remain untouched.</li>
+                    </ol>
+                </li>
+                <li>Edit the <span class="softwareName">create_ebufr_files.pl</span> script.
+                    <ol>
+		        <li>Change the variable: <code>$PROJECT</code> to the name of the current project.</li>
+		        <li>Change the variable: <code>$PROGRAM</code> to point to the project's version of the class2ebufr program.</li>
+		    </ol>
+                </li>
+	        <li>Run the <span class="softwareName">create_ebufr_files.pl</span> script.  This will concatonate the ESC files into day ESC files which will be used to generate the EBUFR day files.
+		    <p class="note">Near the end of the file is the pattern for the names of the files that will be generated.  Make sure that the files match the HIAPER network.</p>
+		    <p class="note">The script copies the five aforementioned files to the <span class="directoryName">ebufr</span> directory and removes them once the processing is finished.  This is to force all of the intermediate and final files to be saved in the <span class="directoryName">ebufr</span> directory.</p>
+                </li>
+            </ol>
+        </div>
+
+    </div>
+
+    <a name="codiac"></a><h3>Inserting into the Database</h3>
+    <div class="block">
+        <h4>ESC Formatted Files</h4>
+        <div class="block">
+            <p>With the day files created, they are ready to be inserted into the database.  This is a general process and is explained in the document: <a href="howto_insert_text_class_soundings.html">How To: Insert Text CLASS Sounding Data</a>.</p>
+        </div>
+
+        <h4>EBUFR Formatted Files</h4>
+        <div class="block">
+            <p>With all of the EBUFR files created, they need to be inserted into the database.  This is a general process and is explained in the document: <a href="/dpg/GENERAL/soundings/howto_insert_ebufred_class_soundings.html">How To: Insert EBUFRed CLASS Sounding Data</a>.</p>
+        </div>
+    </div>
+</div>
+<a href="#">Top</a><hr>
+
+<a name="documents"></a><h2>Documentation</h2>
+<div class="block">
+    <p>The following are a list of documents that may help with the conversion or are related to the raw data.</p>
+    <ul>
+	<li><a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>- The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/dpg/GENERAL/soundings/howto_ebufr_class_soundings.html">How To: EBUFR CLASS Sounding Data</a>- The instructions for dealing with the EBUFR software that relate to CLASS Soundings.</li>
+	<li><a href="/dpg/GENERAL/soundings/howto_insert_ebufred_class_soundings.html">How To: Insert EBUFR'ed CLASS Sounding Data into the Database</a>- The instructions on how insert the EBUFR'ed sounding data into the database.</li>
+        <li><a href="howto_insert_text_class_soundings.html">How To: Insert Text CLASS Sounding Data</a>- The instructions on how to insert ESC formatted sounding files into the database.</li>
+	<li><a href="#">How To: Process HIAPER Sounding Data</a>- This document.</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr>
+
+<p class="foot">Last Updated: 2007/02/22 - Joel Clawson</p>
+</body>
+</html>

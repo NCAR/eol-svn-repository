@@ -1,0 +1,53 @@
+<!-- JOSS Catalina Auto-deploy Context file -->
+
+<!-- For Context element options, see:
+ http://www.joss.ucar.edu/docs/tomcat-docs/config/context.html
+
+ docBase is your expanded directory or the .war filename
+-->
+
+<Context path="/dpgapps" docBase="/web/java/webapps/dpgapps"
+        cookies="true" reloadable="true" crossContext="true"
+        override="true" swallowOutput="true" useNaming="true"
+        debug="0"
+        >
+
+  <!-- buggy junk to try to allow symlinks in WEB-INF/lib/ -->
+  <Resources className="org.apache.naming.resources.FileDirContext"
+   cached="false" allowLinking="true"
+   />
+   <!-- caseSensitive="false" -->
+
+  <!-- Uncomment this Valve to limit access to this app to localhost
+   for security reasons. Allow may be a comma-separated list of
+   IP addresses (or even regular expressions).
+   Use RemoteHostValve for hostnames.
+
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+    allow="127.0.0.1,128.117.90.*,128.117.150.*"/>
+  -->
+
+  <!-- Setup Catalina's logging of your app for stdout/stderr.
+   See http://www.joss.ucar.edu/docs/tomcat-docs/config/logger.html
+   The logger class ucar.joss.misc.catalina.FileLogger is the same
+   as the standard org.apache.catalina.logger.FileLogger but adds
+   a dateInFilename="false" (or true) option to turn off the pesky
+   date in the filename between prefix and suffix.
+  -->
+
+<!--
+  <Logger className="org.apache.catalina.logger.FileLogger"
+          verbosity="1" timestamp="true"
+	  directory="/web/java/webapps/dpgapps/WEB-INF/logs"
+          prefix="dpgapps_log." suffix=".txt"
+          />
+-->
+
+  <Logger className="ucar.joss.misc.catalina.FileLogger"
+          verbosity="1" timestamp="true"
+	  directory="/web/java/webapps/dpgapps/WEB-INF/logs"
+          prefix="dpgapps_log" suffix=".txt"
+          dateInFilename="false"
+          />
+
+</Context>

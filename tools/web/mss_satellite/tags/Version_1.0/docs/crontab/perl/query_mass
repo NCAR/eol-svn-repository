@@ -1,0 +1,71 @@
+#!/bin/perl -w
+
+use lib ".";
+use DayRecord;
+use FileRecord;
+use Table;
+
+# a simple testing script to mess around with 
+#  querying mass store.
+
+open( DAY_OUT, ">day_out.txt" ) || die( "unable to open output file" );
+open( FILE_OUT, ">file_out.txt" ) || die( "unable to open output file" );
+
+my $fh = select( DAY_OUT );
+$| = 1;
+select($fh);
+
+$fh = select( FILE_OUT ); 
+$| = 1; 
+select($fh);
+
+my $path = $ARGV[0];
+
+my @arr = split( /\//, $path );
+
+my $satellite = $arr[6];
+my $resolution = $arr[7];
+my $year = $arr[8];
+
+@daily_dir = `msls -1 $path`;
+
+foreach my $dir ( @daily_dir )
+{
+	chop( $dir );
+	my $day = DayRecord->new();
+	my $fileTable = Table->new();
+	my $totSize = 0;
+
+	$day->{satellite} = $satellite;
+	$day->{resolution} = $resolution;
+	$day->{date} = $dir;
+	$day->{path} = $path . "/" . $dir;
+
+	my @files = `msls -l $day->{path}`;
+	$day->{nfiles} = @files - 1;
+
+	for( my $x = 1; $x < @files; $x++ )
+	{
+		my $file = $files[$x];
+		my $fileRec = FileRecord->new();
+		chop( $file );
+
+		my @data = split( / +/, $file );
+		my @dt_tm = split( /\./, $data[8] );
+
+		$fileRec->{date} = $dt_tm[1];
+		$fileRec->{time} = $dt_tm[2];
+		$fileRec->{size} = $data[4] / 1000;
+		$totSize += $fileRec->{size};
+		$fileRec->{path} = $day->{path} . "/" . $data[8];
+		$fileTable->addRecord( $fileRec );
+	}	
+
+	$day->{nfiles} = $fileTable->{count};
+	$day->{size} = $totSize;
+
+	$day->write( *DAY_OUT );
+	$day->write( *STDOUT );
+	$fileTable->write( *FILE_OUT );
+	$fileTable->write( *STDOUT );
+}

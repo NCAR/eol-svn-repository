@@ -1,0 +1,261 @@
+<html>
+<head>
+    <title>How To: Insert File Scripts</title>
+    <link rel="stylesheet" type="text/css" href="/css/howto.css" />
+</head>
+<body>
+<h1 class="title">How To: Insert Files Scripts</h1>
+
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#about">About the Scripts</a></li>
+        <li><a href="#config">Configuration File Setup</a>
+            <ol>
+		<li><a href="#cfg-key">Config File Keys</a></li>
+		<li><a href="#datetimechar">Date/Time Meta-Characters</a></li>
+            </ol>
+        </li>
+    </ol>
+</div>
+
+<a name="about"></a>
+<h2>About the Scripts</h2>
+<div class="block">
+    <table class="directories">
+        <tr>
+            <th>Software:</th>
+            <td>/net/work/bin/scripts/insert/<span class="softwareName">insert_multiple_files</span></td>
+            <td>Load multiple files into the database for a dataset.</td>
+        </tr>
+        <tr>
+            <th>Software:</th>
+            <td>/net/work/bin/scripts/insert/<span class="softwareName">insert_frd_sounding</span></td>
+            <td>Load FRD formatted sounding files into the database.</td>
+        </tr>
+        <tr>
+            <th>Library:</th>
+            <td>/net/work/lib/perl/mysql</td>
+            <td>General MySQL modules library.  Used by the insert scripts.</td>
+        </tr>
+    </table>
+
+    <p>These scripts are used for loading multiples files into the database for a dataset.  They are to be used:</p>
+    <p class="code">/net/work/bin/scripts/insert/insert_multiple_files cfg-Dataset.ID</p>
+    <p class="code">/net/work/bin/scripts/insert/insert_ftd_soundings</p>
+    <p class="note">Dataset.ID needs to be replaces with the actual dataset id for the dataset.</p>
+</div>
+
+
+<a name="config"></a>
+<h2>Configuration File Setup</h2>
+<div class="block">
+    <p>The <span class="softwareName">insert_multiple_files</span> script requires a configuration file called <span class="softwareName">cfg-</span><b>dataset_id</b> (where <b>dataset_id</b> is the actual dataset id of the dataset the files are being inserted for).  The configuration file contains a set of blocks, surrounded in curly braces {}, which contain the required information for inserting a specific set of files for the dataset.  Each block is unique and independant from the other blocks within the file.</p>
+</div>
+
+<a name="cfg-key"></a>
+<h3>Configuration File Keys</h3>
+<div class="block">
+    <p>There are several key/value pairs recognized for each block.  Some are optional while others are required.  They are described in detail below.</p>
+    <p class="note">Both the directory and filename keys allow Perl pattern matching.  The only major restriction (that is known) is the inability to handle nested groups.  This confuses the date/time parser and may generate unexpected results or quit with problems.</p>
+    <ul>
+        <li><p><b>directory</b></p>
+            <p>The <span class="softwareName">directory</span> key defines the path where the files are stored.  This can be either a local system directory (<span class="directoryName">/export/archive/data/</span>) or on the mass store (<span class="directoryName">/JOSS/DATA/RAW</span>).  In either case, the <span class="softwareName">directory</span> key can contain any characters recognized by Perl in pattern matching and the special <a href="datetimechar">date/time characters</a> defined for the parser to find the date and time.</p>
+	    <p class="note">This key is Required in all blocks.</p>
+	    <p><b>Examples:</b></p>
+	    <table class="directories">
+                <tr>
+                    <td>Local Basic</td>
+                    <td>directory: /export/archive/data/name/surface/ISS</td>
+                <tr>
+		<tr>
+                    <td>Local with Date/Time Meta-Characters</td>
+                    <td>directory: /export/archive/data/trex/mesonet/special/asu/sonics/[\M\M\y\y\Y\Y]</td>
+                </tr>
+                <tr>
+                    <td>Local with Pattern Matching</td>
+                    <td>directory: /export/archive/data/rainex/aircraft/HRD/Radar/(Ophelia|Rita)/N42</td>
+                </tr>
+                <tr>
+                    <td>Local with both Date/Time Meta-Characters and Pattern Matching</td>
+                    <td>directory: /export/archive/data/trex/aircraft/bae146/navigation/b\d\d\d\-[\Y\Y\Y\Y]\-[\V]\-[\y\y]</td>
+                </tr>
+                <tr>
+                    <td>MSS with Date/Time Meta-Characters</td>
+                    <td>directory: /JOSS/DATA/RAW/SURFACE/ASOS/NCDC/1min/[\Y\Y\Y\Y]</td>
+                </tr>
+            </table>
+            </li>
+        <li><p><b>filename</b></p>
+            <p>The <span class="softwareName">filename</span> key defines the pattern used to find files underneath the directories found with <span class="softwareName>directory</span> key.  The key can contain any characters recognized by Perl in pattern matching and the special <a href="datetimechar">date/time metacharacters</a> defined for the parser to find the date and time.</p>
+	    <p class="note">This key is Required in all blocks.</p>
+	    <p><b>Examples:</b></p>
+	    <table class="directories">
+                <tr>
+                    <td>With Date/Time Meta-Characters</td>
+                    <td>filename: (\Y\Y\M\M\y\y).._[\H\H\m\m]_{\H\H\m\m}_xy\.txt</td>
+                <tr>
+		<tr>
+                    <td>With Pattern Matching</td>
+                    <td>filename: .*\.txt</td>
+                </tr>
+                <tr>
+                    <td>With both Date/Time Meta-Characters and Pattern Matching</td>
+                    <td>filename: om\d_\d\d\d\d[\M\M]\.tar\.Z</td>
+                </tr>
+            </table>
+            </li>
+        <li><p><b>startdate</b></p>
+            <p>The <span class="softwareName">startdate</span> key defines the portions of the start date/time that are not defines using the <a href="datetimechar">date/time meta-characters</a>.  It must be defined in the MySQL date format of <code>YYYY-MM-yy HH:mm:SS</code>.  All meta-characters in the key expect values defined from the directory/filename parsing.  All values in the key expect there not to be values defined from the directory/filename parsing.</p>
+            <p>The year pattern is handles slightly differently than the other five date/time values.  It is the only one allowed to have a combination of digits and meta-characters.  This is to allow a directory/filename parsing of a year with less than four digits for the year.  The user is able to define the start of the year and fill in the remainder from the parsing.</p>
+	    <p class="note">This key is Required in all blocks unless the start year, month, day, hour, and minute are defined in the <span class="softwareName">directory</span> and <span class="softwareName">filename</span> keys.</p>
+	    <p><b>Examples:</b></p>
+	    <table class="directories">
+                <tr>
+                    <td>Day Files</td>
+                    <td>startdate: YYYY-MM-yy 00:00:00</td>
+                </tr>
+                <tr>
+                    <td>Month Files</td>
+                    <td>startdate: YYYY-MM-01 00:00:00</td>
+                </tr>
+                <tr>
+                    <td>2-Digit Year</td>
+                    <td>startdate: 20YY-MM-yy HH:00:00</td>
+                </tr>
+            </table>            
+            </li>
+        <li><p><b>enddate</b></p>
+            <p>The <span class="softwareName">enddate</span> key defines the portions of the end date/time that are not defined using the <a href="datetimechar">date/time meta-characters</a>.  It must be defined in the MySQL date format of <code>YYYY-MM-yy HH:mm:SS</code>.  All meta-characters in the key expect values defined from the directory/filename parsing.  All values in the key expect there not to be values defined from the directory/filename parsing.</p>
+            <p>The year pattern is handles slightly differently than the other five date/time values.  It is the only one allowed to have a combination of digits and meta-characters.  This is to allow a directory/filename parsing of a year with less than four digits for the year.  The user is able to define the start of the year and fill in the remainder from the parsing.</p>
+	    <p class="note">This key is required in blocks that do not use the <span class="softwareName">filelength</span> key and do not fully define the end date from the date/time parsing of the <span class="softwareName">directory</span> and <span class="softwareName">filename</span> keys.</p>
+	    <p><b>Examples:</b></p>
+	    <table class="directories">
+                <tr>
+                    <td>Day Files</td>
+                    <td>enddate: YYYY-MM-yy 23:59:59</td>
+                </tr>
+                <tr>
+                    <td>Hour Files</td>
+                    <td>enddate: YYYY-MM-yy HH:59:59</td>
+                </tr>
+                <tr>
+                    <td>2-Digit Year</td>
+                    <td>enddate: 20YY-MM-yy HH:59:59</td>
+                </tr>
+            </table>            
+            </li>
+        <li><p><b>filelength</b></p>
+            <p>The <span class="softwareName">filelength</span> key defines the length of the files defined within a block.  This is used when the end date is not being defined during the date/time parsing of the <span class="softwareName">directory</span> and <span class="softwareName">filename</span> keys and is not explictly defined through the <span class="softwareName">enddate</span> key.</p>
+            <p>The key must contain a number followed by a recognized frequency of (year, month, day, hour, or minute).  The script is flexible to allow the frequency to be plural and case-insensitive.</p>
+	    <p class="note">This key is required in blocks that do not define an end date.</p>
+	    <p><b>Examples:</b></p>
+	    <table class="directories">
+                <tr>
+                    <td>Day Files</td>
+                    <td>filelength: 1 day</td>
+                </tr>
+                <tr>
+                    <td>2 a Day Files</td>
+                    <td>filelength: 12 Hours</td>
+                </tr>
+                <tr>
+                    <td>Week Files</td>
+                    <td>filelength: 7 daYs</td>
+                </tr>
+            </table>            
+            </li>
+        <li><p><b>insertrange</b></p>
+            <p>The <span class="softwareName">insertrange</span> key defines the range of dates for the files to be included within the block.  This allows a user to enter a directory and ignore files outside the date range without having to do potentially several different blocks in the config file.  The dates in the range must be in the MySQL date format of <code>YYYY-MM-yy</code> separated by a colon.</p>
+	    <p class="note">This key is optional.</p>
+	    <p><b>Examples:</b></p>
+	    <table class="directories">
+                <tr>
+                    <td>Insert only 2004 files</td>
+                    <td>insertrange: 2004-01-01:2004-12-31</td>
+                </tr>
+            </table>            
+            </li>
+        <li><p><b>format</b></p>
+            <p>The <span class="softwareName">format</span> key defines the format id from the database for the files within the block.  This tells the database that the files are ASCII text, PDF, HTML, tar, or whatever type of files.  The complete list of format ids can be found through <a href="/cgi-bin/qcodiac/supervisor?qform=formats">QCODIAC</a>.</p>
+	    <p class="note">This key is Requrired.</p>
+	    <p><b>Examples:</b></p>
+	    <table class="directories">
+                <tr>
+                    <td>ASCII Text Files</td>
+                    <td>format: 43</td>
+                </tr>
+            </table>            
+            </li>
+        <li><p><b>host</b></p>
+            <p>The <span class="softwareName">host</span> key defines the location where the files are stored (localhost vs. mass_store).</p>
+	    <p class="note">This key is requrired for mass store datasets only.</p>
+	    <p><b>Examples:</b></p>
+	    <table class="directories">
+                <tr>
+                    <td>Localhost</td>
+                    <td>host: localhost</td>
+                </tr>
+                <tr>
+                    <td>Mass Store</td>
+                    <td>host: mass_store</td>
+                </tr>
+            </table>            
+            </li>
+        <li><p><b>purpose</b></p>
+            <p>The <span class="softwareName">purpose</span> key defines the purpose/type of file being loaded (data, doc, eula).</p>
+	    <p class="note">This key is optional.  The default is <code>data</code>.</p>
+	    <p><b>Examples:</b></p>
+	    <table class="directories">
+                <tr>
+                    <td>Data Files</td>
+                    <td>purpose: data</td>
+                </tr>
+                <tr>
+                    <td>Doc Files</td>
+                    <td>purpose: doc</td>
+                </tr>
+                <tr>
+                    <td>EULA Files</td>
+                    <td>purpose: eula</td>
+                </tr>
+            </table>            
+            </li>
+        <li><p><b>recursedirectories</b></p>
+            <p>The <span class="softwareName">recursedirectories</span> key is a flag to prevent the search for files beneath the directories found from the <span class="softwareName">directory</span> key.</p>
+	    <p class="note">This key is optional.  The default is <code>true</code>.</p>
+	    <p><b>Examples:</b></p>
+	    <table class="directories">
+                <tr>
+                    <td>Prevent Recursion</td>
+                    <td>recursedirectories: false</td>
+                </tr>
+                <tr>
+                    <td>Allow Recursion</td>
+                    <td>recursedirectories: true</td>
+                </tr>
+            </table>            
+            </li>
+    </ul>
+</div>
+
+<a name="datetimechar"></a>
+<h3>Date/Time Meta-Characters</h3>
+<div class="block">
+    <p>There are two sets of meta-characters used by the date/time parser.  The grouping characters ((), [], and {}) and the date/time meta-characters (\Y, \M, \y, \H, \m, \J, and \V).</p>
+    <p>The grouping characters have multiple meanings depending on context in the pattern.  If the grouping contains at least one date/time meta-characters, it thinks the entire grouping is a date/time and uses the grouping character to determine if it is a start date [], end date {}, or both ().</p>
+    <p>Within a date/time group, the entire contents must be meta-characters only.  Any other character will result in an error and force a correction to the configuration file.</p>
+    <p>The date/time meta-characters match a digit (except \V which matches 3 or 4 characters for a month abbrevation).  The following list the specifics of each meta-character.</p>
+    <ul>
+        <li><b>\Y</b>- Matches a digit in the YEAR.</li>
+        <li><b>\M</b>- Matches a digit in the MONTH.</li>
+        <li><b>\y</b>- Matches a digit in the DAY.</li>
+        <li><b>\H</b>- Matches a digit in the HOUR.</li>
+        <li><b>\m</b>- Matches a digit in the MINUTE.</li>
+        <li><b>\J</b>- Matches a digit in the JULIAN DAY.</li>
+        <li><b>\V</b>- Matches an abbreviation for the MONTH.  This matches the customary 3 character abbrevations for every month along with the 4 character abbrevations/month names of june, july, and sept.  The abbreviation matching is case-insensitive.</li>
+    </ul>
+</div>
+
+</body>
+</html>

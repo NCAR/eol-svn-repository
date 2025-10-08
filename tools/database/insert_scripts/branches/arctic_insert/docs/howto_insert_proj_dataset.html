@@ -1,0 +1,110 @@
+<html>
+<head>
+    <title>How To: Insert Projects and Datasets</title>
+    <link rel="stylesheet" type="text/css" href="/css/howto.css" />
+</head>
+<body>
+<h1 class="title">How To: Insert Projects and Datasets Scripts</h1>
+
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#about">About the Scripts</a></li>
+        <li><a href="#config">Configuration File Setup</a>
+            <ul>
+		<li><a href="#key">Config File Keys</a></li>
+            </ul>
+        </li>
+	<li><a href="#doit">doit Wrapper Script</a></li>
+	<li><a href="#steps">Step-By-Step Procedure</a></li>
+    </ol>
+</div>
+
+<a name="about"></a>
+<h2>About the Scripts</h2>
+<div class="block">
+    <table class="directories">
+        <tr>
+            <th>Software:</th>
+            <td>/net/work/bin/scripts/insert/<span
+		    class="softwareName">insert_proj_dataset</span></td>
+            <td>Load a dataset and/or project into the database.</td>
+        </tr>
+    </table>
+
+    <p>These scripts are used for loading multiples files into the database for a dataset.  They are to be used:</p>
+    <p class="code">Usage: ../src/insert_proj_dataset [add_project=proj]
+    add_dataset=dataset [-o]<br />
+    -o 	 Output the possible options for use in the setup files.  <br />
+    Not pretty, but informative...</p>
+</div>
+
+
+<a name="config"></a>
+<h2>Configuration File Setup</h2>
+<div class="block">
+    <p>The <span class="softwareName">insert_proj_dataset</span> script requires
+    configuration files called <span class="softwareName">dataset</span> [ and <span
+	class="softwareName">proj</span> if inserting a project ]
+The configuration file contains lines with a database field name on the left and a
+value on the right, separated by an equal sign, which contain the required information for inserting a specific dataset.
+</p>
+<p>
+Some config examples and a bit more documentation can be found in subversion:
+<a href="http://svn.eol.ucar.edu/viewvc/dmg/tools/database/insert_scripts/trunk/config/dataset?view=markup">dataset</a>
+<a href="http://svn.eol.ucar.edu/viewvc/dmg/tools/database/insert_scripts/trunk/config/proj?view=markup">proj</a>
+</p>
+</div>
+
+<a name="key"></a>
+<h3>Configuration File parameters</h3>
+<div class="block">
+   <p>To see a list of possible database field names, run the code with the -o option.
+   To see a set of commonly used field names, look at the dataset and proj fields
+   above.
+</div>
+
+<a name="doit"></a>
+<h2>Wrapper Script</h2>
+<div class="block">
+    <p>I have created a wrapper-script called <a
+	href="http://svn.eol.ucar.edu/viewvc/dmg/tools/database/insert_scripts/trunk/src/doit?view=markup">doit</a>
+    which will insert a dataset, insert the associated files using the 
+    <a href="./howto_insert_scripts.html"> insert_multiple_files </a> script, then run
+    lsdsfiles. You will have to create your dataset and cfg- files before running this
+    script.
+</div>
+
+<a name="steps"></a>
+<h2>Step-By-Step Procedure</h2>
+<div class="block">
+    <p>
+    <ol>
+	<li>If it has not already been done, a <a href="http://svn.eol.ucar.edu/viewvc/dmg/tools/database/insert_scripts/trunk/config/proj?view=markup">proj</a> file must be created. This file is only created once per project.  For this file, the following project metadata will be entered into the corresponding fields: name, title, codiac dataset id prefix (first 3 digits of codiac id #), description, begin/end date, lat/lon, and xlinks.</li><br />
+	<li>The next available codiac id # for the project of interest must be determined by checking in codiac. In zinc, creating a new dataset for the project will auto-generate the next available number (but don't actually follow through with the "create"), or veiwing "Datasets in this archive" on the project page will give a list of the datasets and id #'s already in existence.</li><br />
+	<li>When the last 3 digits of the dataset id # have been determined, a <a href="http://svn.eol.ucar.edu/viewvc/dmg/tools/database/insert_scripts/trunk/config/dataset?view=markup">dataset</a> file must be created. The filename will contain the last 3 digits of the id # as in "dataset###" where ### are the 3 digits. The dataset id, title, and summary will be entered into the appropriate fields of the <a href="http://svn.eol.ucar.edu/viewvc/dmg/tools/database/insert_scripts/trunk/config/dataset?view=markup">dataset</a> file. When loading several similar datasets, these three fields (and possibly the begin/end date fields) will likely be the only fields that need to be changed based on the previously used dataset file. When creating the first <a href="http://svn.eol.ucar.edu/viewvc/dmg/tools/database/insert_scripts/trunk/config/dataset?view=markup">dataset</a> file of a kind, the following information will also be needed for the appropriate fields in the file: platform id, category id, frequency id, spatial type (ex: "raster"), and point of contact id (EOL Data Support <codiac@ucar.edu> is 1). Most of the appropriate id numbers can be retrieved from <a href="http://dmg.eol.ucar.edu/software/tools/web/qcodiac/">QCODIAC</a>. A number of fields commonly seen with check-boxes in zinc will need to be set to either 1 (checked) or 0 (unchecked). Other fields that require text entry in zince should be set with the appropriate text between quotations in the dataset file. The begin/end dates are inherited from the proj file, but can be set manually in the bottom section of the <a href="http://svn.eol.ucar.edu/viewvc/dmg/tools/database/insert_scripts/trunk/config/dataset?view=markup">dataset</a> file. </li><br />
+	<li>A <a href="http://svn.eol.ucar.edu/viewvc/dmg/tools/database/insert_scripts/trunk/src/doit?view=markup">doit</a> file must be created. In the file, the only change necessary is that the "archid" field needs to be set with the appropriate codiac id #. </li><br />
+	<li>The cfg-file needs to be set up. For more information see <a href="http://dmg.eol.ucar.edu/software/tools/database/insert_scripts/howto_insert_scripts.html">How To: Insert Files Scripts</a>. If the dataset contains a large number of files the database could time out and give an <a href="http://dmg.eol.ucar.edu/software/tools/database/insert_scripts/howto_insert_scripts.html#errors">error</a>, killing the insert script. To avoid this the cfg-file needs to be broken up into chunks as seen in this <a href="cfg_example.html">example</a>. If this is the case, the insert_multiple_files script will need to be called several times - commenting out and un-commenting a different block of the cfg-file each time. lsdsfiles will also need to be called manually in this scenario.</li><br />
+	<li>Finally, the <a href="http://svn.eol.ucar.edu/viewvc/dmg/tools/database/insert_scripts/trunk/src/doit?view=markup">doit</a> script is called which will then automatically set up the dataset in codiac with the appropriate metadata, call insert_multiple_files to insert the files into codiac, and run lsdsfiles. Run <a href="http://svn.eol.ucar.edu/viewvc/dmg/tools/database/insert_scripts/trunk/src/doit?view=markup">doit</a> on sferic so that lsdsfiles can be called automatically.</li><br />
+	<li>Check the dataset in zinc. If additional contacts need to be entered (such as a "source" contact or "originator") this can be done in zinc. Also, enter in xlinks in zinc if they were not inherited from the project.</li><br />
+    </ol>
+    </p>
+<h4>Notes:</h4>
+<ul>
+<li>The summary parameter in the dataset### file must not contain double quotes ("") within the double quotes already presently defining the entry as this will create an error.</li>
+<li>The dataset### and doit files should be placed in the the /net/work/cfg-files/&#60;Project&#62; workspace, alongside the cfg-files, and used from there.</li>
+</ul>
+<br />
+<i>Edited: Brooks / 2012-07-17 15:51:00</i>
+<br />
+</div>
+
+
+<hr>
+<i>
+<!--Last change: $Id: howto_proj_dataset.html 2747 2012-03-30 00:15:41Z jja $<br-->
+Original: janine | 2012-06-19 13:39:00<br>
+</i>
+
+</body>
+</html>

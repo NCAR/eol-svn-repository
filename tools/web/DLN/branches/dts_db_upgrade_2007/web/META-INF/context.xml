@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context cookies="true" crossContext="true" debug="9" override="true"
+            path="/dln" reloadable="true" swallowOutput="true" 
+            useNaming="true">
+
+    <Realm className="org.apache.catalina.realm.JDBCRealm" 
+            connectionName="dts-full" connectionPassword="l@micbc"
+            connectionURL="jdbc:mysql://riesling.eol.ucar.edu/dmg_authentication"
+            debug="99" digest="MD5" driverName="com.mysql.jdbc.Driver"
+            roleNameCol="rolename" userCredCol="password" userNameCol="username"
+            userRoleTable="web_user_role" userTable="web_user" />
+</Context>

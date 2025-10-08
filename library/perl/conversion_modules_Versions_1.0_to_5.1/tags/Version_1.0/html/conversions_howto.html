@@ -1,0 +1,780 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Conversion Module How To</title>
+  </head>
+  
+  <body>
+      <h1>Conversion Module How To</h1>
+      <ol>
+	<li><a href="#intro">Introduction</a></li>
+	<li><a href="#about">About this Document</a></li>
+	<li><a href="#conv">Conversions Module</a><ol>
+	    <li><a href="#conv_call">Calling a Conversion Method</a></li>
+	    </ol></li>
+	<li><a href="#stn">Station Module</a><ol>
+	    <li><a href="#stn_new">Creating a new Station</a></li>
+	    <li><a href="#stn_mod">Modifying a Station</a></li>
+	    </ol></li>
+	<li><a href="#smap">StationMap Module</a><ol>
+	    <li><a href="#smap_new">Creating a new StationMap</a></li>
+	    <li><a href="#smap_mod">Modifying a StationMap</a></li>
+	    <li><a href="#smap_files">Making Output Files from a StationMap
+	      </a></li>
+	    <li><a href="#smap_inherit">Inheriting StationMap</a></li>
+	    </ol></li>
+	<li><a href="#rec">Record Module</a><ol>
+	    <li><a href="#rec_new">Creating a new Record</a></li>
+	    <li><a href="#rec_mod">Modifying a Record</a></li>
+	    <li><a href="#rec_spec">Time and Special Records</a></li>
+	    <li><a href="#rec_warn">Warnings for a Record</a></li>
+	    <li><a href="#rec_die">When a Record Dies</a></li>
+	    <li><a href="#rec_out">Generating Output Files</a></li>
+	    </ol></li>
+	<li><a href="#rmap">RecordMap Module</a><ol>
+	    <li><a href="#rmap_new">Creating a new RecordMap</a></li>
+	    <li><a href="#rmap_mod">Modifying a RecordMap</a></li>
+	    <li><a href="#rmap_seq">The Sequence Checker</a></li>
+	    <li><a href="#rmap_dupes">The Duplicate Record List</a></li>
+	    </ol></li>
+	<li><a href="#connect">Connecting the Modules Together</a></li>
+      </ol>
+
+      <hr><a name="intro"><h2>Introduction</h2></a>
+      <p>The conversion modules are a collection of Perl program modules that
+	can be used to help write conversions from raw data to the quality 
+	control format (.0qc files).  The modules were created to increase the
+	speed of writing a conversion while simplifying the code by hiding 
+	functionality that is not conversion specific and reduce the chance of
+	errors occuring by rewriting/copying code that performs the same tasks
+	in different conversions.  It is also meant to provide more 
+	consistancy between conversions.</p>
+      <p>The modules are written in Perl using the object-oriented style of
+	programming.</p>
+
+      <hr><a name="about"><h2>About this Document</h2></a>
+      <p>This document is meant to help use the conversion modules to make
+	writing a conversion a simple as possible.</p>
+      <p>All fragments of code are given a line number.  The line number is
+	only a reference for me to help explain a specific line of code.  It
+	is not a part of the actual code and should not be used as a part of
+	actual code.</p>
+      <p>All of the code fragments are in Perl because the modules are written
+	in Perl.</p>
+      <p>As the author of this document, I will use multiple words to refer to
+	the same thing.  Here is a list of ones that I am sure that I will use.
+	<ul><li>function = method</li><li>arguments = parameters</li></ul>
+        I will attempt to be consistant throughout the document, but will also
+        apologize in advance for the inconsitancies that I will not catch.</p>
+
+      <hr><a name="conv"><h2>Conversions Module</h2></a>
+      <p>The <code>Conversions</code> module is a collection of static 
+	functions used in converions.  The functions consist of conversions of
+	measurements between units, converting values to specific formats, 
+	accessing constant values, and other functions that are useful for a
+	conversion.</p>
+      <a name="conv_call"><h3>Calling a Conversion Method</h3></a>
+      <p>To call a function from the <code>Conversions</code> module use:<pre>
+   001 $value = Conversions::function_name(parameters);
+      </pre>The line calls the function <code>function_name</code> in the 
+      <code>Conversions</code> module with the arguements <code>parameters
+	</code>.  The function returns the value <code>$value</code>.</p>
+      <p>It should be noted that the return value(s) and parameters list are
+	dependant on the actual function being called.  The functions and
+	full module documentation for the <code>Conversions</code> module
+	can be found <a href="http://www.joss.ucar.edu/cgi-bin/dpg/doc/docperl.cgi?file=/work/DPG_HTML/BEST_SW/conversion_modules/Version1/Conversions.pm">here</a>.</p>
+
+      <hr><a name="stn"><h2>Station Module</h2></a>
+      <p>The <code>Station</code> module is a data structure used for holding
+	the data for a single station in a network.  The <code>Station</code>
+	module is assigned all of the data (either by the conversion or the 
+	default values) and can print out the data in the format for the 
+	<code>*stationCD.out</code> file.</p>
+      <a name="stn_new"><h3>Creating a new Station</h3></a>
+      <p>To create a new <code>Station</code> instance, use the <code>new
+	</code> function.  The <code>new</code> function is the <code>Station
+	</code> module's constructor.  To use the <code>new</code> function
+	do:<pre>
+   001 $station = Station->new(1);
+      </pre>The function call creates a new <code>Station</code> instance with
+      the verbose flag on and stores it in the <code>$station</code> variable.
+      The new <code>Station</code> is a generic <code>Station</code> with all
+      of the variables set to the default values.</p>
+      <a name="stn_mod"><h3>Modifying a Station</h3></a>
+      <p>Once a new <code>Station</code> instance has been created, the data
+	needs to be set for it.  There are two types of variables in the
+	<code>Station</code> module, the required variables and the other
+	variables.  The required variables are variables that must be changed
+	from the default value to prevent errors and/or warnings from occuring
+	later when being checked/quality controled.  The required variables
+	are unique to each individual station or network.  The other variables
+	are the rest of the variables that are set to their most common 
+	settings.  In some cases the other variables will need to be changed,
+	depending on the specifics of the network.</p>
+      <p>The following is a list of all of the variables used in the 
+	<code>Station</code> module.
+	<table border=2>
+	<tr><th>Required</th><th>Default</th><th>Notes</th></tr>
+	<tr><td>Station Id</td><td>StnId</td></tr>
+	<tr><td>Station Name</td><td>Station Name</td></tr>
+	<tr><td>Network Name</td><td>NetName</td></tr>
+	<tr><td>Network Id</td><td>0</td></tr>
+	<tr><td>Platform Id</td><td>0</td></tr>
+	<tr><td>Latitude</td><td>-999.99999</td></tr>
+	<tr><td>Longitude</td><td>-999.99999</td></tr>
+	<tr><td>Lat Long Accuracy</td><td>4</td><td>Needs to match accuracy of the latitude and longitude values</td></tr>
+	<tr><td>Elevation</td><td>-9999.9</td></tr>
+	<tr><td>State Code</td><td>99</td><td>Needs to be set as the state's abbrviation to get the correct number.</td></tr>
+	<tr><td>Reporting Frequency</td><td>xxxxx</td></tr>
+	<tr><td>Begin Date</td><td>99999999</td><td><a href="#stn_date">See Modifying the Date</a></td></tr>
+	<tr><td>End Date</td><td>00000000</td><td><a href="#stn_date">See Modifying the Date</a></td></tr>
+	<tr><th>Other</th><th>Default</th><th>Notes</th></tr>
+	<tr><td>Occurence</td><td>0</td><td>Should never be changed from 0</td></tr>
+	<tr><td>Commissioned</td><td>N</td></tr>
+	<tr><td>Country</td><td>US</td></tr>
+	<tr><td>County Code</td><td>???</td></tr>
+	<tr><td>UTC Offset</td><td>0</td><td>The offset is the offset in the final converted data, not the raw data.</td></tr>
+	<tr><td>Daylight Savings</td><td>n</td><td>The daylight saving switch is if the switch is in the final data, not the raw data.</td></tr>
+	<tr><td>Mobility Flag</td><td>f</td></tr>
+	</table>
+      <p>The following is an example of modifying a <code>Station</code>
+	instance.<pre>
+   002 $station->setStationId($station_id);
+   003 $station->setStationName($station_name);
+   004 $station->setNetworkName("COAGMET");
+   005 $station->setNetworkIdNumber(21);
+   006 $station->setPlatformIdNumber(139);
+   007 $station->setLatitude($latitude, $lat_fmt);
+   008 $station->setLongitude($longitude, $long_fmt);
+   009 $station->setLatLongAccuracy(2);
+   010 $station->setElevation($elevation, "m");
+   011 $station->setStateCode("CO");
+   012 $station->setReportingFrequency("hourly");
+      </pre>The variables that are used are unique values to each <code>Station
+      </code> instance where the constant values are unique to the network.</p>
+      <a name="stn_date"><h3>Modifying the Date of a Station</h3></a>
+      <p>The <code>Station</code> module uses a single function to update the
+	date range a <code>Station</code> reports using the <code>insertDate
+	</code> function.  This function updates the begin date, end date or 
+	both for the date passed in as an arguement to the function.</p>
+      <p>The intention for the use of the <code>insertDate</code> function is:
+	after a <code>Record</code> has been converted from the raw data to
+	a <code>Record</code> instance, pull the nominal date from the
+	<code>Record</code> and use that nominal date to pass to the <code>
+	  insertDate</code> function.</p>
+      <p>The following is an example of how the <code>insertDate</code> 
+	function is intended to be used.<pre>
+   013 while(&lt;INFILE>) {
+   014     my $record = parseDataLine($_);
+   015     if (defined($record) && $self->inTimeOfInterest($record)) {
+   016         my $station = getStation($record->getStationId(), $record->getNetworkId());
+   017         $station->insertDate($record->getNominalDate());
+   018     }
+   019 }
+      </pre>Line 13 loops through all of the lines in the file pointed to by
+      the file handle <code>INFILE</code>.  While the loop cycles through the
+      lines of the file, line 14 converts the raw data to a <code>Record</code>
+      instance and stores it in <code>$record</code>. Line 15 makes sure that
+      the returned <code>$record</code> was actually created and the 
+      <code>Record</code> is in the time of interest for the project.  Line 16
+      gets the <code>Station</code> that the <code>$record</code> was recorded
+      at and assigns it to <code>$station</code>.  The <code>Station</code>
+      now updates its dates using the <code>insertDate</code> function and the
+      nominal date of the <code>$record</code>.</p>
+      <p>The <code>getStation</code> function assumes that the conversion 
+	program extends the <code>StationMap</code> module.  This will be 
+	discussed in more detail in the <a href="#smap">StationMap</a> section
+	of this document.</p>
+      <p>The full documentation for the <code>Station</code> module can be
+	found <a href="http://www.joss.ucar.edu/cgi-bin/dpg/doc/docperl.cgi?file=/work/DPG_HTML/BEST_SW/conversion_modules/Version1/Station.pm">here</a>.</p>
+
+      <hr><a name="smap"><h2>StationMap Module</h2></a>
+      <p>The <code>StationMap</code> module is a data structure that holds
+	a collection of <code>Station</code> instances.  It defines a <code>
+	  Station</code> as unique if the combination of the station id and
+	the name of the network are unique.</p>
+      <p>The purpose of the <code>StationMap</code> module is to provide a 
+	simple way of holding and accessing all of the <code>Station</code>
+	instances for a conversion.  This is useful for <code>Station</code>
+	instances that have their raw data in multiple files or to print all
+	of the <code>Station</code> instances to the <code>*stationCD.out
+	</code> file.</p>
+      <a name="smap_new"><h3>Creating a new StationMap</h3></a>
+      <p>To create a new <code>StationMap</code> instance, use the <code>new
+	</code> function.  The <code>new</code> function is the <code>
+	  StationMap</code> module's constructor.  To use the <code>new</code>
+	function do:<pre>
+   001 my $stn_map = StationMap->new();
+      </pre>The function call creates a new <code>StationMap</code> instance
+      and stores it in the <code>$stn_map</code> variable.</p>
+      <a name="smap_mod"><h3>Modifying a StationMap</h3></a>
+      <p>The following sections of code will provide examples of how to use a
+	<code>StationMap</code> instance.</p><pre>
+   002 while (&lt;STN_IN>) {
+   003    my $station = $self->parseStationLine($_);
+   004    $stn_map->add($station);
+   005 }
+      </pre>This code loops through every line in the <code>STN_IN</code> file
+      handle, creates a new <code>Station</code> instance for each line and
+      adds it to the <code>StationMap</code> instance.</p><pre>
+   006 if ($stn_map->hasStation($station_id, $network_id)) {
+   007    my $station = $stn_map->getStation($station_id, $network_id);
+   008    my $record = Record->new($station);
+   009    # Load record data
+   010    return $record;
+   011 } else {
+   012    return undef();
+   013 }
+      </pre>This code section checks to see if a <code>Station</code> with
+      the specfied station id and network id are in the <code>StationMap
+      </code>.  If the <code>StationMap</code> has the <code>Station</code>
+      it gets it and uses it to create a new <code>Record</code> and returns
+      the <code>Record</code>, otherwise it returns the undefined value.</p>
+      <p>Line 9 represents a larger block of code that actually loads the
+	values of the <code>Record</code>.</p>
+      <a name="smap_files"><h3>Making Output Files from a StationMap</h3></a>
+      <p>A <code>StationMap</code> is also very useful for creating the 
+	<code>*stationCD.out</code> file.  To create the <code>*stationCD.out
+	</code> file do the following:<pre>
+   014 my @stations = $stn_map->getAllStations();
+   015 foreach my $station (@stations) {
+   016    print STATIONS $station->toQCF_String();
+   017 }
+      </pre>Line 14 gets a list of all of the <code>Station</code> instances in
+      the <code>StationMap</code>.  The loop goes through the list and prints
+      the QCF station line to the file opened by the file handle <code>STATIONS
+      </code>.
+      <p>Each <code>StationMap</code> can also create a summary of all of the
+	<code>Station</code> instances held in the <code>StationMap</code>. 
+	The summary prints the number of stations for each network along with
+	the hemispheres where the stations are located.  This is helpful for
+	finding stations that were skipped or if latitude/longitude values have
+	the wrong signs.</p>
+      <p>To create the summary file do:<pre>
+   018 print SUMMARY $stn_map->getStationSummary();
+      </pre>This prints the station summary to the file opened by the file
+      handle <code>SUMMARY</code>.</p>
+      <a name="smap_inherit"><h3>Inheriting StationMap</h3></a>
+      <p>Inheriting from the <code>StationMap</code> module allows the module
+	inheriting the <code>StationMap</code> to become a <code>StationMap
+	</code> having full use of its functions without creating a specific
+	<code>StationMap</code> instance.  The reasons for inheriting <code>
+	  StationMap</code> are mainly out of keeping the code cleaner and
+	ease of use.  It is cleaner than creating a <code>StationMap</code> as
+	a global variable and is easier than trying to pass around a variable
+	between functions.</p>
+      <p>To inherit the <code>StationMap</code> module do the following at the
+	beginning of the program.<pre>
+   019 our @ISA = ("StationMap");
+      </pre>
+      <p>To use inherited module as a <code>StationMap</code> just use 
+	<code>$self</code> as the variable name before calling the function.
+	For example:<pre>
+   020 sub printStationSummary {
+   021    my $self = shift;
+   022    print SUMMARY $self->getStationSummary();
+   023 }
+      </pre>This function prints the summary file for the <code>StationMap
+      </code>.  It should be noted that the code is not complete as it leaves
+      out the code for the file handle.</p>
+      <p>The documentation for the <code>StationMap</code> module can be found
+	<a href="http://www.joss.ucar.edu/cgi-bin/dpg/doc/docperl.cgi?file=/work/DPG_HTML/BEST_SW/conversion_modules/Version1/StationMap.pm">here</a>.</p>
+
+      <hr><a name="rec"><h2>Record Module</h2></a>
+      <p>The <code>Record</code> module is a data structure used for holding
+	data for a single reading from a station in a network.  The <code>
+	  Record</code> module is assigned all of the data (either by the
+	conversion or the default value of missing) and can print out the data
+	in the QCF format for the final output file.</p>
+      <a name="rec_new"><h3>Creating a new Record</h3></a>
+      <p>To create a new <code>Record</code> instance, use the <code>new</code>
+	function.  The <code>new</code> function is the <code>Record</code>
+	module's constructor.  To use the <code>new</code> function do:<pre>
+   001 $record = Record->new($station);
+      </pre>The function call creates a new <code>Record</code> for the 
+      specified <code>Station $station</code>.  The <code>Record</code> uses
+      the network name, station id, latitude, longitude, elevation, and 
+      reporting frequency from the <code>Station</code> to set the 
+      corresponding values in the <code>Record</code> so they do not need to
+      be done by the conversion.  This also ensures that the values match 
+      between the <code>Station</code> and its <code>Record</code> instances.
+    </p>
+      <a name="rec_mod"><h3>Modifying a Record</h3></a>
+      <p>Once a new <code>Record</code> has been created, the data needs to be
+	set for it.  All of the values default to the QCF missing value of 
+	<code>-999.99</code> or <code>15</code> for the missing cloud values.
+	The <code>Record</code> module will also automatically determine the 
+	flag values unless set by the conversion.</p>
+      <p>The following are a couple of examples of how to set values for a 
+	<code>Record</code>.<pre>
+   002 $record->setTemperature(87.76, "F");
+   003 $record->setPressure(934.22, "mb", Conversions::getUncheckedFlag());
+      </pre>Line 2 sets the temperature and automatically determines the 
+      value of the temperature flag.  Line 3 sets the pressure and its flag.
+    </p>
+      <a name="rec_spec"><h3>Time and Special Records</h3></a>
+      <p>Each <code>Record</code> has a time that the reading was taken.  Many
+	times the raw reading time is in local time and needs to be converted
+	to UTC time.  To do this, use the <code>setReadingTime</code> function.
+	The <code>setReadingTime</code> function takes in the date and time of
+	the reading along with the UTC offset, converts them to UTC time and
+	sets the actual and nominal dates and times.<pre>
+   004 $record->setReadingTime("2003/08/12", "YYYY/MM/DD", "1200", "HHMM", 7);
+      </pre>This call changes the MST local date and time to the UTC date and
+      time.</p>
+      <p>The <code>Record</code> module has a function called <code>isSpecial
+	</code>.  This function checks to see if the <code>Record</code> is
+	considered special.  A special <code>Record</code> is a <code>Record
+	</code> that does not have a nominal time on the reporting frequency.
+	For example, if a network is being converted for hourly data, but 
+	actually reports every 30 minutes, the readings on the half hour (*:30)
+	will be special <code>Record</code> instances.</p>
+      <p>A problem can occur though if a network reports hourly but the reading
+	times are not on the hour.  In this case, since <code>setReadingTime
+	</code> sets both the actual and nominal time to the converted UTC 
+	time, all of the <code>Record</code> instances will be considered
+	special.  To fix this, do something like the following:<pre>
+   005 my $hour = substr($record->getNominalTime(), 0, 3);
+   006 $record->setNominalTime($hour."00", "HH:MM");
+      </pre>This assumes a few things.  First, that <code>setReadingTime</code>
+      has already been called converting the time to UTC and formatting the
+      time to "HH:MM".  Second, the value for the hour is correct and itis 
+      only the minute value that is wrong.  If the hour was wrong as well, a 
+      different approach would need to be taken.  Third, this assumes that 
+      any restrictions on the <code>Record</code> instances to be fixed are
+      in place before it arrives at this section of code.</p>
+      <p>When fixing the nominal time values, be careful that only the <code>
+	  Record</code> instances that are to be fixed are changed.</p>
+      <a name="rec_warn"><h3>Warning for a Record</h3></a>
+      <p>As measurements are being set for a <code>Record</code>, the <code>
+	  Record</code> module performs a number of checks on the values.  Many
+	of the checks are sanity checks to make sure the values are reasonable
+	for the measurement.  If the value is not expected, it generates a
+	warning for the <code>Record</code>.  As each measurement is set, it
+	keeps adding to a list of warnings.  Once all of the measurements have
+	been set, the warnings can be retrieved with the <code>getWarnings
+	</code> function.<pre>
+   007 print WARNING $record->getWarnings();
+      </pre>This line prints the list of warnings to a file opened by the 
+      <code>WARNING</code> file handle.  Each warning is printed on its own
+      line and each warning only has one line.</p>
+      <a name="rec_die"><h3>When Records Die</h3></a>
+      <p>Occasionally the conversion will be running smoothly and it will just
+	quit.  The conversion had not finished running and a warning was 
+	printed to <code>STDERR</code>.  This occurred because something bad 
+	has happened that needs to be addressed immediately.</p>
+      <p>There are four main reasons why a conversion dies.  The first
+	is that the conversion was manually setting the flags and the flag
+	did not match the value (a missing value had a non-missing flag or 
+	vice-versa).  The second is that the conversion was manually setting
+	the flags and passed in a flag that was not one character long or the
+	flag was not recognized by the module.  The third reason is that the
+	value being set for a measurement was too big to fit in the space
+	provided for the measurement.  The fourth reason was that a unit of
+	measurement was passed in for a measurement and it was not recognized
+	by the function that was converting the units.</p>
+      <a name="rec_out"><h3>Generating Output Files</h3></a>
+      <p>The following section of code is how to create the output files from
+	the data stored in a <code>Record</code> instance.<pre>
+   008 if ($record->isSpecial) {
+   009    print SPECIAL $record->toQCF_String();
+   010 } else {
+   011    print OUTFILE $record->toQCF_String();
+   012 }
+   013 print WARNING $record->getWarnings();
+      </pre>This code prints <code>Record</code> instances that are considered
+      special to the <code>SPECIAL</code> file and everything else to the
+      <code>OUTFILE</code>.  Every <code>Record</code> has its warnings printed
+      to the <code>WARNING</code> file.
+      <p>To see the documetation for the <code>Record</code> module, go <a 
+	  href="http://www.joss.ucar.edu/cgi-bin/dpg/doc/docperl.cgi?file=/work/DPG_HTML/BEST_SW/conversion_modules/Version1/Record.pm">here</a>.</p>
+
+      <a name="rmap"><h2>RecordMap Module</h2></a>
+      <p>The <code>RecordMap</code> module is a data structure that holds a 
+	collection of <code>Record</code> instances.  It defines a <code>
+	  Record</code> as unique if the cobination of the station id, the 
+	network, the nominal date, and nominal time are unique.</p>
+      <p>The purpose of the <code>RecordMap</code> is to provide a simple way
+	of holding and accessing <code>Record</code> instances for a
+	conversion.  This is useful for checking for duplicate <code>Record
+	</code> instances and to see if there are missing <code>Record</code>
+	instances for a <code>Station</code>.</p>
+      <a name="rmap_new"><h3>Creating a new RecordMap</h3></a>
+      <p>Creating a new <code>RecordMap</code> is the same as creating a new
+	<code>StationMap</code>.  See <a href="#smap_new">Creating a new
+	  StationMap</a>.</p>
+      <a name="rmap_mod"><h3>Modifying a RecordMap</h3></a>
+      <p>Again, modifying a <code>RecordMap</code> is pretty much the same
+	as modifying a <code>StationMap</code>.  See <a href="#smap_mod">
+	  Modifying a StationMap</a>.</p>
+      <p>One thing that is not mentioned in the modifying a <code>StationMap
+	</code> section is the <code>clear</code> function.  The <code>clear
+	</code> function removes all of the <code>Record</code> instances in
+	the <code>RecordMap</code>.  This is very useful if there is a lot of
+	data being converted and using the <code>RecordMap</code> is slowing
+	down the processing.</p>
+      <a name="rmap_seq"><h3>The Sequence Checker</h3></a>
+      <p>Currently the <code>RecordMap</code> only has a sequence checker for
+	hourly data.  The function <code>checkHourlySummary</code> checks all
+	of the <code>Record</code> instances between a begin date and an end
+	date and creates a log of which times are missing for each <code>
+	  Station</code>.<pre>
+   001 print SEQUENCE $all_records->checkHourlySummary($self->getBeginTOI(), $self->getEndTOI());
+      </pre>This call prints to the <code>SEQUENCE</code> file a list of 
+      <code>Record</code> instances that are in the time of interest, but not
+      in the <code>RecordMap</code>.</p>
+      <a name="rmap_dupes"><h3>Duplicate Records</h3></a>
+      <p>The <code>RecordMap</code> also contains a duplicate <code>Record
+	</code> list.  These are <code>Record</code> instances that are trying
+	to be inserted into the <code>RecordMap</code> but there already 
+	exists a <code>Record</code> with the same uniqueness identifiers.  
+	The extra copies are added to a duplicate <code>Record</code> list 
+	inside of the <code>RecordMap</code>.</p>
+      <p>To get the dupcliate <code>Record</code> instances use the <code>
+	  getDuplicateRecords</code> function.<pre>
+   002 my @dupes = $all_records->getDuplicateRecords();
+   003 foreach my $dupe (@dupes) {
+   004    print DUPES $dupe->toQCF_String();
+   005 }
+      </pre>This code gets the list of duplicate <code>Record</code> instances
+      and prints them to the <code>DUPES</code> file.</p>
+
+      <a name="connect"><h2>Connecting the Modules Together</h2></a>
+      <p>The best way to try and describe how the modules fit together is 
+	providing a detailed example of an entire conversion program.</p>
+      <p>Before I get into the code and its details, I am going to let you
+	know about some of personal preferences and biases regarding my code.
+	First off, I detest global variables.  You will notice that all my
+	variables are bound with the <code>my</code> keyword.  I also use
+	the <code>use strict</code> line at the top of my program to prevent
+	variables from accidently becoming global.</p>
+      <p>Second is that I tend to write a lot of small functions that only do
+	one thing.  I do this to make my code easier to understand even though
+	it tends to make the overall program a bit longer.</p>
+      <p>It may also seem that I use long variable and function names.  This 
+	is done to make it as easy as possible to know what a variable 
+	represents or a function does.  If I do end up using an ambiguous 
+	variable it is probably just a counter that will go out of scope
+	quickly.</p>
+      <p>I also align my functions in the file in alphabetical order, except
+	for <code>main</code>.  I put <code>main</code> as my first function
+	with all the others in alphabetical order.  This is to make the
+	functions easy to find.</p>
+      <p>The conversion I will use is the COAGMET conversion for BAMEX.  The
+	actual code can be found at:<br>
+	<code>/work/BAMEX_PROCESSING/COAGMET/software/COAGMET_Converter.pl
+	</code></p>
+      <p>I will be breaking up the code into sections to make it as easy as 
+	possible to match the code with the explanations.  I will also be 
+	leaving out the actual code comments to keep them from getting 
+	confused with this documentation.</p>
+      <pre>
+   001 package COAGMET_Converter;
+   002 use strict;
+   003 use lib "/work/DPG_HTML/BEST_SW/conversion_modules/Version1";
+   004 use Conversions;
+   005 use Station;
+   006 use StationMap;
+   007 use Record;
+   008 use RecordMap;
+   009 our @ISA = ("StationMap");
+   010 &main();
+      </pre><p>Line 1 defines the conversion module.  Line 2 defines strict
+	use of variables and subroutines.  This is good to use to ensure that
+	the varaibles being used are local and not global to prevent them from
+	being modified somewhere unexpected causing strange results that will
+	be hard to find later.  Line 3 is the location of the modules that are
+	going to be used.  Lines 4-8 are the modules that are going to be used
+	in the conversion.  Line 9 makes the <code>COAGMET_Converter</code>
+	module a <code>StationMap</code>.  Line 10 tells the program to run
+	the <code>main</code> function to start the program.</p><pre>
+   011 sub getDupesFile { return "../output/duplicate_record.log"; }
+   012 sub getEndTOI { return "2003/07/06"; }
+   013 sub getOutputFile { return "../output/coagmet.0qc"; }
+   014 sub getRawDirectory { return "../raw_data/"; }
+   015 sub getSequenceFile { return "../output/sequence.log"; }
+   016 sub getSpecialFile { return "../output/coagmet_special.0qc"; }
+   017 sub getStartTOI { return "2003/05/20"; }
+   018 sub getStationFile { return "../output/COAG60_BAMEX_stationCD.out"; }
+   019 sub getStationList { return "../station_list/station_list.txt"; }
+   019 sub getSummaryFile { return "../output/station_summary.log"; }
+   020 sub getWarningFile { return "../output/warning.log"; }
+      </pre><p>Lines 11-20 are a set of functions that define constants used 
+      throughout the conversion program.  The function prevent an extreme 
+      amount of argument passing between function and global variables.</p>
+      <pre>
+   021 sub main {
+   022    my $converter = COAGMET_Converter->new();
+   023    $converter->convert();
+   024 }
+      </pre><p>This is the <code>main</code> function that starts the 
+	conversion program.  It creates a new <code>COAGMET_Converter</code> 
+	which is actually calling the <code>new</code> function of the <code>
+	  StationMap</code> from the inheritance in line 9.  It finishes by 
+	calling the <code>convert</code> function on the <code>$converter
+	</code> to actually begin the conversion process.</p><pre>
+   025 sub convert {
+   026     my $self = shift;
+   027     $self->loadStations();
+   028     $self->readFiles();
+   029     $self->printStations();
+   030 }
+      </pre><p>The <code>convert</code> function is the controller for doing
+	the actual converion of the raw data to the QCF format.  The process
+	it defines is to load the <code>Station</code> instances from the
+	<code>station_list</code>, read, parse and print the raw data files
+	to the QCF format, and finally print the <code>Station</code>
+	instances that actually provided data to the final output.</p><pre>
+   031 sub inTimeOfInterest {
+   032     my $self = shift;
+   033     my $record = shift;
+   034     my $date = $record->getNominalDate(); 
+   035    return (Conversions::compareDates($self->getStartTOI(), $date) <= 0 &&
+   036  	  Conversions::compareDates($date, $self->getEndTOI()) <= 0);
+   037 }
+      </pre><p>The <code>inTimeOfInterest</code> is a function that checks to
+	see if a <code>Record</code> is in the time of interest for the
+	project.  This is used so only the data that is in the time of 
+	interest is output into the files.</p><pre>
+   038 sub loadStations {
+   039     my $self = shift;
+   040     my $station_file = $self->getStationList();
+   041     open(STATIONS, $station_file) || die "Cannot open station file: $station_file\n";
+   042     while (<STATIONS>) {
+   043 	        my $station = $self->parseStationLine($_);
+   044   	if (defined($station)) {
+   045  	    $self->addStation($station);
+   046  	}
+   047     }
+   048 }
+      </pre><p>The <code>loadStations</code> function is where the conversion
+	reads in the data from the <code>station_list</code> file and 
+	converts each line in the file to a <code>Station</code> instance.</p>
+      <p>The <code>if</code> statement in line 44 is important because in the
+	COAGMET network; there are few stations that do not have latitude or
+	longitude values.  These will not create valid <code>Station</code>
+	instances in the <code>parseStationLine</code> function and only valid
+	<code>Station</code> instances should go into the <code>StationMap
+	</code></p><pre>
+   049 sub parseDataLine {
+   050     my $self = shift;
+   051     my $line = shift;
+   052     chomp($line);
+   053     my @data = split(/[, ]/, $line);
+   054     if ($self->hasStation($data[0], "COAGMET")) {
+   055  	my $station = $self->getStation($data[0], "COAGMET");
+   056  	foreach my $item (@data) {
+   057  	    if ($item eq "") { $item = Conversions::getMissing(); }
+   058  	}
+   059  	while (scalar(@data) < 14) {
+   060  	    $data[scalar(@data)] = Conversions::getMissing(); 
+   061  	}
+   062  	my $record = Record->new($station);
+   063  	$record->setReadingTime($data[1], "YYYY-MM-DD", $data[2], "HH:MM:SS", 7);
+   064  	$record->setTemperature($data[3], "C");
+   065  	$record->setRelativeHumidity($data[4], 0);
+   066  	$record->setCalculateDewPoint(1);
+   067  	$record->setWindSpeed($data[7], "m/s");
+   068  	$record->setWindDirection($data[8]);
+   069  	$record->setPrecip($data[10], "mm");
+   070  	return $record;
+   071     } else {
+   072  	return undef();
+   073     }
+   074 }
+      </pre><p>The <code>parseDataLine</code> function converts a raw data
+	line to a <code>Record</code>.  Line 52 removes the "\n" character
+	from the end of the line while line 53 turns the comma separated list
+	into a Perl list.  Line 54 checks to see if the station id that was
+	in <code>$line</code> is a <code>Station</code> in the <code>StationMap
+	</code>.  Line 55 actually gets the <code>Station</code>.</p>
+      <p>Lines 56-58 change all of the empty values in the data list to the QCF
+	missing value.  Lines 59-61 do the same thing at the end of the list.
+	This is necessary because Perl lists do not hold empty string elements
+	at the end of a list.  Lines 62-69 actually create the <code>Record
+	</code> instance for <code>$line</code> and it returns it in line 70.
+      </p><p>The <code>else</code> statement in lines 71-73 is the case where
+	the <code>Station</code> is not in the list.  In this case it returns
+	the <code>undef()</code> value to say the line is unusable to the
+	conversion.</p><pre>
+   075 sub parseStationLine {
+   076     my $self = shift;
+   077     my $line = shift;
+   078     chomp($line);
+   079     my @data = split(/,/, $line);
+   080     my $count = 0;
+   081     while ($count < scalar(@data)) {
+   082  	if (!defined($data[$count]) || $data[$count] eq "") {
+   083  	    $data[$count] = Conversions::getMissing();
+   084  	}
+   085  	$count++;
+   086     }
+   087     while (scalar(@data) < 5) {
+   088  	$data[scalar(@data)] = Conversions::getMissing();
+   089     }
+   090     if ($data[2] eq Conversions::getMissing() ||
+   091  	$data[3] eq Conversions::getMissing()) {
+   092  	return undef();
+   093     }
+   094     my $station = Station->new(0);
+   095     $station->setStationId($data[0]);
+   096     $station->setStationName($data[1]);
+   097     $station->setElevation($data[4], "ft");
+   098     $station->setNetworkName("COAGMET");
+   099     $station->setNetworkIdNumber(21);
+   100     $station->setPlatformIdNumber(139);
+   101     $station->setReportingFrequency("hourly");
+   102     $station->setStateCode("CO");
+   103     my $lat_fmt = "";
+   104     if ($data[2] < 0) {
+   105  	$lat_fmt = "-";
+   106     }
+   107     while (length($data[2]) > length($lat_fmt)) {
+   108  	$lat_fmt .= "D";
+   109     }
+   110     $station->setLatitude($data[2], $lat_fmt);
+   111     my $long_fmt = "";
+   112     if ($data[3] < 0) {
+   113  	$long_fmt = "-";
+   114     }
+   115     while (length($data[3]) > length($long_fmt)) {
+   116  	$long_fmt .= "D";
+   117     }
+   118     $station->setLongitude($data[3], $long_fmt);
+   119     return $station;
+   120 }
+      </pre><p>Lines 78-79 removes the "\n" character and splits <code>$line
+	</code> into a data list.  Lines 80-86 goes through the data list and
+	replaces empty strings or undefined values in the list with the QCF
+	missing value.  Lines 87-89 add missing values to the end of the list.
+      </p><p>Lines 90-93 check to see if the latitude and longitude values are
+	not missing.  In the COAGMET network there are some stations that do 
+	not have latitude or longitude values.  These stations are of no use
+	to the end user, so they are ignored in the conversion.  This is why
+	<code>undef()</code> is returned if either is missing, so it will not
+	be put in the <code>StationMap</code>.</p>
+      <p>Lines 94-102 create a new <code>Station</code> instance and load it
+	with most of the data.  Lines 103-109 create the format for the 
+	latitude so it will be correctly converted and sets it in the <code>
+	  Station</code> in line 110.  Lines 111-118 do the same thing with
+	the longitude.</p><pre>
+   121 sub printStations {
+   122     my $self = shift;
+   123     my $file = $self->getStationFile();
+   124     open(STATION, ">$file") || die "Can't open file $file\n";
+   125     foreach my $station ($self->getAllStations()) {
+   126  	if ($station->getBeginDate ne "99999999") {
+   127  	    print(STATION $station->toQCF_String());
+   128  	}
+   129     }
+   130     close(STATION);
+   131     my $summary = $self->getSummaryFile();
+   132     open(SUMMARY, ">$summary") || die "Can't open file $summary\n";
+   133     print(SUMMARY $self->getStationSummary());
+   134     close(SUMMARY);
+   135 }
+      </pre><p>The <code>printStations</code> function prints the <code>
+	  *stationCD.out</code> file and the station summary file.  Lines 
+	124-130 print the <code>*stationCD.out</code> file.  The <code>if
+	</code> statement in line 126 is used to make sure that <code>
+	  $station</code> actually contributed data to the output file.  If
+	it did not contribute data, it should not be in the <code>
+	  *stationCD.out</code> file.</p>
+      <p>Lines 131-134 print the station summary to the summary file.</p><pre>
+   136 sub readFiles {
+   137     my $self = shift;
+   138     my $raw_dir = $self->getRawDirectory();
+   139     my $output = $self->getOutputFile();
+   140     my $sequence = $self->getSequenceFile();
+   141     my $special = $self->getSpecialFile();
+   142     my $warning = $self->getWarningFile();
+   143     my $dupes = $self->getDupesFile();
+   144     opendir(RAW, $raw_dir) || die "Can't open directory $raw_dir\n";
+   145     my @raw_files = readdir(RAW);
+   146     closedir(RAW);
+   147     open(OUTPUT, ">$output") || die "Can't open file $output\n";
+   148     open(SEQUENCE, ">$sequence") || die "Can't open file $sequence\n";
+   149     open(SPECIAL, ">$special") || die "Can't open file $special\n";
+   150     open(WARNING, ">$warning") || die "Can't open file $warning\n";
+   151     open(DUPES, ">$dupes") || die "Can't open file $dupes\n";
+   152     foreach my $raw (@raw_files) {
+   153  	if ($raw !~ m/^[\.]+/) {
+   154  	    $raw = $raw_dir.$raw;
+   155  	    print(STDOUT "File: ".$raw."\n");
+   156  	    my $allRecords = RecordMap->new();
+   157  	    my $currentStation;
+   158  	    my $currentNetwork;
+   159  	    open(FILE, "<$raw") || die "Can't open file $raw\n";
+   160  	    while(&lt;FILE>) {
+   161  		my $record = $self->parseDataLine($_);
+   162  		if (defined($record) && $self->inTimeOfInterest($record)) {
+   163  		    $currentStation = $record->getStationId();
+   164  		    $currentNetwork = $record->getNetworkId();
+   165	                    $self->getStation($currentStation, $currentNetwork)->insertDate($record->getNominalDate());
+   166  		    if ($record->isSpecial()) { 
+   167  			print(SPECIAL $record->toQCF_String());
+   168  		    } else {
+   169  			print(OUTPUT $record->toQCF_String());
+   170  			$allRecords->addRecord($record);
+   171  		    }
+   172  	            print(WARNING $record->getWarnings());
+   173  		} 
+   174  	    }
+   175  	    close(FILE);
+   176  	    foreach my $record ($allRecords->getDuplicateRecords()) {
+   177  		printf(DUPES "Duplicate record at nominal time %s %s for %s in network %s", $record->getNominalDate(), $record->getNominalTime(), $currentStation, $currentNetwork);
+   178  	    }
+   179  	    printf(SEQUENCE "%s", $allRecords->checkHourlySequence($self->getStartTOI(), $self->getEndTOI()));
+   180  	}
+   181     }
+   182     close(DUPES);
+   183     close(WARNING);
+   184     close(SPECIAL);
+   185     close(SEQUENCE);
+   186     close(OUTPUT);
+   187 }
+      </pre><p>The <code>readFiles</code> function reads the raw data files,
+	converts them to <code>Record</code> instances, and creates the output
+	files.  Lines 138-151 get the files that are going to be used and open
+	them so they can be read or written to.  Line 152 cycles through every
+	file in the raw_data directory.  Line 153 skips the <code>.</code> and
+	<code>..</code> directories.  It assumes all other files in the 
+	directory are raw data files to be converted.</p>
+      <p>Line 154 appends the directory path to the file name.  This is needed
+	because the list of files in <code>@raw_files</code> is only the file
+	name and not the path name and file name.  Line 155 is a print 
+	statement used to show the progress of the conversion by printing out
+	the name of the file being worked on.</p>
+      <p>Line 156 creates a <code>RecordMap</code> for a file.  The COAGMET
+	network has one file per station so the <code>RecordMap</code> will
+	only hold the data for one <code>Station</code> before going out of
+	scope.  Lines 157-158 are variables that are used frequently and are
+	assigned in lines 163-164 to make the code shorter and easier to read.
+      </p><p>Lines 159-175 are where the raw data file is read and converted
+	to <code>Record</code> instances.  The <code>while</code> loop in line
+	160 reads each line and puts the line in the variable <code>$_</code>.
+	Line 161 actually creates the <code>Record</code> instance for the 
+	line using the <code>parseDataLine</code> function.  The <code>if
+	</code> statement in line 162 only includes <code>Record</code>
+	instances that actually exist (not <code>undef()</code>) and are in
+	the time of interest for the project.  Line 165 updates the begin and
+	end dates for the <code>Station</code> instance that the <code>Record
+	</code> is for.  Lines 166-172 adds the <code>Record</code> to the
+	<code>SPECIAL</code> or <code>OUTPUT</code> file and prints any 
+	warnings to the <code>WARNING</code> file.  It also adds non-special
+	<code>Record</code> instances to the <code>RecordMap</code> to check
+	for duplicates and sequence check on.</p>
+      <p>Lines 176-178 create the <code>DUPES</code> file containing the 
+	duplicate <code>Record</code> instances.  Line 179 checks the sequence
+	of the <code>Record</code> instances and prints out any times that
+	are missing during the time of interest.  Lines 182-186 close all of
+	the files that were still open.</p>
+
+      <hr>
+      <address><a href="mailto:jclawson@joss.ucar.edu">Joel Clawson</a></address>
+<!-- Created: Tue Aug 12 09:29:15 MDT 2003 -->
+<!-- hhmts start -->
+Last modified: Wed Aug 27 12:36:32 MDT 
+<!-- hhmts end -->
+  </body>
+</html>

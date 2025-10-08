@@ -1,0 +1,26 @@
+#! /usr/bin/perl -w
+
+package ProjectActionCGI;
+use strict;
+use lib ".";
+use lib "lib";
+use ActionCGI;
+use Project;
+our @ISA = ("ActionCGI");
+
+&main();
+
+sub main {
+    my $self = ProjectActionCGI->new();
+    $self->buildPage("Project Action");
+}
+
+sub processParams {
+    my ($self) = @_;
+    my $project = Project->new();
+    $project->setId($self->param("project"));
+    $project->setNoteId($self->param("note_id"));
+    $project->setNote($self->param("note_text"));
+
+    $self->update($project);
+}

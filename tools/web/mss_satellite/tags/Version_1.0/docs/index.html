@@ -1,0 +1,170 @@
+<html>
+
+<head>
+	<title>Mass Store Satellite Data Query</title>
+</head>
+<body>
+
+<center><h1>Mass Store Satellite Data Query</h1></center>
+<b>Project Overseer: </b> Greg Stossmeister<br>
+<b>Status Description: </b>In Use<br>
+<hr>
+	<ul>
+		<li><a href=#html>Web Interface/HTML Code</a>
+		<li><a href=#cgi>CGI Code</a>
+		<li><a href=#crontab>CronTab Code</a>
+		<li><a href=#database>Database</a>
+		<li><a href=#problems>Problems/Possible Issues</a>
+		<li><a href=#other>Other</a>
+	</ul>
+
+<hr>
+
+<br>
+<a name=html><font size=+1><b><u>Web Interface/HTML Code</font></u></b><br></a>
+<br>
+<b>Directory: </b> <a href=html>html</a><br>
+<b>Actual Location: </b>/web/docs/satellite/query<br>
+<br>
+This directory contains the html files needed for the web interface.<br>
+<br>
+	<dd><b>index.html - </b> The html form used by the user; I've renamed this index_.html for this documentation<br>
+	<dd><b>query.js - </b> Some javascript used by the queryMS.html page<br>
+	<dd><b>bottom.html - </b> Page to display in the bottom frame after a submit from the 
+		queryMS.html form<br>
+	<dd><b>notes.html - </b> Links to the schedules for each of the satellites, see
+		below for a better description <br>
+<br>
+<hr>
+<br>
+
+<a name=cgi><font size=+1><b><u>CGI Code</font></b></u><br></a>
+<br>
+<b>Directory: </b> <a href=cgi>cgi</a><br>
+<b>Actual Location: </b>/web/cgi-bin/dpg/mass_store<br>
+<br>
+This directory contains the perl scripts to be placed in the cgi-bin.  The <b>query</b> script
+is the cgi-script which receives the request from the user and form in the queryMS.html.<br>
+<br>
+	<dd><b>query - </b>Queries the database and displays the results.  This handles everything, including
+   the initial frameset to set up the split-screen view, the listing of each day and the number of files
+   available (in the top frame), and the listing of all the files for one day (in the bottom frame).
+	<dd><b>lib/ - </b>Contains modules used by the query script
+	<dd><b>src/ - </b>At one time I was using RCS to keep track of different versions of the query script
+   this may or may not be up-to-date. <br>
+<br>
+<hr>
+<br>
+
+<a name=crontab><font size=+1><b><u>CronTab Code</font></b></u><br></a>
+<br>
+<b>Directory: </b> <a href=crontab>crontab</a><br>
+<b>Actual Location: </b>/home/stoss/???? - talk to Greg<br>
+<br>
+The <b>perl/</b> sub-directory is of primary interest.  It contains the query_daily script which has 
+been running everyday as a cronjob on hurricane.  It performs simple msls commands on mass store and 
+adds the previous day's files to the MySQL database.  <br>
+<br>
+	<dd><b>perl/query_daily - </b>cronjob script
+	<dd><b>perl/query_tmp - </b>Similar to query_daily but the date to query is provided as an
+     argument as opposed to getting today's date.  This allows you to update the database when
+     a day is missed, this can occur if mass store is down when the cronjob is run.
+	<dd><b>lists/ - </b>See the 'Other' section of this document below
+	<dd><b>schedule/ - </b>See the 'Other' section of this document below <br>
+<br>
+<hr>
+<br>
+
+<a name=database><font size=+1><b><u>Database</font></b></u><br></a>
+<p>This project uses the MySQL <b>sat_query</b> database located on hurricane.  To access the database
+the stormdba username and password can be used (ask John or Don for the password).  Up until recently 
+the database was in my personal 'testing' database located on thunder, I never took the time to move
+it until now.  Therefore, some of the more obscure scripts I have written to pull things from this database
+may still point to the old database, this will result in an error.
+</p>
+<p>To get to the database log on to hurricane and execute this command: 
+	<dd>mysql -h hurricane -u stormdba -p sat_query<br>
+</p>
+
+<b>Database Architecture Description: </b> <a href=database/dbinfo.txt>database/dbinfo.txt</a><br>
+<b>SQL 'CREATE' Statements : </b> <a href=database/create.sql>database/create.sql</a><br>
+
+<br>
+
+<br>
+<hr>
+<br>
+
+<a name=problems><font size=+1><b><u>Problems/Possible Issues</font></b></u><br></a>
+<p>
+This project has been in use for awhile and things seem to be going fine.  One concern may be the 
+incompleteness of the database.  I would say at least 95-98% of the files located on mass store
+are archived within the database, but there have been instances when the cronjob failed, for one 
+reason or another.  I have made an effort to re-run the script when this happens, but I know I have
+not been perfect.  There us probably a few days in which we do have data on mass store but the
+database does not reflect this. 
+
+</p>
+<br>
+<hr>
+<br>
+
+<a name=other><font size=+1><b><u>Other</font></b></u><br></a>
+<br>
+<b>Schedule Extractions</b><br>
+<p>A couple of scripts were written to pull each satellite's scanning schedule from the database
+and display them using html.  This was meant for reference and the outputs can be accessed from
+the main query page by clicking on the Notes/Documentation link.
+</p>
+	<dd><b>Scripts: </b><a href=crontab/perl/extract>crontab/perl/extract</a>
+	<dd><b>README: </b><a href=crontab/perl/extract/README>crontab/perl/extract/README</a>
+<br>
+<br>
+<b>Listings - for Darren</b><br>
+<p>
+At one point Darren was doing some GOES processing and asked me to pull from the database what
+files we had on mass store given some criteria.  I think this worked out well and may want to be
+done again.  
+</p>
+	<dd><a href=crontab/lists>crontab/lists</a> - This diretory contains the script (make_lists) and 
+the output files it generates.
+
+<br>
+<br>
+<b>Sector Quality Control</b>
+<p>
+When a file is established as a certain scan sector it is also given a quality control number to help
+tell how good of a match this really is.  These numbers are based on two things - the time of the file
+relative to the given scheduled time and the time until the next recorded scan relative to the duration
+of the scan.  If the file time plus the duration of the scan are within five minutes of the next file
+time then it is thought to be a good match.  If the file time plus the duration of the scan is something
+like six hours before the next file time this is thought of as a poor match.  This is used to mark
+files which have possibly been misidentified - i.e. marked with a red star.  If the quality control
+number of a dataset is 3, 4, or 5 it is flagged.
+</p>
+Below is a summary of these numbers: <br>
+	<dd> 0 - the file time and schedule time match perfectly, time to complete within five minutes
+	<dd> 1 - the file time is one more minute than the scheduled time, time to complete is within five minutes
+	<dd> 2 - the scheduled time is one more minute than the file time, time to complete is within five minutes
+	<dd> 3 - the file time and scheduled time match perfectly, the time to complete is NOT within five minutes
+	<dd> 4 - the file time is one more minute than the scheduled time, time to complete is NOT within five minutes
+	<dd> 5 - the scheduled time is one more minute than the file time, time to complete is NOT within five minutes
+	<dd> 6 - the sector can not be determined, unknown
+	<dd> 7 - other
+<br> <br>
+NOTE: if the file time plus the duration of the scan overlaps onto the next file time then the sector is
+ is labled as unknown - because there wasn't enough time to complete the task.
+<hr>
+<br>
+
+<br>
+<!-- To Include/Discuss:
+CGI code
+crontab code
+database
+schedule extractions
+lists created for Darren /home/suldan/mass_store/lists
+problems - missed days because mass store was down
+-->
+
+</html>

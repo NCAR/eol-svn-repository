@@ -1,0 +1,134 @@
+ 
+use strict;
+use lib "lib";
+use Utils;
+
+sub dataset_view
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	println( $cgi->header() );
+	println( "<html>" );
+		println( "<head>" );
+		println( "<title>Iven Dataset View</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+	println( "<body>" );
+
+	menu( $state, $cgi );
+
+	my $ds;
+	$ds = DatasetDBA::getFromDB( $state->{dataset}, $state->{product}, $state->{project} );
+
+	println( "<br>" );
+
+	println( "<table border=0 cellpadding=0 cellspacing=0 width=100%>" );
+		if( $ds->{is_extraction} )
+		{
+			println( "<tr bgcolor=#FFFFCC>" );
+				println( "<td colspan=3 align=center>" );
+					println( "<font color=#900000 size=+1><b>Extraction</font></b>" );
+				println( "</td>" );
+			println( "</tr>" );
+		}
+		println( "<tr>" );
+			println( "<td width=33%>" );
+				my $url = $state->getUrlString( "view" => $PRODUCT, "product" => $ds->{pdname} );
+				println( "<b><font>Status: </b> $status_hash{$ds->{status}}<br>" );
+				println( "<b><font>Product: </b> <a href=$url>$ds->{pdname}</a></font>" );
+			println( "</td>" );
+			println( "<td width=33% align=center>" );
+				if( $state->{view} == $DATASET )
+				{ println( "<b><u><font size=+2>$ds->{dsname}</font></b></u>" ); }
+				else
+				{ println( "<b><u><font size=+2>$ds->{extname}</font></b></u>" ); }
+			println( "</td>" );
+			println( "<td width=33% align=right>" );
+				println( "<b>Processing: </b> $ds->{user_processing_object}->{fname} $ds->{user_processing_object}->{lname}" );
+			println( "</td>" );
+		println( "</tr>" );
+		if( $ds->{is_extraction} )
+		{
+			my $url = $state->getUrlString( "view"=>$PRODUCT, "product"=>$ds->{extraction_object}->{pdsource} );
+			println( "<tr>" );
+				println( "<td colspan=3>" );
+					println( "<b>Source Product: </b><a href=$url>$ds->{extraction_object}->{pdsource}</a>" );
+				println( "</td>" );
+			println( "</tr>" );
+		}
+	println( "</table>" );
+	println( "<br>" );
+
+	println( "<center><table border=0 cellspacing=1 cellpadding=2 class=notesTable width=85%>" );
+		println( "<tr class=notesHeading>" );
+			println( "<td>" );
+				println( "<table border=0 cellpadding=0 cellspacing=0 width=100%>" );
+					println( "<tr class=notesHeading>" );
+						println( "<td width=10%>&nbsp;</td>" );
+						println( "<td>General Notes</td>" );
+						my $url = $state->getUrlString( "edit"=>1, "product"=>$ds->{pdname}, "dataset"=>$ds->{dsname} );
+						println( "<td align=right width=10%><a href=\"javascript: notesEditWindow( '$url' )\"><img src=$img_src/edit.gif border=0 alt=\"Edit Notes\"></a></td>" );
+					println( "</tr>" );
+				println( "</table>" );
+			println( "</td>" );
+		println( "</tr>" );
+		println( "<tr class=notesRow><td><div class=bigScroll>$ds->{admin_notes}</div></td></tr>" );
+	println( "</table></center>" );
+	println( "<br><br>" );
+
+	println( "<center><table border=0 cellspacing=1 cellpadding=2 width=85% class=statusTable>" );
+
+		println( "<tr class=statusHeading><td>Dataset Status</td></tr>" );
+		println( "<tr class=statusRow>" );
+			println( "<td>" );
+			println( "<table border=0 cellpadding=2 width=100%>" );
+				println( "<tr>" );
+					println( "<td><li><b>Raw Data: </b></td>" );
+					println( "<td>$ds->{raw_data}</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td><li><b>Final Data: </b></td>" );
+					println( "<td>$ds->{final_data}</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td><li><b>Station List: </b></td>" );
+					println( "<td>$ds->{station_info}</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td><li><b>Software: </b></td>" );
+					println( "<td>$ds->{software}</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td><li><b>Plots: </b></td>" );
+					println( "<td>$ds->{plots}</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td><li><b>Id Type: </b></td>" );
+					println( "<td>$ds->{id_type}</td>" );
+				println( "</tr>" );
+
+				println( "<tr>" );
+					println( "<td><li><b>Platform Type: </b></td>" );
+					println( "<td>$ds->{platform_type}</td>" );
+				println( "</tr>" );
+			println( "</table>" );  #end dir listing table
+			println( "</td>" );
+		println( "<tr class=statusHeading><td>Processng Notes</td></tr>" );
+		println( "<tr class=statusRow>" );
+			println( "<td>" );
+				println( $ds->{status_notes} );
+			println( "</td>" );
+		println( "</tr>" );
+	println( "</tr>" );
+	println( "</table>" );  #end of status table
+
+	println( "</body></html>" );
+}
+1;

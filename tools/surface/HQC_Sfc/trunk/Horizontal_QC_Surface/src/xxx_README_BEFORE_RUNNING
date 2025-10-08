@@ -1,0 +1,39 @@
+------------------------------------------
+Update HQC s/w so not overwrite I flag
+if it occurs for station pressure. Now the
+DATSAV2 stn pressure is calculated from
+the altimeter and elevation so it can be
+-999.99 I. This s/w has not yet been
+tested.
+
+LEC 5 May 99
+------------------------------------------
+Consider:
+
+Add in check for negative precip and
+for values too large to fit in field.
+In these cases set the prcflg to "C".
+
+LEC   16 Nov 98
+------------------------------------------
+The above should be checked and found
+by the check_QCF_file.c program. QC should
+not have to check for these items.
+
+But we now have Mobile stations that we
+should HQC. ID these stations by "DATSAV2M"
+and "GLERLM".  Let variances be computed.
+This way we can see how stable these stations
+are. (We don't expect them to be stable or
+stationary at all, but this might help ID
+sites that were mis-ID'd as being mobile.)
+Skip the mobile stations in the main_qc.c
+program. Then if want, we could actually
+QC this data should someone want to.  
+
+LEC   12 Jan 99
+------------------------------------------
+
+Also ensure that MAXNUMSTNS in local.h
+is large enough to be = or > the total
+number of stns in this composite.

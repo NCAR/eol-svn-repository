@@ -1,0 +1,240 @@
+#!/bin/perl -wT
+
+# --------------------------------------------------------------
+# category_table: 
+#  Displays datasets by category.  Displays all datasets for 
+#  a project or for a single category.
+#
+# Expected params:
+#  "project" - the project id number to display
+#  "category" - (optional) the category to display, if no category
+#    is given all datasets for the given project are displayed
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI;
+use lib "../lib";
+use Utils;
+use lib "../../mcd_lib";
+use MLProject;
+use MLProjectDBA;
+use Category;
+use CategoryDBA;
+use MLDataset;
+use MLDatasetDBA;
+use LinkDBA;
+#use EQuery;
+require( "./show_error" );
+
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+
+my $ds_dba = MLDatasetDBA->new();
+my $cat_dba = CategoryDBA->new();
+my $proj_dba = MLProjectDBA->new();
+my $link_dba = LinkDBA->new();
+
+my $cgi = CGI->new();
+my $project = $cgi->param( "project" );
+my $category = $cgi->param( "category" );
+
+check_valid( $project, $category );
+
+my $proj = $proj_dba->getFromDB( $project );
+
+my @tree;
+my $title = $proj->{name};
+
+my @ptree = $cat_dba->getTree( $project );
+
+if( defined( $category ) )
+{
+	@tree = $cat_dba->getSubTree( $category );
+}
+else
+{
+	@tree = @ptree;
+	$category = -1;
+}
+
+my $ds = $ds_dba->getDatasetList( \@tree );
+
+$ds_dba->getDocUrls_list( $ds );
+
+my $count = 0;
+
+println( $cgi->header() );
+
+println( "<html><head><title>JOSS Master List</title></head>" );
+println( &body_css( $proj->{body_css_src}) );
+println( $jscript );
+println( "<body bgcolor=#e9e9e9 link=#000066 alink=#000066 vlink=#000066 text=black>" );
+println( "<br>" );
+
+println( "<center><table border=0 cellpadding=4 cellspacing=0 width=97% bgcolor=#dcdcdc class=titleTable>" );
+	println( "<tr>" );
+		println( "<td align=center valign=center width=15%>" );
+			println( "&nbsp;" );
+		println( "</td>" );
+		println( "<td align=center valign=top width=70%>" );
+			println( "$proj->{name} Data Sets<br>" );
+			println( "<font size=-1><i>$proj->{long_name}</i></font>" );
+		println( "</td>" );
+		println( "<td align=center valign=center width=15%>" );
+			println( &nbsp(2), "<img src=http://www.joss.ucar.edu/master_list/images/joss.gif>" );
+		println( "</td>" );
+	println( "</tr>" );
+println( "</table>" );
+println( "<br>" );
+println( "<center><table border=0 cellpadding=3 cellspacing=1 width=97%>" );
+
+	println( "<tr bgcolor=#336699 class=tableHead><td colspan=4>" );
+		println( "$proj->{name} Master Data Set List" );
+		if( $category != -1 )
+		{
+			#println( ": <a href=category_table?project=$project>All</a>&nbsp;&gt&nbsp;" );
+			println( ": All&nbsp;&gt&nbsp;" );
+			showPath( \@ptree, $category );
+		}
+	println( "</td></tr>" );
+
+showTable( $ds );
+
+my $total = "Total Number of <i>$proj->{name}</i> Data Sets: $count";
+$total = "Total Number of <i>$tree[0]->{category}->{name} </i> Data Sets: $count" if( $category != -1 );
+ 
+println( "<tr bgcolor=#336699 class=tableHead><td colspan=4>$total</td></tr>" );
+println( "</table>" );
+println( "</body></html>" );
+
+sub showTable
+{
+	my $list = shift;
+	my $readme = "http://www.joss.ucar.edu/master_list/readme.gif";
+
+	if( $list )
+	{
+		my @list = @$list;
+		foreach my $node (@list)
+		{
+			my @links = $link_dba->getCategoryLinks( $node->{category}->{id} );
+
+			#if( $category != $node->{category}->{id} )
+			#{
+				println( "<tr bgcolor=#dcdcdc class=catHead>" );
+					println( "<td colspan=3><b>$node->{category}->{name}</b>" );
+					foreach my $link (@links)
+					{
+						println( &nbsp(3), "<a href=$link->{url} target=$link->{target}>$link->{name}</a>" );
+					}
+				println( "</tr>" );
+			#}
+			
+			foreach my $ds ( @{$node->{datasets}} )
+			{
+				$count++;
+				
+				println( "<tr bgcolor=white onmouseover=\"javascript: style.backgroundColor=\'#ebebf5\'\" onmouseout=\"javascript: style.backgroundColor=\'white\'\">" );
+
+					my $url = $ds->{remote_url};
+					if( $url && $url =~ /^ftp/ )
+					{
+						$url = "ftp_url?dataset=$ds->{id}&project=$project";
+					}
+					elsif( ( !$url || $url eq "" ) && $ds->{storm_id} )
+					{
+						$url = "http://www.joss.ucar.edu/cgi-bin/codiac/dss?$ds->{storm_id}";
+					}
+
+					println( "<td width=75% class=dsTitleCell>" );
+						if( defined( $url ) && $url ne "" )
+						{
+							println( "<a href=$url target=_top>$ds->{title}</a>" );
+						}
+						else
+						{
+							println( $ds->{title} );
+						}
+					println( "</td>" );
+
+
+					println( "<td nowrap align=center width=10%>" );
+						if( $ds->{status}->{in_progress} == 1 )
+						{ println( "<font color=red size=-1 face=Verdana>In Progress</font>" ); }
+						elsif( $ds->{status}->{updated} == 1 )
+						{ 
+							println( "<img src=$img_src/updated.gif>" );
+							println( "<br>", $ds->{date} ) if( $ds->{date} ne "0000-00-00" );
+						}
+						elsif( $ds->{status}->{new} == 1 )
+						{ 
+							println( "<img src=$img_src/new.gif>" );
+							println( "<br>", $ds->{date} ) if( $ds->{date} ne "0000-00-00" );
+						}
+						elsif( $ds->{date} ne "0000-00-00" )
+						{ println( "$ds->{date}" ); }
+						else
+						{ println( "&nbsp;" ); }
+					println( "</td>" );
+
+					println( "<td nowrap align=center class=dsDocCell width=10%>" );
+						if( defined( $ds->{doc_url} ) && $ds->{doc_url} ne "" )
+						{
+							println( "<a href=$ds->{doc_url}>documentation</a>" );
+						}
+						else
+						{
+							println( "&nbsp;" );
+						}
+					println( "</td>" );
+				println( "</tr>" );
+			}
+
+			showTable( $node->{childern} ); 
+		}
+	}
+}
+
+sub showPath
+{
+	my @tree = @{ $_[0] };
+	my $cat = $_[1];
+
+	foreach my $node ( @tree )
+	{
+		if( $node->{category}->{id} == $category )
+		{
+			println( $node->{category}->{name} );
+			return;
+		}
+		elsif( $node->inTree( $category ) )
+		{
+			println( "<a href=category_table?project=$project&category=$node->{category}->{id}>$node->{category}->{name}</a>&nbsp;&gt;&nbsp;" );
+			showPath( $node->{childern}, $category );
+			last;
+		}
+	}
+}
+sub check_valid
+{
+	my $project = shift;
+	my $category = shift;
+
+	if( !defined( $project ) ) 
+	{
+		show_error( "category_table: undefined project id." );
+	}
+	elsif( $project =~ /\D/ )
+	{
+		show_error( "category_table: project id not valid: $project" );
+	} 
+	elsif( defined( $category ) && $category =~ /\D/ )
+	{
+		show_error( "category_table: category id not valid: $category" );
+	} 
+}
+

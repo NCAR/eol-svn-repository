@@ -1,0 +1,14 @@
+SHELL = /bin/sh
+
+#CC=purify acc -g
+#CC=acc -p
+#CC=acc
+CC=cc
+##CFLAGS = -g
+
+convert_QCF_time_4DYR: convert_QCF_time_4DYR.o process_qcfrec_4DYR.o date_4DYR.o
+	$(LINK.c) -o convert_QCF_time_4DYR convert_QCF_time_4DYR.o process_qcfrec_4DYR.o date_4DYR.o
+	chmod 0755 convert_QCF_time_4DYR
+
+clean:
+	rm *.o

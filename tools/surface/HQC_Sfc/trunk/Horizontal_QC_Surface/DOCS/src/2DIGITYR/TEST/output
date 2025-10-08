@@ -1,0 +1,26 @@
+
+OUTPUT #1:  No signal handling OR call the default.
+
+torrent /rraid1/NEWQC/src/TEST 39->main
+Begin program test.
+Close the file.
+Before pclose call, stat = 0
+Broken Pipe
+After pclose call, stat = 36096
+End test
+
+
+OUTPUT #2:  Call to signal(SIGPIPE, SIG_IGN); 
+     Generates even more output - just the opposite of what is wanted.
+
+torrent /rraid1/NEWQC/src/TEST 40->main
+Begin program test.
+Close the file.
+Before pclose call, stat = 0
+
+gunzip: stdout: Broken pipe
+After pclose call, stat = 256
+ WARNING: file_compressed -> pclose stat = 256
+End test
+torrent /rraid1/NEWQC/src/TEST 41->
+

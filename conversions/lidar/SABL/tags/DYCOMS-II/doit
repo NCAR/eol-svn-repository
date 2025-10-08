@@ -1,0 +1,13 @@
+#!/bin/csh
+foreach dir (`ls | grep "^20010"`)
+    set newdir = `echo $dir|sed 's?/??'`
+    echo "Processing $newdir\n"
+    cd $newdir
+    #foreach file (`ls`)
+    #    echo $file
+    #end
+    tapeToCdf -f ../../config.txt -b --debug all > & sabl_debug.log
+    ncrcat *nc ../sabl.$newdir.all.nc
+    cd ../
+end
+

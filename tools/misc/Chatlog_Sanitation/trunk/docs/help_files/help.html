@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>Help for ChatScrubber</title>
+
+<style type="text/css">
+<!--
+li{ margin-top:6px; 
+ margin-bottom:6px;  }
+img{margin-top:6px;}
+-->
+</style>
+</head>
+<body>
+<h3 align="center">Help for ChatScrubber</h3>
+
+
+<p>The ChatScrubber is used to remove unwanted statements from a chat log.  This program is not autonomous and still requires the user to choose which text to sanitize.  The process is sped up considerably as words of interest are highlighted and can be sanitized quickly.</p>
+<b>Running the Program</b><br>
+<ul>
+<li>This program was written in java and requires at least java 1.6 to be run properly.</li>  
+<li>To run the program from the command line type 'java -jar ChatScrubber.jar'.</li>
+</ul>
+
+<b>Sanitizing Text</b>
+<ul>
+<li><p>To begin the user loads a chat file by going to the menu and selecting the "Load chat file" option.  The user can also use the Ctrl-O keyboard shortcut to open a new file.</p>
+<img src="screenshot/load_file.png"></li>
+<li><p>Once the file has been loaded the user should choose the "Mark lines" menu item (also Ctrl-M).</p>
+<img src="screenshot/mark_lines.png"></li>
+<li><p>The program traverses the text and checks for any areas that match the loaded regular expressions. Matching text is marked in red and the current flagged line is highlighted in yellow.</p>
+<img src="screenshot/screenshot1.png"></li>
+<li><p>After viewing the highlighted text the user can choose to either replace the text with a generic sanitized statement using the "Replace current with statement" button, or move to the next flagged line with the "next" button.  Pressing the "back" button will highlight the previous flagged line.  The user can press 'alt+down arrow' to go to the next line or 'alt+up arrow' to go back.</p>
+<img src="screenshot/replace.png"> </li>
+<li><p>The user can also select text with the mouse and replace this text with a generic statement using the "Insert statement at selected text" button. If you click in the text area the cursor does not appear.  Clicking the "Insert statement at selected text" button without any selected text will insert a statement at the last clicked location.</p>
+<img src="screenshot/insert.png"></li> 
+<li>Many lines are flagged to tell the user of the ChatScrubber to watch for sensitive material.  For example, the word "password" is flagged to show the user that there is a possibility of a password being revealed in the surrounding chatting.</li>
+<li>After sanitation is completed the user can save by clicking the save button, or using the save menu item in the menu.  The sanitized text is saved with the original file name and ".san" appended to it.  If any errors were made during the sanitation the original file still exists.</li> 
+</ul>
+
+<b>Regular Expressions</b>
+<ul>
+<li>The user is supplied with a generic set of regular expressions, but may also choose to load their own set of regular expressions.</li>
+<li>To load a new set of regular expressions create a new text file with one regular expression per line.</li>
+<li>Comments can be denoted with "#".</li>
+<li><p>To load the new file choose the "Load regular expressions" menu item from the main menu and find the regex file you created.</p>
+<img src="screenshot/regex.png"></li>
+<li>The "Show regex matching stats" menu item will show the user how many times each regex was matched in the chatting</li>
+</ul>
+
+
+
+<b>Problems</b>
+<ul>
+<li>If you are having errors when trying to match text make sure that your regular expressions are correct.  Invalid regular expressions or regular expressions that match any text may freeze the program</li>
+</ul>
+
+</body>

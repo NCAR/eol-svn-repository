@@ -1,0 +1,15 @@
+c---------------------------------------------------------------------
+c ARCSyM atmospheric 3d variables
+      real *4 u_mod_may(ix,jx,nprs,mt), v_mod_may(ix,jx,nprs,mt),
+     +        u_may(ix,jx,nprs,mt), v_may(ix,jx,nprs,mt),
+     +        w_may(ix,jx,nprs,mt), t_may(ix,jx,nprs,mt),
+     +        z_may(ix,jx,nprs,mt), rh_may(ix,jx,nprs,mt),
+     +        qv_may(ix,jx,nprs,mt), spechum_may(ix,jx,nprs,mt),
+     +        cld_may(ix,jx,nprs,mt), ice_may(ix,jx,nprs,mt),
+     +        cld_frac_may(ix,jx,nprs,mt)
+      common /arcmip_may_3d/ u_mod_may, v_mod_may, u_may,
+     +                   v_may, w_may, t_may,
+     +                   z_may, rh_may, qv_may,
+     +                   spechum_may, cld_may, ice_may,
+     +                   cld_frac_may
+c---------------------------------------------------------------------

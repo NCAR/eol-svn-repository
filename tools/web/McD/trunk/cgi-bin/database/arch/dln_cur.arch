@@ -1,0 +1,88 @@
+Application: current Data Loading Notes 
+
+Host: thunder   Database: data_loading_notes
+
++------------------------------+
+| Tables_in_data_loading_notes |
++------------------------------+
+| Checkers                     |
+| Contacts                     |
+| Links                        |
+| Loaders                      |
+| Notes                        |
+| Projects                     |
++------------------------------+
+
+Projects:
++-----------+-------------+------+-----+---------+----------------+
+| Field     | Type        | Null | Key | Default | Extra          |
++-----------+-------------+------+-----+---------+----------------+
+| id        | int(11)     |      | PRI | NULL    | auto_increment |
+| name      | varchar(25) | YES  |     | NULL    |                |
+| notes     | text        | YES  |     | NULL    |                |
+| id_prefix | varchar(10) | YES  |     |         |                |
++-----------+-------------+------+-----+---------+----------------+
+
+Notes:
++----------------+--------------+------+-----+------------+----------------+
+| Field          | Type         | Null | Key | Default    | Extra          |
++----------------+--------------+------+-----+------------+----------------+
+| id             | int(11)      |      | PRI | NULL       | auto_increment |
+| storm_id       | varchar(15)  | YES  |     | NULL       |                |
+| loader_id      | int(11)      | YES  |     | NULL       |                |
+| title          | varchar(200) | YES  |     | NULL       |                |
+| readme         | int(11)      | YES  |     | NULL       |                |
+| master         | int(11)      | YES  |     | NULL       |                |
+| checked        | int(11)      | YES  |     | NULL       |                |
+| date           | date         | YES  |     | 0000-00-00 |                |
+| notes          | text         | YES  |     | NULL       |                |
+| proj_id        | int(11)      | YES  |     | NULL       |                |
+| checker_id     | int(11)      | YES  |     | NULL       |                |
+| int_contact_id | int(11)      | YES  |     | NULL       |                |
+| ext_contact    | varchar(25)  | YES  |     | NULL       |                |
+| ext_email      | varchar(25)  | YES  |     | NULL       |                |
+| ingest         | varchar(100) | YES  |     | NULL       |                |
+| archive        | varchar(100) | YES  |     | NULL       |                |
+| ext_link       | varchar(150) | YES  |     | NULL       |                |
++----------------+--------------+------+-----+------------+----------------+
+
+Loaders:
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(11)     |      | PRI | NULL    | auto_increment |
+| name   | varchar(25) | YES  |     | NULL    |                |
+| email  | varchar(25) | YES  |     | NULL    |                |
+| active | int(11)     | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+
+Checkers:
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(11)     |      | PRI | NULL    | auto_increment |
+| name   | varchar(25) | YES  |     | NULL    |                |
+| email  | varchar(25) | YES  |     | NULL    |                |
+| active | int(11)     | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+
+Contacts:
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int(11)     |      | PRI | NULL    | auto_increment |
+| name   | varchar(25) | YES  |     | NULL    |                |
+| email  | varchar(25) | YES  |     | NULL    |                |
+| active | int(11)     | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+
+Links:
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int(11)      |      | PRI | NULL    | auto_increment |
+| proj_id | int(11)      | YES  |     | NULL    |                |
+| name    | varchar(100) | YES  |     | NULL    |                |
+| url     | varchar(200) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+

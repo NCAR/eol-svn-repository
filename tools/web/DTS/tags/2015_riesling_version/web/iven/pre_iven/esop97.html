@@ -1,0 +1,582 @@
+<HTML>
+<body bgcolor=white>
+
+<TITLE>Dataset Processing Inventory </TITLE>
+
+<center><H1><u>Dataset Processing Inventory</u></H1></center>
+<br>
+<center><H2>Updated: 23 November 1999</H2></center>
+<br>
+<H3><b>GCIP/ESOP97 </b></H3>
+<br>
+<b>TOI: 01 Oct 1996 through 31 May 1997 </b>
+<br>
+
+<b>AOI:  LSA-NC (North Central)
+<ul>
+   <li>  LAT:  37 to 50 (N)
+   <li>  LON: -85 to -99(W)
+</ul>
+</b>
+<br>
+<b>CODIAC ID Prefix: 17.xxx </b>
+<br>
+<b>GCIP Charge #.</b>
+<br>
+<p>
+<b>Products: (All DONE and loaded onto CODIAC as of 3 June 1999.) </b>
+<ul>
+   <li><a>Hourly Surface Composite - DONE </a>
+   <li><a>Specials Surface Composite - DONE</a>
+   <li><a>15-min Precip Composite - DONE </a>
+   <li><a>Hourly Precip Composite - DONE </a>
+   <li><a>Daily Precip Composite - DONE </a>
+   <li><a>Daily COOP Surface - DONE </a>
+   <li><a>USGS streamflow - DONE  </a>
+   <li><a>USGS reservoir - DONE </a>
+   <li><a>EAOP98 Station List - DONE </a>
+</ul>
+<br>
+<p> NOTE: /ingest/trfc/pub/StageIII/* (1hr, 6hr, 24hr) - AbrFC Stage III Gifs.
+</p>
+<p>                                        
+<!-- ================================================= -->
+<h3><u>Hourly Surface Composite Datasets:</u></h3>
+<!-- ================================================= -->
+ 
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> ASOS </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> See /ingest/modem/capture/asossao </td>
+   </tr>
+ 
+   <tr><td> AWOS (MNBBS)</td>
+       <td> <font color=blue>DONE </font>     </td>
+       <td> 20min/Junky. Done as stand alone dataset
+            See /ingest/modem/capture/mnbbs.  </td>
+   </tr>
+
+   <tr><td>HPNC (High Plains Hourly) </td>
+       <td> <font color=blue>DONE </font>     </td>
+       <td> /ingest/hpcn (4/97@ /raid/1/ESOP96_PROCESSING/HPLAINS/ 
+            raw_data/1997) (Had to order missing time periods -
+            1Oct1995-31mar1996 & 1Oct1996 to 31Mar1997.
+            SFW has requested.)
+       </td>
+   </tr>
+
+   <tr><td>Great lakes Buoy (NDBC) Hourly </td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td> /raid4/ESOP97_PROCESSING/NDBC (raw on /ingest/)
+       </td> 
+   </tr>
+
+   <tr><td>NSTL Hourly Met  </td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td> /raid4/ESOP97_PROCESSING/NSTL/final (Walnut Creek) 
+       </td> 
+   </tr>
+
+   <tr><td> Rosemount (30 minute)</td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td> /raid4/ESOP97_PROCESSING/ROSEMOUNT/ 
+       </td> 
+   </tr>
+
+   <tr><td>MI Air Qual Hourly </td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td>  /data10/ESOP-97/mi_air_quality/ (true AIRS format)
+       </td> 
+   </tr>
+
+   <tr><td>WI DNR Air Qual Hourly</td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td>  /data10/ESOP-97/wi_dnr_airquality/ (true AIRS format)
+       </td> 
+   </tr>
+
+   <tr><td>State Air Qual Hourly </td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td> /data10/ESOP-97/AIRS/* (Not true AIRS format.AQ for each state) 
+       </td> 
+   </tr>
+
+   <tr><td>MOCAWS Hourly</td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td> /raid4/MOCAWS 
+       </td> 
+   </tr>
+
+   <tr><td>MODOC Hourly </td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td> /riad4/MODOC 
+       </td> 
+   </tr>
+
+   <tr><td>U of WI AWON Hourly </td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td>  
+        /raid4/WI_AWON (SL Ordering from web?)(Univ of WI Ag Wx Obs Network)
+       </td> 
+   </tr>
+
+   <tr><td> SMST Hourly</td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td> None.
+       </td> 
+   </tr>
+
+   <tr><td>NCDC US DATSAV2 Hourly </td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td> late Dec 1998, received NCDC tapes 
+            containing DATSAV2 data. Conversion now in progress.
+            Original Exabyte tape received w/ DATSAV2, but contained
+            insufficient data. Ordered METAR from NCDC 8 April 1998.
+            SFW requested from Wayne Faas. W. Faas says OK, yet
+            they will have not provided the data.
+       </td> 
+   </tr>
+
+   <tr><td> NCDC Canadian DATSAV2 Hourly</td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td> Included in NCDC US DATSAV2 data.
+       See other comments for NCDC US DATSAV2. 
+       </td> 
+   </tr>
+
+   <tr><td> Prof/NPN sfc Hourly</td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td>  
+       Downloaded from NCDC on 13 Nov 98.
+       Ordered from NCDC 8 April 1998 (OASIS order failed)
+       See /data10/murdock/profiler - winds and sfc for
+       Oct 96 only. Problem with fire wall at NCDC.
+       See comments for NCDC US DATSAV2.
+       </td> 
+   </tr>
+
+
+   <tr><td>ISWS/ICN Hourly</td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td>  
+           On storm at /data/ftp/isws. 
+       </td> 
+   </tr>
+
+   <tr><td>ARMCART Met 1min->Hrly </td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td>  SFW visited ARM in early Jan 1999. Debbie 
+             will prepare and send all ARMCART data. None
+             sent before 11 Jan 1999.
+       </td> 
+   </tr>
+
+   <tr><td>Chicago Meso 1min </td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td>  /rraid1/CHICAGOMESO/ord_97_data.tar - Only have data
+             1997. This data was collected during a one-time project.
+       </td> 
+   </tr>
+
+   <tr><td>U of Minn ECN Hourly </td> 
+       <td> <font color=blue>N/A </font>     </td>
+       <td>  
+       Need SL  to order (Univ of Minn Extension 
+       Climatology Network) How Much $$? This dataset would
+       be good to have. There are 2 versions of this
+       data (cleaned and uncleaned). This dataset only
+       contains a few stations. Actually will get 3 most 
+       important Uof MN sites via Baker. 
+       </td>
+   </tr>
+
+   <tr><td>LTER Data </td> 
+       <td> <font color=blue>N/A </font>     </td>
+       <td> Mixed Freq per stn. Need SL  to order. SL tried to order, 
+            but Can't get. This dataset is not critical. Will NOT receive.
+       </td> 
+   </tr>
+
+   <tr><td>MESA Hourly Data </td> 
+       <td> <font color=blue>N/A </font>     </td>
+       <td>   
+       Need SL  to order. SL tried to order, but Can't get? 
+       Tried to get from NSTL. This dataset is not
+       critical. Will get most important MSEA site (Princeton)
+       through Baker data.
+       </td> 
+   </tr>
+
+   <tr><td>MI State Univ AWSN Hourly </td> 
+       <td> <font color=blue>N/A </font>     </td>
+       <td>  
+       Need SL  to order (Michigan State Univ. Auto 
+       Wx Stn Network) SL send several emails - no response.
+       This dataset is not critical.
+       </td>  
+   </tr>
+
+   <tr><td>USACE sfc </td> 
+       <td> <font color=blue> N/A </font>     </td>
+       <td>  
+       DON'T DO      Before converting this dataset, must determine if
+       these stations are already in the USGS data. 
+       Rock Island data. This data was compared with the USGS
+       and all but 1 station plus the OMNI stations were
+       found in the USGS. SL says OK, do not process this
+       dataset.
+       </td>
+   </tr>
+
+   <tr><td>WI Tower Flux Hourly </td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td>  
+       Wisconsin Tower Flux Measurement Data. Ken Davis of
+       Univ of MN. 450 m tower in North Central WI 15 km
+       from Park Falls. Since lowest level is 30m above
+       ground, this dataset will most likely be standalone
+       dataset. Note that all the 1996 precip was bad.
+       This is a standalone dataset on CODIAC (17.013).
+       </td>
+   </tr>
+
+   <tr><td> Tilden sfc</td> 
+       <td> <font color=blue>DONE </font>     </td>
+       <td>  Unknown Freq. One site (Bondville).
+       </td> 
+   </tr>
+</table>
+<br> <br>
+<!-- ================================================= -->
+<h3><u>15 Minute Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> ARMSFC Extract 15min </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Extract of 15min precip from ARMSFC 5min sfc. </td>
+   </tr>
+
+   <tr><td> NCDC 15min Precip  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Ordered from OASIS - /rraid1/NCDC_DataOrder/esop97/
+         ncdc15mP*ebufr. Data done on /raid/4/ESOP97_PROCESSING/
+         NCDC_PRECIP. Sent email to Tom Ross asking when
+         data are valid. EG: data reported at 00:15. Is that
+         collected from 00:00 to 00:15 or from 00:15 to
+         00:30? Currently, our software is like the
+         original and it shifts the data back one slot.
+         Same question for Hourly This has been corrected.
+         We do not need to shift the data anymore!!!
+       </td>
+   </tr>
+
+   <tr><td> NOAA/OH NCRFC 15min Precip </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> None received.  Use Sid Katz NCEP/CPC data instead. 
+         Have Sid's data for whole US. Sid's data have been processed, 
+         but they did not contain any 15 minute data.
+       </td>
+   </tr>
+</table>
+
+<br> <br> 
+
+<!-- ================================================= -->
+<h3><u>Hourly Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+ 
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td>Pcp Extracted from HSC   </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Extract of Hrly pcp from Hrly Sfc Comp (w/o
+            NCDC, NSTL, etc. Remove potential duplicates.) </td>
+   </tr>
+
+   <tr><td>Cook County & Imperial Valley Pcp  </td>
+       <td> <font color=blue> DONE - Remote Link. </font>     </td>
+       <td> ~25 sites in IL. Remote Link to ICN. Link to. 
+            SFW tried to order (Imperial Valley Water Authority 
+            Precip Net.)  Bob Scot is preparing. Have heard 
+            that this and Cook County datasets are poor. 
+            Remote links to ICN for Cook County and Imperial Valley.
+       </td>
+   </tr>
+
+   <tr><td>NCDC Hrly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>   
+          Ordered from OASIS - /rraid1/NCDC_DataOrder/esop97/
+          ncdcHrlyP*ebufr.  Data done on /raid/4/
+          ESOP97_PROCESSING/NCDC_PRECIP. See comments for 15min times.
+       </td>
+   </tr>
+
+   <tr><td>NOAA/OH NCRFC Hrly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>
+         NCRFC data not received. Use Sid Katz NCEP/CPC data 
+         instead. Have Sid's data for whole US. Sid's data have
+         been processed. Found accum data mixed with incremental
+         and met with Sid about this and other problems. Sid
+         provided better stn info giving approx 60 more sites
+         for ESOP97.
+       </td>
+   </tr>
+
+
+   <tr><td>NSTL Hrly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Originally, SL ordered, but only received NSTL Hourly sfc 
+            data that only has 2 sites. Hourly precip now 
+            received. Got Daily precip which was unuseable. 
+       </td>
+   </tr>
+
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Daily Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+ 
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td>Dly Pcp Extracted from HPC   </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Extract of Hrly pcp from Hrly Pcp Comp (w/o
+            NCDC, NSTL, etc. Remove potential duplicates.)</td>
+   </tr>
+
+   <tr><td>Cook County & Imperial Valley Pcp  </td>
+       <td> <font color=blue> DONE - Remote Link. </font>     </td>
+       <td> ~25 sites in IL. Remote Link to ICN. Link to.
+            SFW tried to order (Imperial Valley Water Authority
+            Precip Net.)  Bob Scot is preparing. Have heard
+            that this and Cook County datasets are poor.
+            Remote links to ICN for Cook County and Imperial Valley.
+       </td>
+   </tr>
+
+   <tr><td>NOAA/OH NCRFC Daily Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Did not receive NCRFC data. Got Sid Katz NCEP/CPC
+            data instead. Have Sid's data for whole US. Sid's 
+            data have been processed.
+       </td>
+   </tr>
+ 
+   <tr><td>NCDC COOP Dly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> 
+          Ordered from NCDC 8 April 1998.
+          CDROM should be available December 1998 which
+          will contain all COOP data from 1994 through 1997.
+          Data Element Format. Mid Sept. received last 3 months
+          of 1996 on CDROM? Need rest of 1997 data.
+          SFW has requested rest of data from W. Faas which
+          suppose to be available in OCT or NOV 1998.
+       </td>
+   </tr>
+ 
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Daily Composite Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td>NCDC COOP Dly Sfc  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>
+          Received COOP CD-ROM of 1997 data early Jan 1999. 
+          (Loaded onto CODIAC)Now being converted (Jan 1999).
+          Ordered from NCDC 8 April 1998. According to W.Faas a
+          CDROM should be available December 1998 which
+          will contain all COOP data from 1994 through 1997.
+          Data Element Format. Received CD-ROM with 1996-Mar1997.
+       </td>
+   </tr>
+ 
+</table>
+
+<br><br>
+
+<!-- ================================================= -->
+<h3><u>Specials Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td> Specials </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG) From ASOS and DATSAV2 datasets.  </td>
+   </tr>
+</table>
+   
+<br> <br>
+ 
+
+<!-- ================================================= -->
+<h3><u>Hydrology Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> USGS Streamflow </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (<a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?17."
+              target="_top"> CODIAC ID 17.</a>)
+       </td>
+   </tr>
+ 
+   <tr><td> USGS Rsrvr Daily </td>
+       <td> <font color=blue>DONE</font>     </td>
+       <td> Provide as is. (LEC)
+            (<a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?17."
+              target="_top"> CODIAC ID 17.</a>)
+       </td>
+   </tr>
+ 
+   <tr><td> USGS COOP Rsvr </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> Provide as is. (Month End). (LEC)
+            (<a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?17."
+              target="_top"> CODIAC ID 17.</a>)
+       </td>
+   </tr>
+   
+   <tr><td> USGS IRI </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Always requested, but never received. 
+          SFW does not expect to get (Stage, discharge,
+          soil moisture possible. Probably for 1998)
+          SFW might request again. North Central Minn.
+          SFW sent another request on 18 Nov 99.
+ 
+ </td>
+   </tr>
+
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Soil Moisture/Temp Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td> Il/WI Gravediggers Net  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>
+          Data received from Jim Angel at ISWS. On CODIAC.
+          SFW ordered (Frost Depth). SFW has contacted
+          but no data. This data may need to be digitized.
+          Received and digitized. Put out as standalone
+          dataset. SFW will ask Dr. Jim Angel for a readme,
+          else we will create a generic one. Only have Jan
+          1997 through Jan 1998.
+       </td>
+
+   </tr>
+
+   <tr><td> Iowa State U Soil Moisture  </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Need SL  to order (50 sites) Twice a yr (Spr, Fall)
+          digitized. Wants $$ for student.
+       </td>
+   </tr>
+
+   <tr><td>ISWS Soil Moisture  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> As is on CODIAC.  Bob Scot sent 1 Sept.
+          See torrent /ftp/isws/WILLIAMS.TXT
+          and README_email.txt. SFW says if these data are
+          volumetric, then go ahead and put on-line.
+          Data are volumetric and the desc. files and the
+          data have been prepared and put into codiac area on jukebox.
+       </td>
+   </tr>
+
+   <tr><td> NSTL Soil Moisture/Temp </td>
+       <td> <font color=blue> Not Received</font>     </td>
+       <td> SL to order.</td>
+   </tr>
+ 
+   <tr><td> Rosemount Soil Moisture/Temp </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> CODIAC ID 17..</td>
+   </tr>
+ 
+   <tr><td> Tilden's Data</td>
+       <td> <font color=red> Ready?</font>     </td>
+       <td> Downloadable?
+       </td>
+   </tr>
+
+   <tr><td> USGS IRI Soil Moisture</td>
+       <td> <font color=red> TBD </font>     </td>
+       <td> SFW to order. SFW has contacted but no data.
+          North Central Minn.
+       </td>
+   </tr>
+
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Profiler Datasets:</u></h3>
+<!-- ================================================= -->
+ 
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td> NPN (Profiler) Winds</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Downloaded from NCDC 13 Nov 98.
+          Ordered from NCDC 8 April 1998 (Profs 405 winds)
+          Mid Sept. received Oct 1996 data only. Problem
+          with fire wall at NCDC. W. Faas says data will
+          be made available yet nothing since early sept.
+          (OASIS order also failed.) 6min?
+
+       </td>
+   </tr>
+</table>
+
+<b>-------------------End GCIP/ESOP-97-----------------------<b>
+</HTML>

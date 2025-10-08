@@ -1,0 +1,66 @@
+Oct 21, 2010:
+/home/joss/goes/initial_stage modified to put the data in e.g.
+/EOL/operational/satellite/goes//g13/1km/2010/day306.
+(note that Greg did not update the change log at the top of the script,
+and he left an extra '/' after EOL which causes the double in the path. )
+
+/home/joss/goes/goes_mysql_update.pl was not updated, so the following
+datasets are no longer being updated:
+
+http://data.eol.ucar.edu/codiac/dss/id=100.003
+http://data.eol.ucar.edu/codiac/dss/id=100.004
+
+causing errors like:
+
+Subject: Cron /home/joss/goes/goes_mysql_update.pl
+Date: Mon, 1 Nov 2010 22:00:02 -0600
+From: root@tsunami.eol.ucar.edu (Cron Daemon)
+To: joss@tsunami.eol.ucar.edu
+
+/JOSS/DATA/RAW/SATELLITE/GOES/G13/4KM/2010/2010298: No such file or
+directory
+
+1) goes_mysqql_update.pl has been superceded by the sat_query tool
+and should be turned off.
+  - done by Greg 11/3, but sat_query tool is broken, so no access right now.
+  - Greg made a note in the crontab documenting why turned off.
+2) Hide 100.003 and 100.004 - done by Greg 11/3/2010
+3) Figure out if the other two datasets controlled by goes_mysql_update.pl are
+still active or not, determine if we broke them, and decide what to do.
+4) Update path's in codiac? -This will probably NOT be done (codiac paths
+point to /JOSS.) as we will likely eventually delete these datasets.
+5)EVERY project that refers to these datasets needs to have the master list
+link replaced with a link to the sat_query tool
+        - Greg will hide all until sat_query tool is fixed by Susan.
+
+Eventually sat_query database will be rolled into EMDAC database. Then
+100.003 and 004 should probably be deleted from codiac to avoid confusion.
+
+
+For all ingest scripts, Joel's replacement was going to standardize these
+scripts, create libraries (there is lots of code duplication), put them
+into subversion, and document them. This has not happened.
+
+
+On 11/3/10 4:35 PM, Greg Stossmeister wrote:
+> Janine,
+>       The other two datasets haven't been updated in 6 years so there is
+>       no reason to keep the cron script running for those. The period for
+>       which we have data for those two datasets is 9/9/2003 - 4/20/2004.
+>       I believe Bob is in the process of moving those - they are the G10
+>       and G12 sounder files. The G10 files were ordered once by someone
+>       outside of EOL in 2004. The G12 files have never been ordered.
+>       We'll fix the paths in CODIAC once we're sure they've been moved.
+>        With regard to the G12 1KM  and 4KM datasets we were discussing
+>        earlier, We were able to determine that those two datasets were
+>        referenced in the BAMEX and T-REX master lists. We've since hidden
+>        them in both the master lists and in GUImaint. A notation has not
+>        yet been made in the DTS but I'll do that shortly.
+>
+> Greg
+
+
+From crontab:
+# sat_query handles goes updates so goes_mysql_update no longer needed.
+# Greg commented out this line.
+#0 22 * * * /home/joss/goes/goes_mysql_update.pl

@@ -1,0 +1,37 @@
+#
+# $Id: Makefile,v 1.1 1992/06/22 17:03:35 wayne Exp $
+#
+#
+# $Log: Makefile,v $
+# Revision 1.1  1992/06/22  17:03:35  wayne
+# Initial Version
+#
+# 13 Jan 94 lec
+#   Corrected comment. Updated lib location.
+#   Switched compilation FFLAGS.
+#  8 Mar 96 ds
+#   Updated libs location.
+
+SHELL = /bin/sh
+#    Makefile for hplainsqcf program
+#
+RLIBS=/spare1/gids/GISTlibs
+
+#FFLAGS = -g -C -u
+FFLAGS = -u -O4
+
+.KEEP_STATE:
+
+hplains: hplainsqcf.o gtfils.o in2mm.o mph2msec.o rh2dew.o ieee_hand.o
+	$(LINK.f) -o hplainsqcf \
+	hplainsqcf.o gtfils.o in2mm.o mph2msec.o rh2dew.o ieee_hand.o \
+	$(RLIBS)/fest.a
+
+testrh: testrh.o rh2dew.o
+	$(LINK.f) -o testrh testrh.o rh2dew.o
+
+splt: splt_qcf.o
+	$(LINK.f) -o splt_qcf splt_qcf.o $(RLIBS)/fest.a
+
+clean:
+	rm hplainsqcf.o

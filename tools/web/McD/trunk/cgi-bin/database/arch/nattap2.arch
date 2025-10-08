@@ -1,0 +1,92 @@
+Application: NATTAP v2.0 testing DB
+
+Host: hurricane  Database: nattap
+
++------------------+
+| Tables_in_nattap |
++------------------+
+| category         |
+| dataset          |
+| dscatlink        |
+| project          |
+| user             |
++------------------+
+
+project:
++------------+--------------+------+-----+------------+-------+
+| Field      | Type         | Null | Key | Default    | Extra |
++------------+--------------+------+-----+------------+-------+
+| name       | varchar(15)  |      | PRI |            |       |
+| begin_date | date         | YES  |     | 0000-00-00 |       |
+| end_date   | date         | YES  |     | 0000-00-00 |       |
+| minlat     | float(10,2)  | YES  |     | NULL       |       |
+| maxlat     | float(10,2)  | YES  |     | NULL       |       |
+| minlon     | float(10,2)  | YES  |     | NULL       |       |
+| maxlon     | float(10,2)  | YES  |     | NULL       |       |
+| prefix     | varchar(10)  | YES  |     | NULL       |       |
+| charge_num | varchar(100) | YES  |     | NULL       |       |
+| notes      | text         | YES  |     | NULL       |       |
+| active     | int(11)      | YES  |     | NULL       |       |
++------------+--------------+------+-----+------------+-------+
+
+dataset:
++----------------+--------------+------+-----+------------+-------+
+| Field          | Type         | Null | Key | Default    | Extra |
++----------------+--------------+------+-----+------------+-------+
+| storm_id       | varchar(15)  |      | PRI |            |       |
+| title          | varchar(200) | YES  |     | NULL       |       |
+| project        | varchar(15)  |      |     |            |       |
+| date           | date         | YES  |     | 0000-00-00 |       |
+| loader         | varchar(15)  |      |     |            |       |
+| checker        | varchar(15)  |      |     |            |       |
+| int_contact    | varchar(15)  |      |     |            |       |
+| ext_contact    | varchar(25)  | YES  |     | NULL       |       |
+| ext_email      | varchar(25)  | YES  |     | NULL       |       |
+| readme         | int(11)      | YES  |     | 0          |       |
+| checked        | int(11)      | YES  |     | 0          |       |
+| loaded         | int(11)      | YES  |     | 0          |       |
+| ingest         | varchar(100) | YES  |     | NULL       |       |
+| archive        | varchar(100) | YES  |     | NULL       |       |
+| notes          | text         | YES  |     | NULL       |       |
+| dln_date       | date         | YES  |     | 0000-00-00 |       |
+| remote_url     | varchar(150) | YES  |     | NULL       |       |
+| author         | varchar(100) | YES  |     | NULL       |       |
+| comments       | varchar(255) | YES  |     | NULL       |       |
+| doc_url        | varchar(150) | YES  |     | NULL       |       |
+| ml_date        | date         | YES  |     | 0000-00-00 |       |
+| ml_post        | int(11)      | YES  |     | 0          |       |
+| ml_active      | int(11)      | YES  |     | 0          |       |
+| ml_in_progress | int(11)      | YES  |     | 0          |       |
++----------------+--------------+------+-----+------------+-------+
+
+category:
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int(11)     |      | PRI | NULL    | auto_increment |
+| name    | varchar(50) | YES  |     | NULL    |                |
+| abrv    | varchar(20) | YES  |     | NULL    |                |
+| parent  | int(11)     | YES  |     | NULL    |                |
+| project | varchar(15) |      |     |         |                |
++---------+-------------+------+-----+---------+----------------+
+
+dscatlink:
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| category | int(11)     |      |     | 0       |       |
+| storm_id | varchar(15) |      |     |         |       |
++----------+-------------+------+-----+---------+-------+
+
+user:
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| name    | varchar(32)  |      | PRI |         |       |
+| email   | varchar(100) | YES  |     | NULL    |       |
+| active  | int(11)      | YES  |     | 1       |       |
+| loader  | int(11)      | YES  |     | 1       |       |
+| checker | int(11)      | YES  |     | 1       |       |
+| contact | int(11)      | YES  |     | 1       |       |
++---------+--------------+------+-----+---------+-------+
+

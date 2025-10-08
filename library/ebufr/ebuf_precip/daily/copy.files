@@ -1,0 +1,23 @@
+#!/bin/csh
+
+# Script to copy the necessary EBUFR files to a data
+# directory in order to ebufr daily precip data.
+
+if ( $1 == "" ) then
+	echo "syntax: copy.files <destination-directory>"
+	exit (1)
+endif
+
+cp dp2e $1
+cp control_dpqcf.txt $1
+cp class_file $1
+cp desc_file $1
+cp code_* $1
+cp flag_* $1
+echo "Be sure to edit lines 11 and 12 in the control_dqcf.txt:"
+echo "    line #12 - a short description of the dataset being converted"
+echo "    line #11 - the length of the text in line #12, not counting the new line character"
+
+
+
+

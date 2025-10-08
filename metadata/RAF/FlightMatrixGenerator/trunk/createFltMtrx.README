@@ -1,0 +1,127 @@
+This script must be run on shiraz.
+
+This script accesses the following files, which need to be in
+place before it is run if a complete table is to be created.
+
+/net/www/docs/raf/Projects/<PROJ>/Flight_Reports/<FltNum>.html 
+	- Research Flight Reports
+/net/www/docs/raf/Projects/<PROJ>/QA.html - Data Quality Report
+/net/www/docs/raf/Projects/<PROJ>/pics/<PROJ>_logo.png - Project Logo, name of 
+	file changes, so script will need updating
+/net/www/docs/raf/Catalog/taplog.lrt.<ProjNum>.html
+/net/www/docs/raf/Catalog/taplog.hrt.<ProjNum>.html
+/net/www/docs/raf/Catalog/taplog.movie.<ProjNum>.html
+/net/www/docs/raf/Catalog/taplog.catalog.<ProjNum>.html
+/net/www/docs/raf/pics/<ProjNum>/<FltNum>/ whole flight plots
+/net/web/catalog/html/<proj>/report/<platform>/<date?>/report*flight_summary.pdf
+/scr/raf2/Prod_Data/<Proj>/<Proj>fltnum.nc for each flight you
+want in the table
+
+You must also set the following constants in createFltMtrx.py:
+
+ProjNum = "114"
+Year = "2007"
+PI = "Alan Bandy"
+plat = "C-130Q Hercules"
+platform = string.join(["NSF/NCAR",plat,"(N130AR)"]," ")
+Proj = "PASE"
+ProjLongName = "Pacific Atmospheric Sulfer Experiment"
+platform_catalog = "ncar_c-130"
+platform_image = "/raf/pics/ps_c130fixa.jpg"
+Lpath = "/net/www/docs/raf/Projects/"+Proj+"/"
+Limage = "pics/"+Proj+"_logo.png"
+Rpath = "/net/www/docs"
+Rimage = "/raf/pics/RAF_final_sm.jpg"
+
+********************************************************************************
+# Development on this code is not complete. Here are some useful notes.
+********************************************************************************
+Issues to Resolve
+-----------------
+
+Need to highlight the letters in the long name that make up the project acronym.
+Since both are passed to banner, maybe do it there?
+
+measurementDescription.js
+-------------------------
+
+//  -------  measurement list for status window text messages
+//           (Be cognizant of message length, since display will not show
+//           text longer than will fit in the status window.  Resizing
+//           the window should make it appear.)
+  
+//  -------  standard measurement descriptions
+   var _260X = 'PMS-1D 260X Probe - 260X';
+   var _2DC  = 'PMS-2D Cloud Probe';
+   var _ATRL = 'Ambient Temperature, Radome Left (C) - ATRL';
+   var _ATRR = 'Ambient Temperature, Radome Right (C) - ATRR';
+   var _ATWH = 'Ambient Temperature, Deiced Wing (C) - ATWH';
+   var _CONCN = 'Condensation Nucleus (CN) Concentration (N/cm3) - CONCN';
+   var _DPBC = 'Corrected Bottom Dew Point Temperature (C) - DPBC';
+   var _DPTC = 'Corrected Top Dew Point Temperature (C) - DPTC';
+   var _DPXC = 'Dew Point Temperature, Reference (C) - DPXC';
+   var _PSFRD = 'Raw Static Pressure, Fuselage (Ruska) (mbar) - PSFRD';
+   var _PSFC = 'Corrected Static Pressure, Fuselage (mbar) - PSFC';
+   var _MRLA = 'Mixing Ratio, Stub Lyman Alpha (g/kg) - MRLA';
+   var _RHOLA = 'Absolute Humidity (Vapor Density), Stub Lyman Alpha (g/M3) - RHOLA';
+   var _MRLA1 = 'Mixing Ratio, Cross-Flow Lyman Alpha (g/kg) - MRLA1';
+   var _RHOLA1 = 'Absolute Humidity (Vapor Density), Cross-Flow Lyman Alpha (g/M3) - RHOLA1';
+   var _DPLA1 = 'Dew Point, Cross-Flow Lyman Alpha (C) - DPLA1';
+   var _RHLA1 = 'Relative Humidity, Cross-Flow Lyman Alpha (%) - RHLA1';
+   var _PLWCC = 'Corrected PMS/CSIRO (King) Liquid Water Content, 1st sensor (g/M3) - PLWCC';
+   var _PLWCC1 = 'Corrected PMS/CSIRO (King) Liquid Water Content, 2nd sensor (g/M3) - PLWCC1';
+   var _PLWCC2 = 'DMT Probe Total Water Content (g/M2) - PLWCC2';
+   var _XGLWC = 'Gerber PVM-100 Probe Liquid Water Content (g/M2) - XGLWC';
+   var _SPP100 = 'PMS-1D FSSP-100 Foward Scattering Spectrometer Probe, DMT - SPP-100';
+   var _SPP200 = 'PMS-1D PCASP Passive Cavity Aerosol Spectrometer Probe, DMT - SPP-200';
+   var _SPP300 = 'PMS-1D FSSP-300 Foward Scattering Spectrometer Probe, DMT - SPP-300';
+   var _CONCF = 'FSSP-100 Concentration (N/cM3) - CONCF';
+   var _ADIFR = 'Vertical Differential Pressure, Radome (mbar) - ADIFR';
+   var _ATTACK = 'Attack Angle (deg) - ATTACK';
+   var _SSLIP = 'Sideslip Angle (deg) - SSLIP';
+   var _QCRC = 'Corrected Dynamic Pressure, Radome (mbar) - QCRC';
+   var _TASR = 'True Airspeed (Radome) (M/s) - TASR';
+   var _RSTT = 'Radiometric (Sky) Temperature (C) - RSTT';
+   var _RSTB = '1st Radiometric (Surface) Temperature (C) - RSTB';
+   var _RSTB1 = '2nd Radiometric (Surface) Temperature (C) - RSTB1';
+   var _GALT = 'GPS Altitude, MSL (M) - GALT';
+   var _ALTX = 'Altitude, Reference, MSL (M) - ALTX';
+   var _HGM232 = 'Geometric (Radar) Altitude (APN-232) (M) - HGM232';
+   var _XGSFC = 'Gerber PVM-100 Particle Surface Area, Raw (cM2/M3) - XGSFC';
+   var _XGRFF = 'Gerber PVM-100 Effective Droplet Radius (uM) - XGRFF';
+   var _CING  = 'Gerber CIN Asymmetry Parameter (none) - CING';
+   var _MRLH  = 'Mixing Ratio, Tunable Diode Laser Hygrometer (g/M3) - MRLH';
+   var _XNLWC  = 'Nevzorov Probe Liquid Water Content (g/M3) - XNLWC';
+   var _XNTWC  = 'Nevzorov Probe Total Water Content (g/M3) - XNTWC';
+   var _TEO3C  = 'Corrected TECO (UV) Ozone Concentration (ppbv) - TEO3C';
+   var _TEO3P  = 'Internal TECO Ozone Sampling Pressure (mbar) - TEO3P';
+  
+//  -------  user measurement descriptions
+   var _XPLWDMT  = 'Raw Liquid Water Content, DMT Probe - XPLWDMT';
+   var _XNLWC  = 'Nevzorov Probe, Liquid Water Content (g/M3) - XNLWC';
+   var _XNTWC  = 'Nevzorov Probe, Total Water Content (g/M3) - XNTWC';
+  
+//  -------  generic descriptions
+   var _ADS = 'Airborne Data System failure';
+   var _ADSm = 'Airborne Data System malfunction';
+   var _GPS = 'Global Positioning System';
+   var _Icing = 'Sensor icing encountered during the flight.';
+   var _IRS = 'Excessive drift in Inertial Reference System.';
+   var _IRSf = 'Inertial Reference System failure';
+   var _Ophir = 'Ophir-III Radiometric Temperature (C) - OAT';
+   var _Ozone = 'Ozone Measurements';
+   var _winds = 'All wind measurements';
+   var _Lightning = 'Two lightning strikes occurred on this flight.';
+  
+// -------  end of measurement list
+  
+//  Insert this, if necessary, to "turn off" persistent display after mouseout
+//  Then, add the following to each affected HREF:
+//            onMouseOut="return display(_None);"
+   var _None = '';
+  
+function display(stuff)
+  {
+    window.status = stuff;
+    return true;
+  }

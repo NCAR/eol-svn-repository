@@ -1,0 +1,38 @@
+SHELL=/bin/csh
+
+all: decoder grabbufr dumpdata splitdump
+
+decoder:
+	source /usr/local/lf9562/csh_setup;
+	limit coredumpsize 1024 megabytes;
+	limit stacksize unlimited;
+	/usr/local/lf9562/bin/lf95 -o ../bin/decoder_linux BUFR_1_07.f RRS_Decoder_1_04.EOL.f
+
+dumpdata:
+	source /usr/local/lf9562/csh_setup;
+	limit coredumpsize 1024 megabytes;
+	limit stacksize unlimited;
+	/usr/local/lf9562/bin/lf95 -o ../bin/dumpdata_linux BUFR_1_07.f DumpData.f
+
+grabbufr:
+	source /usr/local/lf9562/csh_setup;
+	limit coredumpsize 1024 megabytes;
+	limit stacksize unlimited;
+	/usr/local/lf9562/bin/lf95 -o ../bin/grabbufr_linux BUFR_1_07.f grabbufr.f
+
+splitdump:
+	source /usr/local/lf9562/csh_setup;
+	limit coredumpsize 1024 megabytes;
+	limit stacksize unlimited;
+	/usr/local/lf9562/bin/lf95 -o ../bin/splitdump_linux BUFR_1_07.f split_dump.f
+
+
+deploy: decoder dumpdata grabbufr splitdump
+	chmod 777 /net/work/bin/extractors/NWS_RRS/*_linux;
+	cp ../bin/*_linux /net/work/bin/extractors/NWS_RRS;
+	chmod 555 /net/work/bin/extractors/NWS_RRS/*_linux;
+	chgrp cds /net/work/bin/extractors/NWS_RRS/*_linux;
+	chmod -R 777 /net/web/dmg/html/software/tools/upper_air/NWS_RRS_bufr_extractor/*;
+	cp -r ../docs/* /net/web/dmg/html/software/tools/upper_air/NWS_RRS_bufr_extractor;
+	chmod -R 555 /net/web/dmg/html/software/tools/upper_air/NWS_RRS_bufr_extractor/*;
+	chgrp -R cds /net/web/dmg/html/software/tools/upper_air/NWS_RRS_bufr_extractor

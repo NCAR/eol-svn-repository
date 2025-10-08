@@ -1,0 +1,27 @@
+
+use strict;
+use lib "lib";
+use Utils;
+
+sub user_view
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	println( $cgi->header() );
+
+	println( "<head>" );
+		println( "<title>Iven User View</title>" );
+		println( $css );
+		println( $jscript );
+	println( "</head>" );
+
+	println( "<body>" );
+
+	menu( $state, $cgi );
+
+	println( "<br><b>User: </b>$state->{user}" );
+	println("</body></html>" );
+}
+
+1;

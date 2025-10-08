@@ -1,0 +1,8 @@
+order deny,allow
+deny from all
+allow from 128.117.90
+AuthType Basic 
+AuthUserFile /web/lib/htpasswd/travel
+AuthName ByPassword
+require valid-user 
+satisfy any 

@@ -1,0 +1,281 @@
+/* findnn.c - find nearest model grid point neighbors to centers of EASE-Grid cells */
+
+#include <stdio.h>
+#include <errno.h>
+#include "arcmip_ease.h"
+#include "ezlhconv.h"
+
+int start_col,start_row,ease_cols,ease_rows,ease_len;
+double *ease_lat,*ease_lon;
+int (*nbor_idx)[NUM_NBORS];
+double (*nbor_dist)[NUM_NBORS];
+double (*nbor_rats)[NUM_NBORS];
+int nbor_len;
+
+int model_cols,model_rows,model_len;
+double *model_lat,*model_lon;
+
+
+double distance();
+
+
+
+main()
+{
+read_ease();
+read_model();
+findnn();
+writenn();
+}
+
+
+
+read_ease()
+{
+FILE *fp;
+
+errno=0;
+
+if (!(fp=fopen(EASE_FILE,"rb"))) {
+ fprintf(stderr,"cannot open ease file %d\n",EASE_FILE);
+ exit(1);
+ }
+
+for (; (fgetc(fp) != 12) && !feof(fp); ) ; /* look for ^L after text string */
+fread(&start_col,sizeof(int),1,fp);
+fread(&start_row,sizeof(int),1,fp);
+fread(&ease_cols,sizeof(int),1,fp);
+fread(&ease_rows,sizeof(int),1,fp);
+ease_len=ease_rows*ease_cols;
+
+fprintf(stderr,"EASE:\n start col=%d row=%d\n num cols=%d rows=%d len=%d\n",
+ start_col,start_row,ease_cols,ease_rows,ease_len);
+
+ease_lat = (double*)malloc(ease_len*sizeof(double));
+if (!ease_lat) {
+ fprintf(stderr,"malloc error %d ease lat\n",errno);
+ exit(1);
+ }
+ease_lon = (double*)malloc(ease_len*sizeof(double));
+if (!ease_lon) {
+ fprintf(stderr,"malloc error %d ease lon\n",errno);
+ exit(1);
+ }
+
+if (fread(ease_lat,sizeof(double),ease_len,fp) < ease_len) {
+ fprintf(stderr,"ease_lat read error %d\n",errno);
+ exit(1);
+ }
+if (fread(ease_lon,sizeof(double),ease_len,fp) < ease_len) {
+ fprintf(stderr,"ease_lon read error %d\n",errno);
+ exit(1);
+ }
+fclose(fp);
+
+nbor_len = ease_len*NUM_NBORS;
+nbor_idx=(int(*)[NUM_NBORS])malloc(nbor_len*sizeof(int));
+nbor_dist=(double(*)[NUM_NBORS])malloc(nbor_len*sizeof(double));
+nbor_rats=(double(*)[NUM_NBORS])malloc(nbor_len*sizeof(double));
+if (!nbor_idx || !nbor_dist || !nbor_rats) {
+ fprintf(stderr,"malloc error nbor\n");
+ exit(1);
+ }
+} /* read_ease() */
+
+
+
+findnn()
+{
+int ei; /* ease index */
+int mi; /* model index */
+int ni; /* neighbor index */
+int far_idx;
+double d,far_dist;
+
+for (ei=0; ei<ease_len; ei++) {
+ if (!(ei%ease_cols))
+   fprintf(stderr,"%d ",ei/ease_cols+start_row); /* simple progress meter */
+
+/* setup 1st NUM_NBORS model points as nearest neighbors, remembering the farthest */
+/* use both ni&mi in loop for clarity */
+for (far_idx=-1,far_dist=-1.0, mi=0, ni=0; ni<NUM_NBORS; ni++, mi++) {
+ nbor_idx[ei][ni]=mi;
+ if ((nbor_dist[ei][ni]=distance(ei,mi)) > far_dist) {
+  far_idx=ni;
+  far_dist=nbor_dist[ei][ni];
+  }
+ }
+
+/* foreach model point:
+ *  if it's closer than the farthest neighbor,
+ *  then replace far neighbor w/model point
+ *   and redetermine the far neighbor
+ */
+for (; mi<model_len; mi++)
+ if ((d=distance(ei,mi)) < far_dist) {
+  nbor_idx[ei][far_idx]=mi;
+  nbor_dist[ei][far_idx]=d;
+  for (far_idx=-1,far_dist=-1.0, ni=0; ni<NUM_NBORS; ni++)
+   if (nbor_dist[ei][ni] > far_dist) {
+    far_idx=ni;
+    far_dist=nbor_dist[ei][ni];
+    }
+  }
+
+for (ni=0; ni<NUM_NBORS; ni++)
+ nbor_rats[ei][ni] = (far_idx==ni) ? 1.0 : (nbor_dist[ei][far_idx] / nbor_dist[ei][ni]);
+
+} /* for */
+fputc('\n',stderr);
+} /* findnn() */
+
+
+
+double distance(ei,mi)
+int ei,mi;
+{
+double a1,b1,a2,b2;
+
+a1=ease_lat[ei]*DEG_TO_RAD;
+b1=ease_lon[ei]*DEG_TO_RAD;
+a2=model_lat[mi]*DEG_TO_RAD;
+b2=model_lon[mi];
+if (b2 > 180.0)
+ b2=b2-360.0; /* stoopid model */
+b2=b2*DEG_TO_RAD;
+
+return(
+ fabs( acos( cos(b2-b1) * cos(a1) * cos(a2) + sin(a1) * sin(a2) ) ) * RE_km
+ );
+
+}
+
+
+
+writenn()
+{
+FILE *fp;
+int i;
+
+if (!(fp=fopen(NBOR_FILE,"wb"))) {
+ fprintf(stderr,"cannot open neighbor distances file %d\n",NBOR_FILE);
+ exit(1);
+ }
+
+fprintf(fp,"ARCMIP EASE-Grid nearest neighbors for model %s\n%c",MODEL_NAME,12);
+fwrite(&start_col,sizeof(int),1,fp);
+fwrite(&start_row,sizeof(int),1,fp);
+fwrite(&ease_cols,sizeof(int),1,fp);
+fwrite(&ease_rows,sizeof(int),1,fp);
+i=NUM_NBORS; fwrite(&i,sizeof(int),1,fp);
+
+if (fwrite(nbor_idx,sizeof(int),nbor_len,fp) < nbor_len) {
+ fprintf(stderr,"error %d writing neighbor indices\n",errno);
+ exit(1);
+ }
+if (fwrite(nbor_dist,sizeof(double),nbor_len,fp) < nbor_len) {
+ fprintf(stderr,"error %d writing neighbor distances\n",errno);
+ exit(1);
+ }
+
+fclose(fp);
+
+
+if (!(fp=fopen(NBOR_FRAT,"wb"))) {
+ fprintf(stderr,"cannot open neighbor ratios file %d\n",NBOR_FRAT);
+ exit(1);
+ }
+
+fprintf(fp,"ARCMIP EASE-Grid nearest neighbors for model %s\n%c",MODEL_NAME,12);
+fwrite(&start_col,sizeof(int),1,fp);
+fwrite(&start_row,sizeof(int),1,fp);
+fwrite(&ease_cols,sizeof(int),1,fp);
+fwrite(&ease_rows,sizeof(int),1,fp);
+i=NUM_NBORS; fwrite(&i,sizeof(int),1,fp);
+
+if (fwrite(nbor_idx,sizeof(int),nbor_len,fp) < nbor_len) {
+ fprintf(stderr,"error %d writing neighbor indices\n",errno);
+ exit(1);
+ }
+if (fwrite(nbor_rats,sizeof(double),nbor_len,fp) < nbor_len) {
+ fprintf(stderr,"error %d writing neighbor ratios\n",errno);
+ exit(1);
+ }
+
+fclose(fp);
+}
+
+
+
+#include "netcdf.h"
+
+
+read_model()
+{
+char *model_fnam=MODEL_FILE;
+int ncid;
+int model_latid=MODEL_LATID;
+int model_lonid=MODEL_LONID;
+char name[NC_MAX_NAME];
+int ndims;
+int dimids[NC_MAX_VAR_DIMS];
+size_t length;
+int i,j;
+
+if (nc_open(model_fnam,0,&ncid) != NC_NOERR) {
+ fprintf(stderr,"cannot nc_open model file %s\n",model_fnam);
+ exit(1);
+ }
+
+if (nc_inq_var(ncid, model_latid, name, 0, &ndims, dimids, 0) != NC_NOERR) {
+ fprintf(stderr,"cannot read lat var info\n");
+ exit(1);
+ }
+fprintf(stderr,"lat id %d = %s\n",model_latid,name);
+for (i=0, j=1; i<ndims; i++) {
+ if (nc_inq_dimlen(ncid,dimids[i],&length) != NC_NOERR) {
+  fprintf(stderr,"cannot get dim %d length for lat dim %d\n",dimids[i],i);
+  exit(1);
+  }
+ fprintf(stderr,"lat dim %d = %d\n",i,length);
+ j*=length;
+ }
+fprintf(stderr,"lat len = %d\n",j);
+model_len=j;
+
+if (nc_inq_var(ncid, model_lonid, name, 0, &ndims, dimids, 0) != NC_NOERR) {
+ fprintf(stderr,"cannot read lon var info\n");
+ exit(1);
+ }
+fprintf(stderr,"lon id %d = %s\n",model_lonid,name);
+for (i=0, j=1; i<ndims; i++) {
+ if (nc_inq_dimlen(ncid,dimids[i],&length) != NC_NOERR) {
+  fprintf(stderr,"cannot get dim %d length for lat dim %d\n",dimids[i],i);
+  exit(1);
+  }
+ j*=length;
+ }
+fprintf(stderr,"lon len = %d\n",j);
+if (j != model_len) {
+ fprintf(stderr,"lat len = %d but lon len = %d\n",model_len,j);
+ exit(1);
+ }
+
+model_lat = (double*)malloc(model_len*sizeof(double));
+model_lon = (double*)malloc(model_len*sizeof(double));
+if (!model_lat || !model_lon) {
+ fprintf(stderr,"malloc error model\n");
+ exit(1);
+ }
+
+if (nc_get_var_double(ncid,model_latid,model_lat) != NC_NOERR) {
+ fprintf(stderr,"cannot read model lat\n");
+ exit(1);
+ }
+if (nc_get_var_double(ncid,model_lonid,model_lon) != NC_NOERR) {
+ fprintf(stderr,"cannot read model lon\n");
+ exit(1);
+ }
+
+nc_close(ncid);
+}

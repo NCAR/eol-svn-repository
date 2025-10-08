@@ -1,0 +1,32 @@
+#! /usr/bin/perl -w
+
+package GroupActionCGI;
+use strict;
+use lib ".";
+use lib "lib";
+use ActionCGI;
+use Group;
+our @ISA = ("ActionCGI");
+
+&main();
+
+sub main {
+    my $self = GroupActionCGI->new();
+    $self->buildPage("Group Action");
+}
+
+sub processParams {
+    my ($self) = @_;
+    my $group = Group->new();
+    $group->setId($self->param("group_id"));
+    $group->setName($self->param("group_name"));
+    $group->setStatusId($self->param("status"));
+    $group->setNoteId($self->param("note_id"));
+    $group->setNote($self->param("note_text"));
+
+    if ($self->param("action") =~ /^Update/i) {
+	$self->update($group);
+    } elsif ($self->param("action") =~ /^Delete/i) {
+	$self->delete($group);
+    }
+}

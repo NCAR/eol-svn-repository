@@ -1,0 +1,50 @@
+Written by Soo Park, 2015
+
+This is a python script that loads genpro-i tapelogs for the legacy data and
+parses it so that it fit the yaml dataset format.
+
+This script also utilizes the load_data_proj script in the 
+/net/work/bin/scripts/insert/loaddata/ 
+directory to display the dataset in yaml format. 
+
+To run the script:
+
+usage: movefiles [-h] proj arcid tapLog
+
+  proj        Enter in the project name. Either lower or uppercase is
+              accepted.
+  
+  arcid       Enter in the archive identifier of the dataset. This will most
+              likely be the first time you'll have to decide the archive
+              identifier for this dataset.
+  
+  tapLog      tape log name retreived from https://www.eol.ucar.edu/node/906
+
+so for example:
+./movefiles ssn 447.001 taplog.646.html
+
+Here are the steps that the script goes through
+
+1. retrieve taplog data from /net/www/raf/Catalog 
+
+2. parses the taplog data to extract necessary information and saves it into a list. 
+
+3. using the parsed data, the script moves the genpro files from its 
+   /EOL/RAF/TL... location to the new directory, for example:
+   /EOL/1979/ssn/aircraft/queenairb80_n306d/LRT/GENPRO-I/RF...
+
+4. imports a precompiled template for genpro-i datasets.
+
+5. creates a new yaml dataset for the project with all the neccessary information
+   yaml datasets are then saved in the /net/work/cfg-files directory
+
+6. load_data_proj GUI is loaded with the yaml.
+
+7. the user has to check and make sure the data type, and manually input the long/lat
+
+8. save the yaml file again by overwriting the existing file in the cfg-files directory
+
+9. If loading the dataset, the user must not run load_a_dataset with the new yaml file 
+
+If you have any questions, please email Soo at soopark@ucar.edu
+

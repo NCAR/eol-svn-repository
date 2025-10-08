@@ -1,0 +1,334 @@
+#!/bin/perl -w
+
+my %months = ( "Jan" => 1,
+							 "Feb" => 2,
+							 "Mar" => 3,
+							 "Apr" => 4,
+							 "May" => 5,
+							 "Jun" => 6,
+							 "Jul" => 7,
+							 "Aug" => 8,
+							 "Sep" => 9,
+							 "Oct" => 10,
+							 "Nov" => 11,
+							 "Dec" => 12 );
+
+my $in = "data_list.html";
+my $out = "ml.dat";
+
+my $file = readFile( $in );
+my @tr = split( "<tr", $file );
+
+shift( @tr );
+my $cat;
+my @datasets;
+foreach my $row (@tr)
+{
+	my @td = split( "<td", $row );
+	my $titles;
+	my $urls;
+	my $ids;
+	my $date;
+	my $doc;
+
+	if( @td > 1 )
+	{
+		my $name = index( $td[1], "name=" );
+		if( $name != -1 )
+		{
+			my $name_end = index( $td[1], ">", $name );
+			$cat = noQuote( substring( $td[1], $name+5, $name_end ) );	
+		}
+		($titles, $urls, $ids) = parseTitle( $td[1] );
+		$date = parseDate( $td[2] );
+		$doc = parseDoc( $td[3] );	
+		my $count = @$titles;	
+		for( my $x = 0; $x < $count; $x++ )
+		{
+			my %ds;
+			$ds{title} = $titles->[$x];
+			$ds{remote_url} = $urls->[$x];
+			$ds{storm_id} = $ids->[$x];
+			$ds{date} = $date;
+			$ds{doc_url} = $doc;
+			$ds{category} = $cat;
+			$datasets[scalar(@datasets)] = \%ds if( $ds{title} ne "" );
+		}
+	}
+}
+
+outDatasets( $out, \@datasets );
+
+sub parseTitle
+{
+	my $cell = shift;
+	my $title = "";
+	my $url = "";
+	my $storm_id = "99.999";
+	my @title;
+	my @url;
+	my @storm_id;
+	my $c = 1;
+	my $href = index( $cell, "href" );
+
+	if( $href != -1 )
+	{
+		my $href = index( $cell, "href" );
+		my $href_end = getSmallest( index( $cell, ">", $href ),
+																index( $cell, " ", $href ),
+																index( $cell, "\n", $href ) );
+		$url = trim( shrinkWhite( noQuote( substring( $cell, $href+5, $href_end ) ) ) );
+		my $t_start = index( $cell, ">", $href ) + 1;
+		my $t_end = index( $cell, "<", $t_start );
+		$title = trim( shrinkWhite( substring( $cell, $t_start, $t_end ) ) );
+
+		# Check to see if more than one link
+		if( index( $cell, "href", $href_end ) != -1 )
+		{
+			$url[0] = $url;
+	
+			# Get the real title
+			my $font = index( $cell, "<font" );
+			my $font_end = index( $cell, ">", $font );
+			my $start = $font + $font_end;
+			my $end = index( $cell, "<", $start );
+			my $type = $title;
+			$title = trim( shrinkWhite( substring( $cell, $start, $end ) ) );
+			$title[0] = $title . " ($type)";
+
+			$href = index( $cell, "href", $href+1 );
+			$href_end = getSmallest( index( $cell, ">", $href ),
+																index( $cell, " ", $href ),
+																index( $cell, "\n", $href ) );
+			$url[1] = trim( shrinkWhite( noQuote( substring( $cell, $href+5, $href_end ) ) ) );
+			$t_start = index( $cell, ">", $href ) + 1;
+			$t_end = index( $cell, "<", $t_start );
+			$type = trim( shrinkWhite( substring( $cell, $t_start, $t_end ) ) );
+			$title[1] = $title . " ($type)";
+
+			$c++;
+		}
+		else
+		{
+			$title[0] = $title;
+			$url[0] = $url;
+		}
+		
+		for( my $x = 0; $x < $c; $x++ )
+		{
+			if( $url[$x] =~ /^http:\/\/www.joss.ucar.edu\/cgi-bin\/codiac\/dss/ )	
+			{
+				$storm_id[$x] = trim( substring( $url[$x], length( "http:\/\/www.joss.ucar.edu\/cgi-bin\/codiac\/dss?" ), length($url[$x]) ) );
+				$url[$x] = "";
+			}
+			else
+			{
+				$storm_id[$x] = "99.999";
+			}	
+		}
+	}
+	else
+	{
+		$title[0] = trim( shrinkWhite( removeTags( $cell ) ) );
+		$title[0] = "" if( $title[0] eq "&nbsp;" );
+		$storm_id[0] = "99.999";
+		$url[0] = "";
+	}
+
+	if( $title[0] eq "Availability" )
+	{
+		my $start = index( $cell, ">", index( $cell, "font" ) ) + 1;
+		my $end = index( $cell, "</font", $start );
+		$title[0] = trim( shrinkWhite( substring( $cell, $start, $end ) ) ) . " - Availability";
+print( $title[0], "\n" );
+	}
+
+	for( my $x = 0; $x < $c; $x ++ )
+	{
+		#print( "--$x--\n" );
+		#print( $storm_id[$x], "\n" );
+		#print( $title[$x], "\n" );
+		#print( $url[$x], "\n" );
+	}
+	return( \@title, \@url, \@storm_id );
+}
+
+sub parseDate
+{
+	my $cell = shift;
+	my $date = removeTags( $cell );
+	$date = trim( $date );
+
+	if( $date eq "&nbsp;" || $date eq "" )
+	{
+		$date = "0000-00-00";
+	}	
+	else
+	{
+		my @d = split( " ", $date );
+
+		if( @d > 1 )
+		{
+			my $day = $d[0];
+			my $month = $months{$d[1]};
+			if( !exists $months{$d[1]} ){ print( "$month does not exist!" ) };
+			my $year = $d[2];	
+			if( !( isNumber($year) && isNumber($month) && isNumber($day) ) )
+			{
+				$date = "0000-00-00";
+			}
+			else
+			{
+				$date = sprintf( "%4.4d-%2.2d-%2.2d", $year, $month, $day );
+			} 
+		}
+	}
+
+
+	return $date;
+}
+
+sub parseDoc
+{
+	my $cell = shift;
+	my $url = "";
+	my $href = index( $cell, "href" );
+	if( $href != -1 )
+	{
+		$href_end = getSmallest( index( $cell, ">", $href ),
+															index( $cell, " ", $href ),
+															index( $cell, "\n", $href ) );
+		$url = noQuote( substring( $cell, $href+5, $href_end ) );
+	}
+
+	#print( $url, "\n" );
+	return $url;
+}
+
+sub removeTags
+{
+	my $str = shift;
+	my @chars = split( //, $str );
+	my $ignore = 0;
+	$str = "";
+	foreach $char (@chars)
+	{
+		if( $char eq "<" )
+		{
+			$ignore = 1;
+		}
+		elsif( $char eq ">" )
+		{
+			$ignore = 0;
+		}
+		elsif( !$ignore )
+		{
+			$str = $str . $char;
+		}
+	}
+
+	return $str;
+}
+
+# substring( str, start, end )
+sub substring
+{
+	my $str = shift;
+	my $start = shift;
+	my $end = shift;
+	my $length = length($str) - $start - (length($str) - $end);
+	return substr( $str, $start, $length );
+}
+
+sub readFile
+{
+	my $file = shift;
+	my $str = "";
+	open( IN, "<$file" ) || die( "unable to open $file" );
+
+	while( !eof( IN ) )
+	{
+		$str = $str . <IN>;
+	}	
+
+	return $str;
+}
+
+sub isNumber 
+{
+	my $value = shift;
+	if ($value =~ m/^-?([0-9]+[\.]?[0-9]*|[0-9]*[\.]?[0-9]+)$/) 
+	{
+		return 1;
+	} 
+	else 
+	{
+		return 0;
+	}
+}
+
+sub trim
+{
+	local $str = $_[0];
+	$str =~ s/^\s+//;
+	$str =~ s/\s+$//;
+	return $str;
+}
+
+sub noQuote
+{
+	my $str = shift;
+	$str =~ s/^\"//;
+	$str =~ s/\"$//;
+	return $str;
+}
+
+sub remove
+{
+	my $str = shift;
+	my $char = shift;
+
+	$str =~ s/$char//g;
+
+	return $str;
+}
+
+sub shrinkWhite
+{
+	my $str = shift;
+
+	$str =~ s/\s+/ /g;
+
+	return $str;
+}
+sub getSmallest
+{
+	my $small = shift;
+	foreach my $s (@_)
+	{
+		$small = $s if( $s >= 0 && $s < $small );
+	}
+	return $small;	
+}
+
+sub outDatasets
+{
+	my $out = shift;
+	my $ds_ref = shift;	
+	my @dss = @$ds_ref;
+
+	open( OUT, ">$out" );
+	foreach my $ds (@dss)
+	{
+		foreach my $field ( "storm_id", "title", "date", "remote_url", "doc_url", "category" )
+		{
+			$ds->{$field} = "" if( !defined( $ds->{$field} ) );
+			print( OUT $ds->{$field} );		
+			my $end = "";
+			$end = "" if( $field eq "category" );
+			print( OUT $end );
+		}
+	}
+
+	close( OUT );
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context cookies="true" override="true" useNaming="true"
+    swallowOutput="true"
+    >
+
+    <Realm
+        className="org.apache.catalina.realm.JDBCRealm" 
+        digest="MD5"
+
+        connectionName="dts-full"
+        connectionPassword="l@micbc"
+        connectionURL="jdbc:mysql://emdac.eol.ucar.edu/dmg_dts"
+        driverName="com.mysql.jdbc.Driver"
+
+        roleNameCol="rolename"
+        userCredCol="password"
+        userNameCol="contact_short_name"
+        userRoleTable="role NATURAL JOIN user_role NATURAL JOIN contact"
+        userTable="contact"
+    />
+  
+    <Resource
+        name="connection" auth="container" type="javax.sql.DataSource" 
+
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://emdac.eol.ucar.edu/dmg_merged_ml"
+        username="mledit"
+        password="dsL1ster"
+        autoReconnect="false" autoReconnectForPools="true" failOverReadOnly="false"
+
+        maxActive="100" maxIdle="30" maxWait="20000"
+
+        removeAbandoned="true" removeAbandonedTimeout="14400" logAbandoned="true"
+        validationQuery="select 1" testOnBorrow="true"
+
+    />
+
+</Context>

@@ -1,0 +1,492 @@
+head	1.2;
+access;
+symbols;
+locks;
+comment	@ * @;
+
+
+1.2
+date	94.07.19.20.48.41;	author mark;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	92.12.03.00.54.43;	author mark;	state Exp;
+branches;
+next	;
+
+
+desc
+@I/O library for CLASS format files
+@
+
+
+1.2
+log
+@Enable pressure display
+Extend to 50 mb
+Fix zoom bug (hopefully)
+@
+text
+@/* classio.c
+ *
+ * routines to read/write STORM CLASS Format
+ *
+ * Mark Bradford, STORM Project Office, NCAR, Boulder, May 1992
+ *
+ * $Id
+ * $Log
+ */
+
+#include <stdio.h>
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/dir.h>
+#include <sys/stat.h>
+#include "xqc.h"
+
+struct direct **dlist;
+
+char hdr[HDRLINES][LINEBUF];
+Data d[MAXLINES];
+QC qc[MAXLINES];
+
+int doy, hour, min;
+int compressed;
+char path[81];
+char site[4];
+char cmd[LINEBUF];
+int write_okay=0;
+int numlines=0;
+int numfiles=0;
+int thisfile=0;
+
+char *infile, *outfile;
+
+extern int alphasort();
+
+int this_site(d)
+struct direct *d;
+    {
+    return((!(strncmp(site, d->d_name, 3))) &&
+	    (strstr(d->d_name, "qc")==NULL));
+    }
+
+char *new_site(s)
+char *s;
+    {
+    free_dir();
+    make_dir();
+    if (numfiles < 1)
+	/* no files */
+	{
+	return NULL;
+	}
+    thisfile=1;
+    strcpy(s, dlist[0]->d_name);
+    return(s);
+    }
+
+make_dir()
+    {
+    if ((numfiles=scandir(path, &dlist, this_site, alphasort)) == -1)
+	oops(BADDIRLIST);
+    }
+
+free_dir()
+    {
+    while (numfiles)
+	free(dlist[--numfiles]);
+    free(dlist);
+    }
+
+setthisfile()
+    {
+    int i;
+
+    for (i=0; i<numfiles; i++)
+	if (!strncmp(dlist[i]->d_name, infile, strlen(infile)))
+	    {
+	    thisfile=i+1;
+	    return(0);
+	    }
+    return(1);
+    }
+
+int read_class(file, numlines)
+char *file;
+int *numlines;
+    {
+    FILE *f;
+    int i;
+
+    *numlines=0;
+    if (compressed)
+	{
+	strcpy(cmd,"uncompress ");
+	strcat(cmd, file);
+	if (system(cmd))
+	    oops(BADUNCOMPRESS);
+	}
+    if ((f=fopen(file,"r"))==NULL)
+	return(BADOPEN);
+    for (i=0; i<15; i++)
+	if (fgets(hdr[i], LINEBUF, f)==NULL)
+	    return(BADREAD);
+    while (!(i=read_line(f, &d[*numlines], &qc[*numlines])))
+	{
+	(*numlines)++;
+	if (*numlines > MAXLINES)
+	    oops(TOOBIG);
+	}
+    fclose(f);
+    if (compressed)
+	{
+	strcpy(cmd, "compress ");
+	strcat(cmd, file);
+	strcat(cmd, " &");
+	if (system(cmd))
+	    oops(BADCOMPRESS);
+	}
+    if (i==EOFFOUND)
+	return(0);
+    else
+	return(i);
+    }
+
+int write_class(file, numlines)
+char *file;
+int numlines;
+    {
+    FILE *f;
+    int i;
+
+    if ((f=fopen(file,"w"))==NULL)
+	return(BADOPEN);
+    for (i=0; i<15; i++)
+	fputs(hdr[i], f);
+    for (i=0; i<numlines; i++)
+	if (write_line(f, &d[i], &qc[i]))
+	    return(BADWRITE);
+    fclose(f);
+    if (compressed)
+	{
+	strcpy(cmd, "compress -f ");
+	strcat(cmd, file);
+	strcat(cmd, " &");
+	if (system(cmd))
+	    oops(BADCOMPRESS);
+	}
+    return(0);
+    }
+
+int read_line(f, d, qc)
+FILE *f;
+Data *d;
+QC *qc;
+    {
+    char l[LINEBUF];
+/*    static char *infmt="%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %*[^]\n";*/
+    static char *infmt="%f %f %f %f %f %f %f %f \
+%f %f %f %f %f %f %f %f %f %f %f %f %f%*[^]\n";
+    int i;
+
+    if (fgets(l, LINEBUF, f)==NULL)
+	if (feof(f))
+	    return(EOFFOUND);
+	else
+	    return(BADREAD);
+    i=sscanf(l, infmt, &(d->time), &(d->pres), &(d->t), &(d->dp), &(d->rh),
+	     &(d->uwind), &(d->vwind), &(d->wspd), &(d->wdir), &(d->dz),
+	     &(d->lon), &(d->lat), &(d->tmp1), &(d->tmp2), &(d->alt),
+	     &(qc->qp), &(qc->qt), &(qc->qh), &(qc->qu), &(qc->qv), &(qc->qw));
+    if ((d->pres <= PMAX) && (d->pres >= PMIN))
+	{
+	if (qc->qp==UNCHECKED)
+	    qc->qp=GOOD;
+	if (qc->qt==UNCHECKED)
+	    qc->qt=GOOD;
+	if (qc->qh==UNCHECKED)
+	    qc->qh=GOOD;
+	if (qc->qu==UNCHECKED)
+	    qc->qu=GOOD;
+	if (qc->qv==UNCHECKED)
+	    qc->qv=GOOD;
+	}
+    return (0);
+    }
+
+int write_line(f, d, qc)
+FILE *f;
+Data *d;
+QC *qc;
+    {
+    static char *outfmt="%6.1f %6.1f %5.1f %5.1f %5.1f %6.1f %6.1f %5.1f \
+%5.1f %5.1f %8.3f %7.3f %5.1f %5.1f %7.1f %4.1f %4.1f %4.1f %4.1f \
+%4.1f %4.1f\n";
+
+    return((fprintf(f, outfmt, d->time, d->pres, d->t, d->dp, d->rh,
+		    d->uwind, d->vwind, d->wspd, d->wdir, d->dz,
+		    d->lon, d->lat, d->tmp1, d->tmp2, d->alt,
+		    qc->qp, qc->qt, qc->qh, qc->qu, qc->qv, qc->qw))==EOF);
+    }
+
+char *latmin(deg)
+float deg;
+    {
+/*  Mark Bradford, STORM Project Office, April 1992
+
+    Given latitude in decimal degrees (DEG), return a string in the format
+    "dd mm.mm'D", where dd is degrees, mm.mm is decimal minutes,
+    and D is N or S appropriately.
+*/
+    int whole;
+    float frac;
+    char *s, dxn;
+
+    if ((s=(char *)malloc(11*sizeof(char)))==NULL)
+	oops(OUTOFMEMORY);
+    whole=(int)deg;
+    frac=deg-whole;
+    if (whole < 0)
+	{
+	dxn='S';
+	whole= -whole;
+	frac= -frac;
+	}
+    else
+	dxn='N';
+    sprintf(s,"%02.2i %05.2'%c", whole, frac*60., dxn);
+    return s;
+    }
+    
+char *lonmin(deg)
+float deg;
+    {
+/*  Mark Bradford, STORM Project Office, April 1992
+
+    Given longitude in decimal degrees (DEG), return a string in the format
+    "ddd mm.mm'D", where ddd is degrees, mm.mm is decimal minutes,
+    and D is E or W appropriately.
+*/
+
+    int whole;
+    float frac;
+    char *s, dxn;
+
+    if ((s=(char *)malloc(12*sizeof(char)))==NULL)
+	oops(OUTOFMEMORY);
+    whole=(int)deg;
+    frac=deg-whole;
+    if (whole < 0)
+	{
+	dxn='W';
+	whole= -whole;
+	frac= -frac;
+	}
+    else
+	dxn='E';
+    sprintf(s,"%03.3i %05.2'%c", whole, frac*60., dxn);
+    return s;
+    }
+
+oops(err)
+int err;
+    {
+    fprintf(stderr, "ERROR %d!\n", err);
+    abort();
+    }
+
+class_main(argc, argv)
+int argc;
+char **argv;
+    {
+    int numlines, result, i;
+    int month, day;
+    char *file, *s;
+
+    if (argc != 2)
+	{
+	fprintf(stderr, "No no!\n");
+	exit(1);
+	}
+    file=argv[1];
+    if (compressed)
+	sscanf(file, "%3c%1d%2d%2d.0cls.Z", site, &month,
+		&day, &hour);
+    else
+	sscanf(file, "%3c%1d%2d%2d.0cls", site, &month,
+		&day, &hour);
+    site[3]='\0';
+    if (month > 1)
+	day += 31;
+    if (month > 2)
+	day += 29;
+    if (month > 3)
+	day += 31;
+    doy=day;
+    if ((s=(char *)malloc(81*sizeof(char)))==NULL)
+	exit(1);
+/*
+    result=read_class(file, &numlines);
+    printf("Result: %d Lines: %d \n", result, numlines);
+    printf("Header:\n");
+    for (i=0; i<HDRLINES; i++)
+	printf("%2d: %s", i, hdr[i]);
+    result=(write_class("/home/mark/bogus.out", numlines));
+    printf("Write result: %d\n", result);
+*/
+    printf("Next file: %s\n",next_file(s)?s:"NULL");
+    printf("Prev file: %s\n",prev_file(s)?s:"NULL");
+    printf("Prev file: %s\n",prev_file(s)?s:"NULL");
+    }
+
+char *next_file(s)
+char *s;
+    {
+    if (thisfile < numfiles)
+	{
+	thisfile++;
+	strcpy(s, dlist[thisfile-1]->d_name);
+	return (s);
+	}
+    /* No file found before max day */
+    return ((char *)NULL);
+    }
+
+char *prev_file(s)
+char *s;
+    {
+    if (thisfile > 1)
+	{
+	thisfile--;
+	strcpy(s, dlist[thisfile-1]->d_name);
+	return(s);
+	}
+    /* No file found before max day */
+    return ((char *)NULL);
+    }
+
+char *old_next_file(s)
+char *s;
+    {
+    int h, d, m;
+    struct stat b;
+
+    d=doy;
+    h=hour;
+    while (d < MAX_DOY)
+	{
+	h+=3;
+	if (h >= 24)
+	    {
+	    h-=24;
+	    d++;
+	    }
+	if (compressed)
+	    sprintf(s, "%3s%1d%2.2d%2.2d.0cls.Z", site, month(d),
+		    dayofmonth(d), h);
+	else
+	    sprintf(s, "%3s%1d%2.2d%2.2d.0cls", site, month(d),
+		    dayofmonth(d), h);
+	strcpy(cmd, path);
+	strcat(cmd, s);
+	if (!stat(cmd, &b))
+	    /* file exists */
+	    {
+	    doy=d;
+	    hour=h;
+	    return(s);
+	    }
+	else if (errno != ENOENT)
+	    /* error other than non-existent file */
+	    perror("next_file");
+/*	    abort(); */
+	}
+    /* No file found before max day */
+    return ((char *)NULL);
+    }
+
+char *old_prev_file(s)
+char *s;
+    {
+    int h, d, m;
+    struct stat b;
+
+    d=doy;
+    h=hour;
+    while (d > MIN_DOY)
+	{
+	h-=3;
+	if (h < 0)
+	    {
+	    h+=24;
+	    d--;
+	    }
+	if (compressed)
+	    sprintf(s, "%3s%1d%2.2d%2.2d.0cls.Z", site, month(d),
+		    dayofmonth(d), h);
+	else
+	    sprintf(s, "%3s%1d%2.2d%2.2d.0cls", site, month(d),
+		    dayofmonth(d), h);
+	strcpy(cmd, path);
+	strcat(cmd, s);
+	if (!stat(cmd, &b))
+	    /* file exists */
+	    {
+	    doy=d;
+	    hour=h;
+	    return(s);
+	    }
+	else if (errno != ENOENT)
+	    /* error other than non-existent file */
+	    perror("prev_file");
+/*	    abort(); */
+	}
+    /* No file found before max day */
+    return ((char *)NULL);
+    }
+
+int month(d)
+int d;
+    {
+    /* Return month [1-12] given day of year [1-366];
+       Quick hack, leap year only, January-April only;
+     */
+    if (d <= 31)
+	return 1;
+    else if (d <= 60)
+	return 2;
+    else if (d <= 91)
+	return 3;
+    else
+	return 4;
+    }
+
+int dayofmonth(d)
+int d;
+    {
+    /* Return day of month [1-31] given day of year [1-366];
+       Quick hack, leap year only, January-April only;
+     */
+    if (d <= 31)
+	return d;
+    else if (d <= 60)
+	return (d-31);
+    else if (d <= 91)
+	return (d-60);
+    else
+	return (d-91);
+    }
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d173 1
+a173 1
+    if ((d->pres <= 1050.) && (d->pres >= 100.))
+@

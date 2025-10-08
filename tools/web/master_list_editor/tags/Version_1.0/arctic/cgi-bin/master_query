@@ -1,0 +1,900 @@
+#!/bin/perl -wT
+
+#-----------------------------------------------------------------
+# master_query: This script along with the master_maint script
+#  make up the Master List Application.  The master_query script
+#  reads in various parameters set in the url of a link and displays a table
+#  using those parameters.  An explanation of how to build the urls
+#  to query the database can be found at: 
+#  http://www.joss.ucar.edu/dpg/arctic_ml/query_howto.html
+#
+# Author: Dan Sullivan
+# Date: August, 2002 
+#
+# Important variables:
+#   $dbh - Database handle to the MySQL database
+#   %query - the parameter values set in the url
+#   %headers - hash table that stores the values to place in the 
+#              table headings.  
+#   %td_tags - hash table of <td> tags to use for each different
+#              column in the table. 
+# 
+# Updates:
+#  August 8, 2003:
+#   Script under went heavy revisions, to simplify and add new 
+#   features:  
+#    - The ability to pull fields from CODIAC (frequency,
+#   size, begin_date, end_date) was added.  
+#
+#   - The 'display' option  to show the archive summary was removed and 
+#   placed in a stand-alone script 'ml_summary' located in this directory.  
+#
+#   - The 'readme' option was also removed and replaced with a stand-alone
+#   script 'codiac_readme' which queries CODIAC and forwards the
+#   user to the readme file for a given storm_id number. 
+# 
+#   - A Cascading Style Sheet was implemented to replace the
+#   ColorScheme table in the master_list database.
+#   css files located here: /web/docs/dpg/arctic_ml/css
+# 
+# September 5, 2003:
+#  Added the following date conditionals:
+#   dateeq, datelt, dategt, datele, datege
+#
+#-----------------------------------------------------------------
+use strict;
+use CGI qw(:standard :html3 );
+use DBI;
+use lib "./lib";
+use Util;
+use List;
+use Field;
+use Row;
+use EQuery;
+#---------------------Initialize some Variables-------------------
+
+# Connect to the database
+my $dbh = connectToDB();
+
+# All of the query parameters to read in
+my %query = ( "platforms", [],
+							"data_types", [],
+							"disciplines", [],
+							"sites", [],
+							"order", [],
+							"fields", [],		
+			 				"comments", [],
+			 				"authors", [],
+			 				"phases", [],
+			 				"dateeq", [],
+			 				"datelt", [],
+			 				"datele", [],
+			 				"dategt", [],
+			 				"datege", [],
+			 				"project", undef,
+			 				"year", undef,
+							"title", undef );
+
+# The headings to display in the table
+my %headers = ( "date", "Date",
+								"storm_id", "Storm Id",
+								"title", "Dataset Title",
+								"author", "Author/PI",
+								"comments", "Comments",
+								"data_type", "Data Type",
+								"discipline", "Discipline",
+								"platform", "Platform",
+								"site", "Site",
+								"spat_res", "Spatial Resolution",
+								"documentation", "Documentation",
+								"doc_url", "Documentation URL",
+								"phase", "Phase",
+								"start_year", "Start Year",
+								"end_year", "End Year",
+								"frequency", "Frequency",
+								"begin_date", "Begin Date",
+								"end_date", "End Date",
+								"size", "Size (KB)",
+								"method_of_obs", "Method of Obs.",
+								"year", "Year(s)" );
+
+# The table data tags to use when displaying the table
+my %td_tags = ( "date", "<td nowrap align=center>",
+								"storm_id", "<td nowrap align=left>",
+								"title", "<td align=left>",
+								"author", "<td align=left>",
+								"comments", "<td align=left>",
+								"data_type", "<td nowrap align=center>",
+								"platform", "<td nowrap align=center>",
+								"site", "<td nowrap align=center>",
+								"discipline", "<td nowrap align=center>",
+								"spat_res", "<td nowrap align=center>",
+								"documentation", "<td align=center>",
+								"doc_url", "<td nowrap align=left>",
+								"phase", "<td align=center>",
+								"start_year", "<td align=center>",
+								"end_year", "<td align=center>",
+								"frequency", "<td align=center>",
+								"begin_date", "<td align=center>",
+								"end_date", "<td align=center>",
+								"size", "<td align=right>",
+								"method_of_obs", "<td align=center>",
+								"year", "<td align=center>" );
+
+my %procSubs =  (
+								"date", \&procDef,
+								"storm_id", \&procDef,
+								"title", \&procTitle,
+								"author", \&procDef,
+								"comments", \&procDef,
+								"data_type", \&procDef,
+								"platform", \&procDef,
+								"site", \&procDef,
+								"discipline", \&procDef,
+								"spat_res", \&procDef,
+								"documentation", \&procDocumentation,
+								"doc_url", \&procDef,
+								"phase", \&procDef,
+								"start_year", \&procStartYear,
+								"end_year", \&procEndYear,
+								"year", \&procYear,
+								"frequency", \&procDef,
+								"begin_date", \&procDef,
+								"end_date", \&procDef,
+								"size", \&procSize,
+								"method_of_obs", \&procDef
+								);
+#-----------------------------------------------------------------
+
+
+#-----------------------The Main Program--------------------------
+
+# Display the master list table according to the parameters
+
+# Read in the parameters
+my $error = getParameters();
+
+# Check for an error
+if( !defined( $error ) )
+{
+	# Form the sql statement to query the database
+	my $sql = getSQL();
+
+	# Build the table
+	my @table = getTable( $sql );
+
+	# Query CODIAC
+	queryCodiac( @table );
+
+	@table = filterYear( @table ) if( $query{year} );
+
+	# Output the table in html format
+	showTable( @table );
+}
+else
+{
+	showError( $error );
+}
+#-----------------------------------------------------------------
+
+#---------------------Subroutines---------------------------------
+
+#-----------------------------------------------------------------
+# Reads in the parameters the user has set in the url
+# All the values are stored in the %query hash table.
+#-----------------------------------------------------------------
+sub getParameters
+{
+	my $error = undef;
+
+	# The array of platforms to display
+	@{$query{platforms}} = param( "platforms" );
+
+	# The array of data types to display
+	@{$query{data_types}} = param( "data_types" );
+
+	# The array of disciplines to display
+	@{$query{disciplines}} = param( "disciplines" );
+
+	# The array of sites to display
+	@{$query{sites}} = param( "sites" );
+
+	# The arry of spatial resolutions to display
+	@{$query{spat_resolutions}} = param( "spat_resolutions" );
+
+	# The order by which to sort the table
+	@{$query{order}} = param( "order" );
+
+	# The fields to display in the table - order from left to right by
+  #  the way the are ordered in the array
+	@{$query{fields}} = param( "fields" );
+
+	# The value(s) of the comments field to display
+	@{$query{comments}} = param( "comments" );
+
+	# The value(s) of the phase field to display
+	@{$query{phases}} = param( "phases" );
+
+	# the value(s) of the author field to display
+	@{$query{authors}} = param( "authors" );
+
+	# The value(s) of methods of observation to display
+	@{$query{methods_of_obs}} = param( "methods_of_obs" );
+
+	# The name of the project 
+	$query{project} = param( "project" );
+
+	# The year to display 
+	$query{year} = param( "year" );
+
+	# The dates to display
+	@{$query{dateeq}} = param( "dateeq" );
+	@{$query{datelt}} = param( "datelt" );
+	@{$query{dategt}} = param( "dategt" );
+	@{$query{datele}} = param( "datele" );
+	@{$query{datege}} = param( "datege" );
+
+	# The title to display at the top of the table
+	$query{title} = param( "title" );
+
+	# Make sure a project name has been specified
+	if( !defined( $query{project} ) )
+	{
+		$error = "No Project Specified!";
+	}
+
+	return $error;
+}
+
+#-----------------------------------------------------------------
+# Uses the parameters set by the user to form the sql statement 
+#  needed to query the database.
+#-----------------------------------------------------------------
+sub getSQL
+{
+	# Start the sql SELECT statement
+	my $sql = "SELECT List.*, DataType.name, Discipline.name, Platform.name, Site.name, SpatRes.name " .
+						"FROM List, DataType, Discipline, Platform, Site, ListProjects, SpatRes " .
+						"WHERE ( ListProjects.id = List.proj_id AND ListProjects.name =  " . $dbh->quote( $query{project} ) . ")";
+
+	# Get the part of the WHERE statement for each field
+	$sql = $sql . getFieldSQL( "platforms", "Platform", "platform_id" );
+	$sql = $sql . getFieldSQL( "data_types", "DataType", "data_type_id" );
+	$sql = $sql . getFieldSQL( "disciplines", "Discipline", "discipline_id" );
+	$sql = $sql . getFieldSQL( "sites", "Site", "site_id" );
+	$sql = $sql . getFieldSQL( "spat_resolutions", "SpatRes", "spat_res_id" );
+	$sql = $sql . getParamSQL( "List", "comments", "comments" );
+	$sql = $sql . getParamSQL( "List", "phase", "phases" );
+	$sql = $sql . getParamSQL( "List", "author", "authors" );
+	$sql = $sql . getParamSQL( "List", "method_of_obs", "methods_of_obs" );
+	$sql = $sql . getParamSQL( "List", "date", "dateeq" );
+	$sql = $sql . getParamSQL( "List", "date", "datelt", "<" );
+	$sql = $sql . getParamSQL( "List", "date", "dategt", ">" );
+	$sql = $sql . getParamSQL( "List", "date", "datele", "<=" );
+	$sql = $sql . getParamSQL( "List", "date", "datege", ">=" );
+
+	# Get the ORDER statement
+	$sql = $sql . getOrder();
+
+	return $sql;
+}
+
+
+#-----------------------------------------------------------------
+# Creates the necessary part of the WHERE clause for the given
+#  table, used for Discipline, Site, DataType, SpatRes
+#-----------------------------------------------------------------
+sub getFieldSQL
+{
+	my $qkey = shift;
+	my $table = shift;
+	my $col = shift;
+
+	# Get the platforms the user wants to display
+	my @fields = @{$query{$qkey}};
+	my $sql;
+
+	if( @fields )
+	{
+		$sql = " AND ( List.$col = $table.id AND (";
+
+		# Add each platform to the statement  
+		for(my $x = 0; $x < @fields; $x++ )
+		{
+			$sql = $sql . "$table.name = " . $dbh->quote( $fields[$x] );
+			if( $x == (@fields - 1) )
+			{
+				$sql = $sql . ")";
+			}
+			else
+			{
+				$sql = $sql . " OR ";
+			}
+		}
+		$sql = $sql . ")";
+	}
+	else
+	{
+		$sql = " AND List.$col = $table.id"; 
+	}
+	return $sql;
+}
+
+# getParamSQL( "List", "phase", "phases" );
+#-----------------------------------------------------------------
+# Forms the part of the sql statement for the given table and coloumn.
+# Arguments: getParamSQL( table, column, param )
+#   table - the table in the database
+#   column - the column in the table
+#   param - the name of the parameter the column has to match.
+#   cond - the conditional expression to use, "=", "<", ">" etc.
+#    if cond is null, "=" is the default.
+# The statement pulls out all of the records where the 'column' of the
+#  'table' matches any of the values in the parameters called 'param' 
+#-----------------------------------------------------------------
+sub getParamSQL
+{
+	my $table = shift;
+	my $col = shift;
+	my $param = shift;
+	my $cond = shift;
+
+	$cond = "=" if( !defined( $cond ) );
+
+	# Get the values to match
+	my @params = @{$query{$param}};
+	my $sql = "";
+
+	if( @params )
+	{
+		$sql = " AND (";
+
+		for(my $x = 0; $x < @params; $x++ )
+		{
+			$sql = $sql . $table . "." . $col .  " $cond " . $dbh->quote( $params[$x] );
+			if( $x == (@params - 1) )
+			{
+				$sql = $sql . ")";
+			}
+			else
+			{
+				$sql = $sql . " OR ";
+			}
+		}
+	}
+	return $sql;
+}
+
+#-----------------------------------------------------------------
+# Forms the ORDER BY portion of the sql statement
+#-----------------------------------------------------------------
+sub getOrder
+{
+	my @order = @{$query{order}};
+	my $sql;
+
+	if( @order )
+	{
+		$sql = " ORDER BY ";
+
+		for( my $x = 0; $x < @order; $x++ )
+		{
+			if( $order[$x] eq "data_type" )
+			{
+				$sql = $sql . "DataType.name"; 
+			}
+			elsif( $order[$x] eq "discipline" )	
+			{
+				$sql = $sql . "Discipline.name"; 
+			}
+			elsif( $order[$x] eq "platform" )	
+			{
+				$sql = $sql . "Platform.name"; 
+			}
+			elsif( $order[$x] eq "site" )	
+			{
+				$sql = $sql . "Site.name"; 
+			}
+			elsif( $order[$x] eq "spat_resolution" )	
+			{
+				$sql = $sql . "SpatRes.name"; 
+			}
+			else
+			{
+				$sql = $sql . "List." . $order[$x]; 
+			}
+			if( $x == (@order - 1) )
+			{
+				$sql = $sql . " ";	
+			}
+			else
+			{
+				$sql = $sql . ", ";	
+			}
+		}
+	}
+	else
+	{
+		$sql = " ORDER BY List.date"
+	}
+	return $sql;
+}
+
+#-----------------------------------------------------------------
+# Connect to the database 
+#-----------------------------------------------------------------
+sub connectToDB
+{
+	return DBI->connect( "DBI:mysql:database=master_list;host=hurricane",
+												"mlist", "world-data", { RaiseError=>1} ) || die( "Unable to connect to database" );
+}
+
+#-----------------------------------------------------------------
+# Query the database using the given sql statement and return
+#  an array of List objects
+#-----------------------------------------------------------------
+sub getTable 
+{
+	my $sql = shift;
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @table;
+
+	while( (my @row = $sth->fetchrow()) )
+	{
+		my $r = List->new();
+		$r->set( @row );
+		$table[scalar(@table)] = $r;
+	}
+
+	@table = combineMultiples( @table );
+
+	return @table;
+}
+
+#-----------------------------------------------------------------
+# Output the html formatted table.
+#-----------------------------------------------------------------
+sub showTable
+{
+	my @table = @_;
+
+	# Show the file header
+	showHeader();	
+
+	# Show the headings to the table
+	showTableHead();
+
+	# Display each row
+	foreach my $row (@table)
+	{
+		println( $tr );
+	
+		# Display the fields set by the user in the URL
+		foreach my $field (@{$query{fields}})
+		{
+			my $display = $procSubs{$field}->($field, $row);
+
+			println( $td_tags{$field} . $display . $tde );
+		}
+		println( $tre );
+	}
+	my $cols = scalar(@{$query{fields}});
+	my $nds = @table;
+	println( "<tr><td colspan=$cols><b>Number of Datasets: $nds</b></td></tr>" );
+	println( "</table></body></html>" );
+}
+
+#-----------------------------------------------------------------
+# Displays the default html file header
+#-----------------------------------------------------------------
+sub showHeader
+{
+	println( header() );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>$query{project} Master List</title>" );
+		println( &css( $query{project}) );
+	println( "</head>" );
+	println( "<body>" );
+}
+
+#-----------------------------------------------------------------
+# Show the heading to the table.  This includes the beginning 
+#  table tag, the title of the table, and the headings for each
+#  column.
+#-----------------------------------------------------------------
+sub showTableHead
+{
+	my @fields = @{$query{fields}};
+	my $size = @fields;
+
+	if( defined( $query{title} ) )
+	{
+		println( "<font class=title>$query{title}</font><br><br>" );
+	}
+	else
+	{
+		println( "<b><font class=title>Master List</font></b><br><br>" );
+	}
+
+	println( "<center><table border=1 cellpadding=2 cellspacing=2 width=100%>" );
+
+	println( "<tr class=header>" );
+	foreach my $field (@fields)
+	{
+		println( "<td nowrap align=center>" . $headers{$field} . "<br><br></td>" );
+	}
+	println( "</tr>" );
+}
+
+#-----------------------------------------------------------------
+# Show an error message.
+#-----------------------------------------------------------------
+sub showError
+{
+	my $error = shift;
+
+	println( header() );
+	println( "<html><head><title>Script Error</title></head></title><body bgcolor=white>" );
+	println( "<h1>SCRIPT ERROR</h1>" );
+	println( "<p>An error with the script has occured.</p>" );
+	println( "<p>$error</p>" );
+	println( "<p>Please contact <a href=mailto:suldan\@ucar.edu>suldan\@ucar.edu</a>.</p>" );
+	println( "</body></html>" );
+}
+
+#-----------------------------------------------------------------
+# Combines datasets with the same title.  I fault of the system is
+#  the inability to define mutliple Disciplines, Sites etc. to 
+#  a dataset, a shortcut was to add a dataset multiple times
+#  with the same title and change the Dsicipline, Site etc.
+#  This is really ugly, and has gotten out of hand.
+#-----------------------------------------------------------------
+sub combineMultiples
+{
+	my @table = @_;
+	my @new_tbl;
+
+	for( my $x = 0; $x < @table; $x++ )
+	{
+		my $match = 0;
+		if( @new_tbl == 0 )
+		{
+			$new_tbl[scalar(@new_tbl)]  = $table[$x];
+			$match = 1;
+		}
+		else
+		{
+			for( my $y = 0; $y < @new_tbl; $y++ )
+			{
+				my $row = $new_tbl[ $y ];
+				my $row2 = $table[$x];
+				if( $row->{title} eq $row2->{title} )
+				{
+					$new_tbl[$y] = combineRows( $row, $row2 );
+					$match = 1;
+					last;
+				} 
+			}
+		}
+
+		if( $match == 0 )
+		{
+			$new_tbl[scalar(@new_tbl)] = $table[$x];
+		}
+	}
+
+	return @new_tbl;
+}
+
+
+#-----------------------------------------------------------------
+# Combine two rows with the same title.
+#-----------------------------------------------------------------
+sub combineRows
+{
+	my $r1 = shift;
+	my $r2 = shift;
+
+	$r1->{discipline} = combineVals( $r1->{discipline}, $r2->{discipline} );
+	$r1->{platform} = combineVals( $r1->{platform}, $r2->{platform} );
+	$r1->{data_type} = combineVals( $r1->{data_type}, $r2->{data_type} );
+	$r1->{site} = combineVals( $r1->{site}, $r2->{site} );
+	$r1->{spat_res} = combineVals( $r1->{spat_res}, $r2->{spat_res} );
+
+	return $r1;
+}
+
+#-----------------------------------------------------------------
+# Combine the two values, places a <br> in between multiple values.
+#  The first val can already contain multiple values.
+#-----------------------------------------------------------------
+sub combineVals
+{
+	my $val1 = shift;
+	my $val2 = shift;
+	my $c = 0;
+	my $matchit = 1;
+
+	my @arr = split( /<br>/, $val1 );
+	my @new_arr;
+
+	for( my $x = 0; $x < @arr; $x++ )
+	{
+		if( $arr[$x] ge $val2 && $matchit )
+		{
+			if( $arr[$x] ne $val2 )
+			{
+				$new_arr[$c++] = $val2;
+			}
+			$matchit = 0;
+		}
+		$new_arr[$c++] = $arr[$x];
+	}
+	if( $matchit )
+	{
+		$new_arr[$c++] = $val2;
+	}	
+
+	$val1 = join( "<br>", @new_arr );
+	return $val1;	
+}
+
+#-----------------------------------------------------------------
+# Pull the extra fields from the CODIAC database.
+#-----------------------------------------------------------------
+sub queryCodiac
+{
+	my @table = @_;
+	my $found = 0;
+	
+	my $in = "IN( 0";
+	foreach my $r (@table)
+	{
+		if( $r->{storm_id} ne "99.999" )
+		{
+			$in = $in . ", $r->{storm_id}";	
+			$found = 1;
+		}
+	}
+	$in = $in . ")";
+
+	my %results;
+	if( $found && queryCatalog() )
+	{
+		my $sql = "SELECT storm_id, frequency, begin_date, end_date FROM dataset WHERE storm_id " . $in;
+
+		my $eq = EQuery->new( "catalog_db" );
+		$eq->query( $sql );	
+
+		while( (my %row = $eq->getRow()) )
+		{
+			$results{$row{storm_id}} = \%row;
+		}
+
+		foreach my $r (@table)
+		{
+			$r->{frequency} = $results{$r->{storm_id}}->{frequency};
+			$r->{begin_date} = $results{$r->{storm_id}}->{begin_date};
+			$r->{end_date} = $results{$r->{storm_id}}->{end_date};
+		}
+	}
+
+	if( $found && queryPhysDir() )
+	{
+		my $sql = "SELECT l_dds_id, sum(data_amt) FROM on_line_phys_dir WHERE l_dds_id " . $in . " GROUP BY l_dds_id";
+		my $eq = EQuery->new( "phys_dir_db" );
+		$eq->query( $sql );
+
+		my @meta = $eq->getResultMetadata();
+		my $col = $meta[1];
+		while( (my %row = $eq->getRow()) )
+		{
+			$results{$row{l_dds_id}} = \%row;
+		}	
+
+		foreach my $r (@table)
+		{
+			$r->{size} = $results{$r->{storm_id}}->{$col};
+		}	
+	}
+}
+
+#-----------------------------------------------------------------
+# Filter out the year passed in through the url.  This uses the
+#  begin and end date pulled from CODIAC.
+#-----------------------------------------------------------------
+sub filterYear
+{
+	my @table = @_;
+	my @new_tbl;
+	my $year = $query{year};
+
+	foreach my $row (@table)
+	{
+		if( $row->{begin_date} && $row->{end_date} )
+		{
+			my $begin = substr( $row->{begin_date}, 0, 4);
+			my $end = substr( $row->{end_date}, 0, 4);
+			if( $begin <= $year && $end >= $year )
+			{
+				$new_tbl[scalar(@new_tbl)] = $row;
+			}
+		}
+	}	
+
+	return @new_tbl;	
+}
+
+#-----------Proc functions for each field-------------------------
+# The following functions return the formated values for each 
+#  type of field.  These are stored in the %procSubs hash
+#-----------------------------------------------------------------
+
+# Default
+sub procDef
+{
+	my $field = shift;
+	my $row = shift;
+
+	if( !$row->{$field} || $row->{$field} eq "UNKNOWN" )
+	{
+		return "&nbsp;";
+	}
+	else
+	{
+		return $row->{$field};
+	}
+}
+
+sub procTitle
+{
+	my $field = shift;
+	my $row = shift;
+	my $title;
+
+	if( !$row->{title}	|| $row->{title} eq "" )
+	{
+		$title = "&nbsp;";
+	}
+	elsif( $row->{url} && $row->{url} ne "" )
+	{
+		$title = "<a href=$row->{url}>$row->{title}</a>";
+	}
+	else
+	{
+		$title = $row->{title};
+	}
+
+	return $title;
+}
+
+sub procDocumentation
+{
+	my $field = shift;
+	my $row = shift;
+	my $doc;
+
+	if( $row->{doc_url} && $row->{doc_url} ne "" )
+	{
+		$doc = "<a href=$row->{doc_url}>Documentation</a>";
+	}
+	elsif( $row->{storm_id} && $row->{storm_id} ne "99.999" )
+	{
+		$doc = "<a href=codiac_readme?storm_id=$row->{storm_id}>Documentation</a>";
+	}
+	else
+	{
+		$doc = "&nbsp;";
+	}
+
+	return $doc;
+}
+
+sub procYear
+{
+	my $field = shift;
+	my $row = shift;
+	my $year;
+
+	if( $row->{begin_date} && $row->{end_date} )
+	{
+		$year = substr( $row->{begin_date}, 0, 4 ) . "-" . substr( $row->{end_date}, 0, 4 );
+	}
+	else
+	{
+		$year = "&nbsp;";
+	}
+
+	return $year;
+}
+
+sub procStartYear
+{
+	my $field = shift;
+	my $row = shift;
+	my $start;
+
+	if( $row->{begin_date} )
+	{
+		$start = substr( $row->{begin_date}, 0, 4 );
+	}
+	else
+	{
+		$start = "&nbsp;";
+	}
+
+	return $start;
+}
+
+sub procEndYear
+{
+	my $field = shift;
+	my $row = shift;
+	my $end;
+
+	if( $row->{end_date} )
+	{
+		$end = substr( $row->{end_date}, 0, 4 );
+	}
+	else
+	{
+		$end = "&nbsp;";
+	}
+
+	return $end;
+}
+
+sub procSize
+{
+	my $field = shift;
+	my $row = shift;
+	my $size;
+
+	if( !defined( $row->{size} ) )
+	{
+		$size = "<i>offline</i>"; 
+	}
+	else
+	{
+		$size = $row->{size};
+	}
+
+	return $size;
+}
+
+#-----------------End of proc subroutines-------------------------
+
+#-----------------------------------------------------------------
+# Returns true if it is necessary to query the catalog_db of
+#  codiac, that is the frequency, begin_date, and end_date
+#-----------------------------------------------------------------
+sub queryCatalog
+{
+	return 1 if( $query{year} );
+
+	foreach my $field (@{$query{fields}})
+	{
+		foreach my $match("begin_date", "end_date","frequency","start_year","end_year","year")
+		{
+			return 1 if( $field eq $match );
+		}
+	}
+	return 0;	
+}
+
+#-----------------------------------------------------------------
+# Returns true if it is necessary to query the phys_dir_db of
+#  codiac, that is if the user requested the 'size' field.
+#-----------------------------------------------------------------
+sub queryPhysDir
+{
+	foreach my $field (@{$query{fields}})
+	{
+		return 1 if( $field eq "size" );
+	}
+
+	return 0;
+}
+

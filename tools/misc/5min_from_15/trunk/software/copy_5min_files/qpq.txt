@@ -1,0 +1,65 @@
+$Id: qpq.txt,v 1.2 1994/04/25 20:12:16 john Exp $
+
+"qpq.txt"
+Documentation for qpq5 and qpq60
+
+QPQ - QCF to PQCF conversion
+
+qpq5 converts 5-minute QCF into 15-minute PQCF.
+qpq60 converts hourly QCF into hourly PQCF.
+
+XXX ********* IMPORTANT NOTES ********* XXX
+qpq5 assumes leap year.
+  ---> must change code and recompile
+  ---> (search for XXX in qpq5.c)
+qpq60.sc filters for data in 1992
+  (egrep -e '^92') 	9/96 note: No longer true.
+*******************
+
+Actually, the programs convert a temporary file format
+into PQCF. The temporary file format has records which are
+subsets of QCF records:
+<date> <time> <lat> <lon> <occ> <precip> <qc flag> <network> <station>
+The temporary files are created via awk programs in the
+scripts "qpq60.sc" and "presort/xpre5.sc".
+
+The script "qpq60.sc" will convert hourly QCF day files
+into hourly PQCF day files, without leaving around any
+temporary files.
+
+The scripts in the subdirectory "presort" will convert
+5-minute QCF day files into 15-minute PQCF day files,
+in several stages, leaving around lots of temporary data.
+See the file "presort/Readme" for more info.
+
+The final files will be named "5min_*.pqcf" or "hrly_*.pqcf".
+The QC flags are carried over from the QCF files. In the case
+of 15-minute PQCF, which is computed as the sum of three 5-minute
+QCF values, the worst of the 3 flags is used. For example, if
+two values are good and one is dubious, then the PQCF flag will
+be dubious. Here is the ordering used (by increasing goodness) to
+evaluate the QCF QC flags: M N X B E D U G.
+
+
+Output Format (Precip-QCF):
+  The output format is called Precip-QCF, or PQCF.
+  It is similar to QCF in that it contains almost the same
+  prefix and is in ASCII. Here are the fields:
+	(nominal) date
+	(nominal) time
+	network string
+	station string
+	latitude
+	longitude
+	cli byte (3 characters)
+	precip value
+	precip qualifier
+	QC flag	
+  The last 3 items are repeated 24 times for hourly data and
+  96 times for 15-minute data.
+
+  Here is a FORTRAN FORMAT used to write the data (from "ep2pq.f"):
+
+211	FORMAT (A2,'/',A2,'/',A2,X,A2,':',A2,':',A2,
+&	    X,A10,X,A10,
+&	    X,F10.5,X,F11.5,X,A3,96(: X,F7.2,X,I1,X,A1))

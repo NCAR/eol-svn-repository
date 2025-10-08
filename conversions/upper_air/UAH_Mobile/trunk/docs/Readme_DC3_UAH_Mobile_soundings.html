@@ -1,0 +1,298 @@
+<html>
+<head>
+<title>DC3 UAH Mobile Radiosonde Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">DC3 UAH Mobile Radiosonde Data</h1>
+
+
+<h2>1.0 General Description</h2>
+<p>
+This is one of the upper air data sets developed for the Deep Convective Clouds and Chemistry Project (DC3) 2012 project. This data set includes 22 high vertical resolution (1-sec) soundings from the UAH Mobile site taken in locations around northern Alabama and southern Tennessee from 15 May to 15 June 2012. These data were provided by the University of Alabama-Huntsville. NCAR/EOL converted the soundings to ESC format and passed them through a QC process. </p> 
+
+<h3>1.1 Data Set Contact</h3>
+
+<p>Scot Loehrer<br>
+NCAR/EOL<br>
+loehrer@ucar.edu</p>
+
+<h2>2.0 Detailed Data Description</h2>
+<h3>2.1 Detailed Format Description</h3>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite Format (ESC).  ESC is a version of the National Center for Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, and meteorological and wind data processors.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center" cellpadding=2 cellspacing=1>
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+
+<p>The seven non-standard header lines may contain any label and contents.  The labels are padded to 35 characters to match the standard header lines. Records for this dataset include the following non-standard header lines.</p>
+
+<table border=1 bordercolor="black" align="center" cellpadding=2 cellspacing=1> 
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>6</td><td>Sonde Id/Sonde Type:</td><td>P20166/iMET-1-AB</td></tr>
+<tr><td>7</td><td>Ground Station Equipment:</td><td>iMET-3150</td></tr>
+<tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>9</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>10</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>11</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL codes:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1> 
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of DC3 UAH Mobile High Resolution Radiosonde sounding data in ESC format.   The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  See section 2.1 for an exact format specification.
+
+
+<pre>
+Data Type:                         UAH Mobile/Ascending
+Project ID:                        DC3
+Release Site Type/Site ID:         UAH Mobile
+Release Location (lon,lat,alt):    086 34.20'W, 35 08.40'N, -86.570, 35.140, 201.8
+UTC Release Time (y,m,d,h,m,s):    2012, 05, 18, 18:01:00
+Sonde Id/Sonde Type:               P20166/iMET-1-AB
+Ground Station Equipment:          iMET-3150
+/
+/
+/
+/
+Nominal Release Time (y,m,d,h,m,s):2012, 05, 18, 18:01:00
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat    Ele   Azi   Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg    deg   deg    m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+   0.0  992.0  29.4  13.2  37.0   -0.5    0.4   0.7 129.0 999.0  -86.570  35.140 999.0 999.0   201.8 99.0 99.0 99.0 99.0 99.0  9.0
+   1.0  990.9  29.1  11.4  33.4    1.5    2.9   3.3 207.8  19.5  -86.568  35.138 999.0 999.0   221.3 99.0 99.0 99.0 99.0 99.0 99.0
+   2.0  990.5  28.8  11.5  34.3    1.6    2.8   3.3 209.2  19.5  -86.566  35.137 999.0 999.0   240.8 99.0 99.0 99.0 99.0 99.0 99.0
+   3.0  989.8  28.5  11.5  34.8    1.6    2.9   3.3 209.6   5.5  -86.566  35.137 999.0 999.0   246.3 99.0 99.0 99.0 99.0 99.0 99.0
+   4.0  989.4  28.2  11.5  35.4    1.6    3.0   3.4 208.3   5.5  -86.566  35.137 999.0 999.0   251.8 99.0 99.0 99.0 99.0 99.0 99.0
+   5.0  988.5  27.9  11.4  35.9    1.5    3.1   3.5 205.9   5.4  -86.566  35.137 999.0 999.0   257.2 99.0 99.0 99.0 99.0 99.0 99.0
+   6.0  987.8  27.6  11.4  36.5    1.4    3.2   3.5 203.5   5.5  -86.566  35.137 999.0 999.0   262.7 99.0 99.0 99.0 99.0 99.0 99.0
+   7.0  987.1  27.2  11.4  37.3    1.3    3.2   3.4 202.1   7.0  -86.566  35.137 999.0 999.0   269.7 99.0 99.0 99.0 99.0 99.0 99.0
+   8.0  986.5  26.9  11.3  37.5    1.2    3.1   3.4 201.8   5.0  -86.566  35.137 999.0 999.0   274.7 99.0 99.0 99.0 99.0 99.0 99.0
+   9.0  985.8  26.6  11.1  37.9    1.3    3.1   3.3 202.0  16.0  -86.566  35.137 999.0 999.0   290.7 99.0 99.0 99.0 99.0 99.0 99.0
+  10.0  985.1  26.3  11.1  38.5    1.2    3.1   3.3 201.6   2.0  -86.566  35.137 999.0 999.0   292.7 99.0 99.0 99.0 99.0 99.0 99.0
+  11.0  984.4  26.0  10.9  38.8    1.2    3.1   3.3 200.8   2.0  -86.566  35.137 999.0 999.0   294.7 99.0 99.0 99.0 99.0 99.0 99.0
+  12.0  983.7  26.0  10.9  38.9    1.1    3.1   3.3 199.3   5.0  -86.566  35.137 999.0 999.0   299.7 99.0 99.0 99.0 99.0 99.0 99.0
+  13.0  983.0  25.9  10.9  38.9    1.0    3.1   3.2 198.1   7.0  -86.566  35.137 999.0 999.0   306.7 99.0 99.0 99.0 99.0 99.0 99.0
+  14.0  982.4  25.8  11.0  39.3    0.9    3.0   3.1 197.5   6.0  -86.566  35.137 999.0 999.0   312.7 99.0 99.0 99.0 99.0 99.0 99.0
+  15.0  981.8  25.8  11.0  39.7    1.0    2.9   3.1 198.0   5.0  -86.566  35.137 999.0 999.0   317.7 99.0 99.0 99.0 99.0 99.0 99.0
+  16.0  981.2  25.7  11.2  40.2    1.0    2.9   3.1 199.0   6.0  -86.566  35.137 999.0 999.0   323.7 99.0 99.0 99.0 99.0 99.0 99.0
+  17.0  980.5  25.7  11.2  40.4    1.1    3.0   3.2 200.8   6.0  -86.566  35.137 999.0 999.0   329.7 99.0 99.0 99.0 99.0 99.0 99.0
+  18.0  979.9  25.6  11.2  40.5    1.2    3.0   3.2 202.6   6.0  -86.566  35.137 999.0 999.0   335.7 99.0 99.0 99.0 99.0 99.0 99.0
+  19.0  979.2  25.6  11.3  40.7    1.3    3.0   3.3 204.2   4.7  -86.566  35.137 999.0 999.0   340.4 99.0 99.0 99.0 99.0 99.0 99.0
+  20.0  978.6  25.6  11.4  41.0    1.4    3.0   3.3 205.2   4.8  -86.566  35.137 999.0 999.0   345.2 99.0 99.0 99.0 99.0 99.0 99.0
+  21.0  977.9  25.5  11.4  41.3    1.4    2.9   3.2 205.8   4.7  -86.566  35.137 999.0 999.0   349.9 99.0 99.0 99.0 99.0 99.0 99.0
+  22.0  977.3  25.5  11.5  41.5    1.4    2.8   3.2 205.8   4.7  -86.566  35.137 999.0 999.0   354.6 99.0 99.0 99.0 99.0 99.0 99.0
+  23.0  976.7  25.5  11.6  42.0    1.3    2.8   3.1 204.9   6.5  -86.566  35.137 999.0 999.0   361.1 99.0 99.0 99.0 99.0 99.0 99.0
+  24.0  976.0  25.5  11.8  42.4    1.2    2.8   3.1 203.4   6.5  -86.566  35.137 999.0 999.0   367.6 99.0 99.0 99.0 99.0 99.0 99.0
+  25.0  975.4  25.4  11.8  42.5    1.1    2.9   3.1 201.8   6.0  -86.566  35.137 999.0 999.0   373.6 99.0 99.0 99.0 99.0 99.0 99.0
+</pre>
+
+<h3>2.2 Data Remarks</h3>
+
+With the complex topography and plentiful vegetation across northern Alabama and adjacent portions of southern Tennessee, 
+pre-defined sites were deemed suitable for launch locations roughly two to three weeks before intensive field operations commenced.
+<p>
+The radiosonde receiver utilized by UAH for mobile ballooning operations was the International Met Systems or iMet-3150 radiosonde package.
+<p>
+The iMet-1-AB radiosonde was capable of measuring temperature, relative humidity, pressure, and derived wind speeds based on GPS.
+<p>
+For detailed specifications see http://www.wmo.int/pages/prog/www/IMOP/publications/IOM-82-TECO_2005/Posters/P2%2816%29_USA_11_Wierenga.pdf
+<p>
+Upon arrival, surface observations from the mobile mesonet fixed atop the vehicle were logged into the iMet system.
+<p>
+Each team member was designated a specific task, ranging from using the helium apparatus to ensure the flow of gas into the balloon, to 
+securing the balloon itself when inflating. When possible, members of the radiosonde team released radiosondes from grassy areas (as 
+opposed to pavement) to ensure that the launch site was somewhat representative of the larger environment.
+<p>
+
+<h3>2.3 Station List</h3>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr>
+<th>ID</th>
+<th>SITE</th>
+<th>COUNTRY</th>
+<th>LONG</th>
+<th>LAT</th>
+<th>ELEV (m)</th>
+</tr>
+<tr>
+<td>UAH Mobile</td>
+<td>UAH Mobile</td>
+<td>US</td>
+<td>Mobile</td>
+<td>Mobile</td>
+<td>Mobile</td>
+</tr>
+</table>
+
+
+<!-- This is the QC section appropriate for Upsondes  -->
+<h2>3.0 Quality Control Processing</h2>
+
+
+<p>This dataset underwent an automated QC process.  The dataset underwent
+internal consistency checks which included two types of checks, gross limit
+checks on all parameters and rate-of-change checks on temperature, pressure and
+ascension rate. Some further information on the QC processing conducted by
+NCAR/EOL can be found in Loehrer et al. (1996) and Loehrer et al. (1998).</p>
+
+<h3>3.1  Gross Limit Checks</h3>
+<p>These checks were conducted on each sounding and data were automatically
+flagged as appropriate.  Only the data point under examination was flagged.
+NCAR/EOL conducted the following gross limit checks on the DC3 2012 UAH 
+Mobile sounding dataset.  In the table P = pressure, T = temperature, RH =
+relative humidity, U = U wind component, V = V wind component, B = bad, and Q =
+questionable.</p>
+
+<table border=1 style="{font-size:10pt;}" align="center">
+<tr><th>Parameter</th><th>Gross Limit Check</th><th>Parameter(s) Flagged</th><th>Flag Applied</th></tr>
+<tr><td>Pressure</td>
+        <td align="center">&lt; 0 mb or &gt; 1050 mb</td>
+        <td align="center">P</td><td align="center">B</td>
+        </tr>
+<tr><td>Altitude</td>
+        <td align="center">&lt; 0 m or &gt; 40000 m</td>
+        <td align="center">P, T, RH</td><td align="center">Q</td>
+        </tr>
+<tr><td>Temperature</td>
+        <td align="center">&lt; -90 &deg;C or &gt; 45 &deg;C</td>
+        <td align="center">T</td><td align="center">T</td>
+        </tr>
+<tr><td>Dew Point</td>
+        <td align="center">&lt; -99.9 &deg;C or &gt; 33 &deg;C<br>&gt; Temperature</td>
+        <td align="center">RH<br>T, RH</td><td align="center">Q<br>Q</td>
+        </tr>
+<tr><td>Relative Humidity</td>
+        <td align="center">&lt; 0% or &gt; 100%</td>
+        <td align="center">RH</td><td align="center">B</td>
+        </tr>
+<tr><td>Wind Speed</td>
+        <td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+        <td align="center">U, V<br>U, V</td><td align="center">Q<br>B</td>
+        </tr>
+<tr><td>U Wind Component</td>
+        <td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+        <td align="center">U<br>U</td><td align="center">Q<br>B</td>
+        </tr>
+<tr><td>V Wind Component</td>
+        <td align="center">&lt; 0 m/s or &gt; 100 m/s<br>&gt; 150 m/s</td>
+        <td align="center">V<br>V</td><td align="center">Q<br>B</td>
+        </tr>
+<tr><td>Wind Direction</td>
+        <td align="center">&lt; 0&deg; or &gt; 360&deg;</td>
+        <td align="center">U, V</td><td align="center">B</td>
+        </tr>
+<tr><td>Ascent Rate</td>
+        <td align="center">&lt; -10 m/s or &gt; 10 m/s</td>
+        <td align="center">P, T, RH</td><td align="center">Q</td>
+        </tr>
+</table>
+
+<h3>3.2  Vertical Consistency Checks</h3>
+<p>These checks were conducted on each sounding and data were automatically
+flagged as appropriate.  These checks were started at the lowest level of the
+sounding and compared neighboring 2-sec data points (except at pressures less
+than 100 mb where 30-sec average values were used).  In the case of checks
+ensuring that the values increased/decreased as expected, only the data point
+under examination was flagged.  However, for the other checks, all of the data
+points used in the examination were flagged.   All items within the table are
+as previously defined.</p>
+
+<table border=1 style="{font-size:10pt;}" align="center">
+<tr><th>Parameter</th><th>Vertical Consitency Check</th><th>Parameter(s) Flagged</th><th>Flag Applied</th></tr>
+<tr><td>Time</td>
+        <td align="center">decreasing / equal</td>
+        <td align="center">None</td><td align="center">None</td>
+        </tr>
+<tr><td>Altitude</td>
+        <td align="center">decreasing / equal</td>
+        <td align="center">P, T, RH</td><td align="center">Q</td>
+        </tr>
+<tr><td>Pressure</td>
+        <td align="center">increasing / equal<br>&gt; 1 mb/s or &lt; -1 mb/s<br>&gt; 2 mb/s or &lt; -2 mb/s</td>
+        <td align="center">P, T, RH<br>P, T, RH<br>P, T, RH</td><td align="center">Q<br>Q<br>B</td>
+        </tr>
+<tr><td>Temperature</td>
+        <td align="center">&lt; -15 &deg;C/km<br>&lt; -30 &deg;C/km<br>&gt 50 &deg;C/km (not applied at p &lt; 250 mb)<br>&gt;100 &deg;C/km (not applied at p &lt; 2
+50 mb)</td>
+        <td align="center">P, T, RH<br>P, T, RH<br>P, T, RH<br>P, T, RH</td>
+        <td align="center">Q<br>B<br>Q<br>B</td>
+        </tr>
+<tr><td>Ascent Rate</td>
+        <td align="center">change of &gt; 3 m/s or & lt; -3 m/s<br>change of &gt; 5 m/s or &lt; -5 m/s</td>
+        <td align="center">P<br>P</td><td align="center">Q<br>B</td>
+        </tr>
+</table>
+
+<h3>3.3 Visual Quality Checks</h3>
+<p>Each sounding was visually examined for data quality issues. Any issues
+found were flagged in the data file and/or noted in Section 3.4.</p>
+
+<h3>3.4 Data Quality Issues</h3>
+
+201206111729 - winds bad from 695-655mb. Also a few RH spikes scattered from ~790-590mb.
+<p>
+201206111836 - winds bad from 260-235mb. 
+
+<h2>4.0 References</h2>
+
+
+<p>Loehrer, S. M., T. A. Edmands, and J. A. Moore, 1996: TOGA COARE upper-air sounding data archive: development and quality control procedures.  Bull. Amer. Meteor. Soc., 77, 2651-2671.</p>
+<p>Loehrer, S. M., S. F. Williams, and J. A. Moore, 1998: Results from UCAR/JOSS quality control of atmospheric soundings from field projects.  Preprints, Tenth Symposium on Meteorological Observations and Instrumentation, Phoenix, AZ, Amer. Meteor. Soc., 1-6.</p>
+
+</body>
+</html>

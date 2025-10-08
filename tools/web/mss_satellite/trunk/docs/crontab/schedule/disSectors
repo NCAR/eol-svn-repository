@@ -1,0 +1,26 @@
+#!/bin/perl -w
+
+# Display all of the sectors in the database - not sure why
+#  I wrote this, but it is here
+
+use DBI;
+my $dbh = getConnection();
+
+my $sql = "SELECT * FROM Sector";
+
+my $sth = $dbh->prepare( $sql );
+$sth->execute();
+
+my @row;
+
+while( (@row=$sth->fetchrow()) )
+{
+	print( $row[0], "\t", $row[1], "\t", $row[2], "\t", $row[3], "\n" );
+}
+$dbh->disconnect();
+
+sub getConnection
+{
+	return DBI->connect( "DBI:mysql:database=suldan;host=thunder",
+												"suldan", "hithere", {RaiseError=>1} ) || die( "Unable to connecto to database" );
+}

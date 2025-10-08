@@ -1,0 +1,81 @@
+#! /usr/bin/perl -w
+
+##Module---------------------------------------------------------------------
+# The deploy script is used for generating the production version of the
+# MySQL Perl library and the scripts that use the library to insert files
+# into the database.  It copies the files to the production locations,
+# changes permissions to prevent them from being editted, changes group
+# ownership to CDS, and updates the library locations in the scripts to
+# point to the production version from the developmental version.
+#
+# @author Joel Clawson
+# @version 1.0 - Original creation of the script.
+##----------------------------------------------------------------------------
+use strict;
+
+# Define the locations for the scripts and library files.
+my $BIN_DIR = "";
+my $WEB_DIR = "";
+if (-d "/net/work/bin") { 
+    $BIN_DIR = "/net/work/bin/scripts/insert";
+    $WEB_DIR = "/net/web/dmg/html/software/tools/database/insert_scripts";
+} elsif (-d "/work/bin") { 
+    $BIN_DIR = "/work/bin/scripts/insert";
+    $WEB_DIR = "/web/dmg/html/software/tools/database/insert_scripts";
+} else {
+    printf("Unable to find the work directory to deploy the tools!\n");
+    exit(1);
+}
+
+&main();
+
+##----------------------------------------------------------------------------
+# @signature void main()
+# <p>Deploy the CODIAC insert scripts and the MySQL library modules to the
+# production locations for everyday use.</p>
+##----------------------------------------------------------------------------
+sub main {
+    deploy_scripts();
+    deploy_docs();
+}
+
+sub deploy_docs {
+    system("mkdir -p $WEB_DIR");
+    system("chmod -R 775 $WEB_DIR");
+
+    printf("Copying docs to $WEB_DIR ...\n");
+    system("cp -r docs/* $WEB_DIR");
+
+    printf("Changing permission to read only ...\n");
+    system("chmod 444 $WEB_DIR/*");
+
+    printf("Chanding group to cds ...\n");
+    system("chgrp -R cds $WEB_DIR");
+}
+
+##------------------------------------------------------------------------------
+# @signature void deploy_scripts()
+# <p>Copy the scripts to the bin directory and change the permissions of the
+# files so they can be read and executed.</p>
+##------------------------------------------------------------------------------
+sub deploy_scripts {
+    # Create the bin directory where the scripts are located.
+    system("mkdir -p $BIN_DIR");
+    system("chmod -R 775 $BIN_DIR");
+
+    # Copy the scripts to the bin directory.
+    printf("Copying scripts to $BIN_DIR ...\n");
+    system("cp -r src/* $BIN_DIR");
+
+    # Change the library references to the dev area to the production area.
+    printf("Updating to use the correct library...\n");
+    system("perl -pi -e \"s/use lib (.+)\\\/dev\\\/mysql\\\/lib/use lib \\\$1\\\/lib\\\/perl\\\/mysql/\" $BIN_DIR/*");
+
+    # Change the permissions to prevent anyone from changing the files.
+    printf("Changing permissions to read and execute only ...\n");
+    system("chmod 554 $BIN_DIR/*");
+
+    # Make sure all of the scripts are available to CDS users.
+    printf("Chaning group to cds ...\n");
+    system("chgrp -R cds $BIN_DIR");
+}

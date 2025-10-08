@@ -1,0 +1,122 @@
+#!/bin/perl -w
+
+use strict;
+use DBI;
+use CGI;
+
+use lib "lib";
+use State;
+use DLNUtils;
+
+use lib "../mcd_lib";
+use UserDBA;
+use ProjectDBA;
+
+my $cgi = CGI->new();
+my $user_dba = UserDBA->new();
+my $proj_dba = ProjectDBA->new();
+
+# view mode, project, loader, checker, or none
+my $mode = $cgi->param( "mode" );
+
+$mode = "none" if( !defined( $mode ) );
+
+my @list;
+if( $mode eq "project" || $mode eq "add" )
+{
+	@list = $proj_dba->getAllProjects( 1 ) 
+}
+elsif( $mode ne "none" )
+{
+	@list = $user_dba->getAllUsers( "display_name", 1 );
+}
+
+
+print( cr(
+	$cgi->header(),
+	"<html><head><title>DLN: Left Nav</title>",
+		$css,
+		$jscript, 
+	"</head>",
+	"<body>",
+
+	"<br>",
+	"<table width=100% border=0 cellpadding=1 cellspacing=1>",	
+		"<tr><td align=center><font size=+3><b>DLN</b></td></tr>",
+		"<tr><td align=center>&nbsp;</td></tr>",
+		"<tr>",
+			"<td class=navHead>",
+				"<a href=left_nav?mode=project>Projects</a>",
+			"</td>",
+		"</tr>" ) );
+			showList( $State::PROJECT, "name" ) if( $mode eq "project" );
+
+print( cr(
+		"<tr><td align=center>&nbsp;</td></tr>",
+		"<tr>",
+			"<td class=navHead>",
+				"<a href=left_nav?mode=loader>Loaders</a>",
+			"</td>",
+		"</tr>" ) );
+			showList( $State::LOADER, "display_name") if( $mode eq "loader" );
+
+print( cr(
+		"<tr><td align=center>&nbsp;</td></tr>",
+		"<tr>",
+			"<td class=navHead>",
+				"<a href=left_nav?mode=checker>Checkers</a>",
+			"</td>",
+		"</tr>", ) );
+			showList( $State::CHECKER, "display_name") if( $mode eq "checker" );
+
+print( cr(
+		"<tr><td align=center>&nbsp;</td></tr>",
+		"<tr>",
+			"<td class=navHead>",
+				"<a href=left_nav?mode=add>Add New Dataset</a>",
+			"</td>",
+		"</tr>" ) );
+			showAddList() if( $mode eq "add" );
+
+print( cr(
+		"<tr><td align=center>&nbsp;</td></tr>",
+		"<tr>",
+			"<td class=navHead>",
+				"<a href=search_form target=body>Search DLN</a>",
+			"</td>",
+		"</tr>" ) );
+print( cr(
+	"</table>",
+	"</body></html>" ) );		
+
+
+sub showList
+{
+	my $view_type = shift;
+	my $display = shift;
+	
+	foreach my $item (@list)
+	{
+		print( cr(
+			"<tr>",
+				"<td class=navItem><li>",
+					"<a href=controller?view=$State::LIST&list_view_type=$view_type&list_view_id=$item->{id} target=body>$item->{$display}</a>",
+				"</td>",
+			"</tr>" ) );
+
+	}
+}
+
+sub showAddList
+{
+	foreach my $proj (@list)
+	{
+		my $url = "controller?edit=1&mode=add&view=$State::LIST&list_view_type=$State::PROJECT&list_view_id=$proj->{id}";
+		print( cr(
+			"<tr>",
+				"<td class=navItem><li>",
+					"<a href=\"javascript: editWindow( \'$url\' )\">$proj->{name}</a>",
+				"</td>",
+			"</tr>" ) );
+	}
+}

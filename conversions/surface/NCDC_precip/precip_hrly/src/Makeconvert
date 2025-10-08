@@ -1,0 +1,17 @@
+# $Id$
+# $Log$
+#
+SHELL = /bin/sh
+#    Makefile for convert NCDC precip to EBUFR s/w.
+#
+
+CC=acc
+##CFLAGS = -g
+
+procprecip: convert_precip_to_ebufr.o
+	$(LINK.c) -o convert_precip_to_ebufr.exe convert_precip_to_ebufr.o 
+	cp convert_precip_to_ebufr.exe convert_precip_to_ebufr
+	chmod 0755 convert_precip_to_ebufr
+
+clean:
+	rm *.o

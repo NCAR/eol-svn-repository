@@ -1,0 +1,104 @@
+       Prj           Date        Start     End       #      File Size
+tape#  no.  fltno  mm/dd/yyyy    Time      Time     Recs    (Mbytes)    Comments
+-----  ---  -----  ----------  --------  --------  ------  -----------  --------
+R0969  130  TF01   10/06/1995                        3486    84.877640
+R0970  130  TF02   10/06/1995                        2230    54.260308
+R0973  130  TF04   10/25/1995                        4080   100.127356
+R0975  151  RF02   06/12/1995  21:02:28  22:07:34    1306    38.311392
+R0977  151  RF03   06/14/1995                        1011    29.641932
+R0978  151  RF04   06/16/1995                        3533   104.817916
+R0979  151  RF05   06/19/1995                        1546    45.827860
+R0980  151  RF06   06/19/1995                        1420    42.087172
+R0981  151  RF07   06/21/1995                        1686    49.984180
+R0982  151  RF08   06/22/1995                         111     3.225580
+R0983  151  RF09   06/22/1995                        1864    55.268644
+R0984  151  RF10   06/23/1995                        4673   138.662236
+R0986  151  RF11   06/24/1995                        5099   151.309324
+R0987  151  RF12   06/26/1995                        1910    56.634292
+R1073  110  TF01   05/20/1996                        1151    35.417156
+R1074  110  TF03   05/28/1996                        2296    67.845140
+R1075  110  TF02   05/24/1996                        2159    64.100696
+R1077  110  FF01   05/30/1996                        5646   166.853696
+R1091  110  S3F1   07/24/1996  17:03:32  19:19:32    1364    40.972860
+R1095  110  S3F2   08/08/1996                        1190    36.164108
+R1139  807  TF02   08/20/1998  16:30:32  20:33:56    3641   114.326164
+R1168  802  TF05A  08/17/1998                        14450  157.162140
+R1172  802  TF05B  08/17/1998                        14445  157.112070
+R1211   ?     ?        ?                                                Missing
+R1270  101  FF03   05/29/1998  14:42:01  22:13:29  204558  2250.801536
+R1271  101  TF03   06/18/1998  18:53:13  21:08:15   62947   725.951064
+R1273  101  TF04   06/30/1998  19:04:11  19:52:49   21540   234.497532
+R1274  101  TF04   06/30/1998  19:04:25  19:52:49   21448   233.486350
+R1309  143  TF05   03/18/2000                        3409    29.197284
+R1423  828  RF98   12/14/2000  18:34:53  22:26:08    3880   120.791432
+R1427  111  TF01   04/03/2002                           0            0  No data
+R1428  111  TF02   04/03/2002                           0            0  No data
+R1440  143  TF04   01/29/2000  18:10:14  22:03:27   14002   119.958108
+R1448  143  RF08   03/05/2000                       13446   115.194300
+R1470  143  RF27   05/14/2000                        1145     9.799332
+R1520  828  TF01   08/11/2000                         479    13.958196
+R1521  828  TF02   08/11/2000                        2018    59.044740
+R1522  828  TF03   08/15/2000                        1456    42.580388
+R1587  161  TF01   08/22/2001                        2603    45.799100
+R1588  161  TF03   08/27/2001                        4864    86.086028
+
+vi command to convert above format to Active_tapelist file format
+:'a,'bs:\(.....\)  \(...\)  \(.....\)  \(......\)\(....\)\(.*\): \1   \3  ExaByte  ADS     Master  \5-\2  :
+
+-------
+
+Second wave
+
+       Prj           Date        Start     End       #      File Size
+tape#  no.  fltno  mm/dd/yyyy    Time      Time     Recs    (Mbytes)    Comments
+-----  ---  -----  ----------  --------  --------  ------  -----------  --------
+R0344  278  TF01   03/16/1993                        1626    47.332020
+R0581  819  TF02   01/20/1993                         883    25.640868
+R0706  278  TF01   02/09/1993                         883    25.640868
+R0972  130  TF03   10/20/1995                        3129    76.778404
+R1214  103  TF01   10/16/1997  00:46:21  02:28:57    3079    75.369084
+R1215  103  TF02  ?10/17/1997? 03:05:27  03:06:54    6352   155.465940  No ADS date
+R1216  103  TF03   01/09/1998  02:56:07  04:57:35    1823    59.716284
+R1217  103  TF04   02/08/1998  02:50:54  06:41:47    1980    62.873868
+R1218  103  FF01   02/16/1998  17:46:18  02:28:44    4479   142.222116
+
+vi command to convert above format to Active_tapelist file format
+:'a,'bs:\(.....\)  \(...\)  \(.....\)  \(......\)\(....\)\(.*\): \1   \3  ExaByte  ADS     Master  \5-\2  :
+
+Files that have been updated and (re)archived to the MSS:
+  /jnet/shared/proj/101/Production/tp2ms.summary       /RAF/1998/101/tp2ms.summary
+  /jnet/shared/proj/101/Production/archive/tapes.101   /RAF/1998/101/tapes.101 (new)
+  /jnet/shared/proj/101/Production/MSCP_out.101        /RAF/1998/101/MSCP_out.101
+  /jnet/shared/proj/103/Production/tp2ms.summary       /RAF/1998/103/tp2ms.summary
+  /jnet/shared/proj/103/Production/archive/tapes.103   /RAF/1998/103/tapes.103 (new)
+  /jnet/shared/proj/103/Production/MSCP_out.103        /RAF/1998/103/MSCP_out.103
+  /jnet/shared/proj/110/Production/tp2ms.summary       /RAF/1996/110/tp2ms.summary (new)
+  /jnet/shared/proj/110/Production/archive/tapes.110   /RAF/1996/110/tapes.110
+  /jnet/shared/proj/110/Production/MSCP_out.110        /RAF/1996/110/MSCP_out.110
+  /jnet/shared/proj/130/Production/tp2ms.summary       /RAF/1996/130/tp2ms.summary
+  /jnet/shared/proj/130/Production/archive/tapes.130   /RAF/1996/130/tapes.130 (new)
+  /jnet/shared/proj/130/Production/MSCP_out.130        /RAF/1996/130/MSCP_out.130
+  /jnet/shared/proj/143/Production/tp2ms.summary       /RAF/2000/143/tp2ms.summary
+  /jnet/shared/proj/143/Production/archive/tapes.143   /RAF/2000/143/tapes.143
+  /jnet/shared/proj/143/Production/MSCP_out.143        /RAF/2000/143/MSCP_out.143
+  /jnet/shared/proj/151/Production/tp2ms.summary       /RAF/1995/151/tp2ms.summary (new)
+  /jnet/shared/proj/151/Production/archive/tapes.151   /RAF/1995/151/tapes.151 (new)
+  /jnet/shared/proj/151/Production/MSCP_out.151        /RAF/1995/151/MSCP_out.151 (new)
+  /jnet/shared/proj/161/Production/tp2ms.summary       /RAF/2001/161/tp2ms.summary
+  /jnet/shared/proj/161/Production/archive/tapes.161   /RAF/2001/161/tapes.161
+  /jnet/shared/proj/161/Production/MSCP_out.161        /RAF/2001/161/MSCP_out.161
+  /jnet/shared/proj/278/Production/tp2ms.summary       /RAF/1993/278/tp2ms.summary (new)
+  /jnet/shared/proj/278/Production/archive/tapes.278   /RAF/1993/278/tapes.278 (new)
+  /jnet/shared/proj/278/Production/MSCP_out.278        /RAF/1993/278/MSCP_out.278 (new)
+  /jnet/shared/proj/802/Production/tp2ms.summary       /RAF/1998/802/tp2ms.summary
+  /jnet/shared/proj/802/Production/archive/tapes.802   /RAF/1998/802/tapes.802 (new)
+  /jnet/shared/proj/802/Production/MSCP_out.802        /RAF/1998/802/MSCP_out.802
+  /jnet/shared/proj/807/Production/tp2ms.summary       /RAF/1998/807/tp2ms.summary
+  /jnet/shared/proj/807/Production/archive/tapes.807   /RAF/1998/807/tapes.807 (new)
+  /jnet/shared/proj/807/Production/MSCP_out.807        /RAF/1998/807/MSCP_out.807
+  /jnet/shared/proj/828/Production/tp2ms.summary       /RAF/2000/828/tp2ms.summary
+  /jnet/shared/proj/828/Production/archive/tapes.828   /RAF/2000/828/tapes.828 (new)
+  /jnet/shared/proj/828/Production/MSCP_out.828        /RAF/2000/828/MSCP_out.828
+  /jnet/shared/proj/819/Production/tp2ms.summary       /RAF/1993/819/tp2ms.summary (new)
+  /jnet/shared/proj/819/Production/archive/tapes.819   /RAF/1993/819/tapes.819 (new)
+  /jnet/shared/proj/819/Production/MSCP_out.819        /RAF/1993/819/MSCP_out.819 (new)

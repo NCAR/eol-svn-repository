@@ -1,0 +1,92 @@
+ARCMIP status
+
+Grid definition:
+
+The ARCMIP EASE-Grid is a 50km equal area grid on a
+northern azimuthal projection, i.e. a 50km version of
+the original NL/NH grids for SSM/I described at:
+
+http://nsidc.org/data/ease/ease_grid.html
+
+I call this "N5": a 50km grid for the entire hemisphere,
+which is a 360x360 grid (129600 cells).
+The ARCMIP 70x55 domain.txt grid boundaries plus a 5 cell
+border was taken for the ARCMIP EASE-Grid.
+Center of the grid is 72N 153W.
+N5 columns 113 - 212 and rows 101 - 192.
+(100x92 = 9200 cells)
+
+I have a little picture of it (1st URL)
+and a text file (2nd URL) which compares things to the
+sample ARCMIP 70x55 domain.txt file (3rd URL).
+
+http://www.joss.ucar.edu/arcmip/regrid/ease_domain.gif
+http://www.joss.ucar.edu/arcmip/regrid/ease_domain.txt
+http://cires.colorado.edu/lynch/arcmip/domain.html
+
+In the picture (which is 360x360 pixels), the big square
+is the CASPR data, the next square is the ARCMIP EASE-Grid
+as I have defined it, and the smallest square is the
+area on N5 which contains domain.txt (not the actual grid
+from domain.txt, which would not be a square on this
+map projection).
+
+The latlons of the corners of the ARCMIP EASE-Grid are:
+
+      where col  row  lat       lon
+upper left  113  101  41.89710 -139.69868
+upper right 212  101  50.81162  157.94894
+lower left  113  192  58.93256  -79.84573
+lower right 212  191  74.54461   69.44396
+
+All this, with a picture is online at:
+http://www.joss.ucar.edu/arcmip/regrid/
+
+
+software development:
+Completed s/w to re-grid model data in ARCSyM-style netCDF
+to the ARCMIP 50km EASE-Grid. Test runs have been made
+for 2 models (below).
+
+
+received 4 models:
+1. ARCSyM : converted to EASE-Grid, samples sent to John Cassano
+2. HIRHAM (version 2): converted to EASE-Grid, samples being
+evaluated by Annette Rinke
+3. COAMPS : data structure is not as expected, waiting for new files
+4. NARCM : data file corrupted, waiting for resubmittal
+
+
+sample data:
+Sample data files for ARCSyM and HIRHAM models are available
+at a temporary ftp site:
+
+ftp://ftp.joss.ucar.edu/pub/john/
+
+
+open questions:
+I still have some open questions. I have received very little
+input on these issues in the past but cannot go any further
+without resolution.
+
+1. ARCMIP EASE-Grid
+I need official confirmation on the size and location of
+the ARCMIP EASE-Grid. The key question is how many EASE-Grid
+cells should buffer the extent of domain.txt?
+
+2. interpolation
+On John Cassano's suggestion, I am using the 4 closest model
+points in a linear distance-weighted average to determine the
+value for each and every ARCMIP EASE-Grid cell. Thus there is
+a significant edge effect, where the 4 closest model points
+are 1700km away. The data in these EASE cells are pretty
+much junk. (I can/will provide the model points and their
+distances that I use for interpolation.)
+
+3. ZSFC and land-sea mask
+Rather than interpolate these values from domain.txt,
+I think it makes more sense to get the real values from
+a land use database.
+I have asked before and received no response-
+which database shall I use?
+i.e. which database was used to create domain.txt?

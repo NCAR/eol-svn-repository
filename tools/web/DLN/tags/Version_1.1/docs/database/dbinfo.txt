@@ -1,0 +1,62 @@
+Database Architecture Description
+---------------------------------
+Dan Sullivan
+Updated May, 2004
+
+The dln database on hurricane backs the Data Loading Notes application.
+
+NOTE: the database was originally located on thunder and named data_loading_notes, that
+database is now obsolete and can be dropped.
+
+user: contains the user information for the loaders, checkers, contacts etc.
++------------+--------------+------+-----+---------+-------------------------------------------------------------+
+| Field      | Type         | Null | Key | Default | Comments
++------------+--------------+------+-----+---------+-------------------------------------------------------------+
+| uid        | varchar(32)  |      | PRI |         |  Primary Key, user id, matches the user ids in CODIAC      
+| first_name | varchar(50)  |      |     |         |  User's first name     
+| last_name  | varchar(50)  |      |     |         |  User's last name 
+| email      | varchar(100) | YES  |     | NULL    |  User's e-mail addresss 
+| active     | int(11)      | YES  |     | 1       |  Whether or not user is active at JOSS (i.e. still working at 
+|            |              |      |     |         |   JOSS)                                                       
++------------+--------------+------+-----+---------+-------------------------------------------------------------+
+
+
+project: contains the project information
++-----------------+-------------+------+-----+---------+---------------------------------------------------------+
+| Field           | Type        | Null | Key | Default | Comments
++-----------------+-------------+------+-----+---------+---------------------------------------------------------+
+| pname           | varchar(16) |      | PRI |         | Primary key, project name, matches the project id in CODIAC
+| storm_id_prefix | varchar(10) | YES  |     | NULL    | The prefix used for the project's storm_ids (e.g. 77 for IHOP
+| active          | int(11)     | YES  |     | NULL    | Whether or not the project is active, this is not used 
+|                 |             |      |     |         |    by the DLN app.                                                      
++-----------------+-------------+------+-----+---------+---------------------------------------------------------+
+
+
+dataset: contains the information for each dataset
++-------------+--------------+------+-----+------------+--------------------------------------------------------+
+| Field       | Type         | Null | Key | Default    | Comments
++-------------+--------------+------+-----+------------+--------------------------------------------------------+
+| dsid        | int(11)      |      | PRI | NULL       | Primary key
+| storm_id    | varchar(16)  | YES  |     | NULL       | dataset's storm_id in CODIAC
+| title       | varchar(255) | YES  |     | NULL       | dataset's title               
+| readme      | int(11)      | YES  |     | 0          | whether or not the dataset's readme is complete               
+| master      | int(11)      | YES  |     | 0          | whether or not the dataset is in the master list
+| checked     | int(11)      | YES  |     | 0          | whether or not the dataset has been checked
+| loaded      | int(11)      | YES  |     | 0          | whether or not the dataset has been loaded
+| date        | date         | YES  |     | 0000-00-00 | the date the dataset was added to the system               
+| notes       | text         | YES  |     | NULL       | notes about the loading process for the dataset
+| project     | varchar(16)  | YES  | MUL | NULL       | the project the dataset is in               
+|             |              |      |     |            |   * Foreign key, references pname in the project table 
+| loader      | varchar(32)  | YES  | MUL | NULL       | the user loading the dataset into CODIAC
+|             |              |      |     |            |   * Foreign key, references uid in the user table 
+| checker     | varchar(32)  | YES  | MUL | NULL       | the user checking the dataset in CODIAC
+|             |              |      |     |            |   * Foreign key, references uid in the user table 
+| int_contact | varchar(32)  | YES  | MUL | NULL       | the user who serves as an internal contact for the dataset
+|             |              |      |     |            |   * Foreign key, references uid in the user table 
+| ext_contact | varchar(32)  | YES  |     | NULL       | external contact's name
+| ext_email   | varchar(100) | YES  |     | NULL       | external contact's e-mail address
+| ingest      | varchar(255) | YES  |     | NULL       | dataset's ingest location
+| archive     | varchar(255) | YES  |     | NULL       | dataset's archive location
+| remote_url  | varchar(255) | YES  |     | NULL       | remote webpage the dataset points to - if applicable 
++-------------+--------------+------+-----+------------+--------------------------------------------------------+
+

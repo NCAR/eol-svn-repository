@@ -1,0 +1,350 @@
+#! /usr/bin/perl -wT
+
+#-------------------------------------------------------------------#
+# ml_summary: displays the archive summary for the arctic master 
+#  list.
+#
+# Expected parameters:
+#  project - the name of the project in the ml database
+#  title - (optional) the title to display at the top
+#
+# Author: Dan Sullivan
+# Date: August, 2003
+#
+# Adopted from code taken from the orginal master_query script.
+#-------------------------------------------------------------------#
+
+use strict;
+use DBI;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use Util;
+
+my $dbh = connectToDB();
+my $project = param( "project" );
+my $title = param( "title" );
+
+if(!defined( $project ) )
+{
+	showError( "Project Not Specified!" );
+	exit;
+}
+
+showSummary();
+
+
+#-------------------------------------------------------------------#
+# Display the Archive Summary for the given project
+#-------------------------------------------------------------------#
+sub showSummary {
+    #my $sql = "SELECT id FROM ListProjects WHERE name = '$project'";
+    my $sql = "SELECT project_id FROM project WHERE project_id=?";
+    my $sth = $dbh->prepare( $sql );
+    $sth->execute($project);
+    my @row = $sth->fetchrow();
+    $sth->finish();
+    
+    if( !@row ) {
+	showError( "Project not found in database." );
+    }
+    
+    my $proj_id = $row[0];
+	
+    my $pcounts= getProjectCounts( $proj_id );
+    
+		
+    my $classCounts = getCounts( "Category", "data_type_id", $proj_id );
+    my $authorCounts = getAuthorCounts($proj_id);
+    my $phaseCounts = getPhaseCounts($proj_id);
+    my $yearCounts = getYearCounts($proj_id);
+    
+    showHeader();
+    
+    if( !defined( $title ) ) {
+	println( "<b><font class=title>$project Archive Summary</font></b><br><br>" );
+    } else {
+	println( "<b><font class=title>$title</font></b><br><br>" );
+    }
+    
+    println( "<center>" );	
+    println( "<font size=3><b>Total Number of Datasets: </b>$pcounts</font><br>" );
+    println( "<table width=100% border=1 cellpadding=1 cellspacing=1>" );
+    
+    println( "<tr>" );
+    println( "<td width=20% valign=top>" );
+    println( "<table border=0 cellpadding=1 cellspacing=1>" );
+    showCounts("Author/PI",$authorCounts->{"Author/PI"}->{"counts"},$authorCounts->{"Author/PI"}->{"total"});
+    println( "</table></td>" );    
+    foreach my $type (sort(keys(%{ $classCounts}))) {
+	println( "<td width=20% valign=top>" );
+	println( "<table border=0 cellpadding=1 cellspacing=1>" );
+	showCounts($type,$classCounts->{$type}->{"counts"},$classCounts->{$type}->{"total"});
+	println( "</table></td>" );
+    }
+    println( "<td width=20% valign=top>" );
+    println( "<table border=0 cellpadding=1 cellspacing=1>" );
+    showCounts("Phase",$phaseCounts->{"Phase"}->{"counts"},$phaseCounts->{"Phase"}->{"total"} );
+    println( "</table>" );
+    println( "</td>" );
+    println( "<td width=20% valign=top>" );
+    println( "<table border=0 cellpadding=1 cellspacing=1>" );
+    showCounts("Year",$yearCounts->{"Year"}->{"counts"},$yearCounts->{"Year"}->{"total"} );
+    println( "</table>" );
+    println( "</td>" );
+    println("</tr>");
+    
+    println( "</table>" );
+    println( "</body></html>" );
+}
+
+sub getProjectCounts {
+    my $proj_id = shift;
+    my $count = 0;
+    
+    my $sql = "SELECT COUNT(dataset_id) FROM dataset_project WHERE project_id=?";
+    my $sth = $dbh->prepare( $sql );
+    $sth->execute($proj_id); 
+    my @row = $sth->fetchrow();
+    $count = $row[0];
+    $sth->finish();
+
+    return $count;
+}
+
+sub getYearCounts {
+
+    my $project_id = shift;
+    my $counts = {};
+    
+    my @datasets = ();
+    my $sql = "SELECT dataset_id FROM dataset_project WHERE project_id=? AND dataset_id NOT LIKE 'ML.%'";
+    my $sth = $dbh->prepare($sql);
+    $sth->execute($project_id);
+    while ((my @row = $sth->fetchrow())) {
+	push(@datasets,$row[0]);
+    }
+    $sth->finish();
+    
+    my $conn = DBI->connect( "DBI:mysql:database=zedi;host=data.eol.ucar.edu",
+			     "zediview", "look-123", { RaiseError=>1} ) || 
+				 die( "Unable to connect to database" );
+    
+    $sql = "SELECT begin_date,end_date FROM dataset WHERE dataset_id IN (".
+	join(",",@datasets).")";
+    my $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    while ((my @row = $stmt->fetchrow())) {
+	my $begin_year = substr($row[0],0,4);
+	my $end_year = substr($row[1],0,4);
+	my $year = sprintf("%04d-%04d",$begin_year,$end_year);
+	if ($begin_year == $end_year) {
+	    $year = $begin_year;
+	}
+
+	if (!defined($counts->{"Year"}->{"counts"}->{$year})) {
+	    $counts->{"Year"}->{"counts"}->{$year} = 0;
+	}
+	$counts->{"Year"}->{"counts"}->{$year}++;
+	if (!defined($counts->{"Year"}->{"total"})) {
+	    $counts->{"Year"}->{"total"} = 0;
+	}
+	$counts->{"Year"}->{"total"}++;	
+    }
+
+    return $counts;    
+}
+
+sub getCounts {
+    my $tname = shift;
+    my $cname = shift;
+    my $proj_id = shift;
+    
+    my $counts = {};
+    
+    my $sql = "select classification_type.name,classification.name,COUNT(dataset_classification.dataset_id) FROM classification JOIN classification_type ON classification.type_id=classification_type.type_id JOIN dataset_classification ON classification.class_id=dataset_classification.class_id JOIN dataset_project ON dataset_classification.dataset_id=dataset_project.dataset_id WHERE project_id=? GROUP BY dataset_classification.class_id";
+    
+    my $sth = $dbh->prepare( $sql );
+    $sth->execute($proj_id);	
+    
+    while( (my @row = $sth->fetchrow()) ) {
+	$counts->{$row[0]}->{"counts"}->{$row[1]} = $row[2];
+	if (!defined($counts->{$row[0]}->{"total"})) {
+	    $counts->{$row[0]}->{"total"} = 0;
+	}
+	$counts->{$row[0]}->{"total"} += $row[2];
+    }
+    
+    return $counts;
+}
+
+sub getAuthorCounts {
+    my ($project_id) = @_;
+
+    my $counts = {};
+
+    my $sql = "SELECT DISTINCT(author_pi),COUNT(dataset.dataset_id) FROM dataset JOIN dataset_project ON dataset.dataset_id=dataset_project.dataset_id WHERE project_id=? AND author_pi!=? GROUP BY author_pi";
+    my $stmt = $dbh->prepare($sql);
+    $stmt->execute($project_id,"");
+
+    while ((my @row = $stmt->fetchrow())) {
+	$counts->{"Author/PI"}->{"counts"}->{$row[0]} = $row[1];
+	if (!defined($counts->{"Author/PI"}->{"total"})) {
+	    $counts->{"Author/PI"}->{"total"} = 0;
+	}
+	$counts->{"Author/PI"}->{"total"} += $row[1];	
+    }
+
+    return $counts;
+}
+
+sub getPhaseCounts {
+    my ($project_id) = @_;
+    my $counts = {};
+
+    my $sql = "SELECT DISTINCT(name),COUNT(dataset_phase.dataset_id) FROM phase JOIN dataset_phase ON phase.phase_id=dataset_phase.phase_id WHERE project_id=? GROUP BY name";
+    my $stmt = $dbh->prepare($sql);
+    $stmt->execute($project_id);
+
+    while ((my @row = $stmt->fetchrow())) {
+	$counts->{"Phase"}->{"counts"}->{$row[0]} = $row[1];
+	if (!defined($counts->{"Phase"}->{"total"})) {
+	    $counts->{"Phase"}->{"total"} = 0;
+	}
+	$counts->{"Phase"}->{"total"} += $row[1];	
+    }
+
+    return $counts;    
+}
+
+sub getListCounts
+{
+	my @return;
+	my $count = 0;
+	my $col = shift;
+	my $proj_id = shift;
+	my $total = 0;
+
+	my $sql = "SELECT $col FROM List WHERE proj_id=$proj_id GROUP BY $col";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	my @row;
+
+	while( (@row=$sth->fetchrow() ) )
+	{
+		if( defined( $row[0] ) && $row[0] ne "" )
+		{
+			my $sql2 = "SELECT id FROM List WHERE proj_id=$proj_id AND $col=" . $dbh->quote( $row[0] ) . "GROUP BY title";
+			my $sth2 = $dbh->prepare( $sql2 );
+			$sth2->execute();
+
+			my $arr = $sth2->fetchall_arrayref();
+
+			$return[$count++] = $row[0];
+			$return[$count++] = @{$arr}; 
+
+			$total += $return[$count-1];
+		}
+	}
+
+	$return[$count] = $total;
+	return @return;
+}
+
+#-----------------------------------------------------------------
+# Connect to the database 
+#-----------------------------------------------------------------
+sub connectToDB
+{
+	return DBI->connect( "DBI:mysql:database=dmg_merged_ml;host=localhost",
+			     "dts-full", "l\@micbc", { RaiseError=>1} ) || 
+				 die( "Unable to connect to database" );
+}
+
+#-----------------------------------------------------------------
+# Show an error message.
+#-----------------------------------------------------------------
+sub showError
+{
+	my $error = shift;
+
+	println( header() );
+	println( "<html><head><title>Script Error</title></head></title><body bgcolor=white>" );
+	println( "<h1>SCRIPT ERROR</h1>" );
+	println( "<p>An error with the script has occured.</p>" );
+	println( "<p>$error</p>" );
+	println( "<p>Please contact <a href=mailto:suldan\@ucar.edu>suldan\@ucar.edu</a>.</p>" );
+	println( "</body></html>" );
+}
+
+sub showCounts {
+    my ($type,$typeCounts,$total) = @_;
+    my $param = $type;
+	
+    println( "<tr><td colspan=3><b><u><font size=2>$type: </b></u>" . nbsp(2). "Total defined: $total</td></tr>" );
+
+    my @entries = (sort(keys(%{ $typeCounts})));
+    if ($param eq "Year") { @entries = reverse(@entries); }
+
+    foreach my $entry (@entries) {
+	my $title = $entry . " Datasets";
+	println( "<tr>" );
+	println( "<td>" . nbsp(3) . "</td>" );
+	println( "<td align=left nowrap><font size=2><b><a href=" . getSummaryLink( $title, $param, $entry ) . ">" . &truncate( $entry, 40 ) . "</a>&nbsp;" );	
+	println( "</td><td>" );
+	println( "<font size=2><b>".$typeCounts->{$entry}."</b>" );
+	println( "</td>" );
+	println( "</tr>" );
+    }
+    println( "<tr><td colspan=3>&nbsp;</td></tr>" );
+}
+
+sub getSummaryLink
+{
+	my $title = shift;
+	$title = replaceSpace( $title );
+	my $param = shift;
+	my $value = shift;
+	$value = replaceSpace( $value );
+
+        if ($param eq "Author/PI") { $param = "authors"; }
+        elsif ($param eq "Category") { $param = "data_types"; }
+        elsif ($param eq "Event") { $param = "platforms"; }
+        elsif ($param eq "Site") { $param = "sites"; }
+        elsif ($param eq "Phase") { $param = "phases"; }
+	elsif ($param eq "Year") { $param = "year"; }
+
+	my $link = "master_query?project=$project&fields=author&fields=title&fields=documentation&" . $param .
+						"=" . $value . "&title=$title&order=author&order=title";
+	return $link;
+	
+}
+
+#-----------------------------------------------------------------
+# Displays the default html file header
+#-----------------------------------------------------------------
+sub showHeader
+{
+	println( header() );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>$project Master List</title>" );
+		println( &css( $project ) );
+	println( "</head>" );
+	println( "<body>" );
+	
+}
+
+sub truncate()
+{
+	my $word = shift;	
+	my $size = shift;
+	my $new_word = $word;
+
+	if( length( $word ) > $size )
+	{
+		$new_word = substr( $word, 0, $size-3 ) . " ...";
+	}
+
+	return $new_word;
+}

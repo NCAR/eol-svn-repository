@@ -1,0 +1,47 @@
+
+
+
+	How to Tight Check QCF Surface Data
+	-----------------------------------
+
+This level of checking is used to do a finer check of the 
+individual parameters in the JOSS Quality Control Format (QCF)
+for the Surface data only. The s/w is almost identical to
+the check_QCF_file s/w (see "How to Check QCF Surface Data")
+but with tighter gross limit checks.  The table below shows
+the tighter limits applied to each parameter. The user should
+check the actual s/w to ensure the applied limits. This s/w also
+performs all the other checks that check_QCF_file does, plus
+a few more (e.g., issue warning if dew point is greater than
+temperature).  This s/w will produce (in general) more output than
+any of the other QCF checkers. Record numbers, network, stn id,
+date and time are included in the warning and error messages. 
+This s/w should be executed after all other checkers have been run
+on the data and after all major data problems have been corrected.
+
+
+The source and executable s/w is located in the
+"/data8/vortex/QC/checktightlimits/Version1/" area.
+
+
+To execute this s/w, issue the following command:
+> check_QCF_tightlimits <input_file_name>
+
+
+Parameter		Min Limit	Max Limit
+-----------------------------------------------------------------
+elevation		  -5.00		4300.00 meters
+latitude		  20.00		  50.00 deg
+longitude		-125.000	  65.00 deg
+pressure (stn)		 700.00		1060.00 mb    (Siberia)
+Sea Lvl Press		 915.00		1060.00 mb    (Hurrican Hugo at 918)
+Calc Sea Lvl Press	 915.00         1060.00 mb
+Temperature		 -52.00		  50.00 deg C (-60F(MN 1996)-122 F)
+Dew Point		 -52.00           50.00 deg C
+Wind Speed		   0.00		  72.00 m/s   (Hugo Max of 160mph)
+Wind Direction		   0.00		 360.00 deg
+precipitation		   0.00		 200.00 mm    (Max Dly limit of 7.9 inches)
+Squall Gust		   0.00		 103.00 m/s   (Mt Wash. max of approx 231 mph)
+Visibility		Same as check_QCF_file.
+Ceiling Height		Same as check_QCF_file.
+Cloud Amount		Same as check_QCF_file.

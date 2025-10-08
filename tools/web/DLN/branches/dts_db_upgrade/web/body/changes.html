@@ -1,0 +1,37 @@
+<html>
+
+<body>
+<h1>Changes - Version 2.0 from 1.1</h1>
+<h2>Database</h2>
+<p>There has been significant changes to the database behind the DLN.  This database is the new DTS database that is combining the DLN,IVEN, and to a lesser extent ML.  It is completely dependant on CODIAC.  The benefit of this is that there is one set of data that can be maintained through the different systems.  (i.e.  Changing the dataset name in DLN changes it in CODIAC, thus in GUImaint.)</p>
+<p>Because of the new database, other side affects occur (mostly intentional).</p>
+<ul>
+   <li>Any dataset associated with a project in CODIAC will appear in the dataset listing in the DLN.  Similarily, all datasets added through the DLN will appear in CODIAC and can be edited in GUImaint.</li>
+   <li>The ML flag is no longer a changeable flag, but a display of the dataset existence in the new ML database.  At the writing of this document, the ML has not been upgraded to be in the DTS database, so the flag does not yet appear.  It should start showing up once the ML has been upgraded.</li>
+</ul>
+
+<h2>Datasets</h2>
+<p>Datasets have changed the most into Version 2.0.  They are based in CODIAC with DTS values augmenting it to add in our information.  There have been additions and subtractions from the dataset editor to better represent and handle datasets.</p>
+<ol>
+   <li>All datasets must have their own unique dataset id.  This means no more "99.999" and "link" values.  There are no checks in the DLN for this, but may cause problems in CODIAC.</li>
+   <li><p>Datasets associated with multiple projects all use the same information instead of having seperate copies for each project.  Now a note changed for a single project will be available for all other projects.</p>
+       <p>As a result of this, the dataset editor now allows multiple project to be assigned to it.  It uses a list that can have the "CTRL+CLICK" multiple selection that is used in web forms.  Projects can only be added through this tool, they cannot be removed.  If a project needs to be disassociated with the dataset, it must be done through GUImaint.</p>
+       </li>
+   <li>There is no longer a place to enter the external contact information.  This is because of the setup of the external contact in CODIAC begin a foreign key to the contact table.  This would either mean having a dropdown box of 600+ names and growing or make it a note.  So it should not be included as part of the notes.</li>
+   <li>There is a new text field for the location of the data to be archived.  This is so the ingest location will mean the actual location where the data is ingested.</li>
+   <li>Emails are now can be sent after an update to the dataset.  This is to allow the editor to send the same load email if the loader changed through the system as if a new dataset was added.</li>
+</ol>
+
+<h2>Task Statuses</h2>
+<p>The tasks of loading and checking are no longer a boolean flag, but a textual status on the state of the task.  Each status has a boolean flag to determine if it is considered "Done."  This flag is used for the bear and check mark icons that represent that the task is finished.</p>
+<p>Using the "unassigned" status is removing any status information from the task.  It is the equivalent of assigning the task to "null."</p>
+
+<h2>Users</h2>
+<p>The users (loaders and checkers) all come from CODIAC and have the active_editor flag set.  This is why the CODIAC user and UNIDATA support users appear.  The CODIAC user appears in many places because it is the default user when the previous "Other" user was assigned.</p>
+<p>The DLN no longer maintains users.  This should all be done through GUImaint.</p>
+
+<h2>Projects</h2>
+<p>Projects, like datasets, are based out of CODIAC.  They can no longer be added or removed from the DLN and must be done through GUImaint.  The only thing the DLN can do with projects is the set/unset the active flag for appearing in the project lists.</p>
+
+</body>
+</html>

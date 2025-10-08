@@ -1,0 +1,32 @@
+> groovy authorshipConnect.groovy BSIERP
+
+Created log file:	logs/log_20150716143100.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+--------------------------------------------------------------------------------
+  BSIERP:  245.B55-002
+		Stoecker, Diane K. and Kristen L. Blattner
+Which of these contacts matches this author:	Kristen L. Blattner
+
+		1972	null	Kristen L. Blattner	University of Maryland Center for Environmental Science/Horn Point Laboratory 
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1972
+
+Unable to find contact 1972 for data set 245.B55-002. Will insert contact.
+Found contact 879 for data set 245.B64-003 with sort_key 65534 (instead of 1). Will update sort_key.
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1972, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '245.B55-002';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 124609 and contact_id = 879;
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

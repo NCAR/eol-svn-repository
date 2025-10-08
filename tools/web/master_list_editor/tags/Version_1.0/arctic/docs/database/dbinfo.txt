@@ -1,0 +1,132 @@
+Database Architecture Description
+---------------------------------
+Dan Sullivan
+Updated May, 2004
+
+
+The database backing the Arctic Master List is the master_list database located on thunder. 
+Below is a brief description of each table.
+
+Note: The database has several foeign key constraints but these are not enforced by MySQL
+because the version of MySQL located on thunder does not support Foreign Key Constraints.
+
+DataType:
+
+This table maintains all of the Data Type categories for the master lists.  Each project has its own seperate set
+of Data Types and that is why the proj_id field is included.  (Therefore both ATLAS and SBI could have a data 
+type of ASCII but there would be two records in this table - this goes for Discipline and Platform too)
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| Field       | Type         | Null | Key | Default | Comments
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| id          | int(11)      |      | PRI | 0       | primary key
+|             |              |      |     |         |   *Referenced by the data_type_id in the List table
+| name        | varchar(100) | YES  |     | NULL    | Name of the data type
+| description | text         | YES  |     | NULL    | Short description of data type - currently not in use
+| proj_id     | int(11)      | YES  |     | NULL    | The Project this data type belongs to
+|             |              |      |     |         |   *Foreign key, references id in the ListProjects table
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+
+
+Discipline:
+
+This table maintains all of the Discipline categories for the master lists. 
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| Field       | Type         | Null | Key | Default | Comments
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| id          | int(11)      |      | PRI | 0       | primary key
+|             |              |      |     |         |   *Referenced by the discipline_id in the List table
+| name        | varchar(100) | YES  |     | NULL    | Name of the discipline
+| description | text         | YES  |     | NULL    | Short description of discipline - currently not in use
+| proj_id     | int(11)      | YES  |     | NULL    | The Project this discipline belongs to
+|             |              |      |     |         |   *Foreign key, references id in the ListProjects table
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+
+Platform:
+
+This table maintains all of the Platform categories for the master lists. 
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| Field       | Type         | Null | Key | Default | Comments
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| id          | int(11)      |      | PRI | 0       | primary key
+|             |              |      |     |         |   *Referenced by the platform_id in the List table
+| name        | varchar(100) | YES  |     | NULL    | Name of the platform
+| description | text         | YES  |     | NULL    | Short description of platform - currently not in use
+| proj_id     | int(11)      | YES  |     | NULL    | The Project this platform belongs to
+|             |              |      |     |         |   *Foreign key, references id in the ListProjects table
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+
+Site:
+
+This table maintains all of the Site categories for the master lists. 
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| Field       | Type         | Null | Key | Default | Comments
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| id          | int(11)      |      | PRI | 0       | primary key
+|             |              |      |     |         |   *Referenced by the site_id in the List table
+| name        | varchar(100) | YES  |     | NULL    | Name of the site
+| description | text         | YES  |     | NULL    | Short description of site - currently not in use
+| proj_id     | int(11)      | YES  |     | NULL    | The Project this platform belongs to
+|             |              |      |     |         |   *Foreign key, references id in the ListProjects table
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+
+SpatRes:
+
+This table maintains all of the Spatial Resolutions categories for the master lists. 
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| Field       | Type         | Null | Key | Default | Comments
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+| id          | int(11)      |      | PRI | 0       | primary key
+|             |              |      |     |         |   *Referenced by the spat_res_id in the List table
+| name        | varchar(100) | YES  |     | NULL    | Name of the spat_res
+| description | text         | YES  |     | NULL    | Short description of spat_res - currently not in use
+| proj_id     | int(11)      | YES  |     | NULL    | The Project this platform belongs to
+|             |              |      |     |         |   *Foreign key, references id in the ListProjects table
++-------------+--------------+------+-----+---------+-----------------------------------------------------------+
+
+
+ListProjects:
+
+This table maintains all of the Projects for the master lists.
++-------+-------------+------+-----+---------+------------------------------------------------------------------+
+| Field | Type        | Null | Key | Default | Comments
++-------+-------------+------+-----+---------+------------------------------------------------------------------+
+| id    | int(11)     |      | PRI | 0       | primary key
+|       |             |      |     |         |   *Referenced by the proj_id in the List table
+| name  | varchar(20) | YES  |     | NULL    | Name of the project
+| notes | text        | YES  |     | NULL    | Some notes regarding this project
++-------+-------------+------+-----+---------+------------------------------------------------------------------+
+
+
+List:
+
+This is the main table for the master lists. Contains an entry for each dataset.
++---------------+--------------+------+-----+---------+---------------------------------------------------------+
+| Field         | Type         | Null | Key | Default |
++---------------+--------------+------+-----+---------+---------------------------------------------------------+
+| id            | int(11)      |      | PRI | 0       | Primary key
+| storm_id      | varchar(15)  | YES  |     | NULL    | The storm id number of the dataset
+| title         | varchar(150) | YES  |     | NULL    | The title of the dataset
+| date          | date         | YES  |     | NULL    | The date - submitted or entered
+| author        | varchar(100) | YES  |     | NULL    | The Autor or PI of the dataset
+| doc_url       | varchar(200) | YES  |     | NULL    | The documnetation url
+| data_type_id  | int(11)      | YES  |     | NULL    | The data type
+|               |              |      |     |         |  *Foreign key, references id in the DataType table
+| discipline_id | int(11)      | YES  |     | NULL    | The discipline
+|               |              |      |     |         |  *Foreign key, references id in the Discipline table
+| platform_id   | int(11)      | YES  |     | NULL    | The Platform
+|               |              |      |     |         |  *Foreign key, references id in the Platform table
+| site_id       | int(11)      | YES  |     | NULL    | The Site
+|               |              |      |     |         |  *Foreign key, references id in the Site table
+| proj_id       | int(11)      | YES  |     | NULL    | The project this dataset is part of 
+|               |              |      |     |         |  *Foreign key, references id in the ListProjects table
+| comments      | varchar(255) | YES  |     | NULL    | Comments field
+| url           | varchar(200) | YES  |     | NULL    | The url this dataset should point to
+| phase         | varchar(50)  | YES  |     | NULL    | The phase (I, II...)
+| start_year    | int(11)      | YES  |     | NULL    | The starting year of observations - not used!!!
+| end_year      | int(11)      | YES  |     | NULL    | The ending year of observations - not used!!!
+| spat_res_id   | int(11)      | YES  |     | NULL    | The spatial resolution
+|               |              |      |     |         |  *Foreign key, references id in the SpatRes table
+| method_of_obs | varchar(200) | YES  |     | NULL    | Method of Observation
++---------------+--------------+------+-----+---------+---------------------------------------------------------+
+
+ 

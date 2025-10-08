@@ -1,0 +1,11 @@
+#! /usr/bin/csh
+
+echo "Converting data..."
+/usr/bin/nice -5 HoustonFlux_SFC_Converter.pl
+
+echo "Sorting data..."
+if (-e ../output/houstflx05.0qc.sort) rm ../output/houstflx05.0qc.sort
+cosort Y2Kqcf_sort_spec <../output/houstflx05.0qc > ../output/houstflx05.0qc.sort
+
+echo "Creating the dayfiles..."
+/work/software/library/createdays/Version4_4digitYear/Y2Kcreate_day_files ../output/houstflx05.0qc.sort ../final/HOUSTFLX05_

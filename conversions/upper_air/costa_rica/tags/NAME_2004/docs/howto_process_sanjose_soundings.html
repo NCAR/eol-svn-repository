@@ -1,0 +1,148 @@
+<html>
+<head>
+<title>How To: Process San Jose Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/dpg/GENERAL/dpg_howto.css">
+</head>
+
+<body>
+<h1>How To: Process San Jose Upper Air Sounding Data</h1>
+<h2>Table of Contents</h2>
+<ol>
+	<li><a href="#purpose">Purpose</a></li>
+	<li><a href="#network">Network Information</a></li>
+	<li>Previous Versions<ol>
+		<li><a href="#version_name">2004 (NAME)</a></li>
+		</ol></li>
+	<li><a href="#directory">Directory Structure</a></li>
+	<li>Processing the Data<ol>
+		<li><a href="#converting">Converting the Data</a></li>
+		<li><a href="#autoqc">QC'ing the Data</a></li>
+		<li><a href="#ebufr">Converting to EBUFR</a></li>
+		<li><a href="#codiac">Inserting into the Database</a></li>
+		</ol></li>
+	<li><a href="#software">Software</a></li>
+	<li><a href="#documents">Documentation</a></li>
+</ol>
+<hr>
+
+<a name="purpose"></a>
+<h3>Purpose</h3>
+<p>This document contains the instructions on how to process the sounding data from the San Jose site into the CLASS format.</p>
+<hr>
+
+<a name="network"></a>
+<h3>Network Information</h3>
+<ul>
+	<li>The ID-Type is 15.</li>
+	<li>The Platform is 53.</li>
+	<li>The station is in Costa Rica.</li>
+	<li>The station is fixed.</li>
+</ul>
+<hr>
+
+<h3>Previous Versions</h3>
+
+<a name="version_name"></a>
+<h4>NAME (2004)</h4>
+<table>
+	<tr><th>Software:</th><td>/work/NAME/upper_air/san_jose/software</td></tr>
+	<tr><th>Raw Data:</th><td>/ingest/name/soundings/san_jose</td></tr>
+	<tr><th>Final Data:</th><td>/archive/codiac/name/upper_air/soundings/san_jose</td></tr>
+</table>
+<hr>
+
+<a name="directory"></a>
+<h3>Directory Structure</h3>
+<table>
+	<tr><th>san_jose/</th><td>The main directory for the processing.</td></tr>
+	<tr><td>docs</td><td>The directory containing documentation about the processing and the data.</td></tr>
+	<tr><td>ebufr</td><td>The directory where the EBUFR files are placed once they have been created.</td></tr>
+	<tr><td>final</td><td>The directory where the QC'ed files are placed once they have been created.</td></tr>
+	<tr><td>logs</td><td>The directory where the error/check files from the QC are placed.</td></tr>
+	<tr><td>output</td><td>The directory where the CLASS files are put after they are generated.</td></tr>
+	<tr><td>raw_data</td><td>The directory where the raw data is stored.</td></tr>
+	<tr><td>software</td><td>The directory where the software for the conversion is stored.</td></tr>
+</table>
+<hr>
+
+<h3>Processing the Data</h3>
+
+<a name="convert"></a>
+<h4>Converting the Data</h4>
+<p>The following is how to convert the raw ASCII data into the CLASS format ready to be QC'ed.</p>
+<ol>
+	<li>Copy the raw data into the <b>raw_data</b> directory.</li>
+	<li>Change to the <b>software</b> directory.</li>
+	<li>Edit the <b>SanJose_SND_Converter.pl</b> script.<ol>
+		<li>Change the function: <b>getProjectName()</b> to return the current project.</li>
+		</ol></li>
+	<li>Run the <b>SanJose_SND_Converter.pl</b> script.  This will convert the raw data to the CLASS format.</li>
+</ol>
+
+<a name="autoqc"></a>
+<h4>QC'ing the Data</h4>
+<p>The following explains how to QC the CLASS formatted sounding data.  This assumes that the auto qc binary is already created.  For more information on the auto qc, see <a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>.</p>
+<ol>
+	<li>Change to the software directory (if you are not already there).</li>
+	<li>Edit the <b>autoqc.pl</b> script.
+		<p>The variable <b>$AUTOQC</b> needs to be changed to point to the correct autoqc program for the current project.</p>
+		</li>
+	<li>Run the <b>autoqc.pl</b> script.
+		<p>This script takes each file in the <b>output</b> directory, runs the auto qc program on it, and creates a new CLASS file that is placed in the <b>final</b> directory and a check/error log file that is placed in the <b>log</b> directory.</p>
+</ol>
+
+<a name="ebufr"></a>
+<h4>Converting to EBUFR</h4>
+<p>The following explains how to EBUFR the QC'ed CLASS files.  This assumes that the class2ebufr binary file has been generated.  For more information on the EBUFR process, see <a href="/dpg/GENERAL/soundings/howto_ebufr_class_soundings.html">How To: EBUFR CLASS Sounding Data</a>.</p>
+<ol>
+	<li>Change to the software directory (if you are not already there).
+	<li>Make sure the EBUFR configuration files are in the directory.  There should be five (class_file, code_08_021, code_33_254, control_scf.txt, desc_file).  The program will crash without these files.</li>
+	<li>Make sure there is a copy of the executable (or a symbolic link to it) in the directory.</li>
+	<li>Edit the <b>control_scf.txt</b> file.
+		<p>On the 12th line, (two lines above the "END FILE" line) the project name needs to be edited to match the current project.  The rest of the files should remain untouched.</p>
+	<li>Edit the <b>create_ebufr_files.pl</b> script.<ol>
+		<li>Change the variable: <b>$PROJECT</b> to the name of the current project.</li>
+		<li>Change the variable: <b>$PROGRAM</b> to the path where the class2ebufr program can be found for the current project.</li>
+		</ol></li>
+	<li>Run the <b>create_ebufr_files.pl</b> script.  This will concatonate the CLASS files into day CLASS file which will be used to generate the EBUFR day files.
+		<p class="note">Near the end of the script is a pattern for generating the ebufr files.  Make sure that the network name is set to SanJose.</p>
+		<p class="note">The script copies the five aforementioned files to the <b>ebufr</b> directory and removes them once the processing is finished.  This is to force all of the intermediate and final files to be saved in the <b>ebufr</b> directory.</p>
+</ol>
+
+<a name="codiac"></a>
+<h4>Inserting into the Database</h4>
+<p>With all of the EBUFR files created, they need to be inserted into the database.  This is a general process and is explained in the document: <a href="/dpg/GENERAL/soundings/howto_insert_ebufred_class_soundings.html">How To: Insert EBUFRed CLASS Sounding Data</a>.</p>
+<hr>
+
+<a name="software"></a>
+<h3>Software</h3>
+<p>The following is a list of the contents of the <b>software</b> directory with a brief explanation of the file.</p>
+<ul>
+	<li><b><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/NAME/upper_air/san_jose/software/SanJose_SND_Converter.pl">SanJose_SND_Converter.pl</a></b>- Convert all of the raw data into the CLASS format and create the station list.</li>
+	<li><b><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/NAME/upper_air/san_jose/software/autoqc.pl">autoqc.pl</a></b>- QC the CLASS files.</li>
+	<li><b>class_file</b>- A configuration file for the <b>class2ebufr</b> program.</li>
+	<li><b>code_08_021</b>- A configuration file for the <b>class2ebufr</b> program.</li>
+	<li><b>code_33_254</b>- A configuration file for the <b>class2ebufr</b> program.</li>
+	<li><b>control_scf.txt</b>- A configuration file for the <b>class2ebufr</b> program.</li>
+	<li><b><a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/NAME/upper_air/san_jose/software/create_ebufr_files.pl">create_ebufr_files.pl</a></b>- Convert the QC'ed CLASS files into daily EBUFR files.</li>
+	<li><b>desc_file</b>- A configuration file for the <b>class2ebufr</b> program.</li>
+</ul>
+<hr>
+
+<a name="documents"></a>
+<h3>Documentation</h3>
+<p>The following are a list of documents that may help with the conversion or are related to the raw data.</p>
+<ul>
+	<li><a href="/dpg/GENERAL/soundings/howto_autoqc_class_soundings.html">How To: AUTO QC CLASS Sounding Data</a>- The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/dpg/GENERAL/soundings/howto_ebufr_class_soundings.html">How To: EBUFR CLASS Sounding Data</a>- The instructions for dealing with the EBUFR software that relate to CLASS Soundings.</li>
+	<li><a href="/dpg/GENERAL/soundings/howto_insert_ebufred_class_soundings.html">How To: Insert EBUFR'ed CLASS Sounding Data into the Database</a>- The instructions on how insert the EBUFR'ed sounding data into the database.</li>
+	<li><a href="#">How To: Process San Jose Sounding Data</a>- This document.</li>
+	<li><a href="README_NAME_SanJose_sounding.html">README_NAME_SanJose_sounding.html</a>- The database readme file for the NAME data.</li>
+	<li><a href="sonde_sanjose_raw.txt">sonde_sanjose_raw.txt</a>- The raw data readme.</li>
+</ul>
+<hr>
+
+<p class="foot">Last Updated: April 7, 2005 - Joel Clawson</p>
+</body>
+</html>

@@ -1,0 +1,14 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for hrly2daily s/w.
+#
+
+CC=acc
+CFLAGS = 
+
+prochrly: hrly2daily.o
+	$(LINK.c) -o hrly2daily hrly2daily.o 
+	chmod 0755 hrly2daily
+clean:
+	rm *.o

@@ -1,0 +1,71 @@
+#! /bin/csh -f
+#
+#  Script to update all the support files that changed as a result of the
+#   tp2ms.job script run during June and July 2003
+#
+#
+#  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+#  *  Copyright 2003                                                         *
+#  *  University Corporation for Atmospheric Research, All Rights Reserved.  *
+#  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+#   
+#
+#  Check login (only "dmg" login allowed to run this script)
+set user = `whoami`
+if ($user != "dmg") then
+  echo "${0}:  Only the 'dmg' login is allowed to run this script.  Quitting."
+  exit
+endif
+#
+set msrcpMachine = vivaldi
+#
+echo "#  Jobs submitted on `date`"
+#
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/101/Production/tp2ms.summary mss:/RAF/1998/101/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/101/Production/archive/tapes.101 mss:/RAF/1998/101/tapes.101
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/101/Production/MSCP_out.101 mss:/RAF/1998/101/MSCP_out.101
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/103/Production/tp2ms.summary mss:/RAF/1998/103/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/103/Production/archive/tapes.103 mss:/RAF/1998/103/tapes.103
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/103/Production/MSCP_out.103 mss:/RAF/1998/103/MSCP_out.103
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/110/Production/tp2ms.summary mss:/RAF/1996/110/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/110/Production/archive/tapes.110 mss:/RAF/1996/110/tapes.110
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/110/Production/MSCP_out.110 mss:/RAF/1996/110/MSCP_out.110
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/130/Production/tp2ms.summary mss:/RAF/1996/130/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/130/Production/archive/tapes.130 mss:/RAF/1996/130/tapes.130
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/130/Production/MSCP_out.130 mss:/RAF/1996/130/MSCP_out.130
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/143/Production/tp2ms.summary mss:/RAF/2000/143/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/143/Production/archive/tapes.143 mss:/RAF/2000/143/tapes.143
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/143/Production/MSCP_out.143 mss:/RAF/2000/143/MSCP_out.143
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/151/Production/tp2ms.summary mss:/RAF/1995/151/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/151/Production/archive/tapes.151 mss:/RAF/1995/151/tapes.151
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/151/Production/MSCP_out.151 mss:/RAF/1995/151/MSCP_out.151
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/161/Production/tp2ms.summary mss:/RAF/2001/161/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/161/Production/archive/tapes.161 mss:/RAF/2001/161/tapes.161
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/161/Production/MSCP_out.161 mss:/RAF/2001/161/MSCP_out.161
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/278/Production/tp2ms.summary mss:/RAF/1993/278/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/278/Production/archive/tapes.278 mss:/RAF/1993/278/tapes.278
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/278/Production/MSCP_out.278 mss:/RAF/1993/278/MSCP_out.278
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/802/Production/tp2ms.summary mss:/RAF/1998/802/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/802/Production/archive/tapes.802 mss:/RAF/1998/802/tapes.802
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/802/Production/MSCP_out.802 mss:/RAF/1998/802/MSCP_out.802
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/807/Production/tp2ms.summary mss:/RAF/1998/807/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/807/Production/archive/tapes.807 mss:/RAF/1998/807/tapes.807
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/807/Production/MSCP_out.807 mss:/RAF/1998/807/MSCP_out.807
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/828/Production/tp2ms.summary mss:/RAF/2000/828/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/828/Production/archive/tapes.828 mss:/RAF/2000/828/tapes.828
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/828/Production/MSCP_out.828 mss:/RAF/2000/828/MSCP_out.828
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/819/Production/tp2ms.summary mss:/RAF/1993/819/tp2ms.summary
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/819/Production/archive/tapes.819 mss:/RAF/1993/819/tapes.819
+#rsh $msrcpMachine msput_job -pe 4095 -pr 41113009 -wpwd RAFDMG /jnet/shared/proj/819/Production/MSCP_out.819 mss:/RAF/1993/819/MSCP_out.819
+#
+echo "#  Jobs completed on `date`"
+exit
+#
+#  First wave
+#  Jobs submitted on Thu Jul 17 18:02:21 MDT 2003
+#  Jobs completed on Thu Jul 17 18:09:19 MDT 2003
+#
+#  Second wave (update Proj 278)
+#  Jobs submitted on Fri Jul 18 16:56:52 MDT 2003
+#  Jobs completed on Fri Jul 18 16:57:02 MDT 2003
+#

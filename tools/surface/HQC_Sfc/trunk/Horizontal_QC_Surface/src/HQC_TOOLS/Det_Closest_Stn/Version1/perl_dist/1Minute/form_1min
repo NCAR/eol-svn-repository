@@ -1,0 +1,4 @@
+/bin/rm web*.htm web_1minute.log
+form_webPage_output.pl BAMEX_stn_list_1Minute.ID 200 > web_1minute.log
+cp BAMEX_stn_list_1Minute.ID /work/DPG_HTML/BAMEX/.
+cp webPage_200.htm /work/DPG_HTML/BAMEX/closest_stns_1min.htm

@@ -1,0 +1,280 @@
+#!/usr/bin/perl -w
+
+#----------------------------------------------
+#
+# make_flag_code.pl
+#
+# Run this to change the DQR file to code to
+# insert in the perl program.
+#
+# Note:
+#  When implementing the DQR flagging from the DQR reports,                  
+#  remember that any parameters derived using these flagged
+#  values should have that same flag applied to them, as well.
+#   
+#  dewpoint relies on:
+#      rel_hum
+#      temp_air
+#   
+#  specific_humidity relies on: 
+#      dewpoint        
+#          rel_hum
+#          temp_air              
+#      stn_pres
+#   
+#  UV winds relies on:
+#      wind_spd
+#      wind_dir
+#   
+#  net_rad relies on: 
+#      short_in
+#      long_in
+#      short_out
+#      long_out
+#  
+# 8 May 04, ds
+#
+# rev 18 July 05, ds
+#   Now handles "all parameters except precip";
+#   "All parameters" in *flag.file lines, and
+#   any number of obs names joined by "and". 
+#
+#   Runs all networks one after another, now.
+#----------------------------------------------
+
+$DEBUG = 0;
+
+#--------------------------------------------------------------------------------------
+# the parameters we want from each set of files, by platform
+#--------------------------------------------------------------------------------------
+my (@gndrad_fields, @skyrad_fields, @mettwr_fields);
+# gndrad array of field names
+push (@gndrad_fields, "time_offset");
+push (@gndrad_fields, "up_short_hemisp");
+push (@gndrad_fields, "qc_up_short_hemisp");
+push (@gndrad_fields, "up_long_hemisp");
+push (@gndrad_fields, "qc_up_long_hemisp");
+push (@gndrad_fields, "sfc_ir_temp");
+push (@gndrad_fields, "qc_sfc_ir_temp");
+# skyrad array of field names
+push (@skyrad_fields, "time_offset");
+push (@skyrad_fields, "down_short_hemisp");
+push (@skyrad_fields, "qc_down_short_hemisp");
+push (@skyrad_fields, "down_long_hemisp_shaded1");
+push (@skyrad_fields, "qc_down_long_hemisp_shaded1");
+# mettwr array of field names
+push (@mettwr_fields, "time_offset");
+push (@mettwr_fields, "AtmPress");
+push (@mettwr_fields, "qc_AtmPress");
+push (@mettwr_fields, "WinSpeed_U_WVT");
+push (@mettwr_fields, "qc_WinSpeed_U_WVT");
+push (@mettwr_fields, "WinDir_DU_WVT");
+push (@mettwr_fields, "qc_WinDir_DU_WVT");
+push (@mettwr_fields, "T5m_AVG");
+push (@mettwr_fields, "qc_T5m_AVG");
+push (@mettwr_fields, "T2m_AVG");
+push (@mettwr_fields, "qc_T2m_AVG");
+push (@mettwr_fields, "RH5m_AVG");
+push (@mettwr_fields, "qc_RH5m_AVG");
+push (@mettwr_fields, "RH2m_AVG");
+push (@mettwr_fields, "qc_RH2m_AVG");
+push (@mettwr_fields, "DP5m_AVG");
+push (@mettwr_fields, "qc_DP5m_AVG");
+push (@mettwr_fields, "DP2m_AVG");
+push (@mettwr_fields, "qc_DP2m_AVG");
+push (@mettwr_fields, "PCPRate");
+push (@mettwr_fields, "qc_PCPRate");
+push (@mettwr_fields, "CumSnow");
+push (@mettwr_fields, "qc_CumSnow");
+push (@mettwr_fields, "WS2M_U_WVT");
+push (@mettwr_fields, "qc_WS2M_U_WVT");
+push (@mettwr_fields, "WS10M_U_WVT");
+push (@mettwr_fields, "qc_WS10M_U_WVT");
+push (@mettwr_fields, "WS20M_U_WVT");
+push (@mettwr_fields, "qc_WS20M_U_WVT");
+push (@mettwr_fields, "WS40M_U_WVT");
+push (@mettwr_fields, "qc_WS40M_U_WVT");
+push (@mettwr_fields, "WD2M_DU_WVT");
+push (@mettwr_fields, "qc_WD2M_DU_WVT");
+push (@mettwr_fields, "WD10M_DU_WVT");
+push (@mettwr_fields, "qc_WD10M_DU_WVT");
+push (@mettwr_fields, "WD20M_DU_WVT");
+push (@mettwr_fields, "qc_WD20M_DU_WVT");
+push (@mettwr_fields, "WD40M_DU_WVT");
+push (@mettwr_fields, "qc_WD40M_DU_WVT");
+push (@mettwr_fields, "T2M_AVG");
+push (@mettwr_fields, "qc_T2M_AVG");
+push (@mettwr_fields, "T10M_AVG");
+push (@mettwr_fields, "qc_T10M_AVG");
+push (@mettwr_fields, "T20M_AVG");
+push (@mettwr_fields, "qc_T20M_AVG");
+push (@mettwr_fields, "T40M_AVG");
+push (@mettwr_fields, "qc_T40M_AVG");
+push (@mettwr_fields, "RH2M_AVG");
+push (@mettwr_fields, "qc_RH2M_AVG");
+push (@mettwr_fields, "RH10M_AVG");
+push (@mettwr_fields, "qc_RH10M_AVG");
+push (@mettwr_fields, "RH20M_AVG");
+push (@mettwr_fields, "qc_RH20M_AVG");
+push (@mettwr_fields, "RH40M_AVG");
+push (@mettwr_fields, "qc_RH40M_AVG");
+push (@mettwr_fields, "DP2M_AVG");
+push (@mettwr_fields, "qc_DP2M_AVG");
+push (@mettwr_fields, "DP10M_AVG");
+push (@mettwr_fields, "qc_DP10M_AVG");
+push (@mettwr_fields, "DP20M_AVG");
+push (@mettwr_fields, "qc_DP20M_AVG");
+push (@mettwr_fields, "DP40M_AVG");
+push (@mettwr_fields, "qc_DP40M_AVG");
+#@gndrad_fields = ("time_offset", "up_short_hemisp", "qc_up_short_hemisp", "up_long_hemisp", "qc_up_long_hemisp", "sfc_ir_temp", "qc_sfc_ir_temp", "net", "qc_net");
+#@skyrad_fields = ("time_offset", "down_short_hemisp", "qc_down_short_hemisp", "down_long_hemisp_shaded1", "qc_down_long_hemisp_shaded1");
+#@smet_fields   = ("time_offset", "precip_mean", "qc_precip_mean", "temp_mean", "qc_temp_mean", "relh_mean", "qc_relh_mean", "wind1_spd_vec_avg", "qc_wind1_spd_vec_avg", "wind1_dir_vec_avg", "qc_wind1_dir_vec_avg", "atmos_pressure", "qc_atmos_pressure");
+
+%params = (
+    "gndrad" => \@gndrad_fields,
+    "skyrad" => \@skyrad_fields,
+    "mettwr"   => \@mettwr_fields
+); 
+
+#--------------------------------------------------------------------------------------
+# the input file
+#--------------------------------------------------------------------------------------
+%file_in = (
+    "gndrad"  => "../code_frag/gndrad_DQR_flag.file", 
+    "skyrad"  => "../code_frag/skyrad_DQR_flag.file",
+    "mettwr" => "../code_frag/mettwr_DQR_flag.file"
+);
+
+#--------------------------------------------------------------------------------------
+# the output file
+#--------------------------------------------------------------------------------------
+%file_out = (
+    "gndrad"  => "../code_frag/dqr_gndrad_code.frag", 
+    "skyrad"  => "../code_frag/dqr_skyrad_code.frag",
+    "mettwr"  => "../code_frag/dqr_mettwr_code.frag"
+);
+
+$i = 0;													# for counting date time lines
+
+foreach $network (keys (%file_in)) {
+  print "processing $network\n";
+}
+exit();
+foreach $network (keys (%file_in)) {
+	open(INFILE, $file_in{$network}) || die "Couldn't open $file_in{$network}\n";
+	open(OUTFILE, ">$file_out{$network}") || die "Couldn't open $file_out{$network}\n";
+	print "Reading in the data from $file_in{$network} \n";
+
+	print OUTFILE "    #---------------------------------------------------------------------------\n";
+	print OUTFILE "    # following section fixes flags according to DQRs\n";
+
+	while ($input_line = <INFILE>) {
+		print $input_line if ($DEBUG);
+		if ($input_line =~ /(^[CE]\d{1,3})/) {				# site ID, e.g."E9"
+			print "matched site: $1.\n" if ($DEBUG);
+			&put_dates($flag) if($i > 0);					# finish last flag if we have dates for it
+			$site_id = $1;
+			print OUTFILE ("    #---------------------------------------------------------------------------\n");
+			print OUTFILE ("    # ".$site_id."\n"); 
+			print OUTFILE ("    #---------------------------------------------------------------------------\n");
+			print OUTFILE ('    } elsif ($id eq "'.$site_id."\") {\n");
+		} elsif ($input_line =~ /\([BD]\)/) {				# either "(D)" or "(B)" for the flag
+			print "matched B or D flag.\n" if ($DEBUG);
+			&put_dates($flag) if($i > 0);					# finish last flag if we have dates for it
+			chomp($input_line);
+			$flag = substr($input_line, -2, 1);				# get new flag at end of string, without parentheses
+			if ($input_line =~ /all parameters except precip/i) {	# case insensitive
+				#------------------------------------------------------
+				# example: "all parameters except precip (B)"
+				# simple enough: every parameter but "precip"
+				#------------------------------------------------------
+				$num_params = $#{$params{$network}};
+				print OUTFILE ('        if ( ');
+				for($x=0; $x<$num_params; $x++) {
+					next if(${$params{$network}}[$x] eq "precip");
+					print OUTFILE ('$var eq "'.${$params{$network}}[$x].'" || '); 
+				}
+				if(${$params{$network}}[$x] ne "precip") {
+					print OUTFILE ('$var eq "'.${$params{$network}}[$x].'") {'."\n");
+				} else {
+					seek(OUTFILE, -4, 2);
+					print OUTFILE (' ) {'."\n");
+				}
+			} elsif ($input_line =~ /all parameters/i)  {					# <-------- end all params but precip
+				#------------------------------------------------------
+				# example: "all parameters (B)"
+				# we check against each parameter name
+				#------------------------------------------------------
+				$num_params = $#{$params{$network}};
+				print OUTFILE ('        if ( ');
+				for($x=0; $x<$num_params; $x++) {
+					print OUTFILE ('$var eq "'.${$params{$network}}[$x].'" || ');
+				}
+				print OUTFILE ('$var eq "'.${$params{$network}}[$x].'") {'."\n");
+			} else {														# <-------- end all params
+				#------------------------------------------------------
+				# example: "h and e and g1 (D)"
+				# more than 1, less than all; names joined with "and"
+				#------------------------------------------------------
+				(@flag_line) = split(" ", $input_line);
+				$num_ands = 0;
+				foreach $word(@flag_line) {
+					$num_ands++ if($word eq "and");
+				}
+				#----------------------
+				# first one, start line
+				#----------------------
+				print OUTFILE ('        if ($var eq "' . $flag_line[0]);
+				#----------------------
+				# if more, add with OR
+				#----------------------
+				for($x=1, $y=2; $x<=$num_ands; $x++) {
+					print OUTFILE ('" || $var eq "'.$flag_line[$y]);
+					$y += 2;
+				}
+				#----------------------
+				# close line out
+				#----------------------
+				print OUTFILE ('") {'."\n");
+			}																# <-------- end named parameters
+		} elsif ($input_line =~ /if /) {
+			print "added line to array named date_line.\n" if ($DEBUG);
+	        $date_line[$i] = $input_line;                  	# get all date lines for a single variable and flag into an array
+			$i++;
+		}													# <--------- end if date line
+	} 														# <--------- end while input line
+								
+	&put_dates($flag) if($i > 0);							# finish last flag if we have dates for it
+	print OUTFILE ("    }\n");
+	print OUTFILE ("\n");									# close out subroutine
+	print OUTFILE ('    return $new_flag;'."\n");
+	print OUTFILE ("}\n");
+}															# <--------- end foreach network
+
+
+sub put_dates
+{
+	if ($i == 1) {
+		substr($date_line[0], -3, 3, "{\n");			# fix up first date line
+	} elsif ($i > 1) {
+		substr($date_line[0], 11, 4, "if ((");
+		$j = 1;
+		while ($j < $i-1) {
+			substr($date_line[$j], 11, 3, "    ");		# fix up middle date lines
+			$j++;
+		}
+		substr($date_line[$j], 11, 3, "    ");			# fix up last date line
+		substr($date_line[$j], -4, 4, ") {\n");
+	}
+
+	for ($j=0; $j < $i; $j++) { 
+		print OUTFILE $date_line[$j];
+	}
+	print OUTFILE ('                $new_flag = "'.$flag.'";'."\n");
+	print OUTFILE ('                print "on $datetime, for $id, overrode orig flag = $flag_val with DQR value = $new_flag for $var\n" if($DEBUG1);'."\n");
+	print OUTFILE ("            }\n");
+	print OUTFILE ("        }\n");
+
+	$i = 0;
+	undef @date_line;
+}

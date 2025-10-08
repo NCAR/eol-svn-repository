@@ -1,0 +1,17 @@
+Data Type:                         CLASS/Ascending
+Project ID:                        DYNAMO
+Release Site Type/Site ID:         R/V Sagar Kanya VTJR
+Release Location (lon,lat,alt):    089 00.00'E, 64 00.00'N, 89.000, 64.000, 230.0
+UTC Release Time (y,m,d,h,m,s):    1987, 05, 05, 11:11:00
+Sonde Id/Sonde Type:               E4514351/Vaisala
+/
+/
+/
+/
+/
+Nominal Release Time (y,m,d,h,m,s):1987, 05, 05, 11:11:00
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat    Ele   Azi   Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg    deg   deg    m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+   0.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0   89.000  64.000 999.0 999.0   230.0  9.0  9.0  9.0  9.0  9.0  9.0
+   2.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0   7.5   89.000  64.000 999.0 999.0   245.0  9.0  9.0  9.0  9.0  9.0 99.0

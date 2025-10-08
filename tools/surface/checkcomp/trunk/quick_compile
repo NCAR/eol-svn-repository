@@ -1,0 +1,4 @@
+cc   -c  check_QCF_comp.c
+cc   -c  process_qcfrec.c
+cc    -o check_QCF_comp check_QCF_comp.o process_qcfrec.o
+chmod 0755 check_QCF_comp

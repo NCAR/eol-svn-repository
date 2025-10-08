@@ -1,0 +1,242 @@
+a:link, a:visited { color: #006600; text-decoration: none; }
+a:hover { color: #660000; text-decoration: underline; }
+
+body {
+    background-color: #FFFFCC;
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+div.aoi { padding-left: 20px; }
+
+div.headerMenu {
+    background-color: #000066;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+div.notedate { font-size: 16pt; font-weight: bold; }
+div.noteText { padding: 0 30px 10px 30px; }
+
+div.statusBars, div.projectNoteSection {
+    background-color: #FFFFFF;
+    border: 1px solid #000066;
+    margin: 0 20px 20px 20px;
+    max-height: 250px;
+    min-height: 100px;
+    overflow: auto;
+}
+
+div.statusTitle, div.projectNoteTitle {
+    background-color: #000066;
+    color: #FFFFFF;
+    font-size: 14pt;
+    font-weight: bold;
+    margin: 20px 20px 0 20px;
+    text-align: center;
+}
+
+div.statusBarBackground {
+    background-color: #DDDDFF;
+    border: 1px solid #000066;
+    height: 8px;
+    padding: 1px;
+    width: 100px;
+}
+
+div.statusBarForeground {
+    background-color: #006600;
+    height: 8px;
+}
+
+
+div.titleBox {
+    background-color: #000066;
+    color: #FFFFFF;
+    margin: 50px auto;
+    padding: 20px 0;
+    text-align: center;
+    width: 60%;
+}
+
+div.titleBox div.welcome {
+    font-size: 36pt;
+    font-weight: bold;
+}
+
+div.titleBox div.desc { font-size: 18pt; }
+
+img { border: 0; }
+
+table.projectList {
+    margin: 0 auto 25px auto;
+    width: 60%;
+}
+
+table.infoBar {
+    border: 0;
+    color: #FFFFFF;
+    width: 100%;
+}
+
+table.infoBar td.centerPane {
+    font-size: 20pt;
+    font-weight: bold;
+    text-align: center;
+}
+
+table.infoBar td.sidePane {
+    font-size: 10pt;
+    vertical-align: top;
+    white-space: nowrap;
+    width: 20%;
+}
+
+table.infoBar td.sidePane b { font-size: 12pt; }
+
+table.navBar {
+    background-color: #FFFF99;
+    border: 1px solid #000066;
+    width: 100%;
+}
+
+table.navBar td { font-size: 16pt; font-weight: bold; padding: 2px 20px; white-space: nowrap; }
+
+table.navBar td.dropdown { text-align: center; width: 100%; }
+
+
+table.projectList tr th { 
+    background-color: #CCCCCC;
+    border: 1px solid #000066;
+    color: #000000;
+    font-size: 16pt;
+    font-weight: bold;
+    padding: 4px;
+    text-align: left;
+}
+
+td.projectCell {
+    background-color: #FFFFFF;
+    border: 1px solid #000066;
+    padding: 5px 40px;
+}
+
+td.projectCell div.link { font-size: 14pt; font-weight: bold; }
+td.projectCell div.name { padding-left: 20px; }
+
+td.datasetCount { font-family: mono; font-size: 11pt; font-weight: bold; text-align: center; white-space: nowrap; }
+td.datasetTotal { font-size: 10pt; text-align: right; white-space: nowrap; }
+td.progressBar { white-space: nowrap; }
+td.statusCompositeName, td.statusDatasetName { font-size: 10pt; }
+td.statusCompositeName { font-weight: bold; }
+td.statusName { font-size: 10pt; text-align: center; white-space: nowrap; }
+
+tr.header { background-color: #CCCCCC; }
+
+/*
+BODY { background-color: #FFFFFF; color: black }
+
+BODY A:link { color: #3300CC; text-decoration: none }
+BODY A:visited { color: #3300CC; text-decoration: none }
+BODY A:active { color: #3300CC; text-decoration: none }
+BODY A:hover { color: blue; text-decoration: underline }
+
+table.projectListTable { color: black; border-color: black; background-color: #a8a8a8; }
+tr.projectListHeading { background-color: #e9e9e9; font-size: 14pt; font-weight: bold }
+tr.projectListProject { background-color: white; };
+
+table.productTable { color: black; border-color: black; background-color: #a8a8a8; }
+
+tr.productHead{ color: black; background-color: #e9e9e9; font-size: 13pt; font-weight: bold; text-align: center}
+tr.productHead2{ color: black; background-color: #FFFFFF; font-size: 13pt; font-weight: bold; text-align: center}
+tr.dsRow{ color: black; background-color: white; font-size: 12pt; text-align: left}
+tr.dsRow A:link { color: #000066; text-decoration: none }
+tr.dsRow A:visited { color: #000066; text-decoration: none }
+tr.dsRow A:active { color: #000066; text-decoration: none }
+tr.dsRow A:hover { color: #3300FF; text-decoration: underline }
+
+tr.exRow{ color: black; background-color: #FFFFCC; font-size: 12pt; text-align: left}
+tr.excludeRow{ color: black; background-color: #ffffff; font-size: 12pt; text-align: left; text-decoration: line-through}
+
+tr.productTitle{ color: black; background-color: #ebebf5; font-size: 14pt; font-weight: bold;}
+tr.productTitle A:link { color: #3300cc; text-decoration: none}
+tr.productTitle A:visited { color: #3300cc; text-decoration: none}
+tr.productTitle A:active { color: #3300cc; text-decoration: none}
+tr.productTitle A:hover { color: #3300cc; text-decoration: underline}
+
+font.productNote{ color: black; font-size: 12pt; font-weight: bold;}
+
+font.productLink{ font-size: 12pt; font-weight: bold; }
+font.productLink a:link { color: #3300cc; text-decoration: underline}
+font.productLink a:visited { color: #3300cc; text-decoration: underline}
+font.productLink a:active { color: #3300cc; text-decoration: underline}
+font.productLink a:hover { color: #3300cc; text-decoration: underline}
+
+table.menuTable { color: black; border-color: black; background-color: #e9e9e9; }
+td.menuTitle{ color: black; text-align:center; font-size: 20pt; font-weight: bold; }
+td.menuText{ color: black; font-size: 10pt }
+tr.menuOptions{ color: black; text-align:center; font-size: 14pt; font-weight: bold;  }
+
+table.notesTable{ color: black; background-color: #a8a8a8; }
+tr.notesHeading{ background-color: #e9e9e9; font-weight: bold; font-size: 15pt; }
+tr.notesRow{ color: black; background-color: white; }
+
+table.statusTable{ color: black; background-color: #a8a8a8; }
+tr.statusHeading{ background-color: #e9e9e9; font-weight: bold; font-size: 15pt; text-align: center }
+tr.statusRow{ color: black; background-color: white; }
+table.statusLinkTable{ color: black; background-color: #e9e9e9 }
+table.statusLinkTable tr{ background-color: white }
+
+div.bigScroll{ position:relative; height:200px; overflow:auto; }
+div.smallScroll{ position:relative; height:100px; overflow:auto; }
+
+table.editBackTable{ background-color: black }
+table.editTable{ background-color: white; color: black; border: 2px solid black }
+tr.editHeading{ background-color: #e9e9e9; color:black; font-size: 14pt; font-weight: bold; }
+td.spacer{ background-color: #e9e9e9; height: 3px }
+
+
+tr.tableHeading{ color: black; background-color: #FFFFCC; font-size: 14pt; font-weight: bold; text-align: center}
+tr.tableHeading A:link { color: black; text-decoration: none}
+tr.tableHeading A:visited { color: black; text-decoration: none}
+tr.tableHeading A:active { color: black; text-decoration: none}
+tr.tableHeading A:hover { color: black; text-decoration: underline}
+
+td.navHead { color: white; font-size: 14pt; text-indent: 10px }
+td.navHead A:link { color: white; text-decoration: none }
+td.navHead A:visited { color: white; text-decoration: none }
+td.navHead A:active { color: white; text-decoration: none }
+td.navHead A:hover { color: white; text-decoration: underline }
+
+td.navItem { color: white; font-size: 12pt; text-indent: 18px }
+td.navItem A:link { color: white; text-decoration: none }
+td.navItem A:visited { color: white; text-decoration: none }
+td.navItem A:active { color: white; text-decoration: none }
+td.navItem A:hover { color: white; text-decoration: underline }
+
+
+tr.hlightRow{ color: black; background-color: #FFFFCC; font-size: 12pt; text-align: left}
+tr.hlightRow A:link { color: #000066; text-decoration: none }
+tr.hlightRow A:visited { color: #000066; text-decoration: none }
+tr.hlightRow A:active { color: #000066; text-decoration: none }
+tr.hlightRow A:hover { color: #3300FF; text-decoration: underline }
+
+td.editCell{ color: black; font-size: 9pt; font-family: Verdana}
+td.editCell A:link { color: blue; text-decoration: none }
+td.editCell A:visited { color: blue; text-decoration: none }
+td.editCell A:active { color: blue; text-decoration: none }
+td.editCell A:hover { color: red; text-decoration: none }
+
+tr.titleBar{ color: white; background-color: #336699; font-size: 13pt; font-weight: bold; }
+tr.hideBar{ color: black; background-color: #dcdcdc; font-size: 12pt; }
+tr.blankBar{ color: black; background-color: #dcdcdc; font-size: 12pt; }
+
+tr.navBar{ color: black; background-color: #dcdcdc; font-size: 12pt; }
+table.dsHead{ color: black; background-color: #ebebf5; font-size: 12pt;}
+
+table.dsHead TD { background-color: white}
+table.dsBody{ color: black; background-color: white; font-size: 12pt;}
+
+*/

@@ -1,0 +1,400 @@
+#! /usr/bin/perl -w
+##------------------------------------------------------------------------------
+# Script to insert projects and datasets into zith9 with the help of setup
+# files to facilitate automated data loading.
+# 
+# Janine Aquino 6/18/2012
+#
+# Written to grab fields directly from mysql tables rather than hardcode
+# them, EXCEPT:
+	# # WARNING #
+	# This assumes that the table project_xlink contains the fields
+	# project_id and xlink_id and the table xlink contains the field id
+	# whick corresponds to xlink_id.
+# 
+# Used g2n conversion scripts written by Sean Stroble as a starting point, then made
+# extensive modification.
+#
+##------------------------------------------------------------------------------
+my $libdir;
+my $scriptsdir;
+BEGIN
+{
+    $libdir = $ENV{"MYSQL_DIR"};
+    if (!defined($libdir)) {
+       $libdir = "/net/work/lib/perl/mysql";
+    }
+    $scriptsdir = $ENV{"SCRIPTS_DIR"};
+    if (!defined($scriptsdir)) {
+       $scriptsdir = "/net/work/bin/scripts/insert";
+    }
+}
+
+use strict;
+# Use deployed copy of perl mysql scripts to work with production database;
+use lib $libdir;
+use MySqlDatabase;
+use lib $scriptsdir;
+use ReadConfig;
+my $config = ReadConfig->new();
+
+my $msg = "";
+my $options = undef;
+our @dataset_options = ();
+our @project_options = ();
+
+# Usage statement
+sub usage {
+    my @ARGV = shift;
+    print "Usage: $0 [-o] [add_project=proj] add_dataset=dataset \n";
+    print "\t -o \t Output the possible options for use in the setup files.\n";
+    print "\t\t Not pretty, but informative...\n";
+    print "\t Note: -o must come before add_project or add_dataset.\n";
+    print"\t\t \"insert_proj_dataset -o add_dataset=PMS2D.yml add_project=proj.yml\"\n";
+    exit(1);
+}
+
+if ($#ARGV == -1) #no options, only program name
+{
+    usage(@ARGV);
+}
+# Connect to database
+my $database = MySqlDatabase->new("zithupdate","change-999");
+$database->connect();
+
+# Read in the command line args, and call subroutines to do the work
+foreach my $arg (@ARGV) {
+       if ( $arg eq "-o") { 
+           # Don't do dataset loading, just print options for setup files
+	   $options = 1;
+       }
+       elsif ($arg =~ /add_project=(.*)/) {
+	   	unless (-e $1) { die "$1 does not exist!\n"; }
+		#print "\nADD A NEW PROJECT\n";
+		#print   "-----------------\n";
+		$msg = addproject($database, $1,$options);
+		if ($msg ne "") {
+			print "Message: $msg\n";
+			$database->rollback();
+			$database->disconnect();
+			exit(1);
+		}
+	}
+	elsif ($arg =~ /add_dataset=(.*)/) {
+	   	unless (-e $1) { die "$1 does not exist!\n"; }
+		#print "\nADD A NEW DATASET\n";
+		#print   "-----------------\n";
+		$msg = adddataset($database, $1,$options);
+		if ($msg ne "") {
+			print "Message: $msg\n";
+			$database->rollback();
+			$database->disconnect();
+			exit(1);
+		}
+	} else {
+            usage(@ARGV);
+	    exit(1);
+	}
+}
+
+if ($options) {
+    print "\nPROJECT OPTIONS\n";
+    print   "-----------------\n";
+    my @unique = sort(@project_options);
+    foreach ( @unique ) {
+	print $_,"\n";
+    }
+
+    print "\nDATASET OPTIONS\n";
+    print   "-----------------\n";
+    @unique = sort(@dataset_options);
+    foreach ( @unique ) {
+	print $_,"\n";
+    }
+
+    $database->rollback();
+    $database->disconnect();
+    exit(1);
+}
+
+# If there are no errors, ask user to confirm commit changes to db.
+if ($msg eq "") { 
+    printf("\n\nTo commit changes, press Enter.\n");
+    printf("To cancel changes, enter any value and press Enter.\n\n");
+    printf(">> ");
+    my $result = <STDIN>;
+    
+    if ($result =~ /^\s*$/) {
+	$database->commit() 
+    }
+    else { 
+	print "User Selected to Cancel!\n";
+	$database->rollback();
+    }
+}
+# If there are errors, let user know and don't commit changes.
+else {print "Message: $msg\n"; $database->rollback() }
+$database->disconnect();
+
+# End of Main #
+##-----------------------------------------------------------------------------
+sub addproject {
+	my $msg = "";
+	my $db = shift;
+	my $filename = shift;
+	my $options = shift;
+
+	my @ATTR;
+	my @VAL;
+        $config->read_config_file($filename,\@ATTR,\@VAL);
+
+	my $table = "";
+	my @attr = ();
+	my @attribute = ();
+	my @value = ();
+
+	#Insert project, project_prefix
+	foreach $table ("project","dataset_prefix_project") {
+	    $msg = insert_record($database,$table,$options,\@ATTR,\@VAL,\@project_options);
+	    if ($table eq "project") {get_project_id(\@ATTR,\@VAL);}
+	    #If we are just printing options or there was an error, bail here
+	    if ($options || $msg ne "") { return $msg; }
+	}
+
+	# Add xlinks to project where
+	# # WARNING #
+	# This assumes that the table project_xlink contains the fields
+	# project_id and xlink_id and the table xlink contains the field id
+	# whick corresponds to xlink_id.
+	$table = "project_xlink";
+	@attr = ();
+	push @attr, "project_id";
+	my @attributetemp = ();
+	my @valuetemp = ();
+	my $where;
+	foreach (@attr) {
+		$a = $_;
+		for (my $i = 0; $i <= $#ATTR; $i++) {
+			if ($a eq $ATTR[$i]) { push @attributetemp, $ATTR[$i]; push @valuetemp, $VAL[$i]; }
+			if ($ATTR[$i] eq "add_xlink_where")
+			{
+				$where = $VAL[$i];
+			}
+		}
+	}
+	print "Adding XLINKS WHERE $where\n";
+	if (defined $where && $where ne "") {
+	    ($msg, my @data) = $database->selectAll("xlink","id",$where);
+	    if ($msg ne "") { return $msg; }
+	    foreach (@data) {
+	        my @attribute = @attributetemp;
+	        my @value = @valuetemp;
+	    	push @attribute, "xlink_id";
+		push @value, @{$_}[0];
+		print " xlink: @{$_}[0]\n";
+		print "INSERT INTO $table(" . join(',', @attribute) . ") VALUES(" . join(',', @value) . ")\n\n";
+		$msg .= $database->insert($table,join(',', @attribute),join(',', @value));
+	    }
+	}
+	
+	return $msg;
+}
+##-----------------------------------------------------------------------------
+sub adddataset {
+        my $msg = "";	
+	my $db = shift;
+	my $filename = shift;
+	my $options = shift;
+
+	my @ATTR;
+	my @VAL;
+        $config->read_config_file($filename,\@ATTR,\@VAL);
+
+	get_project_id(\@ATTR,\@VAL);
+
+	my $table = "";
+	my @attr = ();
+	my @attribute = ();
+	my @value = ();
+	my %results;
+
+	#Insert dataset, Project Ref, Categories, Platforms, Options (Subset/Browse)
+	#Dataset table must be first so can get dataset_id needed for other
+	#tables.
+	my $dataset_id;
+	foreach $table ("dataset","dataset_project","dataset_category",
+	    "dataset_platform","codiac_dataset_options","dataset_version","dataset_contact") {
+	    if ($table eq "dataset" || $table eq "dataset_version") {
+		$database->add_quotes_to_string($table,\@ATTR,\@VAL);
+	    }
+	    if ($table eq "dataset_version") {
+		push @ATTR, "publish_time";
+		push @VAL, "NOW()";
+	    }
+
+	    $msg = insert_record($database,$table,$options,\@ATTR,\@VAL,\@dataset_options);
+	    #If we are just printing options or there was an error, bail here
+	    if ($options || $msg ne "") { return $msg; }
+
+	    # After insert dataset, get dataset_id which is needed for other 
+	    # tables.
+	    if ($table eq "dataset") {$dataset_id = get_dataset_id(\@ATTR,\@VAL);}
+
+	    # After insert dataset_version, read id back in and set as 
+	    # current_version_id in dataset table.
+            if ($table eq "dataset_version") {
+		    my $current_version_id;
+		    (my $msg, $current_version_id) = 
+		        $database->select("dataset_version","id","dataset_id=$dataset_id");
+		    print "UPDATE dataset set current_version_id = ".$current_version_id ." where id=".$dataset_id;
+                    print "\nUpdate dataset entry:\n";
+	            print "\tdataset_id: ".$dataset_id."\n"; 
+	            print "\tcurrent_version_id: ".$current_version_id."\n"; 
+                    print "\n";
+                    $msg .= $database->update("dataset","current_version_id = $current_version_id","id=$dataset_id");
+		}
+	}
+
+	#Add browsing (if specified)
+	for (my $i = 0; $i <= $#ATTR; $i++) {
+	    if (($ATTR[$i] eq "browseable") && ($VAL[$i] == 1)) {
+		$table = "codiac_dataset_plot";
+	        $msg = insert_record($database,$table,$options,\@ATTR,\@VAL,\@dataset_options);
+	        #If we are just printing options or there was an error, bail here
+	        if ($options || $msg ne "") { return $msg; }
+	    }
+	}
+
+	#Add Dataset Ref (If Specified)
+	$table = "dataset_reference";
+	if (!$options && defined($value[1]) && $value[1] ne "") {
+	    print " $value[2] $value[1])\n";
+	    $msg = insert_record($database,$table,$options,\@ATTR,\@VAL,\@dataset_options);
+	}
+
+	#Add secondary,etc contacts  (if specified)
+	$table = "dataset_contact";
+	my $n=2;
+	my @indices = ();
+	while ($#ATTR != 0) {
+	    @indices = grep { $ATTR[$_] =~ /_$n$/ } 0..$#ATTR;
+	    push @indices,(0);
+	    @ATTR = @ATTR[@indices];
+	    my @VAL = @VAL[@indices];
+	    if ($#ATTR != 0) {
+		foreach my $attr (@ATTR) {$attr =~  s/_$n//;}
+		$msg = insert_record($database,$table,$options,\@ATTR,\@VAL,\@dataset_options);
+	        #If we are just printing options or there was an error, bail here
+		if ($options || $msg ne "") { return $msg; }
+		}
+	    $n++;
+        }
+
+	return $msg;
+}
+##------------------------------------------------------------------------------
+#Zith9 uses database-generated keys. Get them here.
+#Get id from dataset table
+sub get_dataset_id {
+    my $table = "dataset";
+    my $key = "archive_ident";
+    (my $msg, my $dataset_id) = 
+            select_db_key($table, $key, \@{ $_[0] }, \@{ $_[1] });
+    # When -o option in place, dataset_id will be null which causes problems later,
+    # so initialize here.
+    if (!defined $dataset_id) {$dataset_id="";}
+    unshift @{ $_[0] }, "dataset_id";
+    unshift @{ $_[1] }, $config->ProcAttr("dataset_id", $dataset_id);
+
+    return $dataset_id;
+}
+##------------------------------------------------------------------------------
+#Zith9 uses database-generated keys. Get them here.
+#Get id from project table
+sub get_project_id {
+    my $table = "project";
+    my $key = "name";
+    (my $msg, my $project_id) = 
+        select_db_key($table, $key, \@{ $_[0] }, \@{ $_[1] });
+    push @{ $_[0] }, "project_id";
+    push @{ $_[1] }, $config->ProcAttr("project_id", $project_id);
+}
+##------------------------------------------------------------------------------
+sub select_db_key {
+    my $table = shift;
+    my $key = shift;
+    my @ATTR = @{ $_[0] };
+    my @VAL = @{ $_[1] };
+    my $val;
+    my @attr = ();
+    push @attr, $key;
+    foreach (@attr) {
+	$a = $_;
+	for (my $i = 0; $i <= $#ATTR; $i++) {
+		if ($a eq $ATTR[$i]) { $val = $VAL[$i]; }
+	}
+    }
+    my $tests = "$key = $val";
+    ($msg, my @id) = $database->select($table,"id",$tests);
+    return ($msg, $id[0]);
+}
+##------------------------------------------------------------------------------
+# Insert a record into a database table
+sub insert_record {
+    my $database = shift;
+    my $table = shift;
+    my $option = shift;
+    my @ATTR = @{ $_[0] };
+    my @VAL = @{ $_[1] };
+    my @options = @{ $_[2] };
+
+    my $msg= "";
+    my %results;
+    my @attribute = ();
+    my @value = ();
+    
+    ($msg, %results) = $database->selectFull($table,'*');
+    
+    # If user just wants to see fields in table, return the list here.
+    if ($option) {
+	push @options, @{$results{"name"}};
+	#foreach ( @{$results{"name"}} ) {print $_."\n";}
+	return $msg;
+    }
+    foreach (@{$results{"name"}}) {
+	$a = $_;
+
+	for (my $i = 0; $i <= $#ATTR; $i++) {
+	    # Loaddata adds a marker to identify database for some parameters. 
+	    # We want the codiac ones, so remove that here so they will match 
+	    # database fields. Note that fields with _dts will not match and not get
+	    # used, by design.
+	    $ATTR[$i] =~ s/_codiac$//;#, $ATTR[$i];
+	    if ($a eq $ATTR[$i]) { push @attribute, $ATTR[$i]; push @value, $VAL[$i]; }
+	    #exceptions/inconsistencies
+	    if ($a eq "project_name" && $ATTR[$i] eq "name") {
+	       push @attribute, "project_name"; push @value, $VAL[$i];
+	    }
+	}
+    }
+
+    # If we only have one parameter to insert to a table, it will be the dataset_id, and we
+    # don't have a complete entry, so bail.
+    if ((scalar(@attribute) == 1) && ($attribute[0] eq "dataset_id")) {
+	print "Skip $table: only dataset_id defined for $table\n";
+	return "";
+    }
+
+    print "INSERT INTO $table(" . join(',', @attribute) . ") VALUES(" . join(',', @value) . ")\n";
+    print "\nNew $table entry:\n";
+    for (my $i = 0; $i < scalar(@attribute); $i++) { 
+	print "\t".$attribute[$i].": ".$value[$i]."\n"; 
+    }
+    print "\n";
+    # If you comment out this insert for testing, be sure to comment out the
+    # other one two calls or they will throw errors.
+    $msg .= $database->insert($table,join(',', @attribute),join(',', @value));
+
+    return $msg;
+}
+##------------------------------------------------------------------------------

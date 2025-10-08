@@ -1,0 +1,126 @@
+> groovy authorshipConnect.groovy OHHI OWLeS PACDEX
+
+Created log file:	logs/log_20131209141805.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+Unable to find 508 for data set 96.001
+--------------------------------------------------------------------------------
+  PACDEX:  96.002
+		Pilewskie
+Which of these contacts matches this author:	Pilewskie
+
+		390	ppilewskie	Peter Pilewskie	NASA Ames Research Center
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 390
+
+Found 390 for data set 96.002 and has sort_key of 65534 (instead of 1).
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ESRL-CSD
+
+--------------------------------------------------------------------------------
+
+Unable to find 1 for data set 96.004
+Unable to find 508 for data set 96.007
+Unable to find 508 for data set 96.008
+--------------------------------------------------------------------------------
+  PACDEX:  96.009
+		Heymsfield
+Which of these contacts matches this author:	Heymsfield
+
+		1173	null	Andrew Heymsfield	NCAR
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 1173
+
+Found 1173 for data set 96.009 and has sort_key of 65534 (instead of 1).
+Unable to find 526 for data set 96.010
+Unable to find 1 for data set 96.011
+--------------------------------------------------------------------------------
+  PACDEX:  96.012
+		(Arizona State University)
+Which of these contacts matches this author:	Arizona State University
+
+		528	asu	null	Arizona State University
+		671	achristman	Adam Christman	Arizona State University
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 528
+
+Unable to find 528 for data set 96.012
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	Greg Carmichael
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  PACDEX:  96.013
+		Carmichael, Greg (Univ. of Iowa)
+Which of these contacts matches this author:	Univ. of Iowa
+
+		291	weichinger	William Eichinger	University of Iowa
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+--------------------------------------------------------------------------------
+  PACDEX:  96.014
+		(Lanzhou University)
+Which of these contacts matches this author:	Lanzhou University
+
+		735	jhuang	jianping huang	Lanzhou University
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 0
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	
+
+--------------------------------------------------------------------------------
+
+Unable to find 962 for data set 96.020
+Unable to find 962 for data set 96.021
+Unable to find 962 for data set 96.022
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '96.001';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 5922 and contact_id = 390;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '96.004';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '96.007';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '96.008';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 8068 and contact_id = 1173;
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 526, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '96.010';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '96.011';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 528, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '96.012';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 962, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '96.020';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 962, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '96.021';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 962, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '96.022';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

@@ -1,0 +1,25 @@
+#!/bin/perl -wT
+
+use strict;
+use CGI;
+
+sub show_error
+{
+	my $error = shift;
+	my $cgi = CGI->new();
+
+	println( $cgi->header );
+		println( "<html><head><title>JOSS Data Set Master List: Error</title></head>" );
+		println( "<body bgcolor=white text=black>" );
+			println( "<br><br>" );
+			println( "<center><b><font size=+2>JOSS Data Set Master List: Error</font></center></b><br><br>" );
+			println( "The JOSS Data Set Master List has generated the following error:" );
+			println( "<br><br><dd><font size=+1> $error</font>" );
+			println( "<br><br>" );
+			println( "If you think you have gotten this error by mistake please contact " .
+							"<a href=mailto:suldan\@ucar.edu>suldan at ucar.edu</a>" );
+	println( "</body></html>" );
+
+	exit 0;
+}
+1;

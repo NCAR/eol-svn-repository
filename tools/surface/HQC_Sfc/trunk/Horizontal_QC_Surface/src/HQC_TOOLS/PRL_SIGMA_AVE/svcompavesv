@@ -1,0 +1,47 @@
+#!/usr/bin/perl -a
+#-----------------------------
+# First get and print the time
+#-----------------------------
+($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+printf "Compave began at $year/$mon/$mday $hour:$min:$sec\n";
+
+#---------------------------------
+# Open the input and output files.
+#---------------------------------
+#open(INFILE, "sorted_cut_V94_DPT.txt") || die "Can NOT open input file for reading";
+#open(INFILE, "V941210000.dpt") || die "Can NOT open input file for reading";
+open(INFILE, "19941210000.sig") || die "Can NOT open input file for reading";
+
+open(OUTFILE, ">aveVariances.out") || die "Can NOT open output file for reading";
+printf OUTFILE "Compave began at $year/$mon/$mday $hour:$min:$sec\n";
+
+#---------------------------------------------------------
+# For each file opened, Read and sum all the variances for
+# each parameter type. Then compute the average for each
+# type and write to the output file for later plotting.
+#---------------------------------------------------------
+$numstns = <INFILE>;
+printf "%5d\n", $numstns;
+
+$i = 0;
+while (<INFILE>) 
+   { 
+   # Read a line from file.
+   # Compute average of input numbers.
+   chop;
+   printf "Read line: $_\n";
+   ++$i;
+   printf "i=: $i\n";
+   $sum += $_; 
+   }
+
+$ave = $sum/$i;
+
+printf "i, sum, ave, std: %d %d %f %f\n", $i, $sum, $ave, sqrt($ave);
+printf OUTFILE "%d %d %f %f\n", $i, $sum, $ave, sqrt($ave);
+printf OUTFILE "Compave ended at $year/$mon/$mday $hour:$min:$sec\n";
+printf "Compave ended at $year/$mon/$mday $hour:$min:$sec\n";
+
+close(INFILE);
+close(OUTFILE);
+

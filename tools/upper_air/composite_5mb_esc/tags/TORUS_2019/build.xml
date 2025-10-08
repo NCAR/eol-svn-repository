@@ -1,0 +1,79 @@
+<project name="5MB Sounding Conversion" default="compile" basedir=".">
+
+    <property name="project" value="TORUS_2019_5MB_" />     
+    <property name="build" location="build" />
+    <property name="build.classes" location="build/classes" />
+    <property name="docs" location="docs" />
+    <property name="docs.api" location="${docs}/api" />
+    <property name="src" location="src" />
+
+    <property name="database" location="database" />
+    <property name="final_merged" location="data" />
+    <property name="5mb_extract" location="5mb_database" />
+
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <pathelement path="${build.classes}" />
+        <fileset dir="/net/work/lib/java">
+            <include name="utilities.jar" />
+            <include name="station.jar" />
+            <include name="upper_air.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/dayfiles">
+            <include name="upper_air_dayfile.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/checkers">
+            <include name="esc_format_checker.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/sorters">
+            <include name="esc_record_sorter.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/extractors">
+            <include name="esc_extractor.jar" />
+        </fileset>
+    </path>
+
+    <target name="5mb-extract">
+        <java classname="dmg.ua.sounding.extract.ESC5mbExtractor" fork="yes">
+            <arg value="-Z" />
+            <arg value="${final_merged}" />
+            <arg value="${5mb_extract}" />
+            <arg value="${5mb_extract}/extract.log" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+
+        <java classname="dmg.ua.sounding.check.ESCCheckFile" fork="yes">
+            <arg value="${5mb_extract}" />
+            <arg value="${5mb_extract}/check_format_5mb.log" />
+            <arg value="\.05mb(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="-check-format">
+        <java classname="dmg.ua.sounding.check.ESCCheckFile" fork="yes">
+            <arg value="${directory}" />
+            <arg value="${logfile}" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="dayfiles">
+        <java classname="dmg.ua.sounding.dayfile.ESCDayFileCreator" fork="yes">
+            <arg value="-Z" />
+            <arg value="TORUS19_5MB_" />
+            <arg value="${final_merged}" />
+            <arg value="${database}" />
+            <arg value="\.05mb(\.gz)?" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build.classes}" />
+    </target>
+
+</project>

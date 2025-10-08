@@ -1,0 +1,103 @@
+210,211c210,211
+< set delim = "_"      #  C-130Q
+< #set delim = "-"      #  GV
+---
+> #set delim = "_"      #  C-130Q
+> set delim = "-"      #  GV, C-130Q down for ICE-L
+466c466
+< set SSdir = "$projno`echo $fltno | tr '[A-Z]' '[a-z]'`_fwd"
+---
+> set SSdir = "$projno`echo $fltno | tr '[A-Z]' '[a-z]'`_down"
+672,673c672,673
+<   set fdate = `echo $file | awk -F$delim '{print $3}'`  # C-130Q format
+< #  set fdate = `echo $file | awk -F$delim '{print $1}'`  # GV format
+---
+> #  set fdate = `echo $file | awk -F$delim '{print $3}'`  # C-130Q format
+>   set fdate = `echo $file | awk -F$delim '{print $1}'`  # GV format, C130Q down ICE-L
+683,684c683,684
+<     set ftime = `echo $file | awk -F$delim '{print $4}'` # C-130 format
+< #    set ftime = `echo $file | awk -F$delim '{print $2}'` # GV format
+---
+> #    set ftime = `echo $file | awk -F$delim '{print $4}'` # C-130 format
+>     set ftime = `echo $file | awk -F$delim '{print $2}'` # GV format, C130 down ICE-L
+690,717c690
+< 
+<     #  @ sec = $ho * 3600 + $mi * 60 + $se # deprecated
+< ##########
+< # The root of the problem is that csh now (as of F10) enforces the notion that 
+< # numbers that start with a 0 are octal.  Thus any date before day 100 with an 
+< # 8 or a 9 in it fails with the "badly formed number" error if processed by csh.
+< # So this line doesn't work for hours, minutes, or seconds equal to 08 or 09
+<     #  @ sec = $ho * 3600 + $mi * 60 + $se
+< # The workaround is to add 6 and then 2 or 3. (Could use many combination of 8 
+< # and 9 to do this. Nothing magic about 6.
+<     @ fred = $ho * 3600 + $mi * 60
+<     if ($se == 08) then
+<       if ($db) then
+<         echo "found an eight"
+<       endif
+<       @ sec = $fred + 6 + 2
+<     else if ($se == 09) then
+<       if ($db) then
+<         echo "found a nine"
+<       endif
+<       @ sec = $fred + 6 + 3
+<     else
+<       @ sec = $fred + $se
+<     endif
+< ##########
+<     if ($db) then
+<       echo "sec = $sec"
+<     endif
+---
+>     @ sec = $ho * 3600 + $mi * 60 + $se
+884,891c857,864
+<     set Smeta = `echo $Sfile | sed -e "s/.jpg//"`
+<     set Smeta = `(echo $Smeta | awk -F$delim '{print $1, $2, $3, $4}')`
+<     set Sdate = `echo $Smeta[3] | sed -e "s:\(..\)\(..\)\(..\):\2/\3/20\1:"`
+<     set Stime = `echo $Smeta[4] | sed -e "s/\(..\)\(..\)\(..\)/\1:\2:\3/"`
+<     set Emeta = `echo $Efile | sed -e "s/.jpg//"`
+<     set Emeta = `(echo $Emeta | awk -F$delim '{print $1, $2, $3, $4}')`
+<     set Edate = `echo $Emeta[3] | sed -e "s:\(..\)\(..\)\(..\):\2/\3/20\1:"`
+<     set Etime = `echo $Emeta[4] | sed -e "s/\(..\)\(..\)\(..\)/\1:\2:\3/"`
+---
+> #    set Smeta = `echo $Sfile | sed -e "s/.jpg//"`
+> #    set Smeta = `(echo $Smeta | awk -F$delim '{print $1, $2, $3, $4}')`
+> #    set Sdate = `echo $Smeta[3] | sed -e "s:\(..\)\(..\)\(..\):\2/\3/20\1:"`
+> #    set Stime = `echo $Smeta[4] | sed -e "s/\(..\)\(..\)\(..\)/\1:\2:\3/"`
+> #    set Emeta = `echo $Efile | sed -e "s/.jpg//"`
+> #    set Emeta = `(echo $Emeta | awk -F$delim '{print $1, $2, $3, $4}')`
+> #    set Edate = `echo $Emeta[3] | sed -e "s:\(..\)\(..\)\(..\):\2/\3/20\1:"`
+> #    set Etime = `echo $Emeta[4] | sed -e "s/\(..\)\(..\)\(..\)/\1:\2:\3/"`
+893c866
+<     set Locn = `echo $Smeta[2] | tr '[a-z]' '[A-Z]'`
+---
+> #    set Locn = `echo $Smeta[2] | tr '[a-z]' '[A-Z]'`
+897,904c870,877
+< #    set Smeta = `echo $Sfile | sed -e "s/.jpg//"`
+< #    set Smeta = `(echo $Smeta | awk -F$delim '{print $1, $2}')`
+< #    set Sdate = `echo $Smeta[1] | sed -e "s:\(..\)\(..\)\(..\):\2/\3/20\1:"`
+< #    set Stime = `echo $Smeta[2] | sed -e "s/\(..\)\(..\)\(..\)/\1:\2:\3/"`
+< #    set Emeta = `echo $Efile | sed -e "s/.jpg//"`
+< #    set Emeta = `(echo $Emeta | awk -F$delim '{print $1, $2}')`
+< #    set Edate = `echo $Emeta[1] | sed -e "s:\(..\)\(..\)\(..\):\2/\3/20\1:"`
+< #    set Etime = `echo $Emeta[2] | sed -e "s/\(..\)\(..\)\(..\)/\1:\2:\3/"`
+---
+>     set Smeta = `echo $Sfile | sed -e "s/.jpg//"`
+>     set Smeta = `(echo $Smeta | awk -F$delim '{print $1, $2}')`
+>     set Sdate = `echo $Smeta[1] | sed -e "s:\(..\)\(..\)\(..\):\2/\3/20\1:"`
+>     set Stime = `echo $Smeta[2] | sed -e "s/\(..\)\(..\)\(..\)/\1:\2:\3/"`
+>     set Emeta = `echo $Efile | sed -e "s/.jpg//"`
+>     set Emeta = `(echo $Emeta | awk -F$delim '{print $1, $2}')`
+>     set Edate = `echo $Emeta[1] | sed -e "s:\(..\)\(..\)\(..\):\2/\3/20\1:"`
+>     set Etime = `echo $Emeta[2] | sed -e "s/\(..\)\(..\)\(..\)/\1:\2:\3/"`
+907a881
+>     set Locn = "DOWN"
+921,923c895,897
+<     set OFILE = `echo ${Locn}.20${Smeta[3]}.${Smeta[4]}_${Emeta[4]}.jpg.tar`
+< #     for GV:
+< #    set OFILE = `echo ${Locn}.20${Smeta[1]}.${Smeta[2]}_${Emeta[2]}.jpg.tar`
+---
+> #    set OFILE = `echo ${Locn}.20${Smeta[3]}.${Smeta[4]}_${Emeta[4]}.jpg.tar`
+> #     for GV:, C130Q down for ICE-L
+>     set OFILE = `echo ${Locn}.20${Smeta[1]}.${Smeta[2]}_${Emeta[2]}.jpg.tar`

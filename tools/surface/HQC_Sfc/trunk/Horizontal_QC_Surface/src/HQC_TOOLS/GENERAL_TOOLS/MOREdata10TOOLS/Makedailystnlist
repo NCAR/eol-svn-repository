@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for form_daily_stn_list s/w.
+#
+
+CC=acc
+CFLAGS = 
+
+procncdc: form_daily_stn_list.o
+	$(LINK.c) -o form_daily_stn_list form_daily_stn_list.o
+	chmod 0755 form_daily_stn_list
+
+clean:
+	rm *.o

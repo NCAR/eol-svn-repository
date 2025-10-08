@@ -1,0 +1,3686 @@
+
+form_webPage_output.pl of file BAMEX_stn_list.ID began on Wed May 30 16:41:18 2007
+
+Call det_closest_stn BAMEX_stn_list.ID 200.
+AOI_limit = 200.000000 (200)
+
+---- Determine Closest Station Processing ----
+Processing began on Aug  3 2004 14:54:00
+Station ID/lat/lon file name (e.g., stnlatlon.inp): BAMEX_stn_list.ID
+Reading stn ID's lats lons 
+Total number stations read: 2887
+Processing completed on Aug  3 2004 14:54:00
+
+ mv Closest_stns_LIST.out Closest_stns_LIST_200.out
+Call create_web_page( BAMEX_stn_list.ID, 200 10 ).
+current_stn = 037-0003       
+current_stn = 039-0001       
+current_stn = 047-0003       
+current_stn = 047-0005       
+current_stn = 077-0037       
+current_stn = 093-0030       
+current_stn = 093-0031       
+current_stn = 097-0003       
+current_stn = 099-0012       
+current_stn = 1170010006     
+CD_line: 1170010006        31   39.93278   -91.40427   0     4 Quincy, Adams County                           (N) 20030520 20030706 US 17 ???   0.00 n  165 hourly              183.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 1170010006     ,   39.93278,   -91.40427,  165, xxx hourly     xxx,   183.0
+line_parts[0], line_parts[1]:: xxx 9.1170010006     (  39.93278   -91.40427) xxx xxx   8.099-0012       ( 189.25),  21.1171170002     ( 149.19),  22.1171192007     ( 172.92),  23.1171430024     ( 174.23),  24.1171613002     ( 191.39),  25.1171630010     ( 182.00),  26.1171670006     ( 155.69),  33.129-0001       ( 184.88),  35.137-0001       (  60.89),  43.183-1002       ( 155.60),  45.189-0004       ( 179.09),  46.189-0006       ( 166.46),  47.189-3001       ( 170.29),  48.189-5001       ( 161.71),  49.189-7003       ( 161.84),  90.211-0002       ( 130.05),  185.510-0085       ( 176.14),  237.A131909        ( 141.26),  238.A131909        ( 141.34),  242.A135849        ( 146.26),  348.AAA            ( 178.62),  383.ALN            ( 163.70),  502.AP378          ( 194.34),  529.AP429          ( 168.66),  530.AP430          ( 135.13),  531.AP431          ( 158.99),  561.AP550          ( 176.71),  571.AP583          ( 168.67),  628.AP798          ( 141.58),  629.AP799          ( 138.86),  647.AP835          ( 172.72),  648.AP836          ( 146.61),  669.AP879          ( 142.33),  678.AP918          ( 156.82),  716.AWG            ( 151.69),  717.AWG            ( 151.69),  726.Auxvasse       ( 106.90),  773.BRL            (  97.17),  796.Brunswick      ( 164.15),  809.C0099          ( 180.39),  978.CDJ            ( 186.35),  1036.COU            ( 142.42),  1038.CPS            ( 186.34),  1066.Columbia       ( 136.73),  1115.DVN            ( 199.57),  1162.EOK            (  59.86),  1163.EOK            (  59.86),  1344.FFL            ( 133.62),  1345.FFL            ( 133.62),  1375.FSW            (  82.33),  1376.FSW            (  82.33),  1391.GBG            ( 138.38),  1447.H0029          ( 181.55),  1469.H0165          ( 150.98),  1509.H0353          (  52.08),  1522.H0472          ( 152.01),  1603.IA007          ( 101.37),  1607.IA011          ( 162.73),  1610.IA014          ( 195.74),  1618.IA023          ( 192.75),  1626.IA032          ( 107.99),  1630.IA036          ( 148.29),  1634.IA040          ( 174.19),  1638.IA044          ( 192.10),  1646.ICC            ( 181.61),  1657.IJX            ( 101.81),  1669.IOW            ( 189.39),  1671.IRK            (  99.47),  1686.JEF            ( 163.79),  1787.KBRL           (  97.17),  1796.KCDJ           ( 186.35),  1810.KCOU           ( 142.42),  1811.KCPS           ( 186.34),  1836.KDVN           ( 199.57),  1903.KIOW           ( 189.39),  1904.KIRK           (  99.47),  1910.KJEF           ( 163.79),  1960.KMLI           ( 184.71),  1979.KOTM           ( 157.25),  1988.KPIA           ( 167.87),  2015.KSET           ( 139.61),  2021.KSPI           ( 148.46),  2026.KSTL           ( 158.99),  2028.KSUS           ( 154.91),  2050.KUIN           (  17.54),  2103.LLC            ( 155.41),  2140.Linneus        ( 149.14),  2196.MLI            ( 184.71),  2286.MON            ( 123.44),  2293.MPZ            ( 113.63),  2294.MPZ            ( 113.63),  2295.MQB            (  91.59),  2311.MUT            ( 161.48),  2312.MUT            ( 161.48),  2326.Monroe_City    (  43.22),  2353.Novelty        (  67.76),  2393.ORR            (  50.99),  2399.OTM            ( 157.25),  2434.PIA            ( 167.87),  2457.PPQ            (  63.17),  2489.RBUR           ( 101.26),  2493.RCEN           ( 161.95),  2497.RDAV           ( 195.44),  2519.RIAC           ( 189.64),  2530.RMOU           ( 107.30),  2541.ROTT           ( 148.52),  2550.RSIG           ( 173.39),  2556.RTIP           ( 191.51),  2573.SA12           ( 135.33),  2582.SALI4          ( 170.25),  2600.SCDI4          ( 186.51),  2613.SET            ( 139.61),  2616.SFM            ( 115.57),  2681.SPI            ( 148.46),  2706.STL            ( 158.99),  2715.SUS            ( 154.91),  2730.Sanborn_Field  ( 135.50),  2742.TAZ            ( 183.20),  2797.UIN            (  17.54),  2837.WFP            ( 166.32),  2845.WNCI2          (  84.71), [Found   121 stations within  200.00 KM.]
+ xxx
+current_stn (1170010006     ), compared_stations::   8.099-0012       ( 189.25)   21.1171170002     ( 149.19)   22.1171192007     ( 172.92)   23.1171430024     ( 174.23)   24.1171613002     ( 191.39)   25.1171630010     ( 182.00)   26.1171670006     ( 155.69)   33.129-0001       ( 184.88)   35.137-0001       (  60.89)   43.183-1002       ( 155.60)   45.189-0004       ( 179.09)   46.189-0006       ( 166.46)   47.189-3001       ( 170.29)   48.189-5001       ( 161.71)   49.189-7003       ( 161.84)   90.211-0002       ( 130.05)   185.510-0085       ( 176.14)   237.A131909        ( 141.26)   238.A131909        ( 141.34)   242.A135849        ( 146.26)   348.AAA            ( 178.62)   383.ALN            ( 163.70)   502.AP378          ( 194.34)   529.AP429          ( 168.66)   530.AP430          ( 135.13)   531.AP431          ( 158.99)   561.AP550          ( 176.71)   571.AP583          ( 168.67)   628.AP798          ( 141.58)   629.AP799          ( 138.86)   647.AP835          ( 172.72)   648.AP836          ( 146.61)   669.AP879          ( 142.33)   678.AP918          ( 156.82)   716.AWG            ( 151.69)   717.AWG            ( 151.69)   726.Auxvasse       ( 106.90)   773.BRL            (  97.17)   796.Brunswick      ( 164.15)   809.C0099          ( 180.39)   978.CDJ            ( 186.35)   1036.COU            ( 142.42)   1038.CPS            ( 186.34)   1066.Columbia       ( 136.73)   1115.DVN            ( 199.57)   1162.EOK            (  59.86)   1163.EOK            (  59.86)   1344.FFL            ( 133.62)   1345.FFL            ( 133.62)   1375.FSW            (  82.33)   1376.FSW            (  82.33)   1391.GBG            ( 138.38)   1447.H0029          ( 181.55)   1469.H0165          ( 150.98)   1509.H0353          (  52.08)   1522.H0472          ( 152.01)   1603.IA007          ( 101.37)   1607.IA011          ( 162.73)   1610.IA014          ( 195.74)   1618.IA023          ( 192.75)   1626.IA032          ( 107.99)   1630.IA036          ( 148.29)   1634.IA040          ( 174.19)   1638.IA044          ( 192.10)   1646.ICC            ( 181.61)   1657.IJX            ( 101.81)   1669.IOW            ( 189.39)   1671.IRK            (  99.47)   1686.JEF            ( 163.79)   1787.KBRL           (  97.17)   1796.KCDJ           ( 186.35)   1810.KCOU           ( 142.42)   1811.KCPS           ( 186.34)   1836.KDVN           ( 199.57)   1903.KIOW           ( 189.39)   1904.KIRK           (  99.47)   1910.KJEF           ( 163.79)   1960.KMLI           ( 184.71)   1979.KOTM           ( 157.25)   1988.KPIA           ( 167.87)   2015.KSET           ( 139.61)   2021.KSPI           ( 148.46)   2026.KSTL           ( 158.99)   2028.KSUS           ( 154.91)   2050.KUIN           (  17.54)   2103.LLC            ( 155.41)   2140.Linneus        ( 149.14)   2196.MLI            ( 184.71)   2286.MON            ( 123.44)   2293.MPZ            ( 113.63)   2294.MPZ            ( 113.63)   2295.MQB            (  91.59)   2311.MUT            ( 161.48)   2312.MUT            ( 161.48)   2326.Monroe_City    (  43.22)   2353.Novelty        (  67.76)   2393.ORR            (  50.99)   2399.OTM            ( 157.25)   2434.PIA            ( 167.87)   2457.PPQ            (  63.17)   2489.RBUR           ( 101.26)   2493.RCEN           ( 161.95)   2497.RDAV           ( 195.44)   2519.RIAC           ( 189.64)   2530.RMOU           ( 107.30)   2541.ROTT           ( 148.52)   2550.RSIG           ( 173.39)   2556.RTIP           ( 191.51)   2573.SA12           ( 135.33)   2582.SALI4          ( 170.25)   2600.SCDI4          ( 186.51)   2613.SET            ( 139.61)   2616.SFM            ( 115.57)   2681.SPI            ( 148.46)   2706.STL            ( 158.99)   2715.SUS            ( 154.91)   2730.Sanborn_Field  ( 135.50)   2742.TAZ            ( 183.20)   2797.UIN            (  17.54)   2837.WFP            ( 166.32)   2845.WNCI2          (  84.71)  [Found   121 stations within  200.00 KM.]
+
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   8.099-0012         189.25) xxx   8 099-0012        xxx   8 xxx 099-0012        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 099-0012          31   38.43778   -90.36139   0     2 Arnold                                         (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 099-0012       ,   38.43778,   -90.36139,  165, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   21.1171170002       149.19) xxx   21 1171170002      xxx   21 xxx 1171170002      xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 1171170002        31   39.39612   -89.80955   0     4 Nilwood, Macoupin County                       (N) 20030520 20030706 US 17 ???   0.00 n  165 hourly              201.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 1171170002     ,   39.39612,   -89.80955,  165, hourly    ,   201.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   22.1171192007       172.92) xxx   22 1171192007      xxx   22 xxx 1171192007      xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 1171192007        31   38.79331   -90.03964   0     4 Edwardsville, Madison County                   (N) 20030520 20030706 US 17 ???   0.00 n  165 hourly              134.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 1171192007     ,   38.79331,   -90.03964,  165, hourly    ,   134.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   23.1171430024       174.23) xxx   23 1171430024      xxx   23 xxx 1171430024      xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 1171430024        31   40.68749   -89.60687   0     4 Peoria, Peoria County                          (N) 20030520 20030706 US 17 ???   0.00 n  165 hourly              155.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 1171430024     ,   40.68749,   -89.60687,  165, hourly    ,   155.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   24.1171613002       191.39) xxx   24 1171613002      xxx   24 xxx 1171613002      xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 1171613002        31   41.51461   -90.51724   0     4 Rock Island, Rock Island County                (N) 20030520 20030706 US 17 ???   0.00 n  165 hourly              171.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 1171613002     ,   41.51461,   -90.51724,  165, hourly    ,   171.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   25.1171630010       182.00) xxx   25 1171630010      xxx   25 xxx 1171630010      xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 1171630010        31   38.61212   -90.16041   0     4 East St. Louis, St. Clair County               (N) 20030520 20030706 US 17 ???   0.00 n  165 hourly              125.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 1171630010     ,   38.61212,   -90.16041,  165, hourly    ,   125.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   26.1171670006       155.69) xxx   26 1171670006      xxx   26 xxx 1171670006      xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 1171670006        31   39.80072   -89.59074   0     4 Springfield, Sangamon County                   (N) 20030520 20030706 US 17 ???   0.00 n  165 hourly              171.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 1171670006     ,   39.80072,   -89.59074,  165, hourly    ,   171.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   33.129-0001         184.88) xxx   33 129-0001        xxx   33 xxx 129-0001        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 129-0001          31   40.56000   -93.41833   0     2 Mercer                                         (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 129-0001       ,   40.56000,   -93.41833,  165, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   35.137-0001          60.89) xxx   35 137-0001        xxx   35 xxx 137-0001        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 137-0001          31   39.47306   -91.78917   0     2 Mark Twain State Park                          (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 137-0001       ,   39.47306,   -91.78917,  165, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   43.183-1002         155.60) xxx   43 183-1002        xxx   43 xxx 183-1002        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 183-1002          31   38.87250   -90.22639   0     2 West Alton                                     (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 183-1002       ,   38.87250,   -90.22639,  165, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   45.189-0004         179.09) xxx   45 189-0004        xxx   45 xxx 189-0004        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 189-0004          31   38.53250   -90.38278   0     2 Sunset Hills                                   (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 189-0004       ,   38.53250,   -90.38278,  165, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   46.189-0006         166.46) xxx   46 189-0006        xxx   46 xxx 189-0006        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 189-0006          31   38.61361   -90.49583   0     2 Queeny Park                                    (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 189-0006       ,   38.61361,   -90.49583,  165, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   47.189-3001         170.29) xxx   47 189-3001        xxx   47 xxx 189-3001        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 189-3001          31   38.64139   -90.34583   0     2 Ladue                                          (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 189-3001       ,   38.64139,   -90.34583,  165, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   48.189-5001         161.71) xxx   48 189-5001        xxx   48 xxx 189-5001        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 189-5001          31   38.76611   -90.28583   0     2 Ferguson                                       (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 189-5001       ,   38.76611,   -90.28583,  165, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   49.189-7003         161.84) xxx   49 189-7003        xxx   49 xxx 189-7003        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 189-7003          31   38.72092   -90.36703   0     2 Breckenridge Hills                             (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 189-7003       ,   38.72092,   -90.36703,  165, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   90.211-0002         130.05) xxx   90 211-0002        xxx   90 xxx 211-0002        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 211-0002          31   40.23997   -92.87706   0     2 Green Castle South                             (N) 20030701 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 211-0002       ,   40.23997,   -92.87706,  165, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   185.510-0085         176.14) xxx   185 510-0085        xxx   185 xxx 510-0085        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 510-0085          31   38.65556   -90.19833   0     2 Blair Street                                   (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 510-0085       ,   38.65556,   -90.19833,  165, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   237.A131909          141.26) xxx   237 A131909         xxx   237 xxx A131909         xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: A131909           18   41.20000   -91.48000   0     2 Crawfordsville                                 (N) 20030520 20030706 US 19 ???   0.00 n   16 hourly              233.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: A131909        ,   41.20000,   -91.48000,   16, hourly    ,   233.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   238.A131909          141.34) xxx   238 A131909         xxx   238 xxx A131909         xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: A131909           74   41.20000   -91.50000   0     2 Crawfordsville                                 (N) 20030520 20030706 US 19 ???   0.00 n  288 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: A131909        ,   41.20000,   -91.50000,  288, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   242.A135849          146.26) xxx   242 A135849         xxx   242 xxx A135849         xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: A135849           74   41.22000   -91.06000   0     2 Muscatine                                      (N) 20030520 20030706 US 19 ???   0.00 n  288 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: A135849        ,   41.22000,   -91.06000,  288, hourly    , -9999.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   348.AAA              178.62) xxx   348 AAA             xxx   348 xxx AAA             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AAA                7   40.16000   -89.33000   0     2 99999 LINCOLN/LOGAN CO                 IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              182.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AAA            ,   40.16000,   -89.33000,  253, hourly    ,   182.0
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 0
+AAA             with distance  178.6 is NEW ID. Add to stnInfo Hash.
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   383.ALN              163.70) xxx   383 ALN             xxx   383 xxx ALN             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: ALN                7   38.90000   -90.05000   0     2 99999 ALTON/ST LOUIS RGNL              IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              166.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: ALN            ,   38.90000,   -90.05000,  253, hourly    ,   166.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   502.AP378            194.34) xxx   502 AP378           xxx   502 xxx AP378           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP378             69   40.31667   -89.17767   0     5 WB9SNS-3 McLean                   IN US        (N) 20030705 20030706 US 18 ???   0.00 n  252 hourly              213.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP378          ,   40.31667,   -89.17767,  252, hourly    ,   213.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   529.AP429            168.66) xxx   529 AP429           xxx   529 xxx AP429           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP429             69   38.55417   -92.21433   0     5 KC0CZI Jefferson City             MO US        (N) 20030520 20030706 US 29 ???   0.00 n  252 hourly              199.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP429          ,   38.55417,   -92.21433,  252, hourly    ,   199.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   530.AP430            135.13) xxx   530 AP430           xxx   530 xxx AP430           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP430             69   38.95217   -92.33000   0     5 WX0BC Columbia                    MO US        (N) 20030520 20030706 US 29 ???   0.00 n  252 hourly              226.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP430          ,   38.95217,   -92.33000,  252, hourly    ,   226.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   531.AP431            158.99) xxx   531 AP431           xxx   531 xxx AP431           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP431             69   38.67167   -90.53917   0     5 K0STL-15 Manchester               MO US        (N) 20030520 20030706 US 29 ???   0.00 n  252 hourly              229.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP431          ,   38.67167,   -90.53917,  252, hourly    ,   229.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   561.AP550            176.71) xxx   561 AP550           xxx   561 xxx AP550           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP550             69   38.81330   -89.94917   0     5 N9LBG Edwardsville                IL US        (N) 20030523 20030706 US 17 ???   0.00 n  252 hourly              164.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP550          ,   38.81330,   -89.94917,  252, hourly    ,   164.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   571.AP583            168.67) xxx   571 AP583           xxx   571 xxx AP583           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP583             69   40.77800   -89.75467   0     5 W9HOI Kickapoo                    IL US        (N) 20030520 20030706 US 17 ???   0.00 n  252 hourly              201.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP583          ,   40.77800,   -89.75467,  252, hourly    ,   201.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   628.AP798            141.58) xxx   628 AP798           xxx   628 xxx AP798           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP798             69   38.92917   -92.41500   0     5 K0GN-4 Columbia                   MO US        (N) 20030612 20030630 US 29 ???   0.00 n  252 hourly              205.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP798          ,   38.92917,   -92.41500,  252, hourly    ,   205.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   629.AP799            138.86) xxx   629 AP799           xxx   629 xxx AP799           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP799             69   38.92167   -92.34917   0     5 AE0S-3 Columbia                   MO US        (N) 20030520 20030706 US 29 ???   0.00 n  252 hourly              206.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP799          ,   38.92167,   -92.34917,  252, hourly    ,   206.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   647.AP835            172.72) xxx   647 AP835           xxx   647 xxx AP835           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP835             69   38.60717   -92.44467   0     5 KB0HNR-3 California               MO US        (N) 20030520 20030706 US 29 ???   0.00 n  252 hourly              100.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP835          ,   38.60717,   -92.44467,  252, hourly    ,   100.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   648.AP836            146.61) xxx   648 AP836           xxx   648 xxx AP836           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP836             69   38.88633   -92.43850   0     5 WX0BC-15 Columbia                 MO US        (N) 20030520 20030706 US 29 ???   0.00 n  252 hourly              100.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP836          ,   38.88633,   -92.43850,  252, hourly    ,   100.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   669.AP879            142.33) xxx   669 AP879           xxx   669 xxx AP879           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP879             69   40.95133   -90.38967   0     5 N9VPV Galesburg                   IL US        (N) 20030528 20030706 US 17 ???   0.00 n  252 hourly              235.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP879          ,   40.95133,   -90.38967,  252, hourly    ,   235.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   678.AP918            156.82) xxx   678 AP918           xxx   678 xxx AP918           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AP918             69   38.73333   -90.45017   0     5 KB0YUP Maryland Hts.              MO US        (N) 20030611 20030706 US 29 ???   0.00 n  252 hourly              199.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AP918          ,   38.73333,   -90.45017,  252, hourly    ,   199.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   716.AWG              151.69) xxx   716 AWG             xxx   716 xxx AWG             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AWG                7   41.28000   -91.67000   0     2 99999 WASHINGTON                       IA      (N) 20030520 20030706 US 19 ???   0.00 n  253 hourly              230.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AWG            ,   41.28000,   -91.67000,  253, hourly    ,   230.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   717.AWG              151.69) xxx   717 AWG             xxx   717 xxx AWG             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: AWG                7   41.28000   -91.67000   0     4 Washington                                     (N) 20030520 20030706 US 19 ???   0.00 n   41 1 minute            228.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: AWG            ,   41.28000,   -91.67000,   41, 1 minute  ,   228.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   726.Auxvasse         106.90) xxx   726 Auxvasse        xxx   726 xxx Auxvasse        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: Auxvasse          25   39.08917   -91.99806   0     4 6 miles nw of Auxvasse                         (N) 20030520 20030706 US 29 ???   0.00 n  146 hourly              274.6 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: Auxvasse       ,   39.08917,   -91.99806,  146, hourly    ,   274.6
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   773.BRL               97.17) xxx   773 BRL             xxx   773 xxx BRL             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: BRL                7   40.78000   -91.13000   0     2 99999 BURLINGTON MUNI                  IA      (N) 20030520 20030706 US 19 ???   0.00 n  253 hourly              213.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: BRL            ,   40.78000,   -91.13000,  253, hourly    ,   213.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   796.Brunswick        164.15) xxx   796 Brunswick       xxx   796 xxx Brunswick       xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: Brunswick         25   39.41278   -93.19639   0     4 4 miles west of Brunswick                      (N) 20030520 20030706 US 29 ???   0.00 n  146 hourly              192.5 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: Brunswick      ,   39.41278,   -93.19639,  146, hourly    ,   192.5
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 1
+Brunswick       with distance  164.1 is NEW ID. Add to stnInfo Hash.
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   809.C0099            180.39) xxx   809 C0099           xxx   809 xxx C0099           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: C0099             69   38.54883   -90.31700   0     5 CW0099 Affton                     MO US        (N) 20030520 20030706 US 29 ???   0.00 n  252 hourly              185.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: C0099          ,   38.54883,   -90.31700,  252, hourly    ,   185.0
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 2
+C0099           with distance  180.3 is NEW ID. Add to stnInfo Hash.
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   978.CDJ              186.35) xxx   978 CDJ             xxx   978 xxx CDJ             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: CDJ                7   39.82000   -93.58000   0     2 99999 CHILLICOTHE/LITTON AGRI-SCIENCE  MO      (N) 20030520 20030706 US 29 ???   0.00 n  253 hourly              234.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: CDJ            ,   39.82000,   -93.58000,  253, hourly    ,   234.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1036.COU              142.42) xxx   1036 COU             xxx   1036 xxx COU             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: COU                7   38.82000   -92.22000   0     2 72445 COLUMBIA REGIONAL                MO      (N) 20030520 20030706 US 29 ???   0.00 n  253 hourly              274.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: COU            ,   38.82000,   -92.22000,  253, hourly    ,   274.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1038.CPS              186.34) xxx   1038 CPS             xxx   1038 xxx CPS             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: CPS                7   38.57000   -90.15000   0     2 99999 CAHOKIA/ST. LOUIS                IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              126.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: CPS            ,   38.57000,   -90.15000,  253, hourly    ,   126.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1066.Columbia         136.73) xxx   1066 Columbia        xxx   1066 xxx Columbia        xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: Columbia          25   38.90472   -92.27333   0     4 South Farms 4 mi SE of Columbia                (N) 20030520 20030706 US 29 ???   0.00 n  146 hourly              251.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: Columbia       ,   38.90472,   -92.27333,  146, hourly    ,   251.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1115.DVN              199.57) xxx   1115 DVN             xxx   1115 xxx DVN             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: DVN                7   41.61000   -90.57000   0     2 74455 QUAD CITIES/QUAD CITIES          IA      (N) 20030520 20030706 US 19 ???   0.00 n  253 hourly              229.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: DVN            ,   41.61000,   -90.57000,  253, hourly    ,   229.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1162.EOK               59.86) xxx   1162 EOK             xxx   1162 xxx EOK             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: EOK                7   40.47000   -91.43000   0     4 Keokuk Muni                                    (N) 20030520 20030706 US 19 ???   0.00 n   41 1 minute            204.5 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: EOK            ,   40.47000,   -91.43000,   41, 1 minute  ,   204.5
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1163.EOK               59.86) xxx   1163 EOK             xxx   1163 xxx EOK             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: EOK                7   40.47000   -91.43000   0     2 99999 KEOKUK MUNI                      IA      (N) 20030520 20030706 US 19 ???   0.00 n  253 hourly              205.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: EOK            ,   40.47000,   -91.43000,  253, hourly    ,   205.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1344.FFL              133.62) xxx   1344 FFL             xxx   1344 xxx FFL             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: FFL                7   41.05000   -91.98000   0     4 Fairfield                                      (N) 20030520 20030706 US 19 ???   0.00 n   41 1 minute            242.3 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: FFL            ,   41.05000,   -91.98000,   41, 1 minute  ,   242.3
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1345.FFL              133.62) xxx   1345 FFL             xxx   1345 xxx FFL             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: FFL                7   41.05000   -91.98000   0     2 99999 FAIRFIELD                        IA      (N) 20030520 20030706 US 19 ???   0.00 n  253 hourly              244.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: FFL            ,   41.05000,   -91.98000,  253, hourly    ,   244.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1375.FSW               82.33) xxx   1375 FSW             xxx   1375 xxx FSW             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: FSW                7   40.67000   -91.33000   0     2 99999 FORT MADISON                     IA      (N) 20030521 20030706 US 19 ???   0.00 n  253 hourly              221.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: FSW            ,   40.67000,   -91.33000,  253, hourly    ,   221.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1376.FSW               82.33) xxx   1376 FSW             xxx   1376 xxx FSW             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: FSW                7   40.67000   -91.33000   0     4 Fort Madison                                   (N) 20030521 20030706 US 19 ???   0.00 n   41 1 minute            220.1 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: FSW            ,   40.67000,   -91.33000,   41, 1 minute  ,   220.1
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1391.GBG              138.38) xxx   1391 GBG             xxx   1391 xxx GBG             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: GBG                7   40.93000   -90.43000   0     2 99999 GALESBURG MUNICIPAL              IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              233.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: GBG            ,   40.93000,   -90.43000,  253, hourly    ,   233.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1447.H0029            181.55) xxx   1447 H0029           xxx   1447 xxx H0029           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: H0029             69   38.54000   -90.31000   0     2 Affton        MO                               (N) 20030520 20030706 US 99 ???   0.00 n  252 hourly              185.7 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: H0029          ,   38.54000,   -90.31000,  252, hourly    ,   185.7
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 3
+H0029           with distance  181.5 is NEW ID. Add to stnInfo Hash.
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1469.H0165            150.98) xxx   1469 H0165           xxx   1469 xxx H0165           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: H0165             69   40.02000   -93.17000   0     2 Browning      MO                               (N) 20030520 20030706 US 99 ???   0.00 n  252 hourly              247.1 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: H0165          ,   40.02000,   -93.17000,  252, hourly    ,   247.1
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1509.H0353             52.08) xxx   1509 H0353           xxx   1509 xxx H0353           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: H0353             69   40.40000   -91.37700   0     2 Keokuk        IA                               (N) 20030520 20030706 US 99 ???   0.00 n  252 hourly              205.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: H0353          ,   40.40000,   -91.37700,  252, hourly    ,   205.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1522.H0472            152.01) xxx   1522 H0472           xxx   1522 xxx H0472           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: H0472             69   39.87890   -93.18250   0     2 Linneus     MO                                 (N) 20030520 20030701 US 99 ???   0.00 n  252 hourly              248.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: H0472          ,   39.87890,   -93.18250,  252, hourly    ,   248.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1603.IA007            101.37) xxx   1603 IA007           xxx   1603 xxx IA007           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: IA007             69   40.81300   -91.09920   0     4 Burlington (US 34)                             (N) 20030520 20030706 US 99 ???   0.00 n  252 hourly              218.1 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: IA007          ,   40.81300,   -91.09920,  252, hourly    ,   218.1
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1607.IA011            162.73) xxx   1607 IA011           xxx   1607 xxx IA011           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: IA011             69   40.73970   -93.00270   0     4 Centerville (IA 2)                             (N) 20030520 20030706 US 99 ???   0.00 n  252 hourly              295.2 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: IA011          ,   40.73970,   -93.00270,  252, hourly    ,   295.2
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1610.IA014            195.74) xxx   1610 IA014           xxx   1610 xxx IA014           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: IA014             69   41.60230   -90.67770   0     4 Davenport (I-80/I-280)                         (N) 20030520 20030706 US 99 ???   0.00 n  252 hourly              206.2 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: IA014          ,   41.60230,   -90.67770,  252, hourly    ,   206.2
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1618.IA023            192.75) xxx   1618 IA023           xxx   1618 xxx IA023           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: IA023             69   41.65750   -91.59880   0     4 Iowa City (US 218)                             (N) 20030520 20030706 US 99 ???   0.00 n  252 hourly              254.1 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: IA023          ,   41.65750,   -91.59880,  252, hourly    ,   254.1
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1626.IA032            107.99) xxx   1626 IA032           xxx   1626 xxx IA032           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: IA032             69   40.89570   -91.55550   0     4 Mount Pleasant (US 218)                        (N) 20030520 20030706 US 99 ???   0.00 n  252 hourly              133.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: IA032          ,   40.89570,   -91.55550,  252, hourly    ,   133.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1630.IA036            148.29) xxx   1630 IA036           xxx   1630 xxx IA036           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: IA036             69   41.01680   -92.42120   0     4 Ottumwa (US 63)                                (N) 20030520 20030703 US 99 ???   0.00 n  252 hourly              195.8 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: IA036          ,   41.01680,   -92.42120,  252, hourly    ,   195.8
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1634.IA040            174.19) xxx   1634 IA040           xxx   1634 xxx IA040           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: IA040             69   41.33630   -92.31450   0     4 Sigourney (IA 92)                              (N) 20030520 20030706 US 99 ???   0.00 n  252 hourly              202.5 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: IA040          ,   41.33630,   -92.31450,  252, hourly    ,   202.5
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1638.IA044            192.10) xxx   1638 IA044           xxx   1638 xxx IA044           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: IA044             69   41.64500   -91.12650   0     4 Tipton (I-80)                                  (N) 20030520 20030706 US 99 ???   0.00 n  252 hourly              236.4 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: IA044          ,   41.64500,   -91.12650,  252, hourly    ,   236.4
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1646.ICC              181.61) xxx   1646 ICC             xxx   1646 xxx ICC             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: ICC               22   40.70000   -89.51667   0     2 ISWS/ICN Peoria                                (N) 20030520 20030706 US 17 ???   0.00 n   17 hourly              207.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: ICC            ,   40.70000,   -89.51667,   17, hourly    ,   207.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1657.IJX              101.81) xxx   1657 IJX             xxx   1657 xxx IJX             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: IJX                7   39.78000   -90.23000   0     2 99999 JACKSONVILLE                     IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              190.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: IJX            ,   39.78000,   -90.23000,  253, hourly    ,   190.0
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 4
+IJX             with distance  101.8 is NEW ID. Add to stnInfo Hash.
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1669.IOW              189.39) xxx   1669 IOW             xxx   1669 xxx IOW             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: IOW                7   41.63000   -91.55000   0     2 99999 IOWA CITY                        IA      (N) 20030520 20030706 US 19 ???   0.00 n  253 hourly              204.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: IOW            ,   41.63000,   -91.55000,  253, hourly    ,   204.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1671.IRK               99.47) xxx   1671 IRK             xxx   1671 xxx IRK             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: IRK                7   40.10000   -92.55000   0     2 99999 KIRKSVILLE REGIONAL              MO      (N) 20030520 20030706 US 29 ???   0.00 n  253 hourly              294.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: IRK            ,   40.10000,   -92.55000,  253, hourly    ,   294.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1686.JEF              163.79) xxx   1686 JEF             xxx   1686 xxx JEF             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: JEF                7   38.58000   -92.15000   0     2 99999 JEFFERSON CITY MEM               MO      (N) 20030520 20030706 US 29 ???   0.00 n  253 hourly              167.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: JEF            ,   38.58000,   -92.15000,  253, hourly    ,   167.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1787.KBRL              97.17) xxx   1787 KBRL            xxx   1787 xxx KBRL            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KBRL               7   40.78000   -91.13000   0     4 BURLINGTON                                     (C) 20030520 20030706 US 19 ???   0.00 n   40 1 minute            213.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KBRL           ,   40.78000,   -91.13000,   40, 1 minute  ,   213.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1796.KCDJ             186.35) xxx   1796 KCDJ            xxx   1796 xxx KCDJ            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KCDJ               7   39.82000   -93.58000   0     4 CHILLICOTHE/LITTON                             (C) 20030520 20030706 US 29 ???   0.00 n   40 1 minute            234.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KCDJ           ,   39.82000,   -93.58000,   40, 1 minute  ,   234.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1810.KCOU             142.42) xxx   1810 KCOU            xxx   1810 xxx KCOU            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KCOU               7   38.82000   -92.22000   0     4 COLUMBIA                                       (C) 20030602 20030704 US 29 ???   0.00 n   40 1 minute            274.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KCOU           ,   38.82000,   -92.22000,   40, 1 minute  ,   274.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1811.KCPS             186.34) xxx   1811 KCPS            xxx   1811 xxx KCPS            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KCPS               7   38.57000   -90.15000   0     4 CAHOKIA/ST.                                    (C) 20030520 20030706 US 17 ???   0.00 n   40 1 minute            126.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KCPS           ,   38.57000,   -90.15000,   40, 1 minute  ,   126.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1836.KDVN             199.57) xxx   1836 KDVN            xxx   1836 xxx KDVN            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KDVN               7   41.61000   -90.57000   0     4 QUAD                                           (C) 20030520 20030706 US 19 ???   0.00 n   40 1 minute            229.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KDVN           ,   41.61000,   -90.57000,   40, 1 minute  ,   229.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1903.KIOW             189.39) xxx   1903 KIOW            xxx   1903 xxx KIOW            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KIOW               7   41.63000   -91.55000   0     4 IOWA                                           (C) 20030520 20030706 US 19 ???   0.00 n   40 1 minute            204.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KIOW           ,   41.63000,   -91.55000,   40, 1 minute  ,   204.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1904.KIRK              99.47) xxx   1904 KIRK            xxx   1904 xxx KIRK            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KIRK               7   40.10000   -92.55000   0     4 KIRKSVILLE                                     (C) 20030520 20030706 US 29 ???   0.00 n   40 1 minute            294.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KIRK           ,   40.10000,   -92.55000,   40, 1 minute  ,   294.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1910.KJEF             163.79) xxx   1910 KJEF            xxx   1910 xxx KJEF            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KJEF               7   38.58000   -92.15000   0     4 JEFFERSON                                      (C) 20030520 20030706 US 29 ???   0.00 n   40 1 minute            167.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KJEF           ,   38.58000,   -92.15000,   40, 1 minute  ,   167.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1960.KMLI             184.71) xxx   1960 KMLI            xxx   1960 xxx KMLI            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KMLI               7   41.45000   -90.52000   0     4 MOLINE/QUAD                                    (C) 20030602 20030704 US 17 ???   0.00 n   40 1 minute            181.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KMLI           ,   41.45000,   -90.52000,   40, 1 minute  ,   181.0
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 5
+KMLI            with distance  184.7 is NEW ID. Add to stnInfo Hash.
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1979.KOTM             157.25) xxx   1979 KOTM            xxx   1979 xxx KOTM            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KOTM               7   41.10000   -92.45000   0     4 OTTUMWA                                        (C) 20030520 20030706 US 19 ???   0.00 n   40 1 minute            258.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KOTM           ,   41.10000,   -92.45000,   40, 1 minute  ,   258.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   1988.KPIA             167.87) xxx   1988 KPIA            xxx   1988 xxx KPIA            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KPIA               7   40.67000   -89.68000   0     4 PEORIA                                         (C) 20030602 20030704 US 17 ???   0.00 n   40 1 minute            202.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KPIA           ,   40.67000,   -89.68000,   40, 1 minute  ,   202.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2015.KSET             139.61) xxx   2015 KSET            xxx   2015 xxx KSET            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KSET               7   38.93000   -90.43000   0     4 ST                                             (C) 20030616 20030702 US 29 ???   0.00 n   40 1 minute            134.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KSET           ,   38.93000,   -90.43000,   40, 1 minute  ,   134.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2021.KSPI             148.46) xxx   2021 KSPI            xxx   2021 xxx KSPI            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KSPI               7   39.85000   -89.67000   0     4 SPRINGFIELD/CAPITAL                            (C) 20030602 20030704 US 17 ???   0.00 n   40 1 minute            187.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KSPI           ,   39.85000,   -89.67000,   40, 1 minute  ,   187.0
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 6
+KSPI            with distance  148.4 is NEW ID. Add to stnInfo Hash.
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2026.KSTL             158.99) xxx   2026 KSTL            xxx   2026 xxx KSTL            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KSTL               7   38.75000   -90.37000   0     4 ST.                                            (C) 20030602 20030704 US 29 ???   0.00 n   40 1 minute            172.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KSTL           ,   38.75000,   -90.37000,   40, 1 minute  ,   172.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2028.KSUS             154.91) xxx   2028 KSUS            xxx   2028 xxx KSUS            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KSUS               7   38.67000   -90.65000   0     4 SPIRIT                                         (C) 20030522 20030706 US 29 ???   0.00 n   40 1 minute            141.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KSUS           ,   38.67000,   -90.65000,   40, 1 minute  ,   141.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2050.KUIN              17.54) xxx   2050 KUIN            xxx   2050 xxx KUIN            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: KUIN               7   39.95000   -91.20000   0     4 QUINCY                                         (C) 20030520 20030629 US 17 ???   0.00 n   40 1 minute            234.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: KUIN           ,   39.95000,   -91.20000,   40, 1 minute  ,   234.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2103.LLC              155.41) xxx   2103 LLC             xxx   2103 xxx LLC             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: LLC               22   39.68333   -89.61667   0     2 ISWS/ICN Springfield                           (N) 20030520 20030706 US 17 ???   0.00 n   17 hourly              177.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: LLC            ,   39.68333,   -89.61667,   17, hourly    ,   177.0
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 7
+LLC             with distance  155.4 is NEW ID. Add to stnInfo Hash.
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2140.Linneus          149.14) xxx   2140 Linneus         xxx   2140 xxx Linneus         xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: Linneus           25   39.85694   -93.14722   0     4 Forage Systems Research Center Linneus         (N) 20030520 20030706 US 29 ???   0.00 n  146 hourly              251.3 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: Linneus        ,   39.85694,   -93.14722,  146, hourly    ,   251.3
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2196.MLI              184.71) xxx   2196 MLI             xxx   2196 xxx MLI             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: MLI                7   41.45000   -90.52000   0     2 72544 MOLINE/QUAD CITY                 IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              181.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: MLI            ,   41.45000,   -90.52000,  253, hourly    ,   181.0
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 8
+MLI             EXISTS in the stnInfo Hash. DUPLICATE Distance Stns!
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2286.MON              123.44) xxx   2286 MON             xxx   2286 xxx MON             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: MON               22   40.91667   -90.73333   0     2 ISWS/ICN Monmouth                              (N) 20030520 20030706 US 17 ???   0.00 n   17 hourly              229.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: MON            ,   40.91667,   -90.73333,   17, hourly    ,   229.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2293.MPZ              113.63) xxx   2293 MPZ             xxx   2293 xxx MPZ             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: MPZ                7   40.95000   -91.51000   0     2 99999 MOUNT PLEASANT MUNI AIRPORT      IA      (N) 20030520 20030704 US 19 ???   0.00 n  253 hourly              224.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: MPZ            ,   40.95000,   -91.51000,  253, hourly    ,   224.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2294.MPZ              113.63) xxx   2294 MPZ             xxx   2294 xxx MPZ             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: MPZ                7   40.95000   -91.51000   0     4 Mount Pleasant                                 (N) 20030520 20030704 US 19 ???   0.00 n   41 1 minute            222.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: MPZ            ,   40.95000,   -91.51000,   41, 1 minute  ,   222.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2295.MQB               91.59) xxx   2295 MQB             xxx   2295 xxx MQB             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: MQB                7   40.52000   -90.65000   0     2 99999 MACOMB                           IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              215.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: MQB            ,   40.52000,   -90.65000,  253, hourly    ,   215.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2311.MUT              161.48) xxx   2311 MUT             xxx   2311 xxx MUT             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: MUT                7   41.37000   -91.15000   0     2 99999 MUSCATINE                        IA      (N) 20030520 20030706 US 19 ???   0.00 n  253 hourly              167.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: MUT            ,   41.37000,   -91.15000,  253, hourly    ,   167.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2312.MUT              161.48) xxx   2312 MUT             xxx   2312 xxx MUT             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: MUT                7   41.37000   -91.15000   0     4 Muscatine                                      (N) 20030520 20030706 US 19 ???   0.00 n   41 1 minute            165.5 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: MUT            ,   41.37000,   -91.15000,   41, 1 minute  ,   165.5
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2326.Monroe_City       43.22) xxx   2326 Monroe_City     xxx   2326 xxx Monroe_City     xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: Monroe_City       25   39.63333   -91.72556   0     4 Monroe City Airport                            (N) 20030520 20030706 US 29 ???   0.00 n  146 hourly              224.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: Monroe_City    ,   39.63333,   -91.72556,  146, hourly    ,   224.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2353.Novelty           67.76) xxx   2353 Novelty         xxx   2353 xxx Novelty         xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: Novelty           25   40.02056   -92.19000   0     4 Greenley Memorial Center 1 mi E of Novelty     (N) 20030520 20030706 US 29 ???   0.00 n  146 hourly              250.6 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: Novelty        ,   40.02056,   -92.19000,  146, hourly    ,   250.6
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2393.ORR               50.99) xxx   2393 ORR             xxx   2393 xxx ORR             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: ORR               22   39.80000   -90.83333   0     2 ISWS/ICN Orr                                   (N) 20030520 20030706 US 17 ???   0.00 n   17 hourly              206.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: ORR            ,   39.80000,   -90.83333,   17, hourly    ,   206.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2399.OTM              157.25) xxx   2399 OTM             xxx   2399 xxx OTM             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: OTM                7   41.10000   -92.45000   0     2 99999 OTTUMWA INDUSTRIAL               IA      (N) 20030520 20030706 US 19 ???   0.00 n  253 hourly              258.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: OTM            ,   41.10000,   -92.45000,  253, hourly    ,   258.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2434.PIA              167.87) xxx   2434 PIA             xxx   2434 xxx PIA             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: PIA                7   40.67000   -89.68000   0     2 72532 PEORIA REGIONAL                  IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              202.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: PIA            ,   40.67000,   -89.68000,  253, hourly    ,   202.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2457.PPQ               63.17) xxx   2457 PPQ             xxx   2457 xxx PPQ             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: PPQ                7   39.63000   -90.78000   0     2 99999 PITTSFIELD                       IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              216.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: PPQ            ,   39.63000,   -90.78000,  253, hourly    ,   216.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2489.RBUR             101.26) xxx   2489 RBUR            xxx   2489 xxx RBUR            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: RBUR              56   40.81000   -91.09000   0     2 Burlington (US 34)                             (N) 20030520 20030706 US 19 ???   0.00 n  248 hourly              218.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: RBUR           ,   40.81000,   -91.09000,  248, hourly    ,   218.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2493.RCEN             161.95) xxx   2493 RCEN            xxx   2493 xxx RCEN            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: RCEN              56   40.73000   -93.00000   0     2 Enterville (IA 2)                              (N) 20030520 20030706 US 19 ???   0.00 n  248 hourly              295.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: RCEN           ,   40.73000,   -93.00000,  248, hourly    ,   295.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2497.RDAV             195.44) xxx   2497 RDAV            xxx   2497 xxx RDAV            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: RDAV              56   41.60000   -90.68000   0     2 Davenport (I-80/I-280)                         (N) 20030520 20030706 US 19 ???   0.00 n  248 hourly              206.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: RDAV           ,   41.60000,   -90.68000,  248, hourly    ,   206.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2519.RIAC             189.64) xxx   2519 RIAC            xxx   2519 xxx RIAC            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: RIAC              56   41.63000   -91.59000   0     2 Iowa City (US 218)                             (N) 20030520 20030706 US 19 ???   0.00 n  248 hourly              254.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: RIAC           ,   41.63000,   -91.59000,  248, hourly    ,   254.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2530.RMOU             107.30) xxx   2530 RMOU            xxx   2530 xxx RMOU            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: RMOU              56   40.89000   -91.55000   0     2 Mount Pleasant (US 218)                        (N) 20030520 20030706 US 19 ???   0.00 n  248 hourly              133.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: RMOU           ,   40.89000,   -91.55000,  248, hourly    ,   133.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2541.ROTT             148.52) xxx   2541 ROTT            xxx   2541 xxx ROTT            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: ROTT              56   41.02000   -92.42000   0     2 Ottumwa (US 63)                                (N) 20030520 20030703 US 19 ???   0.00 n  248 hourly              196.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: ROTT           ,   41.02000,   -92.42000,  248, hourly    ,   196.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2550.RSIG             173.39) xxx   2550 RSIG            xxx   2550 xxx RSIG            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: RSIG              56   41.33000   -92.31000   0     2 Sigourney (IA 92)                              (N) 20030520 20030706 US 19 ???   0.00 n  248 hourly              202.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: RSIG           ,   41.33000,   -92.31000,  248, hourly    ,   202.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2556.RTIP             191.51) xxx   2556 RTIP            xxx   2556 xxx RTIP            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: RTIP              56   41.64000   -91.13000   0     2 Tipton (I-80)                                  (N) 20030520 20030706 US 19 ???   0.00 n  248 hourly              236.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: RTIP           ,   41.64000,   -91.13000,  248, hourly    ,   236.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2573.SA12             135.33) xxx   2573 SA12            xxx   2573 xxx SA12            xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: SA12              69   38.95000   -92.33000   0     2 Columbia, MO                                   (N) 20030529 20030706 US 99 ???   0.00 n  252 hourly              226.5 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: SA12           ,   38.95000,   -92.33000,  252, hourly    ,   226.5
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2582.SALI4            170.25) xxx   2582 SALI4           xxx   2582 xxx SALI4           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: SALI4             72   41.02908   -92.80542   0     4 Albia Lincoln Center                           (N) 20030520 20030706 US 19 ???   0.00 n  285 1 minute            312.4 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: SALI4          ,   41.02908,   -92.80542,  285, 1 minute  ,   312.4
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2600.SCDI4            186.51) xxx   2600 SCDI4           xxx   2600 xxx SCDI4           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: SCDI4             72   40.75162   -93.32137   0     4 Wayne Commun _ Corydon                         (N) 20030520 20030706 US 19 ???   0.00 n  285 1 minute            331.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: SCDI4          ,   40.75162,   -93.32137,  285, 1 minute  ,   331.9
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2613.SET              139.61) xxx   2613 SET             xxx   2613 xxx SET             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: SET                7   38.93000   -90.43000   0     2 99999 ST CHARLES (WAS 3SZ)             MO      (N) 20030520 20030706 US 29 ???   0.00 n  253 hourly              134.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: SET            ,   38.93000,   -90.43000,  253, hourly    ,   134.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2616.SFM              115.57) xxx   2616 SFM             xxx   2616 xxx SFM             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: SFM               22   40.16667   -90.08333   0     2 ISWS/ICN Kilbourne                             (N) 20030520 20030706 US 17 ???   0.00 n   17 hourly              152.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: SFM            ,   40.16667,   -90.08333,   17, hourly    ,   152.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2681.SPI              148.46) xxx   2681 SPI             xxx   2681 xxx SPI             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: SPI                7   39.85000   -89.67000   0     2 72439 SPRINGFIELD/CAPITAL              IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              187.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: SPI            ,   39.85000,   -89.67000,  253, hourly    ,   187.0
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 9
+SPI             EXISTS in the stnInfo Hash. DUPLICATE Distance Stns!
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2706.STL              158.99) xxx   2706 STL             xxx   2706 xxx STL             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: STL                7   38.75000   -90.37000   0     2 72434 ST. LOUIS/LAMBERT                MO      (N) 20030520 20030706 US 29 ???   0.00 n  253 hourly              172.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: STL            ,   38.75000,   -90.37000,  253, hourly    ,   172.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2715.SUS              154.91) xxx   2715 SUS             xxx   2715 xxx SUS             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: SUS                7   38.67000   -90.65000   0     2 99999 SPIRIT OF ST LOUIS               MO      (N) 20030520 20030706 US 29 ???   0.00 n  253 hourly              141.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: SUS            ,   38.67000,   -90.65000,  253, hourly    ,   141.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2730.Sanborn_Field    135.50) xxx   2730 Sanborn_Field   xxx   2730 xxx Sanborn_Field   xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: Sanborn_Field     25   38.94250   -92.32000   0     4 Sanborn Field University of Missouri-Columbia  (N) 20030520 20030706 US 29 ???   0.00 n  146 hourly              235.4 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: Sanborn_Field  ,   38.94250,   -92.32000,  146, hourly    ,   235.4
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2742.TAZ              183.20) xxx   2742 TAZ             xxx   2742 xxx TAZ             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: TAZ                7   39.53000   -89.33000   0     2 99999 TAYLORVILLE                      IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              189.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: TAZ            ,   39.53000,   -89.33000,  253, hourly    ,   189.0
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 10
+TAZ             with distance  183.2 is NEW ID. Add to stnInfo Hash.
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2797.UIN               17.54) xxx   2797 UIN             xxx   2797 xxx UIN             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: UIN                7   39.95000   -91.20000   0     2 99999 QUINCY MUNI/BALDWIN              IL      (N) 20030520 20030706 US 17 ???   0.00 n  253 hourly              234.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: UIN            ,   39.95000,   -91.20000,  253, hourly    ,   234.0
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2837.WFP              166.32) xxx   2837 WFP             xxx   2837 xxx WFP             xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: WFP               22   40.73333   -89.75000   0     2 ISWS/ICN Wildlife_Park                         (N) 20030520 20030706 US 17 ???   0.00 n   17 hourly              188.0 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: WFP            ,   40.73333,   -89.75000,   17, hourly    ,   188.0
+Found stn within AOI and less than delta_elevM. Before Increment stations_within_VAOI = 11
+WFP             with distance  166.3 is NEW ID. Add to stnInfo Hash.
+stn_parts, stn_name_parts, stn_index, station_name:: xxx   2845.WNCI2             84.71) xxx   2845 WNCI2           xxx   2845 xxx WNCI2           xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: WNCI2             69   39.66000   -90.48000   0     2 Winchester, IL                                 (N) 20030520 20030706 US 99 ???   0.00 n  252 hourly              171.7 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: WNCI2          ,   39.66000,   -90.48000,  252, hourly    ,   171.7
+stn_parts, stn_name_parts, stn_index, station_name:: xxx  [Found   121 stations within  200.00 KM.]
+ xxx  [Found   121 stations within  200 00 KM ]
+ xxx  [Found   121 stations within  200 xxx 00 KM xxx
+stationCD_lines[0]: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_line: 037-0003          31   38.77028   -94.58000   0     2 Richards Gebaur - South (Belton)               (N) 20030520 20030706 US 29 ???   0.00 n  165 hourly            -9999.9 f
+
+CD_stnID, CD_lat, CD_lon, CD_name, CD_network, CD_freq, CD_elev:: 037-0003       ,   38.77028,   -94.58000,  165, hourly    , -9999.9
+stnInfo::  101.8 -   
+stnInfo{num==1}:: HASH(0x1782d4)
+stnInfo::  148.4 -   
+stnInfo::  155.4 -   
+stnInfo::  164.1 -   
+stnInfo::  166.3 -   
+stnInfo::  178.6 -   
+stnInfo::  180.3 -   
+stnInfo::  181.5 -   
+stnInfo::  183.2 -   
+stnInfo::  184.7 -   
+Line: 23; Input_line=xxx 
+ xxx
+Line: 24; Input_line=xxx 10.1170310001     (  41.67082   -87.73259)::  11.1170310072     (  27.12),  12.1170310076     (   9.11),  13.1170311018     (  13.36),  14.1170313103     (  34.89),  15.1170314201     (  52.55),  16.1170317002     (  43.81),  17.1170436001     (  32.40),  18.1170971007     ( 126.00),  19.1170990007     ( 117.61),  23.1171430024     ( 191.48),  27.1171971011     (  62.98),  28.1172012001     ( 130.91),  178.45007          ( 126.45),  401.AP012          (  71.51),  424.AP091          ( 170.31),  433.AP120          ( 197.09),  434.AP121          ( 190.91),  435.AP122          ( 181.96),  436.AP123          ( 175.62),  438.AP125          ( 195.84),  440.AP127          ( 184.41),  458.AP186          (  10.26),  468.AP226          ( 198.79),  475.AP261          ( 125.97),  498.AP360          ( 153.72),  501.AP377          (  81.36),  502.AP378          ( 193.61),  518.AP399          ( 189.36),  519.AP400          ( 178.63),  520.AP401          ( 114.97),  525.AP418          (  50.38),  560.AP549          ( 167.99),  570.AP581          ( 117.58),  571.AP583          ( 196.37),  577.AP592          ( 152.53),  615.AP732          ( 187.04),  638.AP826          ( 172.34),  643.AP831          ( 165.52),  645.AP833          (  94.84),  646.AP834          ( 170.07),  668.AP878          (  36.69),  690.ARR            (  62.28),  723.AZO            ( 191.17),  733.BBC            ( 133.23),  736.BEH            ( 119.46),  746.BIV            ( 180.47),  762.BMI            ( 165.88),  784.BUU            ( 122.77),  786.BVL            ( 188.22),  803.C0031          (  62.84),  806.C0066          (  54.25),  813.C0141          ( 168.82),  824.C0241          ( 195.17),  838.C0472          (  37.77),  841.C0531          (  43.62),  849.C0571          (  52.20),  869.C0783          (  55.94),  887.C09            (  63.25),  910.C1057          ( 120.95),  912.C1096          ( 146.48),  918.C1116          ( 146.16),  953.C75            ( 156.36),  991.CHICAGO        (  41.42),  1014.CMI            ( 188.44),  1015.CMI            ( 181.73),  1021.CNT            ( 172.92),  1080.DEK            (  94.93),  1094.DKB            (  86.90),  1102.DNV            ( 164.16),  1104.DPA            (  51.14),  1150.EFT            ( 185.62),  1153.EKM            ( 144.16),  1161.ENW            ( 103.78),  1171.ETB            ( 197.49),  1340.FEP            ( 166.01),  1342.FEV            ( 165.95),  1363.FRE            ( 174.02),  1421.GRJ            ( 159.58),  1424.GSH            ( 162.51),  1429.GUS            ( 174.71),  1438.GYY            (  26.62),  1491.H0261          (  79.05),  1513.H0373          ( 194.55),  1519.H0427          ( 168.60),  1527.H0514          (  93.89),  1553.HFD            ( 144.65),  1646.ICC            ( 184.49),  1653.IGQ            (  23.03),  1658.IKK            (  67.62),  1672.IRS            ( 191.11),  1692.JOT            (  40.87),  1696.JVL            ( 150.48),  1766.KARR           (  62.28),  1773.KAZO           ( 191.17),  1775.KBEH           ( 119.46),  1779.KBIV           ( 180.47),  1807.KCMI           ( 188.44),  1831.KDPA           (  51.14),  1841.KENOSHA        ( 102.42),  1842.KENW           ( 103.78),  1878.KGSH           ( 162.51),  1915.KLAF           ( 154.73),  1942.KMDW           (  12.24),  1955.KMKE           ( 143.11),  1976.KORD           (  37.13),  1988.KPIA           ( 197.64),  1998.KPWK           (  52.37),  1999.KRAC           ( 121.45),  2002.KRFD           ( 127.68),  2013.KSBN           ( 117.51),  2049.KUGN           (  84.19),  2055.KVPZ           (  66.58),  2066.LAF            ( 154.73),  2067.LAFAYETTE      ( 168.02),  2109.LOT            (  29.97),  2162.MDW            (  12.24),  2180.MICHIGAN_CITY  (  67.20),  2182.MIL1           ( 148.58),  2183.MILWAUKEE      ( 153.56),  2187.MKE            ( 143.11),  2316.MWC            ( 163.21),  2369.OKK            ( 188.68),  2392.ORD            (  37.13),  2434.PIA            ( 197.64),  2452.PNT            ( 112.37),  2474.PWK            (  52.37),  2478.RAC            ( 121.45),  2511.RFD            ( 127.68),  2545.RPJ            ( 114.52),  2566.RYV            ( 185.62),  2574.SA25           ( 178.58),  2585.SAUGATUCK      ( 167.79),  2595.SBN            ( 117.51),  2677.SOWR           ( 192.74),  2689.SQI            ( 161.29),  2701.STC            (  58.51),  2703.STE            (  88.10),  2724.SWM            ( 122.98),  2752.TIP            ( 157.53),  2795.UES            ( 153.93),  2796.UGN            (  84.19),  2798.UIUC           ( 179.66),  2819.VPZ            (  66.58),  2827.VYS            ( 123.47),  2828.WANATAH        ( 107.54),  2834.WEO            ( 198.91),  2836.WEST_LAFAYETTE ( 140.83),  2837.WFP            ( 198.65),  2843.WLCI3          ( 111.60), [Found   149 stations within  200.00 KM.]
+ xxx
+current_stn = 1170310001     
+current_stn = 1170310072     
+current_stn = 1170310076     
+current_stn = 1170311018     
+current_stn = 1170313103     
+current_stn = 1170314201     
+current_stn = 1170317002     
+current_stn = 1170436001     
+current_stn = 1170971007     
+current_stn = 1170990007     
+current_stn = 1171150013     
+current_stn = 1171170002     
+current_stn = 1171192007     
+current_stn = 1171430024     
+current_stn = 1171613002     
+current_stn = 1171630010     
+current_stn = 1171670006     
+current_stn = 1171971011     
+current_stn = 1172012001     
+current_stn = 1199           
+current_stn = 11J            
+current_stn = 11R            
+current_stn = 12             
+current_stn = 129-0001       
+current_stn = 13             
+current_stn = 137-0001       
+current_stn = 15             
+current_stn = 1540           
+current_stn = 1578           
+current_stn = 16             
+current_stn = 1707           
+current_stn = 1742           
+current_stn = 1777           
+current_stn = 183-1002       
+current_stn = 186-0005       
+current_stn = 189-0004       
+current_stn = 189-0006       
+current_stn = 189-3001       
+current_stn = 189-5001       
+current_stn = 189-7003       
+current_stn = 1915           
+current_stn = 1921           
+current_stn = 1922           
+current_stn = 1924           
+current_stn = 1925           
+current_stn = 1926           
+current_stn = 1927           
+current_stn = 1928           
+current_stn = 1936           
+current_stn = 1940           
+current_stn = 1945           
+current_stn = 1949           
+current_stn = 1950           
+current_stn = 1964           
+current_stn = 1966           
+current_stn = 1981           
+current_stn = 1982           
+current_stn = 1983           
+current_stn = 1984           
+current_stn = 1993           
+current_stn = 1F0            
+current_stn = 1H2            
+current_stn = 2              
+current_stn = 2029           
+current_stn = 2096           
+current_stn = 21-013-0002    
+current_stn = 21-019-0017    
+current_stn = 21-019-9006    
+current_stn = 21-029-0006    
+current_stn = 21-043-0500    
+current_stn = 21-059-0005    
+current_stn = 21-061-0501    
+current_stn = 21-083-0003    
+current_stn = 21-113-0001    
+current_stn = 21-117-0007    
+current_stn = 21-139-0004    
+current_stn = 21-149-0001    
+current_stn = 21-193-0003    
+current_stn = 21-213-0004    
+current_stn = 21-223-0004    
+current_stn = 211-0002       
+current_stn = 2312           
+current_stn = 2347           
+current_stn = 2348           
+current_stn = 2367           
+current_stn = 2397           
+current_stn = 2398           
+current_stn = 2399           
+current_stn = 2411           
+current_stn = 2422           
+current_stn = 2432           
+current_stn = 2433           
+current_stn = 2450           
+current_stn = 2473           
+current_stn = 2476           
+current_stn = 2491           
+current_stn = 2614           
+current_stn = 2621           
+current_stn = 2634           
+current_stn = 2641           
+current_stn = 2646           
+current_stn = 2651           
+current_stn = 2655           
+current_stn = 2668           
+current_stn = 2679           
+current_stn = 27             
+current_stn = 27A            
+current_stn = 2843           
+current_stn = 2847           
+current_stn = 2849           
+current_stn = 2864           
+current_stn = 2868           
+current_stn = 2869           
+current_stn = 2874           
+current_stn = 2889           
+current_stn = 2899           
+current_stn = 29             
+current_stn = 2928           
+current_stn = 2959           
+current_stn = 2991           
+current_stn = 2WX            
+current_stn = 30             
+current_stn = 3009           
+current_stn = 3014           
+current_stn = 3015           
+current_stn = 3028           
+current_stn = 3035           
+current_stn = 32             
+current_stn = 3258           
+current_stn = 3268           
+current_stn = 3285           
+current_stn = 33             
+current_stn = 3317           
+current_stn = 3327           
+current_stn = 3330           
+current_stn = 3350           
+current_stn = 3365           
+current_stn = 3368           
+current_stn = 3370           
+current_stn = 3377           
+current_stn = 3383           
+current_stn = 34             
+current_stn = 3448           
+current_stn = 3491           
+current_stn = 3520           
+current_stn = 3528           
+current_stn = 3557           
+current_stn = 3576           
+current_stn = 3582           
+current_stn = 39-095-0024    
+current_stn = 39-095-0081    
+current_stn = 39-151-0016    
+current_stn = 39-151-0019    
+current_stn = 39-153-0014    
+current_stn = 3917           
+current_stn = 3918           
+current_stn = 3948           
+current_stn = 3949           
+current_stn = 3950           
+current_stn = 3961           
+current_stn = 3964           
+current_stn = 3992           
+current_stn = 40J            
+current_stn = 45002          
+current_stn = 45003          
+current_stn = 45004          
+current_stn = 45005          
+current_stn = 45006          
+current_stn = 45007          
+current_stn = 45008          
+current_stn = 4517           
+current_stn = 4593           
+current_stn = 4596           
+current_stn = 4T6            
+current_stn = 51             
+current_stn = 510-0085       
+current_stn = 53             
+current_stn = 5461           
+current_stn = 5473           
+current_stn = 5590           
+current_stn = 56             
+current_stn = 5691           
+current_stn = 57             
+current_stn = 59             
+current_stn = 6              
+current_stn = 60             
+current_stn = 63             
+current_stn = 64             
+current_stn = 65             
+current_stn = 67             
+current_stn = 6R6            
+current_stn = 6V3            
+current_stn = 71             
+current_stn = 73             
+current_stn = 74             
+current_stn = 75             
+current_stn = 76             
+current_stn = 77             
+current_stn = 78             
+current_stn = 79             
+current_stn = 79J            
+current_stn = 7F6            
+current_stn = 80             
+current_stn = 81             
+current_stn = 82             
+current_stn = 83             
+current_stn = 85             
+current_stn = 86             
+current_stn = 87             
+current_stn = 88             
+current_stn = 89             
+current_stn = 8D3            
+current_stn = 92             
+current_stn = 9V9            
+current_stn = A050119        
+current_stn = A057959        
+current_stn = A058019        
+current_stn = A058799        
+current_stn = A130209        
+current_stn = A130209        
+current_stn = A130219        
+current_stn = A131069        
+current_stn = A131299        
+current_stn = A131299        
+current_stn = A131329        
+current_stn = A131559        
+current_stn = A131559        
+current_stn = A131909        
+current_stn = A131909        
+current_stn = A133259        
+current_stn = A134309        
+current_stn = A134759        
+current_stn = A135849        
+current_stn = A135879        
+current_stn = A135879        
+current_stn = A136949        
+current_stn = A138019        
+current_stn = A141689        
+current_stn = A142099        
+current_stn = A142979        
+current_stn = A143529        
+current_stn = A143599        
+current_stn = A143939        
+current_stn = A144959        
+current_stn = A146139        
+current_stn = A146249        
+current_stn = A146539        
+current_stn = A147019        
+current_stn = A147169        
+current_stn = A147239        
+current_stn = A147259        
+current_stn = A147399        
+current_stn = A148839        
+current_stn = A211549        
+current_stn = A216419        
+current_stn = A237229        
+current_stn = A237439        
+current_stn = A250059        
+current_stn = A250138        
+current_stn = A250148        
+current_stn = A250259        
+current_stn = A250369        
+current_stn = A250629        
+current_stn = A251549        
+current_stn = A251569        
+current_stn = A251599        
+current_stn = A252109        
+current_stn = A252319        
+current_stn = A252599        
+current_stn = A253359        
+current_stn = A253409        
+current_stn = A253479        
+current_stn = A253549        
+current_stn = A253919        
+current_stn = A253929        
+current_stn = A254339        
+current_stn = A254669        
+current_stn = A254699        
+current_stn = A254719        
+current_stn = A254729        
+current_stn = A254739        
+current_stn = A254749        
+current_stn = A254769        
+current_stn = A254809        
+current_stn = A255319        
+current_stn = A255367        
+current_stn = A255368        
+current_stn = A255369        
+current_stn = A255569        
+current_stn = A255599        
+current_stn = A255649        
+current_stn = A256019        
+current_stn = A256079        
+current_stn = A256299        
+current_stn = A256339        
+current_stn = A257079        
+current_stn = A257679        
+current_stn = A257779        
+current_stn = A257839        
+current_stn = A257899        
+current_stn = A258109        
+current_stn = A259209        
+current_stn = A259519        
+current_stn = A320599        
+current_stn = A320999        
+current_stn = A321369        
+current_stn = A321999        
+current_stn = A322189        
+current_stn = A322489        
+current_stn = A322858        
+current_stn = A323359        
+current_stn = A323619        
+current_stn = A324009        
+current_stn = A324019        
+current_stn = A324187        
+current_stn = A324209        
+current_stn = A325219        
+current_stn = A325229        
+current_stn = A325679        
+current_stn = A325749        
+current_stn = A325759        
+current_stn = A326629        
+current_stn = A327359        
+current_stn = A327589        
+current_stn = A328367        
+current_stn = A328849        
+current_stn = A329249        
+current_stn = A329709        
+current_stn = A390669        
+current_stn = A391079        
+current_stn = A391619        
+current_stn = A391979        
+current_stn = A393229        
+current_stn = A396079        
+current_stn = A396599        
+current_stn = A396959        
+current_stn = A397049        
+current_stn = A398939        
+current_stn = AAA            
+current_stn = AAO            
+current_stn = ABER           
+current_stn = ABI            
+current_stn = ABR            
+current_stn = ABY            
+current_stn = ACB            
+current_stn = ACQ            
+current_stn = ACT            
+current_stn = ADC            
+current_stn = ADG            
+current_stn = ADH            
+current_stn = ADM            
+current_stn = ADRI           
+current_stn = ADS            
+current_stn = ADU            
+current_stn = ADU            
+current_stn = AEL            
+current_stn = AEX            
+current_stn = AFJ            
+current_stn = AFK            
+current_stn = AFW            
+current_stn = AGS            
+current_stn = AHN            
+current_stn = AIA            
+current_stn = AID            
+current_stn = AIG            
+current_stn = AIO            
+current_stn = AIO            
+current_stn = AIT            
+current_stn = AIZ            
+current_stn = AKH            
+current_stn = AKO            
+current_stn = AKR            
+current_stn = ALB            
+current_stn = ALN            
+current_stn = ALO            
+current_stn = ALPENA         
+current_stn = ALX            
+current_stn = AMA            
+current_stn = AMDN8          
+current_stn = AMG            
+current_stn = AMHE           
+current_stn = AMN            
+current_stn = AMW            
+current_stn = ANB            
+current_stn = AND            
+current_stn = ANE            
+current_stn = ANJ            
+current_stn = ANTO           
+current_stn = ANW            
+current_stn = AOH            
+current_stn = AP005          
+current_stn = AP012          
+current_stn = AP013          
+current_stn = AP018          
+current_stn = AP032          
+current_stn = AP034          
+current_stn = AP040          
+current_stn = AP043          
+current_stn = AP044          
+current_stn = AP046          
+current_stn = AP051          
+current_stn = AP053          
+current_stn = AP058          
+current_stn = AP062          
+current_stn = AP065          
+current_stn = AP070          
+current_stn = AP071          
+current_stn = AP072          
+current_stn = AP073          
+current_stn = AP074          
+current_stn = AP076          
+current_stn = AP078          
+current_stn = AP079          
+current_stn = AP090          
+current_stn = AP091          
+current_stn = AP092          
+current_stn = AP093          
+current_stn = AP094          
+current_stn = AP095          
+current_stn = AP096          
+current_stn = AP108          
+current_stn = AP110          
+current_stn = AP119          
+current_stn = AP120          
+current_stn = AP121          
+current_stn = AP122          
+current_stn = AP123          
+current_stn = AP124          
+current_stn = AP125          
+current_stn = AP126          
+current_stn = AP127          
+current_stn = AP128          
+current_stn = AP129          
+current_stn = AP130          
+current_stn = AP131          
+current_stn = AP132          
+current_stn = AP133          
+current_stn = AP136          
+current_stn = AP138          
+current_stn = AP142          
+current_stn = AP143          
+current_stn = AP148          
+current_stn = AP152          
+current_stn = AP154          
+current_stn = AP162          
+current_stn = AP163          
+current_stn = AP183          
+current_stn = AP184          
+current_stn = AP186          
+current_stn = AP187          
+current_stn = AP194          
+current_stn = AP209          
+current_stn = AP215          
+current_stn = AP216          
+current_stn = AP217          
+current_stn = AP218          
+current_stn = AP219          
+current_stn = AP225          
+current_stn = AP226          
+current_stn = AP227          
+current_stn = AP228          
+current_stn = AP229          
+current_stn = AP232          
+current_stn = AP233          
+current_stn = AP235          
+current_stn = AP261          
+current_stn = AP264          
+current_stn = AP266          
+current_stn = AP271          
+current_stn = AP272          
+current_stn = AP304          
+current_stn = AP320          
+current_stn = AP321          
+current_stn = AP322          
+current_stn = AP325          
+current_stn = AP326          
+current_stn = AP340          
+current_stn = AP341          
+current_stn = AP343          
+current_stn = AP344          
+current_stn = AP345          
+current_stn = AP346          
+current_stn = AP349          
+current_stn = AP350          
+current_stn = AP351          
+current_stn = AP352          
+current_stn = AP353          
+current_stn = AP357          
+current_stn = AP360          
+current_stn = AP364          
+current_stn = AP365          
+current_stn = AP377          
+current_stn = AP378          
+current_stn = AP379          
+current_stn = AP380          
+current_stn = AP383          
+current_stn = AP384          
+current_stn = AP385          
+current_stn = AP386          
+current_stn = AP387          
+current_stn = AP388          
+current_stn = AP392          
+current_stn = AP393          
+current_stn = AP394          
+current_stn = AP395          
+current_stn = AP396          
+current_stn = AP397          
+current_stn = AP398          
+current_stn = AP399          
+current_stn = AP400          
+current_stn = AP401          
+current_stn = AP403          
+current_stn = AP410          
+current_stn = AP411          
+current_stn = AP416          
+current_stn = AP418          
+current_stn = AP425          
+current_stn = AP426          
+current_stn = AP427          
+current_stn = AP429          
+current_stn = AP430          
+current_stn = AP431          
+current_stn = AP436          
+current_stn = AP437          
+current_stn = AP444          
+current_stn = AP445          
+current_stn = AP446          
+current_stn = AP449          
+current_stn = AP450          
+current_stn = AP454          
+current_stn = AP455          
+current_stn = AP456          
+current_stn = AP458          
+current_stn = AP460          
+current_stn = AP463          
+current_stn = AP464          
+current_stn = AP483          
+current_stn = AP487          
+current_stn = AP499          
+current_stn = AP505          
+current_stn = AP511          
+current_stn = AP512          
+current_stn = AP513          
+current_stn = AP514          
+current_stn = AP521          
+current_stn = AP526          
+current_stn = AP527          
+current_stn = AP539          
+current_stn = AP546          
+current_stn = AP548          
+current_stn = AP549          
+current_stn = AP550          
+current_stn = AP551          
+current_stn = AP552          
+current_stn = AP559          
+current_stn = AP560          
+current_stn = AP561          
+current_stn = AP574          
+current_stn = AP575          
+current_stn = AP580          
+current_stn = AP581          
+current_stn = AP583          
+current_stn = AP584          
+current_stn = AP585          
+current_stn = AP587          
+current_stn = AP588          
+current_stn = AP590          
+current_stn = AP592          
+current_stn = AP594          
+current_stn = AP595          
+current_stn = AP598          
+current_stn = AP599          
+current_stn = AP609          
+current_stn = AP610          
+current_stn = AP638          
+current_stn = AP640          
+current_stn = AP641          
+current_stn = AP642          
+current_stn = AP649          
+current_stn = AP650          
+current_stn = AP651          
+current_stn = AP652          
+current_stn = AP653          
+current_stn = AP654          
+current_stn = AP656          
+current_stn = AP657          
+current_stn = AP658          
+current_stn = AP659          
+current_stn = AP660          
+current_stn = AP663          
+current_stn = AP674          
+current_stn = AP676          
+current_stn = AP677          
+current_stn = AP688          
+current_stn = AP689          
+current_stn = AP690          
+current_stn = AP691          
+current_stn = AP705          
+current_stn = AP706          
+current_stn = AP713          
+current_stn = AP717          
+current_stn = AP718          
+current_stn = AP719          
+current_stn = AP720          
+current_stn = AP728          
+current_stn = AP732          
+current_stn = AP733          
+current_stn = AP746          
+current_stn = AP747          
+current_stn = AP748          
+current_stn = AP771          
+current_stn = AP772          
+current_stn = AP776          
+current_stn = AP777          
+current_stn = AP782          
+current_stn = AP783          
+current_stn = AP785          
+current_stn = AP796          
+current_stn = AP798          
+current_stn = AP799          
+current_stn = AP801          
+current_stn = AP802          
+current_stn = AP812          
+current_stn = AP813          
+current_stn = AP814          
+current_stn = AP815          
+current_stn = AP824          
+current_stn = AP825          
+current_stn = AP826          
+current_stn = AP827          
+current_stn = AP828          
+current_stn = AP829          
+current_stn = AP830          
+current_stn = AP831          
+current_stn = AP832          
+current_stn = AP833          
+current_stn = AP834          
+current_stn = AP835          
+current_stn = AP836          
+current_stn = AP839          
+current_stn = AP844          
+current_stn = AP852          
+current_stn = AP858          
+current_stn = AP860          
+current_stn = AP862          
+current_stn = AP863          
+current_stn = AP864          
+current_stn = AP866          
+current_stn = AP867          
+current_stn = AP868          
+current_stn = AP869          
+current_stn = AP870          
+current_stn = AP871          
+current_stn = AP872          
+current_stn = AP873          
+current_stn = AP875          
+current_stn = AP876          
+current_stn = AP877          
+current_stn = AP878          
+current_stn = AP879          
+current_stn = AP880          
+current_stn = AP881          
+current_stn = AP882          
+current_stn = AP910          
+current_stn = AP911          
+current_stn = AP913          
+current_stn = AP915          
+current_stn = AP916          
+current_stn = AP918          
+current_stn = AP956          
+current_stn = AP957          
+current_stn = AP958          
+current_stn = APN            
+current_stn = AQP            
+current_stn = AQR            
+current_stn = ARA            
+current_stn = ARB            
+current_stn = ARDN           
+current_stn = ARG            
+current_stn = ARL            
+current_stn = ARR            
+current_stn = ARV            
+current_stn = ASD            
+current_stn = ASG            
+current_stn = ASHV           
+current_stn = ASX            
+current_stn = ATL            
+current_stn = ATT            
+current_stn = ATW            
+current_stn = ATY            
+current_stn = AUH            
+current_stn = AUM            
+current_stn = AUO            
+current_stn = AUS            
+current_stn = AUW            
+current_stn = AVK            
+current_stn = AVL            
+current_stn = AW016          
+current_stn = AW027          
+current_stn = AW031          
+current_stn = AW037          
+current_stn = AW048          
+current_stn = AW052          
+current_stn = AW069          
+current_stn = AW073          
+current_stn = AWE01          
+current_stn = AWG            
+current_stn = AWG            
+current_stn = AWM            
+current_stn = AXA            
+current_stn = AXA            
+current_stn = AXN            
+current_stn = AYS            
+current_stn = AZO            
+current_stn = Albany         
+current_stn = Augusta        
+current_stn = Auxvasse       
+current_stn = BAD            
+current_stn = BAK            
+current_stn = BAT            
+current_stn = BAX            
+current_stn = BAYR           
+current_stn = BBB            
+current_stn = BBC            
+current_stn = BBW            
+current_stn = BCB            
+current_stn = BEH            
+current_stn = BEL            
+current_stn = BFF            
+current_stn = BFM            
+current_stn = BFW            
+current_stn = BGD            
+current_stn = BGE            
+current_stn = BHM            
+current_stn = BIE            
+current_stn = BIS            
+current_stn = BIV            
+current_stn = BIX            
+current_stn = BJI            
+current_stn = BJJ            
+current_stn = BKL            
+current_stn = BKLY           
+current_stn = BKW            
+current_stn = BKX            
+current_stn = BLF            
+current_stn = BLK            
+current_stn = BLKV           
+current_stn = BLMM7          
+current_stn = BLPS2          
+current_stn = BLRW3          
+current_stn = BLV            
+current_stn = BMG            
+current_stn = BMI            
+current_stn = BMQ            
+current_stn = BNA            
+current_stn = BNW            
+current_stn = BNW            
+current_stn = BNZ            
+current_stn = BPG            
+current_stn = BPK            
+current_stn = BQK            
+current_stn = BRD            
+current_stn = BRIG           
+current_stn = BRL            
+current_stn = BRL01          
+current_stn = BRL02          
+current_stn = BROW           
+current_stn = BRRN1          
+current_stn = BRW            
+current_stn = BSMK           
+current_stn = BTL            
+current_stn = BTR            
+current_stn = BUSHLAND       
+current_stn = BUTLERVILLE    
+current_stn = BUU            
+current_stn = BVI            
+current_stn = BVL            
+current_stn = BVO            
+current_stn = BVX            
+current_stn = BWD            
+current_stn = BWG            
+current_stn = BYH            
+current_stn = Beaumont       
+current_stn = Ben_Hur        
+current_stn = Bienville      
+current_stn = Bismarck       
+current_stn = Brunswick      
+current_stn = Buffalo        
+current_stn = Burden         
+current_stn = C0001          
+current_stn = C0005          
+current_stn = C0008          
+current_stn = C0019          
+current_stn = C0031          
+current_stn = C0041          
+current_stn = C0062          
+current_stn = C0066          
+current_stn = C0068          
+current_stn = C0069          
+current_stn = C0099          
+current_stn = C0101          
+current_stn = C0115          
+current_stn = C0121          
+current_stn = C0141          
+current_stn = C0144          
+current_stn = C0149          
+current_stn = C0158          
+current_stn = C0162          
+current_stn = C0176          
+current_stn = C0187          
+current_stn = C0193          
+current_stn = C0212          
+current_stn = C0217          
+current_stn = C0221          
+current_stn = C0241          
+current_stn = C0242          
+current_stn = C0267          
+current_stn = C0288          
+current_stn = C0291          
+current_stn = C0345          
+current_stn = C0352          
+current_stn = C0361          
+current_stn = C0364          
+current_stn = C0375          
+current_stn = C0386          
+current_stn = C0393          
+current_stn = C0430          
+current_stn = C0453          
+current_stn = C0472          
+current_stn = C0476          
+current_stn = C0498          
+current_stn = C0531          
+current_stn = C0544          
+current_stn = C0547          
+current_stn = C0548          
+current_stn = C0557          
+current_stn = C0561          
+current_stn = C0564          
+current_stn = C0569          
+current_stn = C0571          
+current_stn = C0573          
+current_stn = C0579          
+current_stn = C0613          
+current_stn = C0616          
+current_stn = C0617          
+current_stn = C0620          
+current_stn = C0621          
+current_stn = C0634          
+current_stn = C0692          
+current_stn = C0698          
+current_stn = C0714          
+current_stn = C0752          
+current_stn = C0755          
+current_stn = C0757          
+current_stn = C0762          
+current_stn = C0769          
+current_stn = C0770          
+current_stn = C0773          
+current_stn = C0777          
+current_stn = C0783          
+current_stn = C0795          
+current_stn = C0796          
+current_stn = C0803          
+current_stn = C0812          
+current_stn = C0814          
+current_stn = C0815          
+current_stn = C0817          
+current_stn = C0827          
+current_stn = C0834          
+current_stn = C0837          
+current_stn = C0838          
+current_stn = C0842          
+current_stn = C0852          
+current_stn = C0856          
+current_stn = C0862          
+current_stn = C0865          
+current_stn = C0866          
+current_stn = C09            
+current_stn = C0900          
+current_stn = C0930          
+current_stn = C0935          
+current_stn = C0944          
+current_stn = C0956          
+current_stn = C0957          
+current_stn = C0964          
+current_stn = C0965          
+current_stn = C0968          
+current_stn = C0969          
+current_stn = C0970          
+current_stn = C0979          
+current_stn = C1006          
+current_stn = C1007          
+current_stn = C1014          
+current_stn = C1033          
+current_stn = C104           
+current_stn = C1046          
+current_stn = C105           
+current_stn = C1050          
+current_stn = C1052          
+current_stn = C1055          
+current_stn = C1057          
+current_stn = C1094          
+current_stn = C1096          
+current_stn = C1099          
+current_stn = C1103          
+current_stn = C1104          
+current_stn = C1108          
+current_stn = C1111          
+current_stn = C1116          
+current_stn = C1123          
+current_stn = C1125          
+current_stn = C1142          
+current_stn = C13            
+current_stn = C134           
+current_stn = C17            
+current_stn = C171           
+current_stn = C19            
+current_stn = C2             
+current_stn = C26            
+current_stn = C3             
+current_stn = C306           
+current_stn = C31            
+current_stn = C312           
+current_stn = C318           
+current_stn = C38            
+current_stn = C401           
+current_stn = C402           
+current_stn = C47            
+current_stn = C52            
+current_stn = C54            
+current_stn = C56            
+current_stn = C61            
+current_stn = C612           
+current_stn = C613           
+current_stn = C614           
+current_stn = C63            
+current_stn = C642           
+current_stn = C68            
+current_stn = C69            
+current_stn = C70            
+current_stn = C71            
+current_stn = C73            
+current_stn = C74            
+current_stn = C75            
+current_stn = C75            
+current_stn = C76            
+current_stn = C77            
+current_stn = C78            
+current_stn = C79            
+current_stn = C82            
+current_stn = C85            
+current_stn = C9             
+current_stn = C94            
+current_stn = CAD            
+current_stn = CAE            
+current_stn = CAK            
+current_stn = CAMS2          
+current_stn = CAO            
+current_stn = CAPROCK        
+current_stn = CAV            
+current_stn = CAV            
+current_stn = CBF            
+current_stn = CBF            
+current_stn = CBG            
+current_stn = CBM            
+current_stn = CCO            
+current_stn = CCY            
+current_stn = CCY            
+current_stn = CDJ            
+current_stn = CDR            
+current_stn = CDS            
+current_stn = CEDT2          
+current_stn = CER            
+current_stn = CEU            
+current_stn = CEW            
+current_stn = CFV            
+current_stn = CGF            
+current_stn = CGI            
+current_stn = CGLK1          
+current_stn = CHA            
+current_stn = CHB1           
+current_stn = CHICAGO        
+current_stn = CHILLICOTHE    
+current_stn = CHK            
+current_stn = CHME           
+current_stn = CHS            
+current_stn = CID            
+current_stn = CIN            
+current_stn = CIN            
+current_stn = CIU            
+current_stn = CKB            
+current_stn = CKC            
+current_stn = CKN            
+current_stn = CKV            
+current_stn = CLAR           
+current_stn = CLAYT          
+current_stn = CLE            
+current_stn = CLI            
+current_stn = CLK1           
+current_stn = CLL            
+current_stn = CLOVIS         
+current_stn = CLR            
+current_stn = CLT            
+current_stn = CMH            
+current_stn = CMI            
+current_stn = CMI            
+current_stn = CMX            
+current_stn = CMY            
+current_stn = CNC            
+current_stn = CNC            
+current_stn = CNK            
+current_stn = CNT            
+current_stn = CNU            
+current_stn = CNWM7          
+current_stn = CO026          
+current_stn = CO046          
+current_stn = CO048          
+current_stn = CO066          
+current_stn = CO067          
+current_stn = CO068          
+current_stn = COLA           
+current_stn = COLB           
+current_stn = COLUMBIA_CITY  
+current_stn = COLUMBUS       
+current_stn = CONO           
+current_stn = COQ            
+current_stn = COU            
+current_stn = CPPN5          
+current_stn = CPS            
+current_stn = CQB            
+current_stn = CQM            
+current_stn = CRG            
+current_stn = CRRS2          
+current_stn = CRS            
+current_stn = CRW            
+current_stn = CSG            
+current_stn = CSM            
+current_stn = CSQ            
+current_stn = CSQ            
+current_stn = CSV            
+current_stn = CTH            
+current_stn = CUB            
+current_stn = CUT            
+current_stn = CVG            
+current_stn = CVN            
+current_stn = CVS            
+current_stn = CVX            
+current_stn = CWA            
+current_stn = CWF            
+current_stn = CWI            
+current_stn = CXO            
+current_stn = Calhoun        
+current_stn = Cameron        
+current_stn = Cardwell       
+current_stn = Charleston     
+current_stn = Clarkton       
+current_stn = Columbia       
+current_stn = Cook_Station   
+current_stn = Corning        
+current_stn = D07            
+current_stn = DAL            
+current_stn = DALHART        
+current_stn = DAY            
+current_stn = DBQ            
+current_stn = DCU            
+current_stn = DDC            
+current_stn = DEC            
+current_stn = DEFI           
+current_stn = DEH            
+current_stn = DEH            
+current_stn = DEK            
+current_stn = DELAWARE       
+current_stn = DEQ            
+current_stn = DET            
+current_stn = DET1           
+current_stn = DFI            
+current_stn = DFNK           
+current_stn = DFW            
+current_stn = DHN            
+current_stn = DHT            
+current_stn = DIK            
+current_stn = DIMM           
+current_stn = DIMMITT        
+current_stn = DISW3          
+current_stn = DKB            
+current_stn = DLH            
+current_stn = DLL            
+current_stn = DMO            
+current_stn = DNL            
+current_stn = DNN            
+current_stn = DNS            
+current_stn = DNS            
+current_stn = DNV            
+current_stn = DOHS2          
+current_stn = DPA            
+current_stn = DQUA4          
+current_stn = DSM            
+current_stn = DTL            
+current_stn = DTN            
+current_stn = DTO            
+current_stn = DTS            
+current_stn = DTW            
+current_stn = DUA            
+current_stn = DUC            
+current_stn = DUH            
+current_stn = DVN            
+current_stn = DWH            
+current_stn = DXS            
+current_stn = DXX            
+current_stn = DYR            
+current_stn = DYS            
+current_stn = DYT            
+current_stn = Dean_Lee       
+current_stn = Delta          
+current_stn = Delta_Center   
+current_stn = E11_Byron      
+current_stn = E13_Lamont_CF1 
+current_stn = E15_Ringwood   
+current_stn = E1_Larned      
+current_stn = E20_Meeker     
+current_stn = E21_Okmulgee   
+current_stn = E24_Cyril      
+current_stn = E27_Earlsboro  
+current_stn = E38            
+current_stn = E3_LeRoy       
+current_stn = E4_Plevna      
+current_stn = E5_Halstead    
+current_stn = E6_Towanda     
+current_stn = E7_Elk_Falls   
+current_stn = E8_Coldwater   
+current_stn = E9_Ashton      
+current_stn = EAR            
+current_stn = EARTH          
+current_stn = EAU            
+current_stn = EBS            
+current_stn = EBS            
+current_stn = ECON8          
+current_stn = ECRN1          
+current_stn = EET            
+current_stn = EFC            
+current_stn = EFT            
+current_stn = EGV            
+current_stn = EHR            
+current_stn = EKM            
+current_stn = ELD            
+current_stn = ELD            
+current_stn = ELK            
+current_stn = ELO            
+current_stn = EMP            
+current_stn = END            
+current_stn = ENL            
+current_stn = ENW            
+current_stn = EOK            
+current_stn = EOK            
+current_stn = EQY            
+current_stn = ERI            
+current_stn = ERY            
+current_stn = ESC            
+current_stn = ESC            
+current_stn = ESF            
+current_stn = EST            
+current_stn = ETB            
+current_stn = ETH            
+current_stn = ETTER          
+current_stn = EVM            
+current_stn = EVV            
+current_stn = EWK            
+current_stn = EXX            
+current_stn = EYE            
+current_stn = Emerado        
+current_stn = F05            
+current_stn = F2011          
+current_stn = F2012          
+current_stn = F2013          
+current_stn = F2014          
+current_stn = F2015          
+current_stn = F2017          
+current_stn = F2028          
+current_stn = F2029          
+current_stn = F2030          
+current_stn = F2031          
+current_stn = F2032          
+current_stn = F2033          
+current_stn = F2034          
+current_stn = F2035          
+current_stn = F2036          
+current_stn = F2064          
+current_stn = F2065          
+current_stn = F2067          
+current_stn = F2068          
+current_stn = F2069          
+current_stn = F2071          
+current_stn = F2072          
+current_stn = F2073          
+current_stn = F2074          
+current_stn = F2075          
+current_stn = F2076          
+current_stn = F2077          
+current_stn = F2078          
+current_stn = F2079          
+current_stn = F2080          
+current_stn = F2081          
+current_stn = F2088          
+current_stn = F2089          
+current_stn = F2091          
+current_stn = F2092          
+current_stn = F2094          
+current_stn = F2095          
+current_stn = F2096          
+current_stn = F2097          
+current_stn = F2098          
+current_stn = F2099          
+current_stn = F2103          
+current_stn = F2104          
+current_stn = F2105          
+current_stn = F2106          
+current_stn = F2107          
+current_stn = F2108          
+current_stn = F2109          
+current_stn = F2110          
+current_stn = F2111          
+current_stn = F2113          
+current_stn = F2114          
+current_stn = F2115          
+current_stn = F2121          
+current_stn = F2123          
+current_stn = F2124          
+current_stn = F2125          
+current_stn = F2127          
+current_stn = F2128          
+current_stn = F2131          
+current_stn = F2139          
+current_stn = F2140          
+current_stn = F2141          
+current_stn = F2142          
+current_stn = F2143          
+current_stn = F2145          
+current_stn = F2146          
+current_stn = F2157          
+current_stn = F2158          
+current_stn = F2159          
+current_stn = F2160          
+current_stn = F2161          
+current_stn = F2162          
+current_stn = F2166          
+current_stn = F2168          
+current_stn = F2170          
+current_stn = F2172          
+current_stn = F2174          
+current_stn = F2175          
+current_stn = F2178          
+current_stn = F2181          
+current_stn = F2186          
+current_stn = F2187          
+current_stn = F2189          
+current_stn = F2191          
+current_stn = F2192          
+current_stn = F2193          
+current_stn = F2195          
+current_stn = F2197          
+current_stn = F2199          
+current_stn = F2200          
+current_stn = F2205          
+current_stn = F2214          
+current_stn = F2215          
+current_stn = F2216          
+current_stn = F2217          
+current_stn = F2219          
+current_stn = F2220          
+current_stn = F2223          
+current_stn = F2224          
+current_stn = F2228          
+current_stn = F2229          
+current_stn = F2230          
+current_stn = F2231          
+current_stn = F2232          
+current_stn = F2235          
+current_stn = F2236          
+current_stn = F2268          
+current_stn = F2269          
+current_stn = F2270          
+current_stn = F2271          
+current_stn = F2272          
+current_stn = F2273          
+current_stn = F2274          
+current_stn = F2275          
+current_stn = F2276          
+current_stn = F2277          
+current_stn = F2278          
+current_stn = F2279          
+current_stn = F2280          
+current_stn = F2281          
+current_stn = F2282          
+current_stn = F2283          
+current_stn = F2284          
+current_stn = F2285          
+current_stn = F2286          
+current_stn = F2289          
+current_stn = F2293          
+current_stn = F2302          
+current_stn = F2304          
+current_stn = F2305          
+current_stn = F2306          
+current_stn = F2316          
+current_stn = F2318          
+current_stn = F2319          
+current_stn = F2320          
+current_stn = F2323          
+current_stn = F2326          
+current_stn = F2330          
+current_stn = F2331          
+current_stn = F2332          
+current_stn = F2333          
+current_stn = F2334          
+current_stn = F2335          
+current_stn = F2336          
+current_stn = F2337          
+current_stn = F2338          
+current_stn = F2339          
+current_stn = F2343          
+current_stn = FAI            
+current_stn = FAM            
+current_stn = FAR            
+current_stn = FARMLAND       
+current_stn = FARWELL        
+current_stn = FBL            
+current_stn = FBYN1          
+current_stn = FCM            
+current_stn = FDR            
+current_stn = FDY            
+current_stn = FEP            
+current_stn = FET            
+current_stn = FEV            
+current_stn = FFC            
+current_stn = FFL            
+current_stn = FFL            
+current_stn = FFM            
+current_stn = FFO            
+current_stn = FFT            
+current_stn = FKA            
+current_stn = FLD            
+current_stn = FLOY           
+current_stn = FLP            
+current_stn = FLUV           
+current_stn = FNB            
+current_stn = FNT            
+current_stn = FOA            
+current_stn = FOD            
+current_stn = FOE            
+current_stn = FORN1          
+current_stn = FOZ            
+current_stn = FPK            
+current_stn = FQD            
+current_stn = FRE            
+current_stn = FREO           
+current_stn = FRIO           
+current_stn = FRM            
+current_stn = FRM            
+current_stn = FRM            
+current_stn = FRTN8          
+current_stn = FSD            
+current_stn = FSE            
+current_stn = FSI            
+current_stn = FSM            
+current_stn = FST            
+current_stn = FSW            
+current_stn = FSW            
+current_stn = FTK            
+current_stn = FTM01          
+current_stn = FTW            
+current_stn = FTY            
+current_stn = FWA            
+current_stn = FWC            
+current_stn = FWS            
+current_stn = FYV            
+current_stn = Fargo          
+current_stn = Fryburg        
+current_stn = GAD            
+current_stn = GAG            
+current_stn = GAIL           
+current_stn = GBD            
+current_stn = GBG            
+current_stn = GCK            
+current_stn = GCM            
+current_stn = GDAC2          
+current_stn = GDMA           
+current_stn = GEV            
+current_stn = GEZ            
+current_stn = GFK            
+current_stn = GGG            
+current_stn = GHW            
+current_stn = GKJ            
+current_stn = GKY            
+current_stn = GLD            
+current_stn = GLDN           
+current_stn = GLE            
+current_stn = GLH            
+current_stn = GLR            
+current_stn = GMJ            
+current_stn = GMU            
+current_stn = GNA            
+current_stn = GOK            
+current_stn = GOV            
+current_stn = GPM            
+current_stn = GPT            
+current_stn = GPZ            
+current_stn = GRAPE          
+current_stn = GRAR           
+current_stn = GRB            
+current_stn = GRD            
+current_stn = GRI            
+current_stn = GRJ            
+current_stn = GRK            
+current_stn = GRR            
+current_stn = GSH            
+current_stn = GSP            
+current_stn = GSSP           
+current_stn = GTR            
+current_stn = GTU            
+current_stn = GUS            
+current_stn = GUST           
+current_stn = GUY            
+current_stn = GVL            
+current_stn = GVLT           
+current_stn = GVT            
+current_stn = GWO            
+current_stn = GYI            
+current_stn = GYL            
+current_stn = GYY            
+current_stn = GZH            
+current_stn = Glennonville   
+current_stn = Golden_Valley  
+current_stn = H0002          
+current_stn = H0003          
+current_stn = H0005          
+current_stn = H0012          
+current_stn = H0017          
+current_stn = H0029          
+current_stn = H0031          
+current_stn = H0032          
+current_stn = H0035          
+current_stn = H0038          
+current_stn = H0043          
+current_stn = H0068          
+current_stn = H0069          
+current_stn = H0087          
+current_stn = H0088          
+current_stn = H0090          
+current_stn = H0091          
+current_stn = H0116          
+current_stn = H0131          
+current_stn = H0134          
+current_stn = H0138          
+current_stn = H0148          
+current_stn = H0150          
+current_stn = H0151          
+current_stn = H0152          
+current_stn = H0161          
+current_stn = H0162          
+current_stn = H0165          
+current_stn = H0175          
+current_stn = H0180          
+current_stn = H0183          
+current_stn = H0186          
+current_stn = H0191          
+current_stn = H0195          
+current_stn = H0201          
+current_stn = H0202          
+current_stn = H0203          
+current_stn = H0205          
+current_stn = H0225          
+current_stn = H0230          
+current_stn = H0234          
+current_stn = H0235          
+current_stn = H0236          
+current_stn = H0240          
+current_stn = H0241          
+current_stn = H0245          
+current_stn = H0246          
+current_stn = H0247          
+current_stn = H0253          
+current_stn = H0261          
+current_stn = H0263          
+current_stn = H0273          
+current_stn = H0278          
+current_stn = H0280          
+current_stn = H0289          
+current_stn = H0291          
+current_stn = H0298          
+current_stn = H0299          
+current_stn = H0307          
+current_stn = H0309          
+current_stn = H0310          
+current_stn = H0313          
+current_stn = H0318          
+current_stn = H0329          
+current_stn = H0338          
+current_stn = H0342          
+current_stn = H0344          
+current_stn = H0353          
+current_stn = H0354          
+current_stn = H0360          
+current_stn = H0369          
+current_stn = H0373          
+current_stn = H0387          
+current_stn = H0396          
+current_stn = H0409          
+current_stn = H0417          
+current_stn = H0419          
+current_stn = H0427          
+current_stn = H0460          
+current_stn = H0468          
+current_stn = H0472          
+current_stn = H0479          
+current_stn = H0482          
+current_stn = H0494          
+current_stn = H0509          
+current_stn = H0514          
+current_stn = H0523          
+current_stn = H0525          
+current_stn = H0544          
+current_stn = H0549          
+current_stn = H0569          
+current_stn = H0573          
+current_stn = H0588          
+current_stn = H0590          
+current_stn = H0591          
+current_stn = H0601          
+current_stn = H0604          
+current_stn = HAC1           
+current_stn = HALFWAY        
+current_stn = HAMM           
+current_stn = HAO            
+current_stn = HART           
+current_stn = HAW            
+current_stn = HBG            
+current_stn = HBR            
+current_stn = HBRK1          
+current_stn = HCD            
+current_stn = HDC            
+current_stn = HDE            
+current_stn = HEI            
+current_stn = HEZ            
+current_stn = HFD            
+current_stn = HIB            
+current_stn = HIPT           
+current_stn = HKA            
+current_stn = HKLO2          
+current_stn = HKS            
+current_stn = HKY            
+current_stn = HLC            
+current_stn = HLG            
+current_stn = HLR            
+current_stn = HLX            
+current_stn = HLY01          
+current_stn = HNB            
+current_stn = HNR            
+current_stn = HNR            
+current_stn = HOB            
+current_stn = HON            
+current_stn = HOP            
+current_stn = HOT            
+current_stn = HQU            
+current_stn = HRO            
+current_stn = HRSN1          
+current_stn = HRT            
+current_stn = HRT            
+current_stn = HSB            
+current_stn = HSI            
+current_stn = HSV            
+current_stn = HSYN1          
+current_stn = HTL            
+current_stn = HTS            
+current_stn = HTV1           
+current_stn = HUF            
+current_stn = HUT            
+current_stn = HVL            
+current_stn = HVLK1          
+current_stn = HXT01          
+current_stn = HYK02          
+current_stn = HYR            
+current_stn = HYS            
+current_stn = HYX            
+current_stn = HZY            
+current_stn = Hammond        
+current_stn = Hill_Farm      
+current_stn = IA000          
+current_stn = IA001          
+current_stn = IA002          
+current_stn = IA003          
+current_stn = IA004          
+current_stn = IA005          
+current_stn = IA006          
+current_stn = IA007          
+current_stn = IA008          
+current_stn = IA009          
+current_stn = IA010          
+current_stn = IA011          
+current_stn = IA012          
+current_stn = IA013          
+current_stn = IA014          
+current_stn = IA015          
+current_stn = IA016          
+current_stn = IA018          
+current_stn = IA019          
+current_stn = IA020          
+current_stn = IA021          
+current_stn = IA022          
+current_stn = IA023          
+current_stn = IA025          
+current_stn = IA026          
+current_stn = IA027          
+current_stn = IA028          
+current_stn = IA029          
+current_stn = IA030          
+current_stn = IA031          
+current_stn = IA032          
+current_stn = IA033          
+current_stn = IA034          
+current_stn = IA035          
+current_stn = IA036          
+current_stn = IA037          
+current_stn = IA038          
+current_stn = IA039          
+current_stn = IA040          
+current_stn = IA041          
+current_stn = IA042          
+current_stn = IA043          
+current_stn = IA044          
+current_stn = IA045          
+current_stn = IA046          
+current_stn = IA047          
+current_stn = IA048          
+current_stn = IA049          
+current_stn = IAB            
+current_stn = IBM            
+current_stn = ICC            
+current_stn = ICL            
+current_stn = ICL            
+current_stn = ICT            
+current_stn = IDL01          
+current_stn = IEN            
+current_stn = IER            
+current_stn = IGQ            
+current_stn = IIB            
+current_stn = IIB            
+current_stn = IIY            
+current_stn = IJX            
+current_stn = IKK            
+current_stn = IKV            
+current_stn = IKV            
+current_stn = ILE            
+current_stn = ILL            
+current_stn = ILN            
+current_stn = IML            
+current_stn = IMT            
+current_stn = IND            
+current_stn = INK            
+current_stn = INT            
+current_stn = IOW            
+current_stn = IPJ            
+current_stn = IRK            
+current_stn = IRS            
+current_stn = ISQ            
+current_stn = ISW            
+current_stn = ITH            
+current_stn = ITR            
+current_stn = IWD            
+current_stn = IXD            
+current_stn = JACKSON        
+current_stn = JAN            
+current_stn = JAS            
+current_stn = JAX            
+current_stn = JAYF1          
+current_stn = JBR            
+current_stn = JCT            
+current_stn = JEF            
+current_stn = JKJ            
+current_stn = JKL            
+current_stn = JLN            
+current_stn = JMR            
+current_stn = JMS            
+current_stn = JOT            
+current_stn = JQF            
+current_stn = JSV            
+current_stn = JTNT2          
+current_stn = JVL            
+current_stn = JWG            
+current_stn = JXN            
+current_stn = JXVL           
+current_stn = JYG            
+current_stn = JYM            
+current_stn = JYR            
+current_stn = K1BSP          
+current_stn = K1EGN          
+current_stn = K1LVW          
+current_stn = K5ADT          
+current_stn = K5BCR          
+current_stn = K5BRP          
+current_stn = K5CHE          
+current_stn = K5CNC          
+current_stn = K5CNE          
+current_stn = K5COO          
+current_stn = K5ED7          
+current_stn = K5EHT          
+current_stn = K5ELW          
+current_stn = K5EMP          
+current_stn = K5EUR          
+current_stn = K5FRD          
+current_stn = K5FVW          
+current_stn = K5GAR          
+current_stn = K5GTB          
+current_stn = K5HJN          
+current_stn = K5JCT          
+current_stn = K5KIO          
+current_stn = K5KSM          
+current_stn = K5LEA          
+current_stn = K5LWR          
+current_stn = K5MAN          
+current_stn = K5MCP          
+current_stn = K5NES          
+current_stn = K5NIC          
+current_stn = K5OK7          
+current_stn = K5PEA          
+current_stn = K5PTT          
+current_stn = K5SCT          
+current_stn = K5SLN          
+current_stn = K5TPK          
+current_stn = K5TRY          
+current_stn = K5WKR          
+current_stn = K5WKY          
+current_stn = K5WLC          
+current_stn = K5WSU          
+current_stn = K72C           
+current_stn = K8D3           
+current_stn = K9V2           
+current_stn = K9V9           
+current_stn = KAAO           
+current_stn = KABI           
+current_stn = KABR           
+current_stn = KACT           
+current_stn = KADG           
+current_stn = KAFW           
+current_stn = KAGS           
+current_stn = KAHN           
+current_stn = KAKH           
+current_stn = KAKR           
+current_stn = KALO           
+current_stn = KAMA           
+current_stn = KAMW           
+current_stn = KANB           
+current_stn = KAND           
+current_stn = KANJ           
+current_stn = KAOH           
+current_stn = KAPN           
+current_stn = KARB           
+current_stn = KARR           
+current_stn = KATL           
+current_stn = KATT           
+current_stn = KATY           
+current_stn = KAUW           
+current_stn = KAVL           
+current_stn = KAXN           
+current_stn = KAZO           
+current_stn = KBBW           
+current_stn = KBEH           
+current_stn = KBFF           
+current_stn = KBHM           
+current_stn = KBIS           
+current_stn = KBIV           
+current_stn = KBJJ           
+current_stn = KBKL           
+current_stn = KBKW           
+current_stn = KBLF           
+current_stn = KBMG           
+current_stn = KBNA           
+current_stn = KBPK           
+current_stn = KBRL           
+current_stn = KBTL           
+current_stn = KBTR           
+current_stn = KBVO           
+current_stn = KBWG           
+current_stn = KCAE           
+current_stn = KCAK           
+current_stn = KCAO           
+current_stn = KCBK           
+current_stn = KCDJ           
+current_stn = KCEU           
+current_stn = KCFV           
+current_stn = KCGI           
+current_stn = KCHA           
+current_stn = KCHS           
+current_stn = KCID           
+current_stn = KCKV           
+current_stn = KCLE           
+current_stn = KCLT           
+current_stn = KCMH           
+current_stn = KCMI           
+current_stn = KCNK           
+current_stn = KCNU           
+current_stn = KCOU           
+current_stn = KCPS           
+current_stn = KCRS           
+current_stn = KCRW           
+current_stn = KCSG           
+current_stn = KCSM           
+current_stn = KCSV           
+current_stn = KCVG           
+current_stn = KDAL           
+current_stn = KDAY           
+current_stn = KDBQ           
+current_stn = KDCU           
+current_stn = KDDC           
+current_stn = KDEC           
+current_stn = KDEQ           
+current_stn = KDET           
+current_stn = KDFI           
+current_stn = KDFW           
+current_stn = KDLH           
+current_stn = KDMO           
+current_stn = KDNL           
+current_stn = KDPA           
+current_stn = KDSM           
+current_stn = KDTN           
+current_stn = KDTO           
+current_stn = KDTW           
+current_stn = KDVN           
+current_stn = KEAU           
+current_stn = KEET           
+current_stn = KELD           
+current_stn = KEMP           
+current_stn = KENOSHA        
+current_stn = KENW           
+current_stn = KERI           
+current_stn = KEST           
+current_stn = KEVV           
+current_stn = KEW1           
+current_stn = KEYE           
+current_stn = KFAR           
+current_stn = KFCM           
+current_stn = KFDR           
+current_stn = KFDY           
+current_stn = KFFC           
+current_stn = KFFT           
+current_stn = KFLD           
+current_stn = KFNB           
+current_stn = KFNT           
+current_stn = KFOE           
+current_stn = KFSD           
+current_stn = KFSM           
+current_stn = KFTW           
+current_stn = KFTY           
+current_stn = KFWA           
+current_stn = KFYV           
+current_stn = KGAG           
+current_stn = KGEZ           
+current_stn = KGFK           
+current_stn = KGGG           
+current_stn = KGKY           
+current_stn = KGLD           
+current_stn = KGLH           
+current_stn = KGLR           
+current_stn = KGMU           
+current_stn = KGOK           
+current_stn = KGRB           
+current_stn = KGRD           
+current_stn = KGRI           
+current_stn = KGRR           
+current_stn = KGSH           
+current_stn = KGSP           
+current_stn = KGVL           
+current_stn = KGWO           
+current_stn = KHAO           
+current_stn = KHBR           
+current_stn = KHKA           
+current_stn = KHKS           
+current_stn = KHKY           
+current_stn = KHLC           
+current_stn = KHON           
+current_stn = KHOT           
+current_stn = KHOX           
+current_stn = KHRO           
+current_stn = KHSI           
+current_stn = KHSV           
+current_stn = KHTL           
+current_stn = KHTS           
+current_stn = KHUF           
+current_stn = KHUT           
+current_stn = KICT           
+current_stn = KIDL           
+current_stn = KILN           
+current_stn = KIMT           
+current_stn = KIND           
+current_stn = KIOW           
+current_stn = KIRK           
+current_stn = KISW           
+current_stn = KIXD           
+current_stn = KJAN           
+current_stn = KJAX           
+current_stn = KJBR           
+current_stn = KJEF           
+current_stn = KJKL           
+current_stn = KJLN           
+current_stn = KJUN           
+current_stn = KJXN           
+current_stn = KLAF           
+current_stn = KLAN           
+current_stn = KLAW           
+current_stn = KLBB           
+current_stn = KLBF           
+current_stn = KLCH           
+current_stn = KLEX           
+current_stn = KLHQ           
+current_stn = KLIT           
+current_stn = KLLQ           
+current_stn = KLNK           
+current_stn = KLNR           
+current_stn = KLOU           
+current_stn = KLOZ           
+current_stn = KLPR           
+current_stn = KLSE           
+current_stn = KLUK           
+current_stn = KLWC           
+current_stn = KLWD           
+current_stn = KLWV           
+current_stn = KLXT           
+current_stn = KMAF           
+current_stn = KMBS           
+current_stn = KMCI           
+current_stn = KMCN           
+current_stn = KMCW           
+current_stn = KMDH           
+current_stn = KMDW           
+current_stn = KMEI           
+current_stn = KMEM           
+current_stn = KMFD           
+current_stn = KMFI           
+current_stn = KMGM           
+current_stn = KMGY           
+current_stn = KMHE           
+current_stn = KMHK           
+current_stn = KMIC           
+current_stn = KMIE           
+current_stn = KMIW           
+current_stn = KMKC           
+current_stn = KMKE           
+current_stn = KMKG           
+current_stn = KMKL           
+current_stn = KMKO           
+current_stn = KMLC           
+current_stn = KMLI           
+current_stn = KMLU           
+current_stn = KMNN           
+current_stn = KMOB           
+current_stn = KMSL           
+current_stn = KMSN           
+current_stn = KMSP           
+current_stn = KMTO           
+current_stn = KMWL           
+current_stn = KMWT           
+current_stn = KODX           
+current_stn = KOFK           
+current_stn = KOJC           
+current_stn = KOKC           
+current_stn = KOMA           
+current_stn = KOQT           
+current_stn = KORD           
+current_stn = KOSH           
+current_stn = KOSU           
+current_stn = KOTM           
+current_stn = KOVS           
+current_stn = KP28           
+current_stn = KP58           
+current_stn = KP75           
+current_stn = KPAH           
+current_stn = KPBF           
+current_stn = KPDK           
+current_stn = KPHD           
+current_stn = KPIA           
+current_stn = KPIT           
+current_stn = KPKB           
+current_stn = KPLN           
+current_stn = KPNC           
+current_stn = KPNS           
+current_stn = KPOF           
+current_stn = KPPF           
+current_stn = KPTK           
+current_stn = KPWA           
+current_stn = KPWK           
+current_stn = KRAC           
+current_stn = KRAP           
+current_stn = KRBD           
+current_stn = KRFD           
+current_stn = KRHI           
+current_stn = KRK01          
+current_stn = KRMG           
+current_stn = KRSL           
+current_stn = KRST           
+current_stn = KRUE           
+current_stn = KRVS           
+current_stn = KRWF           
+current_stn = KSAV           
+current_stn = KSBM           
+current_stn = KSBN           
+current_stn = KSDF           
+current_stn = KSET           
+current_stn = KSFD           
+current_stn = KSGF           
+current_stn = KSHV           
+current_stn = KSJT           
+current_stn = KSLN           
+current_stn = KSPI           
+current_stn = KSPS           
+current_stn = KSPW           
+current_stn = KSTC           
+current_stn = KSTJ           
+current_stn = KSTL           
+current_stn = KSTP           
+current_stn = KSUS           
+current_stn = KSUX           
+current_stn = KSWO           
+current_stn = KSYF           
+current_stn = KTCL           
+current_stn = KTDZ           
+current_stn = KTKI           
+current_stn = KTLH           
+current_stn = KTOL           
+current_stn = KTOP           
+current_stn = KTQE           
+current_stn = KTRB           
+current_stn = KTRI           
+current_stn = KTRL           
+current_stn = KTUL           
+current_stn = KTUP           
+current_stn = KTVC           
+current_stn = KTVR           
+current_stn = KTXK           
+current_stn = KTYR           
+current_stn = KTYS           
+current_stn = KUGN           
+current_stn = KUIN           
+current_stn = KUNO           
+current_stn = KUZA           
+current_stn = KVIH           
+current_stn = KVPC           
+current_stn = KVPZ           
+current_stn = KVTA           
+current_stn = KVTN           
+current_stn = KWD            
+current_stn = KWLD           
+current_stn = KXNA           
+current_stn = KYIP           
+current_stn = KYMA           
+current_stn = KYNG           
+current_stn = KZZV           
+current_stn = LAA            
+current_stn = LAF            
+current_stn = LAFAYETTE      
+current_stn = LAM01          
+current_stn = LAM02          
+current_stn = LAM03          
+current_stn = LAMESA         
+current_stn = LAMS           
+current_stn = LAN            
+current_stn = LANS           
+current_stn = LANS2          
+current_stn = LAW            
+current_stn = LBB            
+current_stn = LBBW           
+current_stn = LBF            
+current_stn = LBL            
+current_stn = LCH            
+current_stn = LCK            
+current_stn = LDBT2          
+current_stn = LDM            
+current_stn = LDT            
+current_stn = LEBA           
+current_stn = LESU           
+current_stn = LEVE           
+current_stn = LEX            
+current_stn = LFK            
+current_stn = LFT            
+current_stn = LGC            
+current_stn = LHQ            
+current_stn = LHW            
+current_stn = LHX            
+current_stn = LIC            
+current_stn = LIGO_North     
+current_stn = LIGO_South     
+current_stn = LIGO_West      
+current_stn = LIOF1          
+current_stn = LIT            
+current_stn = LJF            
+current_stn = LLC            
+current_stn = LLQ            
+current_stn = LMNO2          
+current_stn = LNK            
+current_stn = LNP            
+current_stn = LNR            
+current_stn = LOT            
+current_stn = LOU            
+current_stn = LOU1           
+current_stn = LOZ            
+current_stn = LPR            
+current_stn = LRF            
+current_stn = LRJ            
+current_stn = LRJ            
+current_stn = LROC           
+current_stn = LSCM4          
+current_stn = LSE            
+current_stn = LSF            
+current_stn = LTER           
+current_stn = LTHM7          
+current_stn = LTS            
+current_stn = LUBBOCK        
+current_stn = LUD            
+current_stn = LUK            
+current_stn = LVN            
+current_stn = LWB            
+current_stn = LWC            
+current_stn = LWD            
+current_stn = LWV            
+current_stn = LXL            
+current_stn = LXN            
+current_stn = LXT            
+current_stn = LZK            
+current_stn = LZU            
+current_stn = Lake_Charles   
+current_stn = Lamar          
+current_stn = Lee_Farm       
+current_stn = Linneus        
+current_stn = MACF1          
+current_stn = MACY           
+current_stn = MAF            
+current_stn = MAI            
+current_stn = MAIF1          
+current_stn = MALL           
+current_stn = MBG            
+current_stn = MBL            
+current_stn = MBS            
+current_stn = MCB            
+current_stn = MCD            
+current_stn = MCI            
+current_stn = MCK            
+current_stn = MCN            
+current_stn = MCN1           
+current_stn = MCNE           
+current_stn = MCON           
+current_stn = MCW            
+current_stn = MDH            
+current_stn = MDQ            
+current_stn = MDR3           
+current_stn = MDW            
+current_stn = MDZ            
+current_stn = MEI            
+current_stn = MEM            
+current_stn = MEM2           
+current_stn = MEMP           
+current_stn = METR           
+current_stn = MFD            
+current_stn = MFI            
+current_stn = MGE            
+current_stn = MGG            
+current_stn = MGM            
+current_stn = MGN            
+current_stn = MGY            
+current_stn = MHE            
+current_stn = MHK            
+current_stn = MIAMI          
+current_stn = MIC            
+current_stn = MICHIGAN_CITY  
+current_stn = MIE            
+current_stn = MIL1           
+current_stn = MILWAUKEE      
+current_stn = MIW            
+current_stn = MJQ            
+current_stn = MKC            
+current_stn = MKE            
+current_stn = MKG            
+current_stn = MKJ            
+current_stn = MKL            
+current_stn = MKO            
+current_stn = MKT            
+current_stn = MLC            
+current_stn = MLE            
+current_stn = MLF1           
+current_stn = MLI            
+current_stn = MLU            
+current_stn = MML            
+current_stn = MMT            
+current_stn = MN001          
+current_stn = MN003          
+current_stn = MN004          
+current_stn = MN005          
+current_stn = MN006          
+current_stn = MN007          
+current_stn = MN008          
+current_stn = MN009          
+current_stn = MN010          
+current_stn = MN011          
+current_stn = MN012          
+current_stn = MN013          
+current_stn = MN014          
+current_stn = MN015          
+current_stn = MN016          
+current_stn = MN017          
+current_stn = MN018          
+current_stn = MN019          
+current_stn = MN020          
+current_stn = MN021          
+current_stn = MN022          
+current_stn = MN028          
+current_stn = MN029          
+current_stn = MN030          
+current_stn = MN031          
+current_stn = MN032          
+current_stn = MN033          
+current_stn = MN034          
+current_stn = MN035          
+current_stn = MN036          
+current_stn = MN037          
+current_stn = MN038          
+current_stn = MN040          
+current_stn = MN041          
+current_stn = MN042          
+current_stn = MN043          
+current_stn = MN044          
+current_stn = MN045          
+current_stn = MN047          
+current_stn = MN048          
+current_stn = MN049          
+current_stn = MN050          
+current_stn = MN051          
+current_stn = MN052          
+current_stn = MN054          
+current_stn = MN055          
+current_stn = MN058          
+current_stn = MN059          
+current_stn = MN060          
+current_stn = MN061          
+current_stn = MN062          
+current_stn = MN063          
+current_stn = MN064          
+current_stn = MN065          
+current_stn = MN066          
+current_stn = MN068          
+current_stn = MN069          
+current_stn = MN071          
+current_stn = MN073          
+current_stn = MN074          
+current_stn = MN075          
+current_stn = MN076          
+current_stn = MN077          
+current_stn = MN079          
+current_stn = MN080          
+current_stn = MN081          
+current_stn = MN082          
+current_stn = MN083          
+current_stn = MN084          
+current_stn = MN085          
+current_stn = MN086          
+current_stn = MN087          
+current_stn = MN088          
+current_stn = MN089          
+current_stn = MN090          
+current_stn = MN091          
+current_stn = MN092          
+current_stn = MN093          
+current_stn = MN094          
+current_stn = MN095          
+current_stn = MN096          
+current_stn = MNM            
+current_stn = MNN            
+current_stn = MNRD           
+current_stn = MOB            
+current_stn = MOB1           
+current_stn = MON            
+current_stn = MOP            
+current_stn = MORSE          
+current_stn = MORT           
+current_stn = MOX            
+current_stn = MPAN5          
+current_stn = MPLE           
+current_stn = MPZ            
+current_stn = MPZ            
+current_stn = MQB            
+current_stn = MQY            
+current_stn = MRJ            
+current_stn = MRN            
+current_stn = MRRN1          
+current_stn = MSL            
+current_stn = MSN            
+current_stn = MSP            
+current_stn = MSU            
+current_stn = MTC            
+current_stn = MTO            
+current_stn = MTV            
+current_stn = MTW            
+current_stn = MULE           
+current_stn = MUNDAY         
+current_stn = MUSKEGON       
+current_stn = MUT            
+current_stn = MUT            
+current_stn = MVE            
+current_stn = MVN            
+current_stn = MWA            
+current_stn = MWC            
+current_stn = MWK            
+current_stn = MWL            
+current_stn = MWM            
+current_stn = MWT            
+current_stn = MXF            
+current_stn = MXO            
+current_stn = MXO            
+current_stn = MZH            
+current_stn = Medina         
+current_stn = Monroe_City    
+current_stn = N60            
+current_stn = NBC            
+current_stn = NDBC           
+current_stn = NDS1           
+current_stn = NEW            
+current_stn = NFW            
+current_stn = NIP            
+current_stn = NLGN1          
+current_stn = NMM            
+current_stn = NMOS2          
+current_stn = NOR1           
+current_stn = NOR2           
+current_stn = NOR3           
+current_stn = NORTHWEST      
+current_stn = NOVC2          
+current_stn = NPA            
+current_stn = NQA            
+current_stn = NRB            
+current_stn = NRPS2          
+current_stn = NS095          
+current_stn = NS104          
+current_stn = NSE            
+current_stn = NTH            
+current_stn = NWM            
+current_stn = New_Salem      
+current_stn = Northeast      
+current_stn = Novelty        
+current_stn = OCH            
+current_stn = ODO            
+current_stn = ODON           
+current_stn = ODX            
+current_stn = OEB            
+current_stn = OEO            
+current_stn = OFF            
+current_stn = OFK            
+current_stn = OGA            
+current_stn = OGB            
+current_stn = OJC            
+current_stn = OKAN           
+current_stn = OKC            
+current_stn = OKDL           
+current_stn = OKEE           
+current_stn = OKK            
+current_stn = OKM            
+current_stn = OKMA           
+current_stn = OKMU           
+current_stn = OKOM6          
+current_stn = OKTE           
+current_stn = OLD            
+current_stn = OLN            
+current_stn = OLTO           
+current_stn = OLU            
+current_stn = OLV            
+current_stn = OLY            
+current_stn = OLZ            
+current_stn = OLZ            
+current_stn = OMA            
+current_stn = OMH1           
+current_stn = ONA            
+current_stn = ONL            
+current_stn = ONZ            
+current_stn = OPN            
+current_stn = OQT            
+current_stn = ORC            
+current_stn = ORC            
+current_stn = ORD            
+current_stn = ORR            
+current_stn = OSA            
+current_stn = OSC            
+current_stn = OSH            
+current_stn = OSU            
+current_stn = OTG            
+current_stn = OTM            
+current_stn = OUN            
+current_stn = OVL            
+current_stn = OVS            
+current_stn = OWA            
+current_stn = OWB            
+current_stn = OXV            
+current_stn = OXV            
+current_stn = OZR            
+current_stn = OZW            
+current_stn = Oxford         
+current_stn = P28            
+current_stn = P58            
+current_stn = P59            
+current_stn = P75            
+current_stn = PADU           
+current_stn = PADUCA         
+current_stn = PAH            
+current_stn = PAM            
+current_stn = PARN8          
+current_stn = PARY           
+current_stn = PATT2          
+current_stn = PBF            
+current_stn = PBH            
+current_stn = PCK1           
+current_stn = PDC            
+current_stn = PDK            
+current_stn = PEA            
+current_stn = PEA            
+current_stn = PERRY          
+current_stn = PERRYTON       
+current_stn = PFN            
+current_stn = PHD            
+current_stn = PHN            
+current_stn = PHP            
+current_stn = PIA            
+current_stn = PIB            
+current_stn = PIG            
+current_stn = PIKETON        
+current_stn = PIR            
+current_stn = PIT            
+current_stn = PITC           
+current_stn = PKB            
+current_stn = PKD            
+current_stn = PKTN           
+current_stn = PLAI           
+current_stn = PLN            
+current_stn = PLVW           
+current_stn = PNC            
+current_stn = PNCY           
+current_stn = PNM            
+current_stn = PNR1           
+current_stn = PNS            
+current_stn = PNT            
+current_stn = POE            
+current_stn = POF            
+current_stn = POST           
+current_stn = PPF            
+current_stn = PPQ            
+current_stn = PQL            
+current_stn = PQN            
+current_stn = PRCO2          
+current_stn = PRG            
+current_stn = PRGS2          
+current_stn = PRMS2          
+current_stn = PRRY           
+current_stn = PRX            
+current_stn = PSK            
+current_stn = PTK            
+current_stn = PTR            
+current_stn = PVJ            
+current_stn = PVW            
+current_stn = PWA            
+current_stn = PWC            
+current_stn = PWG            
+current_stn = PWK            
+current_stn = PYX            
+current_stn = QNRK1          
+current_stn = QUIF1          
+current_stn = RAC            
+current_stn = RADA           
+current_stn = RALG           
+current_stn = RALL           
+current_stn = RALT           
+current_stn = RAME           
+current_stn = RANK           
+current_stn = RAP            
+current_stn = RATN           
+current_stn = RAVO           
+current_stn = RBD            
+current_stn = RBUR           
+current_stn = RCA            
+current_stn = RCAR           
+current_stn = RCDR           
+current_stn = RCEN           
+current_stn = RCID           
+current_stn = RCOU           
+current_stn = RCRE           
+current_stn = RDAV           
+current_stn = RDCS2          
+current_stn = RDEC           
+current_stn = RDEW           
+current_stn = RDK            
+current_stn = RDK            
+current_stn = RDR            
+current_stn = RDSM           
+current_stn = RDST           
+current_stn = RDUB           
+current_stn = RDX01          
+current_stn = RD_Research    
+current_stn = REDW           
+current_stn = REES           
+current_stn = RFD            
+current_stn = RFD01          
+current_stn = RFOD           
+current_stn = RGK            
+current_stn = RGRI           
+current_stn = RHAN           
+current_stn = RHI            
+current_stn = RHP            
+current_stn = RIAC           
+current_stn = RIS1           
+current_stn = RJEF           
+current_stn = RKR            
+current_stn = RLEO           
+current_stn = RMAN           
+current_stn = RMAQ           
+current_stn = RMAR           
+current_stn = RMCW           
+current_stn = RMG            
+current_stn = RMIS           
+current_stn = RMOU           
+current_stn = RMY            
+current_stn = RND            
+current_stn = RNEW           
+current_stn = RNH            
+current_stn = ROAM4          
+current_stn = ROAR           
+current_stn = ROG            
+current_stn = RONA           
+current_stn = ROS            
+current_stn = ROSC           
+current_stn = ROTT           
+current_stn = RPD            
+current_stn = RPEL           
+current_stn = RPH            
+current_stn = RPJ            
+current_stn = RQB            
+current_stn = RRED           
+current_stn = RRL            
+current_stn = RSID           
+current_stn = RSIG           
+current_stn = RSIO           
+current_stn = RSL            
+current_stn = RSPE           
+current_stn = RST            
+current_stn = RSTO           
+current_stn = RTIP           
+current_stn = RUE            
+current_stn = RUQ            
+current_stn = RURB           
+current_stn = RVS            
+current_stn = RWAT           
+current_stn = RWBG           
+current_stn = RWDN1          
+current_stn = RWF            
+current_stn = RWIL           
+current_stn = RYV            
+current_stn = RYY            
+current_stn = RZN            
+current_stn = Red_River      
+current_stn = Rice           
+current_stn = Rosepine       
+current_stn = SA08           
+current_stn = SA12           
+current_stn = SA25           
+current_stn = SABS2          
+current_stn = SADI4          
+current_stn = SAEI4          
+current_stn = SAFI4          
+current_stn = SAG1           
+current_stn = SAKI4          
+current_stn = SAL1           
+current_stn = SALI4          
+current_stn = SAMI4          
+current_stn = SAR            
+current_stn = SAUGATUCK      
+current_stn = SAUI4          
+current_stn = SAV            
+current_stn = SAV1           
+current_stn = SAW            
+current_stn = SAZ            
+current_stn = SBDI4          
+current_stn = SBIO1          
+current_stn = SBKI4          
+current_stn = SBM            
+current_stn = SBN            
+current_stn = SBOI4          
+current_stn = SBRI4          
+current_stn = SCAI4          
+current_stn = SCBI4          
+current_stn = SCDI4          
+current_stn = SCGI4          
+current_stn = SCHI4          
+current_stn = SCNI4          
+current_stn = SCOI4          
+current_stn = SCSI4          
+current_stn = SDA            
+current_stn = SDA            
+current_stn = SDF            
+current_stn = SDRI4          
+current_stn = SEAG           
+current_stn = SEMI           
+current_stn = SEP            
+current_stn = SET            
+current_stn = SFAI4          
+current_stn = SFD            
+current_stn = SFM            
+current_stn = SFOI4          
+current_stn = SG01           
+current_stn = SG03           
+current_stn = SG08           
+current_stn = SG19           
+current_stn = SG20           
+current_stn = SG32           
+current_stn = SGA            
+current_stn = SGF            
+current_stn = SGLI4          
+current_stn = SGNW3          
+current_stn = SGRI4          
+current_stn = SGS            
+current_stn = SGT            
+current_stn = SHII4          
+current_stn = SHL            
+current_stn = SHL            
+current_stn = SHUI4          
+current_stn = SHUS2          
+current_stn = SHV            
+current_stn = SIAI4          
+current_stn = SIBY           
+current_stn = SIDN           
+current_stn = SIFI4          
+current_stn = SILV           
+current_stn = SINI4          
+current_stn = SIU            
+current_stn = SJEI4          
+current_stn = SJT            
+current_stn = SJWI4          
+current_stn = SJX            
+current_stn = SKCI4          
+current_stn = SKNI4          
+current_stn = SLAI4          
+current_stn = SLAT           
+current_stn = SLB            
+current_stn = SLB            
+current_stn = SLEI4          
+current_stn = SLG            
+current_stn = SLH            
+current_stn = SLMI4          
+current_stn = SLN            
+current_stn = SLO            
+current_stn = SLOI4          
+current_stn = SMAI4          
+current_stn = SMAM5          
+current_stn = SME            
+current_stn = SMIS2          
+current_stn = SMLI4          
+current_stn = SMNI4          
+current_stn = SMOI4          
+current_stn = SMSI4          
+current_stn = SMSS2          
+current_stn = SNEI4          
+current_stn = SNGN8          
+current_stn = SNL            
+current_stn = SNVI4          
+current_stn = SNY            
+current_stn = SNYD           
+current_stn = SOSI4          
+current_stn = SOWR           
+current_stn = SPAI4          
+current_stn = SPD            
+current_stn = SPEI4          
+current_stn = SPI            
+current_stn = SPIS2          
+current_stn = SPO            
+current_stn = SPR            
+current_stn = SPS            
+current_stn = SPUR           
+current_stn = SPW            
+current_stn = SPYI4          
+current_stn = SQI            
+current_stn = SRAS2          
+current_stn = SRC            
+current_stn = SROI4          
+current_stn = SRUM5          
+current_stn = SSAS2          
+current_stn = SSBS2          
+current_stn = SSC            
+current_stn = SSI            
+current_stn = SSUI4          
+current_stn = STB1           
+current_stn = STC            
+current_stn = STC            
+current_stn = STDM4          
+current_stn = STE            
+current_stn = STE            
+current_stn = STJ            
+current_stn = STL            
+current_stn = STP            
+current_stn = STP1           
+current_stn = SUE            
+current_stn = SUM1           
+current_stn = SUNLEAF        
+current_stn = SUP1           
+current_stn = SUP2           
+current_stn = SUP3           
+current_stn = SUS            
+current_stn = SUW            
+current_stn = SUX            
+current_stn = SVH            
+current_stn = SVN            
+current_stn = SWAI4          
+current_stn = SWAS2          
+current_stn = SWBI4          
+current_stn = SWII4          
+current_stn = SWM            
+current_stn = SWO            
+current_stn = SWTS2          
+current_stn = SWW            
+current_stn = SYAS2          
+current_stn = SZL            
+current_stn = Sanborn_Field  
+current_stn = Smileyberg     
+current_stn = Southeast      
+current_stn = St_Gabriel     
+current_stn = St_Joseph      
+current_stn = Steele         
+current_stn = Sterling       
+current_stn = Sweet_Potato   
+current_stn = T82            
+current_stn = TAHO           
+current_stn = TALH           
+current_stn = TAPV           
+current_stn = TAZ            
+current_stn = TBN            
+current_stn = TBR            
+current_stn = TCC            
+current_stn = TCL            
+current_stn = TCUN5          
+current_stn = TDZ            
+current_stn = TEW            
+current_stn = TIFF           
+current_stn = TIK            
+current_stn = TIP            
+current_stn = TKI            
+current_stn = TLH            
+current_stn = TNB            
+current_stn = TNU            
+current_stn = TNU            
+current_stn = TOB            
+current_stn = TOI            
+current_stn = TOL            
+current_stn = TOP            
+current_stn = TPL            
+current_stn = TQE            
+current_stn = TQH            
+current_stn = TR471          
+current_stn = TR472          
+current_stn = TR484          
+current_stn = TR535          
+current_stn = TR538          
+current_stn = TR569          
+current_stn = TR703          
+current_stn = TR834          
+current_stn = TR881          
+current_stn = TRI            
+current_stn = TRL            
+current_stn = TTF            
+current_stn = TUCUM          
+current_stn = TUL            
+current_stn = TULI           
+current_stn = TUP            
+current_stn = TVC            
+current_stn = TVR            
+current_stn = TWM            
+current_stn = TXAM           
+current_stn = TXAR           
+current_stn = TXAU           
+current_stn = TXBM           
+current_stn = TXK            
+current_stn = TXLU           
+current_stn = TXOD           
+current_stn = TYR            
+current_stn = TYS            
+current_stn = TZR            
+current_stn = Turtle_Cove    
+current_stn = UES            
+current_stn = UGN            
+current_stn = UIN            
+current_stn = UIUC           
+current_stn = UKF            
+current_stn = ULM            
+current_stn = ULM            
+current_stn = UNIV           
+current_stn = UNO            
+current_stn = UNU            
+current_stn = UTS            
+current_stn = UZA            
+current_stn = VAD            
+current_stn = VBT            
+current_stn = VCIO2          
+current_stn = VDI            
+current_stn = VIC1           
+current_stn = VIH            
+current_stn = VINCENNES      
+current_stn = VJI            
+current_stn = VLD            
+current_stn = VOK            
+current_stn = VPC            
+current_stn = VPS            
+current_stn = VPZ            
+current_stn = VQQ            
+current_stn = VTA            
+current_stn = VTI            
+current_stn = VTI            
+current_stn = VTN            
+current_stn = VUJ            
+current_stn = VVV            
+current_stn = VYS            
+current_stn = WANATAH        
+current_stn = WCYN8          
+current_stn = WDG            
+current_stn = WDLM5          
+current_stn = WDR            
+current_stn = WELLINGTON     
+current_stn = WEO            
+current_stn = WESTERN        
+current_stn = WEST_LAFAYETTE 
+current_stn = WFP            
+current_stn = WGG02          
+current_stn = WHIT           
+current_stn = WHITE_DEER     
+current_stn = WHN1           
+current_stn = WIS1           
+current_stn = WLCI3          
+current_stn = WLD            
+current_stn = WNCI2          
+current_stn = WNFL1          
+current_stn = WOOS           
+current_stn = WOOSTER        
+current_stn = WRY01          
+current_stn = WWR            
+current_stn = Whitewater     
+current_stn = XNA            
+current_stn = XVG            
+current_stn = YIP            
+current_stn = YKN            
+current_stn = YNG            
+current_stn = YUM02          
+current_stn = ZZV            
+current_stn = _SBAT          
+current_stn = _SBRA          
+current_stn = _SELS          
+current_stn = _SFOR          
+current_stn = _SFRD          
+current_stn = _SGLD          
+current_stn = _SHAR          
+current_stn = _SHER          
+current_stn = _SKIM          
+current_stn = _SLEM          
+current_stn = _SLUD          
+current_stn = _SNSC          
+current_stn = _SRAP          
+current_stn = _SSLV          
+current_stn = _SSUM          
+current_stn = _STOL          
+current_stn = _SVIC          
+current_stn = _SWAS          
+current_stn = weather_stn01  
+current_stn = weather_stn02  
+current_stn = weather_stn03  
+current_stn = weather_stn04  
+current_stn = weather_stn05  
+current_stn = weather_stn06  
+current_stn = weather_stn07  
+current_stn = weather_stn08  
+current_stn = weather_stn09  
+current_stn = weather_stn10  
+
+Total number lines processed in file Closest_stns_LIST_200.out: 5776
+
+form_webPage_output.pl of file BAMEX_stn_list.ID ended on Wed May 30 16:43:25 2007

@@ -1,0 +1,11 @@
+SHELL = /bin/sh
+
+#CC=purify acc -g
+CC=cc
+##CFLAGS = -g
+
+simple: combine_sigsqfiles.o process_qcfrec.o
+	$(LINK.c) -o combine_sigsqfiles combine_sigsqfiles.o process_qcfrec.o
+	chmod 0755 combine_sigsqfiles
+clean:
+	rm *.o

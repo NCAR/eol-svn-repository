@@ -1,0 +1,160 @@
+#!/bin/perl -w
+
+# --------------------------------------------------------------
+# edit_fields: displays the form to edit the fields in a dataset. 
+#   Allows the user to edit, add or delete a dataset from the 
+#   database.
+#
+# Expected params:
+#   "project" - the project the dataset belongs to
+#   "dataset" - (optional) the dataset to edit, if undefined 
+#     adding a dataest
+#   "mode" - (optional) "add" or "update" mode, default is "add"
+#   NOTE: other params are processed by the State module.
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use Project;
+use Utils;
+use Dataset;
+use Category;
+use State;
+
+my $id = param( "dataset" );
+my $project = param( "project" );
+my $mode = param( "mode" );
+
+my $state = State->new();
+$state->setFromParams();
+
+$mode = "add" if( !defined( $mode ) );
+
+my $ds = Dataset->new();
+
+my @catagories;
+
+if( defined( $id ) )
+{
+	$ds->setFromDB( $id );	
+	$project = $ds->{project};
+	@catagories = $ds->getCategories();
+}
+else
+{
+	$id = -1;
+	$ds->{date} = today();
+}
+my $proj = Project->new();
+$proj->setFromDB( $project );
+
+println( header( -expires=>'-1d' ) );
+
+println( "<html><head><title>Dataset Edit</title></head>" );
+println( $css );
+println( $jscript );
+println( "<body bgcolor=#e9e9e9 link=white alink=white vlink=white text=black>" );
+println( "<center>" );
+println( "<form method=post action=proc_update name=\"main_form\">" );
+println( $state->getHidden() );
+println( "<table border=0 cellpadding=3 cellspacing=8 width=95% bgcolor=#dcdcdc>" );
+	println( "<tr bgcolor=#336699><td colspan=2><font color=white size=+1>Edit/Add Dataset</td></tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>Project: </b></td>" );
+		println( "<td><b>$proj->{name}</b></td>" );
+			println( "<input type=hidden name=\"project\" value=\"$project\">" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right nowrap><b>Date Posted: </b></td>" );
+			my @a = split( "-", $ds->{date} );
+		println( "<td>" );
+			println( "<input type=text size=4 maxlength=4 name=\"year\" value=$a[0]>-".
+						 "<input type=text size=2 maxlength=2 name=\"month\" value=$a[1]>-" .
+						 "<input type=text size=2 maxlength=2 name=\"day\" value=$a[2]>" );
+			println( &nbsp(4), "<a href=\"javascript: today( document.main_form )\"><font size=-1 color=blue>today</a>" );
+			println( &nbsp(4), "<a href=\"javascript: blank( document.main_form )\"><font size=-1 color=blue>blank</a>" );
+		println( "</td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right nowrap><b>Storm Id: </b></td>" );
+		println( "<td>" );
+			println( "<input type=text size=10 maxlength=15 name=\"storm_id\" value=\"$ds->{storm_id}\" onChange=\"setUrl( this.form, true )\" >" );	
+			println( &nbsp(4), "<a href=\"javascript: noStormId( document.main_form )\"><font size=-1 color=blue>99.999</a>" );
+			println( &nbsp(4), "<a href=\"javascript: setUrl( document.main_form, false )\"><font size=-1 color=blue>Set URL</a>" );
+		println( "</td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>Title: </b></td>" );
+		println( "<td><input type=text size=75 name=\"title\" value=\"$ds->{title}\"></td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>URL: </b></td>" );
+		println( "<td><input type=text size=75 name=\"url\" value=\"$ds->{url}\"></td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right><b>Doc URL: </b></td>" );
+		println( "<td><input type=text size=75 name=\"doc_url\" value=\"$ds->{doc_url}\"></td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td align=right nowrap><b>In Progress: </b></td>" );
+		println( "<td>" );
+			my $checked = "";
+			$checked = "checked" if( $ds->{in_progress} == 1 );
+		println( "<input type=checkbox name=\"in_progress\" $checked>" );
+			$checked = ( $ds->{hide} == 1 )? "checked" : "";
+		println( &nbsp(6) . "<b>Hide From Public:</b> <input type=checkbox name=\"hide\" $checked>" );
+		println( "</td>" );
+	println( "</tr>" );
+	println( "<tr>" );
+		println( "<td colspan=2 align=center bgcolor=#336699><font color=white>&nbsp;</td>" );
+	println( "</tr>" );
+	if( $mode eq "add" )
+	{
+		println( "<tr>" );
+			println( "<td colspan=2 align=right>" );
+				println( "<input type=submit name=\"editButton\" value=\"Next >>\">" );
+			println( "</td>" );
+		println( "</tr>" );
+	}
+	println( "<tr>" );
+		println( "<td colspan=2 align=right>" );
+		println( "<input type=hidden name=\"id\" value=\"$id\">" );
+		println( "<input type=hidden name=\"mode\" value=\"$mode\">" );
+
+		if( $mode eq "update" )
+		{
+			my $url = $state->getUrl() . "&hlight=$id";
+			my $onClick = "\"return doSubmit( this.value, this.form, top.opener.parent, \'$url\' )\"";
+			println( "<input type=submit name=\"editButton\" value=\"Update\" onClick=$onClick>" );
+			println( "<input type=submit name=\"editButton\" value=\"Add Dataset\">" );
+			println( "<input type=submit name=\"editButton\" value=\"Delete\" onClick=$onClick>" );
+			println( "<input type=submit name=\"editButton\" value=\"Cancel\" onClick=\"return doCancel( this.form, top.opener.parent ) \">" );
+		}
+		else
+		{
+			println( "<input type=reset name=\"editButton\" value=\"Clear\">" );
+			println( "<input type=submit name=\"editButton\" value=\"Cancel\" onClick=\"return doCancel( this.form, top.opener.parent ) \">" );
+		}
+	println( "</tr>" );
+
+	if( $mode eq "update" )
+	{
+		println( "<tr>" );
+			println( "<td colspan=2 align=right>" );
+				println( "<input type=submit name=\"editButton\" value=\"Add/Remove Categories\">" );
+			println( "</td>" );
+		println( "</tr>" );
+	}
+	println( "<tr>" );
+		println( "<td colspan=2 align=center bgcolor=#336699><font color=white>&nbsp;</td>" );
+	println( "</tr>" );
+	
+		
+println( "</form></table>" );
+
+println( "</body></html>" );
+

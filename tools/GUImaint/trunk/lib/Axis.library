@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<library>
+  <!--JBuilder Library Definition File-->
+  <fullname>Axis</fullname>
+  <class>
+    <path>[saaj.jar]</path>
+    <path>[jaxrpc.jar]</path>
+    <path>[axis.jar]</path>
+    <path>[wsdl4j.jar]</path>
+    <path>[log4j-1.2.8.jar]</path>
+    <path>[commons-logging.jar]</path>
+    <path>[commons-discovery.jar]</path>
+  </class>
+  <source>
+    <path>../thirdparty/xml-axis/java/src/</path>
+  </source>
+  <documentation>
+    <path>../thirdparty/xml-axis/java/docs</path>
+  </documentation>
+  <required>JavaBeans Activation Framework</required>
+  <required>JavaMail</required>
+</library>
+

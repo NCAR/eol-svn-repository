@@ -1,0 +1,71 @@
+57 1001 								; comment
+Bucholtz, Anthony 							; comment
+Naval Research Laboratory						; comment
+Solar and Infrared Broadband Radiometers (BBR) on the CIRPAS Twin Otter	; comment
+POST 									
+1 1 									
+2008 07 16     2009 11 09 						
+1.00000								
+UTC time, seconds							
+    6
+1. 1. 1. 1. 1. 1.							
+-9999. -9999.  -9999. -9999. -9999. -9999.				
+UTC time (hour)
+Mission_Time (seconds)
+Downwelling Broadband IR Irradiance 4.5-42 microns, (W m^-2)
+Upwelling   Broadband IR Irradiance 4.5-42 microns, (W m^-2)
+Downwelling Broadband Solar Irradiance 0.2-3.6 microns, (W m^-2)
+Upwelling   Broadband Solar Irradiance 0.2-3.6 microns, (W m^-2)
+    0
+    37
+Serial Number of Zenith IR Radiometer: 040728
+Serial Number of Nadir  IR Radiometer: 060876
+Serial Number of Zenith SOLAR Radiometer: 030078
+Serial Number of Nadir  SOLAR Radiometer: 040096
+    25
+PI_CONTACT_INFO: phone: 831-656-5024 Address: 7 Grace Hopper Ave., Monterey, CA
+93943, email: anthony.bucholtz@nrlmry.navy.mil
+PLATFORM: CIRPAS Twin Otter
+LOCATION: Get from Twin Otter NAV files which are recorded separately.
+ASSOCIATED_DATA: N/A
+INSTRUMENT_INFO: Solar and IR Broadband Radiometers (BBR) are modified Kipp &
+Zonen CM-22 pyranometers and CG-4 pyrgeometers, respectively.  A solar and IR
+radiometer pair were mounted on the top and bottom of the P-3.
+DATA_INFO:
+UNCERTAINTY: Estimated Nominal BBR uncertainty: 3-5%
+ULOD_FLAG: -7777
+ULOD_VALUE: N/A
+LLOD_FLAG: -8888
+LLOD_VALUE: N/A
+DM_CONTACT_INFO: N/A
+PROJECT_INFO: POST experiment out of Marina, CA, July/Aug 2008
+STIPULATIONS_ON_USE: Please contact the PI when using data
+OTHER_COMMENTS:
+REVISION: R0
+R0: This data has not been corrected for the attitude of the aircraft.
+
+Calibration File Zenith IR Radiometer    : CG4_060875_20080218_Cal_Data.QDA +
+CG4_060875_20080529_Cal_Data.QDA + CG4_060875_20090115_Cal_Data.QDA
+Calibration File Nadir  IR Radiometer    : CG4_060877_20080218_Cal_Data.QDA +
+CG4_060877_20080529_Cal_Data.QDA + CG4_060877_20090115_Cal_Data.QDA
+Calibration File Zenith SOLAR Radiometer :
+CM22_060135_20090114_Sun_Shade_Cal_Data.QDA
+Calibration File Nadir  SOLAR Radiometer :
+CM22_040095_20090114_Sun_Shade_Cal_Data.QDA
+
+secs hrs   secs          W/m^2         W/m^2         W/m^2         W/m^2
+UTC  UTC  Mission_Time  Zen_IR_Irrad  Nad_IR_Irrad  Zen_SOL_Irrad  Nad_SOL_Irrad
+59823.39  16.617607      0.50   387.14   413.93   224.79    33.52
+59824.39  16.617885      1.50   387.34   413.93   224.81    33.52
+59825.39  16.618163      2.50   387.18   414.16   224.80    33.52
+59826.39  16.618440      3.49   387.28   414.02   224.86    33.52
+59827.39  16.618718      4.50   387.20   414.12   224.83    33.45
+59828.39  16.618996      5.49   387.38   414.08   224.75    33.50
+59829.39  16.619274      6.49   387.39   414.14   224.81    33.49
+59830.39  16.619552      7.49   387.27   414.10   224.90    33.54
+59831.39  16.619829      8.49   387.52   414.37   224.84    33.45
+59832.39  16.620107      9.49   387.18   414.26   224.88    33.45
+59833.39  16.620385     10.49   387.45   414.38   224.85    33.52
+59834.39  16.620663     11.49   387.17   414.19   224.93    33.44
+59835.39  16.620940     12.49   387.42   414.47   224.92    33.48
+59836.39  16.621218     13.49   387.29   414.19   225.02    33.43

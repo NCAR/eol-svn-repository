@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+  <!--JBuilder Library Definition File-->
+  <fullname>JSTL</fullname>
+  <class>
+    <path>[../thirdparty/jakarta-taglibs/standard-1.0.1/lib/jstl.jar]</path>
+    <path>[../thirdparty/jakarta-taglibs/standard-1.0.1/lib/standard.jar]</path>
+    <path>[../thirdparty/jakarta-taglibs/standard-1.0.1/lib/saxpath.jar]</path>
+  </class>
+  <documentation>
+    <path>../thirdparty/jakarta-taglibs/standard-1.0.1/javadoc</path>
+  </documentation>
+  <kit>
+    <id>jstl</id>
+    <data>
+      <taglib>
+        <name>core</name>
+        <prefix>c</prefix>
+        <path>../thirdparty/jakarta-taglibs/standard-1.0.1/tld/c.tld</path>
+        <uri>http://java.sun.com/jstl/core</uri>
+        <location>/WEB-INF/c.tld</location>
+      </taglib>
+      <taglib>
+        <name>core RT</name>
+        <prefix>c_rt</prefix>
+        <path>../thirdparty/jakarta-taglibs/standard-1.0.1/tld/c-rt.tld</path>
+        <uri>http://java.sun.com/jstl/core_rt</uri>
+        <location>/WEB-INF/c-rt.tld</location>
+      </taglib>
+      <taglib>
+        <name>XML</name>
+        <prefix>x</prefix>
+        <path>../thirdparty/jakarta-taglibs/standard-1.0.1/tld/x.tld</path>
+        <uri>http://java.sun.com/jstl/xml</uri>
+        <location>/WEB-INF/x.tld</location>
+      </taglib>
+      <taglib>
+        <name>XML RT</name>
+        <prefix>x_rt</prefix>
+        <path>../thirdparty/jakarta-taglibs/standard-1.0.1/tld/x-rt.tld</path>
+        <uri>http://java.sun.com/jstl/xml_rt</uri>
+        <location>/WEB-INF/x-rt.tld</location>
+      </taglib>
+      <taglib>
+        <name>I18N formatting</name>
+        <prefix>fmt</prefix>
+        <path>../thirdparty/jakarta-taglibs/standard-1.0.1/tld/fmt.tld</path>
+        <uri>http://java.sun.com/jstl/fmt</uri>
+        <location>/WEB-INF/fmt.tld</location>
+      </taglib>
+      <taglib>
+        <name>I18N formatting RT</name>
+        <prefix>fmt_rt</prefix>
+        <path>../thirdparty/jakarta-taglibs/standard-1.0.1/tld/fmt-rt.tld</path>
+        <uri>http://java.sun.com/jstl/fmt_rt</uri>
+        <location>/WEB-INF/fmt-rt.tld</location>
+      </taglib>
+      <taglib>
+        <name>SQL</name>
+        <prefix>sql</prefix>
+        <path>../thirdparty/jakarta-taglibs/standard-1.0.1/tld/sql.tld</path>
+        <uri>http://java.sun.com/jstl/sql</uri>
+        <location>/WEB-INF/sql.tld</location>
+      </taglib>
+      <taglib>
+        <name>SQL RT</name>
+        <prefix>sql_rt</prefix>
+        <path>../thirdparty/jakarta-taglibs/standard-1.0.1/tld/sql-rt.tld</path>
+        <uri>http://java.sun.com/jstl/sql_rt</uri>
+        <location>/WEB-INF/sql-rt.tld</location>
+      </taglib>
+    </data>
+  </kit>
+</library>

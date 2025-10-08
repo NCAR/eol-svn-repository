@@ -1,0 +1,8 @@
+source /usr/local/lf9562/csh_setup
+limit coredumpsize 1024 megabytes
+#limit coredumpsize unlimited
+limit stacksize unlimited
+
+set path = ($path /usr/local/codiac/bin)
+set LD_LIBRARY_PATH = /usr/local/lf9562/lib:/usr/local/codiac/extra/lib:/lib:/usr/lib
+

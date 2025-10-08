@@ -1,0 +1,8 @@
+SHELL = /bin/sh
+
+CC=cc
+CFLAGS = 
+
+procdebug: postproc_HQCdebug.o
+	$(LINK.c) -o postproc_HQCdebug postproc_HQCdebug.o  -lm
+	chmod 0755 postproc_HQCdebug

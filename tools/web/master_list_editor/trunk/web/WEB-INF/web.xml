@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <display-name>Master List Editor</display-name>
+	<resource-ref>
+      <description>DB Connection</description>
+	  <res-ref-name>connection</res-ref-name>
+	  <res-type>javax.sql.DataSource</res-type>
+	  <res-auth>Container</res-auth>
+	</resource-ref>
+
+	<context-param>
+        <param-name>com.sun.faces.verifyObjects</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>com.sun.faces.validateXml</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>/WEB-INF/faces-config.xml</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+    </context-param>
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-error-page>/login/error.jsp</form-error-page>
+            <form-login-page>/login/login.jsf</form-login-page>
+        </form-login-config>
+    </login-config>
+    
+    <security-constraint>
+        <auth-constraint>
+            <role-name>basic</role-name>
+            <role-name>super</role-name>
+        </auth-constraint>
+        <web-resource-collection>
+            <url-pattern>/main.jsf</url-pattern>
+            <url-pattern>/main.jsp</url-pattern>
+            <url-pattern>/index.jsp</url-pattern>
+            <url-pattern>/docs/*</url-pattern>
+            <url-pattern>/dataset/*</url-pattern>
+            <url-pattern>/classification/*</url-pattern>
+            <url-pattern>/phase/*</url-pattern>
+            <url-pattern>/project/*</url-pattern>
+            <web-resource-name>Master List Restrictions</web-resource-name>
+        </web-resource-collection>
+    </security-constraint>
+    
+    <security-role><role-name>basic</role-name></security-role>
+    <security-role><role-name>super</role-name></security-role>
+
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+        </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.jsf</url-pattern>
+    </servlet-mapping>
+
+	<session-config><session-timeout>
+            60
+    </session-timeout></session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+	
+</web-app>

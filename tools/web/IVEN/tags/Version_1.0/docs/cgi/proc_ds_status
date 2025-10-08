@@ -1,0 +1,128 @@
+#!/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>Processes the input from the edit_ds_status form.  The user can only
+#  update the dataset's status information using this form.  The status i
+#  information includes the locations of the raw data, final data, etc.
+#  and the status notes.  This script determines which button the user pressed
+#  and performs the required database operations.</p>
+#
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+
+use strict;
+use lib "lib";
+use Dataset;
+use DatasetDBA;
+use State;
+use Utils;
+use CGI;
+
+my $state = State->new();
+my $cgi = CGI->new();
+
+$state->setFromParams( $cgi );
+
+my %actions = ( "Update Dataset" => \&update,
+								"Delete Dataset" => \&delete,
+								"Cancel" => \&cancel
+							);
+
+proc_ds_status( $state, $cgi );
+
+sub proc_ds_status
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $action = $cgi->param( "action" );
+	$actions{$action}->($state, $cgi);
+	
+}
+
+sub getFromParams
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $ds = Dataset->new();
+
+	$ds->{dsname} = $cgi->param( "dsname" );
+	$ds->{pdname} = $cgi->param( "pdname" );
+	$ds->{pjname} = $state->{project};
+	$ds->{raw_data} = $cgi->param( "raw_data" );
+	$ds->{readme} = $cgi->param( "readme" );
+	$ds->{final_data} = $cgi->param( "final_data" );
+	$ds->{station_info} = $cgi->param( "station_info" );
+	$ds->{software} = $cgi->param( "software" );
+	$ds->{how_to} = $cgi->param( "how_to" );
+	$ds->{plots} = $cgi->param( "plots" );
+	$ds->{id_type} = $cgi->param( "id_type" );
+	$ds->{platform_type} = $cgi->param( "platform_type" );
+	$ds->{status_notes} = $cgi->param( "status_notes" );
+
+	my $best_sw = $cgi->param( "best_sw" );
+	if( defined( $best_sw ) )
+	{
+		$ds->{best_sw} = 1;
+	}
+	else
+	{
+		$ds->{best_sw} = 0;
+	}
+	return $ds;
+}
+
+sub cancel
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $onLoad = "\"top.opener.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Action Canceled" );	
+}
+
+sub update
+{
+	my $state = shift;
+	my $cgi = shift;
+	
+	my $ds = getFromParams( $state, $cgi );
+
+	my $source_dsname = $cgi->param( "source_dsname" );
+
+	DatasetDBA::updateDBStatus( $ds, $source_dsname );
+
+	$state->{proc_edit} = undef();
+	$state->{dataset} = $ds->{dsname};
+	
+	my $url = $state->getUrlString();
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Dataset Updated" );	
+}
+
+sub showStatus
+{
+	my $state = shift;
+	my $cgi = shift;
+	my $onLoad = shift;
+	my $msg = shift;
+
+
+	println( $cgi->header() );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>$msg</title>" );
+	println( "</head>" );
+	println( "<body onLoad=$onLoad>" );
+	println( "<center><br><br><br>" );
+	println( "<b>$msg</b>" );
+	println( "<br>" );
+	println( "<input type=submit value='Close Window' onClick=\"window.close()\">" );
+
+	println( "</body></html>" );
+}
+
+1;

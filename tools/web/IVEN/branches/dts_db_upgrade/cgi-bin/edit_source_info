@@ -1,0 +1,69 @@
+#! /usr/bin/perl -w
+
+package SourceEditorCGI;
+use strict;
+use lib "..";
+use EditorCGI;
+our @ISA = ("EditorCGI");
+
+&main();
+
+sub main {
+    my $self = SourceEditorCGI->new();
+    $self->buildPage("Dataset Source Info");
+}
+
+sub buildPageBody {
+    my ($self) = @_;
+    my $dataset = $self->getDataset();
+
+    printf("<form action=\"source_info_action\" method=\"POST\" onSubmit=\"javascript: return validateSourceDataset(this);\">\n");
+    printf("   <table class=editTable>\n");
+    printf("      <tr class=editHeading><td colspan=6>Edit Source Info: %s</td></tr>\n",$dataset->getId());
+    printf("      <tr>\n");
+    printf("         <th>UTC Offset:</th>\n");
+    printf("         <td colspan=5><input type=text name=utc_offset size=10 maxlength=7 value=\"%s\" /></td>\n",$dataset->getUTCOffset());
+    printf("      </tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>DST Flag:</th>\n");
+    printf("         <td colspan=5>\n");
+    printf("            <select name=dst_flag>\n");
+    printf("               <option value=\"\" %s>Unknown</option>\n",defined($dataset->getDSTFlag()) ? "" : "selected");
+    printf("               <option value=\"0\" %s>No</option>\n",defined($dataset->getDSTFlag()) && !$dataset->getDSTFlag() ? "selected" : "");
+    printf("               <option value=\"1\" %s>Yes</option>\n",defined($dataset->getDSTFlag()) && $dataset->getDSTFlag() ? "selected" : "");
+    printf("            </select>\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("      <tr><td class=editSpacer colspan=6></td></tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Source of Time Info:</th>\n");
+    printf("         <td colspan=5><textarea name=source_note rows=10 cols=60>%s</textarea></td>\n",$dataset->getSourceTimeNote());
+    printf("      </tr>\n");
+    printf("      <tr><td class=editSpacer colspan=6></td></tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Collection Time Info:</th>\n");
+    printf("         <td colspan=5><textarea name=collection_note rows=10 cols=60>%s</textarea></td>\n",$dataset->getCollectionTimeNote());
+    printf("      </tr>\n");
+    printf("      <tr><td class=editSpacer colspan=6></td></tr>\n");
+    if ($dataset->getId() eq "") {
+	printf("      <tr>\n");
+	printf("         <th>Note:</th>\n");
+	printf("         <td>If the source dataset is not already in the database, put it in using the DLN before putting it in here.</td>\n");
+	printf("      </tr>\n");
+	printf("      <tr><td class=editSpacer colspan=6></td></tr>\n");
+    }
+    printf("      <tr>\n");
+    printf("         <td class=buttons colspan=2>\n");
+    printf("            <input type=submit name=action value=Update />\n");
+    printf("            <input type=button onclick=\"javascript: closeWindow();\" value=Cancel />\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+
+    printf("   </table>\n");
+    printf("   <input type=hidden name=dataset value=\"%s\" />\n",$dataset->getId()) if ($dataset->getId() ne "");
+    printf("   <input type=hidden name=collection_note_id value=\"%s\" />\n",$dataset->getCollectionTimeNoteId());
+    printf("   <input type=hidden name=source_note_id value=\"%s\" />\n",$dataset->getSourceTimeNoteId());
+    printf("</form>\n");
+}
+
+

@@ -1,0 +1,55 @@
+> groovy authorshipConnect.groovy IDEAS-4_C130
+
+Created log file:	logs/log_20131209141053.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+Unable to find 1 for data set 350.002
+Unable to find 508 for data set 350.002
+Unable to find 1 for data set 350.003
+Unable to find 508 for data set 350.003
+Unable to find 1 for data set 350.006
+Unable to find 508 for data set 350.006
+Unable to find 1 for data set 350.011
+Unable to find 508 for data set 350.011
+Unable to find 1 for data set 350.012
+Unable to find 508 for data set 350.012
+Unable to find 1 for data set 350.013
+Unable to find 508 for data set 350.013
+Unable to find 1 for data set 350.014
+Unable to find 508 for data set 350.014
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.002';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.003';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.006';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.006';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.011';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.011';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.012';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.012';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.013';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.013';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.014';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 508, 'author', 2, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '350.014';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

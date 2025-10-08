@@ -1,0 +1,362 @@
+ MESSAGE TYPE NC002019 -- RRS metadata
+ 
+Heading              Units          Description
+-------              --------------------------------------------------------
+DS                   CODE TABLE     DATA SIGNIFICANCE     9-21  parent/WFO site
+CLX                  ( 4)CCITT IA5  SHORT ICAO LOCATION IDENTIFIER
+DS                   CODE TABLE     DATA SIGNIFICANCE     9-21  RRS obs site
+CLX2                 ( 4)CCITT IA5  SHORT ICAO LOCATION IDENTIFIER
+WMO                  NUMERIC        WMO BLOCK and STATION NUMBER
+WBAN                 NUMERIC        WBAN NUMBER
+RT                   CODE TABLE     RADIOSONDE TYPE  
+SStn                 ( 5)CCITT IA5  SHORT STATION OR SITE NAME (XXX CALL Letters)
+Obs                  ( 4)CCITT IA5  RADIOSONDE OBSERVER
+SoftV                (12)CCITT IA5  WORKSTATION SOFTWARE VERSION NUMBER
+NR                   NUMERIC        NUMBER OF ARCHIVE RECOMPUTES
+Ascn                 NUMERIC        RADIOSONDE ASCENSION NUMBER
+R#                   NUMERIC        RADIOSONDE RELEASE NUMBER
+Serial #             (20)CCITT IA5  RADIOSONDE SERIAL NUMBER
+Frequency            HZ             RADIOSONDE OPERATING RADIO FREQUENCY
+GS                   CODE TABLE     RADIOSONDE GROUND RECEIVING SYSTEM 
+TT                   CODE TABLE     TRACKING TECHNIQUE/STATUS OF SYS  
+RRPPC                PASCAL         RELEASE POINT PRESSURE CORRECTION
+ORCRAZ               DEGREE         ORIENTATION CORRECTION (AZIMUTH)
+ORCREL               DEGREE         ORIENTATION CORRECTION (ELEVATION)
+PS                   CODE TABLE     PRESSURE SENSOR TYPE
+TS                   CODE TABLE     TEMPERATURE SENSOR TYPE
+HS                   CODE TABLE     HUMIDITY SENSOR TYPE
+RC                   FLAG TABLE     RADIOSONDE CONFIGURATION
+BS                   CODE TABLE     BALLOON SHELTER TYPE
+BM                   CODE TABLE     BALLOON MANUFACTURER   
+BT                   CODE TABLE     BALLOON TYPE    
+Balloon_Lot#         (12)CCITT IA5  BALLOON LOT NUMBER
+GT                   CODE TABLE     BALLOON GAS TYPE USED        
+G_Amt                KG             BALLOON GAS AMOUNT USED
+TrLen                METER          BALLOON FLIGHT TRAIN LENGTH
+BWght                KG             BALLOON WEIGHT
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21 Balloon manufacture date 
+B_Yr                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  balloon launch point
+R_Yr                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+Lat                  DEGREE         LATITUDE (HIGH ACCURACY)
+Lon                  DEGREE         LONGITUDE (HIGH ACCURACY)
+Bar_Ht               METER          HEIGHT OF BAROMETER ABOVE MSL
+Ht                   METER          HEIGHT
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  surface obs displacement
+BearAz               DEGREE TRUE    BEARING OR AZIMUTH
+HInc                 METER          HEIGHT INCREMENT
+Dist                 METERS         DISTANCE
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  surface obs
+EQ                   CODE TABLE     SURFACE WEATHER OBSERVING EQUIPMENT 
+Press                PASCAL         PRESSURE
+EQ                   CODE TABLE     SURFACE WEATHER OBSERVING EQUIPMENT 
+RH                   PERCENT        RELATIVE HUMIDITY
+EQ                   CODE TABLE     SURFACE WEATHER OBSERVING EQUIPMENT 
+WD                   DEGREE TRUE    WIND DIRECTION
+WSpd                 METER/SECOND   WIND SPEED
+EQ                   CODE TABLE     SURFACE WEATHER OBSERVING EQUIPMENT 
+Td(k)                DEGREE KELVIN  TEMPERATURE/DRY BULB TEMPERATURE
+TP                   HOUR           TIME PERIOD OR DISPLACEMENT (HOUR)
+Td(k)                DEGREE KELVIN  TEMPERATURE/DRY BULB TEMPERATURE
+TP                   HOUR           TIME PERIOD OR DISPLACEMENT (HOUR)
+EQ                   CODE TABLE     SURFACE WEATHER OBSERVING EQUIPMENT 
+Tdp(k)               DEGREE KELVIN  DEW-POINT TEMPERATURE
+Tw(k)                DEGREE KELVIN  WET BULB TEMPERATURE
+C1                   CODE TABLE     CLOUD TYPE
+C2                   CODE TABLE     CLOUD TYPE
+C3                   CODE TABLE     CLOUD TYPE
+CA                   CODE TABLE     CLOUD AMOUNT
+HOCB                 METERS         HEIGHT OF BASE OF CLOUD
+PW                   CODE TABLE     PRESENT WEATHER
+PW                   CODE TABLE     PRESENT WEATHER
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  flight level termination
+Tmi                  MINUTE         TIME PERIOD OR DISPLACEMENT (MINUTE)
+Tsec                 SECOND         TIME PERIOD OR DISPLACEMENT (SECOND)
+Term-Lat             DEGREE         LATITUDE (HIGH ACCURACY)
+Term-Lon             DEGREE         LONGITUDE (HIGH ACCURACY)
+T-Yr                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+FLPC                 FLAG TABLE     FLIGHT LEVEL PRESSURE CORRECTION 
+TermPr               PASCAL         PRESSURE
+T_RH                 PERCENT        RELATIVE HUMIDITY
+SR                   CODE TABLE     SOLAR AND INFRARED RADIATION CORRECTION
+T_Td                 DEGREE KELVIN  TEMPERATURE/DRY BULB TEMPERATURE
+T_GPH                GPM            GEOPOTENTIAL HEIGHT
+LS                   CODE TABLE     LEVEL SIGNIFICANCE FOR SOUNDING 
+RT                   CODE TABLE     REASON FOR TERMINATION  
+LS                   CODE TABLE     LEVEL SIGNIFICANCE FOR SOUNDING 
+RT                   CODE TABLE     REASON FOR TERMINATION  
+ 
+
+
+ MESSAGE TYPE NC002020 -- RRS raw PTU
+ 
+Heading              Units          Description
+-------              --------------------------------------------------------
+WMO                  NUMERIC        WMO BLOCK and STATION NUMBER
+WBAN                 NUMERIC        WBAN NUMBER
+RT                   CODE TABLE     RADIOSONDE TYPE 
+DS                   CODE TABLE     DATA SIGNIFICANCE,  9-21  balloon launch point
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+Lat                  DEGREE         LATITUDE (HIGH ACCURACY)
+Lon                  DEGREE         LONGITUDE (HIGH ACCURACY)
+Bar_Ht               METER          HEIGHT OF BAROMETER ABOVE MSL
+Ht                   METER          HEIGHT
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  flight level obs
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+FLPC                 FLAG TABLE     FLIGHT LEVEL PRESSURE CORRECTION
+Press                PASCAL         PRESSURE
+%C                   %              DATA PERCENT CONFIDENCE 
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL 
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+RawHr                PERCENT        RAW RELATIVE HUMIDITY
+%C                   %              DATA PERCENT CONFIDENCE
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL   
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+SR                   CODE TABLE     SOLAR AND INFRARED RADIATION CORRECTION
+Td(k)                DEGREE KELVIN  TEMPERATURE/DRY BULB TEMPERATURE
+%C                   %              DATA PERCENT CONFIDENCE 
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL  
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+ 
+
+ MESSAGE TYPE NC002021 -- RRS raw GPS unsmoothed
+ 
+Heading              Units          Description
+-------              --------------------------------------------------------
+WMO                  NUMERIC        WMO BLOCK NUMBER
+WBAN                 NUMERIC        WBAN NUMBER
+RT                   CODE TABLE     RADIOSONDE TYPE  
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  balloon launch point
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+Lat                  DEGREE         LATITUDE (HIGH ACCURACY)
+Lon                  DEGREE         LONGITUDE (HIGH ACCURACY)
+Bar_HT               METER          HEIGHT OF BAROMETER ABOVE MSL
+Ht                   METER          HEIGHT
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  flight level obs
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+GPS-Lat              DEGREE         LATITUDE (HIGH ACCURACY)
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR    
+GPS-Lon              DEGREE         LONGITUDE (HIGH ACCURACY)
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL 
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+GP-HT                METER          HEIGHT
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL 
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+U-Wnd                METER/SECOND   U-COMPONENT
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL  
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR  
+V-Wnd                METER/SECOND   V-COMPONENT
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL 
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR  
+%C                   %              DATA PERCENT CONFIDENCE 
+ 
+
+
+ MESSAGE TYPE NC002022 -- RRS raw GPS smoothed
+ 
+Heading              Units          Description
+-------              --------------------------------------------------------
+WMO                  NUMERIC        WMO BLOCK NUMBER
+WBAN                 NUMERIC        WBAN NUMBER
+RT                   CODE TABLE     RADIOSONDE TYPE  
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  balloon launch point
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+Lat                  DEGREE         LATITUDE (HIGH ACCURACY)
+Lon                  DEGREE         LONGITUDE (HIGH ACCURACY)
+Bar_Ht               METER          HEIGHT OF BAROMETER ABOVE MSL
+Ht                   METER          HEIGHT
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  flight level obs
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+GPS-Lat              DEGREE         LATITUDE (HIGH ACCURACY)
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR    
+GPS-Lon              DEGREE         LONGITUDE (HIGH ACCURACY)
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL 
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+GP-HT                METER          HEIGHT
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL 
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+U-Wnd                METER/SECOND   U-COMPONENT
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL  
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR  
+V-Wnd                METER/SECOND   V-COMPONENT
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL 
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR  
+%C                   %              DATA PERCENT CONFIDENCE 
+
+
+ MESSAGE TYPE NC002023 -- RRS processed PTU
+ 
+Heading              Units          Description
+-------              --------------------------------------------------------
+WMO                  NUMERIC        WMO BLOCK NUMBER
+WBAN                 NUMERIC        WBAN NUMBER
+RT                   CODE TABLE     RADIOSONDE TYPE  
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  balloon launch point
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+Lat                  DEGREE         LATITUDE (HIGH ACCURACY)
+Lon                  DEGREE         LONGITUDE (HIGH ACCURACY)
+Bar_Ht               METER          HEIGHT OF BAROMETER ABOVE MSL
+Ht                   METER          HEIGHT
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  flight level obs
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+FLPC                 FLAG TABLE     FLIGHT LEVEL PRESSURE CORRECTION 
+Press                PASCAL         PRESSURE
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL  
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+FLPC                 FLAG TABLE     FLIGHT LEVEL PRESSURE CORRECTION  
+Press                PASCAL         PRESSURE
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+RH                   PERCENT        RELATIVE HUMIDITY
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL    
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR  
+SR                   CODE TABLE     SOLAR AND INFRARED RADIATION CORRECTION
+Td(k)                DEGREE KELVIN  TEMPERATURE/DRY BULB TEMPERATURE
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL   
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR  
+SR                   CODE TABLE     SOLAR AND INFRARED RADIATION CORRECTION 
+Td(k)                DEGREE KELVIN  TEMPERATURE/DRY BULB TEMPERATURE
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL  
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+DP(k)                DEGREE KELVIN  DEW-POINT TEMPERATURE
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL 
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR  
+GPHT                 GPM            GEOPOTENTIAL HEIGHT
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL  
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR  
+  
+
+ MESSAGE TYPE NC002024 -- RRS processed GPS
+ 
+Heading              Units          Description
+-------              --------------------------------------------------------
+WMO                  NUMERIC        WMO BLOCK NUMBER
+WBAN                 NUMERIC        WBAN NUMBER
+RT                   CODE TABLE     RADIOSONDE TYPE  
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  balloon launch point
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+Lat                  DEGREE         LATITUDE (HIGH ACCURACY)
+Lon                  DEGREE         LONGITUDE (HIGH ACCURACY)
+Bar_Ht               METER          HEIGHT OF BAROMETER ABOVE MSL
+Ht                   METER          HEIGHT
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  flight level obs
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+GPS-Lat              DEGREE         LATITUDE (HIGH ACCURACY)
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR    
+GPS-Lon              DEGREE         LONGITUDE (HIGH ACCURACY)
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL 
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+GP-HT                METER          HEIGHT
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL 
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR 
+U-Wnd                METER/SECOND   U-COMPONENT
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL  
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR  
+V-Wnd                METER/SECOND   V-COMPONENT
+MQ                   CODE TABLE     MANUAL/AUTOMATIC QUALITY CONTROL 
+Ck                   CODE TABLE     DATA QUALITY-CHECK INDICATOR  
+ 
+
+
+ MESSAGE TYPE NC002025 -- RRS standard & significant levels
+ 
+Heading              Units          Description
+-------              --------------------------------------------------------
+WMO                  NUMERIC        WMO BLOCK NUMBER
+WBAN                 NUMERIC        WBAN NUMBER
+RT                   CODE TABLE     RADIOSONDE TYPE  
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  balloon launch point
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+Lat                  DEGREE         LATITUDE (HIGH ACCURACY)
+Lon                  DEGREE         LONGITUDE (HIGH ACCURACY)
+Bar_Ht               METER          HEIGHT OF BAROMETER ABOVE MSL
+Ht                   METER          HEIGHT
+DS                   CODE TABLE     DATA SIGNIFICANCE, 9-21  flight level obs
+Year                 YEAR           YEAR
+Mo                   MONTH          MONTH
+Da                   DAY            DAY
+Hr                   HOUR           HOUR
+Mn                   MINUTE         MINUTE
+Sec                  SECOND         SECOND
+LS                   CODE TABLE     LEVEL SIGNIFICANCE FOR SOUNDING 
+FLPC                 FLAG TABLE     FLIGHT LEVEL PRESSURE CORRECTION 
+Press                PASCAL         PRESSURE
+RH                   PERCENT        RELATIVE HUMIDITY
+SC                   CODE TABLE     SOLAR AND INFRARED RADIATION CORRECTION 
+Tmp                  DEGREE KELVIN  TEMPERATURE/DRY BULB TEMPERATURE
+DPD                  DEGREE KELVIN  DEW-POINT TEMPERATURE
+GPHT                 GPM            GEOPOTENTIAL HEIGHT
+HGHT                 METER          HEIGHT
+WSpd                 METER/SECOND   WIND SPEED
+WD                   DEGREE TRUE    WIND DIRECTION
+ 

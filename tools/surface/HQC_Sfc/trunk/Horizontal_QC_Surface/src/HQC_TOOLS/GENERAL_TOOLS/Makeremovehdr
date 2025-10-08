@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for remove_hdr s/w.
+#
+
+CC=acc
+CFLAGS = 
+
+procncdc: remove_hdr.o
+	$(LINK.c) -o remove_hdr remove_hdr.o 
+	chmod 0755 remove_hdr
+
+clean:
+	rm *.o

@@ -1,0 +1,37 @@
+#! /usr/bin/perl -w
+
+my $libdir;
+BEGIN
+{
+    $libdir = $ENV{"MYSQL_DIR"};
+    if (!defined($libdir)) {
+       $libdir = "/net/work/lib/perl/mysql";
+    }
+}
+use strict;
+use lib $libdir;
+use MySqlInserter;
+
+&main();
+
+sub main {
+    # convenience arg so user doesn't have to figure out env vars
+    if ("-u" == $ARGV[0]) {
+        shift;
+
+        # set username for the Mysql library
+        $ENV{'DMG_SCRIPT_USER'}=shift or usage();
+    }
+
+    usage() if (scalar(@ARGV) != 1);
+    my ($cfg_file) = @ARGV;
+    my $inserter = MySqlInserter->new();
+
+    $inserter->insert($cfg_file);
+}
+
+sub usage {
+    printf("Usage: insert_multiple_files [-u username] cfg-file\n");
+    printf("  -or- insert_multiple_files [-u username] file.yml\n");
+    exit(1);
+}

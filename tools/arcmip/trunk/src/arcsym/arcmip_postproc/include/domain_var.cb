@@ -1,0 +1,9 @@
+c---------------------------------------------------------------------
+c ARCSyM domain variables
+      real *4 xlat(ix,jx), xlon(ix,jx), dlat(ix,jx), dlon(ix,jx),
+     +        zs(ix,jx), sigma(kx)
+      integer out_freq
+      character *4 runno
+      common /domain_var/ xlat, xlon, dlat, dlon,
+     +                    zs, sigma, out_freq, runno
+c---------------------------------------------------------------------

@@ -1,0 +1,225 @@
+import edu.ucar.eol.emdac.zith.*
+import grails.converters.XML
+import edu.ucsb.nceas.ezid.*
+import java.util.regex.*
+
+conemail = System.getenv('USER')+'@ucar.edu'
+con = Contact.findByEmail(conemail)
+if (con == null) {
+  System.err.println "No contact found for ${conemail}"
+  System.exit(1)
+  }
+else {
+  println "Using rowReviseContact ${con}"
+  }
+
+/* ***** */
+/* bother, grails 2.3.x doesn't run BootStrap anymore, this is all pasted from there: */
+
+import org.codehaus.groovy.grails.commons.ApplicationAttributes
+
+java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone('UTC'))
+org.joda.time.DateTimeZone.setDefault(org.joda.time.DateTimeZone.UTC)
+
+// script needs to find this, BootStrap doesn't
+import org.codehaus.groovy.grails.commons.ApplicationHolder
+def servletContext = ApplicationHolder.getApplication().getParentContext().getServletContext()
+
+grails.converters.XML.createNamedConfig('datacite') {
+  it.registerObjectMarshaller(new edu.ucar.eol.emdac.xml.DataciteMarshaller(), 999)
+  it.setEncoding('UTF-8')
+  //it.setPrettyPrint(true)
+  }
+
+// hack! to inject applicationContext in order to get access to a service
+def d = new edu.ucar.eol.emdac.zith.Dataset()
+d.discard()
+def ac = servletContext.getAttribute(ApplicationAttributes.APPLICATION_CONTEXT)
+grails.converters.XML.getNamedConfig('datacite')?.getMarshaller(d).setApplicationContext(ac)
+
+/* ***** */
+
+
+// get datasets somehow, e.g. from a Project or this demo list
+arcs = [
+//  '13.104',
+  '102.019',
+  '102.248',
+//  '102.051',
+//  '102.059',
+//  '102.016',
+//  '245.B69-002'
+]
+datasets = []
+projectList = [
+//  'AMTS',
+//  'ARC-MIP',
+//  'ACADIS',
+//  'ARCSS',
+//  'ATLAS',
+//  'BARROW',
+//  'BASE',
+//  'BeringSea',
+//  'BEST',
+//  'BSIERP',
+//  'ITEX',
+//  'PacMARS',
+//  'SBI',
+//  'SHEBA'
+]
+
+
+// Assume the datasets are gathered from projects list before adding 
+if (projectList.size() > 0) {
+	projectList.each { p ->
+		project = Project.findByName(p)
+		project.datasets.each { ds ->
+			if (ds.visible && !datasets.contains(ds)) {
+				println ds.toString()
+				datasets.push(ds) // Only add the dataset if it's visible and not already in the list
+			}
+		}
+	}
+}
+
+arcs.each { arcid ->
+  println "archive_ident = ${arcid}\n"
+  dataset = Dataset.findByArchiveIdent(arcid)
+  if (!datasets.contains(dataset)) {
+	println dataset.toString()
+	datasets.push(dataset) // Only add the dataset if it's not already in the list
+  }
+}
+println "\n"
+
+
+
+// foreach dataset, get its datacite metadata and submit to EZID
+//doiPrefix = 'doi:10.5072/FK2'		// Test DOI
+doiPrefix = 'doi:10.5065/D6'		// Real DOI
+failedDatasets = [] // Contains a list of Datasets that threw an error during DOI creation
+
+datasets.each{ dataset ->
+  println "Working on ${dataset.id} ${dataset}"  
+   
+  // Check to see if the DOI already exists for this dataset
+  def mint = true
+  def updateDoiORM = false
+
+  if (dataset.doiList.size() > 1) {
+    println "dataset ${dataset.archiveIdent} has ${dataset.doiList.size()} DOIs, skipping..."
+    return
+  } else if (dataset.doiList.size() == 1) {
+    if ( dataset.doiList[0].handle ==~ /${doiPrefix}.*/  ) {
+      // Just update the existing DOI metadata (not the ORM instance)
+      println "setting metadata for dataset ${dataset.archiveIdent} DOI ${dataset.doiList[0].handle} ..."
+      mint = false
+	} else if ( dataset.doiList[0].handle ==~ /doi:10\.5065\/D6.*/ && doiPrefix == 'doi:10.5072/FK2' ) {
+	  // Do not update the existing DOI metadata nor the DOI ORM instance
+      println "setting metadata for dataset ${dataset.archiveIdent} for DOI prefix ${doiPrefix} ..."
+	  mint = false
+	} else {
+	  // Mint the DOI and update the existing DOI ORM instance
+      println "minting metadata for dataset ${dataset.archiveIdent} for DOI prefix ${doiPrefix} ..."
+      updateDoiORM = true
+	}
+  } else {
+    println "minting metadata for dataset ${dataset.archiveIdent} for DOI prefix ${doiPrefix} ..."
+  }
+  
+  XML.use('datacite') { dcxml = dataset as XML }
+
+  // params for EZID API
+  md=[:]
+  md['_target']='http://data.eol.ucar.edu/codiac/dss/id='+dataset.archiveIdent
+  md['_status']='public'
+  md['_profile']='datacite'
+  md.datacite=dcxml.toString()
+
+  println "datacite xml:\n"
+  println md.datacite
+  println "\n\n"
+
+
+  
+  // don't flood EZID
+  println "sleeping before EZID...\n";
+  sleep(1);
+
+  ezid = new EZIDService()
+  if ( doiPrefix == 'doi:10.5065/D6' ) {
+    ezid.login('eol_doi','wednes05day')  // EZIDService won't let us auth on each request
+  } else {
+    ezid.login('apitest','apitest')  // EZIDService won't let us auth on each request
+  }
+  
+  newId = null // Set newId prior to trying to mint the DOI
+  try {
+	if (mint) {
+	  newId = ezid.mintIdentifier(doiPrefix,md)
+	} else {
+	  ezid.setMetadata(newId=dataset.doiList[0].handle,md)
+	}
+    println "archiveIdent = ${dataset.archiveIdent} newId = ${newId}"
+  } catch (e) {
+    failedDatasets.push(dataset)
+	println "EZID Exception: ${e}"
+  }
+
+  // create & mintIdentifier() return both handles, but EZIDService won't let us see them,
+  //   so we have to do *another* request to get them
+  if (newId != null) {
+	  md2 = ezid.getMetadata(newId)
+
+	  ezid.logout()
+
+	  println "\nreturned metadata:\n"
+	  md2.each {
+		println "${it.key} : ${it.value}"
+      }
+	  println "\n\n"
+
+	  // record the DOI
+	  if (mint && !updateDoiORM) {
+		  doi = new Doi(dataset:dataset, handle:newId, shadow:md2.'_shadowedby',
+			dataVersion:'1.0',
+			rowCreateContact: con, rowReviseContact: con,
+			publishTime: new java.sql.Timestamp(Long.parseLong(md2.'_created')*1000L)
+			)
+	  } else if (!mint && !updateDoiORM) {
+	    // If nothing was minted and we just updated the metadata, don't do anything
+		  doi = dataset.doiList[0]
+	  } else {
+	    // If we ended up minting something new (for whatever reason), update the ORM instance
+		  doi = dataset.doiList[0]
+		  doi.handle = newId
+		  doi.shadow = md2.'_shadowedby'
+		  doi.rowCreateContact = con
+		  doi.rowReviseContact = con
+		  doi.publishTime = new java.sql.Timestamp(Long.parseLong(md2.'_created')*1000L)
+	  }
+	  
+	  try {
+		if (doi.save(flush: true)) {
+		  println "doi saved"
+		} else {
+		  //println doi.errors
+		  doi.errors.each { println it.resolvableToString() }
+		}
+	  } catch (e) { // doesn't work?!?
+		println "Exception: ${e}"
+	  }
+  }
+
+  println "\n\n"
+}
+
+if ( failedDatasets.size() > 0 ) {
+  // Print out a list of datasets that didn't get DOIs (due to an error thrown)
+  println "\n\n\n"
+  println "Datasets that failed DOI minting process:\n"
+  failedDatasets.each { dataset ->
+    println dataset.toString()
+  }
+  println "\n\n"
+}

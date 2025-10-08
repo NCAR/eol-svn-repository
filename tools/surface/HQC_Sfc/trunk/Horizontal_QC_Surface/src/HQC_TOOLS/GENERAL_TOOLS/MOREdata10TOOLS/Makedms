@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for simple dms program.
+#
+
+CC=acc
+##CFLAGS = -g
+
+dms_to_dec: dms_to_dec.o
+	$(LINK.c) -o dms_to_dec dms_to_dec.o
+	chmod 0755 dms_to_dec
+
+clean:
+	rm *.o

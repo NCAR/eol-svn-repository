@@ -1,0 +1,190 @@
+$Id: ep2pq.txt,v 1.2 1994/07/08 20:16:44 john Exp $
+
+"ep2pq.txt"
+Documentation for "ep2pq.f"
+Pseudo-ManPage
+14 Sep 1992
+
+ep2pq - E-BUFR Precip to Precip-QCF conversion program
+
+Written by:
+ John J. Allison / john@storm.ofps.ucar.edu
+ UCAR/OFPS
+
+Synopsis:
+  ep2pq [[-type] [-bn]] <infile> <outfile>
+
+Options:
+  type is one of:
+    h   Interpret file as containing hourly data,
+	but expand to 15-minute format if necessary.
+	Also print observation hours as in the daily
+	format if they appear in the input data.
+	This is the default.
+    H   Interpret file as containing hourly data,
+	and do not expand. Precip values for time intervals
+	greater than 24 are not output, and an error
+	message is produced.
+    f   Interpret file as containing 15-minute data.
+	Also print observation hours as in the daily
+	format if they appear in the input data.
+    F   Interpret file as containing 15-minute data.
+	Also resets the flag that stops hourly expansion
+	to 15-minute format.
+	Useful for resetting things between files.
+    d   Interpret file as containing daily data,
+	but expand to 15-minute format if necessary.
+	Observation hours will be printed, but they may
+	contain garbage if the input does not have them.
+    D   Interpret file as containing daily data,
+	and do not expand. Precip values for time intervals
+	greater than 31 are not output, and an error
+	message is produced. Also, if the observation hour
+	is not found in the data records, an error message
+	is output and the program halts.
+
+  -bn   Stop printing error messages after the nth message
+	has been printed. Applies only to format errors,
+	e.g. more or less values were found than expected.
+	This is useful to avoid error messages for each
+	E-BUFR record when one wishes to force an output
+	format from a different input format (hourly vs.
+	15-minute). The default for n is 10. If n is
+	specified as 0, then all error messages are printed
+	out. There is no way to completely turn off
+	error message output via ep2pq (see examples).
+
+  Options may be reset between filenames, in any order, with
+  the last option taking precedence over conflicting options.
+  If no filenames are given, then ep2pq reads from stdin and
+  writes to stdout. Options may be given even without a filename.
+  Error messages are always printed to stderr unless the -b
+  option was given. Options are globally applied to all named
+  files, unless overridden.
+
+  If an E-BUFR record contains less than the number of expected
+  values, then missing values are appended. This may happen
+  when an hourly file is given to ep2pq when it's expecting
+  a 15-minute file, or when the E-BUFR file simply doesn't
+  have enough values.
+
+  Upon end of file, ep2pq prints out the filename, the number
+  of records encountered, and the number of records that may
+  be bad. Records are considered bad if they have less than
+  the number of precip values than expected (e.g. 90 values
+  in a 15-minute record, or 24 values with the -f flag). Records
+  that do not conform to the E-BUFR Precip convention (e.g.
+  have an out of place data descriptor) are skipped (with an
+  error message) and not included in the bad count.
+
+  Output files are in the Precip-QCF (PQCF) format. The output
+  filenames have the '.0pqc' extension. A file named "file.ext"
+  would have an output file "file.0pqc". A file named "file.ext.ext2"
+  would have an output file "file.ext.0pqc". A file named "file"
+  would have an output file "file.0pqc". (The QC'd file should
+  then be called "file.pqcf".)
+
+Input Format (E-BUFR Precip):
+  E-BUFR Precip files make use of E-BUFR's delayed replication
+  feature, and also a manual replication factor. The descriptors
+  in an E-BUFR Precip (EBP) file are as follows:
+	0 04 255	time increment (local offset from GMT)
+	1 03 000	repeat 3 descriptors A times
+	0 31 001	A
+	0 08 022	B = number of manual replications
+	0 13 011	precip value
+	0 08 255	precip qualifier
+  The last 3 descriptors are those that are repeated A times.
+  A is determined when writing the EBP file, and, when using
+  the E-BUFR Read Routines (EBRR) is transparent to the
+  applications programmer who is reading an EBP file.
+  When outputting the information contained in an EBP file, one
+  reads B, then outputs the precip value and qualifier B times.
+  B is thus the number of consecutive time slots that share the
+  given precip and qualifier values, i.e. if B is 5, then the
+  next 5 time slots all have the same data. The "unpacking"
+  required here is is what is meant by "manual replication".
+  Summing the B values in a given record should result in
+  24 for hourly data and 96 for 15-minute data, so that there
+  is a data value for each time slot (every hour or every
+  quarter-hour).
+
+Output Format (Precip-QCF):
+(missing flag for missing or deleted qualifier)
+  The output format is tentatively called Precip-QCF, or PQCF.
+  It is similar to QCF in that it contains almost the same
+  prefix and is in ASCII. Here are the fields:
+	(nominal) date		from Type 9 record header
+	(nominal) time		from Type 9 record header
+	network string		set to "NCDC"
+	station string		set to all blanks
+	latitude		from Type 9 record header
+	longitude		from Type 9 record header
+	cli byte		from Type 9 record header
+	precip value		descriptor 0 13 011
+	precip qualifier	descriptor 0 08 255
+	QC flag			one character flag
+  The last 3 items are repeated 24 times for hourly data and
+  96 times for 15-minute data.
+
+  The following EBUFR descriptor is ignored:
+	GMT offset		descriptor 0 04 255
+
+  The QC flag is set to 'U' for "unchecked", except for two
+  cases. When the precip qualifier is is 7 ("missing") or
+  3 ("deleted"), then the QC flag is set to 'M' ("missing").
+  The precip value is left unchanged. It is supposed to be the
+  missing value in these two cases, but ep2pq does not make value
+  judgements about the data, and so leaves the checking and
+  possible correction of that to a later Quality Control program.
+
+  If the GMT offset field of the E-BUFR record has the missing
+  value, then the PQCF field gets the value "-99".
+
+  Below are the FORTRAN FORMAT and WRITE statements used by ep2pq.
+  The variable MAXTIM contains 24 or 96 for hourly or 15-minute data.
+
+	WRITE (OUTUNI,211)
+&	  CLYEAR(3:4),CLMON,CLDAY,
+&	  CLHOUR,CLMIN,CLSEC,
+&	  'NCDC      ','          ',
+&	  CLLAT,CLLON,CLIBYT,
+&	  (PRECIP(K), QUAL(K), QCFLG(K), K=1,MAXTIM)
+211	FORMAT (A2,'/',A2,'/',A2,X,A2,':',A2,':',A2,
+&	    X,A10,X,A10,
+&	    X,F10.5,X,F11.5,X,A3,96(: X,F7.2,X,I1,X,A1))
+
+
+Examples:
+  To print an hourly file, use:
+	% ep2pq 15min.ebufr
+  To print a 15-minute file, use:
+	% ep2pq -f 15min.ebufr
+  To print the first 24 values for each record from a 15-minute file:
+	% ep2pq -H 15min.ebufr
+  To suppress most of the error messages that would result:
+	% ep2pq -H -b1 15min.ebufr
+  To completely ignore all error messages (in the C Shell):
+	% ep2pq -H 15min.ebufr >& /dev/null
+  To convert an hourly and then a 15-minute file:
+	% ep2pq hrly.ebufr -f 15min.ebufr
+  To convert a 15-minute and then an hourly file:
+	% ep2pq -f 15min.ebufr -h hrly.ebufr
+  To convert a compressed 15-minute file into a compressed PQCF
+  file, sending error messages to the file "15min.err":
+	% zcat 15min.ebufr.Z | ep2pq -f -bn | \
+	compress > 15min.pqcf.Z >& 15min.err
+
+Implementation:
+  ep2pq is a modification of the example program included in
+  the E-BUFR Read Routines (EBRR) library developed by NCAR/OFPS.
+  See the E-BUFR Precip Format section above, the source code,
+  and the EBRR documentation and code for more information.
+
+  ep2pq follows a straightforward algorithm, given in the code,
+  and its code can be figured out by reading the descriptions
+  given above. It's not terribly complex if you are familiar
+  with E-BUFR terminology and the EBRR.
+
+See also:
+  p2e (PQCF to EBUFR), GER, EBRR.

@@ -1,0 +1,87 @@
+#! /usr/bin/perl
+
+#
+# Details
+#  Displays the detailed listing for all of the available tools
+#   This shows up in the main frame (right frame) of QCODIAC
+#  Date: (6/25/03)
+#
+
+# CGI Module to output header information
+use CGI;
+$cgi = new CGI;
+print $cgi->header();
+
+use lib "lib";
+
+# Gets the listing for all of the current tools
+use Tools;
+@tools = Tools::toolListing();
+
+# Gets some utilities that are generally used throughout these programs
+use Utils;
+
+#---------------#
+# Starting HTML #
+#---------------#
+
+print cr( 
+   "<html>",
+   "<head>",
+   "<title> QCodiac </title>",
+   "</head>",
+   "<body bgcolor=#e9e9e9 alink=#000066 vlink=#000066 link=#000066>",
+   "<center>",
+   "<table border=0 width=100% cellpadding=1 cellspacing=1>",
+   "<tr><td colospan=7><font size=+1>&nbsp;</font></td></tr>",
+   "",
+   "<tr bgcolor=#336699>",
+   "<td width=100% align=center><font color=white size=+1><b>Tool Descriptions</td>",
+   "</tr>",
+   "<tr>",
+   "<td width=100% align=center>",
+   "<b>Select one or more tools on the left to view the default results of all in one page OR click a tool name ",
+   "below to execute a single tool with advanced query options. </b>",
+   "</td>",
+   "</tr>", 
+   "<tr><td width=100%>&nbsp;</td></tr>",
+   "" );
+
+#### Loop Through and Display Each of the Dataset Titles and Descriptions
+
+foreach my $group ("dataset", "project", "general")
+{
+   foreach $tool ( @tools ) 
+   {
+      if( $tool->{group} eq $group )
+      {
+         print cr(
+            "<tr><td width=100% bgcolor=#dcdcdc>&nbsp;</td></tr>",
+            "",
+            "<tr bgcolor=#ffffcc>",
+            "<td width=50% bgcolor=#ffffcc>",
+            "<a href=supervisor?qform=$tool->{identifier}>",
+            "<font color=black size=+1><b>". $tool->shortDesc() . "</b></a></td>",
+            "</tr>",
+            "",
+            "<tr bgcolor=white>",
+            "<td width=95%>",
+            $tool->longDesc(),
+            "</td>",
+            "</tr>");
+      }
+   }
+#print cr( "<tr><td width=100% bgcolor=white>&nbsp;</td></tr>" );
+}
+
+print( cr(
+   "<tr bgcolor=#dcdcdc><td>&nbsp;</td></tr>",
+   "<tr bgcolor=#336699>",
+   "<td width=100% align=center>&nbsp;</td>",
+   "</tr>",
+   ) );
+#### Display closing HTML
+print cr(
+   "</table>",
+   "</center>" );
+

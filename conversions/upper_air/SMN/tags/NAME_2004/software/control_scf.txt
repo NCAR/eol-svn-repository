@@ -1,0 +1,49 @@
+STATIC
+     0 ! EBUFR version number
+     2 ! BUFR edition number
+     0 ! BUFR master table number
+     2 ! BUFR master table Version number
+     0 ! Originating centre
+     0 ! Sequence number
+FILE
+   2 ! Message type
+   0 ! Message subtype
+  36 ! Length of identifying text.
+NAME SMN Highres Sounding
+     ( 1)
+END FILE
+
+OBSERVATION   1
+ 0  1 254 3 A10                  10 3
+ 0  1 248 3 A35                  35 3
+ 0  7   1 2                      -1 2
+ 0  4   1 1                      -1 1
+ 0  4   2 1                      -1 1
+ 0  4   3 1                      -1 1
+ 0  4   4 1                      -1 1
+ 0  4   5 1                      -1 1
+ 0  4   6 1                      -1 1
+ 1  2   0 0                      -1 0
+ 0 31   1 1                      -1 1
+ 0  1 249 3 A35                  35 3
+ 0  1 250 3 A95                  95 3
+ 1 17   0 0                      -1 0
+ 0 31   2 1                      -1 1
+ 0  4 247 2                      -1 2
+ 0  8  21 1                      -1 1
+ 0 10   4 2                      -1 2
+ 0 33 254 1                      -1 1
+ 0  7 253 2                      -1 2
+ 0 12   1 2                      -1 2
+ 0 33 254 1                      -1 1
+ 0 12   3 2                      -1 2
+ 0 13 254 2                      -1 2
+ 0 33 254 1                      -1 1
+ 0 11   2 2                      -1 2
+ 0 11   1 2                      -1 2
+ 0 33 254 1                      -1 1
+ 0  6   1 2                      -1 2
+ 0  5   1 2                      -1 2
+ 0  5 254 2                      -1 2
+ 0  5 255 2                      -1 2
+END OBSERVATION

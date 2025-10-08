@@ -1,0 +1,15 @@
+1                          pmethod (Determines computation of distance in QC processing.)
+.002                       Area of Influence 500km (depends on pmethod) (min_weight)
+5                          Data frequency (minutes). Set to highest freq in input. (data_freq)
+25.00                      Precip Maximum `bad` limit. mm in x data freq amt of time. (bmax)
+10.00                      Precip Minimum `dubious` limit. mm in x data freq amt of time. (dmin)
+1994                       Century/Year data was collected. (integer) (current_year)
+940401                     Date Project Began YYMMDD. Sigmas computed based on this date.(proj_begin_date)0401
+940420                     Begin date of data to process YYMMDD (begin_date) 0401
+940420                     End date of data to process YYMMDD   (end_date) 0615
+/data10/NEWQC/test1_             Path name (&general name prefix) of 0qc files to QC.
+/scratch/vortex_qccomp/SIGMAFILES/     Path name of variance files computed by compute_sigmasq.
+0.25                       Default alpha squared for passed low (0.50 STD)
+1.00                       Default alpha sq for passed mid      (1.00 STD)
+2.25                       Default alpha sq for passed high     (1.50  STD)
+4.00                       Default alpha sq for passed Very High. Greater than this fails. (2.00 STD)

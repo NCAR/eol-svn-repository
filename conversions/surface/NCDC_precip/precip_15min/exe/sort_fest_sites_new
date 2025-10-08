@@ -1,0 +1,30 @@
+# cosort specifications by cieslar@torrent (Mark Cieslar)
+# Wed Jun 21 09:08:06 1995
+sort		# Action
+0		# Record length (Variable)
+1		# Number of input files
+fest_sites.fixed	# Input file 1
+3		# Number of keys
+ascending	# Key 1 direction
+fixed		#	location
+50		#	starting column
+5		#	length
+alpha		#	format
+none		#	space/tab trimming
+no		#	case-folded
+ascending	# Key 2 direction
+fixed		#	location
+56		#	starting column
+6		#	length
+alpha		#	format
+none		#	space/tab trimming
+no		#	case-folded
+ascending	# Key 3 direction
+fixed		#	location
+41		#	starting column
+8		#	length
+alpha		#	format
+none		#	space/tab trimming
+no		#	case-folded
+file		# Output
+fest_sites_sorted	# Output file name

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context cookies="true" crossContext="true" debug="9" override="true"
+            path="/master_list" reloadable="true" swallowOutput="true" 
+            useNaming="true">
+
+    <Realm className="org.apache.catalina.realm.JDBCRealm" 
+            connectionName="dts-full" connectionPassword="l@micbc"
+            connectionURL="jdbc:mysql://localhost/dmg_authentication"
+            debug="99" digest="MD5" driverName="com.mysql.jdbc.Driver"
+            roleNameCol="rolename" userCredCol="password" userNameCol="username"
+            userRoleTable="web_user_role" userTable="web_user" />
+  
+    <Resource auth="container" driverClassName="com.mysql.jdbc.Driver" 
+            maxActive="100" maxIdle="30" maxWait="10000" name="connection" 
+            password="l@micbc" type="javax.sql.DataSource" 
+            url="jdbc:mysql://localhost/dmg_merged_ml" username="dts-full"/>
+</Context>

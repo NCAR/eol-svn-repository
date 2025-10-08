@@ -1,0 +1,31 @@
+#! /usr/bin/perl -w
+
+package ExcludeGroupActionCGI;
+use strict;
+use lib ".";
+use lib "lib";
+use ActionCGI;
+use Dataset;
+our @ISA = ("ActionCGI");
+
+&main();
+
+sub main {
+    my $self = ExcludeGroupActionCGI->new();
+    $self->buildPage("Exclude Group Action");
+}
+
+sub excludeDataset {
+    my ($self,$group,$source,$flag) = @_;
+    $self->{"DB"}->excludeFromGroup($group,$source,$flag);
+}
+
+sub processParams {
+    my ($self) = @_;
+
+    if ($self->param("mode") =~ /exclude/i) {
+	$self->excludeDataset($self->param("group"),$self->param("source"),1);
+    } else {
+	$self->excludeDataset($self->param("group"),$self->param("source"),0);
+    }
+}

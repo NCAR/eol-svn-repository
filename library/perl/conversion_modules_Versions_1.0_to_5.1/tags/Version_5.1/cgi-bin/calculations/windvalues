@@ -1,0 +1,133 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------
+# <p>The WindValues script is a CGI script that provides a web
+# interface for the wind speed/direction calculation in the conversion
+# modules.</p>
+#
+# @author Joel Clawson
+# @version 3.0 (Version number used to match conversion version.)
+# <p>Refactored the original web interface into individual conversion
+# scripts and a super WebInterface module that the scripts inherit
+# from.</p>
+# <p>Updated to Version 3 of the conversion modules.</p>
+#
+# @author Joel Clawson
+# @version 1.0 Original Creation.
+##Module-----------------------------------------------------------
+package WindValues;
+use strict;
+use lib "..";
+use lib "/work/software/conversion_modules/Version3";
+use DpgCalculations qw(:DEFAULT);
+use DpgConversions qw(:DEFAULT);
+use WebInterface;
+our @ISA = ("WebInterface");
+
+main();
+
+##------------------------------------------------------------------
+# @signature void main()
+# <p>Run the script that creates the UV wind calculations web 
+# interface.</p>
+##------------------------------------------------------------------
+sub main {
+    my $self = WindValues->new();
+    $self->makePage();    
+}
+
+##------------------------------------------------------------------
+# @signature String createForm()
+# <p>Create the HTML that defines the input form for the calculation.</p>
+# @output $form The HTML code.
+##------------------------------------------------------------------
+sub createForm {
+    my $self = shift;
+    my $form = "<table><tbody>\n";
+
+    # Make the U and V component rows.
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit rowspan=2>%s</td></tr>\n","U Component:",$self->textfield("ucomp"),$self->getVelocityUnits("comp_unit"));
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td></tr>\n","V Component:",$self->textfield("vcomp"));
+
+
+    my ($spd,$dir) = $self->getValues();
+    # Make the wind speed line
+    $form .= sprintf("<tr class=result_line><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>\n","Wind Speed:",$spd,$self->getVelocityUnits("windspd_unit"));
+
+    # Make the wind direction line.
+    $form .= sprintf("<tr class=result_line><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Wind Direction:",$dir,"&deg;");
+
+    $form .= sprintf("<tr><td class=submit colspan=3>%s</td></tr>\n",$self->submit("Calculate"));
+
+    $form .= "</tbody></table>\n";
+
+    return $form;
+}
+
+##------------------------------------------------------------------
+# @signature String getCGI()
+# <p>Get the name of the script to call when the form is submitted.</p>
+# @output $cgi The script name.
+##------------------------------------------------------------------
+sub getCGI { return "calculations/windvalues"; }
+
+##------------------------------------------------------------------
+# @signature String getEquationPage()
+# <p>Get the name of the web page that contains the equations for
+# the calculation.</p>
+# @output $page The equation web page.
+##------------------------------------------------------------------
+sub getEquationPage { "equations_calc.html#winds"; }
+
+##------------------------------------------------------------------
+# @signature String getInstructions()
+# <p>Get the HTML containing the instructions on how to use the 
+# script.</p>
+# @output $instr The HTML instructions.
+##------------------------------------------------------------------
+sub getInstructions {
+    my $self = shift;
+    my $instr = "<p>Insert the U and V wind component values along with the appropriate units of the values.  Update the units for the output of the wind speed and press the <b>Calculate</b> button.  The values will appear in the table between the name and unit.</p>\n";
+    $instr .= "<p>The warnings have been turned off for the calculation.  If no result appears, it is because a value was entered into one of the fields that does not allow the calculation to complete correctly.</p>\n";
+    $instr .= "<p class=warning>The calculation requires the wind components to be in meters/second.  The returned wind speed value is in meters/second and wind direction in degrees.  Any other units that are chosen will convert the value to the appropriate unit for the calculation and the output.</p>\n";
+    return $instr;
+}
+
+##------------------------------------------------------------------
+# @signature String getOnSubmit()
+# <p>Get the javascript command to run when the form is submitted.</p>
+# @output $js The javascript command.
+##------------------------------------------------------------------
+sub getOnSubmit { return "javascript: return (checkValue('U Component',ucomp) && checkValue('V Component',vcomp));"; }
+
+##------------------------------------------------------------------
+# @signature String getTitle()
+# <p>Get the title of the script.</p>
+# @output $title The script title.
+##------------------------------------------------------------------
+sub getTitle { return "Calculate Wind Speed and Direction"; }
+
+##------------------------------------------------------------------
+# @signature String getValues()
+# <p>Get the calculated values or the &amp;nbsp; character when it
+# cannot be calculated.</p>
+# @output $value The float formated value.
+##------------------------------------------------------------------
+sub getValues {
+    my $self = shift;
+    if (defined($self->param("ucomp")) && defined($self->param("vcomp"))) {
+	my ($spd,$dir) = calculateWindFromUV(convertVelocity($self->param("ucomp"),
+							     $self->param("comp_unit"),
+							     "m/s"),
+					     convertVelocity($self->param("vcomp"),
+							     $self->param("comp_unit"),
+							     "m/s"));
+	
+	if (defined($spd) && defined($dir)) {
+	    return (sprintf("%f",convertVelocity($spd,"m/s",$self->param("windspd_unit"))),
+		    sprintf("%f",$dir));
+	}
+    }
+    return ("&nbsp;","&nbsp;");
+}
+

@@ -1,0 +1,184 @@
+a.top_nav:link {
+  font-size : 11pt;
+  color: #003399;
+  font-weight : bold;
+  font-family : Arial, Helvetica, San Serif;
+}
+
+a.top_nav:visited {
+  font-size : 11pt;
+  color: #003399;
+  font-weight : bold;
+  font-family : Arial, Helvetica, San Serif;
+}
+
+a.top_nav:hover {
+  font-size : 11pt;
+  color: gold;
+  text-decoration : underline;
+  font-weight : bold;
+  font-family : Arial, Helvetica, San Serif;
+}
+
+.menu_head  {
+  font-size : 9pt;
+  color: #003399;
+  font-weight : bold;
+  font-family : Arial, Helvetica, San Serif;
+  line-height: 20px;
+  text-indent: 5px;
+}
+
+.menu_section  {
+  font-size : 11pt;
+  color : lightgray;
+//  font-weight : bold;
+  font-family : Arial, Helvetica, San Serif;
+  line-height: 10px;
+  text-indent: 5px;
+}
+
+.cat_head  {
+  font-size : 11pt;
+  color : lightblue;
+  font-weight : bold;
+  font-family : Arial, Helvetica, San Serif;
+//    line-height: 10px;
+  text-indent: 15px;
+}
+
+.ml_table  {
+  font-size : 9pt;
+  color : #FFFFFF;
+//  font-weight : bold;
+  font-family : Arial, Helvetica, San Serif;
+  line-height: 10px;
+  text-indent: 30px;
+}
+
+.menu_tail  {
+  font-size : 11pt;
+  color : lightblue;
+//  font-weight : bold;
+  font-family : Arial, Helvetica, San Serif;
+  line-height: 15px;
+  text-indent: 5px;
+}
+
+.note_section  {
+  font-size : 9pt;
+  color : lightgray;
+  font-family : Arial, Helvetica, San Serif;
+  line-height: 10px;
+}
+
+A:link {
+  color: white;
+  text-decoration: none;
+}
+
+A:visited {
+  color: white;
+  text-decoration: none;
+}
+ 
+A:hover {
+  color : gold;
+  text-decoration : underline;
+}
+
+A:active {
+  text-decoration: none;
+}
+
+  /* CSS issu des tutoriels www.alsacreations.com/articles */
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #21313B;
+    background-image: url(../images/open_water_and_ice-3.jpg);
+    background-repeat:no-repeat;
+    font: 80% verdana, arial, sans-serif;
+  }
+
+  dl, dt, dd, ul, li {
+    filter:alpha(opacity=80);
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  #id_banner {
+    position: absolute;
+    left: 50%;
+    margin-left: -317px;
+    top : 75px;
+  }
+
+  #sponsor_logo {
+    position:absolute;
+    right: 55px;
+    bottom: 36px;
+  }
+
+  #menu {
+    position: absolute;
+    bottom : 55px;
+    left : 11px;
+  }
+
+  dl#menu {
+    width: 14em;
+  }
+
+  dl#menu dt {
+    cursor: pointer;
+    margin: 2px 0;;
+    height: 20px;
+    font-weight : bold;
+    line-height: 20px;
+    color: lightblue;
+    border: 0 none;
+  }
+
+  dl#menu dd {
+    border: 0 none;
+  }
+
+  dl#menu li {
+    font-size : 9pt;
+    line-height: 17px;
+    text-indent: 12px;
+    filter:alpha(opacity=90);
+  }
+
+  dl#menu li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    border: 0 none;
+    height: 100%;
+  }
+
+  dl#menu dt a {
+    color: lightblue;
+    text-decoration: none;
+    display: block;
+    border: 0 none;
+    height: 100%;
+  }
+
+  dl#menu dt:hover {
+    text-decoration : underline;
+  }
+
+  dl#menu li a:hover {
+    color : gold;
+    text-decoration : underline;
+  }
+
+  dl#menu dt a:hover {
+    color : gold;
+    text-decoration : underline;
+  }
+  

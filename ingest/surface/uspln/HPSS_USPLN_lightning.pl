@@ -1,0 +1,229 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------------------
+# <p>The HPSS_USPLN_lighning script is a daily cron script that does the following
+# tasks:</p>
+# <ol>
+#   <li>Copy the local USPLN  to the mass store.  (This removes the tar file from
+# the local system if it was copied correctly.)</li>
+#   <li>Insert the HPSS files into the database.</li>
+# </ol>
+#
+#  @author Linda Echo-Hawk
+#  @version 2.0 22 March 2021
+#  Revised the MySqlDatabase constructor to pass in the  ~/.my.cnf file
+#  containing the dbase and password rather than having these hard-coded
+#  in the script. This solved a security issue.
+#
+# @author Sean Stroble
+# @version 1.0 Apr 11 2011
+# Based off of HDW1h_mysql_stage_to_mss script
+#
+##Module-----------------------------------------------------------------------
+use strict;
+#use lib "/h/eol/dmg/HPSS_cronjobs/lib";
+use lib "/net/work/lib/perl/hpss";
+use lib "/net/work/lib/perl/mail";
+use lib "/net/work/lib/perl/mysql";
+use MySqlDatabase;
+use MySqlDataset;
+use MySqlMSSFile;
+use HPSS;
+#use MAIL;
+
+# Constants
+my $dataset_id = "100.017";
+my $ingest = "/export/ldm/data/lightning";
+my $temp = "/scr/tmp/joss/USPLN/lightning";
+my $hpss = "/FS/EOL/operational/surface/uspln";
+# Campaign Storage user, host, archive path
+my $cs_host='eoldata@data-access.ucar.edu';
+my $cs_archive="/glade/campaign/eol/archive/operational/surface/uspln";
+my @monitors = ('eol-cds-ingest@ucar.edu');
+my $report = "";
+
+&main();
+
+##-----------------------------------------------------------------------------
+# @signature void main()
+# <p>Run the script.</p>
+##-----------------------------------------------------------------------------
+sub main {
+
+    # Create the new tar files.
+    create_tar_files();
+    
+    # Read in all of the tar files in the temp directory
+    opendir(my $TARS,$temp) or sendMailAndDie("Cannot open $temp\n");
+    my @tar_files = grep(/\.tar$/,readdir($TARS));
+    closedir($TARS);
+
+    # Check that year directory is on Campaign Storage, get year from first file
+    my $year_cs = substr($tar_files[0],0,4);
+    my $mkdir_out = mkdir_CS($year_cs);
+
+    # Put the tar files on the mass store and insert them into the database.
+    foreach my $file (sort(@tar_files)) {
+
+	my $msg = place_on_mss($file);
+	$report .= $msg;
+
+    # Copy files to Campaign Storage archive
+    my $cs_msg = copy_to_CS($file);
+    # Chmod files in Campaign Storage directory
+    my $my_cs_chmod = `ssh $cs_host chmod 440 $cs_archive/$year_cs/* 2>&1`;
+    $report .= $cs_msg;
+    $report .= $my_cs_chmod;
+
+	if ($msg eq "") {
+	    ($msg, my $hpss_size) = insert_file($file);
+	    $report .= $msg;
+
+	    if ($msg eq "") {
+		my $size = -s "$temp/$file";
+		# $report .= "HPSS filesize for $file: $hpss_size eq? ".($size/1024)."\n";
+		if ($hpss_size == (-s "$temp/$file")/1024) { 
+		    unlink "$temp/$file"; 
+		}
+	    }
+
+	}
+    }
+
+    # Send out an email that the script has finished.
+    if ($report ne "") { sendMailAndDie($report); }
+    # else { sendMailAndDie("There are no errors to report"); }
+}
+
+##-----------------------------------------------------------------------------
+# @signature String[] create_tar_files()
+# <p>Read the data in the ingest directory and create the tar balls that are
+# to be placed on the mass store.</p>
+##-----------------------------------------------------------------------------
+sub create_tar_files {
+    my ($sec,$min,$hour,$day,$mon,$year) = localtime(time());
+    my $today = sprintf("%04d%02d%02d",$year+1900,$mon+1,$day);
+    my @files = ();
+
+    # Get the list of files that will be used to generate the tar files.
+    opendir(my $INGEST,$ingest) or sendMailAndDie("Cannot open $ingest\n");
+    foreach my $file (sort(readdir($INGEST))) {
+	push(@files,$file) if ($file =~ /^\d{10}_report.txt$/ && substr($file,0,8) < $today);
+    }
+    closedir($INGEST);
+
+    # Confirm that there are new files to archive. If not, warn user
+    if(@files==0){
+	sendMailAndDie("No files exist in the ingest location for date < $today.\n");}
+
+    # Split the files into lists by their date
+    my %tar_hash;
+    foreach my $file (sort(@files)) {
+	push(@{ $tar_hash{substr($file,0,8)}},$file);
+    }
+
+    # Create the tar files for each date
+    my @tar_files = ();
+    chdir($ingest) or sendMailAndDie("Cannot change to $ingest\n");
+    foreach my $date (sort(keys(%tar_hash))) {
+	
+	if (system(sprintf('/bin/tar -cf %s/%s_report.tar %s',$temp,$date,
+			   join(" ",@{ $tar_hash{$date}})))) {
+	    $report .= "$date.tar was not able to be created.\n";
+	} else {
+	    foreach my $file (@{ $tar_hash{$date}}) {
+		$report .= "$file was not able to be removed.\n" if (!unlink($file));
+	    }
+	}
+    }
+}
+
+##-----------------------------------------------------------------------------
+# @signature String insert_file(String file)
+# <p>Insert the specified file into the database.</p>
+#
+# @input $file The name of the file being inserted.
+# @output $msg An error message that was generated from the insert or the empty
+# String if the insert completed successfully.
+##-----------------------------------------------------------------------------
+sub insert_file {
+    my ($file) = @_;
+
+    # Create the file information.
+    my $mysql = MySqlMSSFile->new();
+    $mysql->setDatasetArchiveIdent($dataset_id);
+    $mysql->setFile(sprintf("%s/%04d",$hpss,substr($file,0,4)),$file);
+    $mysql->setFormatId(53);
+    $mysql->setBeginDate(substr($file,0,4),substr($file,4,2),substr($file,6,2),0,0,0);
+    $mysql->setEndDate(substr($file,0,4),substr($file,4,2),substr($file,6,2),23,59,59);
+
+    # Create and open the database
+    my $database = MySqlDatabase->new(); # use ~/.my.cnf
+    $database->connect();
+
+    # Insert the file
+    my $msg = $mysql->insert($database);
+
+    # Commit if no errors have occurred to this point otherwise rollback.
+    if ($msg eq "") { $msg .= $database->commit(); }
+    else { $msg .= "Database rolled back.\n".$database->rollback(); }
+
+    # Always disconnect cleanly.
+    $database->disconnect();
+
+    return ($msg, $mysql->getSize());
+}
+
+##-----------------------------------------------------------------------------
+# @signature String place_on_mss(String file)
+# <p>Copy the specified file to the mass store.</p>
+#
+# @input $file The file to be copied to the mass store.
+# @output $msg Any error messages that occured during the copy or the empty
+# String if it was copied successfully.
+##-----------------------------------------------------------------------------
+sub place_on_mss {
+    my ($file) = @_;
+    my $year = substr($file,0,4);
+    
+    return HPSS::put(\"$temp/$file",\"$hpss/$year/$file");
+}
+
+################################################
+# If YYYY directory does not exist in Campaign #
+# Storage archive location, create it          #
+################################################
+sub mkdir_CS {
+    my $year = shift;
+    ## check if year directory exists, if not create it
+    my $exists = 0;
+    my @date_dirs = `ssh $cs_host ls $cs_archive 2>&1`;
+    my $mkdir;
+    chomp @date_dirs;
+    foreach my $dir (sort(@date_dirs)) {
+        if ($dir eq $year) {
+            $exists = 1;
+        }
+    }
+    if (!$exists) {
+       print "Creating YYYY directory on Campaign Storage\n";
+       $mkdir = `ssh $cs_host  mkdir $cs_archive/$year 2>&1`;
+    }
+    return $mkdir;
+}
+
+##################################################
+# Copy file to Campaign Storage archive location #
+##################################################
+sub copy_to_CS {
+    my ($cs_file) = @_;
+    my $year = substr($cs_file,0,4);
+    return `scp $temp/$cs_file $cs_host:$cs_archive/$year/$cs_file 2>&1`;
+}
+
+sub sendMailAndDie {
+    my ($body) = @_;
+    #MAIL::send_mail("LDM USPLN Lightning HPSS/CODIAC Error",$0."\n\n".$body, @monitors);
+    print "LDM USPLN Lightning HPSS/CODIAC Error",$0."\n\n".$body, @monitors;
+    exit(1);
+}

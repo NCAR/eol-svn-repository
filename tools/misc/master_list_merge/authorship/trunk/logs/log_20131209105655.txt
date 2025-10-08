@@ -1,0 +1,59 @@
+> groovy authorshipConnect.groovy LPB
+
+Created log file:	logs/log_20131209105655.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	
+
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+No contacts match this author:	NOAA-ESRL
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+  LPB:  82.001
+		Gochis
+Which of these contacts matches this author:	Gochis
+
+		47	dgochis	David J. Gochis	NCAR/RAP
+
+Press zero to select none of the above.
+--------------------------------------------------------------------------------
+> 47
+
+Unable to find 47 for data set 82.001
+Unable to find 47 for data set 82.017
+Unable to find 47 for data set 82.018
+Unable to find 47 for data set 82.019
+Unable to find 47 for data set 82.020
+Unable to find 47 for data set 82.021
+Unable to find 47 for data set 82.022
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 47, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.001';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 47, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.017';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 47, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.018';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 47, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.019';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 47, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.020';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 47, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.021';
+
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 47, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '82.022';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

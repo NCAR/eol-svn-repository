@@ -1,0 +1,64 @@
+<html>
+<head>
+   <title>How To: Create SkewT Plots from ESC Soundings</title>
+   <style>
+<!--
+   body {
+      font-family: sans-serif;
+      text-align: justify;
+   }
+   h1 { text-align: center; }
+   p.code {
+      font-family: monospace;
+      font-weight: bold;
+      text-indent: 50px;
+   }
+   p.foot {
+      font-style: italic;
+      text-align: right;
+   }
+-->
+   </style>
+</head>
+
+<body>
+<h1>How To: Create SkewT Plots from ESC Soundings</h1>
+
+<h2>Table of Contents</h2>
+<ul>
+   <li><a href="#purpose">Purpose</a></li>
+   <li><a href="#repos">Repository</a></li>
+   <li><a href="#exe">Executing the Script</a></li>
+</ul>
+
+<a name="purpose"></a>
+<h2>Purpose</h2>
+<p>The purpose of this document is to describe the process of using the <b>plot_skewt.pl</b> script for generating SkewT plots from ESC formatted sounding data.</p>
+
+
+<a name="repos"></a>
+<h2>Repository</h2>
+<p>The skewT plot script is under revision control using subversion.  The repository can be found at:</p>
+<p class="code">http://svn.atd.ucar.edu/svn/dmg/tools/upper_air/plot_script</p>
+
+
+<a name="exe"></a>
+<h2>Executing the Script</h2>
+<p>The script can be run directory from the directory:</p>
+<p class="code">/net/work/bin/plotters/plot_skewt.pl</p>
+<p>It takes the following sets of parameters.  Parameters in <i>italics</i> are optional.</p>
+<ul>
+   <li><b>-o dir</b>: The output directory where the skewT plots are to be placed.</li>
+   <li><b>-d dir</b>: The directory where the ESC formatted sounding files to be plotted are located.</li>
+   <li><b><i>-w int</i></b>: The frequency of the wind values to be kept in the plot.  (i.e. -w 60 will keep all of the wind values that fall on the minute.)</li>
+   <li><b><i>-press high low</i></b>: The range of pressure values to be on the plot.  (i.e -press 1050 500 will show the pressure range of 1050 mb to 500 mb)</li>
+   <li><b><i>-temp low high</i></b>: The range of temperature values to be on the plot.  (i.e. -temp -5 35 will show the temperature range of -5&deg;C to 35&deg;C)</li>
+</ul>
+
+
+<hr>
+<p class="foot">Last Update: September 19, 2007 - Joel Clawson</p>
+
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<HTML>
+<body bgcolor=white>
+
+<TITLE>Dataset Processing Inventory </TITLE>
+
+<center><H1><u>Dataset Processing Inventory</u></H1></center>
+<br>
+<center><H2>Updated: 29 May 2001 </H2></center>
+<br>
+<H3><b>Pan American Climate Studies (PACS)</b></H3>
+<br>
+<b>TOI: approx. 1 January 1995 to 31 December 2004 </b>
+<br>
+
+<b>AOI: (SW)
+<ul>
+   <li>  LAT: -30 to 30 (N)
+   <li>  LON: -30 to -150 (W)
+</ul>
+</b>
+
+<br>
+<b>CODIAC ID Prefix: 15.xxx </b>
+<br>
+<b>PACS Charge #.</b>
+<br>
+<p>
+<b>Products: </b>
+<ul>
+   <li><a>Daily Mexican Precip - DONE (CODIAC ID 15.108) (91 to present) </a>
+   <li><a>Daily Mexican Precip Station List - DONE  CODIAC ID 15.114) (91 to present) </a>
+   <li><a>Daily Central American Precip  (Costa Rica, NI, PA) - DONE</a>
+   <li><a>Daily Central American Station List - DONE</a>
+   <li><a>Daily Equador Precip (Person in MASS has data. Possibly Hourly data.)</a>
+</ul>
+<br>
+<p>
+<b><u>System Areas to examine:</u></b>
+<ul>
+  <li>/work/0/PACS/MX_PRECIP/DATA - raw data, conversion s/w, and sample output.
+  <li>/work/0/PACS/MX_PRECIP/STN_LISTS - stn studies and stn lists.
+</ul>
+<br>
+<br>
+<h3><u>Datasets:</u></h3>
+   
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td> Daily Mexican Precip Dataset </td>
+       <td> <font color=blue> Done. </font>     </td>
+       <td> <p> 
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=15.108"
+            target="_top"> See CODIAC ID 15.108.</a>)
+
+             These data can be divided into 2 parts:
+             data with stn info in the raw data AND
+             data missing stn info from the raw data.
+             The data with the stn info in the raw data
+             have been converted and put out on CODIAC(?)
+             and have not been gross limit checked.</p>
+
+             <p>Need better stn info to convert the data
+                without stn info in raw data. </p>
+  <p>
+  Original NOTES: This dataset contains ~2000 sites covering 
+  Mexico for 1991 to present. Comes in EXCEL and student converted
+  to ASCII text. We will convert to our daily pcp format, check/QC?, 
+  EBUFR the data, and load on CODIAC.  Original work done in
+  /raid3/ntdir/PACS/precip_mexico - raw data, conversion s/w, 
+  and sample output and  /raid/3/MX_PRECIP - stn studies and stn lists. 
+  </p>
+  <p>
+        *Need Better stn information. Javier says
+         there exists a stn list with 5K stns in it
+         that may help. Since our data contains stn
+         names (not IDs), it is difficult to tell stns apart.
+         Lat/lon may not be sufficient and is not always
+         provided in the data.
+  </p>
+  <p> 
+        *MX (Javier) says precip is in mm. Some small values
+         make us think that some stns may collect data in inches.
+  </p>
+  <p>
+        *Daily data collection period said to be 8am. Local? or UTC?
+  </p>
+  <p>
+        *Stns switch to/from DST? Web info that CC found indicates
+         that MX states/people resist switching to/from DST so some
+         do switch and some do not.
+  </p>
+  <p>
+        *What should we do with duplicate data records (same stn, same time)?
+         Which record is best?
+  </p>
+       </td>
+
+
+   <tr><td> Daily Mexican Precip Stn List </td>
+       <td> <font color=blue> Done. </font>     </td>
+       <td> <p>
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=15.114"
+            target="_top"> See CODIAC ID 15.114.</a>)
+   </tr>
+
+   <tr><td> Central American Precip </td>
+       <td> <font color=blue> Done. </font>     </td>
+       <td>
+          <ul>
+          <li> (<a href="http://data.eol.ucar.edu/codiac/dss/id=15.111"
+        target="_top"> See CODIAC ID 15.111 for Costa Rica Monthly Precip.</a>)
+
+          <li> (<a href="http://data.eol.ucar.edu/codiac/dss/id=15.110"
+        target="_top"> See CODIAC ID 15.110 for Costa Rica Daily Precip.</a>)
+
+          <li> (<a href="http://data.eol.ucar.edu/codiac/dss/id=15.112"
+        target="_top"> See CODIAC ID 15.112 for Nicaraguan Daily Precip.</a>)
+
+          <li> (<a href="http://data.eol.ucar.edu/codiac/dss/id=15.107"
+        target="_top"> See CODIAC ID 15.107 for Panamanian Daily Precip.</a>)
+
+   </tr>            
+
+   <tr><td> Central American Precip Stn List </td>
+       <td> <font color=blue> Done. </font>     </td>
+       <td> <p>
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=15.113"
+            target="_top"> See CODIAC ID 15.113.</a>)
+   </tr>            
+</table>
+<br>
+<b>-------------------End PACS----------------------- </b>
+</HTML>

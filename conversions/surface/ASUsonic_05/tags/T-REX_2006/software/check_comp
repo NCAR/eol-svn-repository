@@ -1,0 +1,5 @@
+#! /usr/bin/csh
+
+foreach file (../final/*.0qc)
+	/work/software/library/checkcomp/Version2/check_QCF_compy2k $file
+end

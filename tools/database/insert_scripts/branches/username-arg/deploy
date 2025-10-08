@@ -1,0 +1,104 @@
+#! /usr/bin/perl -w
+
+##Module---------------------------------------------------------------------
+# The deploy script is used for generating the production version of the
+# MySQL Perl library and the scripts that use the library to insert files
+# into the database.  It copies the files to the production locations,
+# changes permissions to prevent them from being editted, changes group
+# ownership to CDS, and updates the library locations in the scripts to
+# point to the production version from the developmental version.
+#
+# @author Joel Clawson
+# @version 1.0 - Original creation of the script.
+##----------------------------------------------------------------------------
+use strict;
+
+my $DEV_DIR = "/net/work/dev/jaa";
+
+# Define the locations for the scripts and library files.
+my $CFG_DIR = "";
+my $LIB_DIR = "";
+my $BIN_DIR = "";
+my $WEB_DIR = "";
+my $copy_command = "rsync -vcCrl --delete --delete-excluded";
+
+if (-d "/net/work/bin") { 
+    $CFG_DIR = "/net/work/cfg-files";
+    $LIB_DIR = "/net/work/lib/perl/mysql";
+    $BIN_DIR = "/net/work/bin/scripts/insert";
+    $WEB_DIR = "/net/web/dmg/html/software/tools/database/insert_scripts";
+} elsif (-d "/work/bin") { 
+    $CFG_DIR = "/work/cfg-files";
+    $LIB_DIR = "/work/lib/perl/mysql";
+    $BIN_DIR = "/work/bin/scripts/insert";
+    $WEB_DIR = "/web/dmg/html/software/tools/database/insert_scripts";
+} else {
+    printf("Unable to find the work directory to deploy the tools!\n");
+    exit(1);
+}
+
+&main();
+
+##----------------------------------------------------------------------------
+# @signature void main()
+# <p>Deploy the CODIAC insert scripts and the MySQL library modules to the
+# production locations for everyday use.</p>
+##----------------------------------------------------------------------------
+sub main {
+    umask(2);
+    deploy_scripts();
+    deploy_docs();
+}
+
+sub deploy_docs {
+    system("mkdir -p $WEB_DIR");
+    system("chmod -R 775 $WEB_DIR");
+
+    printf("Copying docs to $WEB_DIR ...\n");
+    system("$copy_command docs/* $WEB_DIR");
+
+    printf("Changing permission to read only ...\n");
+    system("chmod 444 $WEB_DIR/*");
+
+    printf("Chanding group to cds ...\n");
+    system("chgrp -R cds $WEB_DIR");
+}
+
+##------------------------------------------------------------------------------
+# @signature void deploy_scripts()
+# <p>Copy the scripts to the bin directory and change the permissions of the
+# files so they can be read and executed.</p>
+##------------------------------------------------------------------------------
+sub deploy_scripts {
+    # Create the bin directory where the scripts are located.
+    system("mkdir -p $BIN_DIR");
+    system("chmod -R 775 $BIN_DIR/*");
+
+    # Copy the scripts to the bin directory.
+    printf("Copying scripts to $BIN_DIR ...\n");
+    system("$copy_command src/* $BIN_DIR");
+
+    # Don't want to copy projects subdir, but I couldn't find an easy way to exclude it, so
+    system("rm -rf $BIN_DIR/loaddata/projects");
+
+    # Change the library references to the dev area to the production area.
+    printf("Updating to use the correct library...\n");
+    system ("perl -pi -w -e \"s?$DEV_DIR\/mysql\/lib?$LIB_DIR/?\" $BIN_DIR/*");
+    system ("perl -pi -w -e \"s?$DEV_DIR\/insert_proj_dataset\/src?$BIN_DIR?\" $BIN_DIR/*");
+    system ("perl -pi -w -e \"s?$DEV_DIR\/insert_proj_dataset\/src?$BIN_DIR?\" $BIN_DIR/loaddata/*");
+
+    # Change loaddata to point to production dir for project-specific yaml files.
+    system ("perl -pi -e \"s?$BIN_DIR/loaddata/projects?$CFG_DIR?\" $BIN_DIR/loaddata/load_data_proj");
+
+    # Change insert_dts to point to production dir for project-specific yaml files.
+    system ("perl -pi -e \"s?tsunami-dev?emdac?\" $BIN_DIR/insert_dts");
+
+    # Now that are reading yml content from codiac, can't do this.
+    # Change the permissions to prevent anyone from changing the files.
+    #printf("Changing permissions to read and execute only ...\n");
+    #system("chmod -R 554 $BIN_DIR/*");
+
+    # Make sure all of the scripts are available to CDS users.
+    printf("Changing group to cdsdmg ...\n");
+    system("chgrp -R cdsdmg $BIN_DIR/*");
+}

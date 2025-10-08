@@ -1,0 +1,1 @@
+/bin/cc  -pipe -pedantic -O2 -g -DNDEBUG      -Wl,--disable-new-dtags    -Wl,--allow-shlib-undefined CMakeFiles/tigge_check.dir/tigge_check.c.o  -o ../bin/tigge_check -Wl,-rpath,"\$ORIGIN/../lib" ../lib/libeccodes.so libtigge_tools.a /usr/lib64/libm.so /usr/lib64/libjasper.so /usr/lib64/libjpeg.so -lpthread 

@@ -1,0 +1,166 @@
+#!/bin/perl -w
+
+# McD
+# --------------------------------------------------------------
+# list_table: displays all of the datasets ordered by title for
+#   the given project.  
+#
+# Expected Params:
+#  "project" - the project to display
+#    
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use Time::HiRes qw(sleep);
+
+use lib "../lib";
+use Utils;
+
+use lib "../../mcd_lib";
+use MLProject;
+use MLProjectDBA;
+use Category;
+use CategoryDBA;
+use MLDataset;
+use MLDatasetDBA;
+require( "./show_error" );
+
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+my $proj_dba = MLProjectDBA->new();
+my $ds_dba = MLDatasetDBA->new();
+
+my $project = param( "project" );
+my $sort = param( "sort" );
+check_valid( $project );
+$sort = "title" if( !$sort || $sort ne "date" );
+$sort = "mlview.date" if( $sort ne "title" );
+
+my $proj = $proj_dba->getFromDB( $project );
+
+my @list = $ds_dba->getByProject( $project, [], $sort );
+
+$ds_dba->getDocUrls_array( \@list );
+
+my $count = @list;
+
+println( header() );
+
+println( "<html><head><title>JOSS Master List</title></head>" );
+println( &body_css( $proj->{body_css_src}) );
+println( $jscript );
+println( "<body bgcolor=#e9e9e9 link=#000066 alink=#000066 vlink=#000066 text=black>" );
+println( "<br>" );
+
+println( "<center><table border=0 cellpadding=4 cellspacing=0 width=97% bgcolor=#dcdcdc class=titleTable>" );
+	println( "<tr>" );
+		println( "<td align=center valign=center width=15%>" );
+			println( "&nbsp;" );
+		println( "</td>" );
+		println( "<td align=center valign=top width=70%>" );
+			println( "$proj->{name} Data Sets<br>" );
+			println( "<font size=-1><i>$proj->{long_name}</i></font>" );
+		println( "</td>" );
+		println( "<td align=center valign=center width=15%>" );
+			println( &nbsp(2), "<img src=http://www.joss.ucar.edu/master_list/images/joss.gif>" );
+		println( "</td>" );
+	println( "</tr>" );
+println( "</table>" );
+println( "<br>" );
+
+println( "<center><table border=0 cellpadding=3 cellspacing=1 width=97%>" );
+
+println( "<tr class=listHead>" );
+	println( "<td align=center><a href=list_table?project=$project&sort=title>Data Set Title</a></td>" );
+	println( "<td align=center nowrap><a href=list_table?project=$project&sort=date>Submit Date</a></td>" );
+	println( "<td align=center>&nbsp;</td>" );
+println( "</tr>" );
+
+showTable( @list );
+
+my $total = "Total Number of <i>$proj->{name}</i> Data Sets: $count";
+println( "<tr bgcolor=#336699 class=tableHead><td colspan=4>$total</td></tr>" );
+println( "</table>" );
+println( "</body></html>" );
+
+sub showTable
+{
+	my @list = @_;
+
+	foreach my $ds (@list)
+	{
+		println( "<tr bgcolor=white onmouseover=\"javascript: style.backgroundColor=\'#ebebf5\'\" onmouseout=\"javascript: style.backgroundColor=\'\'\">" );
+
+			my $url = $ds->{remote_url};
+			if( $url && $url =~ /^ftp/ )
+			{
+				$url = "ftp_url?dataset=$ds->{id}&project=$project";
+			}
+			elsif( (!$url || $url eq "") && $ds->{storm_id} )
+			{
+				$url = "http://www.joss.ucar.edu/cgi-bin/codiac/dss?$ds->{storm_id}"; 
+			}	
+
+			println( "<td width=75% class=dsTitleCell>" );
+				if( defined( $url ) && $url ne "" )
+				{
+					println( "<a href=$url target=_top>$ds->{title}</a>" );
+				}
+				else
+				{
+					println( $ds->{title} );
+				}
+			println( "</td>" );
+
+			println( "<td nowrap align=center width=10%>" );
+				if( $ds->{status}->{in_progress} )
+				{ println( "<font color=red size=-1 face=Verdana>In Progress</font>" ); }
+				elsif( $ds->{status}->{updated} )
+				{ 
+					#println( "<font color=red>Updated</font>" ); 
+					println( "<img src=$img_src/updated.gif>" );
+					println( "<br>", $ds->{date} ) if( $ds->{date} ne "0000-00-00" );
+				}
+				elsif( $ds->{status}->{new} )
+				{ 
+					#println( "<font color=red>New</font>" ); 
+					println( "<img src=$img_src/new.gif>" );
+					println( "<br>", $ds->{date} ) if( $ds->{date} ne "0000-00-00" );
+				}
+				elsif( $ds->{date} ne "0000-00-00" )
+				{ println( "$ds->{date}" ); }
+				else
+				{ println( "&nbsp;" ); }
+			println( "</td>" );
+
+			println( "<td nowrap align=center id=\"listing_link\" width=10%>" );
+				if( defined( $ds->{doc_url} ) && $ds->{doc_url} ne "" )
+				{
+					println( "<a href=$ds->{doc_url} target=_blank><font size=-1>documentation</a>" );
+				}
+				else
+				{
+					println( "&nbsp;" );
+				}
+			println( "</td>" );
+		println( "</tr>" );
+	}
+}
+
+sub check_valid
+{
+	my $project = shift;
+
+	if( !defined( $project ) ) 
+	{
+		show_error( "category_list: undefined project id." );
+	}
+	elsif( $project =~ /\D/ )
+	{
+		show_error( "category_list: project id not valid: $project" );
+	} 
+}

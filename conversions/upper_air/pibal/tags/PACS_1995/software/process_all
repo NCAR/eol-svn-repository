@@ -1,0 +1,8 @@
+#! /usr/bin/csh
+
+if (-e pibal_run.log) rm pibal_run.log
+/usr/bin/nice -5 ./pibal2class.pl ../raw_data/* >& pibal_run.log
+./autoqc.pl >>& pibal_run.log
+
+
+

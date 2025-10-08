@@ -1,0 +1,6 @@
+for file in *.cls
+do
+  echo "Fix ${file}"; 
+  sed 's/KVEF Name Not In Table/KVEF Las Vegas/g' ${file}> ${file}.new
+done
+

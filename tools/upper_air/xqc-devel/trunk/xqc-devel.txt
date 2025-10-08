@@ -1,0 +1,34 @@
+
+The XQC development project started with the IDV 4.1 source code.  See this web page for
+information on system requirements for IDV: 
+http://www.unidata.ucar.edu/software/idv/docs/userguide/Systems.html.
+See this web page for information on downloading and installing the IDV:
+http://www.unidata.ucar.edu/software/idv/docs/userguide/Starting.html
+and this web page for building IDV from source:
+http://www.unidata.ucar.edu/software/idv/docs/userguide/misc/SourceBuild.html
+I installed NetBeans 7.2, Java 1.6, and Java 3D 1.5 (java3d.java.net) on my Mac.  At this time, 
+there were no standard Java 3D libraries, so the systems group would not install Java 3D on the
+server, so development had to be done on my local computer.  The following jar libraries
+were used for compiling the software:
+ncIdv.jar
+visad.jar
+external.jar
+jython.jar
+auxdata.jar
+and the DMG jar libraries:
+upper_air.jar
+utilities.jar
+  
+I added classes under ucar/unidata/data/sounding for reading in ESC formatted
+soundings.  I was able to read in an ESC sounding, but I was not able to display it.
+At this time, all development work was halted on xqc because of lack of funds to continue
+the work.  The software uses the DMG jar libraries that read the ESC sounding format.
+
+The software is in two tar files, one is the src code, src.tar, and the other is the 
+distribution files, dist.tar.  The src.tar includes the IDV source code with the changes
+that I made to read in ESC soundings.  The dist.tar includes all the jar files mentioned
+above that are needed to run the IDV software.  I ran the new code from within NetBeans, 
+from the main idv application.
+
+June 2014 - JNS
+

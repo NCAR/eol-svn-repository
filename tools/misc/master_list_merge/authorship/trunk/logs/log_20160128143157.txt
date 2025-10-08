@@ -1,0 +1,34 @@
+> groovy authorshipConnect.groovy ATLAS
+
+Created log file:	logs/log_20160128143157.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+--------------------------------------------------------------------------------
+  ATLAS:  46.619
+		Beringer, J., F. S. Chapin III. C. Copass
+Which of these contacts matches this author:	F. S. Chapin III. C. Copass
+
+There may be an error in the Master List for this dataset.
+ Please check that the first author is lastname, firstname.
+
+		279	ccopass	Catharine D. Copass	Institute of Arctic Biology
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 0
+
+Found contact 743 for data set 46.648 with sort_key 2 (instead of 3). Will update sort_key.
+Found contact 276 for data set 46.648 with sort_key 3 (instead of 4). Will update sort_key.
+
+Skipping over SQL statements.
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

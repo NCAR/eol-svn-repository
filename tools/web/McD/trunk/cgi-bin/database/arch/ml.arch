@@ -1,0 +1,90 @@
+Application: new JOSS Master Data Set List
+
+Host: hurricane    Database: ml
+
++--------------+
+| Tables_in_ml |
++--------------+
+| category     |
+| dataset      |
+| dscatlink    |
+| link         |
+| linkcatlink  |
+| linkprojlink |
+| project      |
++--------------+
+
+project:
++---------------+--------------+------+-----+--------------+----------------+
+| Field         | Type         | Null | Key | Default      | Extra          |
++---------------+--------------+------+-----+--------------+----------------+
+| id            | int(11)      |      | PRI | NULL         | auto_increment |
+| name          | varchar(16)  | YES  | MUL | NULL         |                |
+| long_name     | varchar(255) | YES  |     | NULL         |                |
+| active        | int(11)      | YES  |     | NULL         |                |
+| logo_src      | varchar(255) | YES  |     | NULL         |                |
+| left_css_src  | varchar(255) |      |     | left_def.css |                |
+| body_css_src  | varchar(255) |      |     | body_def.css |                |
+| contact_name  | varchar(100) | YES  |     | NULL         |                |
+| contact_email | varchar(100) | YES  |     | NULL         |                |
++---------------+--------------+------+-----+--------------+----------------+
+
+link:
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int(11)      |      | PRI | NULL    | auto_increment |
+| name   | varchar(200) |      |     |         |                |
+| url    | varchar(255) |      |     |         |                |
+| target | varchar(20)  | YES  |     | _self   |                |
++--------+--------------+------+-----+---------+----------------+
+
+dataset:
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      |      | PRI | NULL    | auto_increment |
+| title       | varchar(200) | YES  |     | NULL    |                |
+| storm_id    | varchar(15)  | YES  |     | NULL    |                |
+| date        | date         | YES  |     | NULL    |                |
+| url         | varchar(200) | YES  |     | NULL    |                |
+| doc_url     | varchar(200) | YES  |     | NULL    |                |
+| in_progress | int(11)      | YES  |     | 0       |                |
+| hide        | int(11)      | YES  |     | 0       |                |
+| project     | int(11)      |      | MUL | 0       |                |
++-------------+--------------+------+-----+---------+----------------+
+
+category:
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int(11)     |      | PRI | NULL    | auto_increment |
+| name    | varchar(50) |      |     |         |                |
+| parent  | int(11)     | YES  |     | NULL    |                |
+| project | int(11)     |      | MUL | 0       |                |
++---------+-------------+------+-----+---------+----------------+
+
+dscatlink:
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| category | int(11) | YES  | MUL | NULL    |       |
+| dataset  | int(11) | YES  | MUL | NULL    |       |
++----------+---------+------+-----+---------+-------+
+
+linkcatlink:
++----------+---------+------+-----+---------+-------+
+| Field    | Type    | Null | Key | Default | Extra |
++----------+---------+------+-----+---------+-------+
+| link     | int(11) | YES  | MUL | NULL    |       |
+| category | int(11) | YES  | MUL | NULL    |       |
++----------+---------+------+-----+---------+-------+
+
+linkprojlink:
+---------+---------+------+-----+---------+-------+
+| Field   | Type    | Null | Key | Default | Extra |
++---------+---------+------+-----+---------+-------+
+| link    | int(11) | YES  | MUL | NULL    |       |
+| project | int(11) | YES  | MUL | NULL    |       |
++---------+---------+------+-----+---------+-------+
+

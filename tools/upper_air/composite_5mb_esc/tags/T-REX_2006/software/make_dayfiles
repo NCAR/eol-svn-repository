@@ -1,0 +1,11 @@
+#! /bin/csh
+
+if (!(-e ../codiac)) then
+    mkdir ../codiac
+endif
+
+gunzip -r ../5mb
+
+/net/work/dev/make_esc_dayfiles/make_esc_dayfiles ../5mb/*/*.05mb ../codiac/T-REX_5mb_
+
+gzip -r ../5mb

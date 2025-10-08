@@ -1,0 +1,160 @@
+----------------
+Goal: Add a Google Custom Search to the ARCSS project page. 
+----------------
+
+This tutorial chronicles the steps I took in creating a Custom Search feature for the ARCSS homepage. The search feature should consist of a small text field that can be attached to the Arcss page. The search will target only arcss datasets stored on Codiac. The Search results will then be displayed in a dhtml window widget on the Arcss page. The links should open inside the same dhtml window. 
+  
+Dhtml window widget is a javascript and css based web tool that can allow the opening of small windows inside of an html page that can be moved, resized, or minimized. More Information on the dhtml window widget specifically can be found here: 
+  
+http://www.dynamicdrive.com/dynamicindex8/dhtmlwindow/index.htm 
+  
+In order to use the dhtml window widget your html page needs to include the script: 
+  
+/net/www/docs/projects/arcss/js/dhtmlwindow.js 
+  
+and also include the css file: 
+  
+/net/www/docs/projects/arcss/css/dhtmlwindow.css 
+  
+----------------
+Step #1 Setting up a Google Custom Search Engine 
+----------------
+
+To create a Google Custom Search engine you must have a google account with which to associate the CSE. For the Arcss search we used the eol webmaster acount: webmaster@eol.ucar.edu. Once you have logged into the google account you can get to the CSE interface by going to 'My Account' and then selecting 'Custom Search' from the products/services list. If Custom Search is not already in your products you can add it by going to: http://www.google.com/coop/cse/ 
+  
+Once you've added Custom search you can create a new Custom Search Engine. Once you've created a search engine you can maintain all aspects of the CSE in the CSE control panel. The 4 most important tabs in the control panel are Basics, Sites, Look and Feel, and Code. 
+  
+* Basics: Name, Description, and keywords are all useful self-explanatory fields which can be found on this page. Under Preferences on this tab you can set the advertising status. Since Ncar/Ucar is a non-profit organization you can disable ads here. Additionally, you may indicate whether the CSE should search only the sites you specify, or the entire Internet with emphasis on the sites you specify. 
+  
+* Sites: This is where you define what content the CSE searches. You can add sites that will be included in the search, and also excluded sites which you specifically do not want searched. There are 3 different ways to define a page or group of pages to search in. It should be remembered that any pages that are dynamically generated cannot be indexed by google with any consistency. For example, readme docs in Codiac are displayed dynamically per request. As a result these pages cannot be indexed. 
+
+   * 1. Include all pages which include this URL. 
+      * URL: eol.ucar.edu 
+      * includes: *eol.ucar.edu* 
+      * examples: http://www.eol.ucar.edu/projects/arcss/index.html, http://data.eol.ucar.edu/codiac/ 
+
+   * 2. URL patterns. 
+      * URL pattern: http://www.eol.ucar.edu/projects/*/doc* 
+      * examples: http://www.eol.ucar.edu/projects/arcss/docs/Data_Policy.html, http://www.eol.ucar.edu/rpojects/pase/documents/114.Safety.AppendixA.doc 
+  
+   * 3. Dynamically Extract pages from links. 
+      * A. Include all pages that are linked from this URL. 
+      * B. Include all partial sites that are linked from this URL. 
+      * C. Include all sites that are linked from this URL. 
+  
+**Note** 
+The Look and Feel as well as Code tabs are useful for implementing a simple search that displays results in one of three relatively limited manners. For the goal description given above it is necessary to use the Google Ajax API which will be discussed later, and does not utilize either the Code or L&F settings. That being said if you just want your search results to be displayed on a simple html page, the L&F and Code tabs should handle this. 
+**End Note** 
+  
+* Look and Feel: L&F setting changes directly influence the code generated in the Code tab. Settings under this tab effect the display of the search field, button, and results. 
+  
+* Code: This tab will auto generate code that can be copied and pasted into an html document to include a basic custom search. There are Three basic methods for doing this. 
+  
+   * 1. Host the results on a Google page. - This code will add the search field and submit button into your html, on click, the button will redirect the user to a Google page which contains search results from the sites specified in the Sites tab. 
+  
+   * 2. Host results in an iframe. - This code requires two pages. The first page will contain the code for the search field. On click the page will redirect to the second page with html arguments attached to the url. Something like: http://www.eol.ucar.edu/projects/arcss/docs/googleresults.jsp?cx=005203271943822719354%3Avjvukaqsjk4&cof=FORID%3A9&ie=UTF-8&q=niskin&sa=Search 
+  
+      * The portion of the URL beginning with '?' Contains parameters that the second page uses to formulate search results. If you look at the code added to the first page in this process you will see the variables there. 
+
+**Note** 
+There is an error when using the code auto-generated by google for this process. The code given for the second page given by google needs to include surrounding html and body tags or results in a blank screen in some browsers. 
+**End Note** 
+  
+   * 3. Host results in an overlay. - This option allows for a simple and clean one page results display. Onclick the screen grays and an overlay with results appears. The drawback to this choice is that the overlay is considerably slower to load than a standard html page. 
+  
+----------------
+Step #2 Using Ajax API for more functionality 
+----------------
+
+----------------
+Important Links when using the API. 
+----------------
+  
+First off, make sure you have Firebug installed for Firefox, or some similar web editing tool. 
+  
+http://getfirebug.com/ 
+  
+Google API has a Class Refernce page that allows you to browse through all the available classes one can use to manipulate the API. 
+  
+http://code.google.com/apis/ajaxsearch/documentation/reference.html 
+  
+The google discussion group for the Google AJAX API is the most valuable tool available. You can post to this page and all posts get mailed out to the users of the group. This allows for a forum like question and answer interaction, with the ease of your personal inbox. Reading through these forums can answer a lot of questions. 
+  
+http://groups.google.com/group/Google-AJAX-Search-API/topics?start&pli=1 
+  
+If you think you have discovered a problem with the API you will want to first visit the issue tracker to see if the problem has been documented. Most problems with the API have been documented at this point, but it can be useful to post additional feedback, as well as confirm a suspicion with the issue tracker. 
+  
+ http://code.google.com/p/google-ajax-apis/issues/list 
+  
+  
+----------------
+Using the API 
+----------------
+  
+In order to use the Google Ajax API you do not need a key. However, if you do use a key, and Google detects a problem with your search application you will receive an email alerting you to the problem. The key generated for the Arcss search is: 
+  
+ABQIAAAA3tbucVxlGNFBYLARMRuqahTL2tmjYYlVN2mt_K7dcvt5qRSuIhQA2YAv3guoDXdWwxvpZ5k2fFwMhQ 
+  
+To create an html file that can use the Ajax API to generate a custom search you must include the  API script: 
+http://www.google.com/jsapi
+
+
+In order to register your search key with your application you must pass the key as a parameter to the script include. Like so: 
+
+«script src="http://www.google.com/jsapi?key= 
+ABQIAAAA3tbucVxlGNFBYLARMRuqahTL2tmjYYlVN2mt_K7dcvt5qRSuIhQA2YAv3guoDXdWwxvpZ5k2fFwMhQ"»«/script»
+
+  
+Additionally, to implement the dhtml window functionality discussed above, you must also include the necessary css and js files mentioned there. Included with this document is a template file that accurately shows how all three resource files can be included. 
+  
+dhtml_and_ajax_api_template.html 
+  
+Once you have the necessary resources you can begin creating a search tool inside the OnLoad() function. The 2 most vital components are: the SearchControl, and the Searcher. A SearchControl must be created, the Searcher must then be added to the SearchControl object, and finally the SearchControl object must be instructed to draw itself. The location where you draw the search control is where the search field appears on the page. When adding the Searcher to the SearchControl you can include an options parameter that instructs (among other things) where the Results (Searcher) should be drawn. An example html file is included with this document that executes the described process. 
+  
+basic_search_template.html 
+
+----------------
+DHTML Windows 
+----------------
+
+  
+Now that you can create a basic custom search page using the Google API, the next step in the task is displaying the results in a dhtml window. To open a dhtmlwindow you must set a variable to the value returned by a function called dhtmlwindow.open(). Complete details about the parameters and acceptable values for them can be found at: 
+  
+  
+http://www.dynamicdrive.com/dynamicindex8/dhtmlwindow/index.htm 
+  
+An Example call of the function looks like: 
+  
+box = dhtmlwindow.open('docwin', 'div', name, 'Search Results', 'width=950px,height=550px,left=165px,top=90px,resize=1,scrolling=1'); 
+  
+In this example box is just an empty variable in js, the parameters are described briefly below. 
+  
+* 'docwin' – This value becomes a unique ID for the div container created to hold the window. 
+* 'div' – This parameter specifies the type of content to be displayed in the dhtml window. There are several options for this value, but for the purposes of setting up a Google custom search the only relevant value is div. 
+* name – In this example, the variable name contains the string that is the name of a div container. This div container holds the results of the search, this is the div that will be displayed in the dhtml window. 
+* 'Search Results' – This parameter becomes the title of the dhtml window that is displayed at the top of that window. 
+* The remaining parameters are pretty self explanatory; left and top set the starting position of the window. Resize and scrolling both enable and disable those features. 
+  
+A limitation of the current version of the dhtml window used in conjunction with the Google API is that once a div container is loaded into the dhtml window it's contents can no longer be modified by the API. As a result you must keep the results in one div container, copying them to a new container before  loading the contents into the dhtml window. An example including detailed comments can be found in the search documentation folder included with this file. 
+  
+dhtml_search_template.html 
+  
+  
+Opening Links in dhtml windows 
+  
+Now that the search results display in a dhtml window you might want the user to be able to click the links in those results without navigating away from the page. A good solution to this is to open the clicked links in a new dhtml window. This way, the user can see the search results while browsing those results. In order to do this, before adding your search results to a dhtml window you must chop up the results and insert code to open dhtml links when the links are clicked. A function that does this can be found in the file: 
+  
+open_links_in_dhtml.txt 
+  
+Total results limitations 
+  
+Presently the google api has a hard time giving you an accurate estimation of the total number of results generated for your search. In the API the search class contains a cursor class which has a function that should theoretically return the total number of results genereated by your search. This class is located in google.search.Search.cursor.estimateResultCount() This functionality is fairly broken presently, the number estimated by estimateResultCount is wildly variable and rarely accurate. As a result it's hard to give a good total for the users. The 'solution' I eventually went with was to give the user a count of all the results on the present page, plus those found on previous pages. This means you can easily navigate to the last page with a single click, and see the total results. This is an unfortunate limitation of the API that will hopefully be fixed soon.
+
+  
+Additional Features 
+  
+From here you should be able to begin working with dhtml windows and the Google API to build a search tool as you see fit. To see the end result of this project visit: 
+  
+http://www.eol.ucar.edu/projects/arcss/index.html 
+  
+All files used to create this tool are also contained with this document for reference.

@@ -1,0 +1,112 @@
+#! /usr/bin/perl -w
+
+#
+# Frequencies.pm
+#  Author: Joel Clawson
+#  Date: 2005-05-26
+#
+
+#-----------------------------------------------------------------------------#
+#                                Subroutines                                  #
+#-----------------------------------------------------------------------------#
+# new()
+#   * Creates and instance of the On_Line_Phys_Listing Tool
+#
+# shortDesc()
+#   * Returns simple text title/description of the tool
+#
+# longDesc() 
+#   * Returns a long text description of the function of this tool
+#
+# linkTitle()
+#   * Returns a smaller title to display in the left frame
+#
+# (my $title, my $form) = queryForm()
+#   * Returns the tool title and the text for an HTML form
+# 
+# (my $title, my $result ) = queryResult( $url_params )
+#   * Input URLparams Instance
+#     Output Queried Result, and a Title
+#   # Expected Params
+#      -sort (optional) sort field by which to sort the table, if none specified
+#         default is id.
+#
+# identifier
+#   * unique id among the tools, and it has no spaces (var)
+#
+# group
+#   * the tool group this tool belongs to (dataset, project, general)
+#-----------------------------------------------------------------------------#
+
+package Frequencies;
+use lib ".";
+use Utils;
+
+sub new {
+    my $class = shift;
+    my $self = {};
+    bless($self, $class);
+    
+    $self->{identifier} = "frequencies";	
+    $self->{group} = "general";
+    
+    return $self;
+}
+
+sub shortDesc {
+    return "Data Frequencies";
+}
+
+sub longDesc {
+    return "Displays all of the valid category types.";
+}
+
+sub linkTitle {
+    return "Frequencies";
+}
+
+sub queryForm {
+    my $self = shift;
+    my $params = shift;
+    return $self->queryResult( $params );
+}
+
+sub queryResult {	
+    my $self = shift;
+    my $params = shift;
+    my $title = "Data Frequencies";
+
+    my $sort = ( defined( $params ) && $params->exists( "sort" ) )? $params->get( "sort" ) : "sort_key";
+    
+    my $query = EQuery->new();
+    
+    my $sql = "SELECT * FROM frequency ORDER BY \'$sort\'";
+    
+    $query->query( $sql );
+    
+    my $result = cr("<table border=0 cellpadding=3 cellspacing=2 bgcolor=#e9e9e9 width=$table_width>",
+		    "<tr>",
+		    "<td align=center bgcolor=#e9e9e9 id=sort_link>", 
+		    "<a href=supervisor?qform=$self->{identifier}&sort=frequency_id><b>Frequency Id</b></a></td>",
+		    "<td align=center bgcolor=#e9e9e9 id=sort_link>",
+		    "<a href=supervisor?qform=$self->{identifier}&sort=name><b>Name</b></a></td>",
+		    "<td align=center bgcolor=#e9e9e9 id=sort_link>",
+		    "<a href=supervisor?qform=$self->{identifier}&sort=sort_key><b>Sort Key</b></a></td>",
+		    "</tr>" );
+    
+    while( (my %row = $query->getRow() ) ) {
+	$result = $result . cr("<tr>",
+			       "<td bgcolor=white>$row{frequency_id}</td>",
+			       "<td bgcolor=white nowrap>$row{name}</td>",
+			       "<td bgcolor=white>$row{sort_key}</td>",
+			       "</tr>" );
+    }
+    
+    $result = $result . cr( "</table>" );
+    
+    return ( $title, $result );
+}
+
+
+1;
+

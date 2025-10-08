@@ -1,0 +1,97 @@
+<project name="NWS Sounding Conversion" default="compile" basedir=".">
+
+    <property name="build" location="build" />
+    <property name="build.classes" location="build/classes" />
+    <property name="build.tests" location="build/tests" />
+    <property name="docs" location="docs" />
+    <property name="docs.api" location="${docs}/api" />
+    <property name="reports" location="reports" />
+    <property name="src" location="src" />
+    <property name="tests" location="tests" />
+
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <pathelement path="${build.classes}" />
+        <fileset dir="/net/work/lib/java">
+            <include name="utilities.jar" />
+            <include name="station.jar" />
+            <include name="upper_air.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/dayfiles">
+            <include name="upper_air_dayfile.jar" />
+        </fileset>
+    </path>
+
+    <path id="test-classpath">
+        <fileset dir="/net/work/lib/java/vendor">
+            <include name="junit.jar" />
+        </fileset>
+        <pathelement path="${build.tests}" />
+        <path refid="classpath" />
+    </path>
+
+    <target name="clean">
+        <delete dir="${build}" />
+        <delete dir="${dist}" />
+        <delete dir="${docs.api}" />
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build.classes}">
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+
+    <target name="compileTests" depends="compile">
+        <mkdir dir="${build.tests}" />
+        <javac srcdir="${tests}" destdir="${build.tests}">
+            <classpath refid="test-classpath" />
+        </javac>
+    </target>
+
+    <target name="convert" depends="compile">
+        <java classname="dmg.ua.sounding.convert.nws.RRSSoundingConverter" fork="yes">
+            <arg value="-Nominal" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="dayfiles">
+        <java classname="dmg.ua.sounding.dayfile.ESCDayFileCreator" fork="yes">
+            <arg value="-Z" />
+            <arg value="OHX_" />
+            <arg value="final" />
+            <arg value="database" />
+            <arg value="OHX_.*\.cls\.qc(\.gz)?" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build.classes}" />
+    </target>
+
+    <target name="javadoc">
+        <mkdir dir="${docs.api}" />
+        <javadoc destdir="${docs.api}" author="true" version="true" use="true" 
+                 windowtitle="DMG NWS Sounding API" doctitle="Data Managment Group NWS Sounding API"
+                 stylesheetfile="/net/web/dmg/html/software/java/javadocs.css"
+                 header="DMG NWS Sounding API" overview="${docs}/overview.html">
+            <classpath refid="classpath" />
+            <fileset dir="${src}" defaultexcludes="yes" />
+            <link href="http://java.sun.com/j2se/1.5.0/docs/api" />
+            <link href="http://dmg.eol.ucar.edu/software/java/api/utilties" offline="true" packagelistLoc="/net/web/dmg/html/software/java/api/utilities" />
+            <link href="http://dmg.eol.ucar.edu/software/java/api/stations" offline="true" packagelistLoc="/net/web/dmg/html/software/java/api/stations" />
+            <link href="http://dmg.eol.ucar.edu/software/java/api/upper_air" offline="true" packagelistLoc="/net/web/dmg/html/software/java/api/upper_air" />
+        </javadoc>
+    </target>
+
+<!--
+    <target name="test" depends="compileTests">
+        <java classname="dmg.UtilTests" fork="yes">
+            <classpath refid="test-classpath" />
+        </java>
+    </target>
+-->
+</project>

@@ -1,0 +1,108 @@
+#!/usr/bin/perl
+
+# $Log: getdisk,v $
+# Revision 1.2  2006/06/28 22:31:58  joss
+# Change directory for tsunami, remove obsolete CODIAC routine
+#
+
+use LWP::UserAgent;
+use HTTP::Date qw(time2str str2time);
+
+$ua = new LWP::UserAgent;
+#$ua->timeout(20);
+
+$HOMEDIR="/ingest/ingest/satellite/fulldisk";
+$lastRun="lastRun";
+
+chdir($HOMEDIR) || die "Couldn't reach $HOMEDIR: $!";
+
+if (-e $lastRun) {
+    ($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,
+    $blksize,$blocks)=stat $lastRun;
+} else {
+    $mtime=time-86400;
+}
+
+# Fetch images if they've changed since script was last (sucessfully) run
+$since=time2str($mtime-60); # subtract a minute for slop
+
+@nominal=(0,0,0,3,3,3,6,6,6,9,9,9,12,12,12,15,15,15,18,18,18,21,21,21);
+
+($sec,$min,$hour,$day,$mon,$year)=gmtime(time);
+$mon+=1;
+$year+=1900;
+$daydir=sprintf("%04d%02d%02d",$year,$mon,$day);
+$name=sprintf("%s_%02d%02d",$daydir,$nominal[$hour],$min);
+
+%target=( "GWVS.JPG" => "goes10.vis.$name.jpg",
+          "GWIR.JPG" => "goes10.ir.$name.jpg",
+          "GEVS.JPG" => "goes8.vis.$name.jpg",
+          "GEIR.JPG" => "goes8.ir.$name.jpg",
+	  );
+
+%targetdir=( "GWVS.JPG" => "goes10/vis",
+             "GWIR.JPG" => "goes10/ir",
+             "GEVS.JPG" => "goes8/vis",
+             "GEIR.JPG" => "goes8/ir",
+	     );
+
+%ids=( "GWVS.JPG" => "15.808",
+       "GWIR.JPG" => "15.807",
+       "GEVS.JPG" => "15.809",
+       "GEIR.JPG" => "15.810",
+       );
+
+%desc=( "GWVS.JPG" => "GOES-10 Full-Disk VIS",
+        "GWIR.JPG" => "GOES-10 Full-Disk IR",
+        "GEVS.JPG" => "GOES-8 Full-Disk VIS",
+        "GEIR.JPG" => "GOES-8 Full-Disk IR",
+        );
+
+#$site="goeshp.wwb.noaa.gov/FULLDISK";
+$site="www.goes.noaa.gov/FULLDISK";
+
+foreach $src (sort keys %target) {
+    $url = "http://$site/$src";
+#    $dir = "/optical/codiac/pacs/$targetdir{$src}/$daydir";
+    $dir = "/net/archive/data/pacs/images/temp/$targetdir{$src}/$daydir";
+    mkdir("$dir",0755) unless -d "$dir";
+    $dest = "$dir/$target{$src}";
+
+    $req=new HTTP::Request 'GET', $url;
+    # Commented out by mark, 20080606, to allow retries after failure
+    #$req->header('If-Modified-Since', $since) if $since;
+    $res=$ua->request($req);
+    if ($res->is_error) {
+        print "Retrieving $url:\n";
+        print "Request failed!  Reason: ",$res->code," (",$res->message,")\n";
+    } elsif (length($res->content) > 0) {
+        open(JPG,">$dest") || die "Couldn't open $dest, $!";
+        print JPG $res->content;
+        close(JPG);
+	open(LOG,">>log") or die "Couldn't open log, $!";
+	print LOG "$dest\n";
+	close(LOG);
+	# ADD TO CODIAC:
+#	&codiac_load($ids{$src},$desc{$src},$dest);
+    }
+}
+
+# touch $lastRun file
+open(LAST,">$lastRun");
+close(LAST);
+
+use POSIX "strftime";
+
+sub asctime {
+    my($time)=@_;
+    return POSIX::strftime("%D %T %Z",localtime($time));
+}
+
+sub note {
+    my($msg)=@_;
+    open(LOG,">>log") || die "Couldn't open log: $!";
+    print LOG asctime(time),": $msg";
+#    print asctime(time),": $msg";
+    close(LOG);
+}
+

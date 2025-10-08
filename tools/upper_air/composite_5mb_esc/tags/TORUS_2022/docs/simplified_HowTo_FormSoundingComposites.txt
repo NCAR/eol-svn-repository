@@ -1,0 +1,43 @@
+How To Form the Sounding Compsites - Simplified Instructions
+
+Updated: 9 March 2023 LEC
+
+1. Copy the directory setup from the SVN repository location into the work area. You may want 
+to only checkout one of the project tags so review the contents from the SVN trunk versus the
+tags. Recommend looking at the latest project tags such as WINTRE-MIX 2022 and SWEX 2019.
+
+From the work area do the following command:
+
+svn checkout http://svn.eol.ucar.edu/svn/dmg/tools/upper_air/composite_highres_esc/trunk .
+
+2. Edit the build.xml file and search for and then replace the project name accordingly plus
+the new directory name for this project. See top of the build.xml file.
+The project name will affect the final output files names that will be loaded into the archive. 
+
+    vi build.xml
+
+3. Copy input dayfiles or individual *.cls files (or a mix of either) into the /data directory.
+A copy of the same data can generally be found in the /input_data directory, too, but it's the
+data in the /data directory that will be used to form the final, composite dayfiles.  NOTE: for the 
+5mb or 50m files, the suffices of the file you place in the /data directory MUST have their suffices
+changed to be *.cls.  The "ant dayfiles" command in the build.xml file only process the *.cls 
+files in the /data directory. 
+
+4. Run the "dayfiles" command from the build.xml file. The output from this ant command will
+place the final data into the /database directory. Do "which ant" to ensure that you can 
+access and run the build.xml command to form the composite. When you run the following command,
+dayfiles will be created in the /database directory.  Run the following command:
+ 
+   ant dayfiles
+
+**You can screen grab the output from this command and place that into a dayfiles.log file. 
+
+5. Once the dayfiles have been created in the /database dir, you may want to rerun the 
+check_format ant command. That can be found in the build.xml file used for most sounding
+data conversions. The individual network processed data have already had both the check-format
+and visual QC run so a final check_format may not be necessary.
+
+6. The science staff creates the readme file for the composites. Ask them for that documentation
+to load with the composite dayfiles into the archive. 
+
+---end document---

@@ -1,0 +1,24 @@
+#! /usr/bin/perl -w
+
+package NoteActionCGI;
+use strict;
+use lib ".";
+use lib "lib";
+use ActionCGI;
+our @ISA = ("ActionCGI");
+
+&main();
+
+sub main {
+    my $self = NoteActionCGI->new();
+    $self->buildPage("Note Action");
+}
+
+sub processParams {
+    my ($self) = @_;
+    if ($self->param("note_id") == -1) {
+
+    } else {
+	$self->{"DB"}->updateNote($self->param("note_id"),$self->param("note_text"));
+    }
+}

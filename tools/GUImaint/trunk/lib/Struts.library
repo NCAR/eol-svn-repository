@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+  <!--JBuilder Library Definition File-->
+  <fullname>Struts</fullname>
+  <class>
+    <path>[../thirdparty/jakarta-struts-1.0.2/lib/struts.jar]</path>
+  </class>
+  <source>
+    <path>../extras/jakarta-struts-1.0.2-src/src/share</path>
+  </source>
+  <documentation>
+    <path>[../thirdparty/jakarta-struts-1.0.2/webapps/struts-documentation.war]/api</path>
+  </documentation>
+  <kit>
+    <id>struts</id>
+    <data>
+      <taglib>
+        <name>struts-bean</name>
+        <prefix>bean</prefix>
+        <path>[../thirdparty/jakarta-struts-1.0.2/lib/struts.jar]/META-INF/tlds/struts-bean.tld</path>
+        <uri>/WEB-INF/struts-bean.tld</uri>
+        <location>/WEB-INF/struts-bean.tld</location>
+      </taglib>
+      <taglib>
+        <name>struts-html</name>
+        <prefix>html</prefix>
+        <path>[../thirdparty/jakarta-struts-1.0.2/lib/struts.jar]/META-INF/tlds/struts-html.tld</path>
+        <uri>/WEB-INF/struts-html.tld</uri>
+        <location>/WEB-INF/struts-html.tld</location>
+      </taglib>
+      <taglib>
+        <name>struts-logic</name>
+        <prefix>logic</prefix>
+        <path>[../thirdparty/jakarta-struts-1.0.2/lib/struts.jar]/META-INF/tlds/struts-logic.tld</path>
+        <uri>/WEB-INF/struts-logic.tld</uri>
+        <location>/WEB-INF/struts-logic.tld</location>
+      </taglib>
+      <taglib>
+        <name>struts-template</name>
+        <prefix>template</prefix>
+        <path>[../thirdparty/jakarta-struts-1.0.2/lib/struts.jar]/META-INF/tlds/struts-template.tld</path>
+        <uri>/WEB-INF/struts-template.tld</uri>
+        <location>/WEB-INF/struts-template.tld</location>
+      </taglib>
+    </data>
+  </kit>
+</library>

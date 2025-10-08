@@ -1,0 +1,209 @@
+#!/bin/perl -w
+
+# This is an attempt to get the arctic master list to use the 
+#  category style database.  I think it was successful.
+# This script also demonstrates what a pain it is to get things
+# out of the arctic master list database.
+#
+# Dan
+
+use DBI;
+
+my $old = connectToDB( "master_list", "thunder", "suldan", "hithere" );
+my $new = connectToDB( "ml", "hurricane", "stormdba", "codiac" );
+
+my $old_proj = 1;
+my $new_proj = 6;
+
+my %data_types = getList( "DataType" );
+my %disciplines = getList( "Discipline" );
+my %platforms = getList( "Platform" );
+my %sites = getList( "Site" );
+my %ids;
+my %data_types_linked;
+my %disciplines_linked;
+my %platforms_linked;
+my %sites_linked;
+my %phaseI_linked;
+my %phaseII_linked;
+
+addCategory( "Data Type", \%data_types );
+addCategory( "Discipline", \%disciplines );
+addCategory( "Platform", \%platforms );
+addCategory( "Site", \%sites );
+
+my @datasets = getDatasets( 1 );
+storeDatasets( @datasets );
+@datasets = getDatasets( 0 );
+storeCatLinks( @datasets );
+
+storePhases( @datasets );
+
+sub getDatasets
+{
+	my $group = shift;
+
+	my @datasets;
+	my $sql = "SELECT * FROM List WHERE proj_id=$old_proj";	
+	$sql = $sql . " GROUP BY title" if( $group );
+ 
+	my $sth = $old->prepare( $sql );
+	$sth->execute();
+
+	while( (my $row = $sth->fetchrow_hashref()) )
+	{
+		my %ds;
+		my %row = %$row;
+		$ds{storm_id} = $row{storm_id};
+		$ds{title} = removeExtraSpaces( $row{title} );
+		$ds{date} = $row{date};
+		$ds{url} = $row{url};
+		$ds{doc_url} = $row{doc_url};
+
+		$ds{data_type_id} = $row{data_type_id};
+		$ds{discipline_id} = $row{discipline_id};
+		$ds{platform_id} = $row{platform_id};
+		$ds{site_id} = $row{site_id};
+		$ds{author} = $row{author};
+		$ds{phase} = $row{phase};
+	
+		$ds{in_progress} = 0;
+		$ds{project} = $new_proj;
+		$datasets[scalar(@datasets)] = \%ds;
+	}
+
+	return @datasets;	
+}
+ 
+sub getList
+{
+	my $table = shift;
+	my %list;
+
+	my $sql = "SELECT * FROM $table WHERE proj_id=$old_proj";
+
+	my $sth = $old->prepare( $sql );
+	$sth->execute();
+
+	while( (my @row = $sth->fetchrow()) )
+	{
+		$list{$row[0]} = $row[1];
+	}
+
+	return %list;
+}
+
+sub addCategory
+{
+	my $name = shift;
+	my $sub_cats = shift;
+
+	my $sql = "INSERT INTO category VALUES(0, " . 
+						$new->quote( $name ) . ", \'\', NULL, $new_proj, \'\')";	
+
+	#print( $sql, "\n" );
+	$new->do( $sql ) || die( "doing: ", $new->errstr() );
+
+	my $parent =	$new->{'mysql_insertid'};
+	#my $parent = 2;
+
+	foreach my $sub (keys %{ $sub_cats})
+	{
+		$sql = "INSERT INTO category VALUES(0, " . 
+						$new->quote( $sub_cats->{$sub} ) . ", \'\', $parent, $new_proj, \'\')";	
+		
+		#print( $sql, "\n" );
+		$new->do( $sql ) || die( "doing: ", $new->errstr() );
+		$sub_cats->{$sub} = $new->{'mysql_insertid'};	
+	}
+}
+
+sub storeDatasets
+{
+	my @datasets = @_;
+
+	foreach $ds (@datasets)
+	{
+		my $sql = "INSERT INTO dataset VALUES ( 0, " .
+							$new->quote( $ds->{title} ) . ", " .
+							$new->quote( $ds->{storm_id} ) . ", " .
+							$new->quote( $ds->{date} ) . ", " .
+							$new->quote( $ds->{url} ) . ", " .
+							$new->quote( $ds->{doc_url} ) . ", " .
+							$ds->{in_progress} . ", 0, " .
+							$ds->{project} . ", " .
+							$new->quote( $ds->{author} ) . ")";
+
+		#print( $sql, "\n" ); 
+		$new->do( $sql ) || die( "doing: ", $new->errstr );
+
+		$ds->{id} = $new->{'mysql_insertid'};
+		$ids{$ds->{title}} = $ds->{id};
+	}
+}
+
+sub storeCatLinks
+{
+	my @datasets = @_;
+
+	foreach my $ds (@datasets)
+	{
+		$ds->{id} = $ids{$ds->{title}};
+		my $sql1 = "INSERT INTO dscatlink VALUES( $data_types{$ds->{data_type_id}}, $ds->{id} )";
+		my $sql2 = "INSERT INTO dscatlink VALUES( $disciplines{$ds->{discipline_id}}, $ds->{id} )";
+		my $sql3 = "INSERT INTO dscatlink VALUES( $platforms{$ds->{platform_id}}, $ds->{id} )";
+		my $sql4 = "INSERT INTO dscatlink VALUES( $sites{$ds->{site_id}}, $ds->{id} )";
+
+		$new->do( $sql1 ) if( $ds->{data_type_id} != 1 && ! exists $data_types_linked{$ds->{id}});
+		$new->do( $sql2 ) if( $ds->{discipline_id} != 1 && ! exists $disciplines_linked{$ds->{id}});
+		$new->do( $sql3 ) if( $ds->{platform_id} != 1 && ! exists $platforms_linked{$ds->{id}});
+		$new->do( $sql4 ) if( $ds->{site_id} != 1 && ! exists $sites_linked{$ds->{id}});
+
+		$data_types_linked{$ds->{id}} = 1;
+		$disciplines_linked{$ds->{id}} = 1;
+		$platforms_linked{$ds->{id}} = 1;
+		$sites_linked{$ds->{id}} = 1;
+	}
+}
+
+sub storePhases
+{
+	my @datasets = @_;
+
+	my $sql = "INSERT INTO category VALUES(0, \'Phase I\', \'\', NULL, $new_proj, NULL)";
+	$new->do( $sql ) || die( "doing: ", $new->errstr() );
+	my $phaseI_id = $new->{'mysql_insertid'};
+
+	$sql = "INSERT INTO category VALUES(0, \'Phase II\', \'\', NULL, $new_proj, NULL)";
+	$new->do( $sql ) || die( "doing: ", $new->errstr() );
+	my $phaseII_id = $new->{'mysql_insertid'};
+
+	foreach my $ds (@datasets)
+	{
+		$ds->{id} = $ids{$ds->{title}};
+		my $sql1 = "INSERT INTO dscatlink VALUES( $phaseI_id, $ds->{id} )";
+		my $sql2 = "INSERT INTO dscatlink VALUES( $phaseII_id, $ds->{id} )";
+
+		$new->do( $sql1 ) if( $ds->{phase} eq "I" && ! exists $phaseI_linked{$ds->{id}} );
+		$new->do( $sql2 ) if( $ds->{phase} eq "II" && ! exists $phaseII_linked{$ds->{id}} );
+
+		$phaseI_linked{$ds->{id}} = 1;
+		$phaseII_linked{$ds->{id}} = 1;
+	}
+}
+
+sub removeExtraSpaces
+{
+	my $str = shift;
+	return join( " ", split( /\s+/, $str ) ); 
+}
+
+sub connectToDB
+{
+  my $db = shift;
+  my $host = shift;
+  my $user = shift;
+  my $passw = shift;
+  return DBI->connect( "DBI:mysql:database=$db;host=$host",
+                        $user, $passw, { RaiseError=>1} ) || die( "Unable to connect to database: $db" );
+}

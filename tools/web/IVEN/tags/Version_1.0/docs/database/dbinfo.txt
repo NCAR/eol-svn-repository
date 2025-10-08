@@ -1,0 +1,105 @@
+Database Architecture Description
+---------------------------------
+Dan Sullivan
+
+Below is a breakdown of each table in the iven database on hurricane.
+
+users:
+Contains the users in the system.  Users are associated with datasets to
+indicate who is processing the datset.
++--------+--------------+------+-----+---------+--------------------------------------------------------+
+| Field  | Type         | Null | Key | Default | Comments
++--------+--------------+------+-----+---------+--------------------------------------------------------+
+| uid    | varchar(31)  |      | PRI |         | primary key, similar format to CODIAC (e.g. dSullivan)
+| fname  | varchar(30)  |      |     |         | user's first name
+| lname  | varchar(30)  |      |     |         | user's last name
+| email  | varchar(100) |      |     |         | user's e-mail addresss
+| active | tinyint(1)   | YES  |     | 1       | whether or not the user is active within the system
++--------+--------------+------+-----+---------+--------------------------------------------------------+
+
+projects:
+Contains the projects using the IVEN application.  Most of the fields (date, lat/lon etc.) 
+are displayed at the top of each page for reference, values should be the same as CODIAC's.
++-----------------+--------------+------+-----+---------+-----------------------------------------------+
+| Field           | Type         | Null | Key | Default | Comments
++-----------------+--------------+------+-----+---------+-----------------------------------------------+
+| pjname          | varchar(16)  |      | PRI |         | primary key, match CODIAC's value (e.g. IHOP_2002)
+| full_name       | varchar(255) | YES  |     | NULL    | The project's full name (e.g. International H2O...)
+| storm_id_prefix | varchar(16)  |      |     |         | Project's storm_id prefix (e.g. 77)
+| begin_date      | date         | YES  |     | NULL    | -----| 
+| end_date        | date         | YES  |     | NULL    |      |
+| minlat          | float        | YES  |     | NULL    |      | should match what is in CODIAC
+| maxlat          | float        | YES  |     | NULL    |      |
+| minlon          | float        | YES  |     | NULL    |      |
+| maxlon          | float        | YES  |     | NULL    |------|
+| admin_notes     | text         | YES  |     | NULL    | administrative notes
+| link_source     | varchar(255) | YES  |     | NULL    | the location in /work/... the processing is 
+|                 |              |      |     |         |  being done. (e.g. /work/BAMEX_PROCESSING )
+| link_target     | varchar(255) | YES  |     | NULL    | the url of the symbolic link 
+|                 |              |      |     |         |  (e.g. /http://www.joss.ucar.edu/dpg/BAMEX/iven )
+| charge_num      | varchar(6)   | YES  |     | NULL    | the project's charge number, for reference only
++-----------------+--------------+------+-----+---------+-----------------------------------------------+
+
+products:
+Contains all the products associated with each project.  The {pdname, pjname} tuple is the primary
+key, it uniquely identifiesa product.  Hence, the system can have two products with the same name
+in different projects, but not two products with the same name in the same project.
++------------------+-------------------------+------+-----+---------+-----------------------------------
+| Field            | Type                    | Null | Key | Default | Comments
++------------------+-------------------------+------+-----+---------+-----------------------------------
+| pdname           | varchar(100)            |      | PRI |         | primary key, product name
+| pjname           | varchar(16)             |      | PRI |         | primary key, associated project name
+|                  |                         |      |     |         |   * references pjname in the project table
+| status           | enum('tbd','done','na') |      |     | tbd     | product's status, notice the enum
+| note             | varchar(255)            | YES  |     | NULL    | small notes field
+| product_link     | varchar(255)            | YES  |     | NULL    | the name of a link for the product
+| product_link_url | varchar(255)            | YES  |     | NULL    | the url of the link above
++------------------+-------------------------+------+-----+---------+-----------------------------------
+
+
+datasets:
+Contains all of the datasets.  the {dsname, pdname, pjname} tuple is the primary key, it uniequly
+identifies the dataset.  Hence, two dataset's with the same name cannot be in the same product,
+but otherwise dataset's with the same name is ok.  The {pdname, pjname} tuple references the 
+products table.
++-----------------+-------------------------+------+-----+---------+------------------------------------+
+| Field           | Type                    | Null | Key | Default | Comments
++-----------------+-------------------------+------+-----+---------+------------------------------------+
+| dsname          | varchar(255)            |      | PRI |         | dataset name
+| pdname          | varchar(100)            |      | PRI |         | product name
+| pjname          | varchar(16)             |      | PRI |         | project name
+| storm_id        | varchar(16)             | YES  |     | NULL    | dataset's storm_id
+| user_processing | varchar(31)             |      | MUL |         | the user processing the dataset
+| raw_data        | varchar(255)            | YES  |     | NULL    | location of the raw data
+| final_data      | varchar(255)            | YES  |     | NULL    | location of the final data
+| station_info    | varchar(255)            | YES  |     | NULL    | location of the station info. file
+| software        | varchar(255)            | YES  |     | NULL    | location fo the software
+| plots           | varchar(255)            | YES  |     | NULL    | location of the plots
+| id_type         | int(11)                 | YES  |     | NULL    | the dataset's id type
+| platform_type   | int(11)                 | YES  |     | NULL    | the dataset's platform type
+| status_notes    | text                    | YES  |     | NULL    | status notes about the conversion
+| admin_notes     | text                    | YES  |     | NULL    | administrative notes
+| status          | enum('tbd','done','na') |      |     | tbd     | dataset's status, notice the enum
+| exclude         | tinyint(1)              | YES  |     | 0       | whether or not to exclude the dataset from the product
+| questions       | tinyint(1)              | YES  |     | 0       | flags the dataset for questions
+| how_to          | varchar(255)            | YES  |     | NULL    | the location of a how to for the conversion
+| readme          | varchar(255)            | YES  |     | NULL    | the location of the raw data's readme
+| best_sw         | tinyint(1)              | YES  |     | 0       | flag to indicate the software has been copied to BEST_SW
++-----------------+-------------------------+------+-----+---------+------------------------------------+
+
+extractions:
+Contains the extractions within a project.  A user 'declares' a dataset as an
+extraction of some product, which causes the system to make an entry into this table.  This
+table associates the {dsname,pdname,pjname} tuple (which identifies a single dataset) with
+the dataset's source product (the product being extracted from), which is identified by
+the {pdsource,pjsouce} tuple.  
++----------+--------------+------+-----+---------+------------------------------------------------------+
+| Field    | Type         | Null | Key | Default | Comments
++----------+--------------+------+-----+---------+------------------------------------------------------+
+| dsname   | varchar(100) |      | PRI |         | dataset's name --|
+| pdname   | varchar(100) |      | PRI |         | product's name   | the dataset which is an extraction
+| pjname   | varchar(100) |      | PRI |         | project's name --|
+| pdsource | varchar(100) |      | MUL |         | product source's name -| the product being extracted
+| pjsource | varchar(100) |      |     |         | project source's name -|  from
++----------+--------------+------+-----+---------+------------------------------------------------------+
+

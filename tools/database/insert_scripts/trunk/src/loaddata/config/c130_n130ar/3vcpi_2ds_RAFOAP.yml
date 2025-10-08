@@ -1,0 +1,89 @@
+dataset:
+- title_content: titleSep
+- name: <PROJECT>
+- archive_ident: '999.999'
+- title: NSF/NCAR GV (HIAPER) 3V-CPI Raw 2D-S Imagery (RAF OAP .2d format)
+- summary: The Three-View Cloud Particle Imager (3V-CPI) is a combination of three imaging instruments. Two of them comprise a 2D-S instrument, in which two 2D probes image particles as they pass through beams that are oriented orthogonally to each other and the airflow. If particles also lie in the intersection of the sensitive areas of the two beams, they are seen by both 2D probes. In that case, the CPI is triggered to take a high-resolution picture, via a briefly illuminated high-resolution imaging array, to provide a third image at high resolution. The probe is particularly suited to imaging ice crystals, but also provide good detection of other hydrometeors including large cloud droplets, drizzle and small rain drops, and precipitation particles. The 3V-CPI measures the size, shape and concentration of water drops and ice particles in clouds in the size range of 15-250 micrometers. This dataset contains 2D-S imagery collected by the 3V-CPI aboard the NCAR GV during the <PROJECT> project. These data have been converted to a format compatible with xpms2d, available from the EOL xpms2d download page.
+- begin_date: '1001-01-01 00:00:00'
+- end_date: '7998-12-31 23:59:59'
+- visible: 0
+- auth_reqd: 0
+- eula_reqd: 0
+- version_number: '1.0'
+- quality: 2
+- ingest_location: /scr/raf/Raw_Data/<PROJECT>/3v_cpi
+- archive_location: /glade/campaign/eol/archive/<year>/<project>/aircraft/c130_n130ar/3V-CPI/2DS/(\E\E\E\E)-\d\d\d\d\d\d/
+- filename_pattern: 'base[\Y\Y\M\M\y\y\H\H\m\m\S\S].2d'
+- startdate_pattern: 20YY-MM-yy HH:mm:SS
+- enddate_pattern: ''
+- filelength: 6 hours
+- minimum_latitude: '-90.0'
+- maximum_latitude: '90.0'
+- minimum_longitude: '-180.0'
+- maximum_longitude: '180.0'
+- CODIAC_specific_fields: titleSep
+- category_id: 2
+- platform_id: 130
+- is_eol_data: 1
+- format: 75
+- host: campaign
+- frequency_id: 2
+- spatial_type: raster
+- point_of_contact_id_codiac: 1
+- internal_contact_id_codiac: 179
+- online_orderable: 1
+- offline_orderable: 0
+- browseable: 0
+- dodsable: 0
+- t_subset: 0
+- event_subset: 1
+- file_subset: 0
+- order_allow_compress: 1
+- gcmd_science_keyword_id: 505, 506
+- xlink_id: 507, 508
+- DTS_specific_fields: titleSep
+- source_contact_id_dts: ''
+- internal_contact_id_dts: 
+- ingest_contact_id_dts: 
+- ingest_status_id_dts: 2
+- load_contact_id_dts: 
+- load_data_location: '*2d'
+- load_status_id_dts: 6
+- approve_contact_id_dts: 
+- approve_status_id_dts: 6
+- author_id_dts: 
+- note_type_id: 4
+- note_text: Loaded with new load_data_proj script
+- remote_url: 'default'
+- readme_url: 'default'
+- optional_fields: titleSep
+- archive_location_2: ''
+- filename_pattern_2: ''
+- startdate_pattern_2: ''
+- enddate_pattern_2: ''
+- filelength_2: ''
+- format_2: null
+- host_2: null
+- archive_location_3: ''
+- filename_pattern_3: ''
+- startdate_pattern_3: ''
+- enddate_pattern_3: ''
+- filelength_3: ''
+- format_3: null
+- host_3: null
+- description: 'default'
+- iso_citation_role: 11
+- contact_id_codiac: 3171
+- datacite_contributor_type: null
+- iso_citation_role_2: 10
+- contact_id_codiac_2: 1
+- datacite_contributor_type_2: null
+- iso_citation_role_3: 1
+- contact_id_codiac_3: ''
+- datacite_contributor_type_3: ''
+- iso_citation_role_4: ''
+- contact_id_codiac_4: ''
+- datacite_contributor_type_4: ''
+- iso_citation_role_5: ''
+- contact_id_codiac_5: ''
+- datacite_contributor_type_5: ''

@@ -1,0 +1,66 @@
+#!/bin/perl -w
+
+print( getJulian( $ARGV[0] ), "\n" );
+
+sub getJulian
+{
+	my $date = shift;
+	my $year = substr( $date, 0, 4 );
+	my $month = substr( $date, 4, 2 );
+	my $day = substr( $date, 6, 2 );
+	my $off = 0;
+	my $jday;
+	if( $year % 4 == 0 )
+	{ $off = 1; }
+
+	if( $month == 1 )
+	{
+		$jday = $day;
+	}
+	elsif( $month == 2 )
+	{
+		$jday = $day + 31;
+	}
+	elsif( $month == 3 )
+	{
+		$jday = $day + 59 + $off;	
+	}
+	elsif( $month == 4 )
+	{
+		$jday = $day + 90 + $off;	
+	}
+	elsif( $month == 5 )
+	{
+		$jday = $day + 120 + $off;	
+	}
+	elsif( $month == 6 )
+	{
+		$jday = $day + 151 + $off;	
+	}
+	elsif( $month == 7 )
+	{
+		$jday = $day + 181 + $off;	
+	}
+	elsif( $month == 8 )
+	{
+		$jday = $day + 212 + $off;	
+	}
+	elsif( $month == 9 )
+	{
+		$jday = $day + 243 + $off;	
+	}
+	elsif( $month == 10 )
+	{
+		$jday = $day + 273 + $off;	
+	}
+	elsif( $month == 11 )
+	{
+		$jday = $day + 304 + $off;	
+	}
+	elsif( $month == 12 )
+	{
+		$jday = $day + 334 + $off;	
+	}
+
+	return ( $year . $jday );	
+}

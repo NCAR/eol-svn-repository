@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for addspace s/w.
+#
+
+CC=acc
+CFLAGS = 
+
+procncdc: addspace.o
+	$(LINK.c) -o addspace addspace.o 
+	chmod 0755 addspace
+
+clean:
+	rm *.o

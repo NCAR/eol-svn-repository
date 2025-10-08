@@ -1,0 +1,2030 @@
+#!/usr/bin/perl 
+
+use lib "./lib";
+use Field;
+use Row;
+use Table;
+use CGI qw(:standard :html3 );
+use GlobalVars;
+use Person;
+use DBI;
+
+
+#-----------------Set Various variables-------------- 
+#my $bar_color = "#333399";
+my $bar_color = "#FFFFFF";
+my $form_color = "#6699CC";
+my $yellow = "#FFFFCC";
+my $top_color = "#660000";
+my $btm_color = "#000066";
+my $table = Table->new();
+
+my $dbh = connectToDB();
+
+my @loaders;
+my @checkers;
+my @contacts;
+
+my %actions = ( "Cancel", \&display,
+								"Add New Dataset", \&display,
+								"Add Dataset", \&addDataset,
+								"Update", \&update,
+								">>", \&getUpdate,
+								"Delete", \&deleteDataset,
+								"getEntryForm", \&getEntryForm,
+								"getReadme", \&getReadme,
+								"getArchive", \&getArchive,
+								"getArchiveFiles", \&getArchiveFiles,
+								"getNotes", \&getNotes,
+								"getContact", \&getContact,
+								"getProjectNotes", \&getProjectNotes,
+								"editProjectNotes", \&editProjectNotes,
+								"Update Project Notes", \&updateProjectNotes );
+
+#----------------------------------------------------
+
+#--------------Main Program--------------------------
+
+$table->{tabletype} = param( "tabletype" );
+if( !defined( $table->{tabletype} ) ) { $table->{tabletype} = 2; }
+
+my $action = param( "Action" );
+
+if( !defined( $action ) ) { $action = "Cancel"; }
+
+$actions{$action}->(); 
+
+#--------------------Subroutines----------------------------------
+
+#-----------------------------------------------------------------
+# Default, queries the database and displays the table
+#-----------------------------------------------------------------
+sub display
+{
+	getDisplayParams();
+	queryDB();
+	showTable( -1 );
+}
+
+#-----------------------------------------------------------------
+# Get data entered by user from html form and add new dataset to
+#   the database. Display the table.
+#-----------------------------------------------------------------
+sub addDataset
+{
+	getDisplayParams();
+
+	my $newRow = readInRow( getBlankRow() );
+
+	$newRow->{id} = addRowToDB( $newRow );
+
+	my $send_mail = param( "send_mail" );
+
+	if( defined( $send_mail ) && $send_mail eq "yes" )
+	{
+		sendMail( $newRow );
+	}
+
+	queryDB();
+
+	showTable( $newRow->{id} );
+}
+
+#-----------------------------------------------------------------
+# Read in the data entered by the user in the html form and update
+#  the selected record.  Display the table.
+#-----------------------------------------------------------------
+sub update
+{
+	getDisplayParams();
+	my $newRow = readInRow( getBlankRow() );
+
+	updateRowInDB( $newRow );
+	
+	queryDB();
+
+	showTable( $newRow->{id} );
+}
+
+#-----------------------------------------------------------------
+# Get the record the user has chosen to update and display that 
+#  record's data in the entry form.  Display the table.
+#-----------------------------------------------------------------
+sub getUpdate
+{
+	getDisplayParams();
+
+	queryDB();
+
+	my $id = param( "id" );
+
+	# Get the record from the table object
+	my $row = $table->getRowById( $id );
+
+	# Check to see if the record still exists in the database
+	if( !defined( $row ) )
+	{
+		my $err_msg = "The Dataset you have chosen no longer exists in the database!  It was probably recently deleted.";
+		showTable( -1, undef, "add", $err_msg );
+	}
+	else
+	{
+		showTable( $row->{id}, $row, "update" );
+	}
+}
+
+#-----------------------------------------------------------------
+# Delete the dataset chosen by the user from the database and 
+#  display the table.
+#-----------------------------------------------------------------
+sub deleteDataset
+{
+	getDisplayParams();
+
+	my $id = param( "id" );
+
+	deleteFromDB( $id );
+
+	queryDB();
+
+	showTable( -1 );
+}
+
+#-----------------------------------------------------------------
+# Returns just the "Long View" version of the entry form.  This
+#  is currently not in use but was used for the idea of having the
+#  form in its own window or frame which still might be implemented.
+#-----------------------------------------------------------------
+sub getEntryForm
+{
+	println( header() );
+	println( "<html><head><title>JOSS Data Loading Notes</title><body bgcolor=#FFFFFF>" );
+	println( "<TABLE CELLPADDING=3 CELLSPACING=3 BORDER=3 WIDTH=100%>" );
+	showEntryForm2( getBlankRow(), "add" );
+	println( "</table></body></html>" );
+}
+
+#-----------------------------------------------------------------
+#  Queries the Codiac database using the empcmd command.  Pulls
+#   the readme file path and file name from the database and directs
+#   the user's browser to the read me file on the web.
+#-----------------------------------------------------------------
+sub getReadme
+{
+	my $storm_id = param( "storm_id" );
+	my $result = "";
+
+	if( defined( $storm_id ) && $storm_id ne "" && length( $storm_id ) <= 10 )
+	{
+		$ENV{MSPATH} = "/usr/empress8.20/rdbms";
+		$result = `/usr/empress8.20/rdbms/bin/empcmd /storm/codiac/codiac_db/catalog_db "select dir_path, file_name from dataset where storm_id='$storm_id'" | tail -1`;
+		chop( $result );
+	}
+
+	if( $result ne "" )
+	{
+		my @arr = split( / +/, $result );
+		my $readme = $arr[0] . "/" . $arr[1];
+		my $link = "http://www.joss.ucar.edu/" .substr( $readme, 5, length( $readme ) - 4 );
+		print( "Location: $link\n\n" );
+	}
+	else
+	{
+		println( header() );
+		println( "<html><head><title>Codiac Id not Found</title></head><body bgcolor=white>" );
+		println( "<h2>Sorry, the readme directory path and file name have not been entered into Codiac.</h2>" );
+		println( "</body></html>" );
+	}	
+}
+
+#-----------------------------------------------------------------
+# Queries the Codiac database for the archive location of the data
+#  given a storm_id through the web.
+#  Displays all of the directories that have been entered into the 
+#  phys_dir_db.  Does not display file names or duplicate directory
+#  path entries.
+#-----------------------------------------------------------------
+sub getArchive
+{
+	my $storm_id = param( "storm_id" );
+	my $error = 1;
+	my $count = 0;
+	my $db_path = "/storm/codiac/codiac_db";
+
+	# Verify the storm_id is defined 
+	if( defined( $storm_id ) && $storm_id ne "" && length( $storm_id ) <= 10 )
+	{
+		# Query the Codiac database - get the total number of files entered for this dataset
+		$ENV{MSPATH} = "/usr/empress8.20/rdbms";
+		my $sql = "\"SELECT COUNT(*) FROM on_line_phys_dir WHERE l_dds_id=\'$storm_id\'\"";
+
+		@count = `/usr/empress8.20/rdbms/bin/empcmd $db_path/phys_dir_db $sql`;
+
+		chop( $count[2] );
+		$count = trim( $count[2] );	
+	}
+
+	# Pull out the directory paths if the number of files is not zero
+	if( $count ne "0" )
+	{
+		my $sql = "\"SELECT UNIQUE dir_path FROM on_line_phys_dir WHERE l_dds_id=\'$storm_id\'\"";
+		@results = `/usr/empress8.20/rdbms/bin/empcmd $db_path/phys_dir_db $sql`; 
+		$error = 0;
+
+		if( !defined( $results[2] ) )
+		{
+			$error = 1;		
+		}
+	}
+
+	# Display the archive location(s)
+	println( header() );
+	println( "<html><head><title>Archive Location: $storm_id</title></head><body bgcolor=white>" );
+	println( "<center><h3>Codiac Archive Location: $storm_id</h3>" );
+	if( $error == 0 )
+	{
+		println( "<center><table border=0 cellpadding=1 cellspacing=1>" );
+		for( my $x = 2; $x < @results; $x++ )
+		{
+			println( "<tr><td align=right><b>Archive Location: </b></td><td>$results[$x]<br></tr></td>" );
+		}
+		println( "<tr><td align=right><b>Number of Files: </b></td><td align=right>$count</td></tr>" );
+		println( "</table>" );
+		println( "<center><a href=$my_url?Action=getArchiveFiles&storm_id=$storm_id>Show All Files</a>" );
+	}
+	else
+	{
+		println( "<b>Sorry, the archive location for this dataset has not been entered into codiac.</b>" );
+	}
+	println( "</body></html>" );
+}
+
+#-----------------------------------------------------------------
+# Queries the Codiac Database for the directory paths and file names
+#  of all the files entered into the On Line Phys Dir.  Displays
+#  the file names and paths in a table format.
+#-----------------------------------------------------------------
+sub getArchiveFiles
+{
+	my $storm_id = param( "storm_id" );
+	my $error = 1;
+	my $db_path = "/storm/codiac/codiac_db";
+	my $col1 = "#FFFFFF";
+	my $col2 = "#EBEBF5";
+	$col2 = "#CCCCCC";
+	my $col = $col1;
+
+	if( defined( $storm_id ) )
+	{
+		$ENV{MSPATH} = "/usr/empress8.20/rdbms";
+		$ENV{MSQLSELCOLSEP} = "";
+		
+		my $sql = "\"SELECT dir_path, file_name from on_line_phys_dir WHERE l_dds_id=\'$storm_id\'\"";
+		@files = `/usr/empress8.20/rdbms/bin/empcmd $db_path/phys_dir_db $sql`;
+
+		$error = 0;
+
+		if( !defined( $files[2] ) )
+		{
+			$error = 1;
+		}
+	}
+
+	println( header() );
+	println( "<html><head><title>Archive File Location: $storm_id</title></head><body bgcolor=white>" );
+	println( "<center><h3>Codiac Archive File Locations: $storm_id</h3>" );
+
+	if( $error == 0 )
+	{
+		println( "<table border=0 cellpadding=1 cellspacing=1>" );
+		for( my $x = 2; $x < @files; $x++ )
+		{
+			$col = ( $col eq $col2 )? $col1 : $col2;
+			
+			my @fl = split( //, $files[$x] );
+			my $path = trim( $fl[0] );
+			my $file = trim( $fl[1] );
+			println( "<tr bgcolor=\"$col\">" );
+				println( "<td bgcolor=\"$col\">$path/$file</td>" );
+			println( "</tr>" );
+		}
+		println( "</table>" );
+	}
+	else
+	{
+		println( "<b>Sorry, the archive file location(s) for this dataset has not been entered into codiac.</b>" );
+	}
+
+	println( "</body></html>" );	
+}
+
+#-----------------------------------------------------------------
+# Pulls the notes field from the database given a record id and
+#  displays them.  Used for the pop-up window when 
+#  the notes are hidden
+#-----------------------------------------------------------------
+sub getNotes
+{
+	my $id = param( "id" );
+	my $success = 1;
+
+	println( header() );
+	println( "<html><head><title>Data Loading Notes</title></head><body bgcolor=white>" );
+	println( "<center><h2>Data Loading Notes</h2></center>" );
+	
+	if( defined( $id ) && $id ne "" )
+	{
+		my $sql = "SELECT storm_id, title, notes from Notes WHERE id=$id";		
+		my $sth = $dbh->prepare( $sql );
+		$sth->execute();
+		my @row = $sth->fetchrow();
+		if( !@row )
+		{
+			$success = 0;
+		}
+		else
+		{
+			println( "<b>Storm Id: </b>$row[0]<br>" );
+			println( "<b>Title: </b>$row[1]<br>" );
+			println( "<b>Notes: </b>" ); 
+			println( "<table border=1><tr><td><pre>$row[2]</pre></td></tr></table>" );
+		}
+	}
+	else
+	{
+		$success = 0;
+	}
+
+	if( !$success )
+	{
+		println( "Sorry, unable to display notes for the selected entry." );		
+	}
+	println( "</body></html>" );
+}
+
+#-----------------------------------------------------------------
+# Gets the contact information from the Codiac Database and 
+#  displays it.
+#-----------------------------------------------------------------
+sub getContact
+{
+	my $storm_id = param( "storm_id" );
+	my $error = 1;
+	my @info2;
+	my @info3;
+	my $contact;
+	
+	if( defined( $storm_id ) && length( $storm_id ) <= 10 )
+	{
+		$ENV{MSPATH} = "/usr/empress8.20/rdbms";
+		$ENV{MSQLSELCOLSEP} = "";
+		my $db_path = "/storm/codiac/codiac_db";
+
+		my $sql = "\"SELECT last_name, first_name, affiliation, address, city, state, country, zip, phone, " . 
+							"email_network, email_addr, fax, user_id from 'user' where user_id = (SELECT contact FROM " . 
+							"\'$db_path/catalog_db':dataset WHERE storm_id=\'$storm_id\')\"";
+ 
+		@contact = `/usr/empress8.20/rdbms/bin/empcmd $db_path/master_db $sql`; 
+	
+		if( defined( $contact[2] ) )
+		{
+			$error = 0;
+
+			@info2 = split( //, $contact[2] );
+			@info3 = split( //, $contact[3] );
+		}
+	}
+	
+	println( header() );
+	println( "<html><head><title>Contact Info: $storm_id</title></head><body bgcolor=white>" );
+	println( "<center><h2>Contact Information: $storm_id</h2>" );
+	if( $error == 0 )
+	{
+		showContactInfo( \@info2, $info3[3] );
+	}
+	else
+	{
+		println( "Sorry, no contact information was found for this dataset" );
+	}
+}
+
+#-----------------------------------------------------------------
+# Nicely formats the contact information pulled from Codiac.
+#-----------------------------------------------------------------
+sub showContactInfo
+{
+	my @info = @{$_[0]};
+	my $addr = $_[1];
+
+	for( my $x = 0; $x < @info; $x++ )
+	{
+		$info[$x] = trim( $info[$x] );
+	}
+	println( "<table border=0 cellspacing=3 cellpadding=1>" );
+		println( "<tr>" );
+			println( "<td align=right><b>Name: </b></td>" );
+			println( "<td>" . $info[1] . " " . $info[0] . nbsp(12) );
+			println( "<b>user_id: </b>$info[12]</td>" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td align=right><b>Affiliation: </b></td>" );
+			println( "<td>$info[2]</td>" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td align=right valign=top><b>Address: </b></td>" );
+			println( "<td>$info[3]" . "<br>$addr</td>" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td>&nbsp</td>" );
+			println( "<td><b>City: </b>$info[4]" );
+			println( nbsp(4) . "<b>State: </b>$info[5]" );
+			println( nbsp(4) . "<b>Country: </b>$info[6]" );
+			println( "<br>&nbsp;<b>Zip: </b>$info[7]" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td align=right><b>Phone: </b></td>" );
+			println( "<td>$info[8]</td>" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td align=right><b>E-mail Net.: </b></td>" );
+			println( "<td>$info[9]</td>" );
+		println( "</tr>" );
+		println( "<tr>" );
+			println( "<td align=right><b>E-mail: </b></td>" );
+			if( $info[10] ne "" )
+			{
+				println( "<td><a href=mailto:$info[10]>$info[10]</a></td>" );
+			}
+			else { println( "<td>&nbsp;</td>" ); }
+		println( "</tr>" );
+			println( "<td align=right><b>Fax: </b></td>" );
+			println( "<td align=left>$info[11]</td>" );
+		println( "</tr>" );
+	println( "</table>" );
+}
+
+#-----------------------------------------------------------------
+# Pulls the project notes from the database given a project id
+#  number and displays them.
+#-----------------------------------------------------------------
+sub getProjectNotes
+{
+	my $proj_id = param( "project" );
+	my @row = undef;
+
+	if( defined( $proj_id ) )
+	{
+		my $sql = "SELECT name, notes from Projects where id=$proj_id";
+		my $sth = $dbh->prepare( $sql );
+		$sth->execute();
+
+		@row = $sth->fetchrow();
+	}
+
+	println( header() );
+	
+	if( @row )
+	{
+		println( "<html><head><title>Project Notes: $row[0]</title></head><body bgcolor=white>" );		
+		println( "<center><h2><u>Project Notes: $row[0]</u></h2></center><hr>" );	
+		println( Field::filtHTML( $row[1] ) );
+		println( "<br><br>" );
+		println( "<hr>" );
+		println( "<center><b><a href=$my_url?Action=editProjectNotes&project=$proj_id>Edit Project Notes</b></center></a>" );
+		println( "</body></html>" );
+	}	
+	else
+	{
+		println( "<html><head><title>Project Notes: not found</title></head><body bgcolor=white>" );
+		println( "<center><h2>Sorry, unable to find project notes for project id $proj_id</h2></center>" );
+		println( "</body></html>" );
+	}
+
+	$sth->finish();	
+}
+
+#-----------------------------------------------------------------
+# Pulls the project notes from the database given a project id 
+#  number and displays them in a <textarea> to be editted.
+#-----------------------------------------------------------------
+sub editProjectNotes
+{
+	my $proj_id = param( "project" );
+	my @row = undef;	
+
+	if( defined( $proj_id ) )
+	{
+		my $sql = "SELECT name, notes from Projects where id=$proj_id";
+		my $sth = $dbh->prepare( $sql );
+		$sth->execute();
+	
+		@row = $sth->fetchrow();
+	}
+
+	println( header() );
+
+	if( @row )
+	{
+		println( "<html><head><title>Edit Project Notes: $row[0]</title></head><body bgcolor=white>" );
+		println( "<center><h2><u>Project Notes: $row[0]</u></h2></center><hr>" );
+		println( "<form name=edit_project method=post action=$my_url>" );
+		println( "<center><textarea cols=75 rows=30 name=\"project_notes\">" . Field::filtHTML( $row[1] ) . "</textarea><br>" );
+		println( "<input type=hidden name=project value=$proj_id></input>" );
+		println( "<input type=submit name=Action value=\"Update Project Notes\"></input></form>" );
+		println( "<br><center><b><a href=$my_url?Action=getProjectNotes&project=$proj_id>Cancel/Return to View</a></b></center>" );
+		println( "</body></html>" );
+	}	
+	else
+	{
+		println( "<html><head><title>Project Notes: not found</title></head><body bgcolor=white>" );
+		println( "<center><h2>Sorry, unable to find project notes for project id $proj_id</h2></center>" );
+		println( "</body></html>" );
+	}
+}
+
+#-----------------------------------------------------------------
+# Updates the submitted project notes in the database and then
+#  returns the user to the normal display of the project notes.
+#-----------------------------------------------------------------
+sub updateProjectNotes
+{
+	my $proj_id = param( "project" );
+	my $notes = param( "project_notes" );
+
+	if( defined( $proj_id ) && defined( $notes ) )
+	{
+		my $sql = "UPDATE Projects SET notes=" . $dbh->quote( $notes ) . "WHERE id=$proj_id";
+
+		$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+	}
+
+	getProjectNotes();
+}
+#-----------------------------------------------------------------
+
+#-----------------------------------------------------------------
+# Reads in the display the parameters the user has specified and
+#  stores them in the table.  Reads in: project id, sort field,
+#  sort direction, display count, show notes boolean, and show
+#  entry form boolean.  
+#-----------------------------------------------------------------
+sub getDisplayParams
+{
+	getProjectId();
+
+	$table->{sortfield} = param( "sort" );
+	if( !$table->{sortfield} ) { $table->{sortfield} = $def_sort; }
+	if( $table->{sortfield} eq "storm_id" )
+	{
+		$table->{secsort} = "date"
+	}
+	else
+	{
+		$table->{secsort} = "storm_id"
+	}
+
+	$table->{displaycount} = param( "displaycount" );
+	if( !defined( $table->{displaycount} ) ) { $table->{displaycount} = "All"; }
+
+	$table->{sortdir} = param( "sortdir" );
+	if( !defined( $table->{sortdir} ) ) { $table->{sortdir} = $def_sort_dir; }  
+
+	$table->{show_notes} = param( "show_notes" );
+	if( !defined( $table->{show_notes} ) ) { $table->{show_notes} = 1; }  
+
+	$table->{show_form} = param( "show_form" );
+	if( !defined( $table->{show_form} ) ) { $table->{show_form} = 1; }  
+}
+
+#-----------------------------------------------------------------
+# Reads in a record of data the user has entered into the html
+#  form and returns the record.
+#-----------------------------------------------------------------
+sub readInRow
+{
+	my $row = shift;
+	my $size = $row->{count};
+
+	for( my $x = 0; $x < $size; $x++ )
+	{
+		${$row->getFieldByIndex($x)}->read_param();
+	}
+	
+	$row->{id} = param( "id" );	
+
+	my $nts = formatText( ${$row->getFieldByName("notes")}->{value} );
+
+	if( substr( $nts, length($nts) - 1, 1 ) ne "\n" )
+	{ $nts = $nts . "\n"; }
+
+	${$row->getFieldByName("notes")}->{value} = $nts;
+
+	return $row;
+}
+
+#-----------------------------------------------------------------
+# Queries the database.  Pulls all of the people (loaders, checkers,
+#  contacts) and the table from the database.
+#-----------------------------------------------------------------
+sub queryDB
+{
+	getPeopleFromDB();
+	queryNotesTable();
+}
+
+#-----------------------------------------------------------------
+# Queries each of the people tables.
+#-----------------------------------------------------------------
+sub getPeopleFromDB
+{
+	@loaders = queryPeople( "Loaders" );
+	@checkers = queryPeople( "Checkers" );
+	@contacts = queryPeople( "Contacts" );
+}
+
+#-----------------------------------------------------------------
+# Queries one of the people tables given the name of the table.
+#  Returns an array of Person objects for each person entered in
+#  the database.
+#-----------------------------------------------------------------
+sub queryPeople
+{
+	my $table = shift;
+	my $sql = "SELECT id, name, email, active FROM $table ORDER BY active DESC, name";
+	my $sth = $dbh->prepare( $sql );	
+	my @people;
+	$sth->execute();
+	my $arr = $sth->fetchall_arrayref();
+	my $count = @{$arr};
+	my $offset = 0;
+
+	for( my $x = 0; $x < $count; $x++ )	
+	{
+		if( $arr->[$x][1] eq "Other" )
+		{
+			$people[$count-1] = Person->new( $arr->[$x][0], $arr->[$x][1], $arr->[$x][2], $arr->[$x][3] );
+			$offset++;
+		}
+		elsif( $arr->[$x][1] eq "unassigned" )
+		{
+			#$people[$count-1] = Person->new( $arr->[$x][0], $arr->[$x][1], $arr->[$x][2], $arr->[$x][3] );
+			$people[0] = Person->new( $arr->[$x][0], $arr->[$x][1], $arr->[$x][2], $arr->[$x][3] );
+			$offset++;
+		}
+		else
+		{
+			$people[$x-$offset+1] = Person->new( $arr->[$x][0], $arr->[$x][1], $arr->[$x][2], $arr->[$x][3] );
+		} 
+	} 
+	$sth->finish();
+	return @people;
+}
+
+#-----------------------------------------------------------------
+# Queries the Notes table of the database and stores all of the 
+#  records in the table object.
+#-----------------------------------------------------------------
+sub queryNotesTable
+{
+	my $sql = "SELECT Notes.id, Notes.storm_id, Loaders.name, Loaders.email, Checkers.name, Checkers.email, " .
+									"Contacts.name, Contacts.email, Notes.ext_contact, Notes.ext_email, Notes.title, Notes.readme, " .
+									"Notes.master, Notes.checked, Notes.date, Notes.notes, Notes.ingest, Notes.ext_link, Notes.archive FROM Notes, Loaders, Checkers, Contacts ";
+	$sql = $sql . "WHERE Notes.proj_id = $table->{proj_id} and Notes.loader_id=Loaders.id and Notes.checker_id=Checkers.id " .
+								"and Notes.int_contact_id=Contacts.id ";
+
+	if( $table->{sortfield} eq "loading" )
+	{
+		$sql = $sql . "ORDER BY Loaders.name $table->{sortdir}, Notes.$table->{secsort} $table->{sortdir}"; 
+	}
+	elsif( $table->{sortfield} eq "checker" )
+	{
+		$sql = $sql . "ORDER BY Checkers.name $table->{sortdir}, Notes.$table->{secsort} $table->{sortdir}"; 
+	}
+	elsif( $table->{sortfield} eq "int_contact" )
+	{
+		$sql = $sql . "ORDER BY Contacts.name $table->{sortdir}, Notes.$table->{secsort} $table->{sortdir}"; 
+	}
+	else
+	{
+		$sql = $sql . "ORDER BY Notes.$table->{sortfield} $table->{sortdir}, Notes.$table->{secsort} $table->{sortdir}"; 
+	}
+
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	my @arr;
+	while( (@arr) = $sth->fetchrow() )
+	{
+		my $row = setRow( @arr );
+ 		$table->addRow( $row );	
+	} 	
+	$sth->finish();
+}
+
+#-----------------------------------------------------------------
+# Utility used by the queryNotesTable subroutine.  Creates a new
+#  row with all of the data pulled from the database and returns it.
+#-----------------------------------------------------------------
+sub setRow 
+{	
+	@vals = @_;
+
+	my $row = Row->new( $vals[0] );
+
+	my $field = Field->new( "storm_id", "text", $vals[1] );
+	$field->{size} = 7;
+	if( defined( $vals[17] ) && $vals[17] ne "" && $vals[17] ne "none" )  #Check to see if user entered an ext. link
+	{
+		$field->{link} = $vals[17] . " target=_top";
+	}
+	else
+	{
+		$field->{link} = "http://www.joss.ucar.edu/cgi-bin/codiac/dss?$vals[1] target=_top";
+	}
+	$row->addField( $field );
+
+	$field = Field->new( "loading", "select", $vals[2] );	
+	$field->{othertagmods} = getSelectArray( \@loaders );
+	if( defined( $vals[3] ) && $vals[3] ne "" )
+	{
+		$field->{link} = "mailto:$vals[3]";
+	}
+	$row->addField( $field );
+
+	$field = Field->new( "checker", "select", $vals[4] );	
+	$field->{othertagmods} = getSelectArray( \@checkers );
+	if( defined( $vals[5] ) && $vals[5] ne "" )
+	{
+		$field->{link} = "mailto:$vals[5]";
+	}
+	$row->addField( $field );
+
+	$field = Field->new( "int_contact", "select", $vals[6] );	
+	$field->{othertagmods} = getSelectArray( \@contacts );
+	if( defined( $vals[7] ) && $vals[7] ne "" )
+	{
+		$field->{link} = "mailto:$vals[7]";
+	}
+	$row->addField( $field );
+
+	$field = Field->new( "ext_contact", "text", $vals[8] );
+	$field->{size} = 20;
+	if( defined( $vals[9] ) && $vals[9] ne "E-mail" && $vals[9] ne "" )
+	{
+		$field->{link} = "mailto:$vals[9]";
+	}
+	$row->addField( $field );
+
+	$field = Field->new( "ext_email", "text", $vals[9] );
+	$field->{size} = 20;
+	$row->addField( $field );
+
+	$field = Field->new( "title", "text", $vals[10] );	
+	$field->{size} = 30;
+	$row->addField( $field );
+
+	$vals[11] = ( $vals[11] == 1 )? "Y" : "N";
+	$field = Field->new( "readme", "checkbox", $vals[11] );	
+	$field->{link} = "$my_url?Action=getReadme&storm_id=$vals[1] target=_top";
+	$row->addField( $field );
+
+	$vals[12] = ( $vals[12] == 1 )? "Y" : "N";
+	$field = Field->new( "master", "checkbox", $vals[12] );	
+	$row->addField( $field );
+
+	$vals[13] = ( $vals[13] == 1 )? "Y" : "N";
+	$field = Field->new( "checked", "checkbox", $vals[13] );	
+	$row->addField( $field );
+
+	$field = Field->new( "date", "date", $vals[14] );	
+	$row->addField( $field );
+
+	$field = Field->new( "notes", "textarea", $vals[15] );	
+	$field->{othertagmods} = \@text_size;
+	$row->addField( $field );
+
+	$field = Field->new( "ingest", "text", $vals[16] );
+	$field->{size} = 70;
+	$row->addField( $field );
+
+	$field = Field->new( "ext_link", "text", $vals[17] );
+	$field->{size} = 60;
+	$row->addField( $field );
+
+	$field = Field->new( "archive", "text", $vals[18] );
+	$field->{size} = 70;
+	$row->addField( $field );
+
+	return $row;
+}
+
+#-----------------------------------------------------------------
+# Determines which table type to display and calls the appropriate
+#  method.  
+# showTable1 = wide view
+# showTable2 = long view
+#
+# Format: showTable( id, row, mode, err_msg );
+#  id - id number of the row to highlight
+#  row - Row object to display in the entry form - if undef displays
+#   a blank row
+#  mode - the mode we're in, "add" (add dataset) or "update" (update
+#   an existing dataset) if undef "add" is assumed
+#  err_msg - error message to display  - if undef displays nothing
+#
+# All of these arguments are passed on to the showTable1 or showTable2
+#  method and are used to display the table.
+#-----------------------------------------------------------------
+sub showTable
+{
+	my $id = shift;
+	my $row = shift;
+	my $mode = shift;
+	my $msg = shift;
+
+	if( !defined( $mode ) ) { $mode = "add"; }
+
+	if( $table->{tabletype} == 1 )
+	{
+		showTable1( $id, $row, $mode, $msg  );
+	}
+	else
+	{
+		showTable2( $id, $row, $mode, $msg  );
+	}
+}
+
+#-----------------------------------------------------------------
+# Displays the wide view of the table.
+#-----------------------------------------------------------------
+sub showTable1
+{
+	my $id = shift;
+	my $row = shift;
+	my $mode = shift;
+	my $msg = shift;
+	my $done = 0;
+	my $show_form;
+	if( $id == -1 ) { $done = 1; }
+
+	if( !defined( $row ) ) 
+	{ 
+		$row = getBlankRow(); 
+		$show_form = $table->{show_form};
+	}
+	else
+	{	
+		$show_form = 1;
+	}
+
+	println( my_header() );
+	showLinks();
+
+	println( "<center><a href=$my_url?Action=getProjectNotes&project=$table->{proj_id} onClick=\"showProjectNotes( \'$table->{proj_id}\', \'$my_url\'); return false;\">View/Edit Project Notes</a></center>" );
+
+	println( "<TABLE CELLPADDING=3 CELLSPACING=3 BORDER=3>" );
+
+	if( defined( $msg ) ) { showError( $msg ); }
+
+	if( $show_form == 1 )
+	{
+		println( $tr );
+			println( "$modes{$mode}" );
+		println( $tre );
+		showHeaders();
+		showEntryForm( $row, $mode );	
+	}
+	else
+	{
+		println( "<tr bgcolor=$form_color><td colspan=10>" );
+		showAddButton();
+		println( "</td></form></tr>" );
+		showHeaders();
+	}
+
+	my $rw;
+	my $count = 0;
+
+	foreach $rw ( @{$table->{array}} )
+	{
+		if( $rw->{id} == $id )
+		{
+			showRow( $rw, $yellow );
+			$done = 1;
+		}
+		else
+		{
+			showRow( $rw, "#FFFFFF" );
+		}
+		$count++;
+		if( $table->{displaycount} ne "All" && $count >= $table->{displaycount} 
+							&& $done )
+		{
+			last;
+		}
+	}
+
+	println( "</table>" );
+	println( "</body></html>" );
+}
+
+#-----------------------------------------------------------------
+# Displays the long view of the table
+#-----------------------------------------------------------------
+sub showTable2
+{
+	my $id = shift;
+	my $row = shift;
+	my $mode = shift;
+	my $msg = shift;
+	my $done = 0;
+	my $show_form;
+	if( $id == -1 ) { $done = 1; }
+
+	if( !defined( $row ) ) 
+	{ 
+		$row = getBlankRow(); 
+		$show_form = $table->{show_form};
+	}
+	else
+	{	
+		$show_form = 1;
+	}
+
+	println( my_header() );
+	println( "<center>" );
+	showLinks();
+
+	println( "<center><a href=$my_url?Action=getProjectNotes&project=$table->{proj_id} onClick=\"showProjectNotes( \'$table->{proj_id}\', \'$my_url\'); return false;\">View/Edit Project Notes</a></center>" );
+
+	println( "<TABLE CELLPADDING=3 CELLSPACING=1 BORDER=1 WIDTH=100%>" );
+
+	if( defined( $msg ) ) { showError( $msg ); }
+
+	if( $show_form == 1 )
+	{
+		println( $tr );
+			println( "$modes{$mode}" );
+		println( $tre );
+		showEntryForm2( $row, $mode );	
+	}
+	else
+	{
+		println( "<tr bgcolor=$form_color><td colspan=3>" );
+		showAddButton();
+		println( "</td></form></tr>" );
+	}
+	println( "</table>" );	
+	println( "<TABLE CELLPADDING=3 CELLSPACING=2 BORDER=0 WIDTH=100% height=100%>" );
+	my $rw;
+	my $count = 0;
+
+	foreach $rw ( @{$table->{array}} )
+	{
+		if( $rw->{id} == $id )
+		{
+			if( $mode eq "add" )
+			{ showRow2( $rw, $yellow, "<a name=new_dataset></a>" ); }
+			else
+			{ showRow2( $rw, $yellow ); }
+			
+			$done = 1;
+		}
+		else
+		{
+			showRow2( $rw, "#FFFFFF" );
+		}
+		$count++;
+		if( $table->{displaycount} ne "All" && $count == $table->{displaycount} 
+					&& $done )
+		{
+			last;
+		}
+	}
+	println( "</table>" );
+	println( "</body></html>" );
+}
+
+#-----------------------------------------------------------------
+# Displays the links for the selected project.
+#-----------------------------------------------------------------
+sub showLinks
+{
+	my @links = getLinks();
+
+		print( "<center><b><font size=4>" );
+		for( my $x = 0; $x < @links; $x+=2 )
+		{
+			println( "<a href=\"$links[$x+1]\" target=_top>$links[$x]</a>" );
+			if( ($x + 2) != @links ) { print( nbsp(5) ); }
+		}
+		println( "</font></b></center><br>" );
+}
+
+#-----------------------------------------------------------------
+# Line pulls the links and link names from the database for the
+#  selected project and returns array of names and links.
+#-----------------------------------------------------------------
+sub getLinks
+{
+	my $sql = "SELECT name, url FROM Links WHERE proj_id = $table->{proj_id}";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @row;
+	my @links;
+	my $cnt = 0;
+	while( @row = $sth->fetchrow() )
+	{	
+		$links[$cnt] = $row[0];
+		$links[$cnt+1] = $row[1];
+		$cnt+=2;
+	}
+
+	return @links;
+}
+
+#-----------------------------------------------------------------
+# Display the headers for the wide view table. Called by the 
+#  showTable1 subroutine.
+#-----------------------------------------------------------------
+sub showHeaders
+{
+	my $x;
+	println( $tr );
+			println( "<th bgcolor=$form_color nowrap>Storm Id" . $the );
+			println( "<th bgcolor=$form_color nowrap>Dataset Title" . $the );
+			println( "<th bgcolor=$form_color nowrap>Readme?" . $the );
+			println( "<th bgcolor=$form_color nowrap>In Master?" . $the );
+			println( "<th bgcolor=$form_color nowrap>Loading" . $the );
+			println( "<th bgcolor=$form_color nowrap>Checked?" . $the );
+			println( "<th bgcolor=$form_color nowrap>Checked By" . $the );
+			println( "<th bgcolor=$form_color nowrap>Date" . $the );
+			println( "<th bgcolor=$form_color nowrap>" );
+				println( "<font color=$top_color>Ingest Location</font><br>" );
+				println( "<font color=$btm_color>Archive Location</font>". $the );
+			println( "<th bgcolor=$form_color nowrap>" );
+				println( "<font color=$top_color>Internal Contact</font><br>" );
+				println( "<font color=$btm_color>External Contact</font>". $the );
+			println( "<th bgcolor=$form_color nowrap>Notes" . $the );
+	println( $tre );
+}
+
+#-----------------------------------------------------------------
+# Display an error message.
+#-----------------------------------------------------------------
+sub showError
+{
+	my $msg = shift;
+	println( "<p><font size=3 color=red>ERROR: </font>$msg</p><br>" );
+}
+
+#-----------------------------------------------------------------
+# Display the entry form for the wide view.  Called by the
+#  showTable1 subroutine. I know this is a mess.
+#-----------------------------------------------------------------
+sub showEntryForm
+{	
+	my $row = shift;
+	my $mode = shift;
+
+	my $tr = "<tr bgcolor=$form_color>";
+	my $x;
+	my $size = $row->{count};
+	println( "<form method=post action=\"$my_url\">" );
+		println( "<td align=center nowrap>" . ${$row->getFieldByName( "storm_id" )}->htm_tag() . $tde );	
+
+		println( "<td align=left nowrap><b>Title: </b><br>&nbsp;" . ${$row->getFieldByName( "title" )}->htm_tag() . "<br>" );	
+		println( "<b>External Link: </b><br>&nbsp;" . ${$row->getFieldByName( "ext_link" )}->htm_tag() . $tde );	
+
+		println( "<td align=center nowrap>" . ${$row->getFieldByName( "readme" )}->htm_tag() . $tde );	
+		println( "<td align=center nowrap>" . ${$row->getFieldByName( "master" )}->htm_tag() . $tde );	
+		println( "<td align=center nowrap>" . ${$row->getFieldByName( "loading" )}->htm_tag() . $tde );	
+		println( "<td align=center nowrap>" . ${$row->getFieldByName( "checked" )}->htm_tag() . $tde );	
+		println( "<td align=center nowrap>" . ${$row->getFieldByName( "checker" )}->htm_tag() . $tde );	
+		println( "<td align=center nowrap>" . ${$row->getFieldByName( "date" )}->htm_tag() . $tde );	
+		println( "<td align=left nowrap><b>Ingest Location:</b><br>" . ${$row->getFieldByName( "ingest" )}->htm_tag(). "<br>" );	
+			println( "<b>Archive Location:</b><br>" . ${$row->getFieldByName( "archive" )}->htm_tag() . $tde );	
+		println( "<td align=left nowrap><b>Internal: </b>" . nbsp(2) . ${$row->getFieldByName( "int_contact" )}->htm_tag() . "<br><br>" );	
+		println( "<b>External: </b>" . nbsp(2) . ${$row->getFieldByName( "ext_contact" )}->htm_tag(). "<br>" );	
+		println( nbsp(19) . ${$row->getFieldByName( "ext_email" )}->htm_tag() . $tde );	
+		println( "<td align=center nowrap>" . ${$row->getFieldByName( "notes" )}->htm_tag() );	
+	println( $tre );
+
+	println( $tr );
+		println( "<td bgcolor=$bar_color colspan=10 align=right>" );
+		if( $mode eq "add" )
+		{
+			println( "<input type=submit name=\"Action\" value=\"Add Dataset\" onClick=\"return verify_form( this.form, \'add\' );\"></input>" );
+			println( "<input type=reset name=\"Reset\" tabindex=13 value=\"Clear\"></input>" );
+		}
+		else
+		{
+			println( "<input type=submit name=\"Action\" value=\"Update\" onClick=\"return verify_form( this.form, \'update\' )\"></input>" );
+			println( "<input type=submit name=\"Action\" value=\"Add Dataset\" onClick=\"return confirm_add( this.form )\"></input>" );
+			println( "<input type=submit name=\"Action\" value=\"Cancel\"></input>" );
+			println( "<input type=submit name=\"Action\" value=\"Delete\"></input>" );
+		}
+	println( $tde . $tre );
+
+	# Hidden fields...
+	println( "<input type=hidden name=\"sort\" value=\"$table->{sortfield}\"></input>" );
+	println( "<input type=hidden name=\"id\" value=\"$row->{id}\"></input>" );
+	println( "<input type=hidden name=\"tabletype\" value=\"$table->{tabletype}\"></input>" );
+	println( "<input type=hidden name=\"displaycount\" value=\"$table->{displaycount}\"></input>" );
+	println( "<input type=hidden name=\"sortdir\" value=\"$table->{sortdir}\"></input>" );
+	println( "<input type=hidden name=\"project\" value=\"$table->{proj_id}\"></input>" );
+	println( "<input type=hidden name=\"show_notes\" value=\"$table->{show_notes}\"></input>" );
+	println( "<input type=hidden name=\"show_form\" value=\"$table->{show_form}\"></input>" );
+	println( "<input type=hidden name=\"send_mail\" value=\"no\"></input>" );
+	println( "</form>" );
+}
+
+#-----------------------------------------------------------------
+# Displays the entry form for the long table view.  Called by the
+#  showTable2 subroutine.
+#-----------------------------------------------------------------
+sub showEntryForm2
+{
+	my $row = shift;
+	my $mode = shift;
+
+	$row = setTable2TabIndex( $row );
+
+	if( !defined( $mode ) ) { $mode = "add"; }
+
+	my $tr = "<tr bgcolor=$form_color>";
+
+	${$row->getFieldByName( "title")}->{size} = 60;
+	${$row->getFieldByName( "ext_link")}->{size} = 60;
+	println( "<form method=post action=\"$my_url\">" );
+	println( $tr );
+		println( "<td rowspan=3 nowrap align=right>" );
+			println( "<b>Storm Id: </b>" . ${$row->getFieldByName( "storm_id" )}->htm_tag() );
+			println( "<br>" . ${$row->getFieldByName( "date" )}->htm_tag() );
+		println( $tde );
+		println( "<td align=left valign=top>" );
+			println( "<b>Title: </b><br>" . nbsp(2) . ${$row->getFieldByName( "title" )}->htm_tag() );
+		println( $tde );
+		println( "<td align=left nowarp colspan=1>" );
+			println( "<b>Ingest Location:</b><br>" . ${$row->getFieldByName( "ingest" )}->htm_tag() . "<br>" );
+			println( "<b>Archive Location:</b><br>" . ${$row->getFieldByName( "archive" )}->htm_tag()  );
+		println( $tde);
+	println( $tre );
+	println( $tr );
+		println( "<td valign=top rowspan=2 width=40%>" );
+			println( "<b>Notes: </b><br>" . ${$row->getFieldByName( "notes" )}->htm_tag() );
+		println( $tde );
+		println(  "<td align=left colspan=1>" );
+			println( "<b>External Contact:</b>" . nbsp(3) . ${$row->getFieldByName( "ext_contact" )}->htm_tag() . nbsp(7) );
+			println( ${$row->getFieldByName( "ext_email" )}->htm_tag() );
+		println( $tde );
+	println( $tre );
+
+	println( $tr );
+		println( "<td>" );
+			println( "<table border=0 cellpadding=3 width=100%>" );
+				println( $tr );
+						println( "<td align=left nowrap width=25%>" );
+							println( "<b>Internal Contact: </b>" );
+						println( $tde );
+						println( "<td width=25%>" );
+							println( ${$row->getFieldByName( "int_contact" )}->htm_tag() );
+						println( $tde );
+
+						println( "<td align=left nowrap width=25%>" );
+							println( "<b>In Master List: </b>" );
+						println( $tde ); 
+						println( "<td align=left width=25%>" );
+							println( ${$row->getFieldByName( "master" )}->htm_tag() );
+						println( $tde ); 
+				println( $tre );
+
+				println( $tr );
+						println( "<td align=left nowrap width=25%>" );
+							println( "<b>Person Loading: </b>" );
+						println( $tde ); 
+						println( "<td align=left width=25%>" );
+							println( ${$row->getFieldByName( "loading" )}->htm_tag() ); 
+						println( $tde ); 
+
+						println( "<td align=left nowrap width=25%>" );
+							println( "<b>Readme Complete: </b>" ); 
+						println( $tde );
+						println( "<td width=25%>" );
+							println( ${$row->getFieldByName( "readme" )}->htm_tag() ); 
+						println( $tde );
+				println( $tre );
+
+				println( $tr );
+					println( "<td align=left nowrap width=25%>" );
+						println( "<b>Person Checking: </b>" );
+					println( $tde ); 
+					println( "<td align=left width=25%>" );
+						println( ${$row->getFieldByName( "checker" )}->htm_tag() );
+					println( $tde ); 
+
+					println( "<td align=left width=25% nowrap>" );
+						println( "<b>Entry Checked: </b>" ); 
+					println( $tde ); 
+					println( "<td align=left width=25%>" );
+						println( ${$row->getFieldByName( "checked" )}->htm_tag() );
+					println( $tde );
+				println( $tre );
+
+			println( "</table>" );
+		println( $tde );
+	println( $tre );
+
+	println( $tr );
+		println( "<td align=right colspan=2><b>External Link: " . nbsp(3) . "</b>" . ${$row->getFieldByName( "ext_link" )}->htm_tag() . nbsp(10) . "</td>" );
+		println( "<td>&nbsp;</td>" );
+	println( $tre);
+	
+	println( $tr );
+		println( "<td bgcolor=$bar_color colspan=3 align=right>" );
+		if( $mode eq "add" )
+		{
+			println( "<input type=submit name=\"Action\" tabindex=13 value=\"Add Dataset\" onClick=\"return verify_form( this.form, \'add\' );\"></input>". nbsp(3) );
+			println( "<input type=reset name=\"Reset\" tabindex=14 value=\"Clear\"></input>". nbsp(3) );
+		}
+		else
+		{
+			println( "<input type=submit name=\"Action\" tabindex=13 value=\"Update\" onClick=\"verify_form( this.form, \'update\' );\"></input>" . nbsp(3) );
+			println( "<input type=submit name=\"Action\" tabindex=14 value=\"Add Dataset\" onClick=\"return confirm_add( this.form )\"></input>" . nbsp(3) );
+			println( "<input type=submit name=\"Action\" tabindex=15 value=\"Cancel\"></input>" . nbsp(3) );
+			println( "<input type=submit name=\"Action\" tabindex=16 value=\"Delete\"></input>" . nbsp(3) );
+		}
+	println( $tde . $tre );
+
+	# Hidden fields...
+	println( "<input type=hidden name=\"sort\" value=\"$table->{sortfield}\"></input>" );
+	println( "<input type=hidden name=\"id\" value=\"$row->{id}\"></input>" );
+	println( "<input type=hidden name=\"tabletype\" value=\"$table->{tabletype}\"></input>" );
+	println( "<input type=hidden name=\"displaycount\" value=\"$table->{displaycount}\"></input>" );
+	println( "<input type=hidden name=\"sortdir\" value=\"$table->{sortdir}\"></input>" );
+	println( "<input type=hidden name=\"project\" value=\"$table->{proj_id}\"></input>" );
+	println( "<input type=hidden name=\"show_notes\" value=\"$table->{show_notes}\"></input>" );
+	println( "<input type=hidden name=\"show_form\" value=\"$table->{show_form}\"></input>" );
+	println( "<input type=hidden name=\"send_mail\" value=\"no\"></input>" );
+	println( "</form>" );
+
+	println( "<tr bgcolor=#333399><td colspan=3><font size=-10>&nbsp;</td></tr>" );
+}
+
+#-----------------------------------------------------------------
+# Sets the tab indecies for the long view, this allows the user
+#  to tab through the form in a logical manner.
+#-----------------------------------------------------------------
+sub setTable2TabIndex
+{
+	my $row=shift;	
+	
+	${$row->getFieldByName("storm_id")}->{tabindex} = 1;
+	${$row->getFieldByName("date")}->{tabindex} = 2;
+	${$row->getFieldByName("title")}->{tabindex} = 3;
+	${$row->getFieldByName("notes")}->{tabindex} = 4;
+	${$row->getFieldByName("ext_link")}->{tabindex} = 5;
+	${$row->getFieldByName("ingest")}->{tabindex} = 6;
+	${$row->getFieldByName("archive")}->{tabindex} = 6;
+	${$row->getFieldByName("ext_contact")}->{tabindex} = 7;
+	${$row->getFieldByName("ext_email")}->{tabindex} = 8;
+	${$row->getFieldByName("int_contact")}->{tabindex} = 9;
+	${$row->getFieldByName("readme")}->{tabindex} = 10;
+	${$row->getFieldByName("master")}->{tabindex} = 11;
+	${$row->getFieldByName("checked")}->{tabindex} = 11;
+	${$row->getFieldByName("loading")}->{tabindex} = 12;
+	${$row->getFieldByName("checker")}->{tabindex} = 13;
+
+	return $row;
+}
+
+#-----------------------------------------------------------------
+# Displays a record in the wide view table.
+#-----------------------------------------------------------------
+sub showRow
+{
+	my $row = shift;
+	my $color = shift;
+
+	my $x;
+	my $size = $row->{count};
+	my $stm_id = ${$row->getFieldByName( "storm_id" )}->getValue();
+	println( "<tr bgcolor=$color>" );
+		println( "<td align=left nowrap>" );
+			showSelectButton( $row->{id} );
+			println( ${$row->getFieldByName( "storm_id")}->print_val(), "</form>" );
+		println( $tde );
+		println( $td3, ${$row->getFieldByName( "title" )}->print_val(), $tde );
+		println( $td, ${$row->getFieldByName( "readme" )}->print_val(), $tde );
+		println( $td, ${$row->getFieldByName( "master" )}->print_val(), $tde );
+		println( $td, ${$row->getFieldByName( "loading" )}->print_val(), $tde );
+		println( $td, ${$row->getFieldByName( "checked" )}->print_val(), $tde );
+		if( ${$row->getFieldByName( "checker" )}->{value} eq "unassigned" )
+		{
+			${$row->getFieldByName( "checker" )}->{font_tag} = "<font color=red>";
+		}
+		println( $td, ${$row->getFieldByName( "checker" )}->print_val(), $tde );
+		println( "<td align=center nowrap>" . ${$row->getFieldByName( "date" )}->print_val(), $tde );
+
+		${$row->getFieldByName( "ingest")}->{font_tag} = "<font color=$top_color>";
+		${$row->getFieldByName( "archive")}->{font_tag} = "<font color=$btm_color>";
+		println( "<td align=left nowrap>" . ${$row->getFieldByName( "ingest" )}->print_val(), "<br><br>" );
+		 println( ${$row->getFieldByName( "archive" )}->print_val(), "<br>" );
+			println( "<a href=$my_url?Action=getArchive&id=$stm_id onClick=\"showArchive( \'$stm_id\', \'$my_url\' ); return false;\"><font color=black><font size=3>Show Archive Loc.</font></a></td>" );
+
+		${$row->getFieldByName( "int_contact")}->{font_tag} = "<font color=$top_color>";
+		${$row->getFieldByName( "ext_contact")}->{font_tag} = "<font color=$btm_color>";
+		println( "<td align=left nowrap>", ${$row->getFieldByName( "int_contact" )}->print_val() . "<br><br>" );
+		println( ${$row->getFieldByName( "ext_contact" )}->print_val(), "<br>" );
+		println( "<a href=$my_url?Action=getContact&storm_id=$stm_id onClick=\"showContact(\'$stm_id\', \'$my_url\' ); return false;\"><font color=black><font size=3>Contact in Codiac</font></a></td>" );
+
+		if( $table->{show_notes} )
+		{
+			println( $td3 . ${$row->getFieldByName( "notes" )}->print_val() . "$tde" );
+		}
+		else
+		{
+			println( "<td align=left nowrap><a href=$my_url?Action=getNotes?id=$row->{id} onClick=\"showNotes( \'$row->{id}\', \'$my_url\' ); return false;\">Show Notes</a>$tde" );
+		}
+	println( $tre );
+}
+
+#-----------------------------------------------------------------
+# Displays a record in the long view table.
+#-----------------------------------------------------------------
+sub showRow2
+{
+	my $row = shift;
+	my $color = shift;
+	my $anchor = shift;
+
+	my $tr = $tr;
+	if( defined( $color ) )
+	{
+		$tr = "<tr bgcolor=$color>";
+	}
+
+	my $stm_id = ${$row->getFieldByName( "storm_id" )}->getValue();
+
+
+	# main table tag
+#	println( "<table cellpadding=3 cellspacing=3 border=0 width=100%>" );
+	println( $tr );
+
+if( defined( $anchor ) )
+{ println( $anchor ); }
+
+	println( "<td width=100%>" );
+	println( "<table cellpadding=0 cellspacing=0 border=1 width=100%>" );
+
+	# ----Cell one - storm_id ----------------------------------------
+	println( "<form method=post action=\"$my_url\">" );
+	print( "<td width=10% height=100% valign=top>" );
+		println( "<table border=1 cellpadding=3 width=100% height=100%>" );
+			println( "<tr>" );
+				println( "<td nowrap height=100%>" );
+					println( ${$row->getFieldByName( "storm_id" )}->print_val() );
+					println( "<br>" . ${$row->getFieldByName( "date" )}->print_val() . "<br><br>" );
+					showSelectButton( $row->{id} );
+					println( "</form>" );
+				println( "</td>" );
+			println( "</tr>" );
+		println( "</table>" );
+	println( "</td>" );
+	#-----------------------------------------------------------------
+	#-------------Cell two - title and notes--------------------------
+	println( "<td width=45% height=100% valign=top>" );
+		println( "<table border=1 cellpadding=3 width=100% height=100%>" );
+			println( "<tr>" );
+				println( "<td width=100% height=20%>" );
+					if( ${$row->getFieldByName( "title" )}->{value} ne "" )
+					{ println( "<b>" . ${$row->getFieldByName( "title" )}->print_val() . "</b>" ); }
+					else
+					{ println( "&nbsp;" ); }
+				println( "</td>" );
+			println( "</tr>" );
+			println( "<tr>" );
+				println( "<td width=100% height=80%>" );
+					if( $table->{show_notes} )
+					{
+						println( "<pre>" . ${$row->getFieldByName( "notes" )}->print_val() . "</pre>" );
+					}
+					else
+					{
+						println( "<a href=$my_url?Action=getNotes&id=$row->{id} onClick=\"showNotes( \'$row->{id}\', \'$my_url\' ); return false;\">Show Notes</a><br>" );
+					}
+				println( "</td>" );
+			println( "</tr>" );
+		println( "</table>" );
+	println( "</td>" );
+	#-----------------------------------------------------------------
+
+	#-------------Cell three - locations, people, and y/n-------------
+	println( "<td width=45% align=top height=100% valign=top>" );
+		println( "<table border=1 cellpadding=3 width=100% height=100%>" );
+			println( "<tr>" );
+				println( "<td colspan=1 width=100% height=20%>" );
+					println( "<b>Ingest Location: </b>" . nbsp(5) . ${$row->getFieldByName( "ingest" )}->print_val() . "<br>" ); 
+					println( "<a href=$my_url?Action=getArchive&storm_id=$stm_id onClick=\"showArchive( \'$stm_id\', \'$my_url\' ); return false;\"><font color=black><b>Archive Location: </b></a>" . nbsp(3) . ${$row->getFieldByName( "archive" )}->print_val() . $tde ); 
+				println( "</td>" );
+			println( "</tr>" );
+			println( "<tr>" );
+				println( "<td colspan=1 width=100%>" );
+					println( "<b><a href=$my_url?Action=getContact&storm_id=$stm_id onClick=\"showContact( \'$stm_id\', \'$my_url\' ); return false;\"><font color=black>External Contact: </a></b></b>" ); 
+					println( nbsp(2) . ${$row->getFieldByName( "ext_contact" )}->print_val() . "</td>" );
+				println( "</td>" );
+			println( "</tr>" );
+			println( "<tr>" );
+
+			println( "<td width=100% valign=top>" );
+			println( "<table border=0 cellpadding=3 width=100%>" );
+
+			println( "<tr>"	);
+
+				println( "<td width=25% nowrap>" );
+					println( "<b>Internal Contact: </b> " );
+				println( "</td>" );
+				println( "<td width=25%>" );
+					println( ${$row->getFieldByName( "int_contact" )}->print_val() );
+				println( "</td>" );
+
+				println( "<td width=25% nowrap>" );
+					println( "<b>In Master List: </b>" );
+				println( "</td>" );
+				println( "<td width=25%>" );
+					println( ${$row->getFieldByName( "master" )}->print_val() );
+				println( "</td>" );
+			println( "</tr>" );
+
+			println( "<tr>" );
+				println( "<td width=25% nowrap>" );
+					println( "<b>Person Loading: </b>" );
+				println( "</td>" );
+				println( "<td width=25%>" );
+					println( ${$row->getFieldByName( "loading" )}->print_val() );
+				println( "</td>" );
+
+				println( "<td width=25% nowrap>" );
+					println( "<b>Readme Complete: </b>" ) ;
+				println( "</td>" );
+				println( "<td width=25%>" );
+					println( ${$row->getFieldByName( "readme" )}->print_val() );
+				println( "</td>" );
+			println( "</tr>" );
+
+			println( "<tr>" );
+				println( "<td width=25% nowrap>" );
+					println( "<b>Person Checking: </b>" );
+				println( "</td>" );
+				println( "<td width=25%>" );
+					println( ${$row->getFieldByName( "checker" )}->print_val() );
+				println( "</td>" );
+
+				println( "<td width=25% nowrap>" );
+					println( "<b>Entry Checked: </b>" );
+				println( "</td>" );
+				println( "<td width=25%>" );
+					println( ${$row->getFieldByName( "checked" )}->print_val() );
+				println( "</td>" );
+			println( "</tr>" );
+		println( "</table>" );
+		println( "</td>" );	
+
+		println( "</table>" );
+	println( "</td>" );
+	#-----------------------------------------------------------------
+	#println( "</tr>" );	
+	println( "</table></td></tr>" );
+	println( "<tr bgcolor=\"#000000\"><td bgcolor=\"#000000\" colspan=3 height=5></td></tr>");
+	
+}
+
+#-----------------------------------------------------------------
+# Display the button that allows the user to select a record to
+#  update or delete it.
+#-----------------------------------------------------------------
+sub showSelectButton
+{
+	my $id = shift;
+	println( "<FORM METHOD=POST ACTION=\"$my_url\">" );
+		println( "<input type=submit name=\"Action\" value=\"&gt&gt\"></input>" );
+		println( "<input type=hidden name=\"sort\" value=\"$table->{sortfield}\"></input>" );
+		println( "<input type=hidden name=\"id\" value=\"$id\"></input>" );
+		println( "<input type=hidden name=\"tabletype\" value=\"$table->{tabletype}\"></input>" );
+		println( "<input type=hidden name=\"displaycount\" value=\"$table->{displaycount}\"></input>" );
+		println( "<input type=hidden name=\"sortdir\" value=\"$table->{sortdir}\"></input>" );
+		println( "<input type=hidden name=\"project\" value=\"$table->{proj_id}\"></input>" );
+		println( "<input type=hidden name=\"show_notes\" value=\"$table->{show_notes}\"></input>" );
+		println( "<input type=hidden name=\"show_form\" value=\"$table->{show_form}\"></input>" );
+
+}
+
+#-----------------------------------------------------------------
+# Display the buttun that allows the user to view the form again.
+# This button is displayed when the user has chosen to hide the form.
+#-----------------------------------------------------------------
+sub showAddButton
+{
+	println( "<FORM METHOD=POST ACTION=\"$my_url\">" );
+		println( "<input type=submit name=\"Action\" value=\"Add New Dataset\"></input>" );
+		println( "<input type=hidden name=\"sort\" value=\"$table->{sortfield}\"></input>" );
+		println( "<input type=hidden name=\"tabletype\" value=\"$table->{tabletype}\"></input>" );
+		println( "<input type=hidden name=\"displaycount\" value=\"$table->{displaycount}\"></input>" );
+		println( "<input type=hidden name=\"sortdir\" value=\"$table->{sortdir}\"></input>" );
+		println( "<input type=hidden name=\"project\" value=\"$table->{proj_id}\"></input>" );
+		println( "<input type=hidden name=\"show_notes\" value=\"$table->{show_notes}\"></input>" );
+		println( "<input type=hidden name=\"show_form\" value=\"1\"></input>" );
+}
+
+#-----------------------------------------------------------------
+# Get a blank row with all of the default settings for each field.
+#-----------------------------------------------------------------
+sub getBlankRow
+{
+	my $row = Row->new();
+	my $field;
+	$row->{id} = -1;
+
+	$field = Field->new( "storm_id", "text", "99.999" );
+	$field->{size} = 7;
+	$field->{onChange} = "verify_id( this.form.storm_id )";
+	$row->addField( $field );
+
+	$field = Field->new( "loading", "select", $def_people );
+	$row->addField( $field );
+	$field->{othertagmods} = getSelectArray( \@loaders );
+
+	$field = Field->new( "title", "text", "" );
+	$field->{size} = 30;
+	#$field->{onChange} = "verify_title( this.form.title )";
+	$row->addField( $field );
+
+	$field = Field->new( "readme", "checkbox", "N" );
+	$row->addField( $field );
+
+	$field = Field->new( "checker", "select", $def_people );
+	$field->{othertagmods} = getSelectArray( \@checkers );
+	$row->addField( $field );
+
+	$field = Field->new( "master", "checkbox", "N" );
+	$row->addField( $field );
+
+	$field = Field->new( "checked", "checkbox", "N" );
+	$row->addField( $field );
+
+	$field = Field->new( "date", "date", get_today() );
+	$field->{onChange} = "verify_date( this.form.date_month, this.form.date_day, this.form.date_year)";
+	$row->addField( $field );
+	
+	$field = Field->new( "notes", "textarea", "" );
+	$field->{othertagmods} = \@text_size;
+	$row->addField( $field );
+
+	$field = Field->new( "int_contact", "select", $def_people );
+	$field->{othertagmods} = getSelectArray( \@contacts );
+	$row->addField( $field );
+
+	$field = Field->new( "ext_contact", "text", "" );
+	$field->{size} = 20; 
+	$row->addField( $field );
+
+	$field = Field->new( "ext_email", "text", "E-mail" );
+	$field->{size} = 20; 
+	$row->addField( $field );
+
+	$field = Field->new( "ingest", "text", "" );
+	$field->{size} = 70; 
+	$row->addField( $field );
+
+	$field = Field->new( "ext_link", "text", "none" );
+	$field->{size} = 60; 
+	$row->addField( $field );
+
+	$field = Field->new( "archive", "text", "" );
+	$field->{size} = 70; 
+	$row->addField( $field );
+
+	return $row;
+}
+
+#-----------------------------------------------------------------
+# Returns today's date in the YYYY-MM-DD format. 
+#-----------------------------------------------------------------
+sub get_today
+{
+	my @date = []; 
+	$date[0] = `date +%m`;
+	$date[1] = `date +%d`;
+	$date[2] = "20" . `date +%y`;
+
+	chop( $date[0] );
+	chop( $date[1] );
+	chop( $date[2] );
+
+	return "$date[2]-$date[0]-$date[1]";
+}
+
+#-----------------------------------------------------------------
+# Returns a string with the number of &nbsp; specified.  Used to
+#  help format the entry forms and such. 
+#-----------------------------------------------------------------
+sub nbsp
+{
+	my $cnt = shift;
+	my $str = "";
+	for( my $x = 0; $x < $cnt; $x++ )
+	{
+		$str = $str . "&nbsp;";
+	}
+
+	return $str;
+}
+
+#-----------------------------------------------------------------
+# Format the text the user entered in the notes textarea portion
+#  of th entry form.  This was developed first to prevent the notes
+#  from getting too wide and expanding the table and also so the user
+#  would see the text with almost the same formatting in the text area
+#  as he/she does in the table.  
+#-----------------------------------------------------------------
+sub formatText
+{
+	my $str = shift;
+	$str = replaceCR( $str );
+	my @orig = split( //, $str );
+	my @tmp = [];
+	my $count = 0;
+	my $size = @orig;
+	my $lncount = 0;
+	my $max = 50;
+	my $loc = 0;
+
+	while( $loc < $size )
+	{
+		if( $orig[$loc] ne "<" )
+		{
+			$len = getNextStrLen( $loc, @orig );	
+			if( $len > $max )
+			{
+				while( $lncount < $max )
+				{
+					$tmp[$count] = $orig[$loc];
+					$count++; $loc++; $lncount++;
+				}	
+				$tmp[$count] = "\n";
+				$count++;
+				$lncount = 0;			
+			}
+			elsif( $len + $lncount > $max )
+			{
+				if( $tmp[$count-1] eq " " )
+				{
+					$tmp[$count-1] = "\n";
+				}
+				else
+				{
+					$tmp[$count] = "\n";
+					$count++;
+				}
+				for( my $x = $loc; $x <= $loc + $len; $x++ )
+				{
+					$tmp[$count] = $orig[$x];
+					$count++; 
+				}
+				$loc += $len + 1;
+				$lncount = $len + 1;
+			}
+			else
+			{
+				for( my $x = $loc; $x <= $loc + $len; $x++ )
+				{
+					$tmp[$count] = $orig[$x];
+					$count++; 
+				}
+				$loc += $len + 1;
+				if( $orig[$loc - 1] eq "\n" )
+				{
+					$lncount = 0;
+				}
+				else
+				{
+					$lncount += $len + 1;
+				}
+			}
+		}	
+		else
+		{
+			do
+			{
+				$tmp[$count] = $orig[$loc];
+				$count++; $loc++;
+			}
+			while( $loc < $size && $orig[$loc-1] ne ">" );
+		}
+	}
+	$str = join( "", @tmp );
+	return $str;
+}
+
+#-----------------------------------------------------------------
+# Returns the next string length for the formatText subroutine.
+# The idea behind this is that we want to ignore html tags when counting
+#  the length of the string.
+#-----------------------------------------------------------------
+sub getNextStrLen
+{
+	my @arr = @_; 
+	my $size = @arr - 1;
+	my $loc = $arr[0];
+	my $c = 0;
+
+	while( ($loc + $c) < $size && $arr[$loc + $c + 1] ne " " && $arr[$loc + $c + 1] ne "\n" && $arr[$loc + $c + 1] ne "<" )
+	{ $c++; }
+
+	if( ($loc + $c) < $size && $arr[$loc + $c + 1] eq "<" )
+	{ $c--; }
+
+	return $c;
+}
+
+#-----------------------------------------------------------------
+# Replaces all of the '^M' characters that are returned when a 
+#  textarea is used with normal '\n' carriage returns
+#-----------------------------------------------------------------
+sub replaceCR
+{
+	my $str = shift;
+	my @arr = split( //, $str );
+	my @new = [];
+	my $size = @arr;
+	for( my $x = 0; $x < $size; $x++ )
+	{
+		if( ord( $arr[$x] ) != 13 )
+		{
+			$new[$x] = $arr[$x];
+		}
+	}
+
+	$str = join( "", @new );
+	return $str;
+}
+
+#-----------------------------------------------------------------
+# Forms a connection with the database.
+#-----------------------------------------------------------------
+sub connectToDB
+{
+	return DBI->connect( "DBI:mysql:database=data_loading_notes;host=thunder",
+												"suldan", "hithere", { RaiseError=>1} ) || die( "Unable to connect to database" );
+}
+
+#-----------------------------------------------------------------
+# Executes the needed sql statment to add the given row to the 
+#  database.
+#-----------------------------------------------------------------
+sub addRowToDB
+{
+	my $row = shift;
+
+	my $sql = "INSERT INTO Notes ( id, storm_id, loader_id, checker_id, int_contact_id, ext_contact, ext_email, ".
+								"title, readme, master, checked, date, notes, proj_id, ingest, ext_link, archive ) VALUES ( 0, ";
+	$sql = $sql . $dbh->quote( ${$row->getFieldByName( "storm_id" )}->{value} ) . ", "; 
+	$sql = $sql . ${$row->getFieldByName( "loading" )}->{value} . ", "; 
+	$sql = $sql . ${$row->getFieldByName( "checker" )}->{value} . ", "; 
+	$sql = $sql . ${$row->getFieldByName( "int_contact" )}->{value} . ", "; 
+	$sql = $sql . $dbh->quote( ${$row->getFieldByName( "ext_contact" )}->{value} ) . ", "; 
+	$sql = $sql . $dbh->quote( ${$row->getFieldByName( "ext_email" )}->{value} ) . ", "; 
+	$sql = $sql . $dbh->quote( ${$row->getFieldByName( "title" )}->{value} ) . ", "; 
+
+	my $readme = ( ${$row->getFieldByName( "readme" )}->{value} eq "Y" )? 1 : 0;
+	my $master = ( ${$row->getFieldByName( "master" )}->{value} eq "Y" )? 1 : 0;
+	my $checked = ( ${$row->getFieldByName( "checked" )}->{value} eq "Y" )? 1 : 0;
+
+	$sql = $sql . "$readme, ";
+	$sql = $sql . "$master, ";
+	$sql = $sql . "$checked, ";
+	$sql = $sql . $dbh->quote( ${$row->getFieldByName( "date" )}->{value} ) . ", "; 
+	$sql = $sql . $dbh->quote( ${$row->getFieldByName( "notes" )}->{value} ) . ", "; 
+	$sql = $sql . "$table->{proj_id},";
+	$sql = $sql . $dbh->quote( ${$row->getFieldByName( "ingest" )}->{value} ) . ", "; 
+	$sql = $sql . $dbh->quote( ${$row->getFieldByName( "ext_link" )}->{value} ) . ", "; 
+	$sql = $sql . $dbh->quote( ${$row->getFieldByName( "archive" )}->{value} ) . ") "; 
+
+	$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+
+	$sql = "SELECT MAX(id) FROM Notes";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @arr = $sth->fetchrow();
+	
+	return $arr[0];	
+}
+
+#-----------------------------------------------------------------
+# Executes the needed sql statment to update the given record in the
+#  database.
+#-----------------------------------------------------------------
+sub updateRowInDB
+{
+	my $row = shift;
+
+	my $select = "SELECT id FROM Notes WHERE id = $row->{id}";
+	my $sth = $dbh->prepare( $select );
+	$sth->execute();
+	my @r = $sth->fetchrow();
+	$sth->finish();
+
+	if( !defined( @r ) )
+	{
+		addRowToDB( $row );
+	}
+	else
+	{
+		my $sql = "UPDATE Notes SET " . 
+							"storm_id = " . $dbh->quote( ${$row->getFieldByName( "storm_id" )}->{value} ) . ", " . 
+							"loader_id = " . ${$row->getFieldByName( "loading" )}->{value} . ", " . 
+							"checker_id = " . ${$row->getFieldByName( "checker" )}->{value} . ", " . 
+							"int_contact_id = " . ${$row->getFieldByName( "int_contact" )}->{value} . ", " . 
+							"ext_contact = " . $dbh->quote( ${$row->getFieldByName( "ext_contact" )}->{value} ) . ", " . 
+							"ext_email = " . $dbh->quote( ${$row->getFieldByName( "ext_email" )}->{value} ) . ", " . 
+							"title = " . $dbh->quote( ${$row->getFieldByName( "title" )}->{value} ) . ", ";  
+
+
+		my $readme = ( ${$row->getFieldByName( "readme" )}->{value} eq "Y" )? 1 : 0;	
+		my $master = ( ${$row->getFieldByName( "master" )}->{value} eq "Y" )? 1 : 0;	
+		my $checked = ( ${$row->getFieldByName( "checked" )}->{value} eq "Y" )? 1 : 0;	
+
+		my $sql = $sql . "readme = $readme, " . 
+							"master = $master, " .
+							"checked = $checked, " .
+							"date = " . $dbh->quote( ${$row->getFieldByName( "date" )}->{value} ) . ", " . 
+							"notes = " . $dbh->quote( ${$row->getFieldByName( "notes" )}->{value} ) . ", " .
+							"ingest = " . $dbh->quote( ${$row->getFieldByName( "ingest" )}->{value} ) . ", " .
+							"ext_link = " . $dbh->quote( ${$row->getFieldByName( "ext_link" )}->{value} ) . ", " .
+							"archive = " . $dbh->quote( ${$row->getFieldByName( "archive" )}->{value} ) . " " .
+							"WHERE id = $row->{id}";
+
+		$dbh->do( $sql ) || die( "doing: ", $dbh->errstr ); 
+	}
+}
+
+#-----------------------------------------------------------------
+# Executes the needed sql statment to delete the record with the
+#  given id number.
+#-----------------------------------------------------------------
+sub deleteFromDB
+{
+	my $id = shift;
+	
+	my $sql = "DELETE FROM Notes WHERE id = $id";
+
+	$dbh->do( $sql ) || die( "doing: ", $dbh->errstr() );
+}
+
+#-----------------------------------------------------------------
+# Returns a reference to an array that contains the id number and
+#  name of each person in the given array of people.  This is used
+#  to send the Field object the value and text for each option of
+#  a drop down box (select).
+#-----------------------------------------------------------------
+sub getSelectArray
+{
+	my @arr = @{$_[0]};
+	my @return;
+	my $cnt=0;
+	foreach $person (@arr)
+	{
+		if( defined( $person ) )
+		{
+			$return[$cnt] = $person->{id};
+			$return[$cnt+1] = $person->{name};
+			$cnt += 2;
+		}
+	}
+
+	return \@return;
+}
+
+#-----------------------------------------------------------------
+# Sends a quick e-mail to the person chosen to load the dataset
+#  notifying them the dataset has been loaded.
+#-----------------------------------------------------------------
+sub sendMail
+{
+	my $row = shift;
+
+	# ---Get the internal contact - the person sending the e-mail---
+	my $sql = "SELECT email, name FROM Checkers WHERE id=" . ${$row->getFieldByName( "checker" )}->{value};
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @row = $sth->fetchrow();
+	my $check = $row[1];
+	my $check_mail = $row[0];
+	$sth->finish();
+	if( $check_mail eq "" || !defined( $check_mail ) )
+	{
+		$check_mail = "joss\@ucar.edu";
+	}
+	#-----------------------------------------------------------------
+
+	#----------Get the name of the project----------------------------
+	$sql = "SELECT name FROM Projects WHERE id=" . $table->{proj_id};
+	$sth = $dbh->prepare( $sql );
+	$sth->execute();
+	@row = $sth->fetchrow();
+	my $project = $row[0];
+	#-----------------------------------------------------------------
+
+	$sql = "SELECT email, name FROM Loaders WHERE id=" . ${$row->getFieldByName( "loading" )}->{value};
+
+	$sth = $dbh->prepare( $sql );
+	$sth->execute();
+	@row = $sth->fetchrow();
+
+	if( !@row ) { die( "Person Loading e-mail not found" ); }
+
+	if( defined( $row[0] ) )
+	{	
+		open( MAIL, "|/usr/lib/sendmail -t" ) || die( "Unable to open sendmail" );
+
+		my $from = "From: $check_mail\n";
+		my $to = "To: $row[0]\n";
+		my $subject = "Subject: $project Dataset Is Ready To Be Loaded.\n\n\n";
+
+		my $msg = "$row[1],\n\n";
+			$msg = $msg . "A dataset has been entered into the data loading notes page for you to load into Codiac.\n";
+			$msg = $msg . "Below is a summary of what has been entered into the notes page.  For more information\n";
+			$msg = $msg . "refer to the data loading notes pages at http://www.joss.ucar.edu/dpg/notes/.\n\n";
+
+		$msg = $msg . "Title: " . ${$row->getFieldByName( "title" )}->{value}  . "\n";
+		$msg = $msg . "Project: " . $project  . "\n";
+
+		$msg = $msg . "Date: " . ${$row->getFieldByName( "date" )}->{value}  . "\n";
+		$msg = $msg . "Person Checking: " . $check  . "\n\n";
+
+		$msg = $msg . "Notes: \n" . ${$row->getFieldByName( "notes" )}->{value}  . "\n";
+
+		print( MAIL $to );
+		print( MAIL $from );
+		print( MAIL $subject );
+		print( MAIL $msg );
+		print( MAIL "\n\n\n" );
+
+		$sth->finish();
+		close( MAIL );
+	}	
+}
+
+#-----------------------------------------------------------------
+# Gets the project id specified.  If the proj_id parameter is set
+#  then that is used.  If the project_name parameter is set the 
+#  database is queried to determine that project's id number.
+#  If neither of these are specified an error is displayed.
+#-----------------------------------------------------------------
+sub getProjectId
+{
+	$table->{proj_id} = param( "project" );
+	if( !defined( $table->{proj_id} ) )
+	{
+		my $proj_name = param( "project_name" );
+		if( !defined( $proj_name ) )
+		{
+			showCGIError( "Project name/id not specified." );
+		}
+		else
+		{
+			my $sql = "SELECT id FROM Projects WHERE name=\"$proj_name\"";
+			my $sth = $dbh->prepare( $sql );
+			$sth->execute();
+
+			my @row = $sth->fetchrow();
+			if( defined( $row[0] ) )
+			{
+				$table->{proj_id} = $row[0]
+			}
+			else
+			{
+				showCGIError( "Project name/id not specified." );
+			}
+		}
+	}
+}
+
+#-----------------------------------------------------------------
+# Display an error message and exit.
+#-----------------------------------------------------------------
+sub showCGIError
+{
+	my $msg = shift;
+	println( header() );
+	println( "<html><head><title>SCRIPT ERROR</title></head><body bgcolor=white>" );
+
+	println( "<h1>Script Error</h1>" );
+	println( "<p>An error has occured due to invalid input.</p>" );
+	println( "<p>Reason: $msg</p>" );
+	println( "Please Notify <a href=\"mailto:suldan\@ucar.edu\">suldan\@ucar.edu</a>." );
+
+	println( "</body></html>" );
+
+	exit();	
+}

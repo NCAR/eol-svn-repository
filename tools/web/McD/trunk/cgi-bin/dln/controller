@@ -1,0 +1,55 @@
+#!/bin/perl -w
+
+use lib "../mcd_lib";
+
+use strict;
+use CGI;
+
+use lib "lib";
+use State;
+use DLNUtils;
+
+require "./common";
+
+my $cgi = CGI->new();
+my $state = State->new();
+$state->setFromParams( $cgi );
+
+
+if( $state->{edit} )
+{
+	require "./edit_form";
+	edit_form( $state, $cgi );
+}
+elsif( $state->{proc_edit} )
+{
+	require "./proc_edit";
+	proc_edit( $state, $cgi );
+}
+elsif( $state->{view} eq $State::LIST )
+{
+	require "./list_view";
+	list_view( $state, $cgi );	
+}
+elsif( $state->{view} eq $State::DATASET )
+{
+	require "./dataset_view";
+	view_dataset( $state, $cgi );
+}
+else
+{
+	showError();
+}
+
+sub showError
+{
+	print( cr(
+		$cgi->header(),
+		"<html><head><title>DLN: Error</title>",
+		$css,
+		"</head><body>",
+		"<center><font size=+2>DLN: Error</font></center>",
+		"<br><br>",
+		"No such view: $state->{view}",
+		"</body></html" ) );
+}

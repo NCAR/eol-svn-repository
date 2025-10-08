@@ -1,0 +1,3 @@
+all:
+	g++ -g -o ../bin/autoqc_ALASKA auto_qc.cpp -lm -I../lib -DNWS -DALASKA
+	g++ -g -o ../bin/autoqc_PLAINS auto_qc.cpp -lm -I../lib -DNWS

@@ -1,0 +1,161 @@
+19,22d18
+< C 21 Jan 94 lec
+< C   Added additional comments. Removed s/w that changed ISWS precip qc flag
+< C   to X or glitch for stn llc. This will now be handled in conversion s/w.
+< C   Updated path names for files.
+39c35
+<       real var(NQCPARMS)        !calculated variances from the analyses/limits
+---
+>       real var(NQCPARMS)      !calculated variances from the analyses/limits
+62d57
+< 
+66c61
+<          call getarg(1,qc_0qc)          ! qc_0qc is input file name.
+---
+>          call getarg(1,qc_0qc)
+81c76
+<       filetype=qc_0qc(x+1:x+3)		        !extract file type
+---
+>       filetype=qc_0qc(x+1:x+3)		!extract file type
+88c83
+< C
+---
+> 
+90d84
+< C
+97d90
+< 
+122c115
+< C initialize variance array with -999.99 which represents the case
+---
+> C initialize variance array with -999.99 which represents a the case
+262,264c255
+< C
+< C description: get the qcf records. Following is description of qcf vars.
+< C              Each qcf var has a qc flag associated with it.
+---
+> C description: get the qcf records
+266,292d256
+< C   qcf.yr, qcf.mo, qcf.day - year, month, day
+< C   qcf.hr, qcf.min -  hour, minute
+< C   qcf.network - current network (e.g., HPLAINS, ISWS, NCDC, etc.)
+< C   qcf.station - current station name or id number. (n/a)
+< C   qcf.lat     - latitude  (decimal)
+< C   qcf.lon     - longitude (decimal)
+< C   qcf.occur   - occurrance. Indicates co-location of stations. (n/a)
+< C   qcf.elev    - station elevation. (m)
+< C   qcf.parms(1)- station pressure (mb) 
+< C   qcf.parms(2)- sea level pressure (mb)
+< C   qcf.parms(3)- calculated sea level pressure (mb)
+< C   qcf.parms(4)- temperature (C)
+< C   qcf.parms(5)- dew point temperature (C)
+< C   qcf.parms(6)- wind speed (m/s) 
+< C   qcf.parms(7)- wind direction (degrees) 
+< C   qcf.parms(8)- precipitation (mm) 
+< C   qcf.sqind   - squall indicator
+< C   qcf.squal   - squall value
+< C   qcf.pw      - present weather
+< C   qcf.vis     - visibility
+< C   qcf.ceilhgt - ceiling height
+< C   qcf.cldamt  - cloud amount
+< C   
+< C
+< C WARNING:
+< C   This s/w assumes that input 0qc files have specific number of 
+< C   header records. This may not be true of all input files!!!!!!
+322c286
+< C loop through the data records
+---
+> C loop throught the data records
+505c469
+<       integer days			!no. days since day1
+---
+>       integer days				!no. days since day1
+535d498
+< 
+627d589
+< 
+634,636c596
+< C            format and prints them out. MAPS surface analyses provides
+< C            the 9 variables listed below. Currently, we only use six of
+< C            these vars (1,2,3,4,5, and 9) during the comparison process.
+---
+> C		format and prints them out.
+653,654d612
+< C 21 Jan 94 lec
+< C  Previously updated path name for MAPS files...was /spare/tmp.
+669c627
+<       CHARACTER*80 analname
+---
+>       CHARACTER*40 analname
+695,696c653
+<          analname='/spare1/gids/QC/MAPS/mapsout/'//fnameanx
+< 
+---
+>    	    analname='/spare/tmp/'//fnameanx
+709c666
+<          else				!Error opening MAPS file
+---
+>          else						!Error opening MAPS file
+780d736
+< 
+900c856
+< 	 analvals(1)=convpres(p,qcf.elev)	! altimeter to stn pressure
+---
+> 	 analvals(1)=convpres(p,qcf.elev)		! altimeter to stn pressure
+903c859
+< 	 analvals(6)=convws(u,v)		! u,v winds to wind speed
+---
+> 	 analvals(6)=convws(u,v)				! u,v winds to wind speed
+916d871
+< 
+941d895
+< 
+958d911
+< 
+974d926
+< 
+995d946
+< 
+1015,1017c966,968
+<       if(flag .eq. 'G') i=2  !Good
+<       if(flag .eq. 'B') i=3  !Bad
+<       if(flag .eq. 'D') i=4  !Dubious
+---
+>       if(flag .eq. 'G') i=2
+>       if(flag .eq. 'B') i=3
+>       if(flag .eq. 'D') i=4
+1035d985
+< 
+1040,1042c990
+< C              interpolated analysis values. This s/w also applies
+< C              additional checks such as gross limit checks and corrects
+< C              some misc oversights from the data conversion process.
+---
+> C              interpolated analysis values.
+1072c1020
+<          roc(i)=-999.99			! rate of change
+---
+>          roc(i)=-999.99
+1085,1088d1032
+< C 21 Jan 94 lec - Removed correction which changed ISWS precip qc flag
+< C                 for stn llc to 'X' for glitch.
+< C
+< C***********************************************************************
+1100a1045,1047
+> C isws precip qc flag should be X for station llc
+>       if(qcf.network .eq. 'ISWS' .and.  qcf.station .eq. 'llc')
+>      +   qcf.parms(8).qc = 'X'
+1456a1404
+>       Real FUNCTION GRIDSWAP()
+1463a1412,1414
+> c
+> c	K. Brewster 8-85
+> c	B. Jewett   7-29-87	altered for use with different grid domains
+1465,1466d1415
+< C	K. Brewster 8-85
+< C	B. Jewett   7-29-87	altered for use with different grid domains
+1468,1470d1416
+< C****************************************************************************
+<       Real FUNCTION GRIDSWAP()
+< 

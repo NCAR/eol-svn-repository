@@ -1,0 +1,274 @@
+<html>
+<head>
+<title>How To: Process Howard Univ. Barbados Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Process Howard Univ. Barbados Upper Air Sounding Data</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#network">Network Information</a></li>
+        <li><a href="#version">Previous Versions</a>
+            <ul>			
+                <li><a href="#version:PREDICT_2010_barbados">2010 (PREDICT Barbados)</a> - Created for PREDICT 2010</li>
+            </ul>
+        </li>
+        <li><a href="#directory">Directory Structure</a></li>
+        <li><a href="#process">Processing the Data</a>
+            <ol>
+			<li><a href="#setup">Initial Processing Setup</a></li> 
+            <li><a href="#convert">Converting the Data</a></li>
+            <li><a href="#autoqc">Auto QC</a></li>
+			<li><a href="#visual_qc">Visual QC</a></li>
+            <li><a href="#finalize">Finalization</a></li>   
+			<li><a href="#5mb-extract">5mb Extraction</a></li>  
+            </ol>
+        </li>
+        <li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+	<p>This document contains instructions for converting Howard Univ. Barbados upper air sounding data into the EOL Sounding Composite (ESC) format.</p>
+</div>
+<a href="#">Top</a><hr />                                        
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+    <li>The ID-Type is 99.</li>
+    <li>The Platform Id is 999.</li>
+</ul>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions</h2>
+<div class="block">
+ 
+    <a name="version:PREDICT_2010_barbados"></a><h3>PREDICT Barbados (2010)</h3>
+    <table class="version">
+	<tr><th>Software:</th><td><a
+	href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FHoward_Univ%2Ftags%2FPREDICT_2010%2F#_conversions_upper_air_Howard_Univ_tags_PREDICT_2010_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/Howard_Univ/tags/PREDICT_2010</a></td></tr>
+    <tr><th>Raw Data:</th><td>/net/work/Projects/PREDICT/upper_air/howard_barbados/raw_data</td></tr>
+    <tr><th>Final Data:</th><td>/net/work/Projects/PREDICT/upper_air/howard_barbados/dayfiles</td></tr>
+    </table>
+
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">howard_barbados</h3>
+    <table class="directories">
+		<tr><th>5mb/</th><td>The directory where the extracted 5mb pressure
+		sounding files are stored.</td></tr>
+		<tr><th>build/</th><td>The auto-generated directory for the compiled
+		Java classes.</td></tr>
+		<tr><th>dayfiles/</th><td>The directory where the generated day files
+		are stored. These are the final processed data files that will be
+		loaded into the database and put online. </td></tr>
+	    <tr><th>docs/</th><td>The directory containing documentation about the
+	    processing and the data.</td></tr> 
+		<tr><th>final/</th><td>The directory where the QC'ed files are placed
+		once they have been created.</td></tr> 
+		<tr><th>logs/</th><td>The directory where the error/check files from
+		the QC are placed.</td></tr> 
+		<tr><th>output/</th><td>The directory where the CLASS files are put
+		after they are generated.</td></tr> 
+	    <tr><th>raw_data/</th><td>The directory where the raw data is
+	    stored.</td></tr>
+		<tr><th>software_source/</th><td>The directory where the software for
+		the conversion is stored.</td></tr>
+	    <tr><th>src/</th><td>Unused directory.  Required for AutoQC to run.</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="process"></a><h2>Processing the Data</h2>
+<div class="block">
+    <a name="setup"></a><h3>Initial Processing Setup</h3>
+	<ol>	
+	<li><p>Copy the raw data into the <span
+	class="directoryName">raw_data</span> directory.  Run dos2unix on the MS-DOS text files.</p></li>               
+    </ol>
+
+    <a name="convert"></a><h3>Converting the Data</h3>
+	<p class="note">This step runs Perl code and should work on basically any
+	machine. However, to run the autoQC and any other processing/data prep done
+	by the build.xml (Ant) file, you must run on any machine with the proper
+	Ant and Java setup, such as merlot.</p>    
+	<p>Converting Howard Univ. Barbados upsonde data into the ESC format consists
+	of the following steps.</p>
+
+	<ol>                                  
+	<li><p>Change to the <span class="directoryName">software</span> directory.</p></li>
+	<li><p>Edit the <span class="softwareName">Howard_Univ_Radiosonde_Converter.pl</span> script.</p> 
+       	<p><i>For PREDICT</i>:</p>
+	    <ul> 
+			<li><p>The header information was at the bottom of the file.  The
+			file was read into an array and then the last few lines were
+			"popped" off into variables containing header info.</p></li>
+			<li><p>Because of inconsistencies in the Latitude and Longtitude
+			information in the raw data files, this information was hard-coded.
+			The first 51 soundings were taken from one location, and the second
+			49 were taken from a second location.</p></li>
+			<li><p>Radiosonde IDs started with either "0", "8", or "9", and two
+			files had "XXXXXX" for probe ID.  The sonde ID indicated which type
+			of radiosonde was used, e.g., if "0", Graw DFM-06.  Code was
+			included to handle this and to check for other values.</p></li>
+			<li><p>For Barbados, the data consisted of 4-second resolution
+			soundings. Time was not included in the data records, so time was
+			HARD-CODED to begin at zero and increment by 4 for each
+			record.</p></li>
+			<li><p>Wind speed was given in knots and the code converted these
+			values to m/s.</p></li>
+			<li><p>A command line option (--skip) was added to allow the user
+			to speed up the converter by skipping the pre-processing steps for
+			the raw data if these steps had already been performed.  The
+			pre-processing step stripped blank lines from the raw data
+			files.</p></li>
+	    </ul>
+	</li>
+	<li><p>Change hard-coded values for project-specific items such as
+		Project, Network, State, etc.</p></li>
+	</li>
+    <li><p>Verify that the converted data columns match the required ESC
+format (<a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/tutorial/sounding-processing-and-composite-generation/appendix-esc-format-description">see
+example</a>).</p></li>	
+	<li><p>Run the <span
+	class="softwareName">Howard_Univ_Radiosonde_Converter.pl</span> script.
+	This will convert the data to the ESC format.</p></li>
+	
+	<li><p>Run the format checker using the ant command:</p>
+    <p class="code">ant check-format-ESC</p></li>
+	<li><p>Check the log file in the <span class="directoryName">output</span>
+	directory to determine if any format issues need to be addressed before
+	proceeding with AutoQC.</p></li>
+	</ol>
+
+<a name="autoqc"></a><h3>Auto QC</h3>
+	<p class="note">This step works best on merlot, but can be done on any
+	machine with the proper Ant and Java setup.</p>
+
+	<p>These steps execute the automatic QC on the processed files in the <span
+	class="directoryName">output</span> directory, generate log files in the
+	<span class="directoryName">logs</span> directory, and place the QC'ed data
+	files into the <span class="directoryName">final</span> directory, as
+	specified by the <span class="softwareName">build.xml</span> file.  After
+	the QC processing has completed, the <span class="softwareName">ant
+	autoqc</span> command runs the format checker on the QC'ed files. Here are
+	the steps to run the sounding Automatic Quality Control Processing:</p>
+    <ol>
+	   <li><p>Stay in/Change to the top level processing directory where the Ant
+	   <span class="softwareName">build.xml</span> file is located.</p></li>
+	   <li><p>Check the <span class="softwareName">build.xml</span> file for the
+	   <code>autoqc</code> target for the following:</p>
+           <ol>
+			   <li><p>A command to copy the properties file to the build
+			   directory. There is typically a copy of the autoqc properties
+			   file (e.g., "us_plains_autoqc.properties") in the software
+			   directory.</p></li>   		   
+			   <li><p>The java command(s) will be executed on the expected data in
+			   the expected locations (i.e., ensure that the directory names in
+			   the build.xml file are correct and what you want.)</p></li>
+			   <li><p>You have updated the project name in the build.xml,
+			   if included in the build.xml file.</p></li>
+		   </ol>	
+       <li><p>Perform the auto QC by executing the ant command:</p>
+	       <p class="code">ant autoqc</p></li>  
+	</ol>
+
+	
+
+<a name="visual_qc"></a><h3>Visual QC</h3>
+	<p>Once the auto QC is completed, email the scientific staff (i.e., Scot
+	Loehrer) so that they can perform a visual QC on the data and give final
+	approval of the processed data set, as required. Note that the visual qc is
+	not performed on all sounding datasets.</p>
+
+
+<a name="finalize"></a><h3>Finalization</h3>
+	<p>After the visual QC is completed, the data set is ready to be finalized
+	(i.e, prep'd for CODIAC).  
+    <ol>
+		 <li><p> Update this "How To" document to indicate the latest project
+		 this conversion was executed for and include any notes about upgrades
+		 made specifically for that project, as required. A copy of this
+		 document is generally found in the <span
+		 class="directoryName">/docs</span> directory. Place a copy of the
+		 updated doc in <span
+		 class="directoryName">/net/web/dmg/html/software/conversions/upper_air/Howard_Univ_Barbados
+		 </span> directory. The s/w repository page points to this doc in that
+		 web location, so this must be updated.  The s/w repository page is
+		 located <a
+		 href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/encyclopedia/repository-dmg-subversion-listing"
+		 target='_top'><b>here</b></a>. </p></li>
+
+		 <li><p>Update the dataset description (or EMDAC) document for this
+		 conversion. Work with the scientific staff to create an EMDAC
+		 document. Generally, start with an existing "similar" document and
+		 simply update it for this project and dataset.  Generally, a copy of
+		 the EMDAC doc can be found in the <span
+		 class="directoryName">/docs</span> area.</p></li>
+
+		 <li><p>The next processing step is to create day files that can/will
+		 be loaded into the EMDAC/CODIAC database, along with the EMDAC dataset
+		 description document.  The dayfiles creation step will generate day
+		 files sorted by nominal release date followed by station location as
+		 required by CODIAC. It's very important that the output dayfiles be in
+		 this expected sort order so that CODIAC can access all the soundings
+		 within a single dayfile. Do the following steps to create the day
+		 files.</p></li>
+		 <ol>
+		 <li><p>Ensure that you are in the same (top) directory as the
+		 build.xml file. Create the day files using the ant command:</p> <p
+		 class="code">ant dayfiles</p> <p>This will create a file for each day
+		 where at least one sounding exists in the <span
+		 class="directoryName">dayfiles</span> directory or whichever directory
+		 is specified as the output directory in the build.xml file. If this
+		 dataset is to be put online "as is", these are the dayfiles to load
+		 into CODIAC.</p></li>
+	     </ol>
+    </ol>
+
+
+<a name="5mb-extract"></a><h3>5mb Extraction</h3>
+	<p>If the converted soundings are also going to be placed into a 5mb
+	composite, the soundings need to have the proper 5mb pressure level
+	soundings generated.  This is done through the following steps:</p>
+    <ol>
+        <li><p>Generate the 5mb pressure level data files using the ant command:</p>
+            <p class="code">ant 5mb-extract</p>
+			<p>This will generate a 5 mb sounding file for each sounding in the
+			<span class="directoryName">final</span> directory and place
+			it in the <span class="directoryName">5mb</span> directory.  It will also run
+			some final checks to make sure the format is correct. Beware that
+			the file directories listed in the build.xml file are what you
+			expect and want.</p></li>
+    </ol>
+	<p>The generated 5mb data files will then be available when the composite
+	is generated.</p>
+
+	</div>
+<a href="#">Top</a><hr>
+
+<a name="documents"></a><h2>Documentation</h2>
+<p>The following are a list of documents that may help with the conversion or
+are related to the raw data.</p>
+<ul>
+	<li><a href="/software/tools/upper_air/autoqc">How To: AUTO QC Sounding Data</a>:  The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/software/tools/upper_air/esc_format_checker">How To: ESC Format Checker</a>:  The instructions and API for working with the ESC format checker program.</li>
+    <li><a href="#">How To: Process Howard Univ. Barbados Sounding Data</a>:  This document.</li>
+
+</ul>
+<a href="#">Top</a><hr>      
+
+<p class="foot">Last Updated: 26 October 2011 - Linda Echo-Hawk</p>
+</body>
+</html>

@@ -1,0 +1,23 @@
+set terminal postscript landscape monochrome dashed "Helvetica" 14
+
+# graph title
+set title "CEOP GAPP SGP XPARAMETERX Station XSTATION XHEIGHTX"
+
+# other
+set missing "-999.99"
+set nokey
+
+# x-axis stuff
+set timefmt "%Y/%m/%d"
+set xdata time
+set xlabel "Date" 0,0
+set xrange ["2002/10/01":"2003/03/31"]
+set format x "%Y/%m/%d"
+
+set timefmt "%Y/%m/%d+%H:%M"
+
+# y-axis
+set ylabel "XPARAMETERX (XUNITSX)" 0,0
+
+set output 'XOUTFILEX'
+plot "< awk -f XAWKFILEX XDATAFILESX" using 1:2 with lines

@@ -1,0 +1,12 @@
+0       Unchecked. No QC has been done for this observation.
+1       Checked and found "Good". In the case of pressure, temperature, and wind parameters, this QC code means the value compared favorably with the MAPS Surface Analysis.
+2       Checked and found "Unlikely". In the case of pressure, temperature and wind parameters, this QC code means the value compared poorly with the MAPS Surface Analysis. Observations with this QC code should only be used after careful analysis as to the validity of its value.
+3       Checked and and found "Questionable". In the case of pressure, temperature, and wind parameters, this QC code means the value compared questionably with the MAPS Surface Analysis. Observations with this QC code should be used with caution.
+4       Not observed or not applicable. This parameter is not observed at this station or this parameter is optionally reported and is not applicable for this station and time.
+5       "Glitch" flag. Either the instrumentation was faulty, or some other problem was known to to exist which invalidates the value of this observation. Observations with this QC flag should not be used.
+6       Estimated value. This parameter's value was estimated and is not a directly observed value. This flag overrides the QC codes 1 ("Good") and 3 ("Questionable"), but the QC code 2 ("unlikely") overrides this code. Use values with this QC code with caution.
+7       Reported value exceeds 9999.99 or was negative. Data changed to missing. (Equivalent to 'C' flag from QC).
+8       Trace amount of precipitation reported
+9       Insufficient or incomplete information. This is a derived parameter that cannot be computed due to missing source data.
+10      Code values 10 - 14 reserved.
+15      Missing. This value is normally reported, but for some unknown reason is missing for this station and time.

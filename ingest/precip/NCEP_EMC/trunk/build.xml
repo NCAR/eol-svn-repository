@@ -1,0 +1,470 @@
+<project name="NCEP_EMC" default="run" basedir=".">
+
+    <property environment="env" />
+
+    <!-- Define the java source properties -->
+    <property name="build" location="build" />
+    <property name="build.classes" location="${build}/classes" />
+    <property name="src" location="src" />
+    <property name="docs" location="docs" />
+    <property name="docs.api" location="${docs}/api" />
+
+    <!-- Define the location properties -->
+    <property name="tar.archive" location="archive" />
+    <property name="ingest.dir" location="ingest" />
+    <property name="ceop.dir" value="ceopavn" />
+    <property name="final.archive" value="/net/archive/data/eop/katz_data" />
+    <property name="log.dir" location="logs" />
+    <property name="NOMADS.dir" location="ingest-NOMADS" />
+
+    <!-- Define end user emails -->
+    <!-- property name="sid.email" value="Sid.Katz@noaa.gov" / -->
+	<!-- Sid Katz retired in Nov 2020 and Tom Collow took over the precip data -->
+    <property name="sid.email" value="thomas.collow@noaa.gov" />
+    <property name="chifan.email" value="chifan@ucar.edu" />
+
+    <!-- Define the classpath to use -->
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <pathelement path="${build.classes}" />
+        <fileset dir="/net/work/lib/java/vendor/edtftpj-1.5.4">
+            <include name="edtftpj-1.5.4.jar" />
+	</fileset>
+	<fileset dir="/net/work/lib/java/vendor">
+            <include name="mysql-connector-java-5.0.6-bin.jar" />
+        </fileset>
+    </path>
+
+    <!-- Clean the java build -->
+    <target name="clean">
+        <delete dir="${build}" />
+    </target>
+    
+    <!-- Compile the java source -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build.classes}" debug="on">
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+
+    <!-- Copy the CEOP tar ball to the mass store system -->
+    <target name="copy-ceop-tarball-to-hpss" depends="init-date">
+        <exec executable="/opt/local/bin/hsi" failonerror="true">
+            <arg line=" put ${tar.archive}/${year}/${ceop.tarball} : /JOSS/DATA/RAW/BY_PROJECT/CEOP/${year}/${ceop.tarball}" />
+        </exec>
+    </target>
+
+    <!-- Copy the Katz Monthly tar ball to the mass store for Chi-Fan -->
+	<!-- NOTE: Path change from /FS/DSS/DS507.5/updates/ to /FS/DECS/DS507.5/updates/ Jan 2019 -->
+    <target name="copy-month-tarball-to-hpss" depends="init-date">
+        <mkdir dir="${log.dir}/${year}" />
+	<echo message="/opt/local/bin/hsi put ${tar.archive}/${year}/${month.tarball} :/FS/DECS/DS507.5/updates/${month.tarball}" />
+        <exec executable="/opt/local/bin/hsi" failonerror="true">
+	    <arg line="put ${tar.archive}/${year}/${month.tarball} : /FS/DECS/DS507.5/updates/${month.tarball}" />
+        </exec>
+        <exec executable="/opt/local/bin/hsi" failonerror="true">
+	    <arg line="chmod 664 /FS/DECS/DS507.5/updates/${month.tarball}" />
+        </exec>
+        <!-- Make the tar ball listing for the email attachment -->
+        <exec executable="/bin/tar" output="${log.dir}/${year}/${month.year.abbrev}.log">
+            <arg line="-tvf ${tar.archive}/${year}/${month.tarball}" />
+        </exec>
+        <!-- Email Chi-Fan that the tar ball is ready. -->
+        <mail from="${env.USER}@eol.ucar.edu" replyto="echohawk@eol.ucar.edu" tolist="${chifan.email}" 
+              cclist="${env.USER}@eol.ucar.edu, echohawk@eol.ucar.edu"
+              subject="NCEP/EMC ${month} ${year} Data" files="${log.dir}/${year}/${month.year.abbrev}.log">
+            <message>Chi-Fan,
+
+		The NCEP/EMC data for ${month} ${year} are on the HPSS.  The file is called /FS/DECS/DS507.5/updates/${month.tarball}.  A listing of the contents of this tarfile is attached.
+            </message>
+        </mail>
+    </target>
+
+    <!-- Download only the CEOP GFS files -->
+    <target name="download-ceop-only" depends="compile, init-date">
+        <mkdir dir="${ingest.dir}/${year}/${month}/${ceop.dir}" />
+        <java classname="dmg.ncepemc.NcepFTP" failonerror="true" fork="yes">
+            <arg value="${month}" />
+            <arg value="${year}" />
+            <arg value="${ingest.dir}/${year}/${month}/${month.year.abbrev}" />
+            <arg value="${ingest.dir}/${year}/${month}/${ceop.dir}" />
+            <arg value="ceoponly" />
+            <classpath refid="classpath" />
+        </java>
+        <!-- Change the ownership so anyone can read, but only user and group can write -->
+        <chmod dir="${ingest.dir}/${year}/${month}" perm="ugo+rx" includes="**/*" />
+        <chmod dir="${ingest.dir}/${year}/${month}" perm="ug+w" includes="**/*" />
+    </target>
+
+    <!-- Download all of the files for the month -->
+    <target name="download-files" depends="compile, init-date">
+        <mkdir dir="${ingest.dir}/${year}/${month}/${month.year.abbrev}" />
+        <mkdir dir="${ingest.dir}/${year}/${month}/${ceop.dir}" />
+        <java classname="dmg.ncepemc.NcepFTP" failonerror="true" fork="yes">
+            <arg value="${month}" />
+            <arg value="${year}" />
+            <arg value="${ingest.dir}/${year}/${month}/${month.year.abbrev}" />
+            <arg value="${ingest.dir}/${year}/${month}/${ceop.dir}" />
+            <classpath refid="classpath" />
+        </java>
+        <!-- Change the ownership so anyone can read, but only user and group can write -->
+        <chmod dir="${ingest.dir}/${year}/${month}" perm="ugo+rx" includes="**/*" />
+        <chmod dir="${ingest.dir}/${year}/${month}" perm="ug+w" includes="**/*" />
+    </target>
+
+    <!-- Download all of the Katz tar ball files -->
+    <target name="download-noceop" depends="compile, init-date">
+        <mkdir dir="${ingest.dir}/${year}/${month}/${month.year.abbrev}" />
+        <java classname="dmg.ncepemc.NcepFTP" failonerror="true" fork="yes">
+            <arg value="${month}" />
+            <arg value="${year}" />
+            <arg value="${ingest.dir}/${year}/${month}/${month.year.abbrev}" />
+            <arg value="${ingest.dir}/${year}/${month}/${ceop.dir}" />
+            <arg value="noceop" />
+            <classpath refid="classpath" />
+        </java>
+        <!-- Change the ownership so anyone can read, but only user and group can write -->
+        <chmod dir="${ingest.dir}/${year}/${month}" perm="ugo+rx" includes="**/*" />
+        <chmod dir="${ingest.dir}/${year}/${month}" perm="ug+w" includes="**/*" />
+    </target>
+
+    <!-- Initialize the settings (create necessary directories) -->
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build.classes}" />
+    </target>
+
+    <!-- Ask the user for the date to ingest and set up necessary variables. -->
+    <target name="init-date">
+        <input message="Enter the month [mm, eg 06]: " addproperty="inmonth" />
+        <input message="Enter the year [yyyy]: " addproperty="year" />
+
+        <!-- Zero fill single digit months -->
+        <condition property="month" value="01">
+            <or>
+                <equals arg1="1" arg2="${inmonth}" />
+                <equals arg1="01" arg2="${inmonth}" />
+            </or>
+        </condition>
+        <condition property="month" value="02">
+            <or>
+                <equals arg1="2" arg2="${inmonth}" />
+                <equals arg1="02" arg2="${inmonth}" />
+            </or>
+        </condition>
+        <condition property="month" value="03">
+            <or>
+                <equals arg1="3" arg2="${inmonth}" />
+                <equals arg1="03" arg2="${inmonth}" />
+            </or>
+        </condition>
+        <condition property="month" value="04">
+            <or>
+                <equals arg1="4" arg2="${inmonth}" />
+                <equals arg1="04" arg2="${inmonth}" />
+            </or>
+        </condition>
+        <condition property="month" value="05">
+            <or>
+                <equals arg1="5" arg2="${inmonth}" />
+                <equals arg1="05" arg2="${inmonth}" />
+            </or>
+        </condition>
+        <condition property="month" value="06">
+            <or>
+                <equals arg1="6" arg2="${inmonth}" />
+                <equals arg1="06" arg2="${inmonth}" />
+            </or>
+        </condition>
+        <condition property="month" value="07">
+            <or>
+                <equals arg1="7" arg2="${inmonth}" />
+                <equals arg1="07" arg2="${inmonth}" />
+            </or>
+        </condition>
+        <condition property="month" value="08">
+            <or>
+                <equals arg1="8" arg2="${inmonth}" />
+                <equals arg1="08" arg2="${inmonth}" />
+            </or>
+        </condition>
+        <condition property="month" value="09">
+            <or>
+                <equals arg1="9" arg2="${inmonth}" />
+                <equals arg1="09" arg2="${inmonth}" />
+            </or>
+        </condition>
+        <condition property="month" value="${inmonth}">
+            <not>
+                <isset property="month" />
+            </not>
+        </condition>
+
+        <!-- Define the month/year abbreviation for file names -->
+        <condition property="month.year.abbrev" value="Jan${year}">
+            <equals arg1="01" arg2="${month}" />
+        </condition>
+        <condition property="month.year.abbrev" value="Feb${year}">
+            <equals arg1="02" arg2="${month}" />
+        </condition>
+        <condition property="month.year.abbrev" value="Mar${year}">
+            <equals arg1="03" arg2="${month}" />
+        </condition>
+        <condition property="month.year.abbrev" value="Apr${year}">
+            <equals arg1="04" arg2="${month}" />
+        </condition>
+        <condition property="month.year.abbrev" value="May${year}">
+            <equals arg1="05" arg2="${month}" />
+        </condition>
+        <condition property="month.year.abbrev" value="Jun${year}">
+            <equals arg1="06" arg2="${month}" />
+        </condition>
+        <condition property="month.year.abbrev" value="Jul${year}">
+            <equals arg1="07" arg2="${month}" />
+        </condition>
+        <condition property="month.year.abbrev" value="Aug${year}">
+            <equals arg1="08" arg2="${month}" />
+        </condition>
+        <condition property="month.year.abbrev" value="Sep${year}">
+            <equals arg1="09" arg2="${month}" />
+        </condition>
+        <condition property="month.year.abbrev" value="Oct${year}">
+            <equals arg1="10" arg2="${month}" />
+        </condition>
+        <condition property="month.year.abbrev" value="Nov${year}">
+            <equals arg1="11" arg2="${month}" />
+        </condition>
+        <condition property="month.year.abbrev" value="Dec${year}">
+            <equals arg1="12" arg2="${month}" />
+        </condition>
+
+        <!-- Define the names for the tarballs using the entered information -->
+        <property name="month.tarball" value="katz_${month.year.abbrev}.tar" />
+        <property name="ceop.tarball" value="ceopavn.${year}${month}.tar" />
+
+        <!-- Display the information to the user. -->
+        <echo message="User: ${env.USER}" />
+        <echo message="Month: ${month}     Year:  ${year}" />
+        <echo message="Tarballs:  ${month.tarball}, ${ceop.tarball}" />
+    </target>
+
+    <!-- Insert the archived data into the database. -->
+    <target name="insert-month-files" depends="compile, init-date">
+        <java classname="dmg.ncepemc.NcepInserter" failonerror="true" fork="yes">
+            <arg value="${month}" />
+            <arg value="${year}" />
+            <arg value="${final.archive}" />
+            <classpath refid="classpath" />
+        </java>
+        
+		<!-- Email Sid Katz that the data is online. --> 
+        <mail from="${env.USER}@eol.ucar.edu" replyto="echohawk@eol.ucar.edu" tolist="${sid.email}" 
+              cclist="${env.USER}@eol.ucar.edu, echohawk@eol.ucar.edu"
+              subject="Data for ${month} ${year}">
+            <message>Tom,
+            
+The data from ${month} ${year} has been downloaded and is now available online. 
+
+Thanks,
+Linda
+
+            </message>
+        </mail>
+
+    </target>
+
+    <!-- Create the javadoc API for the java source files -->
+    <target name="javadoc">
+        <mkdir dir="${docs.api}" />
+        <javadoc destdir="${docs.api}" author="true" version="true" use="true"
+                 windowtitle="NCEP/EMC Tools" doctitle="DMG NCEP/EMC Tools"
+                 header="DMG NCEP/EMC API" overview="${docs}/overview.html">
+            <classpath refid="classpath" />
+            <fileset dir="${src}" defaultexcludes="yes" />
+            <link href="http://java.sun.com/j2se/1.5.0/docs/api" />
+        </javadoc>
+    </target>
+
+    <!-- Create the tar ball for the CEOP files -->
+    <target name="make-ceop-tarball" depends="init-date">
+        <mkdir dir="${tar.archive}/${year}" />
+        <tar destfile="${tar.archive}/${year}/${ceop.tarball}"
+             basedir="${ingest.dir}/${year}/${month}/${ceop.dir}" />
+        <delete dir="${ingest.dir}/${year}/${month}/${ceop.dir}" />
+        <delete includeemptydirs="true">
+            <fileset dir="${ingest.dir}" excludes="**/*.*" />
+        </delete>
+    </target>
+
+
+    <!-- Copy files from ingest-NOMADS to ingest dir -->
+    <target name="copy-NOMADS-files" depends="init-date">
+        <!-- ST2 files discontinued as of 28 July 2020
+		<copy todir="${ingest.dir}/${year}/${month}/${month.year.abbrev}/">
+            <fileset dir="${NOMADS.dir}/${year}/${month}" casesensitive="false">
+                <include name="ST2*" />
+            </fileset>
+        </copy>
+		-->
+        <copy todir="${ingest.dir}/${year}/${month}/${month.year.abbrev}/">
+            <fileset dir="${NOMADS.dir}/${year}/${month}" casesensitive="false">
+                <include name="ST4*" />
+            </fileset>
+        </copy>
+	</target>
+
+    <!-- Create the tar ball for the monthly non-CEOP Katz files -->
+    <target name="make-month-tarball" depends="init-date">
+        <mkdir dir="${tar.archive}/${year}" />
+        <tar destfile="${tar.archive}/${year}/${month.tarball}"
+             basedir="${ingest.dir}/${year}/${month}" includes="${month.year.abbrev}/**" />
+    </target>
+
+    <!-- Move the uncompressed data files to the final data file archive. -->
+    <target name="move-to-final-archive" depends="init-date">
+        <mkdir dir="${final.archive}/hrly_gage/${year}${month}" />
+        <move todir="${final.archive}/hrly_gage/${year}${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}">
+                <include name="gage.hrly.prcp.*.gz" />
+            </fileset>
+        </move>
+
+        <mkdir dir="${final.archive}/dly_gage/${year}${month}" />
+        <move todir="${final.archive}/dly_gage/${year}${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}">
+                <include name="gage.dly.prcp.*.gz" />
+            </fileset>
+	</move>
+
+        <mkdir dir="${final.archive}/preview_gifs/${year}${month}" />
+        <move todir="${final.archive}/preview_gifs/${year}${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}">
+                <include name="*.gif" />
+            </fileset>
+        </move>
+
+        <mkdir dir="${final.archive}/stage4/${year}${month}" />
+        <move todir="${final.archive}/stage4/${year}${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}">
+                <include name="ST4*" />
+            </fileset>
+        </move>
+        
+		<!-- mkdir dir="${final.archive}/stage4/${year}${month}" / -->
+        <move todir="${final.archive}/stage4/${year}${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}">
+                <include name="st4*" />
+            </fileset>
+        </move>
+
+        <!-- ST2 files discontinued as of 28 July 2020
+        <mkdir dir="${final.archive}/grib4km/gag4/${year}${month}" />
+        <move todir="${final.archive}/grib4km/gag4/${year}${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}">
+                <include name="ST2gg*" />
+            </fileset>
+        </move>
+
+        <mkdir dir="${final.archive}/grib4km/mul4/${year}${month}" />
+        <move todir="${final.archive}/grib4km/mul4/${year}${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}">
+                <include name="ST2ml*" />
+            </fileset>
+        </move>
+
+        <mkdir dir="${final.archive}/grib4km/rad4/${year}${month}" />
+        <move todir="${final.archive}/grib4km/rad4/${year}${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}">
+                <include name="ST2rd*" />
+            </fileset>
+        </move>
+
+        <mkdir dir="${final.archive}/grib4km/ubr4/${year}${month}" />
+        <move todir="${final.archive}/grib4km/ubr4/${year}${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}">
+                <include name="ST2un*" />
+            </fileset>
+        </move>
+		-->
+
+        <!-- Remove all of the empty directories including ingest -->
+        <delete includeemptydirs="true">
+            <fileset dir="${ingest.dir}" excludes="**/*.*" />
+        </delete>
+    </target>
+           
+    <!-- Run the complete download and archive process -->
+    <target name="run" depends="compile, init-date, -test-previous-month, download-files, make-ceop-tarball, make-month-tarball, uncompress-month-files, move-to-final-archive, insert-month-files, copy-ceop-tarball-to-hpss, copy-month-tarball-to-hpss" />
+
+    <!-- Run the download and archival process for the CEOP only files -->
+    <target name="run-ceop-only" depends="compile,init-date,download-ceop-only,make-ceop-tarball,copy-ceop-tarball-to-hpss" />
+
+    <!-- Test Only: Run the download and archival process for the non-CEOP Katz monthly files. -->
+    <!-- target name="run-test-noceop" depends="compile,init-date,download-noceop,copy-NOMADS-files,make-month-tarball,uncompress-month-files,move-to-final-archive" / -->
+    <target name="run-grb2-test-noceop" depends="compile,init-date,insert-month-files,copy-month-tarball-to-hpss" />
+
+
+	<!-- Run the download and archival process for the non-CEOP Katz monthly files. -->
+    <target name="run-noceop" depends="compile,init-date,download-noceop,copy-NOMADS-files,make-month-tarball,uncompress-month-files,move-to-final-archive,insert-month-files,copy-month-tarball-to-hpss" />
+
+    <!-- Test to see if the previous month was processed.
+         This cannot be called from the command line because of the single -
+         -->
+    <target name="-test-previous-month" depends="compile">
+        <java classname="dmg.ncepemc.NcepMonthTester" failonerror="true" fork="yes">
+            <arg value="${month}" />
+            <arg value="${year}" />
+            <arg value="${tar.archive}" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <!-- Uncompress and extract all of the downloaded files so they can be put into the final archive.
+         This will remove the compressed/tar files once the files have been extracted. -->
+    <target name="uncompress-month-files" depends="init-date">
+        <untar dest="${ingest.dir}/${year}/${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}" casesensitive="yes" includes="${month.year.abbrev}/prcp.*" excludes="rfc8*" />
+        </untar>
+        <delete includeemptydirs="true">
+            <fileset dir="${ingest.dir}/${year}/${month}" casesensitive="yes" includes="${month.year.abbrev}/prcp.*" excludes="rfc8*" />
+        </delete>
+
+        <!-- 
+        <move todir="${ingest.dir}/${year}/${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}/${month.year.abbrev}" casesensitive="false">
+                <include name="ST2*" />
+            </fileset>
+        </move>
+		-->
+
+        <move todir="${ingest.dir}/${year}/${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}/${month.year.abbrev}" casesensitive="false">
+                <include name="ST4*" />
+            </fileset>
+        </move>
+
+        <!--untar dest="${ingest.dir}/${year}/${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}" casesensitive="yes" includes="ST2_vu*" excludes="*.Z" />
+        </untar>
+        <delete includeemptydirs="true">
+            <fileset dir="${ingest.dir}/${year}/${month}" casesensitive="yes">
+                <include name="ST2_vu.*" />
+                <exclude name="*.Z" />
+            </fileset>
+        </delete>
+        <untar dest="${ingest.dir}/${year}/${month}">
+            <fileset dir="${ingest.dir}/${year}/${month}" casesensitive="yes" includes="ST4*" excludes="*.gz" />
+        </untar>
+        <delete includeemptydirs="true">
+            <fileset dir="${ingest.dir}/${year}/${month}" casesensitive="yes">
+                <include name="ST4.*" />
+                <exclude name="*.gz" />
+            </fileset>
+        </delete> -->
+		
+        <!-- Remove all empty directories in the ingest directory (inclusive) -->
+        <delete includeemptydirs="true">
+            <fileset dir="${ingest.dir}" excludes="**/*.*" />
+        </delete>
+    </target>
+</project>

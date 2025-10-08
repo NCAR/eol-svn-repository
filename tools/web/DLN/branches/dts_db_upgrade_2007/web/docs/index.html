@@ -1,0 +1,135 @@
+<html>
+<head>
+	<title>Docs: Data Loading Notes</title>
+</head>
+
+<body>
+
+<center><h1>Data Loading Notes</h1></center>
+<b>Project Overseer: </b>Don Stott<br>
+<b>Status Description: </b> In Use
+<br><br>
+
+The Data Loading Notes Application was developed using JavaServer Pages.  The JavaServer Pages
+are backed by Database Access (DBA) classes which populate simple container classes for 
+each table in the database.  All interaction with the database is done by the DBA classes.  The
+dln.format.DisplayBean maintains the characteristics for the user's current display - such
+as which 'view' they are in, the order to sort the datasets, etc.  An instance of this
+class is defined in session scope when the user first visits the application.
+
+<hr>
+<br>
+	<ul>
+		<li><a href=#jsp>JavaServer Pages</a>
+		<li><a href=#java>Java Classes</a>
+		<li><a href=#database>Database</a>
+		<li><a href=#problems>Problems/Issues</a>
+		<li><a href=#other>Other</a>
+	</ul>
+
+<hr>
+<br>
+<a name=jsp><font size=+1><b><u>JavaServer Pages</u></b></font></a><br>
+<br>
+<b>Actual Location: </b>/(export|net)/web/dmg/webapps/dln<br>
+<p>
+The JavaServer Pages (.jsp files) are pretty well documented and should be pretty easy to follow.
+Below is a list and description of the more important pages.<br>
+NOTE: IE wants to display some pages as html files so you may have to 'View Source' or take a
+look at the files outside of a web browser.
+</p>
+<p>
+The JSP files have been divided into the following directories:
+	<dd><b>body/</b> - pages that are displayed in the 'body' frame, the big main frame
+		<dd>&nbsp;&nbsp;&nbsp;body/list_view.jsp - displays the table of datasets by project, loader or checker
+		<dd>&nbsp;&nbsp;&nbsp;body/view_dataset.jsp - displays a single dataset in more detail
+	<dd><b>edit/</b> - pages that are used to insert, update, and delete datasets, projects and users
+	<dd><b>left/</b> - pages that are displayed in the 'left' frame		
+	<dd><b>top/</b> - pages that are displayed in the 'top' frame, 'top' is a javascript keyword so	the name of this frame is actually 'top_frame'		
+
+<hr>
+<br>
+<a name=java><font size=+1><b><u>Java Classes</u></b></font></a><br>
+<br>
+<b>Actual Location: </b>/(export|net)/web/dmg/webapps/dln/WEB-INF/src (the compiled files are located in /(export|net)/web/dmg/webapps/dln/WEB-INF/classes)
+	
+<p>
+The DLN application utilizes three <i>pacakages</i>: <b>dln.beans, dln.dba, dln.format</b>.  The dln.beans package contains a 'Bean' class for each table in the database.  These classes are simple container classes to hold a single record in the table.  The dln.dba classes are the interface to the database using the bean classes to select, insert, update and delete records.  The dln.format package contains a single class (DisplayBean.java) which helps maintain the current 'state' of the application.  Each class contains a heading with a description of the important public methods.
+</p>
+
+<p>
+<b>dln.beans:</b>
+	<dd><b>DatasetBean.java </b> - container class for the dataset table
+	<dd><b>ProjectBean.java </b> - container class for the project table
+	<dd><b>UserBean.java </b> - container class for the user table
+	<dd><b>SMTPBean.java </b> - bean used to send e-mails to loaders when datasets are added; I did not write this, I got it off the internet.
+	
+<p>
+<b>dln.dba:</b>
+	<dd><b>DLNConnection.java </b> - establishes the connection to the dln database; this can easily be modified to access a different database
+	<dd><b>DatasetDBA.java </b> - interface with the datset table
+	<dd><b>ProjectDBA.java </b> - interface with the project table
+	<dd><b>UserDBA.java </b> - interface with the user table
+
+<p>
+<b>dln.format:</b>
+	<dd><b>DisplayBean.java</b> - maintains the state of the application.  Contains instance variables such as what field to sort the datasets by, which datasets to hide (e.g. hidden datasets), which project, loader, or checker the user is viewing, etc.  An instance of this class is declared in session scope when the user first visits the application.
+
+<hr>
+<br>
+<a name=database><font size=+1><b><u>Database</u></b></font></a><br>
+<p>
+The <code>dmg_dln</code> database on tsunami backs the Data Loading Notes application.  This is an improved database architecture over the original.  The dataset table's primary key is an auto_increment integer (dsid), not the storm_id.  The primary key should be the storm_id but there are some datasets we want to maintain notes about that are not entered into CODIAC (remote links for example).  The primary keys for the user and project tables both use the same type of primary keys in CODIAC and should match those in the CODIAC database (e.g. dSullivan for user and IHOP_2002 for project).  The user and project tables use these text primary keys instead of the auto_increment integers to better match the CODIAC database.   
+</p>
+
+To access the database:
+	<dd>mysql -h tsunami -u dts-full -p dmg_dln
+	<dd>See Joel or Don for the password <br>
+
+<br>
+<b>Database Architecture Description: <a href="database/dbinfo.txt">dbinfo.txt</a></b><br>
+<b>SQL 'CREATE' Statements: <a href="database/create.sql">create.sql</a></b><br>
+<br>
+
+<br>
+<hr>
+<br>
+<a name=problems><font size=+1><b><u>Problems/Issues</u></b></font></a><br>
+<p>
+<b>Dataset Primary Key:</b><br>
+The dataset primary key is NOT the storm_id, it is an auto_increment integer.  John requested this be changed but there are datasets in the DLN that are not in CODIAC.  The app could easily be updated so the primary key of the dataset table is the storm_id but then all datasets in the DLN would also have to be in CODIAC.  The solution of course would be to add ALL datasets to CODIAC, even remote urls. 
+</p>
+<br>
+<hr>
+<br>
+<a name=other><font size=+1><b><u>Other</u></b></font></a><br>
+
+<p>
+<b>Username/Password:</b><br>
+DLN requires the dpg username/password.  This is defined in the web.xml file, not in some .htaccess file.
+</p>
+<p>
+<b>Cascading Style Sheets/Javascript:</b><br>
+A couple of cascading style sheets and some javascript is used by the app.  
+	<dd><b>CSS </b> - dln.css and dln_body.css
+	<dd><b>JavaScript </b> - jscripts
+
+<p>
+<b><i>Quick Links</i>:</b><br>
+You can make links so that the application opens up to a specfic project, loader or checker. 
+	<dd><a href=http://dmg.eol.ucar.edu/dln/?project=IHOP>http://dmg.eol.ucar.edu/dln/?project=IHOP</a>
+	<dd><a href=http://dmg.eol.ucar.edu/dln/?loader=dSullivan>http://dmg.eol.ucar.edu/dln/?loader=dSullivan</a>
+	<dd><a href=http://dmg.eol.ucar.edu/dln/?checker=dStott>http://dmg.eol.ucar.edu/dln/?checker=dStott</a>
+
+<p>
+<b>Adding projects, loaders, checkers:</b><br>
+The application supports the adding and updating of projects, loaders, and checkers.  Links to these
+are found on the 'welcome' page when the application is first visited.  The applicatoin does not support
+the deleting of any of these because it would be too dangerous.  If a project, loader or checker are
+added and then you want to delete it you must do it using SQL.
+</p>
+
+<br>
+
+</body>
+</html>

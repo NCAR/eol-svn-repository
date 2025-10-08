@@ -1,0 +1,12 @@
+SHELL = /bin/sh
+#    Makefile for extract_qcf s/w.
+#
+
+CC=acc
+
+extract_qcf: extract_qcf.o process_qcfrec.o
+	$(LINK.c) -o extract_qcf extract_qcf.o process_qcfrec.o
+	chmod 0755 extract_qcf
+
+clean:
+	rm *.o

@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>MySQL Perl Module How To</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="../dpg_howto.css">
+</head>
+
+<body>
+<div class="howto_title">How To Use the Perl MySQL Modules</div>
+<hr>
+<h1>Table of Contents</h1><ol>
+<li><a href="#about">About The Modules</a></li>
+<li><a href="#modules">The Modules</a><ol>
+	<li><a href="#mod_database">Database Module</a></li>
+	<li><a href="#mod_file">File Module</a></li>
+	<li><a href="#mod_dataset">Dataset Module</a></li>
+	</ol></li>
+<li><a href="#example">Example</a></li>
+</ol>
+<hr>
+
+<a name="about"></a><h1>About the Modules</h1>
+<p>The modules were created to be used with scripts that automatically insert files into the database.  The intention is for the modules to maintain the database connection, insert files into the file table, and update the dates of the associated dataset for the dates of the files.</p>
+<p>This is not intended to do more than insert the files and update the dataset.  It does not contain information about the dataset that is not related to the date.  Therefore, these modules are not capable of making major changes to a dataset entry, only the begin and end dates.</p>
+<p>There are not other modules for tables other than the file and dataset table. 
+  This is because any manipulation of the other tables should be done through 
+  the maintenance program and not though a Perl script.</p>
+<hr>
+
+<a name="modules"></a><h1>The Modules</h1>
+<p>There are three modules that are in this collection. They are the Database 
+  Module (<b>MySqlDatabase.pm</b>) which handles the connection to the database 
+  and the execution of commands to it, the File Module (<b>MySqlFile.pm</b>) which 
+  represents an entry in the <i>file</i> table, and the Dataset Module (<b>MySqlDataset.pm</b>) 
+  which partially represents an entry in the <i>dataset</i> table. Explanations 
+  of the individual modules are given below.</p>
+
+<a name="mod_database"></a><h2>The Database Module</h2>
+<p>The <b>MySqlDatabase.pm</b> module handles the interaction between Perl and the database.  It maintains the connection and performs the commands (insert, update, select).</p>
+<p>The most important application of the module is that the script using it must specify when the database should attempt to save the data.  This is done through the <b>commit</b> function.  If the <b>commit</b> function does not get called successfully, none of the commands sent to the database will have been saved since the previous call to the function.</p>
+<p>There is also the <b>rollback</b> function. This allows the commands that were 
+  sent to the database since the last commit to be undone. This should only be 
+  used if an error has occurred during the execution of statement to undo the 
+  commands that led up to it. For example, if a dataset had the end date changed 
+  because of a file to be added, but the file could not be inserted, the rollback 
+  command could be used to undo the change to the dataset entry.</p>
+<p>The documentation for the <b>MySqlDatabase.pm</b> module can be found <a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/DPG_HTML/BEST_SW/katz_ncep/NCEP_EMC/lib/MySqlDatabase.pm">here</a>.</p>
+
+<a name="mod_file"></a><h2>The File Module</h2>
+<p>The <b>MySqlFile.pm</b> module is the representation of a file entry in the <i>file</i> table of the database.  It contains all of the information that is needed to properly insert a file.  It requires the file name, directory, format id, dataset id, begin date, and end date.  It will automatically determine the size and will not insert the file if it is a zero length file.</p>
+<p>The documentation for the <b>MySqlFile.pm</b> module can be found <a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/DPG_HTML/BEST_SW/katz_ncep/NCEP_EMC/lib/MySqlFile.pm">here</a>.</p>
+
+<a name="mod_dataset"></a><h2>The Dataset Module</h2>
+<p>The <b>MySqlDataset.pm</b> module is a partial representation of a dataset entry in the <i>dataset</i> table of the database.  It only contains the begin date, end date, and the dataset id.  This is only meant to be used to update the dates based on files that are inserted.  It is not meant to do any other changes to the dataset.</p>
+<p>The documentation for the <b>MySqlDataset.pm</b> module can be found <a href="/cgi-bin/dpg/doc/docperl.cgi?file=/work/DPG_HTML/BEST_SW/katz_ncep/NCEP_EMC/lib/MySqlDataset.pm">here</a>.</p>
+
+<hr>
+
+<a name="example"></a><h2>An Example</h2>
+<p>The following is an example on how to use the modules.  Error handling has not been included to leave the important content of the procedure.</p>
+<p>This example is overly simplified and is meant as a guild to how to use the modules.  They should not be used for data entry that is as simple as this example.  It is not a complete program either.  All of the non-database code has been omitted.</p>
+<pre>
+# Include the modules to be used.
+use MySqlDatabase;
+use MySqlDataset;
+use MySqlFile;
+
+my $db = MySqlDatabase->new(); # Create the database connection object.
+$db->connect(); # Establish the connection.
+
+# Define a new file
+my $file = MySqlFile->new(); # Create the file object.
+$file->setDatasetId("99.999"); # Associate file with the dataset.
+$file->setFile("/directory/path","filename.txt"); # Define the file (will automatically determine size)
+$file->setBeginDate(2004,1,1,0,0,0);
+$file->setEndDate(2004,12,31,23,59,59);
+$file->setFormatId(99); # Format Id will come from the format_id of format table
+# Don't have to set host if localhost
+# Don't have to set purpose if data
+
+# Define the dataset
+my $dataset = MySqlDataset->new("99.999"); # Create the dataset object.
+$dataset->select($db); # Load the values from the database.
+$dataset->setEndDate(2004,12,31,23,59,59); # Set the new end date of the dataset.
+
+# This error handling is overly simplified to show how to rollback and commit.
+my $err = $file->insert($db); # Insert the file into the database.
+$err .= $dataset->update($db); # Update the dataset in the database.
+
+if ($err ne "") { $db->rollback(); } # Undo the changes if an error occurred in either step
+else { $db->commit(); } # Save the changes.
+
+$db->disconnect(); # Close the connection.
+</pre>
+
+<hr>
+<div class="foot">Last Updated by Joel Clawson 2004/12/10</div>
+
+</body>
+</html>

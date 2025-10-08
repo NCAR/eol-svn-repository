@@ -1,0 +1,79 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2511
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Verdana-Bold;\f2\fnil\fcharset0 Verdana;
+\f3\fnil\fcharset0 LucidaGrande;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\})}{\leveltext\leveltemplateid1\'02\'00);}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid2\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\margl1440\margr1440\vieww13480\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\qc\partightenfactor0
+
+\f1\b\fs28 \cf0 Steps to prepare ML.xxxx datasets for ML merge scripts\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\qc\partightenfactor0
+
+\fs22 \cf0 for EOL server\
+Short List version\
+\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sl264\slmult1\pardirnatural\partightenfactor0
+\ls1\ilvl0
+\f2\b0\fs28 \cf0 {\listtext	1)	}Copy the directories and files to create the working directory\
+{\listtext	2)	}cd docs\
+{\listtext	3)	}mysql -u dw -p dmg_merged_ml\
+{\listtext	4)	}cut and paste SQL statements from dmg_ml_updates.txt to MySQL command line\
+{\listtext	5)	}commit\
+{\listtext	6)	}use zith9_dev\
+{\listtext	7)	}source zith9_chemistry_category_updates.txt;\
+{\listtext	8)	}commit\
+{\listtext	9)	}cut and paste SQL statements from zith9_updates.txt to MySQL command line\
+{\listtext	10)	} commit\
+{\listtext	11)	} exit\
+{\listtext	12)	} mysql -u dw -p dmg_merged_ml \'97tee=MLxxxx_select_results.txt\
+{\listtext	13)	} run the special select statement\
+{\listtext	14)	} exit\
+{\listtext	15)	} copy MLxxxx_select_results.txt MLxxxx_datasets-input.list\
+{\listtext	16)	} edit \'94MLxxxx_datasets-input.list" according to special directions and save\
+{\listtext	17)	} cd ../scripts\
+{\listtext	18)	} ./make_sql_updates_for_ML_datasets.pl\
+{\listtext	19)	} cd ../docs\
+{\listtext	20)	} mysql --verbose -u dw -p dmg_merged_ml --tee=MLxxxx_changes.log\
+{\listtext	21)	} source MLxxxx_datasets-changes_pt1.sql;\
+{\listtext	22)	} commit\
+{\listtext	23)	} source MLxxxx_datasets-changes_pt2.sql;\
+{\listtext	24)	} commit\
+{\listtext	25)	} exit\
+{\listtext	26)	} mysql_config_editor print --all\
+\pard\tx940\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li1440\fi-1440\sl264\slmult1\pardirnatural\partightenfactor0
+\ls1\ilvl1\cf0 {\listtext	
+\f3 \uc0\u8259 
+\f2 	}check results against those in A List of Steps\'85 doc\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\sl264\slmult1\pardirnatural\partightenfactor0
+\ls1\ilvl0\cf0 {\listtext	27)	} cd ../scripts\
+{\listtext	28)	} ./make_dataset.sh ml_read dmg_merged_ml zith_move zith9_dev\
+{\listtext	29)	} ./update_MLxxxx.pl\
+{\listtext	30)	} mysql --verbose -u dw -p dmg_merged_ml --tee=MLxxxx_update_IDs.log\
+{\listtext	31)	} source update_MLxxxx_to_archive_ident.sql;\
+{\listtext	32)	} commit\
+{\listtext	33)	} insert into classification_type (type_id, name) VALUES (4, "Platform");\
+{\listtext	34)	} commit\
+{\listtext	35)	} ./link_events.sh ml_read dmg_merged_ml zith_move zith9_dev\
+{\listtext	36)	} ./link_sites.sh ml_read dmg_merged_ml zith_move zith9_dev\
+{\listtext	37)	} ./link_category.sh ml_read dmg_merged_ml zith_move zith9_dev\
+{\listtext	38)	} ./link_platform.sh ml_read dmg_merged_ml zith_move zith9_dev\
+{\listtext	39)	} mysql -u dw -p zith9_dev\
+{\listtext	40)	} update dataset set title = TRIM(title);\
+{\listtext	41)	} use dmg_merged_ml\
+{\listtext	42)	} update dataset set name = TRIM(name);\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sl264\slmult1\pardirnatural\partightenfactor0
+\cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\sl264\slmult1\pardirnatural\qc\partightenfactor0
+\cf0 Done!\
+
+\f1\b \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\qc\partightenfactor0
+
+\f2\b0 \cf0 \
+}

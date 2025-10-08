@@ -1,0 +1,173 @@
+#! /usr/bin/perl
+
+##Module-----------------------------------------------------------------------
+# <p>Processes the input from the edit_product form.  Performs the needed
+#  database operations to add, update and delete products from the database.
+#  The script determines which button the user clicked and the performs the
+#  needed database operations.
+#
+# @author Dan Sullivan
+##Module-----------------------------------------------------------------------
+use strict;
+use lib "lib";
+use Utils;
+use Product;
+use ProductDBA;
+use State;
+use CGI;
+
+# The possible actions the user can request, or the possible buttons to click
+my %actions = ( "Add Product" => \&add,
+								"Update Product" => \&update,
+								"Delete Product" => \&delete,
+								"Cancel" => \&cancel
+							);
+
+# Get the state information
+my $state = State->new();
+my $cgi = CGI->new();
+$state->setFromParams( $cgi );
+
+proc_product( $state, $cgi );
+
+sub proc_product
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	# Determine the button clicked and do the action
+	my $action = $cgi->param( "action" );
+	$actions{$action}->($state, $cgi);
+	
+}
+
+#------------------------------------------------------------------------------
+# Populates a Product object with the values entered into the html form.
+#------------------------------------------------------------------------------
+sub getFromParams
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $pd = Product->new();
+
+	$pd->{pdname} = $cgi->param( "pdname" );
+	$pd->{pjname} = $state->{project};
+	$pd->{status} = $cgi->param( "status" );
+	$pd->{note} = $cgi->param( "note" );
+	$pd->{product_link} = $cgi->param( "product_link" );
+	$pd->{product_link_url} = $cgi->param( "product_link_url" );
+
+	return $pd;
+}
+
+#------------------------------------------------------------------------------
+# Adds a new product to the database with the values entered into the form.
+#------------------------------------------------------------------------------
+sub add
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $pd = getFromParams( $state, $cgi );
+
+	ProductDBA::insertDB( $pd );
+
+	$state->{proc_edit} = undef();
+	my $url = $state->getUrlString();
+
+	if( $state->{view} == $PROJECT )
+	{ $url = $url . "&pdanchor=" . uri_escape( $pd->{pdname} ); }
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "New Product Added" );	
+}
+
+#------------------------------------------------------------------------------
+# Cancels the action, does nothing.
+#------------------------------------------------------------------------------
+sub cancel
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $onLoad = "\"top.opener.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Action Canceled" );	
+}
+
+#------------------------------------------------------------------------------
+# Updates the entry in the database of the selected product.
+#------------------------------------------------------------------------------
+sub update
+{
+	my $state = shift;
+	my $cgi = shift;
+	
+	my $pd = getFromParams( $state, $cgi );
+
+	my $source_pdname = $cgi->param( "source_pdname" );
+	ProductDBA::updateDB( $pd, $source_pdname );
+
+	if( $state->{view} == $PRODUCT )
+	{ $state->{product} = $pd->{pdname}; }
+
+	$state->{proc_edit} = undef();
+	my $url = $state->getUrlString();
+
+	if( $state->{view} == $PROJECT )
+	{ $url = $url . "&pdanchor=" . uri_escape( $pd->{pdname} ); }
+
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Product Updated" );	
+}
+
+#------------------------------------------------------------------------------
+# Deletes the entry in the database of the selected product.
+#------------------------------------------------------------------------------
+sub delete
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $pd = getFromParams( $state, $cgi );
+	$pd->{pdname} = $cgi->param( "source_pdname" );
+
+	ProductDBA::deleteFromDB( $pd );
+
+	$state->{proc_edit} = undef();
+	my $url = $state->getUrlString( "view"=>$PROJECT );
+	my $onLoad = "\"top.opener.parent.location=" . quote( $url ) . "; top.opener.parent.focus()\""; 
+
+	showStatus( $state, $cgi, $onLoad, "Product has been Deleted" );	
+
+}
+
+#------------------------------------------------------------------------------
+# Displays the return page of all actions.  This consists of a provided 
+# message and the 'Close Window' button.
+#------------------------------------------------------------------------------
+sub showStatus
+{
+	my $state = shift;
+	my $cgi = shift;
+	my $onLoad = shift;
+	my $msg = shift;
+
+
+	println( $cgi->header() );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>$msg</title>" );
+	println( "</head>" );
+	println( "<body onLoad=$onLoad>" );
+	println( "<center><br><br><br>" );
+	println( "<b>$msg</b>" );
+	println( "<br>" );
+	println( "<input type=submit value='Close Window' onClick=\"window.close()\">" );
+
+	println( "</body></html>" );
+}
+
+1;

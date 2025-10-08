@@ -1,0 +1,37 @@
+#!/bin/perl -w
+
+use DBI;
+
+open( G08, "<goes08_sectors.txt" );
+open( G10, "<goes10_sectors.txt" );
+
+my $dbh = getConnection();
+
+while( !eof( G08 ) )
+{	
+	my $input = <G08>;
+	chop( $input );
+	my @arr = split( /\t/, $input );
+	
+	my $sql = "INSERT INTO Sector ( id, name, duration, abrv ) VALUES ( 0, \"$arr[0]\", \"$arr[1]\", \"$arr[2]\" )";
+	$dbh->do($sql) || die( "doing: ", $dbh->errstr );
+}
+while( !eof( G10 ) )
+{	
+	my $input = <G10>;
+	chop( $input );
+	my @arr = split( /\t/, $input );
+	
+	my $sql = "INSERT INTO Sector ( id, name, duration, abrv ) VALUES ( 0, \"$arr[0]\", \"$arr[1]\", \"$arr[2]\" )";
+	$dbh->do($sql) || die( "doing: ", $dbh->errstr );
+}
+
+close( G08 );
+close( G10 );
+$dbh->disconnect();
+
+sub getConnection
+{
+	return DBI->connect( "DBI:mysql:database=suldan;host=thunder",
+												"suldan", "hithere", {RaiseError=>1} ) || die( "Unable to connecto to database" );
+}

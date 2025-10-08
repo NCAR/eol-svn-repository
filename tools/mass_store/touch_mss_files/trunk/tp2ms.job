@@ -1,0 +1,624 @@
+#! /bin/csh -f
+#
+#  Archive raw ADS data tapes for various projects
+#
+#  Delete files created by mistake
+#goto deletem
+#
+#  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+#  *  Copyright 2002                                                         *
+#  *  University Corporation for Atmospheric Research, All Rights Reserved.  *
+#  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+#   
+#  Notes:  To work correctly, this script needs to be run only in a project's
+#           "Production/archive" subdirectory under the "dmg" login.
+#          For this special version, the script is run a wave at a time from
+#           the pertinent project directory.
+#          Now that "msrcp" is used, the MSCP log files only go to
+#           the Mass Store with a 32-day retention period.  These
+#           files are needed to recover the record/file structure
+#           on the tape images and to trace import problems.
+#
+#  Revised by RLR  (adapt to new MIGS "msimp" verb)                17 Mar 1999
+#  Revised by RLR  (add noglob, "start" code)                       3 May 1999
+#  Revised by RLR  (# TAPES and # FLIGHTS must match)              14 Jul 1999
+#  Revised by RLR  (add vi commands to ease flt and tape # lists)  30 Nov 1999
+#  Revised by RLR  (# SKIPS and # RECS must match, too,
+#                                               if greater than 1)  02 Dec 1999
+#  Revised by RLR (change the way $PROJ is determined)              20 Mar 2000
+#  Revised by RLR (use DCS "msrcp" command instead of MIGS)         19 Apr 2002
+#
+#  Using 'vi' to edit lines extracted from a "tapes.ppp" file:
+#   first extract only tape and flight numbers (set 'a and 'b)
+#      :'a,'bs/\(............\)\(.*\)/\1
+#   copy the list to second section (set 'c)
+#      'c:'a,'bco.
+#   produce the tape number list
+#      :'a,'bs/.......$/ \\
+#   produce the flight number list (set 'c and 'd)
+#      :'c,'ds/\(.......\)\(.*\)/\2 \\
+#
+#  To find executable (non-comment) lines (from within `vi'), type:
+#   /^[^#]
+#
+#  Check login (only "dmg" login allowed to run this script)
+set user = `whoami`
+if ($user != "dmg") then
+  echo "${0}:  Only the 'dmg' login is allowed to run this script.  Quitting."
+  exit
+endif
+#
+set noglob
+#
+#  Get initialization info
+set PROJ = `pwd | sed -e "s/\(.*\)\([0-9][0-9][0-9]\)\(.*\)/\2/g"`
+set YEAR = `grep FY $LOCAL/proj/$PROJ/Production/proj.info | sed "s/FY=//"`
+#
+#  Set machine on which "msrcp" is to run (should be $MSRCP_MACH)
+set msrcpMachine = "vivaldi"
+#
+# Set MSS Read PassWorD if restricted access
+set RPWD = ""
+#set RPWD = "-rpwd ReadPassword"
+#
+#set TYPE = "9track ermx=99 den=1600"
+#set EOT  = eotp-ignore
+#
+#set TYPE = 8200
+set TYPE = 8500
+set EOT  = eotp-end
+#
+#set SKIPS   = ^B\\*0
+#set SKIPS   = ^B\\*100000
+#set SKIPS   = ^B\\*200000
+#
+#set RECS    = F\\*1
+#set RECS    = B\\*100000
+#
+#  -----------------------------
+#
+#  1st set, 1st segment, 1st try (Proj 130)
+#   This job was done manually during a debug process -- RLR
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R0969 \
+#)
+#set FLIGHTS = ( \
+#TF01 \
+#)
+#
+#  1st set, 1st segment, 2nd try (Proj 130)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R0970 \
+#R0973 \
+#)
+#set FLIGHTS = ( \
+#TF02 \
+#TF04 \
+#)
+#
+#  2nd set, 1st segment, 1st try (Proj 151)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R0975 \
+#R0977 \
+#R0978 \
+#R0979 \
+#R0980 \
+#R0981 \
+#R0982 \
+#R0983 \
+#R0984 \
+#R0986 \
+#R0987 \
+#)
+#set FLIGHTS = ( \
+#RF02 \
+#RF03 \
+#RF04 \
+#RF05 \
+#RF06 \
+#RF07 \
+#RF08 \
+#RF09 \
+#RF10 \
+#RF11 \
+#RF12 \
+#)
+#
+#  3rd set, 1st segment, 1st try (Proj 110)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R1073 \
+#R1074 \
+#R1075 \
+#R1077 \
+#R1091 \
+#R1095 \
+#)
+#set FLIGHTS = ( \
+#TF01 \
+#TF03 \
+#TF02 \
+#FF01 \
+#S3F1 \
+#S3F2 \
+#)
+#
+#  4th set, 1st segment, 1st try (Proj 807)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R1139 \
+#)
+#set FLIGHTS = ( \
+#TF02 \
+#)
+#
+#  5th set, 1st segment, 1st try (Proj 802)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R1168 \
+#R1172 \
+#)
+#set FLIGHTS = ( \
+#TF05A \
+#TF05B \
+#)
+#
+#  6th set, 1st segment, 1st try (Proj 101)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R1270 \
+#R1271 \
+#R1273 \
+#R1274 \
+#)
+#set FLIGHTS = ( \
+#FF03 \
+#TF03 \
+#TF04A \
+#TF04B \
+#)
+#
+#  6th set, 2nd segment, 1st try (Proj 101)
+#set SKIPS   = ^B\\*100000
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R1270 \
+#)
+#set FLIGHTS = ( \
+#FF03B \
+#)
+#
+#  6th set, 3rd segment, 1st try (Proj 101)
+#set SKIPS   = ^B\\*200000
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R1270 \
+#)
+#set FLIGHTS = ( \
+#FF03C \
+#)
+#
+#  7th set, 1st segment, 1st try (Proj 143)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R1309 \
+#R1440 \
+#R1448 \
+#R1470 \
+#)
+#set FLIGHTS = ( \
+#TF05 \
+#TF04 \
+#RF08 \
+#RF27 \
+#)
+#
+#  8th set, 1st segment, 1st try (Proj 828)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R1423 \
+#R1520 \
+#R1521 \
+#R1522 \
+#)
+#set FLIGHTS = ( \
+#RF98 \
+#TF01 \
+#TF02 \
+#TF03 \
+#)
+#
+#  9th set, 1st segment, 1st try (Proj 111)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R1427 \
+#R1428 \
+#)
+#set FLIGHTS = ( \
+#TF01 \
+#TF02 \
+#)
+#
+# 10th set, 1st segment, 1st try (Proj 161)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R1587 \
+#R1588 \
+#)
+#set FLIGHTS = ( \
+#TF01 \
+#TF03 \
+#)
+#
+# 11th set, 1st segment, 1st try (Proj 130)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R0972 \
+#)
+#set FLIGHTS = ( \
+#TF03 \
+#)
+#
+# 12th set, 1st segment, 1st try (Proj 103)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R1214 \
+#R1215 \
+#R1216 \
+#R1217 \
+#R1218 \
+#)
+#set FLIGHTS = ( \
+#TF01 \
+#TF02 \
+#TF03 \
+#TF04 \
+#FF01 \
+#)
+#
+# 13th set, 1st segment, 1st try (Proj 278)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R0344 \
+#R0706 \
+#)
+#set FLIGHTS = ( \
+#TF01 \
+#TF01 \
+#)
+#
+# 13th set, 1st segment, 2nd try (Proj 278)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R0344 \
+#)
+#set FLIGHTS = ( \
+#TF01 \
+#)
+#
+# 14th set, 1st segment, 1st try (Proj 819)
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#R0581 \
+#)
+#set FLIGHTS = ( \
+#TF02 \
+#)
+#
+#   th set, 1st segment, 1st try (Proj )
+#set SKIPS   = ^B\\*0
+#set RECS    = B\\*100000
+#set TAPES   = ( \
+#)
+#set FLIGHTS = ( \
+#)
+#
+#  -----------------------------
+#
+#  Get started:
+echo "#  $#TAPES Job(s) submitted on `date`"
+#
+#  Make sure I have the same number of tapes, flights and command arguments
+if ($#TAPES != $#FLIGHTS) then
+  echo "TAPES and FLIGHTS don't match.  Quitting."
+  exit 1
+endif
+if ($#SKIPS > 1) then
+  if ($#SKIPS != $#FLIGHTS) then
+    echo "SKIPS and FLIGHTS don't match.  Quitting."
+    exit 1
+  endif
+endif
+if ($#RECS > 1) then
+  IF ($#rECS != $#FLIGHTS) then
+    echo "RECS and FLIGHTS don't match.  Quitting."
+    exit 1
+  endif
+endif
+#
+set todo = $#TAPES
+set num = 1
+while ($num <= $todo)
+  set TAPE = $TAPES[$num]
+  set FLIGHT = $FLIGHTS[$num]
+  if ($#SKIPS > 1) then
+    set SKIP = $SKIPS[$num]
+  else
+    set SKIP = $SKIPS
+  endif
+  if ($#RECS > 1) then
+    set REC = $RECS[$num]
+  else
+    set REC = $RECS
+  endif
+#
+#
+   echo \
+   rsh $msrcpMachine /jnet/shared/proj/archives/scripts/msimp_job $TAPE $TYPE \
+    $SKIP $REC $EOT $RPWD \
+    /RAF/$YEAR/$PROJ/$FLIGHT/$TAPE
+#
+#   rsh $msrcpMachine msimp -n RAF -pr 41113009 -k \
+#   -vo $TAPE -ty $TYPE -su "$SKIP $REC $EOT" -f U -blocks 50k \
+#   -blocked binary -pe 32767 -wpwd RAFDMG $RPWD \
+#    /ATD/DATA/$YEAR/$PROJ/$PLATFORM/$TYPE/$DFILE.$DATE.${ST}_$ET.$EXT
+#
+#    MIGS version (for comparison to new version above)
+#  nrnet msimp % l proj=41113009 sci=9008 r opts="-keep" blk=50000 \
+#   fmt=U cos=binary rtpd=4095 wpwd=RAFDMG type=$TYPE sub="$SKIP $REC $EOT" \
+#   vol=$TAPE flnm=
+#
+  @ num ++
+end
+#
+#  User MSCP log file is emailed to user
+echo "  Don't forget to retrieve the MSCP log files."
+#
+# Done.
+echo "#   Completed on `date`"
+exit
+#
+#  1st set, 1st segment, 1st try (Proj 130)
+#   Destination MSS path:  /RAF/1996/130/
+#  Job(s) submitted before Thu Jun 26 15:04:19 MDT 2003
+#   Request: XXIE001879 submitted to MSCP.
+#   Completed on Thu Jun 26 15:04:24 MDT 2003
+#   ../TF01/R0969 -- OK -- 26 Jun 2003 15:08:46
+#
+#  1st set, 1st segment, 2nd try (Proj 130)
+#   Destination MSS path:  /RAF/1996/130/
+#  2 Job(s) submitted on Thu Jun 26 16:45:43 MDT 2003
+#   Request: XXIE001880 submitted to MSCP.
+#   Request: XXIE001881 submitted to MSCP.
+#   Completed on Thu Jun 26 16:45:48 MDT 2003
+#   ../TF02/R0970 -- OK -- 26 Jun 2003 16:48:28
+#   ../TF04/R0973 -- OK -- 26 Jun 2003 17:00:33
+#
+#  2nd set, 1st segment, 1st try (Proj 151)
+#   Destination MSS path:  /RAF/1995/151/
+#  11 Job(s) submitted on Thu Jun 26 17:20:44 MDT 2003
+#   Request: XXIE001882 submitted to MSCP.
+#   Request: XXIE001883 submitted to MSCP.
+#   Request: XXIE001884 submitted to MSCP.
+#   Request: XXIE001885 submitted to MSCP.
+#   Request: XXIE001886 submitted to MSCP.
+#   Request: XXIE001887 submitted to MSCP.
+#   Request: XXIE001888 submitted to MSCP.
+#   Request: XXIE001889 submitted to MSCP.
+#   Request: XXIE001890 submitted to MSCP.
+#   Request: XXIE001891 submitted to MSCP.
+#   Request: XXIE001892 submitted to MSCP.
+#   Completed on Thu Jun 26 17:21:13 MDT 2003
+#  Note:  These files originally were archived to the directory:
+#           /RAF/1996/130/
+#         and were moved to the directory:
+#           /RAF/1995/151/
+#         via script .../proj/151/Production/archive/movem
+#   ../RF02/R0975 -- OK -- 26 Jun 2003 17:23:36
+#   ../RF03/R0977 -- OK -- 26 Jun 2003 17:47:28
+#   ../RF04/R0978 -- OK -- 26 Jun 2003 18:02:15
+#   ../RF05/R0979 -- OK -- 26 Jun 2003 18:08:22
+#   ../RF06/R0980 -- OK -- 26 Jun 2003 18:14:29
+#   ../RF07/R0981 -- OK -- 26 Jun 2003 18:20:55
+#   ../RF08/R0982 -- OK -- 26 Jun 2003 18:24:20
+#   ../RF09/R0983 -- OK -- 26 Jun 2003 18:32:15
+#   ../RF10/R0984 -- OK -- 26 Jun 2003 18:43:41
+#   ../RF11/R0986 -- OK -- 26 Jun 2003 18:53:30
+#   ../RF12/R0987 -- OK -- 26 Jun 2003 19:00:47
+#
+#  3rd set, 1st segment, 1st try (Proj 110)
+#   Destination MSS path:  /RAF/1996/110/
+#  6 Job(s) submitted on Fri Jun 27 10:49:36 MDT 2003
+#   Request: XXIE001893 submitted to MSCP.
+#   Request: XXIE001894 submitted to MSCP.
+#   Request: XXIE001895 submitted to MSCP.
+#   Request: XXIE001896 submitted to MSCP.
+#   Request: XXIE001897 submitted to MSCP.
+#   Request: XXIE001898 submitted to MSCP.
+#   Completed on Fri Jun 27 10:49:48 MDT 2003
+#   ../TF01/R1073 -- OK -- 27 Jun 2003 11:15:59
+#   ../TF03/R1074 -- OK -- 27 Jun 2003 11:31:16
+#   ../TF02/R1074 -- OK -- 27 Jun 2003 11:43:35
+#   ../FF01/R1077 -- OK -- 27 Jun 2003 12:02:04
+#   ../S3F1/R1091 -- OK -- 27 Jun 2003 12:17:44
+#   ../S3F2/R1095 -- OK -- 27 Jun 2003 12:2910
+#
+#  4th set, 1st segment, 1st try (Proj 807)
+#   Destination MSS path:  /RAF/1998/807/
+#  1 Job(s) submitted on Fri Jun 27 12:35:44 MDT 2003
+#   Request: XXIE001899 submitted to MSCP.
+#   Completed on Fri Jun 27 12:35:47 MDT 2003
+#   ../TF02/R1139 -- OK -- 27 Jun 2003 12:45:59
+#
+#  5th set, 1st segment, 1st try (Proj 802)
+#   Destination MSS path:  /RAF/1998/802/
+#  2 Job(s) submitted on Fri Jun 27 13:43:46 MDT 2003
+#   Request: XXIE001900 submitted to MSCP.
+#   Request: XXIE001901 submitted to MSCP.
+#   Completed on Fri Jun 27 13:43:50 MDT 2003
+#   ../TF05A/R1168 -- OK -- 27 Jun 2003 14:02:00
+#   ../TF05B/R1172 -- OK -- 27 Jun 2003 14:16:36
+#
+#  6th set, 1st segment, 1st try (Proj 101)
+#   Destination MSS path:  /RAF/1996/101/
+#  4 Job(s) submitted on Fri Jun 27 14:28:25 MDT 2003
+#   Request: XXIE001902 submitted to MSCP.
+#   Request: XXIE001903 submitted to MSCP.
+#   Request: XXIE001904 submitted to MSCP.
+#   Request: XXIE001905 submitted to MSCP.
+#   Completed on Fri Jun 27 14:28:33 MDT 2003
+#   ../FF03/R1270 -- OK -- 27 Jun 2003 16:03:11 
+#    "A" segment to be renamed via script
+#         .../proj/101/Production/archive/MSCP_out/movem
+#   ../TF03/R1271 -- OK -- 27 Jun 2003 17:09:03
+#   ../TF04A/R1273 -- OK -- 27 Jun 2003 17:29:16
+#   ../TF04B/R1274 -- OK -- 27 Jun 2003 17:53:42
+#
+#  6th set, 2nd segment, 1st try (Proj 101)
+#   Destination MSS path:  /RAF/1996/101/
+#  1 Job(s) submitted on Mon Jun 30 11:09:26 MDT 2003
+#   Request: XXIE001910 submitted to MSCP.
+#   Completed on Mon Jun 30 11:09:29 MDT 2003
+#   ../FF03B/R1270 -- OK -- 14:03:54
+#
+#  6th set, 3rd segment, 1st try (Proj 101)
+#   Destination MSS path:  /RAF/1996/101/
+#  1 Job(s) submitted on Mon Jun 30 14:31:10 MDT 2003
+#   Request: XXIE001915 submitted to MSCP.
+#   Completed on Mon Jun 30 14:31:13 MDT 2003
+#  Note:  This file originally was archived to the directory:
+#           /RAF/2000/828/
+#         and needs to be moved to the directory:
+#           /RAF/1998/101/
+#         via script .../proj/101/Production/archive/MSCP_out/movem
+#   ../FF03C/R1270 -- OK -- 17:47:43
+#
+#  7th set, 1st segment, 1st try (Proj 143)
+#   Destination MSS path:  /RAF/2000/143/
+#  4 Job(s) submitted on Fri Jun 27 14:33:21 MDT 2003
+#   Request: XXIE001906 submitted to MSCP.
+#   Request: XXIE001907 submitted to MSCP.
+#   Request: XXIE001908 submitted to MSCP.
+#   Request: XXIE001909 submitted to MSCP.
+#   Completed on Fri Jun 27 14:33:29 MDT 2003
+#   ../TF05/R1309 -- OK -- 27 Jun 2003 18:05:19
+#   ../TF04/R1440 -- OK -- 27 Jun 2003 18:24:25
+#   ../RF08/R1448 -- OK -- 27 Jun 2003 18:42:11
+#   ../RF27/R1470 -- OK -- 27 Jun 2003 18:47:30
+#
+#  8th set, 1st segment, 1st try (Proj 828)
+#   Destination MSS path:  /RAF/2000/828/
+#  4 Job(s) submitted on Mon Jun 30 13:09:46 MDT 2003
+#   Request: XXIE001911 submitted to MSCP.
+#   Request: XXIE001912 submitted to MSCP.
+#   Request: XXIE001913 submitted to MSCP.
+#   Request: XXIE001914 submitted to MSCP.
+#   Completed on Mon Jun 30 13:09:56 MDT 2003
+#   ../RF98/R1423 -- OK -- 30 Jun 2003 14:31:55
+#   ../TF01/R1520 -- OK -- 30 Jun 2003 14:48:31
+#   ../TF02/R1521 -- OK -- 30 Jun 2003 14:54:06
+#   ../TF03/R1522 -- OK -- 30 Jun 2003 15:27:52
+#
+#  9th set, 1st segment, 1st try (Proj 111)
+#   Destination MSS path:  /RAF/2002/111/
+#  2 Job(s) submitted on Mon Jun 30 15:54:09 MDT 2003
+#   Request: XXIE001916 submitted to MSCP.
+#   Request: XXIE001917 submitted to MSCP.
+#   Completed on Mon Jun 30 15:54:15 MDT 2003
+#   ../TF01/R1427 -- Failed -- 30 Jun 2003 17:56:30 (empty file)
+#   ../TF02/R1428 -- Failed -- 30 Jun 2003 18:13:16 (empty file)
+#
+# 10th set, 1st segment, 1st try (Proj 161)
+#   Destination MSS path:  /RAF/2001/161/
+#  2 Job(s) submitted on Mon Jun 30 16:23:17 MDT 2003
+#   Request: XXIE001918 submitted to MSCP.
+#   Request: XXIE001919 submitted to MSCP.
+#   Completed on Mon Jun 30 16:23:22 MDT 2003
+#   ../TF01/R1587 -- OK -- 30 Jun 2003 18:30:23
+#   ../TF03/R1588 -- OK -- 30 Jun 2003 18:40:30
+#
+# 11th set, 1st segment, 1st try (Proj 130)
+#   Destination MSS path:  /RAF/1996/130/
+#  1 Job(s) submitted on Thu Jul 17 10:39:18 MDT 2003
+#   Request: XXIE001924 submitted to MSCP.
+#   Completed on Thu Jul 17 10:39:21 MDT 2003
+#   ../TF03/R0972 -- OK -- 17 Jul 2003 10:43:57
+#
+# 12th set, 1st segment, 1st try (Proj 103)
+#   Destination MSS path:  /RAF/1998/103/
+#  5 Job(s) submitted on Thu Jul 17 10:43:18 MDT 2003
+#   Request: XXIE001925 submitted to MSCP.
+#   Request: XXIE001926 submitted to MSCP.
+#   Request: XXIE001927 submitted to MSCP.
+#   Request: XXIE001928 submitted to MSCP.
+#   Request: XXIE001929 submitted to MSCP.
+#   Completed on Thu Jul 17 10:43:28 MDT 2003
+#   ../TF01/R1214 -- OK -- 17 Jul 2003 10:50:23
+#   ../TF02/R1215 -- OK -- 17 Jul 2003 11:04:32
+#   ../TF03/R1216 -- OK -- 17 Jul 2003 11:15:28
+#   ../TF04/R1217 -- OK -- 17 Jul 2003 11:38:14
+#   ../FF01/R1218 -- OK -- 17 Jul 2003 11:50:01
+#
+# 13th set, 1st segment, 1st try (Proj 278)
+#   Mistake !!  Destination MSS path:  /RAF/1993/278/
+#  2 Job(s) submitted on Thu Jul 17 10:47:53 MDT 2003
+#   Request: XXIE001930 submitted to MSCP.
+#   Request: XXIE001931 submitted to MSCP.
+#   ../TF01/R1214 -- OK -- 17 Jul 2003 12:10:37
+#   ../TF02/R1215 -- OK -- 17 Jul 2003 12:38:35
+#     /RAF/1993/278/TF01/R1214  <-- to be deleted
+#     /RAF/1993/278/TF02/R1215  <-- to be deleted
+#
+#   Destination MSS path:  /RAF/1993/278/
+#  2 Job(s) submitted on Thu Jul 17 11:02:34 MDT 2003
+#   Request: XXIE001932 submitted to MSCP.
+#   Request: XXIE001933 submitted to MSCP.
+#   Completed on Thu Jul 17 11:02:39 MDT 2003
+#   ../TF01/R0344 -- Failed -- 17 Jul 2003 12:55:10 (RCODE = 20)
+#   ../TF01/R0706 -- OK -- 17 Jul 2003 13:14:16
+#
+# 13th set, 1st segment, 2nd try (Proj 278)
+#   Destination MSS path:  /RAF/1993/278/
+#  1 Job(s) submitted on Thu Jul 17 14:28:18 MDT 2003
+#   Request: XXIE001935 submitted to MSCP.
+#   Completed on Thu Jul 17 14:28:21 MDT 2003
+#   ../TF01/R0344 -- OK -- 17 Jul 2003 14:35:07
+#
+# 14th set, 1st segment, 1st try (Proj 819)
+#   Destination MSS path:  /RAF/1993/819/
+#  1 Job(s) submitted on Thu Jul 17 11:04:22 MDT 2003
+#   Request: XXIE001934 submitted to MSCP.
+#   Completed on Thu Jul 17 11:04:24 MDT 2003
+#   ../TF02/R0581 -- OK -- 17 Jul 2003 13:32:40
+#
+#      set, 1st segment, 1st try (Proj )
+#  Job(s) submitted on 
+#
+#deletem:
+#date
+#msrm -wpwd RAFDMG /RAF/1993/278/TF01/R1214
+#msrm -wpwd RAFDMG /RAF/1993/278/TF02/R1215
+#date
+# Job submitted on Thu Jul 17 17:33:12 MDT 2003
+# Job completed on Thu Jul 17 17:33:15 MDT 2003
+#
+exit

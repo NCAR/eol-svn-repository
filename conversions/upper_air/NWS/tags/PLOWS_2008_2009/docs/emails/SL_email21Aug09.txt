@@ -1,0 +1,72 @@
+From: Scot Loehrer <loehrer@ucar.edu>
+Date: Fri, 21 Aug 2009 09:52:15 -0600
+To: cully@ucar.edu
+Subject: Re: PLOWS 2008-2009 NWS radiosonde data - ready to check first complete
+ run of RRS and MicroArt (Topeka)
+X-Original-To: cully@eol.ucar.edu
+Delivered-To: cully@eol.ucar.edu
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <20090821003845.GB27611@merlot.eol.ucar.edu>
+X-Virus-Scanned: amavisd-new at ucar.edu
+
+Linda,
+
+I've completed checking the NWS data for PLOWS 2008-2009.  I've
+visually checked everything, so the *.qc files are the final data.
+
+One item, you included January data from TOP, PLOWS 2008-2009 is only
+February and March 2009.  Please exclude all of the data prior to
+February (except TOP_200901312332.cls which is really the 00 UTC 1 Feb
+sounding).
+
+Three soundings never left the surface and we don't want to include
+them in the final data set:
+
+KILX_20090219232609.cls
+KOAX_20090207110541.cls
+TOP_200903231104.cls
+
+Just a note for the documentation, the TOP data stops on 26 March due to
+the changeover to RRS.
+
+Thanks.
+
+Scot
+
+Linda Cully wrote:
+>Scot,
+>
+>I've "completed" the first run of the PLOWS 2008-2009 NWS sounding
+>processing
+>and you can see the output at /net/work/Projects/PLOWS/upper_air/NWS .
+>Please
+>take a close look as (as you know) I've had difficultly just getting the
+>MicroArt
+>s/w to compile and run. Let me know anything you notice because it might
+>point
+>out other issues.  If this dataset passes, then I think I can help Ben move
+>forward with the BNL processing.
+>Thanks,
+>LEC
+>
+>On 01/06/09 06:52 -0600, Scot Loehrer wrote:
+>>Linda,
+>>
+>>Don't think I ever gave you a listing of the NWS sonde sites
+>>we want for PLOWS.
+>>
+>>KABR - Aberdeen, SD
+>>KMPX - Chanhassen, MN
+>>KDVN - Davenport, IA
+>>KGRB - Green Bay, WI
+>>KILX - Lincoln, IL
+>>KOAX - Omaha/Valley, NE
+>>KSGF - Springfield, MO
+>>KTOP - Topeka, KS
+>>
+>>The time period is Feb/Mar 2009.
+>>
+>>All are RRS except for KTOP.
+>>
+>>Scot
+

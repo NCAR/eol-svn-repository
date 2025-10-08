@@ -1,0 +1,556 @@
+<HTML>
+<body bgcolor=white>
+
+<TITLE>Dataset Processing Inventory </TITLE>
+
+<center><H1><u>Dataset Processing Inventory</u></H1></center>
+<br>
+<center><H2>Updated: 15 November 2002 </H2></center>
+<br>
+<H3><b> GCIP/EAOP99-NW (LSA-NW)</b></H3>
+<br>
+<b>TOI: 01 April 1999 through 31 March 2000</b>
+<br>
+<b>AOI: (LSA-NW)
+<ul>
+   <li>  LAT: 36 to 51 (N)
+   <li>  LON: -90 to -115 (W)
+</ul>
+</b>
+<br>
+<b>CODIAC ID Prefix: 38.xxx </b>
+<br>
+<p>
+<b>Products: </b>
+<ul>
+   <li> <a href="http://data.eol.ucar.edu/codiac/dss/id=38.039"
+      target='_top'> 
+      Hourly Surface Composite</a> - DONE
+   <li> <a href="http://data.eol.ucar.edu/codiac/dss/id=38.038"
+      target='_top'>
+      Specials Surface Composite</a> - DONE  
+   <li> <a href="http://data.eol.ucar.edu/codiac/dss/id=38.040"
+      target='_top'>
+      15-min Precip Composite  </a> - DONE
+   <li> <a href="http://data.eol.ucar.edu/codiac/dss/id=38.041"
+      target='_top'>
+      Hourly Precip Composite  </a> - DONE
+   <li> <a href="http://data.eol.ucar.edu/codiac/dss/id=38.042"
+      target='_top'>
+      Daily Precip Composite   </a> - DONE
+   <li> <a href="http://data.eol.ucar.edu/codiac/dss/id=55.001"
+      target='_top'>
+      Daily COOP Surface</a> - DONE 
+   <li><a>USGS Hydrology </a> - DONE
+</ul>
+<br>
+
+<!-- ================================================= -->
+<h4><u><font color=green> EAOP99-NW TBD List as of 1 November 200</font></u></h4>
+<!-- ================================================= -->
+
+<ol> <font color=green>
+   <li><a>Hydrology Datasets (Partially Complete - First half data received)</a>
+   <li><a>Final Station List (Partially Complete) </a>
+ </font>
+</ol>
+
+<br>
+<p>
+<!-- ================================================= -->
+<h3><u>Hourly Surface Composite Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> AgriMet </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (38.022 - asis; 38.030 - Hourly QCF; 38.031 - Specials) 
+            See /work/LSANW_EAOP99/agrimet.  </td>
+   </tr>
+  
+   <tr><td> Air Quality (EPA AIRS)</td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td>  Hourly no on web site. Would have to use
+             Freedom of Information Act. SL says forget this dataset.</td>
+   </tr>
+ 
+   <tr><td> ASOS </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (38.014) See /ingest/modem/capture/asossao. </td>
+   </tr>
+
+   <tr><td> AWOS </td> 
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Included in sfc data from NCDC.  </td> 
+   </tr>
+
+   <tr><td> Colorado COAGMET </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> See /work/LSANW_EAOP99/coagmet. P.Skinner converted data.</td>
+   </tr>
+
+   <tr><td> DATSAV3 </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (38.016) Final data received and converted 17 July 2001. 
+            <a href="http://www.joss.ucar.edu/~janine/datsav3"
+               target="_top"> (See DATSAV3 status page by JAG.)
+            </a>
+
+            There is a page with plots of all the wierd values I encountered
+            hanging off the project processing page, and also off the ongoing
+            DATSAV status page - accessable thru the pages we made for Lawford's
+            visit.  It is an interesting look at how the conversion to CSLP
+            does not work at elevation, esp under cold conditions.
+            See 
+            <a href="http://www.joss.ucar.edu/dpg/EAOP99-NW/datsav_study/all.stn_info.with_bad_CSLP.html" target="_top"> See Plots on weird data values.</a>
+
+       </td>
+   </tr>
+
+   <tr><td> High Plains Climate Network (HPCN) </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>  Auto ingest. See /ingest/hpcn.
+       </td>
+   </tr>
+
+   <tr><td> Missouri MOCAWS </td> 
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (38.015) See /work/LSANW_EAOP99/mocaws.  </td> 
+   </tr>
+
+   <tr><td> Missouri MODOC </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Not here. SL no success getting these data. SL says forget it.</td>
+   </tr>
+
+   <tr><td> Tilden Fort Peck, MT sfc </td>
+       <td> <font color=green> Loaded asis.</font>     </td>
+       <td> SL - MISSING SOME DATA? 1999 data in-house. Need 2000. SL has requested. 
+            Currently, loaded on CODIAC as standalone dataset (38.003).
+            Not yet converted to QC format. SL put out.</td>
+   </tr>
+
+   <tr><td> MT Dept of transportation (RWIS) </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Converted to QCF standalone - online as 38.036.
+            Specials in 38.037.
+            Surface Loaded as is as 38.019 on 23 May 2002.
+            See /work/LSANW_EAOP99/mt_rwis.  May not use in the composite. May
+            Just be a stand-alone. Data are in higher resolution than hourly
+            and SL must tell us how to make hourly. 
+            There may be gaps in the data. SL or DG downloaded.
+            SL asked him to put the data (both LSA-NW time periods) in:
+            /ingest/gcip/lsanw2000-2001/mtdot_rwis when he has
+            collected it all. <br>
+
+            <font color=green> To Load asis: </font> <br>
+            Raw data located in /ingest/gcip/lsanw2000-2001/mtdot_rwis. <br>
+            Load only the surface (sfc) files and NOT the *.precip* files.
+            The readme is located with the raw data and is named MDT_RWIS_NW99sfc_readme.txt.
+            Use Steve Williams as the contact. <br>
+            Load raw *gunzipped* data onto CODIAC as GCIP/LSA-NW 99 dataset.
+            Load all station data files for 01 April 1999 through 31 March 2000.
+            Since these data are in month files, we can load them so
+            that users can order all the stns for one month at a time.
+            Look for junk files or oddly named files that might contain
+            junk.  LEC
+       </td>
+   </tr>
+
+   <tr><td>NPN (Wind Prof) sfc  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>(38.017)  </td>
+   </tr>
+
+   <tr><td> NRCS/SMST scan </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (38.018) (JAG) Data located in /work/LSANW_EAOP99/nrcs_scan/ </td>
+   </tr>
+
+   <tr><td> SNOTEL Hrly sfc </td>
+       <td> <font color=green> Loaded asis </font>     </td>
+       <td> Several stations report every 2hr, 6hr, 12hr instead of hourly. Lots of missing
+	    data. Stations on other side of divide included.  Raw data in
+	    /work/gallant/SNOTEL/hourly_data/snotel1999/. DS says very few sfc
+            parms, so recommend not converting to qcf. Not enough hourly values to
+	    create hourly precip dataset.  This network will only
+            be converted to daily precip. "As is" hourly = CODIAC 38.026 - PS</td>
+   </tr>
+
+   <tr><td> WY Dept of transportation (RWIS) </td> 
+       <td> <font color=blue> DONE</font>     </td>
+       <td> Surface Loaded as is 38.021 on 23 May 2002.
+            Nominal QCF loaded as 38.032 and Specials loaded as 38.033 by DW.
+            See /work/LSANW_EAOP99/wy_rwis.  <br>
+            <font color=green> To Load asis: </font> <br>
+            Raw data located in /work/LSANW_EAOP99/wy_rwis. <br>
+            These are surface data files. Data freq is 15minute.
+            The readme is located with the raw data and is named WY_RWIS_NW99sfc_readme.txt.
+            Use Steve Williams as the contact. <br>
+            Load raw *gunzipped* data onto CODIAC as GCIP/LSA-NW 99 dataset.
+            Load all station data files for 01 April 1999 through 31 March 2000.
+            The data are in year files. Include the station information file
+            as a file that gets sent to the user with every order. The stn
+            file is in the raw data area.
+            LEC
+       </td> 
+   </tr>
+
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>15 Minute Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> MT Dept of transportation (RWIS) </td>
+       <td> <font color=blue> DONE - Misc Only. </font>     </td>
+       <td> 
+            After investigation of this precip, this dataset can NOT
+            easily be converted to PQC and so SL says to put out as is, only.
+            Do Not Convert. <p>
+            Surface Loaded as 38.020 on 23 May 2002.
+            Dec 2001 - SFW says put out "as is" as a Misc. pcp dataset.
+            <p>                                                        
+            At highest resolution it is 1min. Not many stns with precip. Think
+            these data are accummulative - not sure.  The total MT RWIS may
+            work better as a standalone. Much of the MT RWIS data is in 
+            house, and SL asked Darren to collect the rest of the time 
+            period.  SL asked him to put the data (both LSA-NW time 
+            periods) in: /ingest/gcip/lsanw2000-2001/mtdot_rwis when he has
+            collected it all. 
+            <br>
+            After review of data, this dataset will be loaded asis as a
+            Miscellaneous dataset.
+            <font color=green> To Load asis: </font> <br>
+            Raw data located in /ingest/gcip/lsanw2000-2001/mtdot_rwis. <br>
+            Title this dataset: "GCIP/LSA-NW99 Montana's Remote Weather 
+            Informational System (RWIS)Miscellaneous Precipitation".
+            Load only *.precip* files, not the other sfc files.
+            The readme is located with the raw data and is named MDT_RWIS_NW99pcp_readme.txt.
+            Use Steve Williams as the contact. <br>
+            Load raw *gunzipped* data onto CODIAC as GCIP/LSA-NW 99 dataset.
+            Load all station data files for 01 April 1999 through 31 March 2000.
+            Since these data are in month files, we can load them so
+            that users can order all the stns for one month at a time.
+            Look for junk files or oddly named files that might contain
+            junk.  LEC
+      </td>
+
+   <tr><td> NCDC 15min Precip  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> DS done by 4 May 2001.  On CODIAC as 38.012.
+       </td>
+   </tr>
+
+   <tr><td> NCEP 15min Precip </td>
+       <td> <font color=blue> N/A</font>     </td>
+       <td> None exists. </td>
+   </tr>
+
+</table>
+
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Hourly Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>Pcp Extracted from HSC   </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Extract of Hrly pcp from Hrly Sfc Comp (w/o
+            NCDC, etc. </td>
+   </tr>
+
+   <tr><td>NCDC Hrly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> DS done by 4 May 2001.
+            On CODIAC as 38.013.
+       </td>
+   </tr>
+ 
+   <tr><td>NCEP Hrly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Loaded on CODIAC as standalone dataset (38.008).  </td>
+   </tr>
+
+   <tr><td>USACE Pcp  </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> In USGS? Won't receive seperately.  </td>
+   </tr>
+
+   <tr><td>SNOTEL Hourly Pcp  </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Loaded as is within the SNOTEL sfc dataset. Precip can't
+         be extracted. Maybe can get data from another source.
+         This dataset should
+         only contain true hrly sites, not bi-hourly, etc. sites.</td>
+   </tr>
+ 
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Daily Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>Dly Pcp Extracted from HPC   </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Extract of Hrly pcp from Hrly Pcp Comp (w/o
+            NCDC, etc. </td>
+   </tr>
+
+   <tr><td>NCEP Daily Pcp  </td>
+       <td> <font color=blue> DONE. </font>     </td>
+       <td> Loaded on CODIAC as standalone dataset (38.009). </td>
+   </tr>
+
+   <tr><td><a href="http://data.eol.ucar.edu/codiac/dss/id=38.011" target=_top">NDARB </a> </td>
+       <td><font color=blue> DONE </font> </td>
+       <td>NDARB -  (LEC) Need to load onto CODIAC as stand alone!
+           The North Dakota Atmospheric Resource Board
+           Precipitation Network data for both LSA-NW time
+           periods are now in-house.
+
+           The data consists of daily observations during
+           the months of April to September 1999 and 2000.
+
+           The data are in a single file:
+           /ingest/gcip/lsanw2000-2001/ndarb/ndarb.txt
+
+           SL looked at the file a little bit and it seems
+           a little disorganized (data from different months
+           are interspersed).  The file is tab delimited.
+
+           Missing values are supposed to be 99.99.                   
+       </td>
+   </tr>
+
+   <tr><td>NCDC COOP Dly Pcp  </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> Verify received as part of late Dec 2000 data order
+            from NCDC. Want Data Element format. 
+            The NCDC COOP data has been processed for EAOP99-NW.
+            The converted files are in:
+                /work/EAOP99NW_PROCESSING/NCDC_COOP/final_out/precip/*.pqc.
+            The 3 station *.out files are in the final_out directory.
+            Currently, loaded on CODIAC as standalone dataset (38.010).
+      </td>
+   </tr>
+
+   <tr><td>SNOTEL Dly Pcp </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> This is an extract from the SNOTEL Dly Sfc dataset which was
+         loaded as is. See CODIAC dataset 38.027. (DW & DS) </td>
+   </tr>
+
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Daily Composite Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>SNOTEL Dly Sfc  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Loaded as is. See CODIAC dataset 38.027.
+       </td>
+   </tr>
+
+   <tr><td>NCDC COOP Dly Sfc  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Verify received as part of late Dec 2000 data order
+            from NCDC. Want Data Element format. 
+            The NCDC COOP data has been processed for EAOP99-NW.
+            The converted files are in:
+                /work/EAOP99NW_PROCESSING/NCDC_COOP/final_out
+            under the ./precip and ./surface directories.
+            The 3 station *.out files are in the final_out directory.   
+            Loaded on CODIAC as standalone dataset (55.001).
+            Link to UMRBPP when done.
+       </td>
+   </tr>
+
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Specials Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> Specials Composite </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Combined ASOS, DATSAV3, and MT RWIS. May not do.</td>
+   </tr>   
+
+   <tr><td> ASOS Specials </td>
+       <td> <font color=blue> DONE. </font>     </td>
+       <td> On-line as stand alone in QC format.</td>
+   </tr>
+
+   <tr><td> DATSAV3 Specials </td>
+       <td> <font color=blue> DONE. </font>     </td>
+       <td> On-line as stand alone in QC format.</td>
+   </tr> 
+
+   <tr><td> MT RWIS Specials </td>
+       <td> <font color=blue> DONE.</font>     </td>
+       <td> See dataset 38.037. </td>
+   </tr>   
+
+   <tr><td> WY RWIS Specials </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> On-line as stand alone in QC format.</td>
+   </tr>
+
+   <tr><td> AgriMet Specials </td>
+       <td> <font color=blue> DONE. </font>     </td>
+       <td> On-line as stand alone in QC format. See 38.031.</td>
+   </tr>                                             
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u><a name="usgs"></a>Hydrology Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> USGS Streamflow </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Decided to re-download all this TOI from the
+            USGS web site and reprocess to have all data complete.
+<br>
+            Early 2002, DW downloaded more USGS data from USGS web site.
+            Data appears complete. New converter written for 04/99-3/00 data.
+            Approx. 1780 stns in output streamflow.
+       </td>
+   </tr>
+ 
+   <tr><td> USGS Rsrvr Daily </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> (4/99-9/99 DONE earlier) 
+            Provide as is.
+<br> 
+       <font color=blue>
+       Remaining data from states: CO received 15 Nov 2002.
+       </font>
+       </td>
+   </tr>
+
+   <tr><td> USGS COOP Rsvr </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td>(4/99-9/99 DONE earlier) 
+       Provide as is. (Month End).
+       <font color=blue>
+       Remaining data from states: CO received 15 Nov 2002.
+       </font>
+
+<br> 
+       </td>
+   </tr>
+ 
+   <tr><td> USGS Stage Only </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> (4/99-9/99 DONE earlier) 
+            Provide as is. May not get anymore. If not included
+            in other USGS data, then this may be it.
+       <font color=blue>
+       Waiting as of Oct 2002 for remaining data from states: CO.
+       </font>
+<br> 
+       </td>
+   </tr>
+
+   <tr><td>TVA Streamflow   </td>
+       <td> <font color=blue>N/A  </font>     </td>
+       <td> TVA will not release data.  </td>
+   </tr>
+
+   <tr><td> USACE Streamflow </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Should be included in the USGS data.  </td>
+   </tr>
+ 
+   <tr><td> USGS IRI </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Always requested, but never received.  In MN so not in AOI.</td>
+   </tr>
+
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Soil Moisture/Temp Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> USDA/NRCS Soil Moisture </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> On-Line. Put out as is. Verify if SL has already put these data out on CODIAC.
+            21 sites - SMST. See Data located in /work/LSANW_EAOP99/nrcs_scan/</td>
+   </tr>
+</table>
+
+<br> <br>
+<!-- ================================================= -->
+<h3><u>Profiler Datasets:</u></h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> NPN (Profiler) Winds</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) We now directly download these data from NCDC. 
+         Loaded on CODIAC as standalone dataset (55.007).</td>
+   </tr>
+</table>
+
+-------------------End GCIP/EAOP-99-LSA-NW-----------------------

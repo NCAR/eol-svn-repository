@@ -1,0 +1,134 @@
+
+use strict;
+use lib "lib";
+use ProductDBA;
+use ProjectDBA;
+use UserDBA;
+use Utils;
+
+# some kind of menu placed at the top of every page?!?
+
+sub menu
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $pjname = $state->{project};
+
+	my $project = ProjectDBA::getFromDB( $pjname );
+	my $products = getProducts( $pjname, $state );
+	my $users = getUsers( $state );
+
+	my $cols = 5;
+	my $cols_2 = $cols - 2;
+	println( "<table border=0 cellpadding=10 cellspacing=10 width=100% class=menuTable>" );
+		println( "<tr>" );
+			println( "<td colspan=$cols>" );
+			println( "<table border=0 cellpadding=0 cellspacing=0 width=100% class=menuTable>" );
+				println( "<td class=menuText width=20%>" );
+					println( "<b>TOI: </b> $project->{begin_date} through $project->{end_date}<br>" );
+					println( "<b>CODIAC ID prefix: </b> " . $project->{storm_id_prefix} . ".XXX<br>" );
+					println( "<b>Charge Number: </b> " . $project->{charge_num}  );
+				println( "</td>" );
+				println( "<td align=center class=menuTitle>$pjname Dataset Processing Inventory</td>" );
+				println( "<td class=menuText width=20%>" );
+					my $minlat = sprintf( "%7.2f", $project->{minlat} );
+					my $maxlat = sprintf( "%7.2f", $project->{maxlat} );
+					my $minlon = sprintf( "%7.2f", $project->{minlon} );
+					my $maxlon = sprintf( "%7.2f", $project->{maxlon} );
+					println( "<b>AOI: </b><br>" );
+					println( &nbsp(3), "Min Lat:  $minlat &nbsp;&nbsp; Max Lat: $maxlat<br>" );
+					println( &nbsp(3), "Min Lon:  $minlon &nbsp;&nbsp; Max Lon: $maxlon" );
+				println( "</td>" );
+			println( "</table>" );
+			println( "</td>" );
+		println( "</tr>" );
+		println( "<tr class=menuOptions>" );
+			println( "<td align=center>" );
+				println( $products );
+			println( "</td>" );
+			println( "<td align=center>" );
+				println( $users );
+			println( "</td>" );
+			println( "<td align=center>" );		
+				my $url = $state->getUrlString( "view" => $PROJECT );
+				println( "<a href=$url>Project Page</a>" );
+			println( "</td>" );
+			println( "<td align=center>" );		
+				$url = $state->getUrlString( "view" => $THREAD );
+				println( "<a href=$url>Dependencies</a>" );
+			println( "</td>" );
+			println( "<td align=center>" );		
+				println( "<a href=project_list>Home</a>" );
+			println( "</td>" );
+		println( "</tr>" );
+	println( "</table>" );
+
+	return $project;
+}
+
+sub getProducts
+{
+	my $pjname = shift;
+	my $state = shift;
+	my $products = ProductDBA::getByProject( $pjname );
+	my $urls = "[";
+
+	foreach my $pd (@$products)
+	{
+		my $u = $state->getUrlString( "view"=>$PRODUCT, "product"=>$pd->{pdname} );
+		$urls = $urls . quote( $u ) . ",";
+	}
+	chop( $urls );
+	
+	my $onChange;
+	if( $urls eq "" )
+	{
+		$onChange = "";
+	}
+	else
+	{
+		$urls = $urls . "]";
+		$onChange = "selView( this, $urls )";
+	}
+
+	my $select = "<select name=products onChange=\"$onChange\">";
+		$select = $select . "<option value=none>Select a Product</option>";
+
+	foreach my $pd (@$products)
+	{
+		$select = $select . "<option value=" . uri_escape( $pd->{pdname} ) . ">$pd->{pdname}</option>";		
+	}
+
+	$select = $select . "</select>";
+
+	return $select;
+}
+
+sub getUsers
+{
+	my $state = shift;
+	my $users = UserDBA::getAllUsers( "fname" );	
+	my $urls = "[";
+
+	foreach my $us (@$users)
+	{
+		my $u = $state->getUrlString( "view"=>$USER, "user"=>$us->{uid} );
+		$urls = $urls . quote( $u ) . ",";
+	}
+	chop( $urls );
+	$urls = $urls . "]";
+
+	my $select = "<select name=users onChange=\"selView( this, $urls )\">";
+		$select = $select . "<option value=none>Select a User</option>";
+
+	foreach my $us (@$users)
+	{
+		$select = $select . "<option value=" . uri_escape( $us->{uid} ) . ">$us->{fname} $us->{lname}</option>";		
+	}
+
+	$select = $select . "</select>";
+
+	return $select;
+}
+1;

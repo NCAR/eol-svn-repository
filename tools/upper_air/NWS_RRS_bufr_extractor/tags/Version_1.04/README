@@ -1,0 +1,114 @@
+                     Radiosonde Replacement System Info
+
+CAVEAT:  The following software has successfully been compiled and 
+executed in an IBM RISC/6000 UNIX environment.  There are no guarantees
+that it can be compile and/or executed in any environment.  
+
+This software is in the public domain, furnished "as is", without 
+technical support, and with no warranty, expressed or implied, as
+to its usefulness for any purpose.
+
+
+Software.
+
+   BUFR Decoder Program:   bufr_1_05.f
+
+      Create Object File:  xlf -c bufr_1_05.f
+
+      This software is vital for operational software to perform the
+      decoding of BUFR coded message files.  This software is a library
+      of subroutines.
+
+
+-----------------------------------------------
+   BUFR fix program for UNIX:  grabbufr.f
+
+      Compilation:  xlf -o grabbufr.exe bufr_1_05.o grabbufr.f
+
+      In order to read a BUFR data file in a UNIX environment, this 
+      software must be run to copy an original BUFR file provided by
+      the NWS to another BUFR type file.
+
+      The function of the program is to reformat the binary green words 
+      at the beginning and ending of each record.
+
+      Usage:  [path]grabbufr.exe  <InputBUFRfile>  <OutputBUFRfile>
+
+
+-----------------------------------------------
+   BUFR verbose dump program:  DumpData.f
+
+      Compilation:  xlf -o DumpData.exe bufr_1_05.o DumpData.f
+
+      This program reads a BUFR data file and generates a dump file of
+      each data value, one value per line.  All seven data messages 
+      are written to one file.  
+
+      NOTE:  An output file can easily reach 100 to 200 MB.
+
+      This program expects the input file to be called "rrs.bfr" 
+      and the output to be called "rrs.out".  In UNIX the following
+      command can be used to create soft links to data filenames.
+
+      ln -s <input_BUFR_file> rrs.bfr 
+      ln -s <output_text_file> rrs.out
+
+      Usage:  [path]DumpData.exe
+
+
+-----------------------------------------------
+   Split dump file program:  split_dump.f 
+
+      Compilation:  xlf -o split_dump.exe split_dump.f
+
+      This program divides the output from DumpData into seven data
+      message files:  
+      NC002019.DMP - Metadata,
+      NC002020.DMP - RRS raw PTU,
+      NC002021.DMP - RRS raw GPS unsmoothed,
+      NC002022.DMP - RRS raw GPS smoothed,
+      NC002023.DMP - RRS processed PTU,
+      NC002024.DMP - RRS processed GPS,
+      NC002025.DMP - RRS standard & significant levels.
+
+
+----------------------------------------------
+   RRS decode BUFR to Formatted Text Records:  rrs_decoder.f
+
+      Compilation:  xlf -o rrs_decoder.exe bufr_1_05.o rrs_decoder.f
+       
+      This program reads a BUFR data file and writes decoded data
+      to seven files.  It is intended as a tool for someone wishing
+      to decode one or more message types into fixed record formats.
+
+      The seven output message type files are:
+      NC002019.DAT - Metadata,
+      NC002020.DAT - RRS raw PTU,
+      NC002021.DAT - RRS raw GPS unsmoothed,
+      NC002022.DAT - RRS raw GPS smoothed,
+      NC002023.DAT - RRS processed PTU,
+      NC002024.DAT - RRS processed GPS,
+      NC002025.DAT - RRS standard & significant levels.
+
+    
+---------------------------------------------
+   Heading descriptions for rrs_decoder:  rrs_decoder.hdg
+
+ 
+---------------------------------------------
+   Sample Data Files:
+
+      94983_2005102412 - BUFR Data, Chanhassen, Mn, 2005/10/24/12
+
+      94983_2005102412.unix - After conversion by "grabbufr"
+
+      94983_2005102412.dump - Output from "DumpData"
+           
+      NC002019.DAT - Outputs from "rrs_decoder"
+      NC002020.DAT
+      NC002021.DAT
+      NC002022.DAT
+      NC002023.DAT
+      NC002024.DAT
+      NC002025.DAT
+

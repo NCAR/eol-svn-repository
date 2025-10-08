@@ -1,0 +1,223 @@
+#!/usr/bin/perl
+#
+# This script checks for new or updated GOES images in the ingest area, copies 
+# those found from ingest to the archive area and loads them into codiac.
+# Status is logged to fulldisk.log in this dir.
+#
+#
+#  @author Linda Echo-Hawk
+#  @version 1.1 22 March 2021
+#  Revised the MySqlDatabase constructor to pass in the  ~/.my.cnf file
+#  containing the dbase and password rather than having these hard-coded
+#  in the script. This solved a security issue.
+#
+#$Log: fulldisk_backtrack,v $
+#Revision 1.2  2006/06/28 22:31:21  joss
+#Replace Empress with MySQL
+#
+#
+# 20050603, mark, change Empress->MySQL
+# 20101206, janine 
+#	change test for copy to check for files that change, not just exist
+#	change to work in temp area and remove files 
+#	(code previously kept 2 copies of all files under /net/archive)
+# 20101209, janine
+#	modified to use MySql* insert libraries for more robust error handling.
+# 20110928, janine
+#	modified to work with new xxxxx database and run on sferic
+#
+#
+
+require "find.pl";
+
+use lib "/net/work/lib/perl/mysql";
+use DBI;
+use File::Basename;
+use MySqlDatabase;
+use MySqlDataset;
+use MySqlMSSFile;
+
+
+my $database = MySqlDatabase->new(); # use ~/.my.cnf
+
+@nominal=(0,0,0,3,3,3,6,6,6,9,9,9,12,12,12,15,15,15,18,18,18,21,21,21);
+format =
+Sat: @<<<<< Band: @<< Day: @<<<<<<< Hour: @<(@<) Min: @< Type: @<<<<
+$sat,             $band,   $day,    $hour,$nominal[$hour],$min,$type
+.
+
+
+%ids=( "goes10.vis" => "15.808",
+       "goes10.ir" => "15.807",
+       "goes8.vis" => "15.809",
+       "goes8.ir" => "15.810",
+       );
+
+%desc=( "goes10.vis" => "GOES-West Full-Disk VIS",
+        "goes10.ir" => "GOES-West10 Full-Disk IR",
+        "goes8.vis" => "GOES-East Full-Disk VIS",
+        "goes8.ir" => "GOES-East Full-Disk IR",
+        );
+
+# Traverse desired filesystems
+
+&find('/net/archive/data/pacs/images/temp');
+
+exit;
+
+sub wanted {
+    (($dev,$ino,$mode,$nlink,$uid,$gid) = lstat($_));
+#    print "looking at $_\n";
+    return unless -f _;
+    return unless ($sat,$band,$day,$hour,$min,$type) = 
+        /(.*)\.(.*)\.(\d+)_(\d\d)(\d\d)\.(.*)/;
+    $destdir = "/net/archive/data/pacs/images/$sat/$band/$day";
+    $destfile = "$sat.$band.${day}_".
+        sprintf("%02d%02d",$nominal[$hour],$min).".$type";
+    $dest = "$destdir/$destfile";
+    # If file already exists and has not changed, do nothing with it.
+    $insert_into_codiac = 1;
+    if (-f $dest) {
+	if (system("diff $name $dest") == 0) {
+            print "$destfile already exists and did not change - did nothing\n";
+            &exec(0, '/bin/rm',$name);
+	    return;
+        } else {
+	    # already exists, but changed, so copy new to archive
+	    # but don't reinsert in codiac.
+	    print "Copying new $destfile to archive\n";
+	    $insert_into_codiac = 0;
+	}
+    }
+#    print "Sat: $sat Band: $band Day: $day Hour: $hour($nominal[$hour]) ".
+#        "Min: $min Type: $type\n";
+    write;
+
+
+#    print "Copy $name to $dest\n";
+    &exec(0, '/bin/mkdir','-p',$destdir) unless -d $destdir;
+    &exec(0, '/bin/cp',$name,$dest);
+
+# Until I am confident script is working, move file to trash dir.
+# When script is proven, change this to rm the file.
+#    &exec(0, '/bin/mv',$name,"/net/archive/data/pacs/images/trash");
+    &exec(0, '/bin/rm',$name);
+
+    $tempdir = "/net/archive/data/pacs/images/temp/$sat/$band/$day";
+#    print "Cleaning ip empty tempdir $tempdir\n";
+    rmdir $tempdir;
+
+#    print "Execute codiac_load(".$ids{"$sat.$band"}.",".
+#        $desc{"$sat.$band"}.",$dest)\n";
+    if ($insert_into_codiac) {
+        &codiac_load($ids{"$sat.$band"},$desc{"$sat.$band"},$dest);
+    }
+}
+
+sub exec {
+    local($ok, @cmd) = @_;
+    foreach $word (@cmd) {
+	$word =~ s#{}#$name#g;
+    }
+    if ($ok) {
+	local($old) = select(STDOUT);
+	$| = 1;
+	print "@cmd";
+	select($old);
+	return 0 unless <STDIN> =~ /^y/;
+    }
+    chdir $cwd;		# sigh
+    system @cmd;
+    chdir $dir;
+    return !$?;
+}
+
+use POSIX "strftime";
+
+sub asctime {
+    my($time)=@_;
+    return POSIX::strftime("%D %T %Z",localtime($time));
+}
+
+sub note {
+    my($msg)=@_;
+#    open(LOG,">>/ingest/ingest/pacs/fulldisk.log") || die "Couldn't open log: $!";
+    open(LOG,">>/h/eol/dmg/HPSS_cronjobs/PACS_fulldisk.log") || die "Couldn't open log: $!";
+    print LOG asctime(time),": $msg";
+#    print asctime(time),": $msg";
+    close(LOG);
+}
+
+sub codiac_load {
+    #Subroutine to make an entry in the CODIAC on_line_phys_dir table
+    #for each image.
+
+    my($dataset_id,$desc,$dest) = @_;
+    note "ID: $dataset_id Desc: $desc Dest: $dest\n";
+
+#constants
+    #$format=34; # GIF
+    $format=60; # JPG
+
+#parse date and time from filename, in form: goes10.vis.19971215_2100.jpg
+    ($year,$mon,$mday,$hour,$min)=($dest=~/.*(\d\d\d\d)(\d\d)(\d\d)_(\d\d)(\d\d)\..*$/);
+    $date=sprintf("%04d-%02d-%02d %02d:%02d:00",$year,$mon,$mday,$hour,$min);
+    ($img_path,$img_name)=($dest=~/(.*)\/(.*)/);
+    note "Date: $date\n";
+    note "img_path: $img_path img_name: $img_name\n";
+
+
+    my $mysqlFile = MySqlFile->new();
+    # defaults to localhost. To change, use:
+    #$mysqlFile->setHost("hpss");
+    $mysqlFile->setDatasetArchiveIdent($dataset_id);
+    $mysqlFile->setFile($img_path, $img_name);
+    $mysqlFile->setFormatId($format);
+    $mysqlFile->setBeginDate($year,$mon,$mday,$hour,$min,0);
+    $mysqlFile->setEndDate($year,$mon,$mday,$hour,$min,0);
+
+    $database->connect();
+    my $msg = $mysqlFile->insert($database);
+
+    if ($msg eq "") { #if insert worked
+        my $msg = expandDate($database, $dataset_id, $mysqlFile);
+    }
+    #if expand date and insert worked
+    if ($msg eq "") { $msg .= $database->commit(); }
+    #else undo
+    else { $msg.= "Database rolled back.\n".$database->rollback(); }
+
+    $database->disconnect();
+
+    note "$msg\n";
+
+
+} 
+sub expandDate {
+    my $database = shift(@_);
+    my $dataset_id = shift(@_);
+    my $mysql = shift(@_);
+
+    # Create and load the dataset.
+    my $dataset = MySqlDataset->new($dataset_id);
+    $msg = $dataset->selectDataset($database);
+
+    # Only continue if the dataset was retreived successfully.
+    if ($msg eq "") {
+        # Load and format dates
+        my $file_begin = $mysql->getBeginDate(); $file_begin =~ s/[\s:-]//g;
+        my $file_end = $mysql->getEndDate(); $file_end =~ s/[\s:-]//g;
+        my $begin = $dataset->getBeginDate(); $begin =~ s/[\s:-]//g;
+        my $end = $dataset->getEndDate(); $end =~ s/[\s:-]//g;
+
+        # Compare the dates and change as necessary.
+        if ($file_begin < $begin) {
+            $dataset->setBeginDate(split(/[\s:-]/,$mysql->getBeginDate())); }
+        if ($file_end > $end) {
+            $dataset->setEndDate(split(/[\s:-]/,$mysql->getEndDate())); }
+
+        # Update the dataset with the new dates.
+        $msg = $dataset->updateDataset($database);
+    }
+    return $msg;
+}

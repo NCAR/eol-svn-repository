@@ -1,0 +1,52 @@
+#!/bin/perl -w
+
+# --------------------------------------------------------------
+# project_list: Displays all of the projects (and links) for the
+#  left frame.  Links each project to the category_list and
+#  list_table pages (left and body respectively)
+#
+# Expected Params: none
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use Project;
+use Utils;
+
+my @list = Project::getAll();
+
+
+println( header() );
+
+println( "<html><head><title>JOSS ML Editor</title></head>" );
+println( $css );
+println( $jscript );
+println( "<body bgcolor=#336699 link=white alink=white vlink=white text=white>" );
+
+println( "<br><br><br>" );
+#println( &nbsp(2), "<font size=+1>Select a Project:</font>" );
+#println( "<ul style=\"list-style:none\">" );
+#println( "<li><b><font size=+2>Projects</font><br><br>" );
+#println( "</ul>" );
+#println( "<ul style=\"list-style:none\">" );
+println( "<ul style=\"list-style: disc\">" );
+
+	foreach my $proj (@list)
+	{
+		my $left = "\'category_list?project=$proj->{id}\'";
+		my $body = "\'list_table?project=$proj->{id}\'";
+
+		println( "<li id=folder_item><b><a href=\"javascript: setFrames( parent, \'\', $left, $body)\">$proj->{name}</a><br><br>" );
+	}
+
+println( "</ul>" );
+
+println( "<br><br>" );
+println( &nbsp(4), "<span id=folder_item><font size=+1>",
+					"<a href=\"javascript: editProjWindow( \'edit_project?mode=add\' )\">Add New Project</a>" );
+println( "</body></html>" );
+

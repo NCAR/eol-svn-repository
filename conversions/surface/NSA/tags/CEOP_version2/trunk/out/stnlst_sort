@@ -1,0 +1,21 @@
+# cosort specifications for NCDC COOP precip 
+#
+sort			# Action
+0				# Record length (Variable)
+1               # Number of input files
+stn_info 		# input file name
+2				# Number of keys
+ascending		# Key 1 direction lat
+fixed			#	location
+22				#	starting column
+6 				#	length
+numeric			#	format
+external		#	value interpretation
+ascending		# Key 2 direction lon
+fixed			#	location
+33				#	starting column
+7 				#	length
+numeric			#	format
+external		#	value interpretation
+file            # Output
+stn_info.sort   # Output file name

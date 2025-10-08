@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/opt/local/bufr/eccodes-2.16.0-Source/examples/C/get_product_kind.c
+eccodes.h
+/opt/local/bufr/eccodes-2.16.0-Source/examples/C/eccodes.h
+
+/opt/local/bufr/eccodes-2.16.0-Source/src/eccodes.h
+grib_api.h
+/opt/local/bufr/eccodes-2.16.0-Source/src/grib_api.h
+
+/opt/local/bufr/eccodes-2.16.0-Source/src/eccodes_windef.h
+
+/opt/local/bufr/eccodes-2.16.0-Source/src/grib_api.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+sys/types.h
+-
+eccodes_windef.h
+/opt/local/bufr/eccodes-2.16.0-Source/src/eccodes_windef.h
+sys/time.h
+-
+math.h
+-
+eccodes_version.h
+/opt/local/bufr/eccodes-2.16.0-Source/src/eccodes_version.h
+
+src/eccodes_version.h
+

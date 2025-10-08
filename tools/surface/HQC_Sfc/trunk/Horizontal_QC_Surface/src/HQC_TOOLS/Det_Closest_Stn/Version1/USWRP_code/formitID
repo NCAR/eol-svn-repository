@@ -1,0 +1,3 @@
+/bin/rm web*.htm web.log
+form_webPage_output.pl USWRP_stn_list.ID 3000 > web.log
+cp *.htm /web/dmg/html/projects/bamex/.

@@ -1,0 +1,220 @@
+#!/bin/perl -w
+
+# McD
+# --------------------------------------------------------------
+# proc_update - processe the form from the proc_fields form
+#  Performs the needed database operations on the dataset and
+#  then displays a status message or allows the user to edit
+#  the dataset-category links.
+#
+# Expected Params:
+#   "editButton" - the button the user clicked, used to 
+#    determine the action.
+#  Others from the form, see the getPostedDs() subroutine.
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use State;
+use Utils;
+
+use lib "../mcd_lib";
+use MLDataset;
+use MLDatasetDBA;
+use DLNDatasetDBA;
+
+#use Time::HiRes qw(sleep);
+#use LTime;
+
+my $ds_dba = MLDatasetDBA->new();
+
+require "./edit_ds_cats";
+
+my %actions = ( "Next >>" => \&editCats, 
+								"Add/Remove Categories" => \&editCats, 
+								"Edit DLN" => \&editDLN, 
+								"Done" => \&updateCats, 
+								"Update" => \&updateDs, 
+								"Add Dataset" => \&addDs, 
+								"Delete" => \&deleteDs, 
+								"Cancel" => \&cancelDs );
+
+my $action = param( "editButton" );
+
+my $project = param( "project" );
+
+my $ds = getPostedDs(); 
+my $state = State->new();
+$state->setFromParams();
+
+$actions{$action}->();
+
+#LTime::log( "$0 action=$action" );
+
+sub showPage
+{
+	my $msg = shift;
+	my $load = shift;
+	my $on_load = "";
+	if( $load )
+	{
+		my $url = $state->getUrl() . "&hlight=$ds->{id}";
+		$on_load = "onLoad=\"setFrames( top.opener.parent, null, null,	\'$url\'); top.opener.parent.focus();\"";
+	}
+	else
+	{
+		$on_load = "onLoad=\"top.opener.parent.focus()\"";
+	}
+	println( header() );
+
+	println( "<html><head><title>Dataset Edit</title></head>" );
+	println( $css );
+	println( $jscript );
+
+	println( "<body bgcolor=#e9e9e9 link=white alink=white vlink=white text=black $on_load>" );
+	println( "<center><table border=0 cellpadding=3 cellspacing=8 width=95% bgcolor=#e9e9e9>" );
+		println( "<tr bgcolor=#336699><td><font color=white size=+1>Edit/Add Dataset</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td align=center><b>$msg</b></td></tr>" );
+		println( "<tr><td align=center><input type=submit value=\"Close Window\" onClick=\"window.close();\"></td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+		println( "<tr><td>&nbsp;</td></tr>" );
+
+	println( "</body></html>" );
+}
+
+sub forward
+{
+	my $page = shift;
+	print( "Location: $page\n\n" );
+
+	exit 0;
+}
+
+sub updateDs
+{
+	$ds_dba->updateDB( $ds );
+
+	showPage( "Dataset has been updated.", 1 );
+}
+
+sub addDs
+{
+	$ds->{id} = -1;
+
+	editCats();
+}
+
+sub deleteDs
+{
+	$ds_dba->deleteDB( $ds );
+
+	showPage( "Dataset has been deleted.", 1 );
+}
+
+sub cancelDs
+{
+	$ds->{id} = -1;
+
+	showPage( "Action Canceled", 0 );
+}
+
+sub editCats
+{
+	my $mode = "update";
+
+	if( $ds->{id} == -1 )
+	{
+		$ds_dba->insertDB( $ds );	
+		$ds_dba->linkToProject( $ds->{id}, $project );
+		my $dln_dba = DLNDatasetDBA->new();
+		$dln_dba->insertBlank( $ds->{id} );
+		$mode = "add";
+	}
+	else
+	{
+		$ds_dba->updateDB( $ds );
+	}
+
+	edit_ds_cats( $ds, $mode );
+}
+
+sub editDLN
+{
+	my $mode = "update";
+
+	$ds_dba->updateDB( $ds );
+
+	require "./edit_dln_form";
+
+	edit_dln_form( $ds, $mode, $state );
+}
+
+sub getPostedDs
+{
+	my $ds = Dataset->new();
+
+	$ds->{id} = param( "id" );
+	$ds->{title} = param( "title" );
+	$ds->{storm_id} = param( "storm_id" );
+
+	my $year = param( "year" );
+	my $month = param( "month" );
+	my $day = param( "day" );
+	if( defined( $year ) && defined( $month ) && defined( $day ) )
+	{	
+		$ds->{date} = param( "year" ) . "-" . param( "month" ) . "-" . param( "day" );	
+	}
+	else
+	{
+		$ds->{date} = undef();
+	}
+	$ds->{remote_url} = param( "remote_url" );
+	$ds->{doc_url} = param( "doc_url" );
+
+	my $status = param( "status" );
+	$status = "none" if( !$status );	
+	my @stat;
+	@stat = (0,0,0 ) if( $status eq "none" );
+	@stat = (1,0,0 ) if( $status eq "in_progress" );
+	@stat = (0,1,0 ) if( $status eq "new" );
+	@stat = (0,0,1 ) if( $status eq "updated" );
+	$ds->{status}->{in_progress} = $stat[0];	
+	$ds->{status}->{new} = $stat[1];	
+	$ds->{status}->{updated} = $stat[2];	
+	$ds->{status}->{dataset} = $ds->{id};
+	$ds->{hide} = ( defined( &param( "hide" ) ) )? 1: 0;
+
+	$ds->checkDefined();
+
+	return $ds;
+}
+
+sub updateCats
+{
+	my @cats = param( "category" );
+
+	if( @cats )
+	{
+		$ds_dba->updateCategories( $ds, \@cats );
+	}
+	else
+	{
+		$ds_dba->updateCategories( $ds );
+	}
+
+	my $mode = param( "mode" );
+	my $msg = "Dataset has been updated.";
+	if( defined( $mode ) && $mode eq "add" )
+	{
+		$msg = "Dataset has been added."
+	}
+	
+	showPage( $msg, 1 );
+}
+

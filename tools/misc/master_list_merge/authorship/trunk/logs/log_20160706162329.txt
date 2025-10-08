@@ -1,0 +1,137 @@
+> groovy authorshipConnect.groovy SHEBA
+
+Created log file:	logs/log_20160706162329.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+--------------------------------------------------------------------------------
+  SHEBA:  13.520
+		Plueddemann, Albert, Takatoshi Takizawa, Richard Krishfield
+Which of these contacts matches this author:	Albert Plueddemann
+
+		290	aplueddemann	Albert Plueddemann	Woods Hole Oceanographic Institution
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 290
+
+Unable to find contact 290 for data set 13.520. Will insert contact.
+Found contact 768 for data set 13.524 with sort_key 0 (instead of 1). Will update sort_key.
+--------------------------------------------------------------------------------
+  SHEBA:  13.801
+		Tucker III, W. B. 
+Which of these contacts matches this author:	W. B.  Tucker III
+
+There may be an error in the Master List for this dataset.
+ Please check that the first author is lastname, firstname.
+
+		743	fschapin	F. Stuart (Terry) Chapin III	null
+		1246	null	Benjamin Crane Johnson III	University of Alaska Fairbanks
+		1303	null	Walter B. "Terry" Tucker III	Cold Regions Research and Engineering Laboratory (CRREL)
+		2023	null	James Michael Tapp III	University of Alaska Fairbanks
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1303
+
+--------------------------------------------------------------------------------
+  SHEBA:  13.818
+		de Roode, S. and C. Bretherton
+Which of these contacts matches this author:	S. de Roode
+
+		1315	null	Stephan R. de Roode	Institute for Marine and Atmospheric Research
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1315
+
+Found contact 175 for data set 13.823 with sort_key 0 (instead of 1). Will update sort_key.
+Found contact 1065 for data set 13.823 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 1257 for data set 13.823 with sort_key 2 (instead of 3). Will update sort_key.
+Found contact 1229 for data set 13.823 with sort_key 3 (instead of 4). Will update sort_key.
+Found contact 175 for data set 13.826 with sort_key 0 (instead of 1). Will update sort_key.
+Found contact 1065 for data set 13.826 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 1257 for data set 13.826 with sort_key 2 (instead of 3). Will update sort_key.
+Found contact 1229 for data set 13.826 with sort_key 3 (instead of 4). Will update sort_key.
+Found contact 1303 for data set 13.826 with sort_key 4 (instead of 5). Will update sort_key.
+Found contact 336 for data set 13.828 with sort_key 0 (instead of 1). Will update sort_key.
+Found contact 1249 for data set 13.828 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 175 for data set 13.828 with sort_key 2 (instead of 3). Will update sort_key.
+--------------------------------------------------------------------------------
+  SHEBA:  13.829
+		Perovich, D., T. Grenfell, B. Light, J. Richter-Menge, M. Sturm, W. Tucker, H. Eicken, G. A. Maykut
+Which of these contacts matches this author:	G. A. Maykut
+
+		2178	null	Gary A. Maykut	University of Washington
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 2178
+
+Found contact 175 for data set 13.829 with sort_key 0 (instead of 1). Will update sort_key.
+Found contact 1065 for data set 13.829 with sort_key 1 (instead of 2). Will update sort_key.
+Found contact 1257 for data set 13.829 with sort_key 2 (instead of 3). Will update sort_key.
+Found contact 1229 for data set 13.829 with sort_key 3 (instead of 4). Will update sort_key.
+Found contact 336 for data set 13.829 with sort_key 4 (instead of 5). Will update sort_key.
+Found contact 1303 for data set 13.829 with sort_key 5 (instead of 6). Will update sort_key.
+Found contact 646 for data set 13.829 with sort_key 6 (instead of 7). Will update sort_key.
+Found contact 2178 for data set 13.829 with sort_key 7 (instead of 8). Will update sort_key.
+Found contact 442 for data set 13.833 with sort_key 0 (instead of 1). Will update sort_key.
+Found contact 701 for data set 13.833 with sort_key 1 (instead of 2). Will update sort_key.
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 290, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '13.520';
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 4934 and contact_id = 768;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 4995 and contact_id = 175;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 4995 and contact_id = 1065;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 4995 and contact_id = 1257;
+
+update dataset_contact set sort_key = 4 where iso_citation_role = 'author' and dataset_id = 4995 and contact_id = 1229;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 4998 and contact_id = 175;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 4998 and contact_id = 1065;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 4998 and contact_id = 1257;
+
+update dataset_contact set sort_key = 4 where iso_citation_role = 'author' and dataset_id = 4998 and contact_id = 1229;
+
+update dataset_contact set sort_key = 5 where iso_citation_role = 'author' and dataset_id = 4998 and contact_id = 1303;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 5000 and contact_id = 336;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 5000 and contact_id = 1249;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 5000 and contact_id = 175;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 5001 and contact_id = 175;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 5001 and contact_id = 1065;
+
+update dataset_contact set sort_key = 3 where iso_citation_role = 'author' and dataset_id = 5001 and contact_id = 1257;
+
+update dataset_contact set sort_key = 4 where iso_citation_role = 'author' and dataset_id = 5001 and contact_id = 1229;
+
+update dataset_contact set sort_key = 5 where iso_citation_role = 'author' and dataset_id = 5001 and contact_id = 336;
+
+update dataset_contact set sort_key = 6 where iso_citation_role = 'author' and dataset_id = 5001 and contact_id = 1303;
+
+update dataset_contact set sort_key = 7 where iso_citation_role = 'author' and dataset_id = 5001 and contact_id = 646;
+
+update dataset_contact set sort_key = 8 where iso_citation_role = 'author' and dataset_id = 5001 and contact_id = 2178;
+
+update dataset_contact set sort_key = 1 where iso_citation_role = 'author' and dataset_id = 4991 and contact_id = 442;
+
+update dataset_contact set sort_key = 2 where iso_citation_role = 'author' and dataset_id = 4991 and contact_id = 701;
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

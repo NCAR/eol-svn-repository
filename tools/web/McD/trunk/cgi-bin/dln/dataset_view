@@ -1,0 +1,436 @@
+
+use lib "lib";
+use DLNUtils;
+use State;
+
+use lib "../mcd_lib";
+use DLNDatasetDBA;
+use MLDatasetDBA;
+use UserDBA;
+use ProjectDBA;
+
+sub view_dataset
+{
+	my $state = shift;
+	my $cgi = shift;
+
+	my $dba = DLNDatasetDBA->new();
+	my $list = getList( $state, $dba );
+	my $size = @{ $list };
+
+	my $dataset = $list->[$state->{dataset_num}];
+
+	my $title = getTitle( $state );
+	my $title_bar = getDsTitleBar( $title, $state->{dataset_num} + 1, $size );
+	my $nav_bar = getNavBar( $state, $size, $dataset );
+	my $projects = getProjects( $dataset->{id}, $dba );
+
+	my $ext_contact = getUserField( $dataset->{ext_contact}, $dataset->{ext_email} );
+	my $int_contact = getUserField( &getUserNameAndEmail( $dataset->{int_contact} ) );
+	my $loader = getUserField( &getUserNameAndEmail( $dataset->{loader} ) );
+	my $checker = getUserField( &getUserNameAndEmail( $dataset->{checker} ) );
+
+	my $documented = getFlag( $dataset->{status}->{documented} );
+	my $checked = getFlag( $dataset->{status}->{checked} );
+	my $loaded = getFlag( $dataset->{status}->{loaded} );
+	my $master = getFlag( &getMaster( $dataset ) );
+
+	my $remote_url = getRemoteUrl( $dataset->{remote_url} );
+
+	print( cr(
+		$cgi->header(),
+		"<html>",
+			"<head><title>DLN: Dataset View</title>",
+			$body_css,
+			$jscript,
+			"</head>",
+		
+			"<body>",
+			"<br>",
+			"<center>",
+			"<table border=0 cellpadding=1 cellspacing=1 width=99%>",
+				"<tr>",
+					"<td width=100%>",
+						$title_bar,
+					"</td>",
+				"</tr>",
+
+		 	"<tr class=blankBar><td width=100%>", &nbsp(4),
+				"<a href=$help_src#dln_v_detail target=_blank><img border=0 src=$img_src/help.gif alt=\"ML/DLN Help\"></a>",
+				&nbsp(3),
+				"<a href=controller?" . $state->getUrlString() . "><img border=0 src=$img_src/refresh.gif alt=\"Refresh\"></a>",
+			"</td></tr>",
+
+				"<tr>",
+					"<td width=100%>",
+						$nav_bar,
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td width=100%>",
+						"<table border=0 cellpadding=4 cellspacing=1 class=dsHead width=100%>",
+							"<tr>",
+								"<td align=right width=15%>",
+									"<b>Title: </b>",
+								"</td>",	
+								"<td width=85%>",
+									"$dataset->{title}",
+								"</td>",
+							"</tr>",
+							"<tr>",
+								"<td align=right width=15%>",
+									"<b>Date: </b>",
+								"</td>",	
+								"<td width=85%>",
+									"$dataset->{date}",
+								"</td>",
+							"</tr>",
+							"<tr>",
+								"<td align=right width=15%>",
+									"<b>Storm Id: </b>",
+								"</td>",	
+								"<td width=85%>",
+									"<a href=http://www.joss.ucar.edu/cgi-bin/codiac/dss?$dataset->{storm_id} target=_blank>$dataset->{storm_id}</a>",
+								"</td>",
+							"</tr>",
+							"<tr>",
+								"<td align=right width=15%>",
+									"<b>Project: </b>",
+								"</td>",	
+								"<td width=85%>",
+									"$projects",
+								"</td>",
+							"</tr>",
+						"</table>",
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td width=100%>",
+						"<table border=0 cellpadding=3 cellspacing=3 width=100% class=dsBody>",
+							"<tr>",
+								"<td align=right width=15% nowrap>",
+									"<b>Ingest Location: </b>",
+								"</td>",
+								"<td width=20% nowrap>",
+									"$dataset->{ingest}",
+								"</td>",
+								"<td>&nbsp;</td>",
+								"<td>&nbsp;</td>",
+							"</tr>",
+
+							"<tr>",
+								"<td align=right width=15% nowrap>",
+									"<b>Archive Location: </b>",
+								"</td>",
+								"<td width=20% nowrap>",
+									$dataset->{archive},
+								"</td>",
+								"<td>&nbsp;</td>",
+								"<td>&nbsp;</td>",
+							"</tr>",
+
+							"<tr>",
+								"<td align=right width=15% nowrap>",
+									"<b>External Contact: </b>",
+								"</td>",
+								"<td width=20% nowrap>",
+									$ext_contact,
+								"</td>",
+								"<td>&nbsp;</td>",
+								"<td>&nbsp;</td>",
+							"</tr>",
+
+							"<tr>",
+								"<td align=right width=15% nowrap>",
+									"<b>Internal Contact: </b>",
+								"</td>",
+								"<td width=20% nowrap>",
+									$int_contact,
+								"</td>",
+								"<td width=10% nowrap>",
+									"<b>In Master List",
+								"</td>",
+								"<td>",
+									$master,
+								"</td>",
+							"</tr>",
+
+							"<tr>",
+								"<td>&nbsp;</td>",
+								"<td>&nbsp;</td>",
+								"<td width=10% nowrap>",
+									"<b>Readme Complete: </b>",
+								"</td>",
+								"<td>",
+									$documented,
+								"</td>",
+							"</tr>",
+
+
+							"<tr>",
+								"<td align=right width=15% nowrap>",
+									"<b>Loader: </b>",
+								"</td>",
+								"<td width=20% nowrap>",
+									$loader,
+								"</td>",
+								"<td width=10% nowrap>",
+									"<b>Dataset Loaded:</b>",
+								"</td>",
+								"<td>",
+									$loaded,
+								"</td>",
+							"</tr>",
+
+							"<tr>",
+								"<td align=right width=15% nowrap>",
+									"<b>Checker: </b>",
+								"</td>",
+								"<td width=20% nowrap>",
+									$checker,
+								"</td>",
+								"<td width=10% nowrap>",
+									"<b>Dataset Checked:</b>",
+								"</td>",
+								"<td>",
+									$checked,
+								"</td>",
+							"</tr>",
+
+							"<tr>",
+								"<td align=right width=15% nowrap>",
+									"<b>Remote URL: </b>",
+								"</td>",
+								"<td width=20% nowrap>",
+									$remote_url,
+								"</td>",
+								"<td>&nbsp;</td>",
+								"<td>&nbsp;</td>",
+							"</tr>",
+
+						"</table>",
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td width=100% bgcolor=#dcdcdc align=center>",
+						"<b><font size=+1>Notes</b></font>",
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td width=100% bgcolor=white>",
+						"<pre>$dataset->{notes}</pre>",
+						"<br><br>",
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td width=100%>",
+						$nav_bar,
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td width=100%>",
+						$title_bar,
+					"</td>",
+				"</tr>",
+						
+			"</table>",
+
+			"</body></html>" ) );
+
+}
+
+sub getDsTitleBar
+{
+	my $title = shift;
+	my $ds_num = shift;
+	my $total = shift;
+
+	return cr(
+		"<table border=0 cellpadding=0 cellspacing=0 width=100%>",
+			"<tr class=titleBar>",
+				"<td width=50%>",
+					$title,
+				"</td>",
+				"<td width=50% align=right>",
+					"Dataset $ds_num of $total &nbsp;&nbsp;",
+				"</td>",
+			"</tr>",
+		"</table>" );
+}
+
+sub getNavBar
+{
+	my $state = shift;
+	my $size = shift;
+	my $ds = shift;
+	my $url = "controller?" . $state->getUrlString( 'view'=>$State::LIST );
+	my $return = "<a href=$url>Return to ";
+
+	if( $state->{list_view_type} == $State::PROJECT )
+	{
+		$return = $return . "Project";
+	}
+	elsif( $state->{list_view_type} == $State::LOADER )
+	{
+		$return = $return . "Loader";
+	}
+	elsif( $state->{list_view_type} == $State::CHECKER )
+	{
+		$return = $return . "Checker";
+	}
+	elsif( $state->{list_view_type} == $State::SEARCH )
+	{
+		$return = $return . "Search";
+	}
+
+	$return = $return . "</a>";
+
+	my $arrows;
+	if( $state->{dataset_num} == 0 )
+	{
+		$arrows = $arrows . "<img src=$img_src/prev-grey.gif border=0>";
+	}
+	else
+	{
+		my $url = "controller?" . $state->getUrlString( 'dataset_num'=>$state->{dataset_num}-1 );
+		$arrows = $arrows . "<a href=$url><img src=$img_src/prev.gif border=0></a>";
+	}
+
+	if( $state->{dataset_num} + 1 == $size )
+	{
+		$arrows = $arrows . &nbsp(2) . "<img src=$img_src/next-grey.gif border=0>";
+	}
+	else
+	{
+		my $url = "controller?" . $state->getUrlString( 'dataset_num'=>$state->{dataset_num}+1 );
+		$arrows = $arrows . &nbsp(2) . "<a href=$url><img src=$img_src/next.gif border=0></a>";
+	}
+
+	my $qcodiac = "";
+	if( $ds->{storm_id} && $ds->{storm_id} ne "99.99" )	
+	{
+		my $qurl = "/cgi-bin/dpg/qcodiac/supervisor?storm_id=$ds->{storm_id}&" .
+							"results=ds_description&results=on_ln_pd&results=off_ln_pd";
+		$qcodiac= "<a href=$qurl target=_blank>&nbsp;QCODIAC&nbsp;</a>";
+	}	
+
+
+	my $edit_url = "controller?mode=update&ds_id=$ds->{id}&" . $state->getUrlString( 'edit'=>1 );
+	return cr(
+		"<table border=0 cellpadding=0 cellspacing=0 width=100%>",
+			"<tr class=navBar>",
+				"<td width=33% class=editCell align=left>",
+						"<a href=\"javascript: editWindow( \'$edit_url\' )\">&nbsp;EDIT&nbsp;</a>",
+						$qcodiac,
+				"</td>",
+				"<td width=33% align=center>",
+					$arrows,
+				"</td>",
+				"<td width=33% align=right class=editCell align=right>",
+					$return,
+				"</td>",
+			"</tr>",
+		"</table>" );	
+						
+}
+
+sub getUserField
+{
+	my $name = shift;
+	my $email = shift;
+
+	my $field;
+	if( !$name )
+	{
+		$field = "&nbsp;";
+	}
+	else
+	{
+		$field = $name;
+		if( $email )
+		{
+			$field = "<a href=\"mailto:$email\">$name</a> &nbsp;&nbsp;&lt;" . $email . "&gt";
+		}
+	} 
+
+	return $field;
+}
+
+sub getUserNameAndEmail
+{
+	my $user_id = shift;
+
+	my $dba = UserDBA->new();
+	my $user = $dba->getFromDB( $user_id );
+
+	return( $user->{display_name}, $user->{email} );
+}
+
+sub getFlag
+{
+	my $flag = shift;
+
+	if( $flag )
+	{
+		return "<font color=blue><b>YES</font>";
+	}
+	else
+	{
+		return "<font color=red><b>NO</font>";
+	}
+
+}
+
+sub getMaster
+{
+	my $dataset = shift;
+
+	my $dba = MLDatasetDBA->new();
+	my $ml_ds = $dba->getFromDB( $dataset->{id} );
+
+	if( $ml_ds )
+	{
+		return !($ml_ds->{hide});
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+sub getProjects
+{
+	my $ds_id = shift;
+	my $dba = shift;
+
+	my @projects = $dba->getProjects( $ds_id );
+	my $ret = "";
+
+	foreach my $proj (@projects)
+	{
+		$ret = $ret . "$proj->{name}<br>";
+	}
+	return $ret;
+}
+
+sub getRemoteUrl
+{
+	my $url = shift;
+
+	if( $url && $url ne "" )
+	{
+		return "<a href=$url target=_blank>$url</a>";
+	}
+	else
+	{
+		return "&nbsp;";
+	}
+}
+1;
+

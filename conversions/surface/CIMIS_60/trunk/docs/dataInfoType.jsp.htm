@@ -1,0 +1,632 @@
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+
+
+
+<link rel="stylesheet" href="default.css" type="text/css">
+
+
+
+<html>
+
+        <head>
+                <META name="title" content="CIMIS - [
+		Data Types
+	]"/> <!-- mandatory -->
+                <meta name="Title" content="Department of Water Resources - CIMIS Homepage">
+                <meta name="Title" content="DWR - CIMIS Homepage">
+                <meta name="Title" content="CIMIS Homepage">
+                <meta name="Title" content="California Irrigation Management Information System Homepage">
+                <meta name="Title" content="California Irrigation Management Information System">
+
+                <meta name="Creator" content="The State of California Department of Water Resources">
+                <meta name="Creator" content="Contrator: Carlos Oretega, DWR: DTS Staff, and OWUE Staff">
+                <meta name="Creator" content="Carlos Ortega, Kent Frame, Bekele Temesgen, Don Hatch">
+
+                <meta name="Description" content="Calculation of Evapotranspiration (ETo) from sensor readings at over 100 weather stations throughout California.">
+
+                <meta name="Portal Category" content="Environmental and Natural Resources">
+                <meta name="Language" content="English">
+                <meta name="Date" content="2003-11-15">
+
+                <meta name="Subject" content="irrigation management; dew point; evapotranspiration">
+
+                <meta name="Keywords" content="weather stations; ETo; relative humidity; soil temperature">
+                <meta name="Keywords" content="weather on the web; cimis; solar radiation; net radiation">
+                <meta name="Keywords" content="cimis contacts; irrigation consultants">
+
+                <meta name="Department" content="Department of Water Resources">
+
+                <meta name="Type" content="Text; data; image">
+                <meta name="Format" content="Text/HTML; XML">
+
+                <meta name="Coverage" content="CAlifornia">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+		<title>CIMIS - [
+		Data Types
+	]</title>
+
+                <style>
+                .menulines{
+                border:1px solid #E5F2EB;
+                }
+
+                .menulines a{
+                text-decoration:none;
+                color:black;
+                }
+                </style>
+
+                <script language="JavaScript1.2">
+                <!--
+                var MENU_BORDER_COLOR		= '#999999'
+                var MENU_MOUSEOVER_COLOR	= '#cccccc'
+                var MENU_CURRENTPAGE_COLOR	= '#E5F2EB'
+
+                ie4 = ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4 ));
+
+                function showHide(el, checkValue)
+                {
+                    if(checkValue.checked) {
+                        el.style.visibility = "visible";
+                        el.style.display = ""
+                    }
+                    else {
+                        el.style.visibility = "hidden";
+                        el.style.display = "none";
+                    }
+                }
+
+                function hideShow(el, checkValue)
+                {
+                    if(checkValue.checked) {
+                        el.style.visibility = "hidden";
+                        el.style.display = "none";
+                    }
+                    else {
+                        el.style.visibility = "visible";
+                        el.style.display = ""
+                    }
+                }
+
+                /*
+                Highlight menu effect script: By Dynamicdrive.com
+                For full source, Terms of service, and 100s DTHML scripts
+                Visit http://www.dynamicdrive.com
+                */
+
+                function borderize(what,bcolor,bkcolor){
+                what.style.borderColor=bcolor
+                what.style.backgroundColor=bkcolor
+                }
+
+                function borderize_on(e){
+                if (document.all)
+                source3=event.srcElement
+                else if (document.getElementById)
+                source3=e.target
+                if (source3.className=="menulines"){
+                borderize(source3, MENU_BORDER_COLOR, MENU_MOUSEOVER_COLOR)
+                }
+                else{
+                while(source3.tagName!="TABLE"){
+                source3=document.getElementById? source3.parentNode : source3.parentElement
+                if (source3.className=="menulines")
+                borderize(source3, MENU_BORDER_COLOR, MENU_MOUSEOVER_COLOR)
+                }
+                }
+                }
+
+                function borderize_off(e){
+                if (document.all)
+                source4=event.srcElement
+                else if (document.getElementById)
+                source4=e.target
+                if (source4.className=="menulines")
+                borderize(source4, MENU_CURRENTPAGE_COLOR, MENU_CURRENTPAGE_COLOR)
+                else{
+                while(source4.tagName!="TABLE"){
+                source4=document.getElementById? source4.parentNode : source4.parentElement
+                if (source4.className=="menulines")
+                borderize(source4, MENU_CURRENTPAGE_COLOR, MENU_CURRENTPAGE_COLOR)
+                }
+                }
+                }
+                //-->
+                </script>
+	</head>
+<body>
+<table align="center" width="740" cellspacing="0" cellpadding="0">
+	<tr valign="top">
+		<td width="740" colspan="5">
+
+
+
+<map name="tabFolder"> 
+  <area shape="rect" coords="7,0,77,29" 
+	href="welcome.jsp" alt="Welcome" />
+  <area shape="rect" coords="78,0,147,29"
+	href="info.jsp" alt="Information Center" />
+  <area shape="rect" coords="148,0,215,29" 
+	href="data.jsp" alt="Data"/>
+  <area shape="rect" coords="216,0,290,29" 
+	href="resource.jsp" alt="Resource Center"/>
+  <area shape="rect" coords="291,0,362,29" 
+	href="myCimis.jsp" alt="My CIMIS"/>
+  <!--area shape="rect" coords="577,0,740,13" 
+	href="http://www.water.ca.gov"  target="mm_window" alt="Department of Water Resources"/-->
+  <!--area shape="rect" coords="577,14,740,25" 
+	href="http://www.owue.water.ca.gov"  target="mm_window" alt="Office of Water Use Efficiency"/-->
+</map>
+<!--=========================================================================-->
+<!--                               Set Header                                -->
+<!--=========================================================================-->
+<table align="center" border="0" cellspacing="0" cellpadding="0" width="740">
+  <tr> 
+    <td align="right"><img src="images/en_cali_logo.gif" BORDER="0" HEIGHT="23" WIDTH="740" usemap="#Map" alt="California - The Golden State"></TD>
+  </tr>
+</table>
+<table align="center" width="740" cellspacing="0" cellpadding="0">
+  <tr bgcolor="7FB2D1"> 
+    <td colspan="3"> <img src="images/en_cimis_banner.gif" width="740" height="96" border="0"></td>
+  </tr>
+  <tr> 
+    <td colspan="3"> <img src="images/en_tf_data_reports.gif" width="740" 
+    height="29" usemap="#tabFolder" border="0"></td>
+  </tr>
+  <tr> 
+    <td width="1" height="1" bgcolor="#BFB7B1" valign="top"/> 
+    <td width="668" bgcolor="#008136" valign="top">&nbsp;</td>
+    <td width="1" height="1" bgcolor="#BFB7B1" valign="top"/> 
+  </tr>
+</table>
+<map name="Map"> 
+  <area shape="rect" coords="609,1,665,23" href="http://www.ca.gov" target="mm_window" alt="California Home Page" title="California Home Page">
+  <area shape="rect" coords="676,1,747,23" href="http://www.governor.ca.gov" target="mm_window" alt="Governor's Home Page" title="Governor's Home Page">
+</map>
+</td>
+	</tr>
+	<tr valign="top">
+		<td width="1" bgcolor="#BFB7B1"><img height="1" width="1" src="images/blank.gif"></td>
+		<td width="150" bgcolor="#E5F2EB">
+
+
+
+<table border="0" width="150" cellspacing="0" cellpadding="0" onMouseover="borderize_on(event)" onMouseout="borderize_off(event)">
+    
+
+    
+        <tr>
+            <td class="menulinesHeading">
+            Welcome Back Scot 
+            </td>
+        </tr>
+    
+
+    
+
+    
+        <tr>
+            <td class="menulines" onclick="logoffNode.click();">
+                <a href="frontLogoffData.do" id="logoffNode"> 
+                    Log Off
+                </a> 
+            </td>
+        </tr>
+        </logic:notEqual>
+    
+
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="hourlyNode.click();">
+            <a href="frontHourlyReport.do" id="hourlyNode">
+                Hourly
+            </a>
+        </td>
+    </tr>
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="dailyNode.click();">
+            <a href="frontDailyReport.do" id="dailyNode">
+                Daily
+            </a>
+        </td>
+    </tr>
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="dailyEToNode.click();">
+            <a href="frontDailyEToReport.do" id="dailyEToNode">
+                Daily ETo Variance
+            </a>
+        </td>
+    </tr>
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="monthlyNode.click();">
+            <a href="frontMonthlyReport.do" id="monthlyNode">
+                Monthly
+            </a>
+        </td>
+    </tr>
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="monthlyEToNode.click();">
+            <a href="frontMonthlyEToReport.do" id="monthlyEToNode">
+                Monthly Average ETo
+            </a>
+        </td>
+    </tr>
+    
+    
+    <tr><td colspan="2" height="10"/></tr>
+    <tr>
+        <td class="menulinesHeading">
+        Quality Control
+        </td>
+    </tr>
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="qcOverviewNode.click();">
+            <a href="dataQc.jsp" id="qcOverviewNode">
+                QC Overview
+            </a>
+        </td>
+    </tr>
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="qcCurrentNode.click();">
+            <a href="dataQcCurrent.jsp" id="qcCurrentNode">
+                Current Flag Summary
+            </a>
+        </td>
+    </tr>
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="qcCurrentHourlyNode.click();">
+            <a href="dataQcCurrentHourly.jsp" id="qcCurrentHourlyNode">
+                Current Hourly Flags
+            </a>
+        </td>
+    </tr>
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="qcCurrentDailyNode.click();">
+            <a href="dataQcCurrentDaily.jsp" id="qcCurrentDailyNode">
+                Current Daily Flags
+            </a>
+        </td>
+    </tr>
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="qcFormerNode.click();">
+            <a href="dataQcFormer.jsp" id="qcFormerNode">
+                Former Flag Summary
+            </a>
+       </td>
+    </tr>
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="qcFormerHourlyNode.click();">
+            <a href="dataQcFormerHourly.jsp" id="qcFormerHourlyNode">
+                Former Hourly Flags
+            </a>
+        </td>
+    </tr>
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="qcFormerDailyNode.click();">
+            <a href="dataQcFormerDaily.jsp" id="qcFormerDailyNode">
+                Former Daily Flags
+            </a>
+        </td>
+    </tr>
+    
+
+    <tr><td colspan="2" height="10"/></tr>
+    <tr>
+        <td class="menulinesHeading">
+        More Info
+    </td>
+    </tr>
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="stationNode.click();">
+            <a href="frontStationListData.do" id="stationNode"> 
+                Station List
+            </a>
+        </td>
+    </tr>
+    
+    
+    
+    <tr>
+        <td class="menuactive">
+            Data Types
+        </td>
+    </tr>
+    
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="dataFormatsNode.click();">
+            <a href="dataInfoFormat.jsp" id="dataFormatsNode">
+                Data Formats
+            </a>
+        </td>
+    </tr>
+    
+
+    
+    
+    <tr>
+        <td class="menulines" onclick="dataSizeNode.click();">
+            <a href="dataInfoSize.jsp" id="dataSizeNode">
+                Data Size
+            </a>
+        </td>
+    </tr>
+    
+
+    <tr><td colspan="2" height="25"/></tr>
+</table></td>
+		<td width="1" bgcolor="#BFB7B1"><img height="1" width="1" src="images/blank.gif"></td>
+		<td width="587">
+			<table width="587" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="587"> 
+<table width="587" cellspacing="0" cellpadding="0">
+  <tr><td colspan="3" width="10" height="10"><img height="10" width="10" src="images/blank.gif"></td></tr>
+  <tr> 
+    <td width="10" height="10"><img height="10" width="10" src="images/blank.gif"></td>
+    <td width="567"> 
+      <table align="center" width="567" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td class="title"> 
+            Data Types
+          </td>
+        </tr>
+        <tr><td colspan="1" height="10"/></tr>
+        <tr> 
+          <td class="content"> 
+            The following weather data are either measured at the CIMIS weather stations or calculated from measured values:
+          </td>
+        </tr>
+        <tr><td colspan="1" height="20"/></tr>
+        <tr> 
+          <td class="pageSubTitle">
+            Measured Values
+          </td>
+        </tr>
+        <tr><td colspan="1" height="1" bgcolor="#BFB7B1"/></tr>
+        <tr> 
+          <td> 
+            <table width="567" cellspacing="0" celpadding="0">
+              <tr> 
+                <td class="content" width="150" valign="top"> 
+                  Solar Radiation:
+                </td>
+                <td class="content"> 
+                  The total incoming solar radiation is measured using pyranometers at a height of 2.0 meters above the ground. Solar radiation data is used in the calculation of net radiation. Hourly, daily, and monthly average solar radiation data are available.
+                </td>
+              </tr>
+              <tr><td colspan="2" height="10"/></tr>
+              <tr> 
+                <td class="content" valign="top"> 
+                  Air Temperature:
+                </td>
+                <td class="content"> 
+                  Air temperature is measured at a height of 1.5 meters above the ground using a thermistor. Air temperature is used in the calculation of other parameters such as dew point temperature, vapor pressure, net radiation, and reference evapotranspiration. Hourly, daily, and monthly data are available. Maximum, minimum, and average air temperatures are reported for the daily and monthly data.
+                </td>
+              </tr>
+              <tr><td colspan="2" height="10"/></tr>
+              <tr> 
+                <td class="content" valign="top"> 
+                  Soil Temperature:
+                </td>
+                <td class="content"> 
+                  Soil temperature is measured at 15 centimeters (6 inches) below the soil surface. It is measured using a thermistor whose resistance varies with temperature. Soil temperature is commonly flagged because soils, especially those with high clay content, crack and let a warmer atmospheric air reach the sensor, resulting in high soil temperature values. Hourly, daily, and monthly soil temperature data are available. Maximum, minimum, and average values are reported for the daily time steps. 
+                </td>
+              </tr>
+              <tr><td colspan="2" height="10"/></tr>
+              <tr> 
+                <td class="content" valign="top"> 
+                  Relative Humidity:
+                </td>
+                <td class="content"> 
+                  Relative humidity is the ratio of the actual amount of water vapor in the atmosphere, to the amount the atmosphere can potentially hold at the given air temperature. It is expressed as a percentage. The relative humidity sensor is sheltered in the same enclosure with the air temperature sensor at 1.5 meters above the ground. Relative humidity values are used in the calculation of dew point temperature, vapor pressure, and reference evapotranspiration. Hourly, daily, and monthly data are available. Maximum, minimum, and average relative humidity data are reported for the daily and monthly reports.
+                </td>
+              </tr>
+              <tr><td colspan="2" height="10"/></tr>
+              <tr> 
+                <td class="content" valign="top"> 
+                  Wind Speed:
+                </td>
+                <td class="content"> 
+                  Wind speed is measured using three-cup anemometers at 2.0 meters above the ground. The threshold wind speed is 1.0 mph. The sensor can withstand wind speeds of up to 120 mph. Wind speed values are used in the calculation of total wind run, resultant wind, wind roses, and reference evapotranspiration. Resultant wind and standard deviation of wind direction are reported in the hourly data whereas the total wind run is reported in the daily and monthly data. Hourly, daily, and monthly values of average wind speed are available.
+                </td>
+              </tr>
+              <tr><td colspan="2" height="10"/></tr>
+              <tr> 
+                <td class="content" valign="top"> 
+                  Wind Directions:
+                </td>
+                <td class="content"> 
+                  Wind direction is measured using a wind vane at 2.0 meters above the ground. Wind direction values range from zero to 360 degrees (both being true north) and are adjusted for declination of the Earth's axis. Wind direction is only available in the hourly reports. On daily time steps, wind direction is used in the development of wind roses.
+                </td>
+              </tr>
+              <tr><td colspan="2" height="10"/></tr>
+              <tr> 
+                <td class="content" valign="top"> 
+                  Precipitation:
+                </td>
+                <td class="content"> 
+                  Rainfall is measured using tipping bucket rain gauges. While maintaining a standardized grass and/or alfalfa surface at the CIMIS weather stations, sprinkler irrigation water may sometimes drop into the rain gauges. The CIMIS staff adjust the corrupt rainfall data most of the time but some may slip their scrutiny. Therefore, users are advised to pay attention to the precipitation data and notify us of any suspicious data.
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr><td colspan="1" height="10"/></tr>
+        <tr> 
+          <td class="pageSubTitle">
+            Calculated Values
+          </td>
+        </tr>
+        <tr><td colspan="1" height="1" bgcolor="#BFB7B1"/></tr>
+        <tr> 
+          <td> 
+            <table width="567" cellspacing="0" celpadding="0">
+              <tr> 
+                <td class="content" width="150" valign="top"> 
+                  Net Radiation:
+                </td>
+                <td class="content"> 
+                  Net radiation is the net radiant energy available at the surface of the earth for evaporating water, heating the surface, and heating the air. It is calculated as a balance between the incoming and outgoing radiant energies. Hourly and daily net radiation data are available.
+                </td>
+              </tr>
+              <tr><td colspan="2" height="10"/></tr>
+              <tr> 
+                <td class="content" valign="top"> 
+                  Reference Evapotranspiration:
+                </td>
+                <td class="content"> 
+                  Reference evapotranspiration is evapotranspiration from standardized grass (ETo) and/or alfalfa (ETr) surfaces. The CIMIS ETo and ETr values are calculated using the <a class="contentLink" href="infoEtoCimisEquation.jsp">modified Penman</a> (also known as the CIMIS Penman) and the <a class="contentLink" href="infoEtoPmEquation.jsp">Penman-Monteith</a> equations. Most CIMIS weather stations are located on actively growing grass. Hence, reference evapotranspiration is commonly referred to as ETo on the CIMIS web site. Hourly, daily and monthly data are available.
+                </td>
+              </tr>
+              <tr><td colspan="2" height="10"/></tr>
+              <tr> 
+                <td class="content" valign="top"> 
+                  Wind Rose:
+                </td>
+                <td class="content"> 
+                  Wind rose shows the distribution of wind speeds and the frequency of the varying wind directions. Wind directions are grouped into different sectors known as bins. Wind roses reported in CIMIS have eight bins. Presently, the distribution of wind speed is reported by CIMIS. However, CIMIS is exploring the possibility of reporting wind frequencies in the future. Wind rose data is currently available for the daily time step only.
+                </td>
+              </tr>
+              <tr><td colspan="2" height="10"/></tr>
+              <tr> 
+                <td class="content" valign="top"> 
+                  Wind Cubed:
+                </td>
+                <td class="content"> 
+                  Wind cubed is the velocity of a wind to the power of three.  It is an indicator of a power that can be generated from the wind.  CIMIS calculates wind velocity cubes from the minute-by-minute readings of wind speed and averages them over the day to provide daily wind cubed values.
+                </td>
+              </tr>
+              <tr><td colspan="2" height="10"/></tr>
+              <tr> 
+                <td class="content" valign="top"> 
+                  Vapor Pressure:
+                </td>
+                <td class="content"> 
+                  The vapor pressure of the atmosphere is the partial pressure exerted by atmospheric water vapor. It is a good indicator of the humidity of the atmosphere and is calculated from measured relative humidity and air temperature data. Hourly, daily, and monthly data are available.
+                </td>
+              </tr>
+              <tr><td colspan="2" height="10"/></tr>
+              <tr> 
+                <td class="content" valign="top"> 
+                  Dew Point Temperature:
+                </td>
+                <td class="content"> 
+                  Dew point temperature is the temperature to which the atmosphere must be cooled, at constant pressure and water vapor content, in order to reach saturation. It is calculated from vapor pressure (relative humidity) and air temperature data. Hourly, daily, and monthly dew point temperature data are available.
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td width="10" height="10"><img height="10" width="10" src="images/blank.gif"></td>
+  </tr>
+  <tr><td colspan="3" width="10" height="10"><img height="10" width="10" src="images/blank.gif"></td></tr>
+</table></td>
+				</tr>
+			</table>
+		</td>
+		<td width="1" bgcolor="#BFB7B1"><img height="1" width="1" src="images/blank.gif"></td>
+	</tr>
+	<tr valign="top">
+		<td width="740" colspan="5">
+
+
+
+<table align="center" width="740" cellspacing="0" cellpadding="0">
+  <tr valign="top"> 
+    <td width="150" align="center" bgcolor="#008136" class="whiteContent"> 
+      <a href="#" class="whiteLink">Back to Top</a> </td>
+    <td width="1" bgcolor="FFFFFF"/> 
+    <td width="150" align="center" bgcolor="#008136" class="whiteContent"> 
+      <a href="/cimis/infoGenCimisOverview.jsp" class="whiteLink">About Us</a> </td>
+    <td width="1" bgcolor="FFFFFF"/> 
+    <td width="150" align="center" bgcolor="#008136" class="whiteContent"> 
+      <a class="whiteLink" href="mailto:temesgen@water.ca.gov"> Contact Us</a> </td>
+    <td width="1" bgcolor="FFFFFF"/> 
+    <td width="287" align="center" bgcolor="#008136" class="whiteContent"> 
+      <a href="/cimis/siteMap.jsp" class="whiteLink">Site Map</a> </td>
+  </tr>
+  <tr valign="top"> 
+    <td colspan="7" align="center" height="25"/> 
+  </tr>
+  <tr valign="top"> 
+    <td colspan="7" align="center" class="content">
+      <a href="http://www.water.ca.gov/conditions.html" class="contentLink">Conditions of Use</a> |
+      <a href="http://www.water.ca.gov/privacy.html" class="contentLink">Privacy Policy</a> |
+      <a href="http://www.water.ca.gov/comment.html" class="contentLink">Comments or Suggestions?</a><br/>
+      © 2005 State of California.<br/>
+    </td>
+  </tr>
+</table>
+</td>
+	</tr>
+</table>
+</body>
+</html>

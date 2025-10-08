@@ -1,0 +1,48 @@
+3,4c3,4
+< C function: getqcfrec()
+< C description: get the qcf records from the qcf file
+---
+> C function: getqcfrec2()
+> C description: get the qcf records with nominal date/time from the qcf file
+5a6,8
+> C 24 Jan 94 lec
+> C    Updated check for header line in 0qc files. Files have 
+> C    'Date     Time'.
+8c11
+<       integer*2 function getqcfrec()
+---
+>       integer*2 function getqcfrec2()
+19c22
+<       getqcfrec = 0
+---
+>       getqcfrec2 = 0
+21a25
+>      +   qcfbuf(1:13) .eq. 'Nominal  Time' .or.
+23,24c27
+<      +   qcfbuf(1:13) .eq. '         UTC ' .or.
+<      +   qcfbuf(1:8) .eq. '**/**/**') goto 100
+---
+>      +   qcfbuf(1:13) .eq. 'Date     UTC ') goto 100
+25a29
+>      +qcf.nomyr,qcf.nommo,qcf.nomday,qcf.nomhr,qcf.nommin,
+42a47
+>      +     qcf.nomyr,qcf.nommo,qcf.nomday,qcf.nomhr,qcf.nommin,
+66c71
+< 900   getqcfrec = -2
+---
+> 900   getqcfrec2 = -2
+69c74
+<       write(0,*) 'getqcfrec(): I/O Error: ',ios,' ',errstr
+---
+>       write(0,*) 'getqcfrec2(): I/O Error: ',ios,' ',errstr
+72c77,78
+< 1001  format(a2,'/',a2,'/',a2,1x,a2,':',a2,1x,a10,1x,a10,1x,f10.5,
+---
+> 1001  format(a2,'/',a2,'/',a2,1x,a2,':',a2,1x,
+>      *       a2,'/',a2,'/',a2,1x,a2,':',a2,1x,a10,1x,a10,1x,f10.5,
+77c83
+< 1002  format(a235)	!This must be equal to length of the qcf record
+---
+> 1002  format(a250)	!This must be equal to length of the qcf record
+79a86
+>      +'Nominal Date/Time: ',a2,'/',a2,'/',a2,x,a2,':',a2,/,

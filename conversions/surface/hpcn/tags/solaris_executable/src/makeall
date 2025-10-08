@@ -1,0 +1,5 @@
+/bin/rm *.o
+make -f Makehpcn hpcn
+make -f Makehplainsf hplains
+mv process_hpcn ../exe/.
+mv hplainsqcf ../exe/.

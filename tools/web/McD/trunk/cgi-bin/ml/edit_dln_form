@@ -1,0 +1,268 @@
+
+use CGI;
+
+use lib "../dln/lib";
+use DLNUtils qw($img_src $help_src &cr $jscript $body_css);
+
+use lib "../mcd_lib";
+use DLNDatasetDBA;
+use ProjectDBA;
+use UserDBA;
+use McDDB;
+
+sub edit_dln_form
+{
+	my $ds = shift;
+	my $mode = shift;
+	my $state = shift;
+
+	my $cgi = CGI->new();
+	my $dba = DLNDatasetDBA->new();
+	my $user_dba = UserDBA->new();
+
+	my $project;
+	$ds = $dba->getFromDB( $ds->{id} );
+	my @projs = $dba->getProjects( $ds->{id} );
+	$project = $projs[0];  # ************** Note this shortcut ****************
+
+	my $title = "Data Loading Notes: Edit Dataset";
+
+	$date = $ds->{date};
+
+	my @users = $user_dba->getAllUsers( "display_name" ); # get all users
+	my $int_contact = getSelectBox( "int_contact", \@users, $ds );
+	my $loader = getSelectBox( "loader", \@users, $ds );
+	my $checker = getSelectBox( "checker", \@users, $ds );
+
+	my $documented = getCheckBox( "documented", $ds );
+	my $loaded = getCheckBox( "loaded", $ds );
+	my $checked = getCheckBox( "checked", $ds );
+
+	my $buttons = getButtons();
+
+	# Used to check if an e-mail should be sent
+	my $jscript2 = "<script language=\'javascript\'>var old_loader=\'$ds->{loader}\'</script>";
+
+	$storm_id = $ds->{storm_id};
+
+	my $ncols = 5;
+	my $ncols_1 = $ncols - 1;
+	my $ncols_2 = $ncols - 2;
+	print( cr(
+		$cgi->header( -expires=>'-1d'),
+		"<html>",
+			"<head>",
+				"<title>JOSS DLN: Edit Dataset</title>",
+				$body_css,
+				$jscript,
+				$jscript2,
+			"</head>",
+		"<body>",
+			"<center><table border=0 cellpadding=6 cellspacing=3 width=98% class=editTable>",
+			"<form method=POST action=proc_dln_update name=mainForm>",
+				"<tr>",
+					"<td width=100% colspan=$ncols>",
+						"<table width=100% border=0 cellpadding=4 cellspacing=0>",
+							"<tr class=titleBar>",
+								"<td width=50%>",
+									$title,
+								"</td>",
+								"<td width=50% align=right><font size=-1>",
+									$date,
+								"</td>",
+							"</tr>",
+						"</table>",
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td align=right width=20%>",
+						"<b>Project:</b>",
+					"</td>",
+					"<td>",
+						"<b>$project->{name}</b>",
+					"</td>",
+					"<td nowrap align=right>",
+						"<b>Storm Id:", &nbsp(2),
+					"</td>",
+					"<td>",
+						"<input type=text name=storm_id value=\"$storm_id\" size=10 maxlength=16>", &nbsp(2),
+					"</td>",
+					"<td>",
+						"<a href=$help_src#dln_a target=_blank><img border=0 src=$img_src/help.gif alt=\"McD Help\"></a>",
+					"</td>",
+				"</tr>",
+				"<tr>",
+					"<td align=right width=20%>",
+						"<b>Title:</b>",
+					"</td>",
+					"<td colspan=$ncols_1>",
+						"<input type=text name=title value=\"$ds->{title}\" size=70 maxlength=255>",
+					"</td>",
+				"</tr>",
+				
+				"<tr><td colspan=$ncols class=spacer></td></tr>",
+	
+				"<tr>",
+					"<td align=right width=20%>",	
+						"<b>Ingest Loc: </b>",
+					"</td>",	
+					"<td colspan=$ncols_2>",	
+						"<input type=text name=ingest value=\"$ds->{ingest}\" size=70 maxlength=255>",
+					"</td>",	
+					"<td>",
+						"&nbsp",
+					"</td>",
+				"</tr>",
+				"<tr>",
+					"<td align=right width=20%>",	
+						"<b>Archive Loc: </b>",
+					"</td>",	
+					"<td colspan=$ncols_2>",	
+						"<input type=text name=archive value=\"$ds->{archive}\" size=70 maxlength=255>",
+					"</td>",	
+				"</tr>",
+
+				"<tr><td colspan=$ncols class=spacer></td></tr>",
+
+				"<tr>",
+					"<td align=right width=20% nowrap>",
+						"<b>External Contact: </b>",
+					"</td>",
+					"<td colspan=$ncols_2>",
+						"<input type=text name=ext_contact value=\"$ds->{ext_contact}\" maxlength=100 size=20>", &nbsp(5),
+						"<b>E-mail: </b>", &nbsp(2),
+						"<input type=text name=ext_email value=\"$ds->{ext_email}\" maxlength=100 size=30>",
+					"</td>",
+					"<td>",
+						"&nbsp",
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td align=right width=20% nowrap>",
+						"<b>Internal Contact: </b>",
+					"</td>",
+					"<td>",
+						$int_contact,
+					"</td>",
+					"<td align=right nowrap>",
+						"<b>Readme Complete: </b>"	,
+					"</td>",
+					"<td colspan=2>",
+						$documented,	
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td align=right width=20% nowrap>",
+						"<b>Person Loading: </b>",
+					"</td>",
+					"<td>",
+						$loader,
+					"</td>",
+					"<td align=right nowrap>",
+						"<b>Dataset Loaded: </b>"	,
+					"</td>",
+					"<td colspan=2>",
+						$loaded,	
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td align=right width=20% nowrap>",
+						"<b>Person Checking: </b>",
+					"</td>",
+					"<td>",
+						$checker,
+					"</td>",
+					"<td align=right nowrap>",
+						"<b>Dataset Checked: </b>"	,
+					"</td>",
+					"<td colspan=2>",
+						$checked,	
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td align=right width=20% nowrap>",
+						"<b>Remote URL: </b>",
+					"</td>",
+					"<td colspan=$ncols_2>",
+						"<input type=text name=remote_url value=\"$ds->{remote_url}\" maxlength=255 size=70>",
+					"</td>",
+					"<td>",
+						"&nbsp",
+					"</td>",
+				"</tr>",
+
+				"<tr><td colspan=$ncols class=spacer></td></tr>",
+
+				"<tr>",
+					"<td width=20% colspan=$ncols>",
+						"<b>Notes: </b>", "<br>",
+						"<textarea name=notes rows=12 cols=75>$ds->{notes}</textarea>",
+					"</td>",
+				"</tr>",
+
+				"<tr class=titleBar>",
+					"<td colspan=$ncols align=right>",
+						$buttons,
+						$state->getHidden(),	
+						"<input type=hidden name=project value=$project->{id}>",
+						"<input type=hidden name=id value=$ds->{id}>",
+						"<input type=hidden name=proc_edit value=1>",
+						"<input type=hidden name=date value=$date>",
+						"<input type=hidden name=send_mail value=n>",
+					"</td>",
+				"</tr>",
+			"</table>",
+			"</form>",
+		"</body></html>" ) );
+		
+
+}
+
+sub getSelectBox
+{
+	my $field = shift;
+	my $users = shift;
+	my $ds = shift;
+
+	my $select = "<select name=$field>";
+	foreach my $user (@{$users})
+	{
+		my $selected = "";
+
+		if( $user->{id} eq $ds->{$field} )
+		{
+			$select = $select . "<option selected value=\"$user->{id}\">$user->{display_name}</option>"; 
+		}
+		elsif( $user->{active} )
+		{
+			$select = $select . "<option value=\"$user->{id}\">$user->{display_name}</option>"; 
+		}
+	}
+
+	$select = $select . "</select>";
+
+	return $select;
+}
+
+sub getCheckBox
+{
+	my $field = shift;
+	my $ds = shift;
+	my $checked = "";
+	$checked = "checked" if( $ds->{status}->{$field} );
+
+	return "<input type=checkbox name=$field $checked>";
+}
+
+sub getButtons
+{
+	return cr( "<input type=submit name=action value=\"Update\" onClick=\"checkEmail( this.form )\">",
+						 "<input type=submit name=action value=\"Cancel\">" );
+}
+
+1;

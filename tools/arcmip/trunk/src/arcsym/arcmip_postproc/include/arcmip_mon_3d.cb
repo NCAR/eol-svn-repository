@@ -1,0 +1,15 @@
+c---------------------------------------------------------------------
+c ARCSyM atmospheric 3d variables (monthly average)
+      real *4 u_mod_mon(ix,jx,nprs), v_mod_mon(ix,jx,nprs),
+     +        u_mon(ix,jx,nprs), v_mon(ix,jx,nprs),
+     +        w_mon(ix,jx,nprs), t_mon(ix,jx,nprs),
+     +        z_mon(ix,jx,nprs), rh_mon(ix,jx,nprs),
+     +        qv_mon(ix,jx,nprs), spechum_mon(ix,jx,nprs),
+     +        cld_mon(ix,jx,nprs), ice_mon(ix,jx,nprs),
+     +        cld_frac_mon(ix,jx,nprs)
+      common /arcmip_mon_3d/ u_mod_mon, v_mod_mon, u_mon,
+     +                       v_mon, w_mon, t_mon,
+     +                       z_mon, rh_mon, qv_mon,
+     +                       spechum_mon, cld_mon, ice_mon,
+     +                       cld_frac_mon
+c---------------------------------------------------------------------

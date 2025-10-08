@@ -1,0 +1,360 @@
+#!/bin/perl -wT
+
+#-------------------------------------------------------------------#
+# ml_summary: displays the archive summary for the arctic master 
+#  list.
+#
+# Expected parameters:
+#  project - the name of the project in the ml database
+#  title - (optional) the title to display at the top
+#
+# Author: Dan Sullivan
+# Date: August, 2003
+#
+# Adopted from code taken from the orginal master_query script.
+#-------------------------------------------------------------------#
+
+use strict;
+use DBI;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use Util;
+
+my $dbh = connectToDB();
+my $project = param( "project" );
+my $title = param( "title" );
+
+if(!defined( $project ) )
+{
+	showError( "Project Not Specified!" );
+	exit;
+}
+
+showSummary();
+
+
+#-------------------------------------------------------------------#
+# Display the Archive Summary for the given project
+#-------------------------------------------------------------------#
+sub showSummary
+{
+	my $sql = "SELECT id FROM ListProjects WHERE name = '$project'";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+	my @row = $sth->fetchrow();
+	$sth->finish();
+	
+	if( !@row )
+	{
+		showError( "Project not found in database." );
+	}
+
+	my $proj_id = $row[0];
+	
+	my @pcounts= getProjectCounts( $proj_id );
+
+		
+	my @dt = getCounts( "DataType", "data_type_id", $proj_id );
+	my @disc = getCounts( "Discipline", "discipline_id", $proj_id );
+	my @plt = getCounts( "Platform", "platform_id", $proj_id );
+	my @site = getCounts( "Site", "site_id", $proj_id ); 
+	my @spat_res = getCounts( "SpatRes", "spat_res_id", $proj_id );
+
+	my @author = getListCounts( "author", $proj_id );
+	my @phase = getListCounts( "phase", $proj_id );
+	my @year = getYearCounts( $proj_id );
+	my @obs = getListCounts( "method_of_obs", $proj_id );
+
+	showHeader();
+
+	if( !defined( $title ) )
+	{
+		println( "<b><font class=title>$project Archive Summary</font></b><br><br>" );
+	}
+	else
+	{
+		println( "<b><font class=title>$title</font></b><br><br>" );
+	}
+
+	println( "<center>" );	
+	println( "<font size=3><b>Total Number of Datasets: </b>$pcounts[0]" );
+	println( nbsp(5) . "<b>Total Number of UNIQUE Datasets: </b>$pcounts[1]</font><br>" );
+	println( "<table width=100% border=1 cellpadding=1 cellspacing=1>" );
+
+		println( "<tr>" );
+			println( "<td width=20% valign=top>" );
+				println( "<table border=0 cellpadding=1 cellspacing=1>" );
+					showCounts( "Data Type", "data_type", \@dt );
+				println( "</table></td>" );
+			println( "<td width=20% valign=top>" );
+				println( "<table border=0 cellpadding=1 cellspacing=1>" );
+					showCounts( "Discipline", "discipline", \@disc );
+				println( "</table>" );
+			println( "</td>" );
+			println( "<td width=20% valign=top>" );
+				println( "<table border=0 cellpadding=1 cellspacing=1>" );
+					showCounts( "Platform", "platform", \@plt );
+				println( "</table></td>" );
+			println( "<td width=20% valign=top>" );
+				println( "<table border=0 cellpadding=1 cellspacing=1>" );
+					showCounts( "Site", "site", \@site );
+				println( "</table>" );
+			println( "</td>" );
+			println( "<td width=20% valign=top>" );
+				println( "<table border=0 cellpadding=1 cellspacing=1>" );
+					showCounts( "Spatial Resolution", "spat_res", \@spat_res );
+				println( "</table>" );
+			println( "</td>" );
+		println( "</tr>" );
+
+		println( "<tr>" );
+			println( "<td width=20% valign=top>" );
+				println( "<table border=0 cellpadding=1 cellspacing=1>" );
+					showCounts( "Author", "author", \@author );
+				println( "</table>" );
+			println( "</td>" );
+			println( "<td width=20% valign=top>" );
+				println( "<table border=0 cellpadding=1 cellspacing=1>" );
+					showCounts( "Phase", "phase", \@phase );
+				println( "</table>" );
+			println( "</td>" );
+			println( "<td width=20% valign=top>" );
+				println( "<table border=0 cellpadding=1 cellspacing=1>" );
+					showCounts( "Years", "year", \@year );
+				println( "</table>" );
+			println( "</td>" );
+			println( "<td width=20% valign=top>" );
+				println( "<table border=0 cellpadding=1 cellspacing=1>" );
+					showCounts( "Method of Observation", "method_of_obs", \@obs );
+				println( "</table>" );
+			println( "</td>" );
+			println( "<td width=20%>" );
+				println( "&nbsp;" );
+			println( "</td>" );
+		println( "</tr>" );
+
+	println( "</table>" );
+
+	println( "</body></html>" );
+}
+
+sub getProjectCounts
+{
+	my $proj_id = shift;
+	my @counts;
+
+	my $sql = "SELECT COUNT(*) FROM List WHERE proj_id=$proj_id";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute(); 
+	my @row = $sth->fetchrow();
+	$counts[0] = $row[0];
+	$sth->finish();
+
+	$sql = "SELECT id FROM List WHERE proj_id=$proj_id GROUP BY title";
+	$sth = $dbh->prepare( $sql );
+	$sth->execute(); 
+	my $arr = $sth->fetchall_arrayref();
+	$counts[1] = @{$arr};
+	$sth->finish();
+
+	return @counts;
+}
+
+sub getYearCounts
+{
+	my $proj_id = shift;
+	my @counts;
+	my $c = 0;
+
+	my $sql = "SELECT start_year, end_year FROM List WHERE proj_id=$proj_id GROUP BY title ORDER BY start_year, end_year";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	my @row;
+	my $prev = "";
+	my $yr;
+	my $total = 0;
+	while( (@row=$sth->fetchrow()) )
+	{
+		if( defined( $row[0] ) && defined( $row[1] ) )
+		{
+			$total++;
+			$yr = $row[0] . "-" . $row[1];
+			if( $yr eq $prev )	
+			{
+				$counts[$c-1]++;
+			}
+			else
+			{
+				$counts[$c++] = $yr;
+				$counts[$c++] = 1;
+				$prev = $yr;
+			}
+		}
+	}
+	$counts[$c] = $total;
+	return @counts;	
+}
+
+sub getCounts
+{
+	my $tname = shift;
+	my $cname = shift;
+	my $proj_id = shift;
+	my @row;
+	my $total = 0;
+
+	my @counts;
+	my $c = 0;
+
+	my $sql = "SELECT id, name FROM $tname WHERE proj_id=$proj_id ORDER BY name";
+
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();	
+
+	while( (@row = $sth->fetchrow()) )
+	{
+		my $sql2 = "SELECT id FROM List where $cname=$row[0] GROUP BY title";
+		my $sth2 = $dbh->prepare( $sql2 );
+		$sth2->execute();
+
+		my $arr = $sth2->fetchall_arrayref();
+
+		$sth2->finish();
+
+		$counts[$c++] = $row[1];
+		$counts[$c++] = @{$arr};	
+
+		$total += $counts[$c-1];
+	}
+	
+	$counts[$c++] = $total;
+	return @counts;
+}
+
+sub getListCounts
+{
+	my @return;
+	my $count = 0;
+	my $col = shift;
+	my $proj_id = shift;
+	my $total = 0;
+
+	my $sql = "SELECT $col FROM List WHERE proj_id=$proj_id GROUP BY $col";
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	my @row;
+
+	while( (@row=$sth->fetchrow() ) )
+	{
+		if( defined( $row[0] ) && $row[0] ne "" )
+		{
+			my $sql2 = "SELECT id FROM List WHERE proj_id=$proj_id AND $col=" . $dbh->quote( $row[0] ) . "GROUP BY title";
+			my $sth2 = $dbh->prepare( $sql2 );
+			$sth2->execute();
+
+			my $arr = $sth2->fetchall_arrayref();
+
+			$return[$count++] = $row[0];
+			$return[$count++] = @{$arr}; 
+
+			$total += $return[$count-1];
+		}
+	}
+
+	$return[$count] = $total;
+	return @return;
+}
+
+#-----------------------------------------------------------------
+# Connect to the database 
+#-----------------------------------------------------------------
+sub connectToDB
+{
+	return DBI->connect( "DBI:mysql:database=master_list;host=thunder",
+												"suldan", "hithere", { RaiseError=>1} ) || die( "Unable to connect to database" );
+}
+
+#-----------------------------------------------------------------
+# Show an error message.
+#-----------------------------------------------------------------
+sub showError
+{
+	my $error = shift;
+
+	println( header() );
+	println( "<html><head><title>Script Error</title></head></title><body bgcolor=white>" );
+	println( "<h1>SCRIPT ERROR</h1>" );
+	println( "<p>An error with the script has occured.</p>" );
+	println( "<p>$error</p>" );
+	println( "<p>Please contact <a href=mailto:suldan\@ucar.edu>suldan\@ucar.edu</a>.</p>" );
+	println( "</body></html>" );
+}
+
+sub showCounts
+{
+	my $name = shift;
+	my $param = shift;
+	my $arr_ref = shift;
+	my @counts = @{$arr_ref};
+	my $size = @counts;
+	
+	println( "<tr><td colspan=3><b><u><font size=2>$name: </b></u>" . nbsp(2). "Total defined: $counts[$size-1]</td></tr>" );
+
+	for( my $x = 0; $x < $size-1; $x+=2 )
+	{
+		#my $title = $name . ": " . $counts[$x];
+		my $title = $counts[$x] . " Datasets";
+		println( "<tr>" );
+				println( "<td>" . nbsp(3) . "</td>" );
+				println( "<td align=left nowrap><font size=2><b><a href=" . getSummaryLink( $title, $param, $counts[$x] ) . ">" . &truncate( $counts[$x], 40 ) . "</a>&nbsp;" );	
+			println( "</td><td>" );
+				println( "<font size=2><b>$counts[$x+1]</b>" );
+			println( "</td>" );
+		println( "</tr>" );
+	}
+	println( "<tr><td colspan=3>&nbsp;</td></tr>" );
+}
+
+sub getSummaryLink
+{
+	my $title = shift;
+	$title = replaceSpace( $title );
+	my $param = shift;
+	my $value = shift;
+	$value = replaceSpace( $value );
+	my $link = "master_query?project=$project&fields=author&fields=title&fields=documentation&" . $param .
+						"s=" . $value . "&title=$title&order=author&order=title";
+	return $link;
+	
+}
+
+#-----------------------------------------------------------------
+# Displays the default html file header
+#-----------------------------------------------------------------
+sub showHeader
+{
+	println( header() );
+	println( "<html>" );
+	println( "<head>" );
+		println( "<title>$project Master List</title>" );
+		println( &css( $project ) );
+	println( "</head>" );
+	println( "<body>" );
+	
+}
+
+sub truncate()
+{
+	my $word = shift;	
+	my $size = shift;
+	my $new_word = $word;
+
+	if( length( $word ) > $size )
+	{
+		$new_word = substr( $word, 0, $size-3 ) . " ...";
+	}
+
+	return $new_word;
+}

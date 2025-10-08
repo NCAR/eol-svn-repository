@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for remove_unkwn s/w.
+#
+
+CC=acc
+CFLAGS = 
+
+procncdc: remove_unkwn.o
+	$(LINK.c) -o remove_unkwn remove_unkwn.o 
+	chmod 0755 remove_unkwn
+
+clean:
+	rm *.o

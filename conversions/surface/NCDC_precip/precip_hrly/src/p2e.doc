@@ -1,0 +1,201 @@
+$Id: p2e.doc,v 1.1 1993/02/16 22:44:36 john Exp $
+
+"p2e.doc"
+Documentation for p2e.f
+
+Written by:
+ John J. Allison
+ UCAR/OFPS
+ 26 Oct 1992
+
+Modification History:
+ 04 Nov 1992 by John J. Allison
+   the PQCF has changed: deleted time offset from GMT and added both
+   network and station identifier strings
+
+p2e converts PQCF (Precip QCF) to EBUFR.
+
+Synopsis:
+ p2e [file.ext ...]
+
+If no filename is given, p2e converts stdin to stdout.
+Beware, however that the Generic Enocder Routines (GER) send
+their error messages to stdout and you might not know if
+the conversion was successful without decoding the EBUFR file.
+Otherwise, the output file is named "file.ebufr".
+
+[The program ep2pq converts EBUFR precip data to PQCF.]
+
+See the GER documentation for more information.
+
+Input format (PQCF):
+  The input format is called Precip-QCF, or PQCF.
+  It is similar to QCF in that it contains almost the same
+  prefix and is in ASCII. Here are the fields:
+	(nominal) date		from Type 9 record header
+	(nominal) time		from Type 9 record header
+	network string		descriptor 0 01 254
+	station string		descriptor 0 01 253
+	latitude		from Type 9 record header
+	longitude		from Type 9 record header
+	cli byte		from Type 9 record header
+	precip value		descriptor 0 13 011
+	precip qualifier	descriptor 0 08 255
+	QC flag			one character flag
+  The last 3 items are repeated 24 times for hourly data and
+  96 times for 15-minute data.
+
+  Following are the READ and FORMAT statements used to read PQCF.
+  MAXTIM is 24 or 96 for hourly or 15-minute and is determined
+  by examining the length of the character array BUFFER, which
+  contains one line of data:
+
+	READ (BUFFER,1002) TIME,NETSTR,STNSTR,LATLON,CLIBYT,
+&	  (PRECIP(K), QUAL(K), QCF(K), K=1,MAXTIM)
+1002	FORMAT (I2,'/',I2,'/',I2,X,I2,':',I2,':',I2,
+&	    X,A10,X,A10,
+&	    X,F10.5,X,F11.5,X,I3,X,I3,96(: X,F7.2,X,I1,X,A1))
+
+
+Output format (EBUFR):
+
+ F XX YYY   Description
+ - -- ---   -----------
+ 0 01 254   network identifier
+ 0 01 253   station identifier
+ 1 04 000   repeat 4 descriptors A times
+ 0 31 000   A
+ 0 08 022   number of time interval replications
+ 0 13 011   precip value
+ 0 08 255   precipitation measurement qualification
+ 0 33 255   quality control flag
+
+
+p2e sends its data to the GER via the IDATA and RDATA
+arrays (for integer and real data):
+
+I   IDATA(I)			RDATA(I)
+-   --------			--------
+1   A				precip value
+2   num time intervals		precip value
+3   precip qualifier		...
+4   qc flag
+5   num time intervals
+6   precip qualifier
+7   qc flag
+8   ...
+
+CDATA(1:10) = network
+CDATA(11:20) = station
+
+Note that p2e uses two kinds of replication:
+ 1) EBUFR delayed replication (1 04 000 and 0 31 000)
+ 2) "manual" time-based replication (0 08 022)
+
+EBUFR delayed replication is probably not noticed in the
+actual EBUFR file. That is, if all you have is the EBUFR
+data, then there is probably nothing special to worry about
+in regards to delayed replication. As far as encoding data
+into EBUFR, delayed replication is actually fairly simple.
+The descriptor 1 04 000 says we are using delayed replication.
+(Note this descriptor has no value and so is not in IDATA or RDATA.)
+The 04 says that we are replicating 4 descriptors, i.e. a
+group of 4 descriptors will be repeated A times. The A is
+found in the descriptor immediately following 1 04 000.
+So the value for 0 31 000 will be A. Then, there will (should)
+be 4*A descriptors after the 0 31 000. These 4*A descriptors
+then are the A sets of 4 which are the data.
+
+But, note that A is not always either 24 or 96. That's because
+of our manual time-based replication. What this does is to
+reduce A in order to save some space. Here's how it works: if
+there are a bunch of consecutive data values that are exactly
+the same, then we only record them once, along with a count
+of how many times that value is repeated. For example, if there
+are 15 consecutive time intervals all with a value of 0.00 for
+the precip, 0 for the qualifier, and G for the QC flag, then
+we would record the equivalent to saying: "repeat the following
+15 times: 0.00 0 G" instead of saying "0.00 0 G 0.00 0 G 0.00 ...".
+This repetition count goes in 0 08 022.
+
+It follows then that if the entire PQCF record has 0.00 0 G, then
+A=1 and 0 08 022 gets 24.
+
+So, to convert PQCF to EBUFR, what we do is read the data in
+for one record (i.e. one day's worth of data for a single
+station). We send the latlon, time stuff to ENCOBS separately.
+Then we put the data into IDATA and RDATA as follows: the time
+increment (GMT offset) goes into IDATA(1). Then for each
+data group in PQCF (precip value, qualifier, qc flag), we
+compare it to the last values. If they're the same, then we
+increment a counter that will go in 0 08 022. If they're different
+then we start a new counter for the new values, and increment
+A. Here is an example:
+
+(The data shown is PQCF but reformatted with newlines for better readability.)
+
+92/02/01 00:00:00 ASOSH      AKO           31.77917   -95.71333 000
+    0.00 0 G    0.10 0 G    0.00 0 G    0.00 0 G    0.00 0 G    5.00 0 B
+    0.00 0 G    0.00 0 G    0.00 0 G -999.99 7 M    0.00 0 G    0.00 0 G
+    0.00 0 G    0.00 0 G    0.00 0 G    0.00 0 G    0.00 0 G    0.00 0 G
+    0.00 0 G    0.00 0 G    0.00 0 G    0.00 0 G    0.00 0 G    0.00 0 G
+
+produces:
+
+I	TIME(I)		LATLON(I)
+-	-------		---------
+1	92		31.77917
+2	2		-95.71333
+3	1
+4	0
+5	0
+6	0
+
+CLIBYT = 0
+
+(TIME, LATLON, CLIBYT are sent to ENCOBS separately)
+
+I	IDATA(I)	RDATA(I)
+-	--------	--------
+1	7		0.0
+2	1		0.1
+3	0		0.0
+4	1		5.0
+5	1		0.0
+6	0		<missing>
+7	1		0.0
+8	3
+9	0
+10	1
+11	1
+12	0
+13	2
+14	3
+15	0
+16	1
+17	1
+18	7
+19	15
+20	14
+21	0
+22	1
+
+where <missing> is the EBUFR GER missing value (all bits set to 1).
+
+CDATA(1:10)  = 'ASOSH     '
+CDATA(11:20) = 'AKO       '
+
+Here is the QC Flag Code Table:
+
+Code	Flag	Description
+----	----	-----------
+0	U	unchecked
+1	G	checked and good
+2	B	checked and bad
+3	D	checked and dubious
+4	N	not measured
+5	X	PAM glitch flag
+6	E	estimated
+7		7-14 reserved (unused)
+15	M	data is missing
+

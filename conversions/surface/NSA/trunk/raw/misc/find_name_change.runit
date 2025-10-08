@@ -1,0 +1,10 @@
+./find_name_change.pl -i ../cdf/gndrad > gndrad.list_of_vars.out
+sort gndrad.list_of_vars.out > gndrad.list_of_vars.sorted.out
+./find_name_change.pl -i ../cdf/mettwr2h > mettwr2h.list_of_vars.out
+sort mettwr2h.list_of_vars.out > mettwr2h.list_of_vars.sorted.out
+./find_name_change.pl -i ../cdf/mettwr4h > mettwr4h.list_of_vars.out
+sort mettwr4h.list_of_vars.out > mettwr4h.list_of_vars.sorted.out
+./find_name_change.pl -i ../cdf/met > met.list_of_vars.out
+sort met.list_of_vars.out > met.list_of_vars.sorted.out
+./find_name_change.pl -i ../cdf/skyrad > skyrad.list_of_vars.out
+sort skyrad.list_of_vars.out > skyrad.list_of_vars.sorted.out

@@ -1,0 +1,27 @@
+head -151 var_ct.out > j1
+tail -150 j1 > stnp_var.out
+/usr/bin/rm j1
+
+head -301 var_ct.out > j1
+tail -150 j1 > slp_var.out
+/usr/bin/rm j1
+
+head -451 var_ct.out > j1
+tail -150 j1 > cslp_var.out
+/usr/bin/rm j1
+
+head -601 var_ct.out > j1 
+tail -150 j1 > temp_var.out 
+/usr/bin/rm j1
+
+head -751 var_ct.out > j1  
+tail -150 j1 > dewpt_var.out  
+/usr/bin/rm j1 
+
+head -901 var_ct.out > j1   
+tail -150 j1 > wdsp_var.out   
+/usr/bin/rm j1 
+
+head -1051 var_ct.out > j1   
+tail -150 j1 > wdir_var.out   
+/usr/bin/rm j1 

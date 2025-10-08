@@ -1,0 +1,50 @@
+
+This doc is a brief description of how to create the McD database on hurricane.
+Currently there are several steps, a couple of which are very messy.  Ideally,
+all projects should be converted to text ( delimited) and then the insert_db 
+script should be used to insert the data into the database.  
+
+
+1) Prepare the ml database:
+   convert the per-project tables in the ml database to the single, multi-project
+   schema.  All files described are located in ./ml
+  a) Create the tables:
+    > cat all.arch | mysql -h hurricane -u stormdba -p ml
+  b) Insert the projects
+    > cat project.dat | mysql -h hurricane -u stormdba -p ml
+  c) Convert the tables
+    > convert_db
+
+2) Create the mcd database
+   All files described below are located in .
+  a) Create the needed tables
+    > cat combine.sql | mysql -h hurricane -u stormdba -p ml
+  b) Add the users
+    > cat user.dat | mysql -h hurricane -u stormdba -p ml
+  c) Add the projects
+    > cat project.dat | mysql -h hurricane -u stormdba -p ml
+
+3) Combine the dln and ml
+   combine the data_loading_notes database on thunder with the database generated
+   above.  All files described below are located in .
+  a) Dump the categories in the ml database:
+    > mysqldump -h hurricane -u stormdba -p -t ml category >! cat_dump.sql
+  b) Combine the two databases into the mcd database
+    > combine_db
+
+4) Parse the static html files
+   For the projects not in the dln and ml databases the static html pages have to 
+   be parsed and converted to a  delimited format.  This is done in the
+   ./grandfather directory.  Each project has its own parse_notes and parse_list
+   scripts to parse the dln and ml html pages.  Across project these scripts are
+   similar be each project required its own little modifications.  You will need
+   to copy over the needed html files (if they have been updated) and delete the
+   header portion, usually until the first needed record in the main table.  Run
+   each script creating the ml.dat and dln.dat files.
+
+5) Insert the grandfathered projects into the database
+  > ./grandfather/insert_all
+
+
+
+Dan Sullivan - August 8, 2003

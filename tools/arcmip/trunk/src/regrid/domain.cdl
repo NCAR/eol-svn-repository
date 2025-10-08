@@ -1,0 +1,22 @@
+netcdf ease_domain {
+dimensions:
+ col = 100;
+ row = 92;
+variables:
+ float lat(row,col);
+ float lon(row,col);
+ lat:long_name = "latitude";
+ lat:units = "deg";
+ lon:long_name = "longitude";
+ lon:units = "deg";
+ :title = "ease_domain.nc";
+ :type = "domain";
+ :modeler = "UCAR/JOSS";
+ :fullname = "ARCMIP 50km EASE-Grid Domain";
+ :start_col = 113;
+ :start_row = 101;
+ :ease_comment = "ARCMIP grid starts at specified row and column of a 50km northern azimuthal EASE-Grid.";
+ :x_index = "col = index of grid points in x direction" ;
+ :y_index = "row = index of grid points in y direction" ;
+ :comment = "Prepared by UCAR/JOSS, 2003. http://www.joss.ucar.edu/arcmip/regrid/  codiac@joss.ucar.edu" ;
+ }

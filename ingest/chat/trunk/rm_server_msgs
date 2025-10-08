@@ -1,0 +1,8 @@
+var=`find /net/work/Projects/chatlog_recovery/logs -maxdepth 1 -type f -exec sed -e '/] <gvbot(gvbot@localhost>/d' -i {} \;`
+echo "$var" | tr -d '\n'
+var=`find /net/work/Projects/chatlog_recovery/logs -maxdepth 1 -type f -exec sed -e '/] <aocbot1(aocbot1@localhost)>/d' -i {} \;`
+echo "$var" | tr -d '\n'
+var=`find /net/work/Projects/chatlog_recovery/logs -maxdepth 1 -type f -exec sed -e '/] <groundbot>/d' -i {} \;`
+echo "$var" | tr -d '\n'
+var=`find /net/work/Projects/chatlog_recovery/logs -maxdepth 1 -type f -exec sed -e '/] @/d' -i {} \;`
+echo "$var" | tr -d '\n'

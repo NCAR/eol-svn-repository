@@ -1,0 +1,137 @@
+<html>
+<body>
+<h1>General Master List (Stand Alone) Requirements<h1>
+
+<h2>Required Information</h2>
+<h3>Project</h3>
+<ul>
+   <li>Project ID</li>
+   <li>Display Name for the Project</li>
+   <li>Length (in days) for how long a dataset is considered "new"</li>
+   <li>Path/URL for the viewer</li>
+   <li>Set of allowed Categories (some could be hidden)</li>
+   <li>Set of Datasets (some could be hidden)</li>
+</ul>
+
+<h3>Category</h3>
+<ul>
+   <li>Category Id</li>
+   <li>Display Name</li>
+   <li>Optional parent category for category heirarchy</li>
+</ul>
+
+<h3>Dataset</h3>
+<ul>
+   <li>Dataset Id</li>
+   <li>Dataset Title</li>
+   <li>Dataset URL</li>
+   <li>Documentation URL</li>
+   <li>Expected Date</li>
+   <li>Entered Date</li>
+   <li>Update Flag</li>
+   <li>Hide Flag (per project)</li>
+   <li>In Progress Flag (per project)</li>
+   <li>Set of Projects</li>
+   <li>Set of Categories</li>
+</ul>
+
+<h2>Required Views</h2>
+<ul>
+   <li>List of all projects with a Master List<ul>
+      <li>Displays the project id and project name for all projects with a Master List</li>
+      </ul></li>
+   <li>List of all categories<ul>
+      <li>Displays all known categories in the Master List</li>
+      </ul></li>
+   <li>Project List<ul>
+      <li>Lists all categories with all associated datasets for the project.</li>
+      <li>Shows all hidden datasets and categories</li>
+      </ul></li>
+</ul>
+
+<h2>Required Functionality</h2>
+<ul>
+   <li>General Functions<ul>
+      <li>Page caching must be turned off to prevent invalid states</li>
+      <li>Dates must be checked for validity</li>
+      <li>Dataset ids must be unique</li>
+      <li>Any change to the database must regenerate all related static HTML pages for all affected projects.</li>
+      <li><i>In Progress</i> datasets are only for the selected project, but updates and dates are applied to all projects.</li>
+      <li>A dataset can be hidden for a project and will hide it for all associated categories.</li>
+      <li>A category can be hidden for a project hiding all associated datasets for the category.</li>
+      </ul></li>
+   <li>Adding a Project<ul>
+      <li>Defines the path for the ML, the display name and its id</li>
+      <li>Assigns the set of categories for the project</li>
+      <li>Generates the initial static HTML pages for the view</li>
+      </ul></li>
+   <li>Cloning a Project<ul>
+      <li>Defines the path for the ML, the display name and its id</li>
+      <li>Removes unnecessary cloned categories</li>
+      <li>Adds necessary cloned categories</li>
+      <li>Remvoes unnecessary cloned datasets that do not have a category assigned in the project</li>
+      <li>Removes other unnecessary cloned datasets</li>
+      <li>Adds associations for datasets that keep the same id for the project</li>
+      <li>Determines new dataset ids for datasets that are created from the source project</li>
+      <li>Generates the initial static HTML pages for the view</li>
+      </ul></li>
+   <li>Editing a Project<ul>
+      <li>Can change the path for the ML and display name</li>
+      <li>Can change the set of categories associated with the project.</li>
+      <li>Regenerates the initial static HTML pages for the view</li>
+      </ul></li>
+   <li>Delete a Project<ul>
+      <li>Completely removes all datasets that are only associated with the project</li>
+      <li>Removes all associates to dataset for the project</li>
+      <li>Remvoes all associates to categories for the project</li>
+      <li>Removes all generated pages for the view</li>
+      <li>Removes the project itself from the database (not in jedi)</li>
+      </ul></li>
+   <li>Create a Category<ul>
+      <li>Autogenerates id</li>
+      <li>User defines a unique name, and optionally a parent</li>
+      </ul></li>
+   <li>Editing a Catetory<ul>
+      <li>Changes the name, but must remain unique</li>
+      <li>Regenerates static HTML pages for all projects that are associated to the category</li>
+      </ul></li>
+   <li>Deleting a Category<ul>
+      <li>Can only be done to categories that do not have any project associations (can have dataset associations that will be removed)</li>
+      <li>Removes the category from the database</li>
+      <li>Static HTML pages do not need to be regenerated because there are no project associations for the category</li>
+      </ul></li>
+   <li>Adding an Existing Dataset to a Project<ul>
+      <li>Add an association between the dataset and project</li>
+      <li>Set the in progress and update flags to false (0)</li>
+      <li>The dates remain unchanged</li>
+      <li>Regenerates the static HTML pages for the project</li>
+      </ul></li>
+   <li>Adding a new Dataset to a Project<ul>
+      <li>Requires dataset title</li>
+      <li>Autogenerates a dataset id if not assigned</li>
+      <li>Flags are set to false (0) as defaults</li>
+      <li>Dates are set to NULL as defaults</li>
+      <li>Dataset must be assigned to at least 1 category</li>
+      <li>Dataset is assigned to the project</li>
+      <li>Regenerates the static HTML pages for the project</li>
+      </ul></li>
+   <li>Editing a Dataset<ul>
+      <li>Does not allow for changing the project associations</li>
+      <li>Can change the categories associated with the dataset</li>
+      <li>Can only change the general dataset information and specific information for the current project</li>
+      <li>Regenerates the static HTML pages for all associated project for the dataset</li>
+      </ul></li>
+   <li>Deleting a Dataset from a Project<ul>
+      <li>Deletes the association with the project</li>
+      <li>Deletes the entire dataset if it is no longer associated with a project</li>
+      <li>Regenerates the static HTML pages for the project</li>
+      </ul></li>
+</ul>
+
+<h2>Purposely Omitted Functionality</h2>
+<ul>
+   <li>A dynamic viewer - all changes will write static HTML files to the specified directory for the project</li>
+</ul>
+
+</body>
+</html>

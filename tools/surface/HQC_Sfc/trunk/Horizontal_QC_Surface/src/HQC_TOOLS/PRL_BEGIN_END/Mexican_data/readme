@@ -1,0 +1,16 @@
+The new det begin and end PERL
+scripts seem to both give the
+same results. I think the first
+(original) script is actually faster
+when it maintains 2 seperate hash
+tables over the new version that
+maintains 1 hash table of arrays
+with the begin and end dates in
+the arrays. part of the slowness
+may be due to how I "delete" and
+re-add to keys in the new version.
+There's probably a way to just update
+an element in the arrays, but I
+don't know how, yet.
+
+LEC

@@ -1,0 +1,13 @@
+SHELL = /bin/sh
+#    Makefile for QCF rec s/w.
+#
+
+CC=cc
+##CFLAGS = -g
+
+distance: distance.o
+	$(LINK.c) -o distance distance.o -l m
+	chmod 0755 distance
+
+clean:
+	rm *.o

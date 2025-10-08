@@ -1,0 +1,219 @@
+#!/usr/bin/perl -w
+
+# spoolACARStest
+# mark, 2004 June 4
+# sean, 2010 July 14
+#
+# $Id: spoolACARS,v 1.3 2004/06/05 06:08:54 joss Exp joss $
+# $Log: spoolACARS,v $
+#  
+#
+# Revision 3.1  16 Jan 2025 danchoi
+# Added in ability to update checksum and will send an email if
+# there is an issue.
+
+#
+# @author Linda Echo-Hawk and J. Scannell
+# @version 3.0 3 Feb 2022
+# Remove HPSS references since the HPSS was decommissioned on 30 Sep 2021.
+# The script will now copy the file to the Campaign Store and load the
+# file to the database from there.
+# Revamp the code because the files are all in one directory in LDM.
+# Still needed: Create year directory if it doesn't exist.
+#               Load all older files if they weren't loaded (in case of
+#                  system downtime, etc.)
+#
+#  @author Linda Echo-Hawk
+#  @version 2.0 22 March 2021
+#  Revised the MySqlDatabase constructor to pass in the  ~/.my.cnf file
+#  containing the dbase and password rather than having these hard-coded
+#  in the script. This solved a security issue.
+#
+# Revision 1.6 1018/10/29 echohawk
+# Changed @monitors from empty string to eol-cds-ingest
+# to conform with other ingest scripts about who receives
+# email notifications. 
+#
+# Revision 1.5 2018/09/07 echohawk
+# Commented out system RM commands. Changes to the LDM server
+# in 2018 resulted in LDM no longer creating group writeable
+# directories so this script can no longer remove files. This
+# change should reduce the number of error messages received
+# until a better fix is in place. Currently John Allison is
+# running an LDM scrubber to remove the files.
+#
+# Revision 1.4 2010/07/14 stroble
+# Added ability to insert files into Codiac automatically
+#
+# Revision 1.3  2004/06/05 06:08:54  joss
+# Remove testing stubs.
+#
+# Revision 1.2  2004/06/04 18:05:47  joss
+# Overhaul of script to directly send data to MSS
+#
+#
+# Script to automatically spool compressed netCDF ACARS data to MSS
+#
+# Data is already gzipped, so daily tarfiles (~100M each) will be stored to
+# /JOSS/DATA/RAW/SOUNDING/ACARS/YYYY where YYYY is the year.  Filenames
+# will be acars.YYYYMMDD.tar where YYYYMMDD is the file date.
+#
+# File will run once per day.
+
+use strict;
+use lib "/net/work/lib/perl/mysql";
+use lib "/net/work/lib/perl/mail";
+use Time::Local;
+use POSIX "strftime";
+use FindBin qw($Script $Bin);
+use MySqlDatabase;
+use MySqlDataset;
+use MySqlFile;
+use DateTime;
+use MAIL;
+
+# Constants
+my $dataset_id = "100.016";
+my $srcdir='/data/ldm/data/acars/netcdf';
+# I had to create the temp dir
+my $tmp='/scr/tmp/joss/acars';
+my $cs_archive = "/glade/campaign/eol/archive/operational/aircraft/acars";
+my $cs_host = 'eoldata@data-access.ucar.edu';
+my $cs_name = "data-access.ucar.edu";
+
+my @monitors = ('eol-cds-ingest@ucar.edu');
+# my @monitors = ('echohawk@ucar.edu');
+my $report_header = "";
+my $report = "";
+my $TAR='/bin/tar';
+my $RM='/bin/rm';
+my $RMDIR='/bin/rmdir --ignore-fail-on-non-empty'; # GNU rmdir can be quiet!
+my $result;
+
+$report_header .= "I am $Bin/$Script running on ".`/bin/hostname`."\n";
+
+chdir($srcdir) or die "Couldn't cd to $srcdir, $!";
+$report_header .= "working from $srcdir\n";
+
+# Figure out day to process
+my $dt = DateTime->now;
+my $day_to_process = $dt - DateTime::Duration->new( days => 2 );
+my $year = $day_to_process->year;
+my $month = sprintf("%02d",$day_to_process->month);
+my $day = sprintf("%02d",$day_to_process->day);
+
+my $processday = sprintf("%04d%02d%02d", $year, $month, $day);
+$report_header .= "Spooling ACARS for $processday (UTC)\n";
+
+$report .= "Year: $year Month: $month Day: $day\n";
+   
+$report .= "Spooling files from $processday\n";
+
+my $filename = "acars.$processday.tar";
+my $tarfile = "$tmp/$filename";
+$result=system("$TAR cf $tarfile $processday\*");
+if ($result != 0) {
+   sendMailAndDie("Error tarring data files to $tarfile.\n");
+}
+# Verify that the campaign store is up
+$result = system("/bin/ping -c 1 -W 1 $cs_name >/dev/null 2>&1");
+if ($result != 0) {
+   sendMailAndDie("The Campaign Store is not up and running.\n");
+}
+# check if YYYY dir exists on Campaign Storage, if not, create it
+$result = system("ssh $cs_host [ -d $cs_archive/$year ] 2>/dev/null");
+# If command does not return 0, check for year directory again, because possibly received
+# an ssh error.
+if ($result ne "0") {
+   $result = system("ssh $cs_host [ -d $cs_archive/$year ] 2>/dev/null");
+   if ($result ne "0") {
+      $result = `ssh $cs_host mkdir $cs_archive/$year 2>&1`;
+      if ($result ne "") {
+         sendMailAndDie("Could not create directory $cs_archive/$year on campaign store.\n");
+      }
+   }
+}
+
+# Read in all of the tar files in the temp directory
+opendir(my $TARS, $tmp) or sendMailAndDie("Cannot open $tmp\n");
+my @tar_files = grep(/\.tar$/,readdir($TARS));
+closedir($TARS);
+
+my $msg = "";
+foreach my $file (sort(@tar_files)) {
+   my $fileyear = substr($file, 6, 4);
+   my $filemonth = substr($file, 10, 2);
+   my $fileday = substr($file, 12, 2);
+#copy the files to the campaign store and change the permissions
+   my $cs_msg = `scp $tmp/$file $cs_host:$cs_archive/$fileyear/$file 2>&1`;
+   if ($cs_msg ne "") {
+      sendMailAndDie("Error copying $tmp/$file to campaign store.\n $cs_msg\n");
+   }
+# Wait after copy has been completed 
+   sleep(60);
+   $result = system("ssh $cs_host chmod 440 $cs_archive/$fileyear/$file >/dev/null");
+   if ($result != 0) {
+      sendMailAndDie(sprintf("Error %d in chmod command.\n", $result/256));
+   }
+# Insert the tarred file to the database
+   $report .= "Inserting $filename to dataset $dataset_id\n";
+# Create and open the database
+   my $database = MySqlDatabase->new(); # use ~/.my.cnf
+	
+   my $mysqlFile = MySqlFile->new();
+   $mysqlFile->setDatasetArchiveIdent("$dataset_id");
+   my $file_details = `ssh $cs_host ls -s $cs_archive/$fileyear/$file`;
+   my @filesize = split(' ', $file_details);
+   $mysqlFile->setFile("$cs_archive/$fileyear", "$file", $filesize[0]);
+   $mysqlFile->setFormatId(53);
+   $mysqlFile->setHost("campaign");
+   $mysqlFile->setBeginDate($fileyear,$filemonth,$fileday,0,0,0);
+   $mysqlFile->setEndDate($fileyear,$filemonth,$fileday,23,59,59);
+
+   $database->connect();
+   $msg = $mysqlFile->insert($database);
+
+#if insert worked
+   $report .= "called database commit\n";
+   if ($msg eq "") { $msg .= $database->commit(); }
+#else undo
+   else { $msg.= "Database rolled back.\n".$database->rollback(); }
+	
+   $database->disconnect();
+
+   $report .= $msg;	
+
+   system("$RM $tmp/$file");
+}
+
+
+# Update the checksum.
+
+
+
+$result = system("ssh $cs_host python3 eoldata-utils/cksum/checksum_utility.py -n -d $cs_archive/$year >/dev/null");
+if ($result != 0) {
+      sendMailAndDie(sprintf("Error with checksum command.\n", $result/256));
+   }
+
+
+# In 2018, LDM created directories that were no longer group
+# writeable and we were not able to remove them with this
+# script. I commented out the two lines below in order to
+# minimize the resulting error emails.
+# system("$RM -r $year/$day");
+# system("$RMDIR $year"); # Will only succeed when $year empty
+
+# LDM now purges the files automatically
+
+# Send out an email that the script has finished.
+   #if ($report ne "") { sendMailAndDie($report_header.$report); }
+   if ($msg ne "") { sendMailAndDie($report_header.$report); }
+   # else { sendMailAndDie("$report_header: No errors to report "); }
+
+sub sendMailAndDie {
+    my ($body) = @_;
+    MAIL::send_mail("$Script Script Results\n",$body, @monitors);
+    exit(1);
+}
+

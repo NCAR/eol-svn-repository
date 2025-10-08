@@ -1,0 +1,214 @@
+a:link, a:visited { color: #006600; text-decoration: none; }
+a:hover, body.color a:hover { color: #990000; text-decoration: underline; }
+
+body {
+	background-color: #FFFFCC;
+	color: black;
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 20px 0;
+}
+
+body.color {
+	background-color: #000066;
+	color: #FFFFFF;
+	padding: 0px 0;
+}
+
+body.color a:link, body.color a:visited { color: #FFFFFF; }
+
+div.dropdownBar {
+    border: 2px solid #000066;
+    font-size: 12pt;
+    min-height: 24px;
+    margin: 0 20px;
+    padding: 1px 5px;
+}
+
+div.dropdownBar div.button {
+    float: left;
+    height: 22px;
+    padding-right: 5px;	
+    vertical-align: middle;
+}
+
+button, input[type=button], input[type=submit] {
+	border: 2px outset #006600;
+	background-color: #FFFF99;
+	color: #006600;
+	font-weight: bold;
+}
+
+button:hover, input[type=button]:hover, input[type=submit]:hover {
+	background-color: #FFFFCC;
+	border: 2px outset #990000;
+	color: #990000;
+	cursor: pointer;
+}
+
+div.dropdownBar div.dropdown {
+	float: right;
+    height: 22px;
+    padding-left: 5px;	
+    vertical-align: middle;
+}
+
+div.dropdownBar div.status {
+    font-style: italic;
+    text-align: center;
+    width: 100%;
+}
+
+div.floatLeft { float: left; }
+div.floatRight { float: right; }
+
+div.folder {
+    font-weight: bold;
+    padding-left: 10px;
+    padding-top: 20px;
+    vertical-align: middle;	
+}
+
+div.folderEntry {
+    font-size: 10pt;
+    font-weight: normal;
+    padding-left: 60px;	
+}
+
+div.headerbar {
+    background-color: #000066;
+    color: #FFFFFF;
+    font-size: 16pt;
+    font-weight: bold;
+    margin: 0 20px;
+}
+
+div.headerbar table tr td {
+    font-size: 14pt;
+    font-weight: bold;	
+    padding: 2px 5px;
+}
+
+div.infobox {
+    margin: 20px 10% 0 10%;
+    width: 80%;	
+}
+
+div.listing {
+    border: 1px solid #000066;
+    margin: 0 20px;
+    padding: 0;
+}
+
+div.newEntryBar {
+    border: 2px solid #000066;
+    font-size: 12pt;
+    margin: 0 20px;
+    padding: 1px 5px;
+}
+
+div.noteArea {
+	background-color: #FFFFFF;
+	border: 1px solid #000066;
+    margin: 0 20px;
+    padding: 0 10px;
+}
+
+div.noteDate {
+	font-size: 16pt;
+	font-weight: bold;
+}
+
+div.noteDate span.noteType {
+    font-size: 12pt;
+    font-weight: normal;
+}
+
+div.noteText {
+    padding: 0 30px 10px 30px;	
+    text-align: justify;
+}
+
+div.noteHeaderBar {
+	background-color: #000066;
+	color: #FFFFFF;
+	font-size: 14pt;
+	font-weight: bold;
+	margin: 15px 20px 0 20px;
+	padding: 5px 0;
+	text-align: center;
+}
+
+div.spacer {
+	border: 1px solid #000066;
+	height: 5px;
+	margin: 0 20px;
+}
+
+div#titlebar {
+    background-color: #000066;
+    color: #FFFFFF;
+    font-size: 24pt;
+    font-weight: bold;
+    margin: 20px 25% 0 25%;
+    padding: 8px;
+    text-align: center;
+}
+
+div#titlebar p.mainTitle {
+	font-size: 36pt;
+	margin: 0 0 10px 0;
+	width: 100%;
+}
+
+div#titlebar p.subTitle {
+	font-size: 14pt;
+	font-weight: normal;
+	margin: 0;
+}
+
+img { border: 0; margin: 0; padding: 0; }
+
+img.folderIcon { padding: 0 5px 0 0; width: 25px; }
+
+.large { font-size: 18pt; }
+
+.small { font-size: 10pt; }
+
+.revisedNote { color: #006666; font-size: 12pt; font-style: italic; font-weight: bold; padding-left: 30px;}
+
+table.datasetListing, table.projectListing, table.userListing { width: 100%; }
+
+table.datasetListing tr.header, table.projectListing tr.header, table.userListing tr.header { background-color: #CCCCCC; }
+
+table.datasetListing tr th, table.projectListing tr th, table.userListing tr th {
+	border: 1px solid #000066;
+    white-space: nowrap;	
+}
+
+table.projectListing tr td, table.userListing tr td {
+    text-align: center;	
+}
+
+table.info { border: 1px solid #000066; width: 100%; }
+table.info tr td { background-color: #FFFFFF; padding: 1px 2px; vertical-align: middle; }
+table.info tr th { background-color: #FFFFFF; text-align: right; vertical-align: middle; white-space: nowrap; }
+
+td.contact, td.date, td.id { padding: 0 2px; text-align: center; vertical-align: middle; }
+td.icon { margin: 0; padding: 0; text-align: center; vertical-align: middle; white-space: nowrap; }
+td.label { font-weight: bold; text-align: right; }
+
+td.projectName { text-align: right; }
+td.ml { text-align: center; vertical-align: middle; }
+
+table.info tr td.datasetProject { border: 1px solid #000066; vertical-align: top; width: 200px; }
+td.datasetProject td { border: 1px solid #000066; text-align: center; vertical-align: top; }
+td.datasetProject th.datasetProject { background-color: #000066; color: #FFFFFF; font-weight: bold; text-align: center; }
+
+tr.highlightRow { background-color: #DDDDDD; }
+tr.hoverRow { background-color: #EEEEFF; }
+tr.listRow { background-color: #FFFFFF; }
+
+th a:link, th a:visited { color: #006600; }
+
+.yes { color: #0000FF; font-weight: bold; }
+.no { color: #FF0000; font-weight: bold; }

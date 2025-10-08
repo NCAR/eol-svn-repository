@@ -1,0 +1,31 @@
+@CHARSET "ISO-8859-1";
+
+html#htmltop {
+	background-image: url("http://pacmars.eol.ucar.edu/images/pacmars_bg_01.jpg") !important;
+	background-color: #333 !important;
+}
+
+div.body { padding: 0px 10px; }
+
+div#grailsLogo, div.footer { background-color: #1f497d; }
+div#grailsLogo h1 { color: #fff; font-weight: bold; font-size: 28px; }
+div#grailsLogo a { color: #fff; }
+div#banner-user { float: right; padding-right: 10px; color: #fff; }
+
+.project-permitted, .ds-list {
+	margin-right: 20px;
+	padding: 10px;
+	border: 1px solid #ccc;
+}
+.project-permitted h4, .ds-list h4 {
+	color: #1f497d;
+	font-weight: normal;
+	font-size: 1.05em;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 5px;
+}
+.project-permitted { float: right; }
+.ds-list { margin: 20px; }
+.project-permitted li, .ds-list li {
+	list-style-type: none;
+}

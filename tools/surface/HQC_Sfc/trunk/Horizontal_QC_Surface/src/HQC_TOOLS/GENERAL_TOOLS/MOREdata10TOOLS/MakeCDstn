@@ -1,0 +1,13 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+
+CC=acc
+##CFLAGS = -g
+
+build_CDstnlist: build_CDstnlist.o
+	$(LINK.c) -o build_CDstnlist build_CDstnlist.o
+	chmod 0755 build_CDstnlist
+
+clean:
+	rm *.o

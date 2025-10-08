@@ -1,0 +1,34 @@
+From conversations with Matt Warner at HPCN
+at (1-402-972-9899 and ftp 129.93.221.65):
+
+The data are hourly values running from 0100
+to 2400 local standard time. None of the 
+stations convert over to Daylight Savings
+Time.
+
+Missing data is flagged with 'M' (or 'm') char.
+Estimated data is flagged with 'E' or 'e'.
+See precip data for examples.
+
+The VORTEX file contains lat/lon and other
+data which we probably don`t need. Matt is
+sending a hard copy of lat/lons/elev, etc
+to me on 22 Dec 93.   VORTEX file has been
+renamed to AAA_HPCN_stn_info.
+
+There are 74 stations, each with a unique
+number. When a stn closes, that number is
+retired. Each stn number is preceed with
+two letter state id, but not needed since
+numbering system is unique.
+
+Verify that lat/lon info is same as for
+stormfest.
+
+All stations are on local standard time
+except the North Dakota stations. The ND
+stations have had their times converted 
+to Central, even if they were in Mountain
+time.  The hplains.stns file has been
+adjusted so that these times will be 
+properly handled.

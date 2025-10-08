@@ -1,0 +1,217 @@
+:
+# Run the toss program
+#   flags: -debug = run in debug mode
+#          -h     = hourly report (default)
+#          -m     = 5 minute report
+#          -b     = print bad values only
+#          -d     = print doubtful values only
+#          -bd    = print both bad and doubtful values only (default)
+#          -s XXXX= print report for station id: XXXX
+
+USAGE="Usage:  $0 [-b | -d | -bd] [-h | -m] [-debug] [-sXXXX] FILE1.toss [FILE2.toss] [FILE3.toss] ..."
+
+PRTB="y";
+PRTD="y";
+PRTT="-h";
+PRTS="";
+DEBUG="n";
+case $# in
+	0)	echo $USAGE;
+		exit 1;;
+	1)	case $1 in
+			-debug|-b|-d|-bd|-db|-h|-m|-s)	echo $USAGE;
+										exit 1;;
+		esac;;
+	2)	case $1 in
+			-debug)	DEBUG="y";
+				shift;;
+			-b)	PRTB="y";
+				shift;;
+			-d)	PRTD="y";
+				PRTB="n";
+				shift;;
+			-bd)	PRTB="y";
+				PRTD="y";
+				shift;;
+			-db)	PRTB="y";
+				PRTD="y";
+				shift;;
+			-h)	PRTT="-h";
+				shift;;
+			-m)	PRTT="-m";
+				shift;;
+			-s)	PRTS="-s";
+			   	PRTS=$PRTS$2;
+				shift;
+				shift;;
+		esac;;
+	*)	case $1 in
+			-debug)	DEBUG="y";
+				shift;;
+			-b)	PRTB="y";
+				shift;;
+			-d)	PRTD="y";
+				PRTB="n";
+				shift;;
+			-bd)	PRTB="y";
+				PRTD="y";
+				shift;;
+			-db)	PRTB="y";
+				PRTD="y";
+				shift;;
+			-h)	PRTT="-h";
+				shift;;
+			-m)	PRTT="-m";
+				shift;;
+			-s)	PRTS="-s";
+			   	PRTS=$PRTS$2;
+				shift;
+				shift;;
+		esac;
+		case $2 in
+			-debug)	DEBUG="y";
+				shift;;
+			-b)	PRTB="y";
+				shift;;
+			-d)	PRTD="y";
+				PRTB="n";
+				shift;;
+			-bd)	PRTB="y";
+				PRTD="y";
+				shift;;
+			-db)	PRTB="y";
+				PRTD="y";
+				shift;;
+			-h)	PRTT="-h";
+				shift;;
+			-m)	PRTT="-m";
+				shift;;
+			-s)	PRTS="-s";
+			   	PRTS=$PRTS$3;
+				shift;
+				shift;;
+		esac;
+		case $3 in
+			-debug)	DEBUG="y";
+				shift;;
+			-b)	PRTB="y";
+				shift;;
+			-d)	PRTD="y";
+				PRTB="n";
+				shift;;
+			-bd)	PRTB="y";
+				PRTD="y";
+				shift;;
+			-db)	PRTB="y";
+				PRTD="y";
+				shift;;
+			-h)	PRTT="-h";
+				shift;;
+			-m)	PRTT="-m";
+				shift;;
+			-s)	PRTS="-s";
+			   	PRTS=$PRTS$4;
+				shift;
+				shift;;
+		esac;;
+esac
+QCPATH="../exe"
+
+echo
+echo "Running toss print program"
+echo "toss: `date`"
+
+if [ $DEBUG = "y" ]
+then
+   echo "  DEBUG mode ON"
+fi
+if [ $PRTB = "y" -a $PRTD = "y" ]
+then
+   echo '  print "B" and "D" toss info'
+   FLAGS="-bd"
+elif [ $PRTB = "y" ]
+then
+   echo '  print "B" toss info only'
+   FLAGS="-b"
+elif [ $PRTD = "y" ]
+then
+   echo '  print "D" toss info only'
+   FLAGS="-d"
+else
+   echo '  print "B" toss info only'
+   FLAGS="-b"
+fi
+echo
+echo -n "Continue[y/n]? "
+read reply
+if [ $reply != "y" ]
+then
+  echo "exiting..."
+  exit
+fi
+
+
+for fname in $*
+do
+   echo "Processing file: $fname"
+   i=`expr index "$fname" .`
+   i=`expr $i - 1`
+   f=`expr substr "$fname" 1 $i`
+   i=`expr $i + 2`
+   ext=`expr substr "$fname" $i 4`
+   if [ $ext != "toss" ]
+   then
+	echo "$fname has incorrect extension.  Skipping..."
+	continue
+   fi
+   if [ -r prttoss.toss ]
+   then
+	echo "prttoss.toss already exists; Removing..."
+     rm -f prttoss.toss
+   fi
+   if [ -r prttoss.var ]
+   then
+	echo "prttoss.var already exists; Removing..."
+     rm -f prttoss.var
+   fi
+   if [ -r prttoss.pres ]
+   then
+	echo "prttoss.pres already exists; Removing..."
+     rm -f prttoss.pres
+   fi
+   if [ -r prttoss.temp ]
+   then
+	echo "prttoss.temp already exists; Removing..."
+     rm -f prttoss.temp
+   fi
+   if [ -r prttoss.wind ]
+   then
+	echo "prttoss.wind already exists; Removing..."
+     rm -f prttoss.wind
+   fi
+   if [ -r prttoss.prcp ]
+   then
+	echo "prttoss.prcp already exists; Removing..."
+     rm -f prttoss.prcp
+   fi
+   echo "sorting $f.toss..."
+   sort $f.toss > prttoss.toss
+   echo "sorting $f.var..."
+   sort $f.var > prttoss.var
+
+   echo   "$QCPATH/toss $FLAGS $PRTT $PRTS"
+   if [ $DEBUG = "y" ]
+   then
+      exec $QCPATH/toss $FLAGS $PRTT $PRTS "-debug"
+   else
+      $QCPATH/toss $FLAGS $PRTT $PRTS
+   fi
+
+   lpr landscape
+   lpr -p prttoss.pres
+   lpr -p prttoss.temp
+   lpr -p prttoss.wind
+   lpr -p prttoss.prcp
+done
+echo
+echo "End of Job!     Finish: `date`"

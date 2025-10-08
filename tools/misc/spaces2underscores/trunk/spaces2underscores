@@ -1,0 +1,58 @@
+#!/bin/bash
+#
+# Filename:       spaces2underscores
+#
+# Version:        1.0
+#
+# Purpose:        Converts spaces in filenames and directory names to 
+#                 underscores in a given directory structure (is recursive!).
+#
+# Author:         Amanda Orin
+#
+# First Created:  03/07/2013 12:50 MST 
+#
+# Last Modified:  03/11/2013 11:45 MST
+#
+
+
+# Variable Declarations -------------------------------------------------------
+nbsp=" "
+
+# Example of DIRECTORY: -------------------------
+# DIRECTORY="/net/web/catalog/html/itop_2010/model/comngu_1deg"
+# -----------------------------------------------
+
+# Retrieve/Set Directory name here
+if [ -z $1 ]
+then
+	DIRECTORY="."
+else
+	DIRECTORY=$1
+fi
+# -----------------------------------------------------------------------------
+
+
+# This is the main function - no modification necessary. ----------------------
+cd $DIRECTORY
+
+echo -e "\nStarting recursive search and replace...\n"
+
+IFS=$'\t\n'	# Set IFS (Internal Field Separator) to split by tabs and newlines only
+list="$(find $DIRECTORY -depth -name '* *' -print)"
+#list="$(find $DIRECTORY -name '* *' -print)"
+unset $IFS	# Undo that setting of IFS
+
+for f in $list
+do
+	outString="CHANGE:\n\t$f\t->\t"
+
+	newf=${f// /_}
+	`mv -i "$f" "$(dirname "$f")/$(basename "$f"|tr ' ' _)"`
+
+	outString="$outString$newf\n"
+	
+	echo -e "$outString"
+done
+
+echo -e "\nDone!\n"
+# -----------------------------------------------------------------------------

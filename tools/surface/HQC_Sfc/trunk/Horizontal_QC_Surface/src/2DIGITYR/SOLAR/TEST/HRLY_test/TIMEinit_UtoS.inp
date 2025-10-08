@@ -1,0 +1,10 @@
+VORTEX 95                  Project Name.             (25 characters only.)
+1                          Conversion type. 1 = UTC to SOLAR; 0 = SOLAR to UTC.
+60                         Data frequency (minutes). (Set to highest freq in input) (input_data_freq)
+0                          Mixed Frequency flag. 0 = 1 freq in data; 1 = multiple freq in data.
+1995                       Century/Year data was collected. (Integer YYYY) (current_year)
+950401                     Begin date of data to process YYMMDD (begin_date) 0401
+950403                     End   date of data to process YYMMDD (end_date)   0615
+/raid/NEWQC/src/SOLAR/TEST/HRLY_test/     Path name (and general name prefix) of 0qc files to process.
+/rraid4/cully/             Path name of output 0qc files.
+-80.00                     Reference Longitude

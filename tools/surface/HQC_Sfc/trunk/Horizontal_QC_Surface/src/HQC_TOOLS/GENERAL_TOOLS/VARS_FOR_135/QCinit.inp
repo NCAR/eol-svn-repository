@@ -1,0 +1,20 @@
+Andataco Test - Hi Res     Project Name. (25 characters only.)
+1                          pmethod.                  (Determines computation of WEIGHT in QC processing.)
+300.0                      Area of Influence in km.  (Depends on pmethod above) (1/# = min_weight)
+5                          Data frequency (minutes). (Set to highest freq in input) (data_freq)
+1995                       Century/Year data was collected. (Integer YYYY) (current_year)
+950401                     Date Project Began YYMMDD. (Sigmas computed based on this date)(proj_begin_date)
+950630                     Date Project Ended YYMMDD. (Used when searching for sigmas)(proj_end_date)
+950401                     Date to BEGIN processing. YYMMDD (begin_date)
+950430                     Date to END processing.   YYMMDD (end_date)
+/raid2/ANDATACO_test/solar_          Path name (and general name prefix) of *.0qc files to QC.
+/raid/VORTEX95/SOLAR_SIGMAFILES/     Path name of variance files computed by compute_sigmasq. (1995*.sig.gz)
+6.00                       Precip Maximum `bad` limit. Millimeters per "data_freq" amt of time. (bmax)
+3.00                       Precip Minimum `dubious` limit. Millimeters per "data_freq" amt of time. (dmin)
+0.5   0.2                  Station Pressure      `bad & dubious` alpha values. (ALL ALPHAS WILL BE SQUARED!)
+0.5   0.2                  Sea Level Pressure    `bad & dubious` alpha values. 
+1.0   0.4                  Calc Sea Lvl Pressure `bad & dubious` alpha values.
+1.0   0.5                  Dry Bulb Temperature  `bad & dubious` alpha values. (Dbled from orig)
+1.0   0.5                  Dew Point Temperature `bad & dubious` alpha values. (Dbled from orig)
+4.0   2.25                 Wind Speed            `bad & dubious` alpha values.
+2.2   1.22                 Wind Direction        `bad & dubious` alpha values.

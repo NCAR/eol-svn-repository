@@ -1,0 +1,5 @@
+#! /usr/bin/csh
+
+foreach file (../final/*.0qc)
+	/work/software/library/checktightlimits/Version2/bin/check_QCF_tightlimits $file
+end

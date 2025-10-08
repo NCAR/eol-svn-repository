@@ -1,0 +1,48 @@
+<html>
+<head>
+   <title>General Requirements</title>
+</head>
+<body>
+<h1>General Requirements</h1>
+
+<h2>Projects</h2>
+<ul>
+   <li>The majority of the project information will be stored in the data archive database.  It will only be able to be edited through GUImaint.</li>
+   <li>The ML will require some extra fields that will be stored in the ML database.  This will include which view to use, stylesheet information (if necessary), and other ML parameters for displaying a ML.  These fields will be managed using the ML editor.</li>
+   <li>The remaining DTS project information will be stored in the DTS database.  This will be managed using the DLN and will not be changed by any other tool (though it can be viewed).</li>
+</ul>
+
+<h2>Datasets</h2>
+<ul>
+   <li>Each dataset has its own dataset id that is the same as the id in the data archive system.</li>
+   <li>Each dataset has 4 tasks (ingest, processing, loading, approving/checking).  The dataset does not have to complete the first 3 tasks, but must complete the 4th to be considered final.</li>
+   <li>Each task is associated to a user who is in charge of the task.</li>
+   <li>Each task has a status that defines the current progress of the task.</li>
+   <li>Each dataset has a type (source/raw, processed, composite, image, link).</li>
+   <li>Source, image, and link datasets should not have any processing done to them.</li>
+   <li>Processing datasets should have at least one base dataset (of any type) that the processed dataset was derived from.</li>
+   <li>Composite datasets are specialized processing datasets and have all of the same fields as a processed dataset.</li>
+   <li>Composite datasets should only contain base datasets that are processed.</li>
+</ul>
+
+<h2>Groups</h2>
+<ul>
+   <li>Dataset groups are collections of datasets that share some feature in common (all processed the same, all ingested together, etc.)</li>
+   <li>Groups contain a set of notes that are for all of its datasets and a status on the groups completion.</li>
+</ul>
+
+<h2>Web Use</h2>
+<ul>
+   <li>All pages must turn off page caching to prevent invalid states.</li>
+   <li>All dates must be checked for validity.</li>
+</ul>
+
+<h2>Web Security</h2>
+<ul>
+   <li>All tools and pages related to the tools will be under security that will require a login and password set to access.</li>
+   <li>All SQL statements need to use bound variables to escape values to prevent SQL Incursion.</li>
+   <li>All data displayed in a page that came from a form input needs to escape the values to prevent embedded HTML/scripting from being executed.</li>
+</ul>
+
+</body>
+</html>

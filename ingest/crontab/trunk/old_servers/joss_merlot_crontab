@@ -1,0 +1,17 @@
+####################################################
+# If you make a modification to this crontab,
+# PLEASE indicate what project it is for and who the
+# responsible party is, and include your initials.
+# Thank you!
+####################################################
+
+# Operational ingest scripts. See Janine for details.
+30 10 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_madis_mysql_stage_to_mss.pl
+0 15 * * * /h/eol/joss/madis/madis_map_tar_mysql.pl
+0 17 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_HDW1h_mysql_stage_to_mss.pl
+0 11 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_HDW_mysql_stage_to_mss.pl
+0 3 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_spoolACARS
+0 18 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_gts_ldm_operational_db_update.pl
+0 2 1 * * /h/eol/dmg/HPSS_cronjobs/HPSS_ldm_metar_mss_db_update.pl
+0 10 * * * /h/eol/dmg/HPSS_cronjobs/HPSS_savefiles
+0 1 6 * * /h/eol/dmg/HPSS_cronjobs/HPSS_download_asos.pl

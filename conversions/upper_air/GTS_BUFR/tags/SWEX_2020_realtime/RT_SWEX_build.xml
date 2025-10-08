@@ -1,0 +1,52 @@
+<!-- This is the ant build.xml file for the REALTIME BUFR sounding processing that requires sorting of the *.cls/ESC files. -->
+<project name="GTSBUFR" default="compile" basedir=".">
+
+<!-- For a new project, change the fieldproject, output, and logs locations. -->
+    <!-- Constants used in the build file. -->
+    <!-- User must ensure these dirs are created before executing ant commands. -->
+    <property name="build" location="build" />
+    <property name="build.classes" location="build/classes" />
+    <property name="fieldproject" location="SWEX" />
+    <property name="src" location="src" />
+    <property name="output" location="/net/work/Projects/SWEX/real-time-plots/data_processing/output_esc" />
+    <property name="logs" location="/net/work/Projects/SWEX/real-time-plots/data_processing/logs" />
+
+    <!-- Define the class path containing necessary jar files for processing. -->
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <pathelement path="${build.classes}" /> 
+
+        <fileset dir="/net/work/lib/java">
+            <include name="utilities.jar" />
+            <include name="upper_air.jar" />
+        </fileset>
+
+        <fileset dir="/net/work/bin/sorters">
+            <include name="esc_record_sorter.jar" />
+        </fileset>
+    </path>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build.classes}" includeantruntime="false">
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build.classes}" />
+    </target>
+
+    <!-- Sort ESC cls files. This is the same sort as used by the NWS sounding processing. -->
+    <target name="sort_esc" depends="compile">
+        <java classname="dmg.ua.sounding.sorter.ESCRecordSorter" fork="yes">
+            <arg value="-T" />
+            <arg value="ASC" />
+            <arg value="${output}" />
+            <arg value="${logs}/record_sorter.log" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+</project>

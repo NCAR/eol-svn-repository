@@ -1,0 +1,18 @@
+        float INConc_CFDC(Time) ;
+                INConc_CFDC:_FillValue = -32767.f ;
+                INConc_CFDC:units = "/CC INSTRUMENT TEMP AND PRESSURE" ;
+                INConc_CFDC:long_name = "ICE NUCLEI CONCENTRATION 60 S RUNNING MEAN, CFDC" ;
+                INConc_CFDC:RevisionNotes = "This is a first archive. Quality control is still underway 60 s running mean concentration is reported for ice nuclei concentration.  The running mean will underestimate  peak concentrations in regions of high or rapidly varying ice nuclei concentrations. Higher frequency data is available on request. Small time offsets may be present compared to other aircraft data.  Filtered air sample data and out of cloud data when sampling from the CVI (counterflow virtual impactor) were used to establish baseline corrections. Concentrations reported when sampling CVI residuals have been corrected to ambient conditions based on the CVI enhancement factor reported in the CVI archive files.  Some periods of homogeneous freezing nucleation have been removed, but others may still be present, so indiscriminate use of the data as being representative of only heterogeneous ice nucleation is not advised." ;
+        float Filter_CFDC(Time) ;    xxxxxxxxxxxxxxxxxx Problem Parm xxxxxxxxxxxxxxxxx
+                Filter_CFDC:_FillValue = -32767.f ;
+                Filter_CFDC:units = "ON PARTICLES=0; ON FILTER=1" ;
+                Filter_CFDC:long_name = "FILTER, CFDC" ;
+        float CVI_CFDC(Time) ;
+                CVI_CFDC:_FillValue = -32767.f ;
+                CVI_CFDC:units = "ON RESIDUALS FROM CVI=1; ON AMBIENT INLET=0" ;
+                CVI_CFDC:long_name = "CVI, CFDC" ;
+        float CVINLET(Time) ;
+                CVINLET:_FillValue = -32767.f ;
+                CVINLET:units = "none" ;
+                CVINLET:long_name = "CVI Inlet Flag: 0=CVI, 1=ambient" ;
+

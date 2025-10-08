@@ -1,0 +1,273 @@
+#!/usr/bin/perl
+
+#################################################################
+# mark, 2001 Dec 10: remove refs to FTPed data (LDM-only for now)
+# $Log: savefiles,v $
+# Revision 1.5  2006/06/13 21:15:21  joss
+# Code out references to ETA 216 model, which has been unavailable
+# for some time
+#
+# Revision 1.4  2006/05/31 19:24:48  joss
+# Port to tsunami/Linux
+#
+# Revision 1.5 2008/04/15 13:38:00   joss (janine)
+# Modified to send output to a log and only email monitors if a warning is
+# generated.
+#
+# Revision 2.0 5 Oct 2021 Commented out hpss:put in 2 locations 
+# after HPSS decommissioned (LEH)
+
+#use lib "/h/eol/dmg/HPSS_cronjobs/lib";
+use lib "/net/work/lib/perl/hpss";
+use lib "/net/work/lib/perl/mail";
+use File::Basename;
+use HPSS;
+use MAIL;
+
+$RSYNC="/usr/bin/rsync -a";
+$MV="/bin/mv";
+#RM# $RM="/bin/rm";
+$CAT="/bin/cat";
+$LS="/bin/ls";
+#$MSRCP="/net/local_lnx/dcs/bin/msrcp -wpwd jossdata -pe 32767";
+#$MSLS="/net/local_lnx/dcs/bin/msls";
+$archive="/FS/EOL/operational/atlas";
+# Campaign Storage user, server, archive location
+$cs_host='eoldata@data-access.ucar.edu';
+$cs_archive="/glade/campaign/eol/archive/operational/atlas";
+#$tmpdir="/codiac_tmp/joss";
+$tmpdir="./tmp";
+
+$monitor="eol-cds-ingest\@ucar.edu";
+$subject="ATLAS file save";
+
+$ETA_216_ENABLED=0;
+$AVN_ENABLED=0;
+
+$log = "";
+close STDOUT;
+open(STDOUT,">",\$log) or die
+    "Couldn't redirect stdout, $!";
+#open STDOUT, "|/bin/mailx -s '$subject' $monitor" or die
+#    "Couldn't redirect stdout, $!";
+select STDOUT; $|=1;
+
+#open STDERR, ">&STDOUT" or die "Couldn't dup stdout, $!";
+#select STDERR; $|=1;
+
+use FindBin qw($Script $Bin);
+use Sys::Hostname;
+$host=hostname();
+&log("I am $Bin/$Script running on $host\n");
+
+use POSIX "strftime";
+
+sub asctime {
+    my($time)=@_;
+    return POSIX::strftime("%D %T %Z",localtime($time));
+}
+
+sub log {
+#    open(LOG,">>$log");
+#    print LOG &asctime(time),": @_\n";
+#    print &asctime(time),": @_\n" if $verbose;
+     print &asctime(time),": @_\n";
+#    close(LOG);
+}
+
+##################################################
+# If YYYYMM directory does not exist in Campaign #
+# Storage archive location, create it            #
+# ################################################
+sub mkdir_CS {
+    my $ym = shift;
+    my $subdir = shift;
+    ## check if year directory exists, if not create it
+    my $exists = 0;
+    my @date_dirs = `ssh $cs_host ls $cs_archive/$subdir 2>&1`;
+    my $mkdir;
+    chomp @date_dirs;
+    foreach my $dir (sort(@date_dirs)) {
+        if ($dir eq $ym) {
+            $exists = 1;
+        }
+    }
+    if (!$exists) {
+       print "Creating YYYYMM directory on Campaign Storage\n";
+       $mkdir = `ssh $cs_host  mkdir $cs_archive/$subdir/$ym 2>&1`;
+    }
+    return $mkdir;
+}
+
+##################################################
+# Copy file to Campaign Storage archive location #
+##################################################
+sub copy_to_CS {
+    my $ym = shift;
+    my $subdir = shift;
+    my $base = shift;
+    my ($file) = @_;
+
+    return `scp $file $cs_host:$cs_archive/$subdir/$ym/$base 2>&1`;
+}
+
+# Check whether given numeric argument
+$daysAgo = 0;
+$daysAgo = $ARGV[0] if ($ARGV[0]*1 == $ARGV[0]);
+# Get time from two days ago
+($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = 
+    gmtime(time-(2+$daysAgo)*86400);
+$year += 1900;
+$mon += 1;
+$ym = sprintf("%04d%02d", $year, $mon);
+$date = sprintf("%04d%02d%02d", $year, $mon, $mday);
+
+&log("Staging ATLAS files for $date to $archive");
+
+#################################################################
+# These files are saved to HPSS but are NOT loaded into codiac.
+# Ceased collection of these files April, 2015 per SFW request
+# Steve decided to keep the files for the ATLAS period (ending 2002)
+# but throw away the rest.
+#################################################################
+if ($AVN_ENABLED) {
+  &log("Copying AVN model");
+  #@files=glob("/ingest/ldm/data/hrs/raw/${date}*avn.grib");
+  @files=glob("/export/ldm/data/gempak/model/raw/${date}*avn.grib");
+  if (@files==0) { &log("WARNING: No files exist in gempak/model/raw/ avn.grib data.\n");}
+  foreach $file (@files) {
+    $base=basename($file);
+#    print("$MSRCP $file $archive/AVN/$ym/$base\n");
+    
+    HPSS::put(\$file, \"$archive/AVN/$ym/$base");
+  }
+}
+
+#################################################################
+# These files have not been available since 2004
+#################################################################
+if ($ETA_216_ENABLED) {
+    &log("Selecting and moving ETA 216 model");
+
+# Create model-run files from FTPed Alaska ETA model.  For each model
+# run, compare the FTPed data to the LDM-acquired data, and keep the larger.
+# Then ax both sets of source files.
+    $etadate=sprintf("%02d%02d%02d", $year%100, $mon, $mday);
+    $srcdir="/ingest/ingest/atlas/ncepc/eta/alaska.$etadate";
+    $ldmdir="/ingest/ldm/data/hrs/raw";
+    mkdir($tmpdir,0755) unless -d $tmpdir;
+    foreach $run (qw(00 06 12 18)) {
+	$file="${date}${run}00_eta216.grib";
+	#    system("$CAT $srcdir/eta.T${run}Z* > $tmpdir/$file");
+	#    if ((-s "$tmpdir/$file") > (-s "$ldmdir/$file")) {
+	##        print("$MSRCP $tmpdir/$file $archive/ETA/$ym/$file\n");
+	#        HPSS::put("$tmpdir/$file", "$archive/ETA/$ym/$file");
+	#	&log("Kept FTPed file for ${run}Z model run");
+	#    } else {
+#        print("$MSRCP $ldmdir/$file $archive/ETA/$ym/$file\n");
+	HPSS::put(\"$ldmdir/$file", \"$archive/ETA/$ym/$file");
+	&log("WARNING: Kept LDMed file for ${run}Z model run");
+	#    }
+	#RM# ###unlink("$ldmdir/$file");
+	#RM# #    unlink("$tmpdir/$file");
+    }
+#RM# #system("$RM /ingest/ldm/data/hrs/gempak/${date}*eta216.gem");
+#RM# #system("$RM -r $srcdir");
+}
+
+#################################################################
+# Collect sa,sh,sy,and ua .gem files and archives them to HPSS.
+# The companion script HPSS_gts_ldm_operational_db_update.pl puts 
+# them into codiac.
+#################################################################
+# [eoldata@barolo ~]$ ssh eoldata@data-access.ucar.edu ls -l
+# /glade/campaign/eol/archive/operational/atlas/OBS (LEH 10 Oct 2021)
+#################################################################
+&log("Copying observational data");
+#@files=glob("/ingest/ldm/data/weather/gempak/data/??${date}*.gem");
+@files=glob("/export/ldm/data/gempak/surface/s?${date}*.gem");
+
+if (@files==0) { &log("WARNING: No files exist in gempak/surface location.\n"); }
+my $matched = grep $_ =~ "sa", @files;
+if ($matched == 0) { &log("WARNING: No sa files exist in gempak/surface.\n");}
+my $matched = grep $_ =~ "sy", @files;
+if ($matched == 0) { &log("WARNING: No sy files exist in gempak/surface.\n");}
+my $matched = grep $_ =~ "sh", @files;
+if ($matched == 0) { &log("WARNING: No sh files exist in gempak/surface.\n");}
+
+# Create YYYYMM directory in Campaign Storage archive location if
+# it doesn't already exist
+my $subdir="OBS";
+my $mk_CS_dir=mkdir_CS($ym, $subdir);
+print $mk_CS_dir;
+my $cp_CS;
+
+foreach $file (@files) {
+    $base=basename($file);
+#    print("$MSRCP $file $archive/OBS/$ym/$base\n");
+    
+    # HPSS decommissioned 9/30/2021    
+    # HPSS::put(\$file, \"$archive/OBS/$ym/$base");
+
+    # Copy files to Campaign Storage archive location
+    $cp_CS=copy_to_CS($ym,$subdir,$base,$file);
+    print $cp_CS;
+}
+@files=glob("/export/ldm/data/gempak/upperair/ua${date}*.gem");
+if (@files==0) { &log("WARNING: No files exist in gempak/upperair location.\n"); }
+foreach $file (@files) {
+    $base=basename($file);
+#    print("$MSRCP $file $archive/OBS/$ym/$base\n");
+
+    # HPSS decommissioned 9/30/2021    
+    # HPSS::put(\$file, \"$archive/OBS/$ym/$base");
+
+    # Copy files to Campaign Storage archive location
+    $cp_CS=copy_to_CS($ym,$subdir,$base,$file);
+    print $cp_CS;
+}
+
+# chmod Campaign Storage archive
+my $my_cs_chmod = `ssh $cs_host chmod 440 $cs_archive/$subdir/$ym/* 2>&1`;
+print $my_cs_chmod;
+
+#################################################################
+# Write log to savefiles.log
+#################################################################
+&log("Results:");
+#chdir($archive);
+#$ENV{'NCAR_MSSPWD'}='/JOSS/DATA/RAW/BY_PROJECT/ATLAS';
+
+# Ceased collection of these files April, 2015 per SFW request
+# Steve decided to keep the files for the ATLAS period (ending 2002)
+# but throw away the rest.
+if ($AVN_ENABLED) {
+   my @output = HPSS::ls("\"$archive/AVN/$ym/${date}*avn.grib\"", "-l");
+   print join("\n",@output) . "\n";
+}
+
+# These files have not been available since 2004
+if ($ETA_216_ENABLED) {
+   my @output = HPSS::ls("\"$archive/ETA/$ym/${date}*eta216.grib\"", "-l");
+    print join("\n",@output) . "\n";
+}
+
+# my @output = HPSS::ls("\"$archive/OBS/$ym/??${date}*.gem\"", "-l");
+# print join("\n",@output) . "\n";
+
+# ls files in Campaign Storage archive location
+print "Campaign Storage:\n";
+print "$cs_archive/$subdir/$ym:\n";
+my @cs_output = `ssh $cs_host  ls -l $cs_archive/$subdir/$ym 2>&1`;
+print join("",@cs_output);
+
+open(LOG,">>savefiles.log");
+print LOG $log;
+close(LOG);
+
+#################################################################
+# If any warnings were generated, send an email.
+#################################################################
+if ($log =~ /WARNING:/) {
+    MAIL::send_mail($subject, $log, @monitor);
+}

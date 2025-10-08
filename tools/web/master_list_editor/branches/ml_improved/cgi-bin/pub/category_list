@@ -1,0 +1,154 @@
+#!/bin/perl -wT
+
+# --------------------------------------------------------------
+# category_list: Displays the categories (with links) in the
+#  left frame for the given project.  Displays the related
+#  project links and the contact e-mail.
+#
+# Expected params:
+#  "project" - the project id number to display categories of
+#  "category" - (optional) the category to expand, this allows
+#  for the open-close type behavior of the sub-categories.  If
+#  no category is given, the root categories are displayed.
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw/:standard/;
+use lib "../lib";
+use Category;
+use Utils;
+use Project;
+use Link;
+require( "./show_error" );
+
+$CGI::POST_MAX = 1024;
+$CGI::DISABLE_UPLOADS = 1;
+
+my $cgi = CGI->new();
+my $project = $cgi->param( "project" );
+my $category = $cgi->param( "category" );
+$category = -1 if( !defined( $category ) );
+
+check_valid( $project, $category );
+
+my @tree = Category::getTree( $project );
+
+my $proj = Project->new();
+$proj->setFromDB( $project );
+
+
+println( $cgi->header() );
+
+println( "<html><head><title>JOSS Master List</title></head>" );
+println( &left_css( $proj->{left_css_src} ) );
+println( $jscript );
+println( "<body bgcolor=#336699 link=white alink=white vlink=white text=white>" );
+
+println( "<br>" );
+
+if( $proj->{logo_src} ne "" )
+{
+	println( "<center><table width=75% border=0 bgcolor=white>" );
+	println( "<tr><td align=center>" );
+		println( &nbsp(2), "<img src=http://www.joss.ucar.edu/master_list/images/$proj->{logo_src}>" );
+	println( "</td></tr></table></center>" );
+}
+
+println( "<br>" );
+
+println( "<table border=0 cellpadding=0 cellspacing=0>" );
+
+println( "<tr><td>&nbsp;</td></tr>" );
+
+println( "<tr><td class=catMenuHead>" );
+	println( "<a href=category_table?project=$project target=body><b>All Data Categories:</a>" );
+println( "</tr></td>" );
+
+showTree( \@tree, 0 ); 
+
+println( "<tr><td>&nbsp;</td></tr>" );
+
+
+my @links = Link::getProjectLinks( $project );
+if( scalar( @links ) > 0 )
+{
+	println( "<tr><td class=catMenuHead>" );
+		println( 	"<b>Related Links:<br>" );
+	println( "</tr></td>" );
+
+	foreach my $link (@links)
+	{
+		println( "<tr><td class=projectLink>" );
+		println( &nbsp(0),
+					"<a href=$link->{url} target=$link->{target}>$link->{name}</a><br>" );
+		println( "</tr></td>" );
+	}
+}
+
+println( "<tr><td>&nbsp;</td></tr>" );
+println( "<tr><td class=contactEmail>" );
+
+	println( &nbsp(1),
+					"Questions and Comments to: ",
+					"<br>&nbsp;&nbsp;<a href=\"mailto:$proj->{contact_email}\">$proj->{contact_name}</a></span>" );
+println( "</tr></td>" );
+println( "</table>" );
+println( "</body></html>" );
+
+sub showTree
+{
+	my @tree = @{ $_[0] };
+	my $depth = $_[1];
+	my $prev_link_cat = $_[2];
+	$prev_link_cat = -1 if( !defined( $prev_link_cat ) );
+
+	foreach my $node (@tree )
+	{
+		my $show_childern = 0;
+		my $link_cat = $node->{category}->{id};
+
+		if( ( $node->{childern} && $category == $node->{category}->{id} ) || 
+				($category != -1 && $node->{childern} && $node->inTree( $category ) ) )
+		{
+			$show_childern = 1;
+			$link_cat = $prev_link_cat;
+		}
+
+		my $next_link_cat = $node->{category}->{id};
+		$next_link_cat = undef() if( $category == $node->{category}->{id} );
+
+		my $left = "\'category_list?project=$project&category=$link_cat\'"; 
+		my $body = "\'category_table?project=$project&category=$node->{category}->{id}\'";
+
+		$body = "\'\'" if( $show_childern );
+
+		println(  "<tr><td class=catMenuItem>", &nbsp( $depth*2),
+							"<a href=\"javascript: setFrames( parent, \'\', $left, $body )\">",
+							$node->{category}->{name}, "</a></td></tr>" );
+
+		showTree( $node->{childern}, $depth+1, $next_link_cat) if( $show_childern );
+	}
+}
+
+sub check_valid
+{
+	my $project = shift;
+	my $category = shift;
+
+	if( !defined( $project ) ) 
+	{
+		show_error( "category_list: undefined project id." );
+	}
+	elsif( $project =~ /\D/ )
+	{
+		show_error( "category_list: project id not valid: $project" );
+	} 
+	elsif( $category != -1 && $category =~ /\D/ )
+	{
+		show_error( "category_list: category id not valid: $category" );
+	} 
+}
+

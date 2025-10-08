@@ -1,0 +1,17 @@
+#!/usr/bin/perl -wT
+
+use lib "./lib";
+use OAIParser;
+use CGI qw(:standard);
+
+sub main {
+	print header "text/xml";
+	my $oai = new OAIParser;
+	my $output = $oai->getVerb()->getOptions()->dispatchVerb()->completeRequest();
+
+	if (defined $output) {
+		print $output;
+	}
+}
+
+&main();

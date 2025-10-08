@@ -1,0 +1,283 @@
+<html>
+<head>
+<title>ITOP 2010 Multi-Network Composite Highest Resolution Upper Air Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">ITOP 2010 Multi-Network Composite Highest Resolution Upper Air Data Set</h1>
+
+<h2>1.0 General Description</h2>
+<p>
+This data set is a composite of radiosondes and dropsondes collected from 2 dropsonde and 6 radiosonde platforms 
+(see Section 2.3) during the Impact of Typhoons on the Ocean in the Pacific (ITOP) 2010 project with data collected 
+from 1 August 2010 through 31 October 2010.  This project was conducted in the western Pacific Ocean.  This composite 
+contains a total of 1753 high resolution soundings.  
+
+Included are dropsondes from the DOTSTAR Astra Jet (94 dropsondes) and two United States Air Force C-130 (683 dropsondes)
+as well as radiosonde data from the US National Weather Service sites in Guam, Chuuk, Koror, Majuro, Ponape and Yap (976
+radiosondes).
+
+All soundings are provided at the highest possible resolution (i.e., the 'native' resolution) and were quality
+controlled by NCAR/EOL.  Data are available in the NCAR/EOL Sounding Composite Format (columnar ASCII).
+</p>
+
+<h3>1.1 Data Set Contact</h3>
+<p>Scot Loehrer<br>
+NCAR/EOL<br>
+loehrer@ucar.edu</p>            
+
+<h2>2.0 Detailed Data Description</h2>
+<h3>2.1 Detailed Format Description</h3>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite Format (ESC).  ESC is a version of the National Center for Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, meteorological and wind data processors.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center" cellpadding=2 cellspacing=1>
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+
+<p>The seven non-standard header lines may contain any label and contents.  The labels are padded to 35 characters to match the standard header lines. Records for this dataset include the following non-standard header lines.</p>
+
+<table border=1 bordercolor="black" align="center" cellpadding=2 cellspacing=1> 
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>6</td><td>Sonde Id/Sonde Type:</td><td>W4342264/Vaisala Loran-C</td></tr>
+<tr><td>7</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>9</td><td>&nbsp;</td><td>&nbsp;</td></tr>    
+<tr><td>10</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>11</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL codes:</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1> 
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of ITOP 2010 radiosonde data in ESC format.   The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  See section 2.1 for an exact format specification
+
+<pre>
+Data Type:                         AVAPS SOUNDING DATA, Channel 1/Descending
+Project ID:                        ITOP
+Release Site Type/Site ID:         ASTRA SPx/B20001 926
+Release Location (lon,lat,alt):    121 01.03'E, 20 58.85'N, 121.017, 20.981, 13714.1
+UTC Release Time (y,m,d,h,m,s):    2010, 10, 16, 21:40:26
+Reference Launch Data Source/Time: Manual Entry/21:31:08
+Sonde Id:                          102145079
+System Operator/Comments:          Arthur Wu/none, Good Drop
+Post Processing Comments:          Aspen Version 3.0; Created on 30 Aug 2011 15:39 UTC; Configuration PTUoscillQC
+/
+/
+Nominal Release Time (y,m,d,h,m,s):2010, 10, 16, 21:40:26
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat   Ele   Azi    Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg   deg   deg     m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+ 962.5 1011.7  27.1  24.4  85.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0     0.0  1.0  1.0  1.0  9.0  9.0  9.0
+ 962.0 1011.1  27.1  24.4  85.0   -8.3   -8.3  11.8  45.1 -10.1  120.962  20.953 999.0 999.0     5.5  1.0  1.0  1.0  1.0  1.0 99.0
+ 961.8 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+ 961.5 1010.6  27.1  24.3  84.7   -8.6   -8.4  12.1  45.4 -10.1  120.962  20.954 999.0 999.0     9.8  1.0  1.0  1.0  1.0  1.0 99.0
+ 961.2 9999.0 999.0 999.0 999.0   -8.7   -8.5  12.2  45.5 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0 99.0 99.0  9.0
+ 961.0 1010.0  27.0  24.2  84.4 9999.0 9999.0 999.0 999.0 -10.1 9999.000 999.000 999.0 999.0    14.4  1.0  1.0  1.0  9.0  9.0 99.0
+ 960.8 9999.0 999.0 999.0 999.0   -8.7   -8.7  12.3  45.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0 99.0 99.0  9.0
+ 960.5 9999.0 999.0 999.0 999.0   -8.7   -8.9  12.4  44.5 999.0  120.962  20.954 999.0 999.0 99999.0  9.0  9.0  9.0 99.0 99.0  9.0
+ 960.2 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+ 960.0 9999.0 999.0 999.0 999.0 9999.0 9999.0 999.0 999.0 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0  9.0  9.0  9.0
+ 959.8 9999.0 999.0 999.0 999.0   -8.5   -9.3  12.5  42.4 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0 99.0 99.0  9.0
+ 959.5 1008.3  26.8  23.8  83.4   -8.3   -9.4  12.6  41.6 -10.1  120.962  20.954 999.0 999.0    29.6  1.0  1.0  1.0  1.0  1.0 99.0
+ 959.2 9999.0 999.0 999.0 999.0   -8.2   -9.5  12.6  40.8 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0 99.0 99.0  9.0
+ 959.0 1007.8  26.8  23.8  83.3   -8.1   -9.6  12.6  40.1 -10.1  120.962  20.954 999.0 999.0    34.5  1.0  1.0  1.0  1.0  1.0 99.0
+ 958.8 9999.0 999.0 999.0 999.0   -8.0   -9.7  12.6  39.6 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0 99.0 99.0  9.0
+ 958.5 1007.2  26.7  23.7  83.2 9999.0 9999.0 999.0 999.0 -10.1 9999.000 999.000 999.0 999.0    39.5  1.0  1.0  1.0  9.0  9.0 99.0
+ 958.2 9999.0 999.0 999.0 999.0   -7.9   -9.9  12.7  38.8 999.0 9999.000 999.000 999.0 999.0 99999.0  9.0  9.0  9.0 99.0 99.0  9.0
+:
+:
+:
+</pre>
+
+<h3>2.2 Data Remarks</h3>
+
+<p>None.  </p>
+<h3>2.3 Station List</h3>
+
+<p><b>2.3.1 DOTSTAR ASTRA</b></p>
+<p>The DOTSTAR Astra jet aircraft was operated by the National Taiwan University.  It conducted six flights during ITOP primarily doing dropsondes of the
+large scale environment around tropical cyclones.  These data are at 0.5 second vertical resolution.</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr>
+<tr>
+<th>ID</th>
+<th>Site/Platform</th>
+<th>State/Country</th>
+<th>Longitude</th>
+<th>Latitude</th>
+<th>Elevation (m)</th>
+</tr>
+<tr>
+<td>ASTRA</td>
+<td>DOTSTAR</td>
+<td>N/A</td>
+<td>Mobile</td>
+<td>Mobile</td>
+<td>-9999.9</td>
+</tr>
+</table>
+
+<p><b>2.3.2 USAF C-130</b></p>
+<p>The United States Air Force operated two C-130 aircraft during ITOP that conducted a total of 26 flights.  They conducted surveillance and reconnaissance flights in and around
+tropical cyclones as well as flights in the cold wake of tropical cyclones.  These data are at 0.5 second vertical resolution.</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr>
+<th>ID</th>
+<th>Site/Platform</th>
+<th>State/Country</th>
+<th>Longitude</th>
+<th>Latitude</th>
+<th>Elevation (m)</th>
+</tr>
+
+<tr>
+<td>USAF</td>
+<td> Lockheed C-130J</td>
+<td>N/A</td>
+<td>Mobile</td>
+<td>Mobile</td>
+<td>-9999.9</td>
+</tr>
+</table>
+
+<p><b>2.3.3 National Weather Service (NWS) Soundings</b></p>
+<p>These are sites operated by the United States National Weather Service.  During the ITOP_2010 period the Yap station used Vaisala radiosondes while all of
+the other sites used the VIZ B2 radiosondes.  These data are at six second vertical resolution.</p>
+
+<table border=1 align="center" cellpadding=2 cellspacing=1>
+<tr>
+<th>ID</th>
+<th>Site/Platform</th>
+<th>State/Country</th>
+<th>Longitude</th>
+<th>Latitude</th>
+<th>Elevation (m)</th>
+</tr>
+
+<tr>
+<td>pgac</td>
+<td>NWS</td>
+<td>Guam, Mariana Is</td>
+<td>144.800</td>
+<td>13.500</td>
+<td>75.0</td>
+</tr>
+
+<tr>
+<td>PMK</td>
+<td>NWS</td>
+<td>Majuro, Marshall Is</td>
+<td>171.300</td>
+<td>7.100</td>
+<td>4.0</td>
+</tr>
+
+<tr>
+<td>PTK</td>
+<td>NWS</td>
+<td>Chuuk (Truk), ECI</td>
+<td>151.800</td>
+<td>7.400</td>
+<td>3.0</td>
+</tr>
+
+<tr>
+<td>PTP</td>                                                                                                       <td>NWS</td>                                                                                                       <td>Ponape, ECI</td>
+<td>158.200</td>
+<td>7.000</td>
+<td>39.0</td>
+</tr>
+
+<tr>
+<td>PTR</td>
+<td>NWS</td>
+<td>Koror, Palau WCI</td>
+<td>134.500</td>
+<td>7.300</td>
+<td>30.0</td>
+</tr>
+
+<tr>
+<td>PTY</td>
+<td>NWS</td>
+<td>Yap, WCI</td>
+<td>138.100</td>
+<td>9.500</td>
+<td>22.0</td>
+</tr>
+
+</table>
+
+
+<!-- This is the QC section appropriate for Upsondes  -->
+
+<h2>3.0 Quality Control Processing</h2>
+
+For information on the QC processing conducted to each of these data sets please see their respective readme files:
+<p>
+USAF C-130 Dropsonde - <a href="http://data.eol.ucar.edu/datafile/nph-get/209.094/readme.ITOP-2010.USAF-C130.dropsondes-final.pdf">http://data.eol.ucar.edu/datafile/nph-get/209.094/readme.ITOP-2010.USAF-C130.dropsondes-final.pdf</a>
+<p>
+DOTSTAR Astra Dropsonde - <a href="http://data.eol.ucar.edu/datafile/nph-get/209.101/readme.ITOP-2010.DOTSTAR.dropsondes.final.pdf">http://data.eol.ucar.edu/datafile/nph-get/209.101/readme.ITOP-2010.DOTSTAR.dropsondes.final.pdf</a>
+<p>
+NWS Radiosonde - <a href="http://data.eol.ucar.edu/datafile/nph-get/209.097/readme_ITOP_2010_nws_sounding.txt">http://data.eol.ucar.edu/datafile/nph-get/209.097/readme_ITOP_2010_nws_sounding.txt</a>
+
+<h2>4.0 References</h2>
+<p>None.</p>
+
+</body>
+</html>

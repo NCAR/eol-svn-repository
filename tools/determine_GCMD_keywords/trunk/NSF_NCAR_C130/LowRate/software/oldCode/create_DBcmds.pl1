@@ -1,0 +1,223 @@
+#! /usr/bin/perl -w
+
+#--------------------------------------------------------------------------------
+# create_DBcmds.pl
+#
+# This software generates the SQL commands to apply pre-determined GCMD keywords
+# to specified netCDF datasets.
+#
+# This Perl script tool is the third step in auto generating GCMD:
+#  1. Run determine_GCMD.pl to generate *.dataTypes and All_uniq_data_types_*_parm.txt
+#  files.
+#
+#  2. The most knowledgable science person/data manager then adds GCMD keywords
+#  to the end of the parm lines (after the xxx) in file All_uniq_data_types_*_parm.txt.
+#
+#  3. Run create_DBcmds.pl with All_uniq_data_types_*_parm.txt with GCMD keywords
+#  to generate (by dataset) the SQL commands to apply to each dataset (*.GCMDcmd).
+#
+#
+# For info on the determine_GCMD.pl software, please that see the header on
+#    that code. Here's a short summary on determine_GCMD.pl....
+#    The determine_GCMD.pl software creates the All_uniq_data_types_*_parm.txt 
+#    output file. The most knowledgable science person/data manager then adds
+#    GCMD keywords to the end of the parm lines (after the xxx) that are to be
+#    applied for that parameter.  That updated All_uniq_data_types_*_parm.txt
+#    file is an input to this create_DBcmds.pl software. determine_GCMD.pl will
+#    only work on netCDF files (*.nc or *.cdf) and the first seven chars of the
+#    input netCDF files needs to be the CODIAC/Dataset ID (e.g., 534-001).
+#
+# Execute: 
+#    create_DBcmds.pl <input_data_dir> <output_dir> 
+#
+# Examples: 
+#    create_DBcmds.pl ../input_data ../output_data
+#
+# Input: 
+#    <input_data_dir> - directory where *.dataTypes AND All_uniq_data_types_*_parm.txt
+#    files for each dataset can be found. This is typically the output directory for the 
+#    determine_GCMD.pl program.
+#
+#    This software also requires the following input files in the same dir as this software:
+#       1. all_datasets_id_archive_ident.txt - File relating dataset ID to CODIAC/ZINC internal DB ID.
+#       2. all_gcmd_id_uuid.txt - File relating GCMD keywords (as set by sci staff) to GCMD number.
+#
+# Output: 
+#    <output_data_dir> - The location where the *.GCMDcmd files will be located (e.g.,
+#    105-004_RF07.20071130.155800_203700.PNI.nc.GMCDcmd, 218-001_RF02.cdf.dataTypes.GCMDcmd, 
+#    etc.)
+#
+# Notes and Assumptions:
+#
+# 1. The user should search for HARDCODED, ASSUMPTIONS, BEWARE, WARNING, and ERROR in this code. 
+#    The user should also search for "exit" in this code so that they know all the possible
+#    places/reasons why this code will stop executing.
+#
+# 2. ASSUMPTION: That the *.dataTypes and All_uniq_data_types_*_parm.txt files exist
+#    in the <input_data_dir>.
+#
+# 3. ASSUMPTION: That the <output_dir> exists.
+#
+#
+# Created: L. Cully Feruary 2020
+#
+# Updates: None.
+#
+#--------------------------------------------------------------------------------
+package create_DBcmds;
+use strict;
+
+if (-e "/net/work") {
+    use lib "/net/work/lib/perl/Utilities";
+} else {
+    use lib "/work/lib/perl/Utilities";
+}
+
+
+my $debug  = 1; # BEWARE: Generates output to screen
+my $TotalFilesProcessed = 0;
+my $OutputRec = 0;
+my $parm;
+
+printf "\ncreate_DBcmds.pl began on ";print scalar localtime;printf "\n\n";
+&main();
+printf "\ncreate_DBcmds.pl ended on ";print scalar localtime;printf "\n";
+
+
+#--------------------------------------------------------------
+# void main()
+# Run the scripts to determine uniq set of netCDF data_types
+# in all files so they can be translated by science staff into
+# GCMD keywords.
+#--------------------------------------------------------------
+sub main 
+   {
+   if ($debug) {print "Enter Main:: length ARGV = $#ARGV,  ARGV() = @ARGV\n";}
+
+   if ($#ARGV < 1)
+      { 
+      print "Incorrect number of command line arguments!\n ARGV = @ARGV\n";
+      print "Usage: create_DBcmds.pl <input_dir> <output_dir>\n";
+      exit(1);
+      }
+
+   my $INPUT_netCDF_DIR  = $ARGV[0];
+   if ($debug) {print "INPUT_netCDF_DIR = $INPUT_netCDF_DIR \n";}
+
+   my $OUTPUT_DIR  = $ARGV[1];
+   if ($debug) {print "OUTPUT_DIR = $OUTPUT_DIR \n";}
+
+   #---------------------------------------------------------------
+   # Read in the list of dataTypes files to process (*.dataTypes).
+   #---------------------------------------------------------------
+#   printf "Opening INPUT_netCDF_DIR:: $INPUT_netCDF_DIR\n";
+#   opendir(my $INPUT_DIR, $INPUT_netCDF_DIR) or die("Cannot open INPUT_netCDF_DIR\n");
+
+#   my @files = grep(/\.dataTypes$/,readdir($INPUT_DIR));      # HARDCODED
+
+#   closedir($INPUT_DIR);
+
+   #----------------------------------------------------
+   # Read in info from file that relates GCMD IDs to
+   # UUID's. These next files are assumed to be located
+   # in same dir as this s/w.
+   #---------------------------------------------------
+   my $input_file = "./all_gcmd_id_uuid.txt";  # HARDCODED
+   print "input_file = $input_file\n";
+
+   my $INPUT_GCMD_RELATION_FILE;
+
+   open($INPUT_GCMD_RELATION_FILE,"<", $input_file) or die("Can't open $input_file for reading\n");
+
+   my @lines = <$INPUT_GCMD_RELATION_FILE>;
+   my $number_lines_in_file = $#lines+1;
+   my %Input_UUID_GCMDID = ();  # Clear Hash
+
+   print "Read into Hash the info from INPUT_GCMD_RELATION_FILE. File has $number_lines_in_file lines.\n";
+
+   foreach my $line (@lines)
+      {
+      chomp ($line); #remove return \n
+      if ($debug) {print "\nUUID vs GCMD ID RELATION FILE Line: xxx $line xxx\n";}
+
+      my @record = split (/\|/, $line);
+      my $key_ID = trim($record[1]);  # This is the UUID associated with GCMD keywords
+      my $DB_GCMD_ID = trim($record[0]);
+
+      if ($debug) {print "UUID key_ID = $key_ID; DB_GCMD_ID = zzz $DB_GCMD_ID zzz\n";}
+
+      $Input_UUID_GCMDID{$key_ID} = $DB_GCMD_ID;
+      }
+
+   if ($debug)
+      {
+      print "\n*****Input Hash UUID vs GCMD IDs *****\n";
+      print "\nInput_UUID_GCMDID Hash Contents::\n   \n";
+###      for my $parm ( sort keys %Input_UUID_GCMDID ) { print "$parm: @{ $Input_UUID_GCMDID{$parm} }\n"; }
+
+      print "\n(2)Input_UUID_GCMDID Hash Contents::\n   \n";
+      foreach my $key (keys %Input_UUID_GCMDID) 
+         {
+         print "$key relates to $Input_UUID_GCMDID{$key}\n";
+         }
+      }
+
+
+   #----------------------------------------------------
+   # Read in info from file that relates datasetID to
+   # DB internal ID... aka archive Ident.
+   #----------------------------------------------------
+   $input_file = "./all_datasets_id_archive_ident.txt";
+   print "input_file = $input_file\n";
+
+   my $INPUT_DATASET_ID_RELATION_FILE;
+
+   open($INPUT_DATASET_ID_RELATION_FILE,"<", $input_file) or die("Can't open $input_file for reading\n");
+
+   @lines = <$INPUT_DATASET_ID_RELATION_FILE>;
+   $number_lines_in_file = $#lines+1;
+   my %Input_DatasetID_archID = ();  # Clear Hash
+
+   print "Read into Hash the info from INPUT_DATASET_ID_RELATION_FILE. File has $number_lines_in_file lines.\n";
+
+   foreach my $line (@lines)
+      {
+      chomp ($line); #remove return \n
+      if ($debug) {print "\nDATASET ID RELATION FILE Line: xxx $line xxx\n";}
+
+      my @record = split (/\|/, $line);  # Split on vertial bar and add to hash.
+                                        # DatasetID will be the hash key.
+
+      my $key_ID = trim($record[1]);
+      my $archID = trim($record[0]);
+
+      if ($debug) {print "key_ID = $key_ID; archID = zzz $archID zzz\n";}
+
+      $Input_DatasetID_archID{$key_ID} = $archID;
+      }
+
+   if ($debug)
+      {
+      print "\n*****Input Hash DatasetIDs vs Archive Idents *****\n";
+      print "\nInput_DatasetID_archID Hash Contents::\n   \n";
+      for my $parm ( sort keys %Input_DatasetID_archID ) { print "$parm: @{ $Input_DatasetID_archID{$parm} }\n"; }
+      }
+
+#---test to here---
+   } # main
+
+
+##------------------------------------------------------------------------------
+# @signature String trim(String line)
+# <p>Remove all leading and trailing whitespace from the specified String.</p>
+#
+# @input $line The String to be trimmed.
+# @output $line The trimmed String.
+##------------------------------------------------------------------------------
+sub trim {
+    my ($line) = @_;
+    return $line if (!defined($line));
+    $line =~ s/^\s+//;
+    $line =~ s/\s+$//;
+    return $line;
+} # trim()

@@ -1,0 +1,1007 @@
+<HTML>
+<body bgcolor=white>
+
+<TITLE>Dataset Processing Inventory </TITLE>
+
+<center><H1><u>Dataset Processing Inventory</u></H1></center>
+<br>
+<center><H2>Updated: 20 May 2002 </H2></center>
+<br>
+<H3><b>ARM/GCIP NESOB97  (Near Surface Observation Dataset 1997)</b></H3>
+<br>
+<b>TOI: 01 April 1997 through 31 March 1998 <i>(Note Whole Year!)</i> </b>
+<br>
+
+<b>AOI:
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/images/figure1.2.gif">
+    Smaller than LSA - SW (Little Washita) (Basically, OK and KS) </a>
+<ul>
+   <li>  LAT:  34 to 39 (N)
+   <li>  LON: -94.5 to -100.5(W)   (WAS -78)
+</ul>
+<br>
+VERTICAL: -2 meters to 3000 meters
+<ul>
+   <li>(1) Boundary Layer  :  < 3000  meters 
+   <li>(2) Surface Layer   :  0 to 10 meters
+   <li>(3) subsurface Layer: -2 to 0  meters
+</ul>
+</b>
+<p>
+<br>
+        The NESOB is a custom data set designed to meet the following reqs:
+        Land surface process studies, validation and verification of land
+        surface processing schemes, Detailed validataion and verification
+        of model output from regional land-atmosphere coupled models, and
+        Models, and Derivation of surface and energy budgets. This collection
+        of datasets should be based upon the GCIP NESOB96 datasets.
+        See SL's <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/"
+        target="_top"> ARM/NESOB web page</a>.
+</p>
+<br>
+
+<br>
+<b>CODIAC ID Prefix: 40.xxx </b>
+<br>
+<b>GCIP Charge #.</b>
+<p>
+<b>Products: See description of each NESOB layer below.</b>
+<br>
+
+<br>
+<!-- ================================================= -->
+<h4><u><font color=green> NESOB97 TBD List as of 18 June 2001</font></u></h4>
+<!-- ================================================= -->
+<ol> <font color=green>
+
+ <li><a href="#soil_temp">
+        Soil Temperature Datasets/Composite </a>
+       <ul>
+        <br>ARS Washita Micronet which have not been received.
+        <br>Consider OKMESO Soil's data?
+       </ul>
+<br>
+ </font>
+</ol>
+
+<br>
+<br>
+
+<!-- ================================================= -->
+<h3>1.0 <u>Boundary Layer Datasets: < 3000 meters </u></h3>
+<!-- ================================================= -->
+<br>
+
+<!-- ================================================= -->
+<h3>1.1 <u>Temperature Profiles </u>
+        <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/temp_wv_profs_97.html"
+         target="_top"> (See NESOB97 Status Page.) </a></h3>
+<!-- ================================================= -->
+<br>
+
+<!-- ================================================= -->
+<h3>1.2 <u>Water Vapor Profiles</u>
+        <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/temp_wv_profs_97.html"
+         target="_top"> (See NESOB97 Status Page.) </a></h3>
+<!-- ================================================= -->
+<br>
+
+<a name="winds"> </a>
+<!-- ================================================= -->
+<h3>1.3 <u> Wind Profiles (0-3000m) </u>
+       <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/wind_profs_97.html"
+         target="_top"> (See NESOB97 Status page.)</a> </h3>
+<!-- ================================================= -->
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> NPN Wind profiles
+       </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Chop 405 wind data to 3K meters.
+            (See <a href="http://data.eol.ucar.edu/codiac/dss/id=40.001"
+              target="_top"> CODIAC ID 40.001</a>)
+       </td>
+   </tr>
+
+   <tr><td> Other </td>
+       <td> <font color=red> TBD </font>     </td>
+       <td> <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/wind_profs_97.html"
+         target="_top"> See NESOB97 Status page. </a>
+       </td>
+   </tr>
+
+</table>
+<br> <br>
+
+<a name="clouds"> </a>
+<!-- ================================================= -->
+<h3>1.4 <u> Cloud Datasets </u>
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/clouds_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a> </h3>
+<!-- ================================================= -->
+<p> Do merge the data. BLC and MPL will be seperate datasets? No.</p>
+
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td> AERI clouds </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Not required or requested.</td>
+   </tr>
+
+   <tr><td> ARM BLC Ceilometer </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> In-house and ready to convert. 
+            based on the DQR the data for the NESOB97 
+            time period have been corrected for NE97 according to SL.
+            Combine with MPL.</td>
+   </tr>
+
+   <tr><td> Hrly Sfc Composite Cloud Info</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>  Completed with HSC's completion.
+   </tr>
+ 
+   <tr><td> MPL data </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> Composite with BLC
+       </td>
+   </tr>
+ 
+</table>
+<br> <br>
+
+<!-- ================================================= -->
+<h3>1.5 <u> RASS </u>
+<a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/temp_wv_profs_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a> </h3>
+<!-- ================================================= -->
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td>NCDC NOAA Profiler RASS (6 and 60 min)</td>
+       <td> <font color=blue> DONE </td>
+       <td> None.
+       </td>
+   </tr>
+
+   <tr><td>Other </td>
+       <td> <font color=blue> See NESOB97 Status Page.</font>     </td>
+       <td> <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/temp_wv_profs_97.html"
+       target="_top"> See NESOB97 Status Page.</a>
+       </td>
+   </tr>
+
+</table>
+<br> <br>
+ 
+<!-- ================================================= -->
+<h3>2.0 <u>Surface Layer Datasets: 0 to 10 meters</u></h3>
+<!-- ================================================= -->
+
+<!-- ================================================= -->
+<h3>2.1 <u> Temp, Specific Humidity, Wind Comp, and Sfc Pressure</u>
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/sfc_met_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a> </h3>
+<!-- ================================================= -->
+<p>
+<b>***FORMING THE SURFACE COMPOSITE***
+  The below datasets have been converted to QCF format,
+  checked, composited, HQC'd, then a seperate script written
+  for NESOB was run on the HQC'd QCF to produce
+  the "extended" QCF. The extended QCF is exactly like QCF
+  with 3 additional parms at the end of the line (i.e.,U&V wind components,
+  Specific Humidity). The script automatically does the computations
+  and sets the associated QC flags. There are also some limited checkers
+  for the extended format that were applied (like check comp/file).
+</b></p>
+<br>
+<!-- ================================================= -->
+<p><b> NOTE: <i>Do NOT create a Specials Composite. </i></b></p>
+<!-- ================================================= -->
+<br>
+
+<a name="HSC"> <a>
+<!-- ================================================= -->
+<p><b> NOTE: 5 Minute ARM-CART Stand Alone Dataset
+       (QCF, but No EBUFR) - <font color=blue> DONE </font>.
+       (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.051"
+            target="_top"> See CODIAC ID 40.051</a>).
+       <br>Converted but not HQC'd.
+ </b></p>
+<!-- ================================================= -->
+<br>
+
+
+<!-- ================================================= -->
+<h3><u> Surface Composite in Extended Format</u></h3>
+<!-- ================================================= -->
+<p>
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>ARMSFC 1min </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> SL has on jukebox at storm /archive/jb0/ARM/SMOS.
+            Extract 15min precip also for precip composite. (DS)
+       </td>
+   </tr>
+
+   <tr><td>ARS Met </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> Not included Or Don't have? Exclude from composite.
+       </td>
+   </tr>
+ 
+   <tr><td>ASOS </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>  (JAG) Data are part of auto ingest.
+       </td>
+   </tr>
+
+   <tr><td>DATSAV3 </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG) Have converted all DATSAV3 data that
+            was supplied in early 2000. Possible holes
+            in 2000 data (Apr and May), so
+            June 2000 request that NCDC ensure
+            that we had received all of DATSAV3 data
+            for April and May 97. No response from
+            NCDC until Dec 2000.  Note that prev. NCDC orders
+            only extend to -99 lon. Need to verify if
+            received extra data for Apr and May AND whether
+            or not it would be worth redoing the Completed
+            NESOB97 sfc composite. SL says probably not.
+            <a href="http://www.joss.ucar.edu/~janine/datsav3"
+               target="_top"> (See DATSAV3 status page by JAG.)</a>
+            Received more data from NCDC and converted in march 2001.
+            Used this final data to complete NESOB97 HSC.
+       </td>
+   </tr>
+ 
+   <tr><td>HPLAINS </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) /ingest/hpcn - auto ingested 
+            SL asked to plot possible radiation parameters and
+            DS is doing this from some sample stations. May
+            want to include HPCN radiation in NESOB radiation composite.
+       </td>
+   </tr>
+
+   <tr><td>NPN Hourly Sfc </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG)
+       </td>
+   </tr>
+
+   <tr><td>Tilden Hourly Met </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> DS - Found probs in data but now corrected @   
+            /raid/4/NE*97*/*tilden*net*/out. First HQC found
+            that elev was probably incorrect.  SL determined
+            new one which better, but not perfect results.
+       </td>
+   </tr>
+
+   <tr><td>Hourly Surface Composite in Extended QCF format</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (See <a href="http://data.eol.ucar.edu/codiac/dss/id=40.010"
+              target="_top"> CODIAC ID 40.010</a>).
+       </td>
+   </tr>
+
+</table>
+<br><br>
+
+<a name=mom_flux> </a>
+<!-- ================================================= -->
+<h3>2.2 <u>Sfc Momentum Flux Composite Datasets</u>
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/mom_flux_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a>
+</h3>
+<!-- ================================================= -->
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>NOAA/ATDD Little Washita (Tilden)  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) 30 min freq.
+       </td>
+   </tr>
+
+   <tr><td>ECOR </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG) - This is a new dataset not done in NE96. 
+            May composite with Tilden's data.
+       </td>
+   </tr>
+
+   <tr><td><b>NESOB 97 Momentum Flux Composite </b></td>
+       <td> <font color=blue> DONE (7/31/00) </font> </td>
+       <td> (DS) (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.017"
+            target="_top"> See CODIAC ID 40.017</a>)
+       </td>
+   </tr>
+
+</table>
+<br><br>
+
+<a name="heat_flux"> </a>
+<!-- ================================================= -->
+<h3>2.3 <u>Sensible, Latent and Ground Heat Flux Composite Datasets </u>
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/heat_flux_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a> </h3>
+<!-- ================================================= -->
+
+<!-- ================================================= -->
+<h3><u>Ground Heat Flux (GHF) </u>
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/heat_flux_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a>
+</h3>
+<!-- ================================================= -->
+
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>ARM SGP EBBR  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) 30min W/m**2;
+            Take EBBR soil Heat flux (flow) latent Ht Flux
+            and sensible Flux which is same as for Tilden's.
+            Note that this data comes in NETCDF. The data are 
+            "all over the place" (see plots), so SL is going
+            over the plots to make a final decision about the data.
+       </td>
+   </tr>
+
+   <tr><td>NOAA/ATDD Little Washita (Tilden)  </td> 
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) 30min W/m**2;
+           Composite with ARM SGP EBBR.  For Tilden, extract the 3 parms
+           shown on SL's GCIP/NESOB96 page.  The order of the output data
+           should have soil heat flux data last. May need to be finalized
+           as pointed out above for ARM data.
+   	   </td>
+   </tr>
+
+   <tr><td>ECOR  </td> 
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG) Will supply to DS for composite formation.
+       </td>
+   </tr>
+
+   <tr><td> <b>NE97 Heat Flux Composite </b></td> 
+       <td> <font color=blue> DONE (7/25/00)</font>     </td>
+       <td> (DS) (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.022"
+            target="_top"> See CODIAC ID 40.022</a>)
+       </td>
+   </tr>
+
+</table>
+<br><br>
+
+<a name="skin_temp"> </a>
+<!-- ================================================= -->
+<h3>2.4<u> Skin Temp (Infrared) (IRT)  </u>
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/skin_temp_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a> </h3>
+<!-- ================================================= -->
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>ARM SGP MFR (10m and 25m) </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) 30min; 10m and 25m
+       </td>
+   </tr>
+
+   <tr><td>NOAA/ATDD Little Washita (Tilden)  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) 30 minute.</td>
+   </tr>
+
+   <tr><td><b>Skin Temperature Composite</b> </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) (Done 8/1/00) 
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.023"
+            target="_top"> See CODIAC ID 40.023</a>)
+       </td>
+   </tr>
+
+</table>
+<br><br>
+
+<br> <br>
+<!-- ================================================= -->
+<h3>2.5 <u> Precipitation </u>
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/precip_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a> </h3>
+<!-- ================================================= -->
+
+<p>
+   (No snow dataset. NOTE that COOP has some daily snow info.
+    Cut all precip comps to TOI & AOI. )
+</p>
+
+<a name="15minpcp"> </a>
+<!-- ================================================= -->
+<h3><u>15 Minute Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> ARMSFC Extract 15min </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) Extract of 15min precip from ARMSFC 5min sfc. </td>
+   </tr>
+
+   <tr><td> NCDC 15min Precip  </td>
+       <td> <font color=blue> DONE</font>  </td>
+       <td>  In new format. Included with Dec 2000 dataset? (DS)
+         <font color = gray> Downloaded the part of this dataset that was
+         not in the EAOP98 TOI. Must ensure that the EAOP98
+         data provided covers the NESOB97 AOI. If not, then
+         must download that time too Problem is that ASCII
+         comes from web and NCDC generally sends EBUFR. 
+         Probably best to just download it all from the
+         web and do the conversion.  (as of 14 July 2000) </font>
+         DS Downloaded best 15min and hourly NCDC pcp from web late March.
+       </td>
+   </tr>
+
+   <tr><td> NCEP/CPC Precip </td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td>  Not at this frequency.
+       </td>
+   </tr>
+
+   <tr><td><b> 15min Precip Composite</b></td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Stand Alone. Does not affect other composites. Hidden on
+       CODIAC as of 4 May 2001. Emailed SL to see if unheated gages
+       should be reset for winter time period.</td>
+   </tr>
+
+</table>
+ 
+<br> <br>
+
+<a name="hlypcp"> </a>
+<!-- ================================================= -->
+<h3><u>Hourly Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td>Pcp Extracted from HSC   </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Extract of Hrly pcp from Hrly Sfc Comp (w/o
+            NCDC, NSTL, etc. Remove potential duplicates.)
+            Since NCDC DATSAV3 didn't include hourly precip,
+            these stns were automatically stripped by the
+            script that extracts the hly pcp from the hly sfc.
+            So, there won't be any NCDC dups to worry about.
+            The hrly precip extract data are located at 
+            /work/NESOB97/Final_HSC_HQC/COMPOSITE/UTC/ExtendedFormat/
+            Best_and_Final/precip_extract/ext*.pqc</td>
+   </tr>
+
+   <tr><td>NCDC Hrly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>
+           (DS) Part of NCDC data order as of 14 July 2000.
+           Data are in-house and conversion in progress.
+
+           DS tried to download these data from the NCDC web page
+           (like for the 15min precip) but they send only docs
+           and stuff for California data. So the web failed.
+           <i>Part of Dec 2000 order?</i> DS downloaded best and
+           final 15min and hrly NCDC precip from web - late March.
+       </td>
+   </tr>
+
+   <tr><td>NCEP/CPC Hrly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG)
+       </td>
+   </tr>
+
+   <tr><td> <b>Hourly Precip Composite </b></td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Dependent on HSC since hrly precip extracted from HSC. SL says
+            don't reset unheated gages for winter time period. </td>
+   </tr>
+
+</table>
+
+<br> <br>
+
+<a name="dlypcp"> </a>
+<!-- ================================================= -->
+<h3><u>Daily Precip Composite Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td>Dly Pcp Extracted from HPC   </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Extract of Hrly pcp from Hrly Pcp Comp (w/o
+            NCDC, NSTL, etc. Remove potential duplicates.)</td>
+   </tr>
+
+   <tr><td>NCDC COOP Dly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) Have all of 1998 for US on tape that DS has. Have
+            all of 1997 on CD that DS has. 
+       </td>
+   </tr>
+
+   <tr><td>NCEP/CPC Hrly Pcp  </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (JAG)
+       </td>
+   </tr>
+
+   <tr><td><b> Daily Precip Composite </b></td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Dependent on Hourly Precip Composite since
+            daily pcp extracted from HPC and included here.</td>
+   </tr>
+ 
+</table>
+ 
+<br> <br>
+
+<a name="misc"> </a>
+<!-- ================================================= -->
+<h3><u>Miscellaneous Datasets:</u></h3>
+<!-- ================================================= -->
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>NCDC COOP Daily sfc </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.021"
+            target="_top"> See CODIAC ID 40.021</a>)
+       </td>
+   </tr>
+
+   <tr><td>NCDC COOP Evaporation </td>
+       <td> <font color=blue> DONE </font>  </td>
+       <td> (DS)  (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.025"
+            target="_top"> See CODIAC ID 40.025</a>)
+            See email from DS on missing data.
+       </td>
+   </tr>
+ 
+   <tr><td>NCEP/CPC Misc. Precip Datasets </td>
+       <td> <font color=blue> DONE </font></td>
+       <td> <a href="http://data.eol.ucar.edu/codiac/dss/id=40.026"
+          target="_top"> See CODIAC ID 40.026</a> Actually, we ended up
+          doing an hourly and a daily misc precip composite. We could have just 
+          pointed to the EOP Misc page. This was done for all other projects.
+       </td>
+   </tr>
+
+   <tr><td>NCEP/CPC GRIB and other CPC datasets as done for NE96. </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> None.
+       </td>
+   </tr>
+
+   <tr><td>SWATS </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> Final In-house and put on-line "as is" in NetCDF per SFW 6/4/01.
+            If ARS data comes in, may pullout 2 SWATS parms (east/west several depths)
+            and combine with ARS. (DS) 
+
+            Prelim data on-line was available earlier.
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.020"
+            target="_top"> See CODIAC ID 40.020</a>). Reprocessed data
+            in-house and turned in to 35,000 divided files on CODIAC as EOP dataset.
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=21.059"
+            target="_top"> See CODIAC ID 21.059</a>). Cross linked from EOP
+            to SGP97, SGP99, NESOB97.
+<p>
+            As of 25 June 2001, DS says,
+            "The SWATS data covers from 4/96-9/00, and is in
+            netCDF format. All the data is available to the
+            GCIP/EOP, SGP97, SGP99, GCIP/NESOB-96, and
+            GCIP/NESOB-97 projects. (All together there are
+            about 32,000 files, because the data have been
+            put into day files, by station.)"  
+       </td>
+   </tr>
+
+</table>
+<br><br>
+
+<a name="radiation"> </a>
+<!-- ================================================= -->
+<h3>2.6 <u> Surface Radiation Datasets: </u>
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/rad_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a> </h3>
+<!-- ================================================= -->
+<p>
+These data are formed into 2 final composites:
+ <ul>
+   <li> <b>Net radiation and PAR composite </b>:
+          Tilden and computed net rad from SIROS.
+          Includes NOAA/ATDD (Tilden) in/out PAR data.
+          Done 6/13/00. (DS)
+          (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.019"
+          target="_top"> See CODIAC ID 40.019</a>)
+ 
+   <li> <b>Short and Long Wave Radiation composite </b>:
+          Contains only data from ARM SIROS, BSRN, MFR, HPCN.
+          Only incoming-BSRN, Only outgoing-MFR. SIROS has all parameters.
+          Done 6/13/00. (DS)
+          (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.018"
+          target="_top"> See CODIAC ID 40.018</a>)
+ </ul>
+
+<p>
+<i>NOTE: DS created 80 plots to be reviewed on these final radiation
+datasets. </i>
+</p> 
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>ARM SGP BSRN</td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS)
+       </td>
+   </tr>
+
+   <tr><td>ARM SGP MFR </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS)
+       </td>
+   </tr>
+
+   <tr><td>ARM SGP SIROS </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) Now called SIRS.
+       </td>
+   </tr>
+
+   <tr><td>HPLAINS (HPCN) Radiation </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Part of Short and Long Wave Radiation composite.
+       In-house; Extract from HPCN sfc which is auto ingested.
+       DS plotted sample of this and SL says save plots and 
+       may use in NE97, may not.  Note that langley*10=W/m2. 
+       DS is waiting for SL's opinion on what to do with these final data. 
+       </td>
+   </tr>
+
+   <tr><td>NOAA/ATDD Little Washita (Tilden) </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS) Put Raw on-line, too?
+       </td>
+   </tr>
+
+</table>
+
+<br> <br>
+
+
+<!-- ================================================= -->
+<h3>2.7 <u>USGS Streamflow and Reservoir Datasets: </u>
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/water_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a>
+</h3>
+<!-- ================================================= -->
+<p> NOTE: Use USGS data from EOP and sector to NE97 AOI and TOI.
+          Have EOP data for 1996-980930 </p>
+
+<table border cols=3>
+
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td> USGS Streamflow </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (LEC) (JAG loaded)
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.011"
+              target="_top"> CODIAC ID 40.011.</a>)
+       </td>
+   </tr>
+
+   <tr><td> USGS Rsrvr Daily </td>
+       <td> <font color=blue>DONE</font>     </td>
+       <td> Provide as is. (LEC) (JAG loaded)
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.012"
+              target="_top"> CODIAC ID 40.012</a>)
+       </td>
+   </tr>
+
+   <tr><td> USGS COOP Rsvr </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> Provide as is. (Month End). (LEC) (JAG loaded)
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.013"
+              target="_top"> CODIAC ID 40.013.</a>)
+       </td>
+   </tr>
+
+   <tr><td>USGS Stage Only </td>
+       <td> <font color=blue> DNE</font>     </td>
+       <td> (LEC) There are NO Stage only recs for NESOB97 TOI.
+       </td>
+   </tr>
+
+   <tr><td>NCDC COOP Evaporation - See Misc. Datasets above. </td>
+       <td> <font color=blue> DONE</font>  </td>
+       <td> (DS)
+       </td>
+   </tr>
+
+</table>
+
+<br><br>
+
+
+<br><br>
+ 
+<!-- ================================================= -->
+<h3>2.8 <u>Vegetation type and characteristics </u>
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/veg_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a> </h3>
+<!-- ================================================= -->
+ 
+<br>
+
+<a name="stns"> </a>
+
+<!-- ================================================= -->
+<h3>2.9 <u>Site Description </u></h3>
+<!-- ================================================= -->
+<p>
+   End with 2 files. 1 = regular CD-ROM file. 2 = more detailed
+   info with everything else we can find (See SWATS file info.)
+</p>
+
+<table border cols=3>
+ 
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+ 
+   <tr><td>Station List </td>
+       <td> <font color=blue> DONE</font>     </td>
+       <td> Do only CD-ROM form of Station List. The *.NAM version 
+            (sorted by Name) goes on CODIAC.
+        <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/site_desc_97.html"
+           target="_top"> See NESOB97 Status Page.</a>
+       </td>
+   </tr>
+
+   <tr><td>Collected Parameter List </td>
+       <td> <font color=blue> DONE</font></td> 
+       <td> See NESOB96 CODIAC Links.
+        Lists of measurements made at each station,
+        Geophysical info, beg type, soils, etc.
+        More detailed description for soil moisture and soil temp sites.
+        Does one of SL's web pages fulfill this? Other web sites
+        list what is collected (e.g., ARM sites, OKMESO sites, and  
+        micronet sites, etc.) 
+        <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/site_desc_97.html"
+        target="_top"> See NESOB97 Status Page.</a>
+       </td>
+   </tr>
+ 
+</table>
+ 
+<br><br>
+ 
+<b><h3>-------------------End Surface Layer---------------------</h3></b>
+ 
+
+<br><br>
+
+<!-- ================================================= -->
+<h3>3.0 <u>Sub-Surface Dataset (-2 to 0M) </u></h3>
+<!-- ================================================= -->
+<p>SFW says NO soil composites. Everything at different
+   levels, etc. True for Temp and/or Moisture? See GHF
+   and section 2.3.
+</p>
+
+
+<a name="soil_moist"> </a>
+<!-- ================================================= -->
+<h3>3.1 <u> Soil Moisture  </u>
+       <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/soil_moist_97.html"
+          target="_top"> (See NESOB97 Status Page.)</a> </h3>
+<!-- ================================================= -->
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=500> Notes  </th></tr>
+
+   <tr><td>ARS Washita Micronet</td>
+       <td> <font color=blue> N/A </font>     </td>
+       <td> (JAG) Pat Stark's writing paper. Source must send data.
+           SL says forget this dataset. We won't get.
+       </td>
+   </tr>
+
+   <tr><td>ARM SGP SWATS (Jeanne Schneider's Soils data) </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> Final In-house and put on-line "as is" in NetCDF per SFW 6/4/01.
+            If ARS data comes in, may pullout 2 SWATS parms (east/west several depths)
+            and combine with ARS. (DS) 
+
+            Hourly Volumetric Water Contents at 
+            5,15,25,35,60,85,125,175cm. 
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.020"
+            target="_top"> See CODIAC ID 40.020</a>).
+<p>
+            As of 25 June 2001, DS says,
+            "The SWATS data covers from 4/96-9/00, and is in
+            netCDF format. All the data is available to the
+            GCIP/EOP, SGP97, SGP99, GCIP/NESOB-96, and
+            GCIP/NESOB-97 projects. (All together there are
+            about 32,000 files, because the data have been
+            put into day files, by station.)"     
+       </td>
+   </tr>
+
+   <tr><td>EBBR </td>
+       <td> <font color=blue> N/A - Not in SL's list </font>     </td>
+       <td> In-house? Decided not to do anything with this
+            data because this soil moist parm is secondary parmeter
+            for EBBR. Not research quality.
+       </td>
+   </tr>
+ 
+   <tr><td>OKMESO Soil's data </td>
+       <td> <font color=red> TBD  - Not in SL's list</font>     </td>
+       <td> (DS)
+            No OKMESO available for 1996 or before. How about for 1997? Password Protected?</td>
+   </tr>
+
+   <tr><td>NOAA/ATDD Little Washita (Tilden) </td>
+      <td> <font color=blue> DONE</font>     </td>
+      <td> (DS) Sensor's were put in June 1997. Could use better readme which
+      DS has asked SL for more info to add if available.
+      (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.024"
+          target="_top"> See CODIAC ID 40.024</a>).
+       </td>
+   </tr>
+ 
+</table>
+<br>
+
+<a name="soil_temp"> </a>
+<!-- ================================================= -->
+<h3>3.2 <u>Soil Temperature Profiles </u>        
+    <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/soil_temp_97.html"
+       target="_top"> (See NESOB97 Status Page.)</a></h3>
+<!-- ================================================= -->
+<p>
+Do soil temperature profiles as seperate datasets.
+All of these datasets could be very different.
+<br>
+<u>Quality Control of Soil Temp data?</u>
+<i>
+It is possible that we might need to QC all the
+different data types for all levels of NESOB96.</i>
+No QC on anything except for what normally have
+done on sfc and upper air.
+</p>
+
+<table border cols=3>
+   <tr bgcolor="#FFFFCC"><th width=200> Dataset</th>
+       <th width=100>Status</th>
+       <th width=650> Notes  </th></tr>
+
+   <tr><td>ARM SGP SWATS (Jeanne Schneider's Soils data) </td>
+       <td> <font color=blue>DONE </font>     </td>
+       <td> Final In-house and put on-line "as is" in NetCDF per SFW 6/4/01.
+            If ARS data comes in, may pullout 2 SWATS parms (east/west several depths)
+            and combine with ARS. (DS) 
+
+            Hourly values at 5,15,25,35,60,85,125,175cm.
+            Prelim data on-line for some time.
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.020"
+            target="_top"> See CODIAC ID 40.020</a>).
+<p>
+            As of 25 June 2001, DS says,
+            "The SWATS data covers from 4/96-9/00, and is in
+            netCDF format. All the data is available to the
+            GCIP/EOP, SGP97, SGP99, GCIP/NESOB-96, and
+            GCIP/NESOB-97 projects. (All together there are
+            about 32,000 files, because the data have been
+            put into day files, by station.)"                  
+       </td>
+   </tr>
+
+   <tr><td>NCDC COOP Daily Soil Temps </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td> (DS)
+            (<a href="http://data.eol.ucar.edu/codiac/dss/id=40.014"
+                target="_top"> See CODIAC ID 40.014</a>)
+       </td>
+   </tr>
+
+   <tr><td>NOAA/ATDD Little Washita Flux Site (Tilden) </td>
+       <td> <font color=blue> DONE </font>     </td>
+       <td>(JAG) 30min values at 2,4,8,16,32,64 cm. 
+            Tilden's Soil Temp done by JAG for NE96.
+            Tilden - 6 layers (2cm - 64cm) See /data10/NESOB/washita*.
+            Do Tilden's soil temp. Depth vs time?<p>
+            The NESOB97 NOAA/ATDD washita soil temp data is online as a
+            standalone dataset.
+            <a href="http://data.eol.ucar.edu/codiac/dss/id=40.052"
+            target="_top"> See CODIAC ID 40.052.</a>
+       </td>
+   </tr>
+ 
+   <tr><td>USDA/ARS Washita Micronet and
+           Washita Special Soil Moisture & Temp network Composite.</td>
+       <td> <font color=red> TBD- Not available? </font>     </td>
+       <td> (JAG) 15min Values composited at 5,10,15,30 cm
+       </td>
+   </tr>
+
+</table>
+<br>
+
+ 
+<!-- ================================================= -->
+<h3>3.3 <u>Soil Physical & Hydraulic properties -
+           Soil Characteristics </u>
+       <a href="http://www.eol.ucar.edu/projects/gcip/dm/nesob/soil_props_97.html"
+          target="_top"> (See NESOB97 Status Page.)</a>
+</h3>
+<!-- ================================================= -->
+ 
+<i> Note: Do NOT do anything in this area for now. All 3.4-3.6 datasets
+          (i.e., Wilting Point, Rooting Zone, etc. from Doug Miller)
+          are combined into the 3.3 datasets. </i>
+<p> See CODIAC Datasets: 
+
+
+<a href="http://data.eol.ucar.edu/codiac/dss/id=40.004" target="_top"> 40.004</a>, 
+<a href="http://data.eol.ucar.edu/codiac/dss/id=40.005" target="_top"> 40.005</a>, 
+<a href="http://data.eol.ucar.edu/codiac/dss/id=40.006" target="_top"> 40.006</a>, 
+<a href="http://data.eol.ucar.edu/codiac/dss/id=40.007" target="_top"> 40.007</a>, 
+<a href="http://data.eol.ucar.edu/codiac/dss/id=40.008" target="_top"> 40.008</a>, 
+<a href="http://data.eol.ucar.edu/codiac/dss/id=40.009" target="_top"> 40.009</a>.
+</p>
+<br>
+<b>--------------------End GCIP/NESOB-97 Inventory-------------------</b>
+</HTML>

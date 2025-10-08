@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+ <!--<meta http-equiv="refresh" content="600" /> auto-refresh every 10 minutes -->
+ <title>Data Set Contact List Tool</title>
+
+ <!-- **** STYLES ********************************************************** -->
+  <link rel="stylesheet" id="styler" href="main.css" type="text/css" />
+  <link rel="stylesheet" id="styler" href="tables.css" type="text/css" />
+  
+  <!--
+  <style type="text/css">
+  	.h1 { width: 20%; }
+  	.h2 { width: 40%; }
+  	.h3 { width: 40%; }
+  </style>
+  -->
+  <style type="text/css">
+    .ds-div h3 { margin-bottom: 5px; }
+    .ds-div h4 { margin-top: 1px; margin-bottom: 5px; }
+  </style>
+  
+ <!-- **** END STYLES ****************************************************** -->
+ <!-- **** SCRIPTS ********************************************************* -->
+  <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script type="text/javascript" src="tables.js"></script>
+ <!-- **** END SCRIPTS ***************************************************** -->
+</head>
+
+<body onload="loadProjects(); $('#ds-input').focus();">
+<!--<center>-->
+
+
+<!-- start of content -->
+<div class="main_content" style="padding: 0% 10%;">
+
+
+
+<div class="full">
+  <div id="status_head" class="full_head toggle">Data Set Contacts</div>
+    <div class="full_box" style="padding-left: 25px;">
+
+		<br />
+		
+		<form name="ds-query" method="" action="" onsubmit="updateCellData(); return false;">
+			<span>Enter in the data set archive ID: </span>
+			<input id="ds-input" name="ds-id" type="text" value="" />
+			<span> Or select a project: </span>
+			<select id="prj-input" name="prj-id"></select>
+			<input type="submit" id="find-btn" value="Find Contacts" />
+            <label for="author-check" style="padding-left:50px;">Authors Only
+                <input type="checkbox" id="author-check" name="author" value="Authors Only" checked="checked" />
+            </label>
+		</form>
+		
+		<div id="ds-list">
+			<div id="ds-div-0" class="ds-div" style="display:none; visibility:hidden;">
+				<h3>Archive ID</h3>
+				<h4 id="ds-auth">Authors</h4>
+				<table id="ds-tbl" border>
+					<thead>
+					<tr>
+						<th class="h1">ISO Role</th>
+						<th class="h2">Person Name</th>
+						<th class="h3">Organization</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr id="ds-0-tr-0">
+						<td class="c1">  </td> <!-- ISO Role -->
+						<td class="c2">  </td> <!-- Person Name -->
+						<td class="c3">  </td> <!-- Organization -->
+					</tr>
+					</tbody>
+				</table>
+			
+			</div>
+		</div>
+
+		<br />
+
+	</div>
+
+</div> <!-- end of main_content -->
+<!-- end of content -->
+
+<div class="clr_foot"></div>
+
+<!--</center>-->
+</body>
+</html>

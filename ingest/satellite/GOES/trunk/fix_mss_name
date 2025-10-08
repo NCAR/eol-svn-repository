@@ -1,0 +1,41 @@
+#!/bin/perl 
+
+$|=1;
+
+# This is a script to read an input file (msls listing) and
+# rename 2-digit year filenames to 4-digit year names
+
+# Usage: first run msls -l "mass-store-directory" > test.out
+# then run this program: fix_mss_name test.out "mass-store-dir"
+
+$name = $ARGV[0];
+$mss_dir = $ARGV[1];
+
+   open(IN,$name) || die "Cannot open $name?";
+   print "Reading . . .$name\n";
+
+   while (<IN>) {
+      $filename = substr($_,54);
+      chop($filename);
+      ($sat,$date,$time,$ext) = split(/\./,$filename);
+      $count = $date =~ tr/0-9//;
+
+      print "count= $count sat=$sat, date=$date, time=$time, ext=$ext\n";
+
+      if($count < 7) {
+	  $jday = substr($date,-3);
+	  $year = substr($date,0,2);
+	  $year = 2000 + $year;
+	  $date = $year.$jday;
+
+          print "new date= $date\n";
+	  $new_filename = $sat.".".$date.".".$time.".".$ext;
+	  print "new filename = $new_filename\n";
+
+          $command = "msmv -wpwd jossdata $mss_dir/$filename $mss_dir/$new_filename";
+          print "command is $command \n";
+          system($command);
+      }
+#      print "Filename = $filename\n";
+
+   }

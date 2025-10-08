@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>The Data Tracking System</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="nattap.css">
+</head>
+
+<body>
+<h1>Data Tracking System (DTS)</h1>
+
+<p>The Data Tracking System (DTS) will become a much more powerful tool and become even more important to our work.  The initial idea is for it to be a controller for all of our data management.  It will handle the updating of the ML and trigger entries for IVEN.</p>
+
+<h3>Required Changes</h3>
+<ul>
+	<li><p><b>New Utilities Section</b>
+		<p>This will primarily include project setup and creating/updating statuses.  The project setup will need to include creating a new project, associating categories with the project with the creation of categories as necessary, and associating products with the project.  The status editor will also be here because it is a utility and I cannot think of a better place for it at this time.
+</ul>
+
+<h3>Suggested Changes</h3>
+<ul>
+	<li><p><b>Removal of the Left Side Navigation Bar</b>
+		<p>This would be removed with dropdown boxes and/or links along the top to replace the functionality.  This will provide more horizontal room to display more required information about each dataset in the table.
+	<li><p><b>Addition of more Icons to the Table</b>
+		<p>The following are potential icons to add to the table.<ul>
+			<li><p>Received: The data was received from the source.
+				<p class="joel">This could be activated when there is a value in the ingest_location link.
+			<li><p>Processed: The data has been processed.
+				<p class="joel">This could be activated when the date is no longer null for the <i>date_processed</i> field.
+			</ul>
+	<li><p><b>Add a column to the table for <i>Processing</i></b>
+		<p>This would be in the same vein as Loading and Checking and would display the name of the person in charge of Processing the data.  There could be an N/A, dashed line, or something to show that the dataset is not to be processed.
+	<li><p><b>The Dropdown Boxes</b>
+		<p>The three dropdown boxes above the table list of datasets at a minimum need to be changed to handle the new icons in the table.
+		<p class="joel">How often are these used?  If it is very little maybe we could get rid of them.  This would also allow us to reclaim the space for the checkbox on the left of the table (if we get rid of the MARK dropdown).  It would also allow more room on the page for more header stuff (like the needed information for the navigation) or display more datasets on the page.
+</ul>
+
+
+
+</body>
+</html>

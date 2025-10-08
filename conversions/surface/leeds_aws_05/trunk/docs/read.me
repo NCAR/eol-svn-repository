@@ -1,0 +1,271 @@
+INSTITUTE OF ATMOSPHERIC SCIENCE, 
+SCHOOL OF EARTH AND ENVIRONMENT (ENVIRONMENT),
+UNIVERSITY OF LEEDS,
+LEEDS LS2 9JT
+UK
+
+
+
+-------------------
+T-REX AWS DATA SETS
+-------------------
+
+
+Version 1.1: 26th April 2007.
+
+
+
+Changelog
+---------
+
+Changes from 1.0 to 1.1
+
+(1) The "Middle" site has now been processed and calibrated in the same
+manner as the previous AWS, and the data have now been released. 
+
+(2) The document now contains the elevations of the AWS as determined
+by DGPS. See Section 2 "AWS Locations".
+
+
+Previous versions:
+------------------
+
+Version 1.0: 12th October 2006.
+
+
+
+
+
+
+
+1. General Description
+----------------------
+
+	These data represent the AWS data collected during the field
+phase of the T-REX experiment, 1st March - 30th April 2006. The data
+were collected at the sites specified below. With the exception of the
+"Notch" site (see below for list of site names) all AWS consisted of a
+10m instrumented mast; the "Notch" site being 2m high (to minimise
+visual impact at this exposed site). The mast system, instrumentation
+amd logger boxes used to store the data were designed, constructed
+and maintained by the T-REX team at Leeds University. 
+
+	Users are advised to inspect the headers of each AWS file
+before using any of the data.
+
+
+2.  AWS Locations
+-----------------
+
+	The following list gives the locations of the Leeds AWS,
+determined by DGPS. Note that the "names" of the sites are for
+descriptive purposes only and need not have any relation to a specific
+physical landmark (although they often do.) All latitudes and 
+longitudes are given relative to the WGS84 datum.
+
+North1
+Lat = 36.890469
+Lon = -118.181652
+Elev = 1135.4
+
+North2
+Lat = 36.858714
+Lon = -118.171024
+Elev = 1133.0
+
+Middle
+Lat = 36.823254
+Lon = -118.152543
+Elev = 1125.4
+
+Railroad
+Lat = 36.827198
+Lon = -118.128576
+Elev = 1128.1
+
+Low Inyo
+Lat = 36.879301
+Lon = -118.100626
+Elev = 1761.9
+
+Santa Rita
+Lat = 36.920047
+Lon = -118.121993
+Elev = 2176.5
+
+Mazourka
+Lat = 36.974447
+Lon = -118.119365
+Elev = 2843.9
+
+Windy Hill
+Lat = 36.794350
+Lon = -118.302564
+Elev = 2115.9
+
+Trailhead
+Lat = 36.774322
+Lon = -118.337822
+Elev = 2766.3
+
+Airport
+Lat = 36.824762
+Lon = -118.190643
+Elev = 1142.7
+
+Notch
+Lat = 36.775229
+Lon = -118.312870
+Elev = 2557.3
+NOTCH: IMPORTANT NOTE: SEE BELOW.
+
+DRI 1
+Lat = 36.768455
+Lon = -118.276087
+Elev = 1708.0
+
+Fish Hatchery
+Lat = 36.830148
+Lon = -118.246418
+Elev = 1294.2
+
+DRI 4
+Lat = 36.794682
+Lon = -118.166195
+Elev = 1142.1
+
+BLM
+Lat = 36.804068
+Lon = -118.227635
+Elev = 1274.7
+
+
+Notes:
+i). The mast at the Notch site blew down at some point in its operation.
+The exact time at which this happened has not been determined yet.
+The instruments all seemed to function correctly after the mast was 
+blown down, and so all the Notch data is given here, but the data
+must be used WITH APPROPRIATE CAUTION.
+ii). DRI1 and DRI4 were, as the names imply, co-located with the DRI AWS
+stations 1 and 4 (based on the numbering system shown at
+http://www.wrcc.dri.edu/trex/
+accessed 12th October 2006).
+iii). These data were post-processed using Gringo-P4,
+
+http://www.nottingham.ac.uk/iessg/gringo/READMEP4.HTM
+
+with IGS Precise Ephemeris data. The reference station used was Musick
+Mountain,
+
+http://archive.unavco.org/network/logs/musblog.txt
+
+For accuracy of DGPS see "What is the accuracy of DGPS?" by Monteiro et
+al., Journal of Navigation 58: 207-225
+
+3. Naming Conventions
+---------------------
+
+	Files are named according to the location of the AWS, following
+the names given above in Section 2. For example, Railroad.nc contains
+the AWS data (in netCDF format- see below) for all of the T-REX field 
+phase at the Railroad site.
+
+Notes:
+i). Where the name consists of two parts, e.g. Low Inyo, a single word
+is constructed via an underscore to form the filename, e.g. Low_Inyo.nc.
+
+
+4. Data Description
+-------------------
+
+	Each AWS data file contains the following fields:
+
+A) Time in Julian days since 1st January 2006, GMT; So that 1.500000 is
+the 1st January at 12Z.
+B) GPS flag; included for University of Leeds diagnostic purposes but
+should be IGNORED by end users. This field will be removed in future
+versions of these data sets.
+C) Wind speed; nominally at 10m.
+D) Wind direction; nominally at 10m.
+E) Surface pressure; nomially at the surface.
+F) Digital temperature; included for University of Leeds diagnostic
+purposes but should be IGNORED by end users. This field will be removed
+in future versions of these data sets.
+G) Relative humidity at a (nominal) height of 2m.
+H) Air Temperature at a (nominal) height of 2m.
+I) Air Temperature at a (nominal) height of 10m.
+
+Notes:
+i). The true heights of the 10m temperature sensor, etc. can be found in
+the header file for each AWS data set.
+ii). Data was recorded at 3s intervals and is presented as such. No
+averaging has been applied to the data.
+iii). Further information on sensor type, etc. can be found in the
+header of the relevant AWS data file.
+iv). Data HAS BEEN CALIBRATED and can be used as-is.
+v). The Notch site did not have a 10m temp. sensor (see above, Section 1)
+and so this field is uniformly error-flagged.
+
+5. Data Set Description
+-----------------------
+
+	The files are in netCDF format and can be read and manipulated
+by a variety of means, see:
+http://www.unidata.ucar.edu/software/netcdf/
+(accessed 12 Oct. 2006).
+	The data contains the fields mentioned above, stored in the 
+order described above. The following table gives the type of each field
+(with the associated Fortran field descriptor in brackets) and 
+associated error flag:
+
+Field		Type		Error
+Time    	Real (f12.7)	N/A
+GPS		Integer (i3)	N/A
+Wind Speed	Real (f8.2)	-999.00
+Wind Direction	Integer (i5)	-999
+Pressure	Real (f8.2)	-999.00
+Dig. temp.	Real (f7.1)	-999.0
+Rel. humidity	Real (f7.1)	-999.0
+2m temperature	Real (f7.1)	-999.0
+10m temperature	Real (f7.1)	-999.0
+
+Notes:
+i). The error flags represent the "missing_value" in netCDF terminology.
+ii). There are no "errors" in the time since this is the independent
+variable.
+
+
+6. Contact Information
+----------------------
+
+	The Leeds T-REX P.I. is Stephen Mobbs who can be contacted at
+the address at the head of this document, or at
+stephen@env.leeds.ac.uk
+	The author of this document and person responsible for
+processing the T-REX data sets is Ralph Burton, same address as above,
+or at
+ralph@env.leeds.ac.uk
+
+7. Use of the Data
+------------------
+
+	Please use the following citation as an acknowledgement, if
+using this data in any scientific report/ paper/presentation:
+
+	"This AWS data was gathered as part
+	of the Terrain-induced Rotor Experiment
+	(T-REX). The primary sponsor of T-REX was
+	the US National Science Foundation. The
+	acquisition of this data was carried out by
+	workers at the Institute for Atmospheric
+	Science, University of Leeds, UK and was
+	funded by the Natural Environment Research
+	Council (NERC), UK."
+
+	If the contribution of this data product is significant to the 
+publication/ presentation, the Leeds P.I.s should be offered 
+the right to joint authorship.
+	
+	Any redistribution of this data must include this data 
+acknowledgement statement.
+

@@ -1,0 +1,149 @@
+#! /usr/bin/perl -w
+
+package ProjectViewCGI;
+use strict;
+use lib ".";
+use ViewCGI;
+our @ISA = ("ViewCGI");
+
+&main();
+
+sub main {
+    my $self = ProjectViewCGI->new();
+    $self->buildPage("View: ".$self->getProject()->getId());
+}
+
+sub buildContent {
+    my ($self) = @_;
+
+    $self->printToolBar();
+    $self->printProductSummary();
+    $self->printProjectNotes();
+    $self->printProductListing();
+}
+
+sub printProductListing {
+    my ($self) = @_;
+    my $project = $self->getProject();
+    my $statusMap = $self->getStatusMap();
+    my $userMap = $self->getUserMap();
+
+    foreach my $product ($self->getProductList($project,"status")) {
+	printf("<center>\n");
+	printf("   <a name=%s></a>\n",$product->getTypedId());
+	printf("   <table class=productTable>\n");
+	printf("      <tr class=productTitle>\n");
+	printf("         <td colspan=4>\n");
+	printf("            <table>\n");
+	printf("               <tr class=productTitle>\n");
+	printf("                  <th class=title><a href=\"%s?project=%s&id=%s\">%s</a></th>\n",
+	       $product->getViewer(),$self->uriEscape($project->getId()),$self->uriEscape($product->getId()),$product->getName());
+	printf("                  <th class=option>\n");
+	printf("                     <a href=\"javascript: addDataset('%s');\">".
+	       "<img src=%s/a_dataset.gif alt=\"Add Dataset\"></a>&nbsp;\n",
+	       $product->getTypedId(),$self->{"IMAGES"});
+	printf("                     <a href=\"javascript: editProduct('%s?project=%s&id=%s');\">".
+	       "<img src=%s/e_product.gif alt=\"Edit Product\"></a>&nbsp;\n",
+	       $product->getEditor(),$project->getId(),$product->getId(),$self->{"IMAGES"});
+	printf("                     <font class=%s>%s</font></th>\n",
+	       $statusMap->{$product->getStatusId()}->getStyle(),$statusMap->{$product->getStatusId()}->getName());
+	printf("               </tr>\n");
+	printf("            </table>\n");
+	printf("         </td>\n");
+	printf("      </tr>\n");
+	printf("      <tr class=productHead>\n");
+	print ("         <th width=2%>&nbsp;</th>\n");
+	print ("         <th width=25%>Dataset</th>\n");
+	print ("         <th width=15%>Processing Contact</th>\n");
+	print ("         <th width=8%>Status</th>\n");
+	printf("      </tr>\n");
+
+	foreach my $dataset ($product->getDatasets()) {
+	    printf("      <tr class=%s onmouseover=\"javascript: hoverOver(this);\" onmouseout=\"javascript: hoverOut(this);\">\n",
+		   $dataset->isExcluded() ? "excludeRow" : "dsRow");
+	    printf("         <td><a href=\"javascript: editDataset('%s');\"><img src=%s/edit.gif alt=\"Edit Dataset\"></a></td>\n",
+		   $self->uriEscape($dataset->getId()),$self->{"IMAGES"});
+	    printf("         <td class=name><a href=\"dataset_view?project=%s&product=%s&dataset=%s\">%s</a></td>\n",
+		   $self->uriEscape($project->getId()),$self->uriEscape($product->getId()),$self->uriEscape($dataset->getId()),
+		   $dataset->getName());
+	    printf("         <td>%s</td>\n",$userMap->{$dataset->getProcessContactId()}->getName());
+	    printf("         <td><font class=%s>%s</font>%s</td>\n",$statusMap->{$dataset->getStatusId()}->getStyle(),
+		   $statusMap->{$dataset->getStatusId()}->getName(),
+		   $dataset->hasQuestions() ? sprintf("<img src=%s/question.gif alt=\"Questions\">",$self->{"IMAGES"}) : "");
+	    printf("      </tr>\n");	    
+	}
+
+	printf("   </table>\n");
+	printf("</center>\n");
+    }
+}
+
+sub printProductSummary {
+    my ($self) = @_;
+    printf("<center>\n");
+    printf("   <table class=productSummary>\n");
+    printf("      <tr class=productHead><th colspan=6>Composite/Group Status Summary</th></tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Name</th>\n");
+    printf("         <th>Status</th>\n");
+    printf("         <th colspan=2>Dataset Progress</th>\n");
+    printf("         <th>Excluded</th>\n");
+    printf("         <th>Total</th>\n");
+    printf("      </tr>\n");
+    
+    foreach my $product ($self->getProductList($self->getProject(),"status")) {
+	my $status = $self->getStatusMap()->{$product->getStatusId()};
+	printf("      <tr class=productRow>\n");
+	printf("         <td class=name><a href=\"#%s\">%s</a></td>\n",
+	       $self->uriEscape($product->getTypedId()),$product->getName());
+	printf("         <td><font class=%s>%s</font></td>\n",$status->getStyle(),$status->getName());
+	printf("         <td class=statusBarContainer>\n");
+	my ($excluded,$total,$finished) = $self->printStatusBar($self->getProject(),$product);
+	printf("         </td>\n");
+	printf("         <td class=summary>(%d of %d)</td>\n",$finished,$total-$excluded);
+	printf("         <td>%d</td>\n",$excluded);
+	printf("         <td>%d</td>\n",$total);
+	printf("      </tr>\n");
+    }
+
+    printf("   </table>\n");
+    printf("</center>\n");
+}
+
+sub printProjectNotes {
+    my ($self) = @_;
+    my $project = $self->getProject();
+
+    printf("<table class=noteTable>\n");
+    printf("   <tr class=noteHeading>\n");
+    printf("      <td>\n");
+    printf("         <table>\n");
+    printf("            <tr>\n");
+    printf("               <td class=end>&nbsp;</td>\n");
+    printf("               <td class=title>Project Notes</td>\n");
+    printf("               <td class=end>\n");
+    printf("                  <a href=\"javascript: projectNoteEditor('%s','%d');\"><img src=%s/edit_notes.gif alt=\"Edit Project Notes\"></a>\n",
+	   $self->uriEscape($project->getId()),$project->getNoteId(),$self->{"IMAGES"});
+    printf("                  <a href=\"javascript: noteExpander('note','projectNote');\"><img src=%s/e_notes.gif id=noteImg></a>\n",$self->{"IMAGES"});
+    printf("               </td>\n");
+    printf("            </tr>\n");
+    printf("         </table>\n");
+    printf("      </td>\n");
+    printf("   </tr>\n");
+    printf("   <tr class=noteRow>\n");
+    printf("      <td><div class=projectNote id=note>%s</div></td>\n",$project->getNote());
+    printf("   </tr>\n");	   
+    printf("</table>\n");
+}
+
+sub printToolBar {
+    my ($self) = @_;
+    printf("<table class=toolbar>\n");
+    printf("  <tr>\n");
+    printf("     <td>\n");
+    printf("        <a href=\"javascript: addProduct('%s');\"><img src=%s/a_product.gif alt=\"Add Product\"></a>\n",
+	   $self->uriEscape($self->getProject()->getId()),$self->{"IMAGES"});
+    printf("     </td>\n");
+    printf("  </tr>\n");
+    printf("</table>\n");
+}

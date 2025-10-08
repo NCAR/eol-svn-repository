@@ -1,0 +1,55 @@
+sub getList
+{
+	my $state = shift;
+	my $dba = shift;
+	
+	if( $state->{list_view_type} == $State::PROJECT )
+	{
+		return $dba->getByProject( $state->{list_view_id}, $state->{hide}, $state->{sort} );
+	}
+	elsif( $state->{list_view_type} == $State::LOADER )
+	{
+		return $dba->getByLoader( $state->{list_view_id}, $state->{hide}, $state->{sort} );
+	}
+	elsif( $state->{list_view_type} == $State::CHECKER )
+	{
+		return $dba->getByChecker( $state->{list_view_id}, $state->{hide}, $state->{sort} );
+	}
+	elsif( $state->{list_view_type} == $State::SEARCH )
+	{
+		return $state->{search}->getListFromDB( $state->{sort} );
+	}
+	else
+	{
+		die( "Error: list_view_type not defined properly\n" );
+	}
+}
+
+
+sub getTitle
+{
+	my $state = shift;
+	my $title;
+
+	if( $state->{list_view_type} eq $State::PROJECT )
+	{
+		my $dba = ProjectDBA->new();
+		my $proj = $dba->getFromDB( $state->{list_view_id} );
+		$title = "Datasets By Project: " . $proj->{name};		
+	}
+	elsif( $state->{list_view_type} eq $State::SEARCH )
+	{
+		$title = "Data Loading Notes Search Results";
+	}
+	else
+	{
+		my $dba = UserDBA->new();
+		my $user = $dba->getFromDB( $state->{list_view_id} );
+		my $type = "Checker";
+		$type = "Loader" if( $state->{list_view_type} eq $State::LOADER );
+		$title = "Datasets By $type: " . $user->{display_name};
+	}
+
+	return $title;
+}
+1;

@@ -1,0 +1,75 @@
+<html>
+<head>
+   <title>How To: Create Sounding Inventory Calendars</title>
+   <style>
+<!--
+   body {
+      font-family: sans-serif;
+      text-align: justify;
+   }
+   h1 { text-align: center; }
+   p.code {
+      font-family: monospace;
+      font-weight: bold;
+      text-indent: 50px;
+   }
+   p.foot {
+      font-style: italic;
+      text-align: right;
+   }
+-->
+   </style>
+</head>
+
+<body>
+<h1>How To: Create Sounding Inventory Calendars</h1>
+
+<h2>Table of Contents</h2>
+<ul>
+   <li><a href="#purpose">Purpose</a></li>
+   <li><a href="#repos">Repository</a></li>
+   <li><a href="#config">Configuration File</a></li>
+   <li><a href="#exe">Executing the Script</a></li>
+</ul>
+
+<a name="purpose"></a>
+<h2>Purpose</h2>
+<p>The purpose of this document is to describe the necessary steps for generating sounding inventories in an HTML calendar format.</p>
+
+<a name="repos"></a>
+<h2>Repository</h2>
+<p>This tool is under revision control using subversion.  It can be found in:</p>
+<p class="code">http://svn.atd.ucar.edu/svn/dmg/tools/upper_air/sounding_calendar</p>
+
+
+<a name="config"></a>
+<h2>Configuration File</h2>
+<p>This section defines the configuration file used by the script for generating the inventory calendars.  It is a very specific file and needs to have all of the following information for the script to execute correctly.</p>
+<p>The configuration file is to be named <b>inv-network</b> where <b>network</b> is the network name.  The script uses the network as part of its output.</p>
+<p>The file must define the following values:</p>
+<ul>
+   <li><b>source</b>: The directory where the files to be inventoried are located.</li>
+   <li><b>dest</b>: The directory where the inventory calendars are to be put once they have been created.</li>
+   <li><b>title</b>: The title to be used on all of the calendars.</li>
+   <li><b>desc</b>: The description of the calendar files.</li>
+   <li><b>stations</b>: A space separated list of stations to be inventoried.</li>
+   <li><b>filename</b>: The pattern used to find the correct files to be inventoried.  Use the following patterns:<ul>
+      <li><b>S+</b>: for the station id</li>
+      <li><b>YYYY</b>: for the four digit year</li>
+      <li><b>MM</b>: for the two digit month</li>
+      <li><b>DD</b>: for the two digit day</li>
+      <li><b>hh</b>: for the two digit hour</li>
+      </ul></li>
+</ul>
+
+<a name="exe"></a>
+<h2>Executing the Script</h2>
+<p>To run the script, run:</p>
+<p class="code">/net/work/bin/scripts/inventory/sounding_calendar_inventory.pl inv-network</p>
+
+<hr>
+<p class="foot">Last Update: September 19, 2007 - Joel Clawson</p>
+
+
+</body>
+</html>

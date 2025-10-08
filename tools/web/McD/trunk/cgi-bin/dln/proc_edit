@@ -1,0 +1,287 @@
+
+use lib "lib";
+use DLNUtils;
+use State;
+
+use lib "../mcd_lib";
+use DLNDatasetDBA;
+use MLDatasetDBA;
+use UserDBA;
+use ProjectDBA;
+
+my %actions = ( "Add Dataset" => \&addDataset,
+								 "Update" => \&updateDataset,
+								 "Cancel" => \&cancel,
+                 "Delete" => \&deleteDataset
+							);
+my $cgi;
+my $state;
+sub proc_edit
+{
+	$state = shift;
+	$cgi = shift;	
+	my $dataset = getDataset();
+
+	my $action = $cgi->param( "action" );
+
+	if( exists( $actions{$action} ) )
+	{
+		$actions{$action}->($dataset);
+	}
+	else
+	{
+		die( "Action does not exist: $action\n" );
+	}
+}
+
+sub addDataset
+{
+	my $ds = shift;
+
+	my $proj = $cgi->param( "project" );
+	my $dba = DLNDatasetDBA->new();
+	$dba->insertDB( $ds );
+	
+	$dba->linkToProject( $ds->{id}, $proj );
+
+	my $ml_dba = MLDatasetDBA->new();
+	$ml_dba->insertBlank( $ds->{id} );
+ 
+	#queryMasterListAdd( $ds );
+
+	$state->{view} = $State::LIST;
+	$state->{list_view_type} = $State::PROJECT;
+	$state->{list_view_id} = $proj;
+
+	checkEmail( $ds );
+
+	showPage( "Dataset Has Been Added", $ds->{id} );
+}
+
+sub updateDataset
+{
+	my $ds = shift;
+	my $ds_old;
+	my $dba = DLNDatasetDBA->new();
+	$ds_old = $dba->getFromDB( $ds->{id} );	
+
+	# Set the dlnview date to 'today' if loader is assigned
+	if( $ds_old->{loader} eq "unassigned" && $ds->{loader} ne "unassigned" )
+	{ $ds->{date} = today(); }
+
+	checkEmail( $ds );
+
+	$dba->updateDB( $ds );
+
+	showPage( "Dataset Has Been Updated", $ds->{id} );
+}
+
+sub cancel
+{
+	my $ds = shift;
+
+	showPage( "Action Cancelled", $ds->{id}, 1 );
+}
+
+sub deleteDataset
+{
+	my $ds = shift;
+
+	my $dba = DLNDatasetDBA->new();
+	$dba->deleteDB( $ds );
+
+	showPage( "Dataset Has Been Deleted", $ds->{id} );
+}
+
+sub getDataset
+{
+	my $dataset = DLNDataset->new();
+
+	$dataset->{id} = $cgi->param( "id" );
+	$dataset->{storm_id} = $cgi->param( "storm_id" );
+	$dataset->{title} = $cgi->param( "title" );
+	$dataset->{date} = $cgi->param( "date" );
+	$dataset->{loader} = $cgi->param( "loader" );
+	$dataset->{checker} = $cgi->param( "checker" );
+	$dataset->{int_contact} = $cgi->param( "int_contact" );
+	$dataset->{ext_contact} = $cgi->param( "ext_contact" );
+	$dataset->{ext_email} = $cgi->param( "ext_email" );
+	$dataset->{ingest} = $cgi->param( "ingest" );
+	$dataset->{archive} = $cgi->param( "archive" );
+	$dataset->{notes} = $cgi->param( "notes" );
+	$dataset->{remote_url} = $cgi->param( "remote_url" );
+
+	$dataset->{status}->{dataset} = $dataset->{id};
+	$dataset->{status}->{documented} = $cgi->param( "documented" );
+	$dataset->{status}->{checked} = $cgi->param( "checked" );
+	$dataset->{status}->{loaded} = $cgi->param( "loaded" );
+
+	$dataset->{status}->{documented} = 1 if( $dataset->{status}->{documented} );
+	$dataset->{status}->{checked} = 1 if( $dataset->{status}->{checked} );
+	$dataset->{status}->{loaded} = 1 if( $dataset->{status}->{loaded} );
+
+	$dataset->checkDefined();
+
+	return $dataset;
+}
+
+# Ask the user if want to add to the ML
+# this is not used!
+sub queryMasterListAdd
+{
+	my $ds = shift;
+	my $dba = DLNDatasetDBA->new();
+	my @projs = $dba->getProjects( $ds->{id} );
+	$project = $projs[0];  # ************** Note this shortcut ****************
+
+	my $ncols = 2;
+	print( cr(
+		$cgi->header(),
+		"<html>",
+		"<head>",
+			"<title>Add To Master List</title>",
+			$jscript,
+			$body_css,
+		"</head>",
+		"<body>",
+			"<form method=post name=mainForm action=controller>",
+			"<center><table border=0 cellpadding=6 cellspacing=3 width=98% class=editTable>",
+				"<tr class=titleBar>",
+					"<td colspan=$ncols>",
+						"Data Loading Notes: Add Dataset",
+					"</td>",
+				"</tr>",
+				"<tr>",
+					"<td align=right>",
+						"<b>Project: </b>",
+					"</td>",
+					"<td>",
+						$project->{name},
+					"</td>",
+				"</tr>",
+				"<tr>",
+					"<td align=right>",
+						"<b>Title: </b>",
+					"</td>",
+					"<td>",
+						$ds->{title},
+					"</td>",
+				"</tr>",
+
+				"<tr><td colspan=$ncols>&nbsp;</td></tr>",
+				"<tr><td colspan=$ncols class=spacer></td></tr>",
+				"<tr><td colspan=$ncols>&nbsp;</td></tr>",
+
+				"<tr>",
+					"<td colspan=$ncols align=center>",
+						"<font size=+1><b>This dataset does not exist in the $project->{name} Master List, would you like to add it?</b></font>",	
+					"</td>",
+				"</tr>",
+
+				"<tr>",
+					"<td colspan=$ncols align=center>",
+						"<input type=submit name=action value=\"Yes\">", &nbsp(2),
+						"<input type=submit name=action value=\"No\">",
+						$state->getHiddenFieldString(),
+					"</td>",
+				"</tr>",
+			"</table>",
+			"</form>",	
+		"</body></html>" ) );
+}
+
+sub showPage
+{
+	my $msg = shift;
+	my $hlight = shift;
+	my $cancel = shift;
+
+	$state->{proc_edit} = undef();
+	my $url = "controller?hlight=$hlight&" . $state->getUrlString();
+	my $onLoad = "\"setFrames( top.opener.parent, null, null, \'$url\')\""; 
+
+	$onLoad = "\"top.opener.parent.focus()\"" if( $cancel );
+
+	print( cr(
+		$cgi->header( -expires=>'-1d'),
+		"<html>",
+			"<head>",
+			"<title>DLN: Edit Dataset</title>",
+			$body_css,
+			$jscript,
+			"</head>",
+		"<body onLoad=$onLoad>",
+			"<table border=0 width=100%>",
+				"<tr class=titleBar>",
+					"<td width=100%>",
+						"Data Loading Notes: Edit/Add Dataset",
+					"</td>",
+				"</tr>",
+				"<tr><td>&nbsp;</td></tr>",
+				"<tr><td>&nbsp;</td></tr>",
+				"<tr><td>&nbsp;</td></tr>",
+				"<tr><td>&nbsp;</td></tr>",
+				"<tr>",
+					"<td width=100% height=100% align=center>",
+						"<b>$msg</font><br><br>",
+						"<input type=submit value=\"Close Window\" onClick=\"window.close()\">",	
+					"</td>",
+				"</tr>",
+				"<tr><td>&nbsp;</td></tr>",
+				"<tr><td>&nbsp;</td></tr>",
+			"</table>",
+		"</body>",
+		"</html>" 
+		) );	
+}
+
+# Sends an e-mail to the loader
+sub checkEmail
+{
+	my $ds = shift;
+
+	my $send_mail = $cgi->param( "send_mail" );
+
+	if( $send_mail eq "y" )
+	{
+		my $udba = UserDBA->new();
+		my $pdba = ProjectDBA->new();
+
+		my $pid = $cgi->param( "project" );
+		my $project = $pdba->getFromDB( $pid );
+
+		my $loader = $udba->getFromDB( $ds->{loader} );
+		my $checker = $udba->getFromDB( $ds->{checker} );
+
+		if( $loader->{active} && $loader->{email} && $checker->{active} && $checker->{email} )
+		{
+			open( MAIL, "|/usr/lib/sendmail -t" ) || die( "Unable to open sendmail" );
+
+			my $from = "From: $checker->{email}\n";
+			my $to = "To: $loader->{email}\n";
+			my $subject = "Subject: $project->{name} Dataset Is Ready To Be Loaded.\n\n\n";
+
+			my $msg = "$loader->{display_name},\n\n";
+			$msg = $msg . "A dataset has been entered into the data loading notes page for you to load into Codiac.\n";
+			$msg = $msg . "Below is a summary of what has been entered into the notes page.  For more information\n";
+			$msg = $msg . "refer to the data loading notes pages at http://www.joss.ucar.edu/mcd.\n\n";
+
+			$msg = $msg . "Title: " . $ds->{title} . "\n";
+			$msg = $msg . "Project: " . $project->{name}  . "\n";
+
+			$msg = $msg . "Date: " . $ds->{date}  . "\n";
+			$msg = $msg . "Person Checking: " . $checker->{display_name}  . "\n\n";
+
+			$msg = $msg . "Notes: \n" . $ds->{notes}  . "\n";
+
+			print( MAIL $to );
+			print( MAIL $from );
+			print( MAIL $subject );
+			print( MAIL $msg );
+			print( MAIL "\n\n\n" );
+
+			close( MAIL );
+		}
+	}
+}
+1;

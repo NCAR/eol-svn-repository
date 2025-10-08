@@ -1,0 +1,32 @@
+Jorgen, Janine -
+
+The next batch of .nc files for VOCALS is ready on ftp.ucar.edu/pub/mmm/bansemer.
+Please note a slight change in file names.
+
+These have the 'round' and 'all' spectra instead of 'irregular', plus all
+of the other changes we discussed earlier.  Let me know if this introduces
+any more merging problems.
+
+---other changes---
+- variable names with 'R' and 'A' instead of 'R' and 'I', 
+- Set concentration [C1DC] for bins containing <50um particles to zero,
+  for both the 25um and 10um probes.  Set "FirstBin" attribute to 3 for 25um 
+probe (62.5 micron and larger), and bin 5 and larger for the 10-micron probe 
+(45 micron and larger).  Leave counts in all bins for A1DC.
+- Compute total concentration [CONC1DC] from the new >50um spectra, for both
+  "round" and "all".
+- Recompute derived parameters [DBARD, PLWC] from the new spectra, for both
+  "round" and "all". 
+-did not change the counts spectrum (i.e. the first few bins should not be changed, although we set them to
+zero for the concentration spectra). 
+--- end other changes---
+
+Unfortunately the 10um 2DC  still shows fewer and/or smaller particles than
+the 25um, even if I accept every particle regardless of roundness.  After
+checking the images, it appears that the 10um probe had more unfocused particles,
+partial particles, and empty parts on the array.  I wonder if the laser
+had already started to fail, or maybe we need to take a closer look at the
+optics in the lab.  I set the DataQuality flag to 'Unknown' on all of the 10um
+data for now...
+
+-Aaron

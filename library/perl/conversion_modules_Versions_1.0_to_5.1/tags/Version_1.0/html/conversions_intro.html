@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Conversions Home</title>
+    <link rel="STYLESHEET" type="text/css" href="http://www.joss.ucar.edu/~suldan/qcodiac/main.css">
+  </head>
+
+  <body>
+      <h1>Conversions and Conversion Modules</h1>
+      <hr>
+      <h3>Conversions</h3>
+      <p>The conversions are a web interface for most of the conversions in the Conversions.pm perl module.</p>
+
+      <hr>
+      <h3>Conversion Modules Version 2</h3>
+      <p>The conversion modules are a collection of object-oriented style perl modules used to assist someone converting raw data into another ASCII style format.  It is a collection of modules that are interconnected.</p>
+      <dl>
+	<dt><b>Conversions.pm</b></dt><dd>This module is a collection of static functions that convert values from one unit of measurement to another unit of measurement and formats data.  These functions should be independant of any type of conversion.</dd>
+	<dt><b>ElevatedStationMap.pm</b></dt><dd>This is a StationMap module that defines a unique station as having different Network ID, Station ID, Latitude, Longitude, and Elevation values.</dd>
+	<dt><b>PositionedStationMap.pm</b></dt><dd>This is a Station Map module that defines a unique station as having different Network ID, Station ID, Latitude, and Longitude values.</dd>
+	<dt><b>QCFConstants.pm</b></dt><dd>This is a module that holds a set of constant values to be used in a JOSS QCF conversion.  It contains missing values, flags and flag precedence orders.</dd>
+	<dt><b>QCFSurfaceRecord.pm</b></dt><dd>This is a Surface Record module that defines flag values and other more specific values for a JOSS QCF conversion than can be assumed for any Surface Record.</dd>
+	<dt><b>Record.pm</b></dt><dd>This module is a generic Record for a conversion.  It should not be used, though it can be.  A subclass should be used instead.  The Record module only holds information that is common to any conversion (dates, times, station information, etc.).  It does not contain any data measurements.</dd>
+	<dt><b>RecordMap.pm</b></dt><dd>This module is used to hold instances of a Record.  It defines a unique Record as having unique Network ID, Station ID, Nominal Date, and Nominal Time values.</dd>
+	<dt><b>SimpleStationMap.pm</b></dt><dd>This is a Station Map module that defines a unique station as having different Network ID and Station ID values only.</dd>
+	<dt><b>Station.pm</b></dt><dd>This module is used to hold the information for a single station.</dd>
+	<dt><b>StationMap.pm</b></dt><dd>This module is used to hold instances of a Station.  It is like a Java abstract class and must have a subclass.  This cannot be instansiated alone.</dd>
+	<dt><b>SurfaceRecord</b></dt><dd>This is a Record module that contains surface data.  It only contains data and the information inherited from the Record Module.  It does not handle any flag values.</dd>
+      </dl>
+
+      <hr>
+      <h3>Conversion Modules Version 1</h3>
+      <p>The conversion modules are a collection of object-oriented style perl modules used to assist someone converting raw data into the JOSS QCF format.  It is a collection of five modules that are interconnected.</p>
+      <dl>
+	<dt><b>Conversions.pm</b></dt><dd>This module is a collection of static functions that convert values from one unit of measurement to another unit of measurement, formats data into the format required by the QCF format, and accesses constants used by the QCF format.</dd>
+	<dt><b>Record.pm</b></dt><dd>This module is a data structure for a single raw data reading for a station.  It hides a lot of the tedious conversions and formatting of the raw data along with automatically determining the flags to provide consistancy among different conversions.</dd>
+	<dt><b>RecordMap.pm</b></dt><dd>This module is a wrapper around a hash to make it easier to access Record instances.  It hashes on the station id, the name of the network, the date of the reading and the time of the reading.<br><font color=RED>Note:  </font>It should be noted that the RecordMap is capable of holding of all Records for every station and network being converted, but if there is a lot of data, holding all of the Records in the map will greatly slow down the conversion.</dd>
+	<dt><b>Station.pm</b></dt><dd>This module is a data structure fro a single station in a network.</dd>
+	<dt><b>StationMap.pm</b></dt><dd>This module is a wrapper around a hash to make it easier to access Station instances.  It hashes on the station id and the name of the network.</dd></dt></dl>
+
+      <p>See the <a href="./conversions_howto.html">how to</a> for a longer 
+	explanation of how to use the modules.</p>
+
+      <hr>
+<!-- Created: Thu Jul 17 14:33:02 MDT 2003 -->
+<!-- hhmts start -->
+Last modified: Fri Jul 23 10:09:22 MDT 
+<!-- hhmts end -->
+  </body>
+</html>

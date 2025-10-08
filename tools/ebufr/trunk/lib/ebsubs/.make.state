@@ -1,0 +1,56 @@
+.MAKE_VERSION:	VERSION-1.0
+getrec.o:
+	f77 -u -fast -O3 -pic -sun4 -c  getrec.f
+getobs.o:
+	f77 -u -fast -O3 -pic -sun4 -c  getobs.f
+nxtbts.o:
+	f77 -u -fast -O3 -pic -sun4 -c  nxtbts.f
+lddesc.o:
+	f77 -u -fast -O3 -pic -sun4 -c  lddesc.f
+getcfs.o:
+	f77 -u -fast -O3 -pic -sun4 -c  getcfs.f
+.BUILT_LAST_MAKE_RUN:
+bare:	/usr/lang/cg89/libm.a /usr/lang/crt0.o /usr/lang/cg89/_nonstd_crt1.o 
+	f77 -u -fast -O3 -pic  -sun4 -o bare bare.o ./libeb.a
+rdrec.o:
+	f77 -u -fast -O3 -pic -sun4 -c  rdrec.f
+bd.o:
+	f77 -u -fast -O3 -pic -sun4 -c  bd.f
+ebread.o:
+	f77 -u -fast -O3 -pic -sun4 -c  ebread.f
+clean:
+	rm -f *.o core *.trace fort.*
+bfinfo.o:
+	f77 -u -fast -O3 -pic -sun4 -c  bfinfo.f
+bfsec4.o:
+	f77 -u -fast -O3 -pic -sun4 -c  bfsec4.f
+bfsec3.o:
+	f77 -u -fast -O3 -pic -sun4 -c  bfsec3.f
+bfsec1.o:
+	f77 -u -fast -O3 -pic -sun4 -c  bfsec1.f
+bfsec0.o:
+	f77 -u -fast -O3 -pic -sun4 -c  bfsec0.f
+.BUILT_LAST_MAKE_RUN:
+libeb.a:
+	ar ruv ./libeb.a bd.o bferr.o getval.o  bfinfo.o bfsec3.o bfsec4.o  ebread.o getobs.o getrec.o  lddesc.o nxtbts.o rdhrec.o  elmnt.o rdrec.o  getnus.o getcfs.o ldtbls.o  bfsec0.o bfsec1.o
+	ranlib ./libeb.a
+rdhrec.o:
+	f77 -u -fast -O3 -pic -sun4 -c  rdhrec.f
+elmnt.o:
+	f77 -u -fast -O3 -pic -sun4 -c  elmnt.f
+.BUILT_LAST_MAKE_RUN:
+exampl:	/usr/lang/cg89/libm.a /usr/lang/crt0.o /usr/lang/cg89/_nonstd_crt1.o 
+	f77 -u -fast -O3 -pic  -sun4 -o exampl exampl.o ./libeb.a
+bferr.o:
+	f77 -u -fast -O3 -pic -sun4 -c  bferr.f
+ldtbls.o:
+	f77 -u -fast -O3 -pic -sun4 -c  ldtbls.f
+exampl.o:	ebufr_parm.inc ebufr_obs.inc ebufr_vars.inc ebufr_data.inc 
+	f77 -u -fast -O3 -pic -sun4 -c  exampl.f
+getnus.o:
+	f77 -u -fast -O3 -pic -sun4 -c  getnus.f
+.BUILT_LAST_MAKE_RUN:
+bare.o:	ebufr_parm.inc ebufr_obs.inc ebufr_vars.inc ebufr_data.inc 
+	f77 -u -fast -O3 -pic -sun4 -c  bare.f
+getval.o:
+	f77 -u -fast -O3 -pic -sun4 -c  getval.f

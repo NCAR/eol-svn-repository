@@ -1,0 +1,10 @@
+To convert the UCI data to netCDF, run UCI2nc.pl to create intermediate
+.new files with the header added and to convert these new files to netCDF.
+
+Then run UCIaddAtts.sh to add the units, long_name, and some global vars to
+the netCDF files to make them NIMBUS compliant.
+
+Note that this code is more of a quick script to handle the POST data and
+will likely need updating in the future. Many things are hard-coded.
+
+JAG 6/4/09

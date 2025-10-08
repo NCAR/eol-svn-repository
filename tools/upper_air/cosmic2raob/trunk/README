@@ -1,0 +1,77 @@
+FIRST: CONFIRM PARAMS IN NETCDF ARE WHAT WE NEED IN TXT FILE. EMAIL JULIE WITH 
+PARAM-PARAM COMPARISON LIST AND MAKE SURE I DID IT RIGHT. IF PARAMS MUST BE 
+CALCULATED, EMAIL SFW!!!
+Else spend about a day on this at most. Charge RAF as 
+would charge other HAIS work (normal RAF acct, I think.)
+
+- sample wetPrf NetCDF data file directly from COSMIC containing a sounding 
+profile. 
+- text file containing a rawinsonde profile probably from the NOAA ESRL 
+archive. This text format is the one Julie prefers to work from when processing 
+her MPR data. 
+
+Estimate time to write converter.
+
+From Doug Hunt:
+
+Hi Steve:  My first recommendation would be to not convert the wetPrf 
+netCDF files to ASCII first, but just to read in the netCDF data.  netCDF 
+interfaces exist for many dozens of different environments and once you 
+have access to one of these interfaces, the files are easier to read than 
+ASCII.
+
+For example, if you're working in FORTRAN, install the netCDF libraries 
+and then you can read in whole profiles in one line from FORTRAN.  Same 
+thing if you are working from perl, C, python, IDL, MATLAB, etc.
+
+I could quickly write an ASCII translator, but it would require perl, 
+netcdf and several other perl libraries to work on a remote system.
+
+Given more time I could write an ASCII translator that only requires C and 
+the netCDF library, but in all cases, netCDF libraries would have to be 
+installed.  If you are going to that effort, why not just read the netCDF 
+files directly?
+
+Regards,
+
+  Doug Hunt
+
+Steve and Janine,
+
+The software which would need to read the netCDF files is in VisualBasic, We 
+briefly explored means for ingesting netCDF files directly, but it's not 
+straightforward in theVB environment and is complicated by the fact that no one 
+here knows much VB (the software was written by one of the HAIS instrument 
+developers, and we have limited access to his time for modifications such as 
+this). So that avenue is not a simple one either.
+
+Julie 
+
+
+Sounding by height
+
+
+Have wetPrf		Need COSMIC
+----			----
+MSL_alt (km)		HGHT (m)	trivial
+Temp (C)		Temp(C)		"
+Vapor pressure (mb)
+			DWPT (C)
+			RELH (%)
+
+Pressure (mb)		PRES (hPa)	trivial
+Anal. Refractivity (N)
+Obs. Refractivity (N)
+Lat (deg)
+Lon (deg)
+			DRCT (deg)
+			SKNT (knot)
+
+			MIXR (g/kg)
+			THTA (K)
+			THTE (K)
+			THTV (K)
+
+For mandatory/sig level selection, reference the ASPEN code that does this:
+http://svn.atd.ucar.edu/websvn/listing.php?repname=aspen&path=%2Ftrunk%2FAspen%2FLevels%2F#_trunk_Aspen_Levels_
+

@@ -1,0 +1,246 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>How To: Convert CEOP Soils Data Files to netCDF</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css"></head>
+<body>
+<h1 class="title">How To: Convert CEOP Soils (.stm) Data
+Files to netCDF</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+<ol>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#directory">Directory Structure</a></li>
+<li><a href="#description">Description</a></li>
+<li><a href="#process">Running the Conversion
+Program</a></li>
+<li><a href="#documents">Documentation</a></li>
+</ol>
+</div>
+<a href="#">Top</a>
+<hr><a name="purpose"></a>
+<h2>Purpose</h2>
+<div class="block">
+<p>This document contains instructions for converting CEOP Soil
+Temperature and Moisture (.stm) data files from the CEOP Soils ASCII
+format
+into
+the CEOP Soils netCDF format and converting the CEOP Soils netCDF
+format back to the CEOP Soils ASCII format.</p>
+</div>
+<a href="#">Top</a>
+<hr><a name="directory"></a>
+<h2>Directory Structure</h2>
+<div class="block">
+<table style="width: 1159px; height: 29px;" class="directories">
+<tbody>
+<tr>
+<th>libraries/</th>
+<td>The directory containing the libraries necessary for
+running the conversion software.</td>
+</tr>
+<tr>
+<th>docs/</th>
+<td>The directory containing documentation about
+the conversion software.</td>
+</tr>
+<tr>
+<th>scripts/</th>
+<td>The directory containing the scripts that were used for
+running the conversion software.</td>
+</tr>
+</tbody>
+</table>
+<h3 class="directory_head">stm2cdf/CEOPstmiosp and
+cdf2stm/CEOPcdf2stm directories</h3>
+<table style="width: 1159px; height: 123px;" class="directories">
+<tbody>
+<tr>
+<th>build/</th>
+<td>The auto-generated directory for the compiled Java
+classes.</td>
+</tr>
+<tr>
+<th>dist/</th>
+<td>The auto-generated directory containing the
+files
+needed to run
+the software.</td>
+</tr>
+<tr>
+<th>nbproject/</th>
+<td>The auto-generated directory containing configuration
+files for NetBeans.</td>
+</tr>
+<tr>
+<th>src/</th>
+<td>The directory containing the java source code.
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<a href="#">Top</a>
+<hr><a name="description"></a>
+<h2>Description</h2>
+<div class="block"> <a name="setup"></a>
+<br>
+The CEOP Soil Temperature and Moisture format conversion programs were written
+using Java 6 and Unidata's NetCDF-Java library version 4.2.
+The Unidata NetCDF-Java library implements a Common Data
+Model (CDM) which is an abstract data model for scientific datasets.
+The necessary Unidata jar files are <span class="softwareName">netcdfUI-4.2.jar</span>
+and <span class="softwareName">
+toolsUI-4.2.jar</span>. The software uses the <span class="softwareName">getopt.jar</span> file,
+version 1.0.8, which is a Java port of GNU getopt. GNU getopt
+is a class for parsing command line arguments passed to programs based
+on the C getopt functions in glibc 2.0.6. The software uses
+the <span class="softwareName">utilities.jar</span>
+file which contain general utilities for unit
+conversions written by DMG personnel. The conversion programs
+were written, compiled, and tested using the NetBeans 7.0.1 interface.<br>
+<br>
+The conversion
+program <span class="softwareName">stm2cdf/CEOPstmiosp</span>,
+which is the conversion from the CEOP Soil Temperature and Moisture format to netCDF, utilizes
+the Input/Output Service Provider (IOSP) interface from
+Unidata. The output netCDF files were created using the
+Climate and Forecast (<span style="font-weight: bold;">CF</span>)
+Metadata <span style="font-weight: bold;">Conventions</span>
+version 1.6-beta. The CF Conventions version 1.6 had not been
+formally accepted when these CEOP conversions were run, but some of the
+features in the 1.6 version of the CF Conventions were necessary for
+creating the netCDF files, specifically the <span style="font-style: italic; font-weight: bold;">Timeseries of
+Station
+Data</span>. The CF Conventions version 1.6 was formally accepted
+in
+December 2011 and the <span style="font-weight: bold; font-style: italic;">Timeseries of
+Station Data</span> has been superseded by
+the <span style="font-style: italic; font-weight: bold;">Discrete
+Sampling Geometries</span>. The CF Standard Name Table was used
+in creating the variable names in the netCDF file. The netCDF
+data files were run through the CF Compliance checker to verify that
+the files correctly met the CF Conventions as of August 2011.<br>
+<p class="note">CEOP ASCII data files may contain more
+than one station, but each station is written to a separate netCDF
+file, therefore there may be many netCDF files created from one CEOP
+ASCII data file. </p>
+The conversion
+program <span class="softwareName">cdf2stm/CEOPcdf2stm</span>
+converts the CEOP Soil Temperature and Moisture netCDF format back to the
+original ASCII format.
+This conversion was used to verify that the original
+conversions to the netCDF format were created correctly. The
+original CEOP Soils ASCII format files were compared to the CEOP Soils
+ASCII format files created from the netCDF format files.<br>
+<p class="note">The CEOP Soils netCDF data files are
+created with data at each height and time combination. &nbsp;If
+there is no data for a specific height and time combination, then the
+data is created with missing values. &nbsp;Therefore, when the
+conversion from the CEOP Soils netCDF format to the CEOP Soils ASCII
+format are run, there may be many additional lines in the created ASCII
+file, then the original ASCII data file.</p>
+<p class="note">Example (using a CEOP Tower data file): File
+BALTEX_LINDENBERG_20021001_20091231.twr for station FOREST has heights
+14.50 and 28.30 from 1/1/2003 through 12/31/2006 and heights 17.50 and
+28.30 from 1/1/2007 through 12/31/2009. &nbsp;The resulting netCDF
+file will have missing values for height 17.50 for each time from
+1/1/2003 through 12/31/2006 and missing values for height 14.50 for
+each time from 1/1/2007 through 12/31/2009. </p>
+<br>
+</div>
+<a href="#">Top</a>
+<hr><a name="process"></a>
+<h2>Running the Conversion Program</h2>
+<div class="block"> <a name="setup"></a>
+<br>
+The program is run using the jar file contained in the <span class="directoryName">dist</span>
+directory. This directory contains the jarfile and the
+necessary
+libraries for running the software. The command to run the
+conversion from CEOP stm ASCII data files to CEOP stm netCDF data files
+is:<br>
+<p class="code">java -jar CEOPstmiosp.jar -i
+&lt;inCEOPfile&gt; -o &lt;outdirname&gt;<br>
+<br>
+&lt;inCEOPfile&gt; is replaced
+with the name of the CEOP stm ASCII data file to convert.<br>
+&lt;outdirname&gt; is replaced with the
+name of the
+directory where the CEOP stm netCDF data files will be written.<br>
+The -o &lt;outdirname&gt; is
+an optional parameter and will default to the current directory.</p>
+The
+output files created will have the same file name, without the dates and with the station name added,
+as the input file
+with _stm.nc as the last part of the file name instead of .stm.<br>
+<p class="note"> Example: java -jar CEOPstmiosp
+CAMP_Tongyu_20021001_20041231.stm -o
+conversionDirectory<br>
+&nbsp; &nbsp;will create
+<span class="directoryName">conversionDirectory/CAMP_Tongyu_Cropland_stm.nc</span><br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;&nbsp; and
+<span class="directoryName">conversionDirectory/CAMP_Tongyu_Grassland_stm.nc&nbsp;
+</span></p>
+The command to run the conversion from CEOP stm netCDF data files to
+CEOP stm ASCII data files is:<br>
+<p class="code">java -jar CEOPcdf2stm.jar -i
+&lt;inCEOPfile&gt; -o &lt;outdirname&gt;</p>
+<p class="code">&lt;inCEOPfile&gt; is replaced
+with the name of the CEOP stm
+netCDF data file to convert.<br>
+&lt;outdirname&gt; is replaced with the name of the directory
+where the
+CEOP stm ASCII data files will be written.<br>
+The -o
+&lt;outdirname&gt; is an optional parameter and will default to
+the current directory.</p>
+The
+output files created will have the same file name, with the dates
+included, as the input file
+with _nc.stm as the last part of the file name instead of _stm.nc.<br>
+<p class="note"> Example: java -jar CEOPcdf2stm
+CAMP_Tongyu_Cropland_stm.nc -o
+outputDirectory<br>
+&nbsp; &nbsp;will create
+<span class="directoryName">outputDirectory/CAMP_Tongyu_Cropland_20021001_20041231_nc.stm</span></p>
+<br>
+</div>
+<a href="#">Top</a>
+<hr><a name="documents"></a>
+<h2>Documentation</h2>
+<p>The following are a list of documents that may help with
+understanding how the software was constructed.</p>
+<ul>
+<li><a href="http://www.unidata.ucar.edu/software/netcdf-java/documentation.htm">Unidata
+NetCDF Java Library</a>: The information on Unidata's NetCDF Java
+Library.</li>
+<li><a href="http://www.unidata.ucar.edu/software/netcdf-java/tutorial/index.html">Unidata
+NetCDF Java Tutorial</a>: A tutorial on using NetCDF Java from
+Unidata.</li>
+<li><a href="http://www.unidata.ucar.edu/software/netcdf-java/tutorial/IOSPoverview.html">Unidata
+Writing an IOSP: Overview</a>: The information on creating an
+IOSP from Unidata.</li>
+<li><a href="http://www.urbanophile.com/arenn/hacking/getopt/gnu.getopt.Getopt.html">Class
+gnu.getopt.Getopt</a>: The information on the Java getopt library
+used in constructing the software.</li>
+<li><a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/encyclopedia/repository-dmg-subversion-listing/#library">DMG
+Utilities</a>: The information on the DMG Utilities Java library
+used in constructing the software.</li>
+<li><a href="http://cf-pcmdi.llnl.gov/documents/cf-conventions/latest-cf-conventions-document-1">CF
+Conventions Document</a>: The information on the CF Conventions.</li>
+<li><a href="http://cf-pcmdi.llnl.gov/documents/cf-standard-names">CF
+Standard Names</a>: The information on the CF Standard Names
+Table.</li>
+<li><a href="http://cf-pcmdi.llnl.gov/conformance/compliance-checker">CF
+Compliance Checker</a>: The information on the CF Compliance
+checkers.</li>
+<li><a href="#">How To: Convert CEOP Soils Data
+Files to netCDF
+</a>: This document.</li>
+</ul>
+<a href="#">Top</a>
+<hr>
+<p class="foot">Last Updated: 2012/08/30 - Janet Scannell</p>
+</body></html>

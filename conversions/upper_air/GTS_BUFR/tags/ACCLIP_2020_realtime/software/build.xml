@@ -1,0 +1,50 @@
+<!-- This is the ant build.xml file for the REALTIME BUFR sounding processing that requires sorting of the *.cls/ESC files. -->
+<project name="GTSBUFR" default="compile" basedir=".">
+
+    <!-- Constants used in the build file. -->
+    <!-- User must ensure these dirs are created before executing ant commands. -->
+    <property name="build" location="build" />
+    <property name="build.classes" location="build/classes" />
+    <property name="fieldproject" location="ACCLIP" />
+    <property name="src" location="src" />
+    <property name="output" location="/net/work/Projects/ACCLIP/data_processing/upper_air/radiosonde/GTS_BUFR_realtime/output_esc" />
+
+    <!-- Define the class path containing necessary jar files for processing. -->
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <pathelement path="${build.classes}" /> 
+
+        <fileset dir="/net/work/lib/java">
+            <include name="utilities.jar" />
+            <include name="upper_air.jar" />
+        </fileset>
+
+        <fileset dir="/net/work/bin/sorters">
+            <include name="esc_record_sorter.jar" />
+        </fileset>
+    </path>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build.classes}" includeantruntime="false">
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build.classes}" />
+    </target>
+
+    <!-- Sort ESC cls files. This is the same sort as used by the NWS sounding processing. -->
+    <target name="sort_esc" depends="compile">
+        <java classname="dmg.ua.sounding.sorter.ESCRecordSorter" fork="yes">
+            <arg value="-T" />
+            <arg value="ASC" />
+            <arg value="${output}" />
+            <arg value="${output}/record_sorter.log" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+</project>

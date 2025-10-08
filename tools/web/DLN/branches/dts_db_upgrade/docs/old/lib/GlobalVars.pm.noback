@@ -1,0 +1,65 @@
+#!/usr/bin/perl -w
+
+package GlobalVars;
+
+use CGI qw(:standard :html3 );
+require Exporter;
+use vars qw(@ISA @EXPORT $VERSION );
+
+
+
+@ISA = qw(Exporter);
+@EXPORT = qw( $td $td2 $td3 $tde $tr $tre $th $the $def_sort $my_url &println &my_header @text_size $def_sort_dir %modes $def_people &trim);
+
+# Some html tags
+$td = "<td align=center>";
+$td2 = "<td align=right>";
+$td3 = "<td align=left>";
+$tde = "</td>";
+$tr = "<tr>";
+$tre = "</tr>";
+$th = "<th>";
+$the = "</th>";
+
+
+# Default sortfield
+$def_sort = "date";
+
+# The url of this script
+$my_url = "http://www.joss.ucar.edu/cgi-bin/notes/data_notes";
+
+sub println
+{
+	print( @_, "\n" );
+}
+
+sub my_header
+{
+	$string = header() . "<html><head><title>Data Loading Notes</title></head></html><body bgcolor=#FFFFFF link=#333399 alink=#333399 vlink=#333399>";
+
+	$string = $string . "<script language=javascript> history.forward() </script>";
+
+	$string = $string . "<script language=javascript src=http://www.joss.ucar.edu/dpg/notes/verify.js></script>";
+
+	return $string;
+}
+
+# Default size of textarea for the 'notes'
+@text_size = ( "COLS=50", "ROWS=5" );
+
+$def_sort_dir = "asc";
+
+%modes = ( 	"add", "<td bgcolor=#FFFFFF align=center colspan=11><font color=black size=3><b>Add New Dataset</b></font></td>",
+						"update", "<td bgcolor=#FFFFCC align=center colspan=3><font color=black size=3><b>Update Dataset</b></font></td>" );
+
+
+$def_people = "unassigned";
+
+sub trim
+{
+	local $str = $_[0];
+	$str =~ s/^\s+//;
+	$str =~ s/\s+$//;
+	return $str;
+}
+1;

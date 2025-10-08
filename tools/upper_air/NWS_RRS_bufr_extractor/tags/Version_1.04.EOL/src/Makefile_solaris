@@ -1,0 +1,15 @@
+all: decoder grabbufr dumpdata splitdump
+
+decoder:
+	f95 -o ../bin/decoder_solaris BUFR_1_07.f RRS_Decoder_1_04.EOL.f
+
+dumpdata:
+	f95 -o ../bin/dumpdata_solaris BUFR_1_07.f DumpData.f
+
+grabbufr:
+	f95 -o ../bin/unixbufr_solaris BUFR_1_07.f unixbufr.f
+
+splitdump:
+	f95 -o ../bin/splitdump_solaris BUFR_1_07.f split_dump.f
+deploy: all
+	cp ../bin/*_solaris /net/work/bin/extractors/NWS_RRS

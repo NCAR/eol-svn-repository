@@ -1,0 +1,14 @@
+$Id: e2f.doc,v 1.1 1992/11/02 21:08:32 john Exp $
+
+E2F - error to flag
+
+A simple program to change the standard error QC values in the
+source data of some SCF files to the QC flags (Good/Bad/...)
+expected by S2M. Considers cmd line args to be filenames,
+or converts stdin to stdout if no args.
+ Output file is called "file.jcls"
+This program was intended only to help compare data with Claude
+Morel (NCAR/ATD), who uses the std err values for his interpolation
+program. To run e2f and s2m on /fest/snd/cape/intercomp/* :
+ cat /fest/snd/cape/intercomp/xmddhhmm.sss | e2f | s2m > sssmddhh.10mb
+

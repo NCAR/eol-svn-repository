@@ -1,0 +1,29 @@
+> groovy authorshipConnect.groovy PacMARS
+
+Created log file:	logs/log_20150723130201.txt
+  About to connect to Zinc and Master List databases...
+  Connected!
+
+  About to enter into the processing...
+--------------------------------------------------------------------------------
+  PacMARS:  255.063
+		Minerals Management Service
+Which of these contacts matches this author:	Minerals Management Service
+
+		1975	null	null	Minerals Management Service
+
+Enter zero to select none of the above (Will not select default if zero is entered).
+--------------------------------------------------------------------------------
+> 1975
+
+Unable to find contact 1975 for data set 255.063. Will insert contact.
+insert into dataset_contact (dataset_id, contact_id, iso_citation_role, sort_key, row_create_time) select d.id, 1975, 'author', 1, CURRENT_TIMESTAMP from dataset d where d.archive_ident = '255.063';
+
+  Processing complete.
+  Writing the author nicknames to file...
+  Writing complete.
+  Writing the questionable datasets to file...
+  Writing complete.
+  Writing the unknown authors to file...
+  Writing complete.
+  Execution complete.

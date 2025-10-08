@@ -1,0 +1,75 @@
+<project name="Data Tracking System" default="compile" basedir=".">
+
+  <property name="app.name" value="dts"/>
+  <property name="src" value="src" />
+  <property name="build" value="build"/>
+  <property name="build.classes" value="${build}/classes"/>
+  <property name="deploy" value="/net/web/dmg/webapps/${app.name}"/>
+  <property name="lib"  value="lib"/>
+  <property name="dist" value ="dist" />
+  <property name="web" value="web" />
+  <property name="catalina.base" value="/usr/local/java/tomcat/current" />
+  <property name="docs" value="docs" />
+  <property name="docs.api" value="${docs}/api" />
+
+   <path id="theclasspath">
+   <!-- for the record, this is a major pain -->
+
+    <!-- get the old classpath, if available -->
+    <pathelement path="${classpath}"/>
+
+    <fileset dir="${catalina.base}/common/lib">
+       <include name="**/*.jar" />
+    </fileset>
+    <fileset dir="${catalina.base}/common/endorsed">
+       <include name="**/*.jar" />
+    </fileset>
+
+    <pathelement location="${catalina.base}/common/classes" />
+
+    <fileset dir="${lib}">
+     <include name="**/*.jar"/>
+    </fileset>
+
+   </path>
+
+  <property name="classpath" refid="theclasspath"/>
+
+
+  <target name="all" depends="compile" />
+
+  <target name="compile" depends="init">
+
+  </target>
+
+  <target name="deploy" depends="dist">
+     <copy todir="${deploy}">
+        <fileset dir="${dist}" />
+     </copy>
+  </target>
+
+  <target name="dist" depends="compile">
+    <tstamp />
+    <mkdir dir="${dist}" />
+    <copy todir="${dist}">
+       <fileset dir="${web}" />
+    </copy>
+    <copy todir="${dist}/${docs}">
+       <fileset dir="${docs}" />
+    </copy>
+  </target>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build.classes}"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${dist}" />
+    <delete dir="${docs.api}" />
+  </target>
+
+</project>

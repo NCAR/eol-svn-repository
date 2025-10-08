@@ -1,0 +1,688 @@
+C
+C Use to determine deg2dist between two points. This s/w takes
+C 2 points; determines distance from a to b then b to a and 
+C forms and returns the average distance for the final distance.
+C
+
+
+c-Here is the package that we use for converting from latitude-longitude to xy
+c-distances from a given origin in latitude-longitude.  I wrote the main driver 
+c-for testing purposes and Bill Anderson wrote the driver routines to access
+c-conversion routines developed back in the mid-seventies, but which did not
+c-handle the transformation except in the US (west longitude,  north latitude).
+c-The original code was also ill-behaved under some circumstance like when the 
+c-longitude was nearly the same as the longitude of the origin, hence double 
+c-precision arithmetic is required.  The code also allows for the azimuth
+c-angle of the +x direction (eastward) to be specified for purposes of
+c-computing positions in a rotated Cartesian coordinate system.
+c-
+c-Jay Miller (ljmill@ncar.ucar.edu)
+
+
+      Program ll_xy
+c
+c     Given: The latitude and longitude of the origin
+c     Calculate: The (x,y) location of a point in (lat,lon)
+c     Input this (x,y) back into routine to calculate a (lat,lon)
+c
+c           (lat,lon) ---> (x,y)
+c           (x,y)     ---> (lat,lon)
+c
+c     All latitudes and longitudes are in degrees, (x,y) in km.
+c
+
+      angxax=90.0
+c     input origin (lat/lon), point (lat,lon)
+c
+      write(6,1)
+ 1    format(1x,'Input  latitude (deg) of origin: ',$)
+      read(5,*)olat
+      write(6,3)
+ 3    format(1x,'Input longitude (deg) of origin: ',$)
+      read(5,*)olon
+
+      write(6,5)
+ 5    format(1x,'Input   latitude (deg) of point: ',$)
+      read(5,*)plat
+      write(6,7)
+ 7    format(1x,'Input  longitude (deg) of point: ',$)
+      read(5,*)plon
+
+c     convert the lat/lon of point to (x,y) from (olat,olon)
+c
+      call ll2xydrv(plat,plon,x,y,olat,olon,angxax)
+      r=sqrt(x*x+y*y)
+      write(6,11)olat,olon,plat,plon,x,y,r
+ 11   format(1x,'olat/lon, plat/lon,x,y,r=',7f10.4)
+
+c     convert (x,y) from ll2xy back to lat/lon using xy2ll
+c
+      call xy2lldrv(xylat,xylon,x,y,olat,olon,angxax)
+      write(6,13)olat,olon,xylat,xylon,x,y,r
+ 13   format(1x,'olat/lon,xylat/lon,x,y,r=',7f10.4)
+
+c     interchange roles of origin and point and calculate (x,y)
+c
+      call ll2xydrv(olat,olon,x,y,plat,plon,angxax)
+      r=sqrt(x*x+y*y)
+      write(6,15)plat,plon,olat,olon,x,y,r
+ 15   format(1x,'plat/lon, olat/lon,x,y,r=',7f10.4)
+
+c     convert (x,y) from ll2xy back to lat/lon using xy2ll
+c
+      call xy2lldrv(xylat,xylon,x,y,plat,plon,angxax)
+      write(6,17)plat,plon,xylat,xylon,x,y,r
+ 17   format(1x,'plat/lon,xylat/lon,x,y,r=',7f10.4)
+      stop
+      end
+c
+c----------------------------------------------------------------------X
+c
+      SUBROUTINE LL2XYDRV(PLAT, PLON, X, Y, ORLAT, ORLON, ANGXAX)
+C
+C     DRIVER ROUTINE FOR CONVERTING THE SEPARATION OF TWO POINTS
+C     SPECIFIED IN LAT, LON TO SEPARATION IN X, Y IN KM. 
+C     THIS ROUTINE (AND LL2XY) WILL WORK FOR POINTS IN ANY PART OF
+C     THE GLOBE WITH SOME RESTRICTIONS (SEE BELOW). THE ANGLE CONVENTIONS ARE:
+C     0   < LAT < 90   ==>  NORTHERN HEMISPHERE
+C     -90 < LAT < 0    ==>  SOUTHERN HEMISPHERE
+C     
+C     0    < LON < 180 ==>  WESTERN HEMISPHERE
+C     -180 < LON < 0   ==>  EASTERN HEMISPHERE
+C     
+C     PLAT  - LAT. OF POINT FOR WHICH X,Y IS DESIRED
+C     PLON  - LON. OF POINT FOR WHICH X,Y IS DESIRED
+C     X     - OUTPUT X VALUE RELATIVE TO ORLAT, ORLON IN KM
+C     Y     - OUTPUT Y VALUE RELATIVE TO ORLAT, ORLON IN KM
+C     ORLAT - LAT. OF ORIGIN
+C     ORLON - LON. OR ORIGIN
+C     ANGXAX- ANGLE OF X-AXIS REL. TO TRUE NORTH (USUALLY 90.0)
+C
+C     KNOWN RESTRICTIONS AND LIMITATIONS:
+C
+C     1) ||PLAT| - |ORLAT|| <= 90.0
+C     2) ||PLON| - |ORLON|| <= 90.0
+C     3) NO INPUT LAT OR LON VALUE SHOULD BE EQUAL TO EXACTLY ZERO
+C     4) THE CODE IS NOT SETUP TO HANDLE CROSSING OVER BOTH HEMISPHERE 
+C     BOUNDARIES AT ONCE; IT CAN HANDLE CROSSING EITHER THE NORTH/SOUTH 
+C     HEMISPHERE BOUNDARY OR THE WEST/EAST BOUNDARY, BUT NOT BOTH AT ONCE. 
+C     FOR EXAMPLE, YOU CAN'T HAVE AN ORIGIN AT (1.0 deg, 1.0 deg) AND TRY 
+C     TO FIND THE X,Y OF A POINT AT (-1.0 deg, -1.0 deg). YOU COULD FIND 
+C     THE X,Y OF A POINT AT (-1.0 deg, 1.0 deg), HOWEVER.
+C     5) CODE WON'T WORK IF YOU TRY TO CROSS A POLE
+C
+      
+      PARAMETER (EPS=0.0001, DEGRAD=0.01745329)
+      
+      ICROSS=0
+C
+C     DETERMINE IF A HEMISPHERE BOUNDARY HAS BEEN CROSSED
+C
+      IF (SIGN(1.0,ORLAT).GT.SIGN(1.0,PLAT)) ICROSS=1
+      IF (SIGN(1.0,ORLAT).LT.SIGN(1.0,PLAT)) ICROSS=2
+      IF (SIGN(1.0,ORLON).GT.SIGN(1.0,PLON)) THEN
+         IF (ICROSS.NE.0) THEN
+            WRITE(*,10)
+ 10         FORMAT(/,5X,'+++ CANNOT HANDLE DUAL HEMISPHERE CROSSOVER ',
+     X           '+++')
+            STOP
+         ELSE
+            ICROSS=3
+         END IF
+      ELSE IF (SIGN(1.0,ORLON).LT.SIGN(1.0,PLON)) THEN
+         IF (ICROSS.NE.0) THEN
+            WRITE(*,10)
+            STOP
+         ELSE
+            ICROSS=4
+         END IF
+      END IF
+         
+      IF (ORLAT.GT.0.0) THEN
+         INHEM=1
+      ELSE
+         INHEM=0
+      END IF
+      IF (ORLON.GT.0.0) THEN
+         IWHEM=1
+      ELSE
+         IWHEM=0
+      END IF
+      IF (ICROSS.EQ.0) THEN
+C
+C     NO HEMISPHERE CROSSOVER; JUST CALL LL2XY
+C
+      
+C
+C     MAKE SIGNED VALUES POSITIVE 
+C
+         DEGLAT=ABS(PLAT)
+         DEGLON=ABS(PLON)
+         SWLAT =ABS(ORLAT)
+         SWLON =ABS(ORLON)         
+         
+         CALL LL2XY(DEGLAT,DEGLON,X,Y,SWLAT,SWLON)
+
+C
+C     SWITCH SIGNS IF NOT IN NORTHERN OR WESTERN HEMISPHERES
+C
+         IF (INHEM.EQ.0) Y=-Y
+         IF (IWHEM.EQ.0) X=-X
+
+      ELSE IF (ICROSS.EQ.1) THEN
+C
+C     +LAT -> -LAT
+C
+
+         DEGLAT=EPS
+         DEGLON=ABS(PLON)
+         SWLAT =ABS(ORLAT)
+         SWLON =ABS(ORLON)
+
+         CALL LL2XY(DEGLAT,DEGLON,X1,Y1,SWLAT,SWLON)
+         
+         IF (IWHEM.EQ.0) X1=-X1
+
+         DEGLAT=ABS(PLAT)
+         DEGLON=ABS(PLON)
+         SWLAT =EPS
+         SWLON =ABS(PLON)
+         CALL LL2XY(DEGLAT,DEGLON,X2,Y2,SWLAT,SWLON)
+         
+         Y=-(ABS(Y1)+ABS(Y2))
+         X=X1
+         
+      ELSE IF (ICROSS.EQ.2) THEN
+C
+C     -LAT -> +LAT
+C
+         DEGLAT=EPS
+         DEGLON=ABS(PLON)
+         SWLAT =ABS(ORLAT)
+         SWLON =ABS(ORLON)
+
+         CALL LL2XY(DEGLAT,DEGLON,X1,Y1,SWLAT,SWLON)
+         
+         IF (IWHEM.EQ.0) X1=-X1
+
+         DEGLAT=ABS(PLAT)
+         DEGLON=ABS(PLON)
+         SWLAT =EPS
+         SWLON =ABS(PLON)
+         CALL LL2XY(DEGLAT,DEGLON,X2,Y2,SWLAT,SWLON)
+         
+         Y=(ABS(Y1)+ABS(Y2))
+         X=X1
+         
+      ELSE IF (ICROSS.EQ.3) THEN
+C
+C     +LON -> -LON
+C
+         DEGLAT=ABS(PLAT)
+         IF (ABS(PLON).LE.45.0) THEN
+            DEGLON=EPS
+         ELSE IF (ABS(PLON).GE.135.0) THEN
+            DEGLON=180.0-EPS
+         END IF
+         SWLAT =ABS(ORLAT)
+         SWLON =ABS(ORLON)
+
+         CALL LL2XY(DEGLAT,DEGLON,X1,Y1,SWLAT,SWLON)
+
+         IF (INHEM.EQ.0) Y1=-Y1
+
+         DEGLAT=ABS(PLAT)
+         DEGLON=ABS(PLON)
+         SWLAT =ABS(PLAT)
+         IF (ABS(PLON).LE.45.0) THEN
+            SWLON=EPS
+         ELSE IF (ABS(PLON).GE.135.0) THEN
+            SWLON=180.0-EPS
+         END IF
+
+         CALL LL2XY(DEGLAT,DEGLON,X2,Y2,SWLAT,SWLON)
+         
+         Y=Y1
+         X=(ABS(X1)+ABS(X2))
+
+      ELSE IF (ICROSS.EQ.4) THEN
+C
+C     -LON -> +LON
+C
+         DEGLAT=ABS(PLAT)
+         IF (ABS(PLON).LE.45.0) THEN
+            DEGLON=EPS
+         ELSE IF (ABS(PLON).GE.135.0) THEN
+            DEGLON=180.0-EPS
+         END IF
+         SWLAT =ABS(ORLAT)
+         SWLON =ABS(ORLON)
+
+         CALL LL2XY(DEGLAT,DEGLON,X1,Y1,SWLAT,SWLON)
+
+         IF (INHEM.EQ.0) Y1=-Y1
+
+         DEGLAT=ABS(PLAT)
+         DEGLON=ABS(PLON)
+         SWLAT =ABS(PLAT)
+         IF (ABS(PLON).LE.45.0) THEN
+            SWLON=EPS
+         ELSE IF (ABS(PLON).GE.135.0) THEN
+            SWLON=180.0-EPS
+         END IF
+
+         CALL LL2XY(DEGLAT,DEGLON,X2,Y2,SWLAT,SWLON)
+         
+         Y=Y1
+         X=-(ABS(X1)+ABS(X2))
+         
+      END IF
+
+C
+C     ROTATE, IF NECESSARY
+C
+      IF (ANGXAX.NE.90.0) THEN
+         THETA=(ANGXAX-90.0)*DEGRAD
+         XT=X
+         YT=Y
+         X=XT*COS(THETA) - YT*SIN(THETA)
+         Y=XT*SIN(THETA) + YT*COS(THETA)
+      END IF
+      
+
+      RETURN
+
+      END
+c
+c----------------------------------------------------------------------X
+c
+      SUBROUTINE  LL2XY (DEGLAT, DEGLON, X, Y, SWLAT, SWLON)
+C
+C  TO CONVERT LAT.,LONG. TO X,Y IN KM WITH RESPECT TO SWLAT,SWLON
+C  PASCAL BY P. JOHNSON, 17-FEB-81.  FORTRAN TRANS R. VAUGHAN 9/81.
+C  FINAL REPAIR, M. BRADFORD, 4/88
+C  WARNING!  WORKS ONLY IN NORTHERN/WESTERN HEMISPHERES!
+C
+      PARAMETER (PI=3.141592654)
+      PARAMETER (R=6380.12)
+      PARAMETER (DEGRAD=0.01745329)
+C
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      REAL DEGLAT,DEGLON,X,Y,SWLON,SWLAT
+
+      X=0.0
+      Y=0.0
+      ALAT = SWLAT * DEGRAD
+      CALAT = COS(ALAT)
+      SALAT = SIN(ALAT)
+      ALONG = ABS(SWLON * DEGRAD)
+      BLAT = DEGLAT*DEGRAD
+      BLONG = ABS(DEGLON)*DEGRAD
+      CBLAT = COS(BLAT)
+      SBLAT = SIN(BLAT)
+      DLON = ALONG-BLONG
+      DLAT=ABS(DEGLAT-SWLAT)*DEGRAD
+      IF(DLAT.LT.0.0001.AND.ABS(DLON).LT.0.0001) GO TO 90
+      CDLON = COS(DLON)
+      AZA = ATAN(SIN( DLON)/(CALAT*SBLAT/CBLAT-SALAT*CDLON))
+      AZB = ATAN(SIN(-DLON)/(CBLAT*SALAT/CALAT-SBLAT*CDLON))
+C
+C  GET BEARING
+C
+      IF(BLAT .LT. ALAT) AZA = AZA+PI
+      IF(ALAT .LT. BLAT) AZB = AZB+PI
+      IF(AZA .LT. 0) AZA = AZA + 2.*PI
+      IF(AZB .LT. 0) AZB = AZB + 2.*PI
+C
+      SINN =  DLAT
+      IF(DLON.NE.0.0)
+     .       SINN = SIN(DLON) * SIN(PI/2.0-BLAT) / SIN(AZA)
+C
+      COSN = SALAT*SBLAT + CALAT*CBLAT*CDLON
+      S = R * ATAN(SINN/COSN)
+      X = S * SIN(AZA)
+      Y = S * COS(AZA)
+C
+   90 CONTINUE
+      RETURN
+C
+      END
+c
+c----------------------------------------------------------------------X
+c
+      SUBROUTINE XY2LLDRV(PLAT,PLON,XP,YP,ORLAT,ORLON,ANGXAX)
+C
+C     DRIVER ROUTINE FOR COMPUTING LAT AND LONGITUDE FROM 
+C     X,Y  COORDINATES RELATIVE TO LOCATION SPECIFIED BY ORLAT, ORLON.
+C     THIS ROUTINE (AND XY2LL) WILL WORK FOR POINTS IN ANY PART OF
+C     THE GLOBE WITH SOME RESTRICTIONS (SEE BELOW). THE ANGLE CONVENTIONS ARE:
+C     0   < LAT < 90   ==>  NORTHERN HEMISPHERE
+C     -90 < LAT < 0    ==>  SOUTHERN HEMISPHERE
+C     
+C     0    < LON < 180 ==>  WESTERN HEMISPHERE
+C     -180 < LON < 0   ==>  EASTERN HEMISPHERE
+C
+C     PLAT  - OUTPUT LATITUDE OF POINT AT POSITION (X,Y)
+C     PLON  - OUTPUT LONGITUDE OF POINT AT POSITION (X,Y)
+C     XP,YP - INPUT COORDINATES IN KM OF LOCATION TO BE CONVERTED
+C     ORLAT - INPUT LATIT. OF REFERENCE POINT (ORIGIN)
+C     ORLON - INPUT LONG.  OF REFERENCE POINT (ORIGIN)
+C     ANGXAX- ANGLE OF X-AXIS RELATIVE TO TRUE NORTH (USUALLY 90.0)
+C
+C     KNOWN RESTRICTIONS AND LIMITATIONS:
+C
+C     1) ||PLAT| - |ORLAT|| <= 90.0
+C     2) ||PLON| - |ORLON|| <= 90.0
+C     3) NO INPUT LAT OR LON VALUE SHOULD BE EQUAL TO EXACTLY ZERO
+C     4) THE CODE IS NOT SETUP TO HANDLE CROSSING OVER BOTH HEMISPHERE 
+C     BOUNDARIES AT ONCE; IT CAN HANDLE CROSSING EITHER THE NORTH/SOUTH 
+C     HEMISPHERE BOUNDARY OR THE WEST/EAST BOUNDARY, BUT NOT BOTH AT ONCE. 
+C     FOR EXAMPLE, YOU CAN'T HAVE AN ORIGIN AT (1.0 deg, 1.0 deg) AND TRY 
+C     TO FIND THE LAT, LON OF A POINT AT (-1000. km, -1000. km). 
+C     YOU COULD FIND THE LAT, LON OF A POINT AT (-1000. km, 1000. km), HOWEVER.
+C     5) CODE WON'T WORK IF YOU TRY TO CROSS A POLE
+      
+      PARAMETER (EPS=0.0001, DEGRAD=0.01745329)
+
+      X=XP
+      Y=YP
+C
+C     ROTATE, IF NECESSARY
+C
+      IF (ANGXAX.NE.90.0) THEN
+         THETA=(90.0-ANGXAX)*DEGRAD
+         XT=X
+         YT=Y
+         X=XT*COS(THETA) - YT*SIN(THETA)
+         Y=XT*SIN(THETA) + YT*COS(THETA)
+      END IF
+
+
+C
+C     DETERMINE IF A HEMISPHERE BOUNDARY IS CROSSED
+C
+      ICROSS=0
+      IF (ORLON.GT.0.0) THEN
+         IF (X.GT.0.0 .AND. ORLON.LT.90.0) THEN
+            CALL LL2XYDRV(ORLAT,EPS,X2,Y2,ORLAT,ORLON,90.0)
+            IF (X2.LT.X) ICROSS=1
+         ELSE IF (X.LT.0.0 .AND. ORLON.GT.90.0) THEN
+            CALL LL2XYDRV(ORLAT,(180.-EPS),X2,Y2,ORLAT,ORLON,90.0)
+            IF (X2.GT.X) ICROSS=2
+         END IF
+      ELSE IF (ORLON.LT.0.0) THEN
+         IF (X.GT.0.0 .AND. ORLON.LT.-90.0) THEN
+            CALL LL2XYDRV(ORLAT,(EPS-180.0),X2,Y2,ORLAT,ORLON,90.0)
+            IF (X2.LT.X) ICROSS=3
+         ELSE IF (X.LT.0.0 .AND. ORLON.GT.-90.0) THEN
+            CALL LL2XYDRV(ORLAT,-EPS,X2,Y2,ORLAT,ORLON,90.0)
+            IF (X2.GT.X) ICROSS=4
+         END IF
+      END IF
+
+      IF (ORLAT.GT.0.0) THEN
+         IF (Y.GT.0.0) THEN
+            CALL LL2XYDRV((90.0-EPS),ORLON,X3,Y3,ORLAT,ORLON,90.0)
+            IF (Y3.LT.Y) THEN
+               WRITE(*,10)
+ 10            FORMAT(/,5X,'+++XY2LL ROUTINE CANNOT HANDLE CASE',
+     X              ' WHERE POINTS CROSS A POLE+++')
+               STOP
+            END IF
+         ELSE
+            CALL LL2XYDRV(EPS,ORLON,X3,Y3,ORLAT,ORLON,90.0)
+            IF (Y3.GT.Y) THEN
+               IF (ICROSS.EQ.0) THEN
+                  ICROSS=5
+               ELSE
+                  WRITE(*,20)
+ 20               FORMAT(/,5X,'+++ XY2LL CANNOT HANDLE DUAL HEMISPHERE',
+     X                 ' CROSSOVER ','+++')
+                  STOP
+               END IF
+            END IF
+         END IF
+      ELSE IF (ORLAT.LT.0.0) THEN
+         IF (Y.GT.0.0) THEN
+            CALL LL2XYDRV(-EPS,ORLON,X3,Y3,ORLAT,ORLON,90.0)
+            IF (Y3.LT.Y) THEN
+               IF (ICROSS.EQ.0) THEN
+                  ICROSS=6
+               ELSE
+                  WRITE(*,20)
+                  STOP
+               END IF
+            END IF
+         ELSE IF (Y.LT.0.0) THEN
+            CALL LL2XYDRV((EPS-90.0),ORLON,X3,Y3,ORLAT,ORLON,90.0)
+            IF (Y3.GT.Y) THEN
+               WRITE(*,10)
+               STOP
+            END IF
+         END IF
+      END IF
+
+C
+C     NOW PERFORM THE CALCULATIONS
+C
+      IF (ICROSS.EQ.0) THEN
+C
+C     NO CROSSOVER
+C
+         IF (ORLON.LT.0.0) THEN
+            ORLON2=-ORLON
+            X2=-X
+         ELSE
+            ORLON2=ORLON
+            X2=X
+         END IF
+         IF (ORLAT.LT.0.0) THEN
+            ORLAT2=-ORLAT
+            Y2=-Y
+         ELSE
+            ORLAT2=ORLAT
+            Y2=Y
+         END IF
+         CALL XY2LL(PLAT,PLON,X2,Y2,ORLAT2,ORLON2)
+         IF (ORLON.LT.0.0) PLON=-PLON
+         IF (ORLAT.LT.0.0) PLAT=-PLAT
+      ELSE IF (ICROSS.EQ.1) THEN
+C
+C     +LON (EPS) -> -LON (-EPS)
+C
+         XNEW=X-X2
+         YNEW=Y-Y2
+
+         IF (ORLAT.LT.0.0) THEN
+            ORLAT2=-ORLAT
+            Y2=-YNEW
+         ELSE
+            ORLAT2=ORLAT
+            Y2=YNEW
+         END IF
+         ORLON2=EPS
+         X2=-XNEW
+
+         CALL XY2LL(PLAT,PLON,X2,Y2,ORLAT2,ORLON2)
+         PLON=-PLON
+         IF (ORLAT.LT.0.0) PLAT=-PLAT
+      ELSE IF (ICROSS.EQ.2) THEN
+C
+C     +LON (180-EPS) -> -LON (EPS-180)
+C
+         XNEW=X-X2
+         YNEW=Y-Y2
+
+         IF (ORLAT.LT.0.0) THEN
+            ORLAT2=-ORLAT
+            Y2=-YNEW
+         ELSE
+            ORLAT2=ORLAT
+            Y2=YNEW
+         END IF
+         ORLON2=180.0-EPS
+         X2=-XNEW
+         
+         CALL XY2LL(PLAT,PLON,X2,Y2,ORLAT2,ORLON2)
+         PLON=-PLON
+         IF (ORLAT.LT.0.0) PLAT=-PLAT
+      ELSE IF (ICROSS.EQ.3) THEN
+C
+C     -LON (EPS-180) -> +LON (180-EPS)
+C
+         XNEW=X-X2
+         YNEW=Y-Y2
+
+         IF (ORLAT.LT.0.0) THEN
+            ORLAT2=-ORLAT
+            Y2=-YNEW
+         ELSE
+            ORLAT2=ORLAT
+            Y2=YNEW
+         END IF
+         ORLON2=180.0-EPS
+         X2=XNEW
+
+         CALL XY2LL(PLAT,PLON,X2,Y2,ORLAT2,ORLON2)
+         IF (ORLAT.LT.0.0) PLAT=-PLAT
+      ELSE IF (ICROSS.EQ.4) THEN
+C
+C     -LON (-EPS) -> +LON (EPS)
+C
+         XNEW=X-X2
+         YNEW=Y-Y2
+
+         IF (ORLAT.LT.0.0) THEN
+            ORLAT2=-ORLAT
+            Y2=-YNEW
+         ELSE
+            ORLAT2=ORLAT
+            Y2=YNEW
+         END IF
+         ORLON2=EPS
+         X2=XNEW
+
+         CALL XY2LL(PLAT,PLON,X2,Y2,ORLAT2,ORLON2)
+         IF (ORLAT.LT.0.0) PLAT=-PLAT
+      ELSE IF (ICROSS.EQ.5) THEN
+C
+C     +LAT -> -LAT
+C
+         XNEW=X-X3
+         YNEW=Y-Y3
+
+         IF (ORLON.LT.0.0) THEN
+            ORLON2=-ORLON
+            X3=-XNEW
+         ELSE
+            ORLON2=ORLON
+            X3=XNEW
+         END IF
+         ORLAT2=EPS
+         Y3=-YNEW
+
+         CALL XY2LL(PLAT,PLON,X3,Y3,ORLAT2,ORLON2)
+         PLAT=-PLAT
+         IF (ORLON.LT.0.0) PLON=-PLON
+      ELSE IF (ICROSS.EQ.6) THEN
+C
+C     -LAT -> +LAT
+C
+         XNEW=X-X3
+         YNEW=Y-Y3
+
+         IF (ORLON.LT.0.0) THEN
+            ORLON2=-ORLON
+            X3=-XNEW
+         ELSE
+            ORLON2=ORLON
+            X3=XNEW
+         END IF
+         ORLAT2=EPS
+         Y3=YNEW
+
+         CALL XY2LL(PLAT,PLON,X3,Y3,ORLAT2,ORLON2)
+         IF (ORLON.LT.0.0) PLON=-PLON
+      END IF
+
+
+      RETURN
+
+      END
+c
+c----------------------------------------------------------------------X
+c
+      SUBROUTINE XY2LL (DEGLAT,DEGLON,X,Y,SWLAT,SWLON)
+C
+C-----COMPUTES LATITUDE AND LONGITUDE FROM X,Y COORDINATES RELATIVE TO
+C     LOCATION SPECIFIED BY SWLAT,SWLON.
+C
+C     DEGLAT- OUTPUT PARAMETER IN DEGREES OF LATITUDE
+C     DEGLON- OUTPUT PARAMETER IN DEGREES OF LONGITUDE
+C     X,Y-    INPUT COORDINATES OF LOCATION TO BE CONVERTED
+C     SWLAT-  INPUT PARAMETER IN DEG OF LATITUDE OF REFERENCE LOCATION
+C     SWLON-  INPUT PARAMETER IN DEG OF LONG. OF REFERERENCE LOCATION
+C
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      REAL DEGLAT,DEGLON,X,Y,SWLAT,SWLON
+
+C      REAL  ACZ
+C      REAL  CANG
+C      REAL  DTR
+      DOUBLE PRECISION  LAMDA1,LAMDA2
+C      REAL  PHI1,PHI2
+C      REAL  R
+C      REAL  RTD
+C      REAL  SANG
+C      REAL  THETA
+C
+      DATA DEGARC/111.354/
+      DATA IENTRY /0/
+C
+      IF(IENTRY .EQ. 1) GO TO 100
+      IENTRY = 1
+      DTR = ATAN(1.)/45.
+      RTD = 1./DTR
+100   CONTINUE
+C
+      DEGLAT = SWLAT
+      DEGLON = SWLON
+C
+      R = SQRT(X*X + Y*Y)
+      IF (R .LT. 0.01) GO TO 10
+C
+      THETA = ATAN2(X,Y)
+      R = (R/DEGARC) * DTR
+C
+      PHI1 = DTR * SWLAT
+      LAMDA1 = DTR * SWLON
+C
+      SANG = COS(THETA)*COS(PHI1)*SIN(R)+SIN(PHI1)*COS(R)
+      IF(ABS(SANG).GT.1.0) THEN
+         IF(SANG .LT. 0.0) SANG = -1.0
+         IF(SANG .GT. 0.0) SANG =  1.0
+      ENDIF
+CSANG=SIGN(1.0,SANG)
+      PHI2=ASIN(SANG)
+C
+      CANG = (COS(R)-SIN(PHI1)*SIN(PHI2))/(COS(PHI1)*COS(PHI2))
+      IF(ABS(CANG).GT.1.0) THEN
+         IF(CANG .LT. 0.0) CANG = -1.0
+         IF(CANG .GT. 0.0) CANG =  1.0
+      ENDIF
+CCANG=SIGN(1.0,CANG)
+      ACZ=ACOS(CANG)
+C
+      IF (X .LT. 0.0) THEN
+          LAMDA2 = LAMDA1 + ACZ
+      ELSE
+          LAMDA2 = LAMDA1 - ACZ
+      END IF
+C
+      DEGLAT = RTD * PHI2
+      DEGLON = RTD * LAMDA2
+C
+ 10   CONTINUE
+C
+      RETURN
+      END

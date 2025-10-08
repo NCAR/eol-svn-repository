@@ -1,0 +1,29 @@
+<project name="Doc Perl" default="init" basedir=".">
+
+    <property name="deploy.cgi" location="/net/web/dmg/cgi-bin/docperl" />
+    <property name="deploy.html" location="/net/web/dmg/html/software/tools/web/docperl" />
+    <property name="src.cgi" location="cgi-bin" />
+    <property name="src.html" location="html" />
+
+    <target name="deploy">
+        <delete dir="${deploy.cgi}" />
+        <delete dir="${deploy.html}" />
+        <mkdir dir="${deploy.cgi}" />
+        <mkdir dir="${deploy.html}" />
+
+        <copy todir="${deploy.cgi}">
+           <fileset dir="${src.cgi}" />
+        </copy>
+        <copy todir="${deploy.html}">
+           <fileset dir="${src.html}" />
+        </copy>
+       
+        <chmod dir="${deploy.cgi}" perm="ugo+rx" includes="**/*" />
+    </target>
+
+
+    <target name="init">
+        <tstamp />
+    </target>
+
+</project>

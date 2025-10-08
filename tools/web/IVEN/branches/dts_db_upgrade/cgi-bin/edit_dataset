@@ -1,0 +1,92 @@
+#! /usr/bin/perl -w
+
+package DatasetEditorCGI;
+use strict;
+use lib "..";
+use EditorCGI;
+our @ISA = ("EditorCGI");
+
+&main();
+
+sub main {
+    my $self = DatasetEditorCGI->new();
+    $self->buildPage("Dataset Editor");
+}
+
+sub buildPageBody {
+    my ($self) = @_;
+    my $dataset = $self->getDataset($self->param("id"));
+
+    printf("<form action=\"dataset_action\" method=\"POST\" onSubmit=\"javascript: return validateDataset(this);\">\n");
+    printf("   <table class=editTable>\n");
+    printf("      <tr class=editHeading><td colspan=6>%s a Dataset: %s</td></tr>\n",$dataset->getId() eq "" ? "Add" : "Edit",
+	   $dataset->getId() eq "" ? "<input type=text name=dataset size=15 maxlength=15 />" : $dataset->getId());
+    if ($dataset->getId() ne "") {
+	printf("      <tr>\n");
+	printf("         <th>Name:</th>\n");
+	printf("         <td colspan=5><input type=text name=name size=72 maxlength=255 value=\"%s\" /></td>\n",
+	       $dataset->getName());
+	printf("      </tr>\n");
+    }
+    printf("      <tr>\n");
+    printf("         <th>Status:</th>\n");
+    printf("         <td><select name=status>\n");
+    $self->printStatusOptions($dataset->getStatusId());
+    printf("         </select></td>\n");
+    printf("         <th>Processing Contact:</th>\n");
+    printf("         <td colspan=3><select name=processor>\n");
+    $self->printUserOptions($dataset->getProcessContactId());
+    printf("         </select></td>\n");
+    printf("      </tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Questions:</th>\n");
+    printf("         <td><input type=checkbox name=questions %s /></td>\n",$dataset->hasQuestions() ? "checked" : "");
+    printf("      </tr>\n");
+    printf("      <tr><td class=editSpacer colspan=6></td></tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Work Dir:</th>\n");
+    printf("         <td colspan=5><input type=text name=home_dir size=72 maxlength=255 value=\"%s\" /></td>\n",$dataset->getHomeDir());
+    printf("      </tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Final Data Dir:</th>\n");
+    printf("         <td colspan=5><input type=text name=final_dir size=72 maxlength=255 value=\"%s\" /></td>\n",$dataset->getFinalDir());
+    printf("      </tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Repos Dir:</th>\n");
+    printf("         <td colspan=5><input type=text name=repos_dir size=72 maxlength=255 value=\"%s\" /></td>\n",$dataset->getReposDir());
+    printf("      </tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Plot Dir:</th>\n");
+    printf("         <td colspan=5><input type=text name=plot_dir size=72 maxlength=255 value=\"%s\" /></td>\n",$dataset->getPlotDir());
+    printf("      </tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>Station List:</th>\n");
+    printf("         <td colspan=5><input type=text name=station_list size=72 maxlength=255 value=\"%s\" /></td>\n",$dataset->getStationList());
+    printf("      </tr>\n");
+    printf("      <tr>\n");
+    printf("         <th>How To:</th>\n");
+    printf("         <td colspan=5><input type=text name=howto size=72 maxlength=255 value=\"%s\" /></td>\n",$dataset->getHowTo());
+    printf("      </tr>\n");
+
+    if ($dataset->getId() ne "") {
+	printf("      <tr><td class=editSpacer colspan=6></td></tr>\n");
+	printf("      <tr>\n");
+	printf("         <th>Notes:</th>\n");
+	printf("         <td colspan=5><textarea name=note_text rows=15 cols=70>%s</textarea></td>\n",$dataset->getNote());
+	printf("      </tr>\n");
+    }
+
+    printf("      <tr><td class=editSpacer colspan=6></td></tr>\n");
+    printf("      <tr>\n");
+    printf("         <td class=buttons colspan=6>\n");
+    printf("            <input type=submit name=action value=Update />\n");
+    printf("            <input type=button onclick=\"javascript: closeWindow();\" value=Cancel />\n");
+    printf("         </td>\n");
+    printf("      </tr>\n");
+    printf("   </table>\n");
+    printf("   <input type=hidden name=dataset value=\"%s\" />\n",$dataset->getId()) if ($dataset->getId() ne "");
+    printf("   <input type=hidden name=product value=\"%s\" />\n",$self->param("product")) if (defined($self->param("product")));
+    printf("   <input type=hidden name=note_id value=\"%s\" />\n",$dataset->getNoteId()) if ($dataset->getId() ne "");
+    printf("</form>\n");
+}
+

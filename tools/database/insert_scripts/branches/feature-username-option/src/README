@@ -1,0 +1,29 @@
+To do development on this code, 
+
+check out this tree from svn
+> svn co http://svn.eol.ucar.edu/svn/dmg/tools/database/insert_scripts/trunk/
+
+Add the following to the bottom of your ~/.my_defaults file:
+
+  ##############################################################################
+  # Insert script setup command
+  ##############################################################################
+  setenv SCRIPTS_DIR /net/work/bin/scripts/insert/
+  setenv MYSQL_DIR /net/work/lib/perl/mysql/
+
+where you replace the paths with the path to where you checked out these
+scripts. If you are also doing development on the mysql libraries, check them
+out and change the above path
+
+> source ~/.my_defaults
+> printenv 
+	- to confirm the above two env vars have been added
+
+To deploy your changes, run deploy in the trunk dir. Confirm that
+load_a_dataset.pl in /net/work/bin/scripts/insert/loaddata has
+$deployed_dir set to /net/work/bin/scripts/insert.
+
+To run the deployed code, change the env vars in your .my_defaults back to
+the values above, and run load_data_proj to create your yaml file, then
+load_a_dataset to load the data to codiac and the dts.
+

@@ -1,0 +1,273 @@
+#!/bin/perl -w
+
+
+# Originally, the database did not contain the sectors.  We did not try and match the sectors just simply
+#  displayed the file times and sizes.  When the sectors were added each file in the existing database  
+#  had to be associated with a sector, that is what this script does.
+ 
+use lib "./lib";
+use DBI;
+use QC;
+use Time;
+use File;
+use Day;
+use Schedule;
+use Event;
+
+print( `date`, "\n" );
+
+#my @satellite = ( "G08", "G10" );
+my @resolution = ( "1KM", "4KM" );
+
+my @satellite = ( "G10" );
+#my @satellite = ( "G08" );
+#my @resolution = ( "4KM" );
+
+my $dbh = getConnection();
+my $day = Day->new();
+
+my %schedules;
+
+my $schedule = getSchedule( "G08" );
+$schedules{G08} = $schedule;
+$schedule = getSchedule( "G10" );
+$schedules{G10} = $schedule;
+
+#printSch( $schedules{G10} );
+
+#for( my $day = 2001001; $day <= 2001365; $day++ )
+#for( my $day = 2002001; $day <= 2002100; $day++ )
+for( my $day = 2002002; $day <= 2002002; $day++ )
+{
+	foreach $sat (@satellite)
+	{
+		foreach $res (@resolution)
+		{
+			my $d = Day::queryDB( $dbh, $day, $sat, $res );	
+			if( defined( $d ) )
+			{
+				matchSectors( $d, $schedules{$sat} );
+				#showDay( $d );
+				updateDatabase( $d );
+			}
+		}
+	}
+}
+
+print( `date`, "\n" );
+
+sub getSchedule
+{
+	my $sat = shift;
+	my @row;
+
+	my $sql = "SELECT Schedule.id, Schedule.time, Schedule.sector, Sector.abrv, Sector.duration FROM Schedule, Sector WHERE " .
+						"Schedule.sector=Sector.id and Schedule.satellite=\"$sat\" ORDER BY Schedule.time";
+	my $sch = Schedule->new();
+
+	my $sth = $dbh->prepare( $sql );
+	$sth->execute();
+
+	while( (@row=$sth->fetchrow()) )
+	{
+		my $event = Event->new( $row[0], Time->new( roundTime( $row[1] ) ), $row[2], $row[3], Time->new( $row[4] ) );
+		$sch->addEvent( $event );
+	}
+
+	$sth->finish();
+	return $sch;
+}
+
+sub matchSectors
+{
+	my $day = shift;
+	my $sch = shift;
+
+	my @files = @{$day->{files}};
+
+	for( my $x = 0; $x < $day->{count} - 1; $x++ )
+	{
+		my $loc = 0;
+		my $file = $files[$x];
+
+		while( $loc < $sch->{count} )
+		{
+			my $diff = Time::minuteDiff( $file->{time}, $sch->{events}[$loc]->{time} );
+
+			if( abs( $diff ) <= 1 )
+			{
+#				$file->setSector( $sch->{events}[$loc], $sch->{events}[$loc+1] ); 
+				$file->setSector( $sch->{events}[$loc], $files[$x+1] ); 
+				last;
+			} 
+			elsif( $diff < 0 )
+			{
+				# no sector found for this file, have gone past in the sch
+				$file->{sector} = 11;
+				$file->{qc} = $UNKNOWN;
+				last;
+			}
+			$loc++;
+			#elsif( $diff > 0 )
+			#{} continue down the schedule 		
+		}
+	}
+
+	# Check the last file of the day - find the sector first!!!
+	my $last = $day->{files}[$day->{count}-1];
+	$loc = 0;
+	my $sector = undef;
+	while( $loc < $sch->{count} )
+	{
+		my $diff = Time::minuteDiff( $last->{time}, $sch->{events}[$loc]->{time} );
+		if( abs( $diff ) <= 1 )
+		{
+			$sector = $sch->{events}[$loc]; 
+			last;
+		} 
+		elsif( $diff < 0 )
+		{
+			# no sector found for this file, have gone past in the sch
+			$sector = undef;
+			last;
+		}
+		$loc++;
+	}
+
+	if( !defined( $sector ) )
+	{
+		$last->{sector} = 11;
+		$last->{qc} = $UNKNOWN;
+	}
+	elsif( defined( $day->{nxtFile} ) )
+	{
+		my $remain = Time::minuteDiff( Time->new( "24:00:00" ), $last->{time} );
+		my $between = $remain + $day->{nxtFile}->{time}->{min};
+		#my $check_diff = Time::minuteDiff( $between, $sector->{duration} ); 
+		my $check_diff = $between - $sector->{duration}->{min};
+		my $diff = Time::minuteDiff( $last->{time}, $sector->{time} );
+
+		if( $check_diff < 0 )
+		{
+			$last->{sector} = 11;
+			$last->{qc} = $UNKNOWN;
+		}
+		elsif( $check_diff > 5 )
+		{
+			if( $diff == 0 )
+			{ $last->{qc} = $ZERO_UK; }
+			elsif( $diff > 0 )
+			{ $last->{qc} = $PONE_UK; }
+			elsif( $diff < 0 )
+			{ $last->{qc} = $MONE_UK; }
+			$last->{sector} = $sector->{sector};
+		}
+		else
+		{
+			if( $diff == 0 )
+			{ $last->{qc} = $ZERO_CP; }
+			elsif( $diff > 0 )
+			{ $last->{qc} = $PONE_CP; }
+			elsif( $diff < 0 )
+			{ $last->{qc} = $MONE_CP; }
+			$last->{sector} = $sector->{sector};
+		}
+	}
+	else
+	{
+		$last->{sector} = $sector->{sector};
+		my $diff = Time::minuteDiff( $last->{time}, $sector->{time} );
+		if( $diff == 0 )
+		{ $last->{qc} = $ZERO_UK; }
+		elsif( $diff > 0 )
+		{ $last->{qc} = $PONE_UK; }
+		elsif( $diff < 0 )
+		{ $last->{qc} = $MONE_UK; }
+	}
+}
+
+sub showDay
+{
+	my $day = shift;
+
+	print( "Satellite: $day->{sat}   Resolution: $day->{res}   Day: $day->{day}\n" );
+	for( my $x = 0; $x < $day->{count}; $x++ )
+	{
+		my $file = $day->{files}[$x];
+		print( $file->{time}->getTime(), "\t", $file->{id}, "\t" );
+		print( $file->{time}->getTime(), "\t" );
+		if( defined( $file->{sector} ) )
+		{
+			print( $file->{sector} );
+		}
+		else
+		{
+			print( "unknown" );
+		}
+		print( "\t", $file->{qc}, "\n" );	
+	}
+}
+
+sub getConnection
+{
+	 return DBI->connect( "DBI:mysql:database=suldan;host=thunder",
+                        "suldan", "hithere", {RaiseError=>1} ) || die( "Unable to Connect to database" );
+}
+
+sub printSch
+{
+	my $sch = shift;
+
+	for( my $x = 0; $x < $sch->{count}; $x++ )
+	{	
+		my $event = $sch->{events}[$x];
+
+		print( $event->{id}, "\t", "$event->{time}->{hour}:$event->{time}->{min}:$event->{time}->{sec}", "\t", $event->{sector}, "\t", $event->{abrv}, "\t", "$event->{duration}->{min}:$event->{duration}->{sec}", "\n" );
+	}
+}
+
+sub roundTime
+{
+	my $time = shift;
+	my @arr = split( /:/, $time );
+
+	my $hr = $arr[0];
+	my $mn = $arr[1];
+	my $sc = $arr[2];
+
+	if( $sc >= 30 )
+	{ $mn++; }
+	$sc = 0;
+
+	if( $mn >= 60 )
+	{
+		$mn -= 60;
+		$hr++;
+	}
+	if( $hr >= 24 )
+	{
+		$hr -= 24;
+	}
+
+	return( sprintf( "%2.2d", $hr ) . ":" . sprintf( "%2.2d", $mn ) . ":00" );
+}
+
+sub updateDatabase
+{
+	my $day = shift;
+
+	for( my $x = 0; $x < $day->{count}; $x++ )
+	{
+		my $file = $day->{files}[$x];
+
+		my $sql = "UPDATE FileTable SET "; 
+		if( defined( $file->{sector} ) )
+		{
+			$sql = $sql . "sector=$file->{sector}, ";
+		}
+
+		$sql = $sql . "sector_qc=$file->{qc} WHERE id=$file->{id}"; 	
+
+		$dbh->do( $sql ) || die( "doing: ", $dbh->errstr );
+	}
+}	

@@ -1,0 +1,116 @@
+#===============================================================================#   
+# fieldMsgs.yml                                                                 #
+#                                                                               #
+# fields that need a description to aid the user in filling out the yaml file   #
+# Only the fields that are populated will be inserted to the GUI. Otherwise the #
+# field value should be left alone.                                             #
+#                                                                               #
+#===============================================================================#
+# create by Soo Park 2015                                                       #
+# updated: 4/24/15                                                              #
+# copyright: University Corporation for Atmospheric Research, 2015              #
+#===============================================================================#
+
+field_messages:
+
+####################################
+# Main Edit Area                    
+  - title_content: 
+####################################
+  - name: Must replace all "<*>" field with their corresponding values
+  - archive_ident: Must be in the format "XXX.XXX" or "XXX.BXX-XXXX" 
+  - title: Must replace all "<*>" field with their corresponding values
+  - summary: Must replace all "<*>" field with their corresponding values
+  - begin_date: Must be before the 'End Date' and must be changed from the default minimum date of '1000-01-01 00:00:00' 
+  - end_date: Must be after the 'Begin Date' and must be changed from the default maximum date of '7999-12-31 59:59:59'
+  - visible: Check to enable visibility
+  - auth_reqd: Check to enable authorization
+  - eula_reqd: Check to enable EULA 
+  - version_number: If the dataset is preliminary, dataset must start with a '0'
+  - quality: If version_number starts with a '0' quality must be preliminary
+  - ingest_location: Must replace all "<*>" field with their corresponding values
+  - archive_location: Must replace all "<*>" field with their corresponding values
+  - filename_pattern: Must replace all "<*>" field with their corresponding values
+  - startdate_pattern: Must replace all "<*>" field with their corresponding values
+  - enddate_pattern:  Cannot have both 'Enddate Pattern' and 'Filelength'. Disable one of the fields by checking the checkbox next to the label. Must replace all "<*>" field with their corresponding values.
+  - filelength: Cannot have both 'Enddate Pattern' and 'Filelength'. Disable one of the fields by checking the checkbox next to the label. This field reads 'integer number' <years/months/days/hours/minutes/seconds>.
+  - minimum_latitude: Cannot be left at -90
+  - maximum_latitude: Cannot be left at 90
+  - minimum_longitude: Cannot be left at -180
+  - maximum_longitude: Cannot be left at 180
+
+####################################
+# Usually left alone below this line
+  - CODIAC_specific_fields: CODIAC specific fields that do not always have to be edited per dataset
+####################################
+  - category_id: 
+  - platform_id:
+  - is_eol_data:
+  - format:
+  - host: 
+  - frequency_id:
+  - spatial_type:
+  - point_of_contact_id_codiac: the default value of this field is 'local' and it may be changed however the user will be warned before saving the dataset
+  - internal_contact_id_codiac:
+  - online_orderable: 
+  - offline_orderable:
+  - browseable: 
+  - dodsable:
+  - t_subset:
+  - file_subset:
+  - event_subset:
+  - order_allow_compress:
+  - gcmd_science_keyword_id: Enter a comma separated list of GCMD keyword ids
+  - xlink_id: Enter a comma separated list of X-Link ids
+####################################
+  - DTS_specific_fields: 
+####################################
+  - source_contact_id_dts: 
+  - internal_contact_id_dts: 
+  - ingest_contact_id_dts: 
+  - ingest_status_id_dts: 
+  - load_contact_id_dts:
+  - load_data_location: 
+  - load_status_id_dts: 
+  - approve_contact_id_dts: 
+  - approve_status_id_dts: 
+  - author_id_dts: 
+  - note_type_id: 
+  - note_text: 
+  - readme_url:
+  - remote_url:
+
+####################################
+  - optional_fields: 
+####################################
+  - instrument_id:
+  - archive_location_2: Must replace all "<*>" field with their corresponding values
+  - filename_pattern_2: Must replace all "<*>" field with their corresponding values
+  - startdate_pattern_2: Must replace all "<*>" field with their corresponding values
+  - enddate_pattern_2: Cannot have both 'Enddate Pattern 2' and 'Filelength 2'. Disable one of the fields by checking the checkbox next to the label. Must replace all "<*>" field with their corresponding values.
+  - filelength_2: Cannot have both 'Enddate Pattern 2' and 'Filelength 2'. Disable one of the fields by checking the checkbox next to the label. This field reads 'integer number' <years/months/days/hours/minutes/seconds>.
+  - format_2: 
+  - host_2: 
+  - archive_location_3: Must replace all "<*>" field with their corresponding values
+  - filename_pattern_3: Must replace all "<*>" field with their corresponding values
+  - startdate_pattern_3: Must replace all "<*>" field with their corresponding values
+  - enddate_pattern_3: Cannot have both 'Enddate Pattern 3' and 'Filelength 3'. Disable one of the fields by checking the checkbox next to the label. Must replace all "<*>" field with their corresponding values.
+  - filelength_3: Cannot have both 'Enddate Pattern 3' and 'Filelength 3'. Disable one of the fields by checking the checkbox next to the label. This field reads 'integer number' <years/months/days/hours/minutes/seconds>.
+  - format_3:
+  - host_3: 
+  - description:
+  - iso_citation_role: 
+  - contact_id_codiac:
+  - datacite_contributor_type:
+  - iso_citation_role_2: 
+  - contact_id_codiac_2:
+  - datacite_contributor_type_2:
+  - iso_citation_role_3:
+  - contact_id_codiac_3:
+  - datacite_contributor_type_3:
+  - iso_citation_role_4:
+  - contact_id_codiac_4:
+  - datacite_contributor_type_4:
+  - iso_citation_role_5:
+  - contact_id_codiac_5:
+  - datacite_contributor_type_5:  

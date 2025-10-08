@@ -1,0 +1,20 @@
+.MAKE_VERSION:	VERSION-1.0
+.BUILT_LAST_MAKE_RUN:
+ieee_hand.o:
+	f77 -u -O4  -c  ieee_hand.f
+.BUILT_LAST_MAKE_RUN:
+rh2dew.o:
+	f77 -u -O4  -c  rh2dew.f
+.BUILT_LAST_MAKE_RUN:
+mph2msec.o:
+	f77 -u -O4  -c  mph2msec.f
+hplains:	/usr/lang/cg87/libm.a /usr/lang/crt0.o /usr/lang/cg87/_crt1.o 
+.BUILT_LAST_MAKE_RUN:
+hplainsqcf.o:	../../inc/qcf.inc 
+	f77 -u -O4  -c  hplainsqcf.f
+.BUILT_LAST_MAKE_RUN:
+gtfils.o:
+	f77 -u -O4  -c  gtfils.f
+.BUILT_LAST_MAKE_RUN:
+in2mm.o:
+	f77 -u -O4  -c  in2mm.f

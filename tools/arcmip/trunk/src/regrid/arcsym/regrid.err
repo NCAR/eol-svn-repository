@@ -1,0 +1,6834 @@
+ARCMIP EASE-Grid nearest neighbors for model ARCSyM
+ start col=113 row=101
+ num cols=100 rows=92 len=9200
+ num neighbors=4 len=36800
+
+doing file 1 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980501.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 2 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980502.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 3 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980503.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 4 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980504.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 5 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980505.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 6 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980506.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 7 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980507.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 8 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980508.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 9 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980509.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 10 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980510.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 11 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980511.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 12 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980512.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 13 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980513.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 14 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980514.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 15 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980515.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 16 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980516.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 17 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980517.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 18 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980518.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 19 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980519.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 20 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980520.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 21 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980521.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 22 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980522.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 23 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980523.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 24 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980524.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 25 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980525.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 26 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980526.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 27 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980527.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 28 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980528.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 29 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980529.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 30 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980530.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 31 /stage/jallison/arcmip/arcsym/arcsym_ar05_may_980531.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing dim 3 thp
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 HOUR
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 PSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 TSFC
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MIN
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T2M_MAX
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 T1M_SOIL
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 SOIL_WAT
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 PRECIP
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 RAIN
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SNOW
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 SWE
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 TOT_CLD_FRAC
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 CLD_BASE
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 LHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 SHF
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 UST
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWD_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 SWU_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWD_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 LWU_SFC
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWD_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 SWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 LWU_TOA
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 U
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 V
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 W
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 T
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 Z
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 RH
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 SPECHUM
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 CLD
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 ICE
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing var 34 CLD_FRAC
+ doing var 34 att 0 long_name
+ doing var 34 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymmdd
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 time_index
+doing gatt 10 comments
+regridding var id 0 PRES
+regridding var id 1 HOUR
+regridding var id 2 PSFC
+regridding var id 3 TSFC
+regridding var id 4 T2M
+regridding var id 5 T2M_MIN
+regridding var id 6 T2M_MAX
+regridding var id 7 T1M_SOIL
+regridding var id 8 SOIL_WAT
+regridding var id 9 PRECIP
+regridding var id 10 RAIN
+regridding var id 11 SNOW
+regridding var id 12 SWE
+regridding var id 13 TOT_CLD_FRAC
+regridding var id 14 CLD_BASE
+regridding var id 15 LHF
+regridding var id 16 SHF
+regridding var id 17 UST
+regridding var id 18 SWD_SFC
+regridding var id 19 SWU_SFC
+regridding var id 20 LWD_SFC
+regridding var id 21 LWU_SFC
+regridding var id 22 SWD_TOA
+regridding var id 23 SWU_TOA
+regridding var id 24 LWU_TOA
+regridding var id 25 U
+regridding var id 26 V
+regridding var id 27 W
+regridding var id 28 T
+regridding var id 29 Z
+regridding var id 30 RH
+regridding var id 31 SPECHUM
+regridding var id 32 CLD
+regridding var id 33 ICE
+regridding var id 34 CLD_FRAC
+
+doing file 32 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9709.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 33 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9710.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 34 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9711.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 35 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9712.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 36 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9801.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 37 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9802.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 38 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9803.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 39 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9804.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 40 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9805.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 41 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9806.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 42 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9807.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 43 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9808.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC
+
+doing file 44 /stage/jallison/arcmip/arcsym/arcsym_ar05_mon_9809.nc
+doing dim 0 npres
+doing dim 1 iew
+doing dim 2 jns
+doing var 0 PRES
+ doing var 0 att 0 long_name
+ doing var 0 att 1 units
+doing var 1 PSFC
+ doing var 1 att 0 long_name
+ doing var 1 att 1 units
+doing var 2 TSFC
+ doing var 2 att 0 long_name
+ doing var 2 att 1 units
+doing var 3 T2M
+ doing var 3 att 0 long_name
+ doing var 3 att 1 units
+doing var 4 T2M_MIN
+ doing var 4 att 0 long_name
+ doing var 4 att 1 units
+doing var 5 T2M_MAX
+ doing var 5 att 0 long_name
+ doing var 5 att 1 units
+doing var 6 T1M_SOIL
+ doing var 6 att 0 long_name
+ doing var 6 att 1 units
+doing var 7 SOIL_WAT
+ doing var 7 att 0 long_name
+ doing var 7 att 1 units
+doing var 8 PRECIP
+ doing var 8 att 0 long_name
+ doing var 8 att 1 units
+doing var 9 RAIN
+ doing var 9 att 0 long_name
+ doing var 9 att 1 units
+doing var 10 SNOW
+ doing var 10 att 0 long_name
+ doing var 10 att 1 units
+doing var 11 SWE
+ doing var 11 att 0 long_name
+ doing var 11 att 1 units
+doing var 12 TOT_CLD_FRAC
+ doing var 12 att 0 long_name
+ doing var 12 att 1 units
+doing var 13 CLD_BASE
+ doing var 13 att 0 long_name
+ doing var 13 att 1 units
+doing var 14 LHF
+ doing var 14 att 0 long_name
+ doing var 14 att 1 units
+doing var 15 SHF
+ doing var 15 att 0 long_name
+ doing var 15 att 1 units
+doing var 16 UST
+ doing var 16 att 0 long_name
+ doing var 16 att 1 units
+doing var 17 SWD_SFC
+ doing var 17 att 0 long_name
+ doing var 17 att 1 units
+doing var 18 SWU_SFC
+ doing var 18 att 0 long_name
+ doing var 18 att 1 units
+doing var 19 LWD_SFC
+ doing var 19 att 0 long_name
+ doing var 19 att 1 units
+doing var 20 LWU_SFC
+ doing var 20 att 0 long_name
+ doing var 20 att 1 units
+doing var 21 SWD_TOA
+ doing var 21 att 0 long_name
+ doing var 21 att 1 units
+doing var 22 SWU_TOA
+ doing var 22 att 0 long_name
+ doing var 22 att 1 units
+doing var 23 LWU_TOA
+ doing var 23 att 0 long_name
+ doing var 23 att 1 units
+doing var 24 U
+ doing var 24 att 0 long_name
+ doing var 24 att 1 units
+doing var 25 V
+ doing var 25 att 0 long_name
+ doing var 25 att 1 units
+doing var 26 W
+ doing var 26 att 0 long_name
+ doing var 26 att 1 units
+doing var 27 T
+ doing var 27 att 0 long_name
+ doing var 27 att 1 units
+doing var 28 Z
+ doing var 28 att 0 long_name
+ doing var 28 att 1 units
+doing var 29 RH
+ doing var 29 att 0 long_name
+ doing var 29 att 1 units
+doing var 30 SPECHUM
+ doing var 30 att 0 long_name
+ doing var 30 att 1 units
+doing var 31 CLD
+ doing var 31 att 0 long_name
+ doing var 31 att 1 units
+doing var 32 ICE
+ doing var 32 att 0 long_name
+ doing var 32 att 1 units
+doing var 33 CLD_FRAC
+ doing var 33 att 0 long_name
+ doing var 33 att 1 units
+doing gatt 0 title
+doing gatt 1 type
+doing gatt 2 fullname
+doing gatt 3 runvers
+doing gatt 4 modeler
+doing gatt 5 yymm
+doing gatt 6 vertical_index
+doing gatt 7 ew_index
+doing gatt 8 ns_index
+doing gatt 9 comments
+regridding var id 0 PRES
+regridding var id 1 PSFC
+regridding var id 2 TSFC
+regridding var id 3 T2M
+regridding var id 4 T2M_MIN
+regridding var id 5 T2M_MAX
+regridding var id 6 T1M_SOIL
+regridding var id 7 SOIL_WAT
+regridding var id 8 PRECIP
+regridding var id 9 RAIN
+regridding var id 10 SNOW
+regridding var id 11 SWE
+regridding var id 12 TOT_CLD_FRAC
+regridding var id 13 CLD_BASE
+regridding var id 14 LHF
+regridding var id 15 SHF
+regridding var id 16 UST
+regridding var id 17 SWD_SFC
+regridding var id 18 SWU_SFC
+regridding var id 19 LWD_SFC
+regridding var id 20 LWU_SFC
+regridding var id 21 SWD_TOA
+regridding var id 22 SWU_TOA
+regridding var id 23 LWU_TOA
+regridding var id 24 U
+regridding var id 25 V
+regridding var id 26 W
+regridding var id 27 T
+regridding var id 28 Z
+regridding var id 29 RH
+regridding var id 30 SPECHUM
+regridding var id 31 CLD
+regridding var id 32 ICE
+regridding var id 33 CLD_FRAC

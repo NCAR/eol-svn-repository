@@ -1,0 +1,132 @@
+#! /usr/bin/perl 
+#
+# Supervisor
+#  Overseeing script for the interaction between available tools
+#  Date: (6/25/03)
+#
+
+#-----------------------------------------------------------------------------#
+#                 Current URL Parameters and their Uses                       #
+#                                                                             #
+# results - a list of all the tools (by identifier) that should be queried      #
+# qform  - a single tool (by identifier) that should display a query form      #
+# dataset_id - a list of Codiac Database Storm Ids (Passed to tools)            #
+# project - a list of Codiac Projects (Passed to tools)                       #
+#-----------------------------------------------------------------------------#
+
+
+# CGI Module to output header information
+use CGI;
+$cgi = new CGI;
+print $cgi->header();
+
+use lib "lib";
+
+# Store all of the parameter information in the URL
+#  - for use in this script and the tools
+use URLparams;
+$params = new URLparams;
+
+# Gets the listing for all of the current tools
+use Tools;
+@tools = Tools::toolListing();
+
+# Gets some utilities that are generally used throughout these programs
+use Utils;
+
+#---------------#
+# Starting HTML #
+#---------------#
+
+print cr(
+"<!DOCTYPE html>",
+"<html>",
+"<head>",
+"   <title> QCODIAC </title>",
+$css,
+$jscript,
+"</head>",
+"<body bgcolor=#e9e9e9 alink=#000066 vlink=#000066 link=#000066>",
+"<center>",
+"<br>",
+"<table border=0 width=100% cellpadding=1 cellspacing=4>",
+"",
+"   <tr bgcolor=#336699>",
+"   	 <td width=100% align=right><font color=white size=+1><b><a href=$home>&nbsp;</td>",
+"   </tr>",
+"   <tr bgcolor=#dcdcdc>",
+"   	 <td width=100% align=right><font color=white size=+1><b><a href=$home target=_top><font color=black size=-1>QCODIAC Home</a>&nbsp;</td>",
+"   </tr>",
+"" );
+
+#-------------------------------------------------#
+# Loop through each tool and display correct info #
+#-------------------------------------------------#
+my @p = $params->get('qform');
+my @disp = $params->get('results');
+
+foreach $tool ( @tools ) {
+	$title = "";
+	$out = "";
+	$desc = "";
+
+	#-- If using a single tool (indicated by having an entry in the tool
+	#-- parameter, and it is this tool, then display the query fields
+	if( $params->exists('qform') && $p[0] eq $tool->{identifier} ) {
+		($title, $out) = $tool->queryForm( $params );
+
+		#-- Add the Tool's Long description to the end of the form
+		#-- So it is visible when a user is performing a query
+		$desc = $tool->longDesc();
+
+	#-- Else if nothing is specified by the 'tool' field display all of
+	#-- the search results for any tools listed by the 'tools' field
+	} elsif ( !$params->exists('qform') ) {
+		foreach $display ( @disp ) {
+			if( $display eq $tool->{identifier} ) {
+				($title, $out) = $tool->queryResult( $params ); 
+			}
+		}
+	}	
+
+
+	# If there is output for this tool then display it
+	if( $title ) {
+		print cr(
+"",
+"   <tr bgcolor=#ffffcc>",
+"     <td width=100% bgcolor=#ffffcc><font color=black size=+1><b>". $title . "</b></td>",
+"   </tr>",
+		"" );
+
+		if( $desc ) {
+			print cr(
+"	<tr>",
+"		<td width=100%>",
+"			<table width=100% padding=10><tr><td width=100% align=center>" . $desc . "</td></tr></table>",
+"		</td>",
+"	</tr>", 
+			"" );
+		}
+
+		print cr(
+"   <tr bgcolor=white>",
+"			<td width=100% align=center>$out</td>",
+"   </tr>",
+"   <tr><td width=100% bgcolor=#dcdcdc>&nbsp;</td></tr>",
+);
+	}
+}
+
+#--------------#
+# Closing HTML #
+#--------------#  
+
+print cr(
+"   <tr bgcolor=#336699>",
+"   	 <td width=100% align=center><font color=white size=+1><b>&nbsp;</td>",
+"   </tr>",
+"</table>",   
+"</center>" );
+
+

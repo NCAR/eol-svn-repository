@@ -1,0 +1,6 @@
+
+--Some statements used to parse the data
+-PI/Group:
+update dataset set pi_group = substring( title, locate("[", title )+1, locate("]", title)-locate("[", title)-1 ) where project=4 and locate( "[", title ) != 0;
+update dataset set storm_id=substring( url, locate( "?",url )+1, length( url ) - locate( "?", url )+1 ) where locate( "http://www.joss.ucar.edu/cgi-bin/codiac/dss", url ) = 1;
+

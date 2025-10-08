@@ -1,0 +1,50 @@
+Re: CAESAR Radiosonde Composites
+
+Scot Loehrer
+Jun 4, 2024, 1:45 PM
+
+Linda,
+
+As is typical with sounding composites, the only deadline is to have them done as soon as we can.
+
+The last time we processed EOL dropsonde data was the SWEX CIRPAS Twin Otter data. Even though it's not an NCAR plane it went through the ISF process and it's in NetCDF format, so it might be the best starting point since I think the most recent before that was SOCRATES but the data then were still in the EOL ASCII format.
+
+Thanks.
+Scot
+
+On Tue, Jun 4, 2024 at 10:59 AM Linda Cully <cully@ucar.edu> wrote:
+Scot - Okay on all that you say.  Do you have a deadline for having this work done?  Also do you remember the last project that we processed the C-130 dropsonde data for?
+Thanks,
+LEC
+
+--------------------------------------------
+On Tue, May 28, 2024 at 2:03 PM Scot Loehrer <loehrer@ucar.edu> wrote:
+Hi Linda,
+
+We will be developing native and 5mb resolution sounding composites for CAESAR.
+
+This will only consist of a few BUFR stations and the C-130 dropsonde data.
+
+The BUFR soundings to be included are all to be found in the ENMI*bufr files:
+
+01001 Jan Mayen Norway
+01004 Ny-Alesund, Svalbard, Norway
+01010 Andenes, Andoya, Norway
+01028 Bjornoya Norway                   
+
+We will typically use only the *ius_sounding.bufr sounding data. The *iuk_sounding.bufr sounding should be used only if there isn't a corresponding ius sounding at that time.
+
+The BUFR files are those from our archived dataset:
+/net/archive/data/operational/upperair/radiosonde/GTS_BUFR
+
+The time period to be processed is: 22 February to 5 April 2024.
+
+The C-130 dropsonde data have not been finalized yet.
+
+The CAESAR account is:
+Account Key: A7433881 DMS CAESAR FC & DM
+
+Let me know if you have any questions.
+
+Thanks!
+Scot

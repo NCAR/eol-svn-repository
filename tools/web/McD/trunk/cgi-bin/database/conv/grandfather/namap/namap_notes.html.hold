@@ -1,0 +1,274 @@
+<htmL>
+
+<!-- ================================================= -->
+<!-- This table contains notes about NAMAP datasets.    -->
+<!-- ================================================= -->
+<!--      Please try to keep in order by CODIAC ID.    -->
+<!-- Initials seen below:                              -->
+<!--    LEC - L. Cully                                 -->
+<!--    jm  - Jose Meitin                              -->
+<!--    dw - Drew Wilkinson			       -->
+<!--    ps - Patrick Skinner			       -->
+<!-- ================================================= -->
+
+<!-- Some datasets are just links, if we added them to CODIAC -->
+<!-- we need to add them below and their note should say the -->
+<!-- that they are only a link to .... -->
+
+<!-- Every dataset that comes into JOSS for NAMAP should -->
+<!-- be listed here. Please add where the data come from -->
+<!-- and where the data are currently stored in the notes -->
+<!-- section for that dataset. -->
+
+
+<body bgcolor=white>
+
+<TITLE>NAMAP Dataset Notes</TITLE>
+
+<center>
+<H1>Notes on NAMAP Datasets</H1>
+<H2>This page is located at /work/0R/DPG_HTML/NAMAP/namap_notes.html</H2>
+<H3>The Master Dataset Table is located on storm at /web/docs/name/namap/index.html. It's part of the main index.html doc.</H3>  
+<H2>Last Updated: 27 November 2002 </H2>
+</center>
+<HR>
+<BR>
+<table border cols=8>
+
+<!-- ---------------Column Headings---------------------------------- -->
+   <tr bgcolor="#FFFFCC"><th width=40> CODIAC ID</th>
+       <th width=50> Who Loaded? </th>
+       <th width=300>Dataset Name</th>
+       <th width=20> Readme <br> <b>(<font color=blue>Y</font>/
+         <font color=red> N</font>)</b></th>
+       <th width=20> Checked? <br><b>(<font color=blue>Y</font>/
+         <font color=red>N</font>)</b></th>
+ <th width=20> <a href="http://www.joss.ucar.edu/name/namap/index.html"
+         target="_top"> Added to JOSS NAMAP Master Dataset Table?</a><br><b>
+         (<font color=blue>Y</font>/
+         <font color=red>N</font>)</b></th>
+       <th width=30> Submission Date <br><b>(<font color=blue>YYYY/MM/DD</font>)
+</b></th>
+       <th width=300>Notes</th> </tr>
+<!-- ---------------------------------------------------------------- -->
+<!-- CODIAC ID, Who Loaded, Dataset Name, Readme?, Checked?, In Master Table?, Submission Date -->
+
+
+<!-- ------ Add datasets before this line!------- -->
+
+<tr><td><a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?75.001">75.001</a></td>
+    <td>DW</td>
+    <td> NAMAP: NASA/Goddard Space Flight Center Model (Philip Pegion) </td>
+    <td> <font color=red> N </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=black> 2002/07/12 </font></td>
+    <td> The data are a total of about 13.4 megs and are located
+         in the NAME ftp site at /ftp/pub/incoming/name/nsipp. Load
+         these data as an on-line dataset. The data are divided into
+         monthly/certain_yr dirs. Consider creating tar files such
+         as "GSFC_Aug_1990_tier1.tar" and that might keep the tier
+         seperated. See how that works out and how large those files
+         become.  
+	 The files are about 1 meg a piece, and are loaded but hidden on 
+	 codiac. Need contanct information for pegion/readme. DW Jul 17 2002
+         Contact info loaded. Dataset on Master table - Done - 18 July 2002.
+	 </td> </tr>                  
+
+<tr><td><a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?75.002">75.002</a></td>
+    <td>DW</td>
+    <td> NAMAP: NCEP ETA (Kenneth Mitchell) </td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=black> 2002/07/23 </font></td>
+    <td> 
+      Data located at /ftp/pub/incoming/name/Eta_NCEP_RCM.tar. We now have a /work/NAME/NAMAP
+      area where we can untar and manipulate the NAMAP data. Untar this file and determine
+      best way to load. Let me know what you find before you do the data loading. It would
+      be good if we could create similar tar files (or whatever) for each of these NAMAP
+      datasets since they should all basically be by tier and parameter. This may not be 
+      possible.
+      Contact info at http://www.joss.ucar.edu/name/namap/ on the questionaire responses
+      page for this user's model.
+      Create dataset description from same questionaire response for this user's model.
+      Also try pointing to this response/model definition page in the dataset description
+      on CODIAC.  
+      Create readme file from same response page.
+      Readme provided. Dataset loaded and unhidden. DW Jul 23 2002
+    </td> </tr>
+
+<tr><td><a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?75.003">75.003</a></td>
+    <td>DW</td>
+    <td> NAMAP: NCEP SFM (Jae-Kyung E. Schemm) </td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=black> 2002/07/23 </font></td>
+    <td>
+      Data located at /ftp/pub/incoming/name/NCEP_SFM.
+      Contact info at http://www.joss.ucar.edu/name/namap/ on the questionaire responses
+      page for this user's model.
+      Create dataset description from same questionaire response for this user's model. 
+      Also try pointing to this response/model definition page in the dataset description 
+      on CODIAC.   
+      Create readme file from same response page. 
+      Readme provided. Dataset loaded and unhidden. DW Jul 23 2002
+    </td> </tr>
+
+<tr><td><a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?75.004">75.004</a></td>
+    <td>PS</td>
+    <td> NAMAP: Experimental Climate Prediction Center Regional Spectral Model (Masao Kanamitsu) - Run 1</td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=black> 2002/08/13 </font></td>
+    <td> Data totals more than 1 gig
+     and is located in /ftp/pub/incoming/name/ECPC_RSM/May-Oct_1990. Every file
+     contains all the data for that parameter for the complete time period
+     May-Oct 1990. The data files are GRIB (binary) which means they also
+     come with control files (*.ctl) that are used to display the data
+     using the Grads tool.  
+<br><br>
+     Entered into CODIAC with two .tar files, one for each tier.  The tier 1
+     .tar file is 903 MB and the tier 2 file is 82 MB.  The three readme's 
+     provided with the data have been combined to form 
+     /web/data/namap/doc/ECPC_RSM_readme.txt.  Also the data frequency is 
+     currently set to "hourly" although the output contains some "12 hourly"
+     data.  These data have been checked by LEC and linked to the master table. - ps
+<br><br>
+    </td> </tr>
+
+<tr><td><a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?75.005">75.005</a></td>
+    <td>PS</td>
+    <td> NAMAP: Experimental Climate Prediction Center Regional Spectral Model (Masao Kanamitsu) - Run 2</td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=black> 2002/09/05 </font></td>
+    <td>  This dataset is Run 2 of the ECPC/RSM model. The data are now located
+     in  /ftp/pub/incoming/name/ECPC_RSM/Run2. WARNING: It looks like there's
+     a "0readme" for every Tier and every month. I think we should rename the readme
+     files to indicate the Tier/date and deliver it with the appropriate month
+     when ordered from CODIAC. The size of this data should be similar to Run 1.
+     Since this data was provided by Month/year, we should try loading it that way....
+     see if creating 2 tar files (Tier1 and 2) for each month works. Use the same
+     high level readme  from the Run 1 for the one off the dataset description page. LEC
+<br><br>
+     This dataset has been entered into CODIAC with .tar files for each month and Tier.	
+     These data have been checked by LEC and linked to the master table. - ps
+    </td> </tr>
+
+<tr><td><a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?75.006">75.006</a></td>
+    <td>PS</td>
+    <td> NAMAP: Experimental Climate Prediction Center (ECPC) Regional Spectral Model (RSM) (Masao Kanamitsu) - Run 3</td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=black> 2002/09/26 </font></td>
+    <td>  This dataset is Run 3 of the ECPC/RSM model. The data are now located
+     in  /ftp/pub/incoming/name/ECPC_RSM/Run3 in month dirs with subdirs by Tier.
+     The size of this data should be similar to Run 1.
+     Use the same high level readme from the Run 1 for the one off the dataset 
+     description page. 
+     The data were ftp'd and in final condition 25 September 2002. LEC
+<br><br>
+     This dataset has been entered into CODIAC with .tar files for each month and tier.
+     These data have been checked by LEC and linked to the master table. - ps
+    </td> </tr>
+
+<tr><td><a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?75.00?">75.00?</a>
+</td>
+    <td>PS</td>
+    <td> NAMAP: RCM (MM5 based) and CWRF (WRF based) (Liang, Xin-Zhong)</td>
+    <td> <font color=red> N </font></td>
+    <td> <font color=red> N </font></td>
+    <td> <font color=red> N </font></td>
+    <td> <font color=black> 2002/07/?? </font></td>
+    <td> As of 13 Sept 2002, waiting for Liang (aka. Li Li) to email and
+         confirm that she has transferred all the data into directory
+         /ftp/pub/incoming/name/ISWS_RCM. At first glance, I don't see
+         a readme file, there may not be Aug 1990 data, nor any control
+         (or *.ctl) files.  We have to wait for her confirmation email
+         before loading this dataset.
+    </td> </tr>
+
+
+<tr><td><a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?75.008">75.008</a>
+</td>
+    <td>ps</td>
+    <td> NAMAP: MM5 (Elizabeth Ritchie)</td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=black> 2002/10/31 </font></td>
+    <td> This dataset is available on-line, we are waiting for a readme to be sent
+	 out.  A preliminary readme is currently available for the run 1 and 2 data.
+	 These data have been checked by LEC and linked to the master table. - ps
+<br>
+<br>
+    This dataset was originally called "Run 1". Please remove the "Run 1" from
+    the name, dataset description, etc. Remove all the Tier/month files from
+    the CODIAC database and put in the new data which is now in just 2 tar files
+    at /ftp/pub/incoming/name/MM5_UNM. These new files cover the same TOI and AOI, so no changes there.   
+    These files are pretty large, but let's try putting them out as is.
+    We can always divide by month later.
+<br><br>
+	This dataset has been updated.  The new data has replaced the old data,
+	and corrections to the dataset description have been made. - ps
+    </td> </tr>
+
+<tr><td><a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?75.009">75.009</a>
+</td>
+    <td>ps</td>
+    <td><font color=green> NAMAP: MM5 (Elizabeth Ritchie) - Run 2 REMOVED</font></td>
+    <td> <font color=green> N </font></td>
+    <td> <font color=green> N </font></td>
+    <td> <font color=green> N </font></td>
+    <td> <font color=green> 2002/10/31 </font></td>
+    <td> This dataset is available on-line, we are waiting for a readme to be sent
+	 out.  A preliminary readme is currently available for the run 1 and 2 data.
+	 These data have been checked by LEC and linked to the master table. - ps
+    <font color=green> Remove this dataset completely from CODIAC! As of 
+    25 October 2002, E. Ritchie (see email) says to remove this dataset. 
+<BR><BR>
+	This dataset has been removed 10/31/02 - ps</font>
+    </td> </tr>
+
+<tr><td><a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?75.010">75.010</a></td>
+    <td>PS</td>
+    <td> NAMAP: NCEP Regional Spectral Model (RSM) (Henry Juang)</td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=blue> Y </font></td>
+    <td> <font color=black> 2002/11/27 </font></td>
+    <td>  This is the National Centers for Environmental Prediction (NCEP) Regional Spectral Model (RSM).
+     The data are now located in  /ftp/pub/incoming/name/NCEP_RSM/Tier1 and /Tier2. 
+     Note that there are 2 readme files - one for each tier. Take a look at them
+     and see if they are the same or different.  I've asked Henry (whose name is
+     actually Hann-Ming Juang (Henry Juang) to fill out a questionnaire
+     on the NAMAP page. When that is done, we can use that for additional information.
+     It looks like several large files. Consider forming tar files - one for each Tier.
+     <font color=red> Please take a look at the NAMAP master list. Henry filled out a
+     questionaire. Use that contact information, etc.  LEC 22 Nov 2002 </font>
+<br><br>
+     These files are extremely large, tier one data has been seperated into pressure
+     and surface data files, but the pressure gzipped .tar file is still over 700 megabytes. - PS
+    </td> </tr>
+
+<tr><td><a href="http://www.joss.ucar.edu/cgi-bin/codiac/dss?75.011">75.011</a></td>
+    <td>PS</td>
+    <td> NAMAP: Verification Data (CLASS RAOBS)</td>
+    <td> <font color=red> N </font></td>
+    <td> <font color=red> N </font></td>
+    <td> <font color=red> N </font></td>
+    <td> <font color=black> 2003/03/13 </font></td>
+    <td> This dataset contains sounding data from the NSSL for the SWAMP-90 project.
+         Currently there is no readme for the data and some sounding stations, 
+         ns1 and ns2, contain sounding files outside the NAMAP TOI, but these files
+ 	 are included with the data. - ps
+    </td> </tr>
+
+</table>
+
+</HTML>

@@ -1,0 +1,15 @@
+# $Id$
+# $Log$
+SHELL = /bin/sh
+#    Makefile for postproc_addon s/w.
+#
+
+CC=acc
+CFLAGS = 
+
+procaddon: postproc_addon.o
+	$(LINK.c) -o postproc_addon postproc_addon.o 
+	chmod 0755 postproc_addon
+
+clean:
+	rm *.o

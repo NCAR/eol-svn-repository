@@ -1,0 +1,7 @@
+#!/bin/csh
+
+foreach i (*.pqcf)
+echo "processing $i"
+check_PQCF_comp $i >>! chek_comp.log
+end
+

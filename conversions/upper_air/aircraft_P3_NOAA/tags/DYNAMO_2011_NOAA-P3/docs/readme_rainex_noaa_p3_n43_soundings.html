@@ -1,0 +1,131 @@
+<html>
+<head>
+<title>RAINEX NOAA P-3 N43RF Dropsonde Data Set</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1 align="center">RAINEX NOAA P-3 N43RF Dropsonde Data Set</h1>
+
+<h2>1.0 General Description</h2>
+<p>This is one of the upper air data sets developed for the Hurricane Rainband and Intensity Change Experiment (RAINEX).  It includes 406 dropsondes from the NOAA P-3 N43RF aircraft.  The data are 0.5 second vertical resolution. It includes dropsondes that occurred during Hurricanes Dennis (2005 Jul 5, 7, 9, and 10), Emily (2005 Jul 18), Gert (2005 Jul 24), Katrina (2005 Aug 25, 27, 28, and 29), Ophelia (2005 Sept 7, 8, 9, and 11) and Rita (2005 Sept 19-23).</p>
+
+<h2>2.0 Detailed Data Description</h2>
+<h3>2.1 Detailed Format Description</h3>
+<p>All upper air soundings were converted to National Center for Atmospheric Research/Earth Observing Laboratory (NCAR/EOL) Sounding Composite Format (ESC).  ESC is a version of the National Center for Atmospheric Research (NCAR) CLASS format and is an ASCII format consisting of 15 header records for each sounding followed by the data records with associated QC information.</p>
+
+<h4>Header Records</h4>
+<p>The header records (15 total records) contain data type, project ID, site ID, site location, release time, sonde type, meteorological and wind data processors, and the operator's name and comments.  The first five header lines contain information identifying the sounding, and have a rigidly defined form.  The following 7 header lines are used for auxiliary information and comments about the sounding, and may vary from dataset to dataset.  The last 3 header records contain header information for the data columns.  Line 13 holds the field names, line 14 the field units, and line 15 contains dashes ('-' characters) delineating the extent of the field.</p>
+<p>The five standard header lines are as follows:</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>1</td><td>Data Type:</td><td>Description of type and resolution of data.</td></tr>
+<tr><td>2</td><td>Project ID:</td><td>Id of weather project.</td></tr>
+<tr><td>3</td><td>Release Site Type/Site ID:</td><td>Description of the release site.</td></tr>
+<tr><td>4</td><td>Release Location (lon,lat,alt):</td><td>Position of release site in the format described below.</td></tr>
+<tr><td>5</td><td>UTC Release Time (y,m,d,h,m,s):</td><td>Time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+     
+<p>The release location is given as:  lon (deg min), lat (deg min), lon (dec. deg), lat (dec. deg), alt (m)</p>
+<p>Longitude in deg min is in the format:  ddd mm.mm'W where ddd is the number of degrees from True North (with leading zeros if necessary), mm.mm is the decimal number of minutes, and W represents W or E for west or east longitude, respectively. Latitude has the same format as longitude, except there are only two digits for degrees and N or S for north/south latitude. The decimal equivalent of longitude and latitude and station elevation follow.</p>
+<p>The seven non-standard header lines may contain any label and contents.  The labels are padded to 35 characters to match the standard header lines. Records for this dataset include the following three non-standard header lines.</p>
+
+<table border=1 bordercolor="black" align="center">
+<tr><th>Line</th><th>Label (padded to 35 char)</th><th>Contents</th></tr>
+<tr><td>6</td><td>Bias Corrections:</td><td></td></tr>
+<tr><td>7</td><td>Comments:</td><td>Operator comments</td></tr>
+<tr><td>8</td><td>Hydrostatic Surface Pressure:</td><td></td></tr>
+<tr><td>9</td><td>Release Flight Level Data:</td><td>Measurements taken at flight level when the sonde was released.</td></tr>
+<tr><td>10</td><td>Sonde Id:</td><td>042115089</td></tr>
+<tr><td>11</td><td>Splash Pressure:</td><td>Pressure of the sounding when it hit the ocean.</td></tr>
+<tr><td>12</td><td>Nominal Release Time (y,m,d,h,m,s):</td><td>Nominal time of release, in the format: yyyy, mm, dd, hh:mm:ss</td></tr>
+</table>
+
+<h4>Data Records</h4>
+<p>The data records each contain time from release, pressure, temperature, dew point, relative humidity, U and V wind components, wind speed and direction, ascent rate, balloon position data, altitude, and quality control flags (see the QC code description).  Each data line contains 21 fields, separated by spaces, with a total width of 130 characters.  The data are right-justified within the fields.  All fields have one decimal place of precision, with the exception of latitude and longitude, which have three decimal places of precision.  The contents and sizes of the 21 fields that appear in each data record are as follows:</p>
+
+<table border=1 align="center" cellpadding=1 cellspacing=1 style="{font-size:10pt}">
+<tr><th>Field No.</th><th>Width</th><th>Format</th><th>Parameter</th><th>Units</th><th>Missing Value</th></tr>
+<tr><td align="center">1</td><td align="center">6</td><td>F6.1</td><td>Time</td><td>Seconds</td><td align="right">9999.0</td></tr>
+<tr><td align="center">2</td><td align="center">6</td><td>F6.1</td><td>Pressure</td><td>Millibars</td><td align="right">9999.0</td></tr>
+<tr><td align="center">3</td><td align="center">5</td><td>F5.1</td><td>Dry-bulb Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">4</td><td align="center">5</td><td>F5.1</td><td>Dew Point Temperature</td><td>Degrees C</td><td align="right">999.0</td></tr>
+<tr><td align="center">5</td><td align="center">5</td><td>F5.1</td><td>Relative Humidity</td><td>Percent</td><td align="right">999.0</td></tr>
+<tr><td align="center">6</td><td align="center">6</td><td>F6.1</td><td>U Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">7</td><td align="center">6</td><td>F6.1</td><td>V Wind Component</td><td>Meters / Second</td><td align="right">9999.0</td></tr>
+<tr><td align="center">8</td><td align="center">5</td><td>F5.1</td><td>Wind Speed</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">9</td><td align="center">5</td><td>F5.1</td><td>Wind Direction</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">10</td><td align="center">5</td><td>F5.1</td><td>Ascent Rate</td><td>Meters / Second</td><td align="right">999.0</td></tr>
+<tr><td align="center">11</td><td align="center">8</td><td>F8.3</td><td>Longitude</td><td>Degrees</td><td align="right">9999.0</td></tr>
+<tr><td align="center">12</td><td align="center">7</td><td>F7.3</td><td>Latitude</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">13</td><td align="center">5</td><td>F5.1</td><td>Elevation Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">14</td><td align="center">5</td><td>F5.1</td><td>Azimuth Angle</td><td>Degrees</td><td align="right">999.0</td></tr>
+<tr><td align="center">15</td><td align="center">7</td><td>F7.1</td><td>Altitude</td><td>Meters</td><td align="right">99999.0</td></tr>
+<tr><td align="center">16</td><td align="center">4</td><td>F4.1</td><td>QC for Pressure</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">17</td><td align="center">4</td><td>F4.1</td><td>QC for Temperature</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">18</td><td align="center">4</td><td>F4.1</td><td>QC for Humidity</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">19</td><td align="center">4</td><td>F4.1</td><td>QC for U Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">20</td><td align="center">4</td><td>F4.1</td><td>QC for V Wind Component</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+<tr><td align="center">21</td><td align="center">4</td><td>F4.1</td><td>QC for Ascension Rate</td><td>Code (see below)</td><td align="right">99.0</td></tr>
+</table>
+
+<p>Fields 16 through 21 contain the Quality Control information derived at the NCAR Earth Observing Laboratory (NCAR/EOL).  Any QC information from the original sounding is replaced by the following EOL codes:</p>
+
+<table border=1 align="center">
+<tr><th>Code</th><th>Description</th></tr>
+<tr><td align="right">99.0</td><td>Unchecked (QC information is "missing.") ("UNCHECKED")</td></tr>
+<tr><td align="right">1.0</td><td>Checked, datum seems physically reasonable. ("GOOD")</td></tr>
+<tr><td align="right">2.0</td><td>Checked, datum seems questionable on physical basis. ("MAYBE")</td></tr>
+<tr><td align="right">3.0</td><td>Checked, datum seems to be in error. ("BAD")</td></tr>
+<tr><td align="right">4.0</td><td>Checked, datum is interpolated. ("ESTIMATED")</td></tr>
+<tr><td align="right">9.0</td><td>Checked, datum was missing in original file. ("MISSING")</td></tr>
+</table>
+	
+<h4>Sample Data</h4>
+<p>The following is a sample record of NOAA P-3 N43RF RAINEX high resolution rawinsonde data in ESC format.   The data portion is much longer than 80 characters and, therefore, wraps around to a second line.  See section 2.1 for an exact format specification
+
+<pre>
+Data Type:                         NOAA P3 Dropsonde/Descending
+Project ID:                        RAINEX
+Release Site Type/Site ID:         NOAA_P3 N43RF/Katrina
+Release Location (lon,lat,alt):    079 6.52'W, 27 29.75'N, -79.109, 27.496, 1502.0
+UTC Release Time (y,m,d,h,m,s):    2005, 08, 25, 14:00:09
+Sonde Id:                          011218009
+Bias Corrections:                  PR = .0 mb, TE = .0 C, RH = .0 %, PRB = .0 mb
+Release Flight Level Data:         PR = 849.5 mb, TA = 18.5 C, RH = 92.1 %, WD = 97 deg, WS = 17.6 m/s
+Splash Pressure:                   1008.8 mb
+Hydrostatic Surface Pressure:      1007.9 mb
+Comments:                          None
+Nominal Release Time (y,m,d,h,m,s): 2005, 08, 25, 14:00:09
+ Time  Press  Temp  Dewpt  RH    Ucmp   Vcmp   spd   dir   Wcmp     Lon     Lat    Ele   Azi   Alt    Qp   Qt   Qrh  Qu   Qv   QdZ
+  sec    mb     C     C     %     m/s    m/s   m/s   deg   m/s      deg     deg    deg   deg    m    code code code code code code
+------ ------ ----- ----- ----- ------ ------ ----- ----- ----- -------- ------- ----- ----- ------- ---- ---- ---- ---- ---- ----
+ 122.0 1008.8  28.6  22.7  70.5  -13.7   -0.1  13.7  90.0 999.0  -79.128  27.497 999.0 999.0     5.0  1.0  1.0  1.0  1.0  1.0  9.0
+ 121.5 1008.1  28.5  22.8  71.1  -13.8   -0.0  13.8  90.0 -12.0  -79.128  27.497 999.0 999.0    11.0  1.0  1.0  1.0  1.0  1.0 99.0
+ 121.0 1007.4  28.5  22.8  71.5  -14.0    0.0  14.0  90.0 -12.0  -79.128  27.497 999.0 999.0    17.0  1.0  1.0  1.0  1.0  1.0 99.0
+ 120.5 1006.8  28.4  22.8  71.8  -14.2    0.1  14.2  90.0 -12.0  -79.128  27.497 999.0 999.0    23.0  1.0  1.0  1.0  1.0  1.0 99.0
+ 120.0 1006.1  28.4  22.9  72.1  -14.4    0.0  14.4  90.0 -12.0  -79.128  27.497 999.0 999.0    29.0  1.0  1.0  1.0  1.0  1.0 99.0
+</pre>
+
+<h3>2.2 Data Remarks</h3>
+
+<h3>2.3 Station List</h3>
+
+<table border=1 align="center">
+<tr><th>ID</th><th>SITE</th><th>STATE</th><th>LONG</th><th>LAT</th><th>ELEV (m)</th></tr>
+<tr><td>N43RF</td><td>NOAA P-3 N43RF</td><td>FL</td><td>-999.99999</td><td>-999.99999</td><td>-9999.9</td></tr>
+</table>
+
+<h2>3.0 Quality Control Processing</h2>
+
+These soundings were quality controlled by NOAA/HRD using their EDITSONDE software.  Their flags were mapped to the NCAR/EOL flags shown in the above table.  No additional quality control was conducted by NCAR/EOL.
+
+<!--
+<h2>4.0 References</h2>
+
+<p>Loehrer, S. M., T. A. Edmands, and J. A. Moore, 1996: TOGA COARE upper-air sounding data archive: development and quality control procedures.  Bull. Amer. Meteor. Soc., 77, 2651-2671.</p>
+<p>Loehrer, S. M., S. F. Williams, and J. A. Moore, 1998: Results from UCAR/JOSS quality control of atmospheric soundings from field projects.  Preprints, Tenth Symposium on Meteorological Observations and Instrumentation, Phoenix, AZ, Amer. Meteor. Soc., 1-6.</p>
+-->
+</body>
+</html>

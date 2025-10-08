@@ -1,0 +1,920 @@
+
+---- Horizontal Quality Control (HQC) ----
+Processing began on Apr 16 1996 15:47:39
+QC Initialization file name (e.g., QCinit.inp): QCinit.inp
+
+PARAMETER INITIALIZATION:: 
+
+Project Name (proj_name): TEST SEARCH              
+Distance fn method (pmethod): 1
+Area of Influence in km (1/min_weight):  300.000
+Data Frequency (data_freq): 5
+Current year of data: 1995
+First day of Project (proj_begin_date): 950401
+Last day of Project  (proj_end_date): 950630
+First day to QC (begin_date) : 950401
+Last day to QC (end_date)    : 950401
+Input file pathname: /raid/NEWQC/src/TEST_SEARCH/0000_
+Sigma file pathname: /raid/VORTEX95/SOLAR_SIGMAFILES/
+
+Precipitation Gross Limits (Unlikely, Dubious): 6.000000 3.000000
+
+Alpha_sq Indices: 0=stn pres, 1=slp, 2=cslp, 3=temp, 4=dw pt, 5=wnd sp, 6=wnd dir
+alpha_sq[ 0][0] = 0.25 alpha_sq[ 0][1] = 0.04
+alpha_sq[ 1][0] = 0.25 alpha_sq[ 1][1] = 0.04
+alpha_sq[ 2][0] = 1.00 alpha_sq[ 2][1] = 0.16
+alpha_sq[ 3][0] = 1.00 alpha_sq[ 3][1] = 0.25
+alpha_sq[ 4][0] = 1.00 alpha_sq[ 4][1] = 0.25
+alpha_sq[ 5][0] = 16.00 alpha_sq[ 5][1] = 5.06
+alpha_sq[ 6][0] = 4.84 alpha_sq[ 6][1] = 1.49
+proj_begin_date, proj_end_date, begin_date, end_date: 950401 950630 950401 950401
+proj_begin_YYYYJJJ, proj_end_YYYYJJJ, begin_YYYYJJJ, end_YYYYJJJ: 1995091 1995181 1995091 1995091
+
+Current julian date is: 1995091 950401
+Processing file: /raid/NEWQC/src/TEST_SEARCH/0000_950401.0qc
+SEARCHING for sigmasq PAST file /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig at hr,min: 0 0 
+for parmeter, stn_no, stn: 2 76 ASOS5     :LWV            
+---Enter locate_sigmasq---, input_stn:xxxASOS5     :LWV            xxx
+(entry) sigma_sq[0] = 27.257410 for input_stn=ASOS5     :LWV            
+(entry) sigma_sq[1] = 29.088964 for input_stn=ASOS5     :LWV            
+(entry) sigma_sq[2] = -999.989990 for input_stn=ASOS5     :LWV            
+(entry) sigma_sq[3] = 32.455742 for input_stn=ASOS5     :LWV            
+(entry) sigma_sq[4] = -999.989990 for input_stn=ASOS5     :LWV            
+(entry) sigma_sq[5] = 5.788364 for input_stn=ASOS5     :LWV            
+(entry) sigma_sq[6] = 12232.016602 for input_stn=ASOS5     :LWV            
+last date searched: 1995121
+SEARCH from/to: begin_YYYYJJJ, begin_YYYY, stop_YYYYJJJ, project_end_YYYYJJJ: 1995122 1995 1995152 1995181
+
+(locate) Current date is: 1995122
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951220000.sig
+
+(locate) Current date is: 1995123
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951230000.sig
+
+(locate) Current date is: 1995124
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951240000.sig
+
+(locate) Current date is: 1995125
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951250000.sig
+
+(locate) Current date is: 1995126
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951260000.sig
+
+(locate) Current date is: 1995127
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951270000.sig
+
+(locate) Current date is: 1995128
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951280000.sig
+
+(locate) Current date is: 1995129
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951290000.sig
+
+(locate) Current date is: 1995130
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951300000.sig
+
+(locate) Current date is: 1995131
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951310000.sig
+
+(locate) Current date is: 1995132
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951320000.sig
+
+(locate) Current date is: 1995133
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951330000.sig
+
+(locate) Current date is: 1995134
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951340000.sig
+
+(locate) Current date is: 1995135
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951350000.sig
+
+(locate) Current date is: 1995136
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951360000.sig
+
+(locate) Current date is: 1995137
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951370000.sig
+
+(locate) Current date is: 1995138
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951380000.sig
+
+(locate) Current date is: 1995139
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951390000.sig
+
+(locate) Current date is: 1995140
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951400000.sig
+
+(locate) Current date is: 1995141
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951410000.sig
+
+(locate) Current date is: 1995142
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951420000.sig
+
+(locate) Current date is: 1995143
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951430000.sig
+
+(locate) Current date is: 1995144
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951440000.sig
+
+(locate) Current date is: 1995145
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951450000.sig
+
+(locate) Current date is: 1995146
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951460000.sig
+
+(locate) Current date is: 1995147
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951470000.sig
+
+(locate) Current date is: 1995148
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951480000.sig
+
+(locate) Current date is: 1995149
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951490000.sig
+
+(locate) Current date is: 1995150
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951500000.sig
+
+(locate) Current date is: 1995151
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951510000.sig
+
+(locate) Current date is: 1995152
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[76]:76 xxxASOS5     :LWV            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951520000.sig
+SEARCHED ALL POSSIBLE DAYS - end search.
+Set parameter 4 to -888.88
+Fn locate_sigmasq() could NOT locate requested sigmasq within 32 days!(Inclds orig day)
+End locate_sigmasq: file_closed = 1
+(AFTER SEARCHING)sigma_sq[76][2] = -888.880005
+(AFTER) sigma_sq[76][0] = 27.257410 for current_stn=ASOS5     :LWV            
+(AFTER) sigma_sq[76][1] = 29.088964 for current_stn=ASOS5     :LWV            
+(AFTER) sigma_sq[76][2] = -888.880005 for current_stn=ASOS5     :LWV            
+(AFTER) sigma_sq[76][3] = 32.455742 for current_stn=ASOS5     :LWV            
+(AFTER) sigma_sq[76][4] = -888.880005 for current_stn=ASOS5     :LWV            
+(AFTER) sigma_sq[76][5] = 5.788364 for current_stn=ASOS5     :LWV            
+(AFTER) sigma_sq[76][6] = 12232.016602 for current_stn=ASOS5     :LWV            
+
+---Enter rewrite_sigmasq_file() ---
+Rewrite file: xxx/raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sigxxx
+executing copy_cmd: cp /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.gz /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.bak.gzxxx
+executing compression_cmd: gunzip /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.gzxxx
+numstns_inp, numstns_in_file: 542 542
+offset3, offset2, (offset3-offset2): 74 40 34
+call fseek
+(End rewrite) executing compression_cmd: gzip /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sigxxx
+SEARCHING for sigmasq PAST file /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig at hr,min: 0 0 
+for parmeter, stn_no, stn: 2 101 ASOS5     :MCB            
+---Enter locate_sigmasq---, input_stn:xxxASOS5     :MCB            xxx
+(entry) sigma_sq[0] = 14.193313 for input_stn=ASOS5     :MCB            
+(entry) sigma_sq[1] = 15.053847 for input_stn=ASOS5     :MCB            
+(entry) sigma_sq[2] = -999.989990 for input_stn=ASOS5     :MCB            
+(entry) sigma_sq[3] = 9.225774 for input_stn=ASOS5     :MCB            
+(entry) sigma_sq[4] = -999.989990 for input_stn=ASOS5     :MCB            
+(entry) sigma_sq[5] = 2.098003 for input_stn=ASOS5     :MCB            
+(entry) sigma_sq[6] = 11475.123047 for input_stn=ASOS5     :MCB            
+last date searched: 1995121
+SEARCH from/to: begin_YYYYJJJ, begin_YYYY, stop_YYYYJJJ, project_end_YYYYJJJ: 1995122 1995 1995152 1995181
+
+(locate) Current date is: 1995122
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951220000.sig
+
+(locate) Current date is: 1995123
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951230000.sig
+
+(locate) Current date is: 1995124
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951240000.sig
+
+(locate) Current date is: 1995125
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951250000.sig
+
+(locate) Current date is: 1995126
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951260000.sig
+
+(locate) Current date is: 1995127
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951270000.sig
+
+(locate) Current date is: 1995128
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951280000.sig
+
+(locate) Current date is: 1995129
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951290000.sig
+
+(locate) Current date is: 1995130
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951300000.sig
+
+(locate) Current date is: 1995131
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951310000.sig
+
+(locate) Current date is: 1995132
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951320000.sig
+
+(locate) Current date is: 1995133
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951330000.sig
+
+(locate) Current date is: 1995134
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951340000.sig
+
+(locate) Current date is: 1995135
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951350000.sig
+
+(locate) Current date is: 1995136
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951360000.sig
+
+(locate) Current date is: 1995137
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951370000.sig
+
+(locate) Current date is: 1995138
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951380000.sig
+
+(locate) Current date is: 1995139
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951390000.sig
+
+(locate) Current date is: 1995140
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951400000.sig
+
+(locate) Current date is: 1995141
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951410000.sig
+
+(locate) Current date is: 1995142
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951420000.sig
+
+(locate) Current date is: 1995143
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951430000.sig
+
+(locate) Current date is: 1995144
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951440000.sig
+
+(locate) Current date is: 1995145
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951450000.sig
+
+(locate) Current date is: 1995146
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951460000.sig
+
+(locate) Current date is: 1995147
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951470000.sig
+
+(locate) Current date is: 1995148
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951480000.sig
+
+(locate) Current date is: 1995149
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951490000.sig
+
+(locate) Current date is: 1995150
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951500000.sig
+
+(locate) Current date is: 1995151
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951510000.sig
+
+(locate) Current date is: 1995152
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[101]:101 xxxASOS5     :MCB            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951520000.sig
+SEARCHED ALL POSSIBLE DAYS - end search.
+Set parameter 4 to -888.88
+Fn locate_sigmasq() could NOT locate requested sigmasq within 32 days!(Inclds orig day)
+End locate_sigmasq: file_closed = 1
+(AFTER SEARCHING)sigma_sq[101][2] = -888.880005
+(AFTER) sigma_sq[101][0] = 14.193313 for current_stn=ASOS5     :MCB            
+(AFTER) sigma_sq[101][1] = 15.053847 for current_stn=ASOS5     :MCB            
+(AFTER) sigma_sq[101][2] = -888.880005 for current_stn=ASOS5     :MCB            
+(AFTER) sigma_sq[101][3] = 9.225774 for current_stn=ASOS5     :MCB            
+(AFTER) sigma_sq[101][4] = -888.880005 for current_stn=ASOS5     :MCB            
+(AFTER) sigma_sq[101][5] = 2.098003 for current_stn=ASOS5     :MCB            
+(AFTER) sigma_sq[101][6] = 11475.123047 for current_stn=ASOS5     :MCB            
+
+---Enter rewrite_sigmasq_file() ---
+Rewrite file: xxx/raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sigxxx
+executing copy_cmd: cp /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.gz /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.bak.gzxxx
+executing compression_cmd: gunzip /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.gzxxx
+numstns_inp, numstns_in_file: 542 542
+offset3, offset2, (offset3-offset2): 74 40 34
+call fseek
+(End rewrite) executing compression_cmd: gzip /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sigxxx
+SEARCHING for sigmasq PAST file /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig at hr,min: 0 0 
+for parmeter, stn_no, stn: 2 423 AWOSQ20   :T98            
+---Enter locate_sigmasq---, input_stn:xxxAWOSQ20   :T98            xxx
+(entry) sigma_sq[0] = 22.029627 for input_stn=AWOSQ20   :T98            
+(entry) sigma_sq[1] = -999.989990 for input_stn=AWOSQ20   :T98            
+(entry) sigma_sq[2] = -999.989990 for input_stn=AWOSQ20   :T98            
+(entry) sigma_sq[3] = 5.604880 for input_stn=AWOSQ20   :T98            
+(entry) sigma_sq[4] = -999.989990 for input_stn=AWOSQ20   :T98            
+(entry) sigma_sq[5] = 1.781469 for input_stn=AWOSQ20   :T98            
+(entry) sigma_sq[6] = 1152.380981 for input_stn=AWOSQ20   :T98            
+last date searched: 1995121
+SEARCH from/to: begin_YYYYJJJ, begin_YYYY, stop_YYYYJJJ, project_end_YYYYJJJ: 1995122 1995 1995152 1995181
+
+(locate) Current date is: 1995122
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951220000.sig
+
+(locate) Current date is: 1995123
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951230000.sig
+
+(locate) Current date is: 1995124
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951240000.sig
+
+(locate) Current date is: 1995125
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951250000.sig
+
+(locate) Current date is: 1995126
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951260000.sig
+
+(locate) Current date is: 1995127
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951270000.sig
+
+(locate) Current date is: 1995128
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951280000.sig
+
+(locate) Current date is: 1995129
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951290000.sig
+
+(locate) Current date is: 1995130
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951300000.sig
+
+(locate) Current date is: 1995131
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951310000.sig
+
+(locate) Current date is: 1995132
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[541]:541 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951320000.sig
+
+(locate) Current date is: 1995133
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951330000.sig
+
+(locate) Current date is: 1995134
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951340000.sig
+
+(locate) Current date is: 1995135
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951350000.sig
+
+(locate) Current date is: 1995136
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951360000.sig
+
+(locate) Current date is: 1995137
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951370000.sig
+
+(locate) Current date is: 1995138
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951380000.sig
+
+(locate) Current date is: 1995139
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951390000.sig
+
+(locate) Current date is: 1995140
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951400000.sig
+
+(locate) Current date is: 1995141
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951410000.sig
+
+(locate) Current date is: 1995142
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951420000.sig
+
+(locate) Current date is: 1995143
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951430000.sig
+
+(locate) Current date is: 1995144
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951440000.sig
+
+(locate) Current date is: 1995145
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951450000.sig
+
+(locate) Current date is: 1995146
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951460000.sig
+
+(locate) Current date is: 1995147
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951470000.sig
+
+(locate) Current date is: 1995148
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951480000.sig
+
+(locate) Current date is: 1995149
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951490000.sig
+
+(locate) Current date is: 1995150
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951500000.sig
+
+(locate) Current date is: 1995151
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951510000.sig
+
+(locate) Current date is: 1995152
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[423]:423 xxxAWOSQ20   :T98            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951520000.sig
+SEARCHED ALL POSSIBLE DAYS - end search.
+Set parameter 1 to -888.88
+Set parameter 4 to -888.88
+Fn locate_sigmasq() could NOT locate requested sigmasq within 32 days!(Inclds orig day)
+End locate_sigmasq: file_closed = 1
+(AFTER SEARCHING)sigma_sq[423][2] = -888.880005
+(AFTER) sigma_sq[423][0] = 22.029627 for current_stn=AWOSQ20   :T98            
+(AFTER) sigma_sq[423][1] = -888.880005 for current_stn=AWOSQ20   :T98            
+(AFTER) sigma_sq[423][2] = -888.880005 for current_stn=AWOSQ20   :T98            
+(AFTER) sigma_sq[423][3] = 5.604880 for current_stn=AWOSQ20   :T98            
+(AFTER) sigma_sq[423][4] = -888.880005 for current_stn=AWOSQ20   :T98            
+(AFTER) sigma_sq[423][5] = 1.781469 for current_stn=AWOSQ20   :T98            
+(AFTER) sigma_sq[423][6] = 1152.380981 for current_stn=AWOSQ20   :T98            
+
+---Enter rewrite_sigmasq_file() ---
+Rewrite file: xxx/raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sigxxx
+executing copy_cmd: cp /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.gz /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.bak.gzxxx
+executing compression_cmd: gunzip /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.gzxxx
+numstns_inp, numstns_in_file: 542 542
+offset3, offset2, (offset3-offset2): 74 40 34
+call fseek
+(End rewrite) executing compression_cmd: gzip /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sigxxx
+SEARCHING for sigmasq PAST file /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig at hr,min: 0 0 
+for parmeter, stn_no, stn: 1 463 ASOS5     :LBF            
+---Enter locate_sigmasq---, input_stn:xxxASOS5     :LBF            xxx
+(entry) sigma_sq[0] = 32.226086 for input_stn=ASOS5     :LBF            
+(entry) sigma_sq[1] = -999.989990 for input_stn=ASOS5     :LBF            
+(entry) sigma_sq[2] = -999.989990 for input_stn=ASOS5     :LBF            
+(entry) sigma_sq[3] = -999.989990 for input_stn=ASOS5     :LBF            
+(entry) sigma_sq[4] = -999.989990 for input_stn=ASOS5     :LBF            
+(entry) sigma_sq[5] = -999.989990 for input_stn=ASOS5     :LBF            
+(entry) sigma_sq[6] = -999.989990 for input_stn=ASOS5     :LBF            
+last date searched: 1995121
+SEARCH from/to: begin_YYYYJJJ, begin_YYYY, stop_YYYYJJJ, project_end_YYYYJJJ: 1995122 1995 1995152 1995181
+
+(locate) Current date is: 1995122
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951220000.sig
+
+(locate) Current date is: 1995123
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951230000.sig
+
+(locate) Current date is: 1995124
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951240000.sig
+
+(locate) Current date is: 1995125
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951250000.sig
+
+(locate) Current date is: 1995126
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951260000.sig
+
+(locate) Current date is: 1995127
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951270000.sig
+
+(locate) Current date is: 1995128
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951280000.sig
+
+(locate) Current date is: 1995129
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951290000.sig
+
+(locate) Current date is: 1995130
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951300000.sig
+
+(locate) Current date is: 1995131
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951310000.sig
+
+(locate) Current date is: 1995132
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[462]:462 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951320000.sig
+
+(locate) Current date is: 1995133
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951330000.sig
+
+(locate) Current date is: 1995134
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951340000.sig
+
+(locate) Current date is: 1995135
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951350000.sig
+
+(locate) Current date is: 1995136
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951360000.sig
+
+(locate) Current date is: 1995137
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951370000.sig
+
+(locate) Current date is: 1995138
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951380000.sig
+
+(locate) Current date is: 1995139
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951390000.sig
+
+(locate) Current date is: 1995140
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951400000.sig
+
+(locate) Current date is: 1995141
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951410000.sig
+
+(locate) Current date is: 1995142
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951420000.sig
+
+(locate) Current date is: 1995143
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951430000.sig
+
+(locate) Current date is: 1995144
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951440000.sig
+
+(locate) Current date is: 1995145
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951450000.sig
+
+(locate) Current date is: 1995146
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951460000.sig
+
+(locate) Current date is: 1995147
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951470000.sig
+
+(locate) Current date is: 1995148
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951480000.sig
+
+(locate) Current date is: 1995149
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951490000.sig
+
+(locate) Current date is: 1995150
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951500000.sig
+
+(locate) Current date is: 1995151
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951510000.sig
+
+(locate) Current date is: 1995152
+(1)executing cmd:xxx
+   STN FOUND MATCH stn_no, stn_list[463]:463 xxxASOS5     :LBF            xxx. Now locate variance.
+NOTE: SEARCH NEXT SIG FILE - Stn OR parm's variance NOT located in sigfile:: 
+ /raid/VORTEX95/SOLAR_SIGMAFILES/19951520000.sig
+SEARCHED ALL POSSIBLE DAYS - end search.
+Set parameter 2 to -888.88
+Set parameter 3 to -888.88
+Set parameter 4 to -888.88
+Set parameter 5 to -888.88
+Set parameter 6 to -888.88
+Fn locate_sigmasq() could NOT locate requested sigmasq within 32 days!(Inclds orig day)
+End locate_sigmasq: file_closed = 1
+(AFTER SEARCHING)sigma_sq[463][1] = -888.880005
+(AFTER) sigma_sq[463][0] = 32.226086 for current_stn=ASOS5     :LBF            
+(AFTER) sigma_sq[463][1] = -888.880005 for current_stn=ASOS5     :LBF            
+(AFTER) sigma_sq[463][2] = -888.880005 for current_stn=ASOS5     :LBF            
+(AFTER) sigma_sq[463][3] = -888.880005 for current_stn=ASOS5     :LBF            
+(AFTER) sigma_sq[463][4] = -888.880005 for current_stn=ASOS5     :LBF            
+(AFTER) sigma_sq[463][5] = -888.880005 for current_stn=ASOS5     :LBF            
+(AFTER) sigma_sq[463][6] = -888.880005 for current_stn=ASOS5     :LBF            
+
+---Enter rewrite_sigmasq_file() ---
+Rewrite file: xxx/raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sigxxx
+executing copy_cmd: cp /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.gz /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.bak.gzxxx
+executing compression_cmd: gunzip /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sig.gzxxx
+numstns_inp, numstns_in_file: 542 542
+offset3, offset2, (offset3-offset2): 74 40 34
+call fseek
+(End rewrite) executing compression_cmd: gzip /raid/VORTEX95/SOLAR_SIGMAFILES/19951210000.sigxxx
+
+HQC - main_qc() completed with 4 searches for sigmasq values.
+NOTE: Each search may have required searching forward through up to 31 files.(Not including the day being HQC'd)
+
+Processing completed on Apr 16 1996 15:47:39

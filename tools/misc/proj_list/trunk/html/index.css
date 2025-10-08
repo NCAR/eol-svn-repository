@@ -1,0 +1,208 @@
+/* For index, Color A = white #fafafa or #ffffff,
+              Color B = powder blue #c7e1f0,
+*/
+#headerwrap { 
+    width: 100%; 
+    background: transparent no-repeat left bottom; 
+    margin: 0px;
+    padding: 0px; 
+}
+
+#header { 
+/*    width: 800px; */
+    margin: 0px; 
+    padding: 0px; 
+/*    background-color: #ffffff; /* white */
+    background: url(http://www.eol.ucar.edu/portal_css/NCAR%20EOL%20Primary%20Skin/++resource++ncar_eol.theme.images/headerback.jpg) repeat-x left top;
+    color: #000000;
+    font-weight: bold;
+    font-size: 20px;
+/*    border: 1px solid #e0e0e0; /* #000000 */
+    text-align: center;
+/*
+    overflow: hidden;
+*/
+}
+
+#header h1 { 
+/*
+    height: 125px; 
+*/
+    width: 10px; 
+    background: transparent; 
+    margin: 0 0 0px; 
+    float: left; 
+} 
+
+/* color for h2 is the font color for project title */
+#header h1, h2 {
+    background: transparent; 
+    margin: 0 0 0px; 
+    color: #000000;
+}                 
+
+#header table {
+    border: 0px solid #000;
+    background: transparent;
+}
+
+#header td {
+    padding: 2px;
+    background: transparent;
+}
+
+
+/* Project Listings section */
+#topbar { 
+    padding: 0px;
+    font-weight: bold; 
+    width: 990px; /* originally 800px; */
+    background: #fff; /*#f5f4e9; /* EOL brown */
+    min-height: 0%;  
+    border: 0px solid #fff;
+    text-align: center;
+}
+
+
+/* Project Listings section */
+#listhead { 
+    font-size: 18px; /* 12 */ 
+    font-weight: bold;
+    color: #fff; /*#ddd;
+    text-shadow: 2px 2px 3px #000;
+    filter: dropshadow(color=#000, offx=2, offy=2); */
+    padding: 0px; 
+    width: 100%; /*978px; /*788px; /* 822 */
+    background: #8f1501; /*#447d9f;  /* blue */
+    min-height: 0%;
+    border-bottom: 1px solid #000; /*#293c79; */
+    padding: 5px; 
+    text-align: center;
+}
+
+/* Project Listings section */
+#listbox { 
+    width: 978px; /* 778px; */
+    padding: 10px; 
+    min-height: 0%; 
+    border: 1px solid #ccc; 
+    background: transparent;
+    font-weight: normal; 
+    text-align: left;
+}
+
+/* Project Listings section */
+#tablelist {
+    width: 990px; /* 800px; */
+}
+
+/* Project Listings section */
+#tablelist td {
+    vertical-align: text-top;
+    padding-bottom: 5px;
+}
+
+/* container background is white, same as body */
+#container { 
+    background-color: #8f1501; /*#c7e1f0; /* powder blue */
+    width: 990px; /* 800px; */ 
+    margin: 0px auto 0px auto; 
+    overflow: hidden;
+    padding-bottom: 0px; 
+    padding-left: 0px; 
+}
+
+
+/************** footer styles ****************/
+DIV#eolfooterwrap {
+	margin: 0px !important;
+}
+
+
+#footerSponsors {
+    font-size: 10px; 
+    padding: 0px;
+    font-weight: bold; 
+    width: 968px; /* 778px; */ 
+/*    background-color: #ffffff; */
+    background: url(http://www.eol.ucar.edu/portal_css/NCAR%20EOL%20Primary%20Skin/++resource++ncar_eol.theme.images/headerback.jpg) repeat-x left top;
+/*    border: 1px solid #e0e0e0; */
+    min-height: 0%;  
+    text-align: center;
+    clear: both;
+    color: #cccccc;
+    padding: 10px 10px 10px 10px;
+    margin: 0px;
+}
+
+
+#footer {
+    font-weight: bold; 
+    width: 948px; /* 758px; */
+/*    background-color: #ffffff; */
+    min-height: 0%;  
+    text-align: center;
+    clear: both;
+    color: #000000; 
+    padding: 0px;
+    margin-top: 0px; /* was 0 */
+    background: transparent;
+}
+
+#footer img {
+    padding: 4px 4px 4px 0px;
+    vertical-align: middle;
+}
+
+#sponsorsbox { 
+    width: 990px; /* 800px; */
+    padding: 5px; 
+    min-height: 0%; 
+    border: 0px solid #000000; 
+    background: #c7e1f0; /* powder blue */
+    font-weight: normal; 
+    text-align: left;
+}
+
+#sponsorsRightbox { 
+    width: 475px; 
+    font-size: 15px;
+    padding: 5px; 
+    min-height: 0%; 
+    border: 1px solid #000000; 
+    background: #c7e1f0; /* powder blue */
+    font-weight: bold; 
+    text-align: left;
+}
+
+/* used in footer */
+#sponsorsLeftbox { 
+    width: 325px; 
+    font-size: 15px;
+    padding: 5px; 
+    min-height: 0%; 
+    border: 1px solid #000000;
+    background: #c7e1f0; /* powder blue */
+    font-weight: bold; 
+    text-align: left;
+}
+
+div { /*background-color: #c7e1f0; /* powder blue */ margin: 0px; color: #000000; }
+body { 
+    font-family: verdana, arial, helvetica, sans-serif;
+    font-size: 14px;
+    background-color: #c7e1f0; /* powder blue */
+    margin: 0px;
+}
+
+
+h1 { font: bold 20pt/24pt verdana, arial, Helvetica, sans-serif; color: black }
+h2 { font: bold 16pt/20pt verdana, arial, Helvetica, sans-serif; color: black }
+h3 { font: bold 12pt/16pt verdana, arial, Helvetica, sans-serif; color: black }
+a:link { color: indigo; text-decoration: none }    /* #40718f */
+a:active { color: indigo; text-decoration: none }  /* #40718f */
+a:visited { color: indigo; text-decoration: none } /* #40718f */
+a:hover { color: red; text-decoration: none }   /* #40718f */
+hr { height: 4px;  background-color: #665500; color: #665500; }
+
+

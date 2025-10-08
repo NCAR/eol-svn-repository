@@ -1,0 +1,43 @@
+<!-- $Id: context.xml,v 1.6 2006/02/17 17:24:04 john Exp $ -->
+<!-- JOSS Catalina Auto-deploy Context file -->
+
+<!-- For Context element options, see:
+ http://{SERVER}/tomcat-docs/config/context.html
+-->
+
+<!--
+
+this not needed- we are now symlinking the directory in tomcat's webapps
+<Context path="/jedi_demos" docBase="/dmsdev/web/java/webapps/jedi_demos"
+
+this *should* be enough
+<Context>
+
+-->
+
+<!-- all this is in the DefaultContext but doesn't seem to get picked up -->
+<Context
+	cookies="true" reloadable="true" crossContext="true"
+	override="true" swallowOutput="true" useNaming="true"
+	debug="9" 
+	>
+
+  <!-- Uncomment this Valve to limit access to this app to localhost
+   for security reasons. Allow may be a comma-separated list of
+   IP addresses (or even regular expressions).
+   Use RemoteHostValve for hostnames.
+   Currently entire server has this+JOSS as default.
+  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+    allow="127.0.0.1"/>
+  -->
+
+<!--
+  <Resource name="jdbc/jedi_mysql" auth="Container" type="javax.sql.DataSource"
+   maxActive="100" maxIdle="30" maxWait="10000"
+   username="jedidemo" password="seeker"
+   driverClassName="com.mysql.jdbc.Driver"
+   url="jdbc:mysql://localhost/jedi6?autoReconnect=false"
+  />
+-->
+
+</Context>

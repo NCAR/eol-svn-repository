@@ -1,0 +1,89 @@
+#!/bin/perl -w
+
+use strict;
+use CGI;
+
+use lib "lib";
+use DLNUtils;
+use State;
+use lib "../mcd_lib";
+use ProjectDBA;
+
+my $cgi = CGI->new();
+
+my $proj_box = getProjectDropDown();
+
+my $state = State->new();
+$state->{view} = $State::LIST;
+$state->{list_view_type} = $State::SEARCH;
+$state->{list_view_id} = -1;
+$state->{sort} = "dataset.title";
+
+print( cr(
+	$cgi->header(),
+  "<html>",
+	"<head>",
+		"<title>DLN: Sort</title>",
+		$body_css,
+	"</head>",
+	"<body>",
+	"<br><br>",
+	"<center>",
+	"<form method=post action=controller>",
+	"<table border=0 celladding=8 cellspacing=15 width=80%>",
+		"<tr class=titleBar>",
+			"<td>Data Loading Notes Search</td>",
+		"</tr>",
+		"<tr>",
+			"<td align=center><font size=+1>Enter a string to search for and select the project and fields to search.</td>",
+		"</tr>",
+		"<tr>",
+			"<td>",
+				"<b>Select Project: $proj_box",
+			"</td>",
+		"</tr>",
+		"<tr>",
+			"<td>",
+					"<b>Search String:</b>",
+					"<input type=text size=100 name=string>",	
+					"<br>",
+			"</td>",
+		"</tr>",
+		"<tr>",
+			"<td>",
+			"<b>Fields to Search: </b>", &nbsp(3),
+				"<font size=-1><b>",
+ 				"<input type=checkbox name=title checked>Dataset Title", &nbsp(3),
+				"<input type=checkbox name=notes checked> Notes",  &nbsp(3),
+				"<input type=checkbox name=storm_id>Storm Id",  &nbsp(3),
+				"<input type=checkbox name=ingest>Ingest Loc.",  &nbsp(3),
+				"<input type=checkbox name=archive>Archive Loc.",  &nbsp(3),
+				"<input type=checkbox name=remote_url>Remote URL",  &nbsp(3),
+			"</td>",
+		"</tr>",
+		"<tr>",
+			"<td align=center><input type=submit value=\"Search DLN\"></td>",
+		"</tr>",
+		"<tr class=titleBar>",
+			"<td>&nbsp;</td>",
+	"</table>",
+
+	$state->getHiddenFieldString(),
+	"</form>",
+	"</body></html>" ) );
+
+sub getProjectDropDown
+{
+	my $dba = ProjectDBA->new();
+	my @projects = $dba->getAllProjects();
+
+	my $select = "<select name=project><option value=-1>All</option>";
+	foreach my $p (@projects)
+	{
+		$select = $select . "<option value=$p->{id}>$p->{name}</option>";
+	}
+
+	$select = $select . "</select>";
+
+	return $select;
+}

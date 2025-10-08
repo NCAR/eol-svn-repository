@@ -1,0 +1,56 @@
+#!/bin/perl -w
+
+#--------------------------------------------------------------
+# frame_set: a simple script to display the frame set needed
+#  for the public Master List.
+#
+# paramters:
+#  project = the project name (not id) to display. 
+#
+# Author: Dan Sullivan
+# Date: October, 2003
+#---------------------------------------------------------------
+ 
+use strict;
+use CGI;
+
+use lib "../lib";
+use Utils;
+use lib "../../mcd_lib";
+use MLProjectDBA;
+
+my $cgi = CGI->new();
+my $dba = MLProjectDBA->new();
+
+my $pname = $cgi->param( "project" );
+my $project = undef();
+
+if( defined( $pname ) )
+{ $project = $dba->getFromDBByName( $pname ); }
+
+
+println( $cgi->header() );
+
+if( !defined( $project ) )
+{
+	println( "<html><head><title>Error: Project not found</title></head>" );
+	println( "<body>" );
+	println( "<font size=+2><b>Error: </b></font>The specified project does not exist in the database." );
+	println( "<br><br>" );
+	println( "Please contact <a href=mailto:suldan\@ucar.edu>Dan Sullivan</a> and report what you were doing when " .
+	  "you received this error" );
+
+	println( "</body></html>" );
+}
+else
+{
+	println( "<html><head>" );
+		println( "<title>JOSS $pname Master Data Set List</title>" );
+		println( "<frameset rows=100% cols=\"260,*\" framespacing=0 border=0 name=bottom_set>" );
+    	println( "<frame name=left border=0 frameborder=0 src=category_list?project=$project->{id} marginwidth=0 marginheight=0>" );
+    	println( "<frame name=body src=list_table?project=$project->{id} frameborder=0 marginwidth=0 marginheight=0>" );
+  	println( "</frameset>" );
+
+	println( "</head></html>" );
+}
+

@@ -1,0 +1,76 @@
+#
+#
+# Makefile for qc programs
+#
+#
+
+SHELL = /bin/csh
+
+# where you want the libqc.a library to end up
+LIBDIR=.
+
+# The NetCDF library
+#WAS:  LIBNET=/usr/local/lib
+LIBNET=/opt/lib
+
+# debug
+#FFLAGS = -u -g -C
+#FFLAGS = -g
+#CFLAGS = -u -g -C
+#CFLAGS = -g
+
+# optimized (on Sun)
+#was: FLAGS = -u -fast -O3
+#was: FFLAGS = -fast -O3
+
+FLAGS = -u -O3
+FFLAGS = -O3
+
+OBJECTS=getbtime_4DYR.o getstncode.o getplatform.o\
+        getqcftime2_4DYR.o getqcftime_4DYR.o getqcfrec_4DYR.o getqcfrec2_4DYR.o 
+INCLUDES=debug.h ioerr.h parmnames.h platform.h \
+	   qcfcom_4DYR.h qcglobal.h stncom.h stnstatcom_4DYR.h
+
+.KEEP_STATE:
+
+stnstat_4DYR20:	stnstat_4DYR20.o $(LIBDIR)/libqc.a
+	$(LINK.f) -o stnstat_4DYR20 stnstat_4DYR20.o $(LIBDIR)/libqc.a
+
+stnstat_4DYR:	stnstat_4DYR.o $(LIBDIR)/libqc.a
+	$(LINK.f) -o stnstat_4DYR stnstat_4DYR.o $(LIBDIR)/libqc.a
+
+stnstat2_4DYR:	stnstat2_4DYR.o $(LIBDIR)/libqc.a
+	$(LINK.f) -o stnstat2_4DYR stnstat2_4DYR.o $(LIBDIR)/libqc.a
+
+getbtime_4DYR:	getbtime_4DYR.o
+	ar ruv $(LIBDIR)/libqc.a getbtime_4DYR.o
+
+getqcftime2_4DYR:     getqcftime2_4DYR.o
+	ar ruv $(LIBDIR)/libqc.a getqcftime2_4DYR.o	
+	
+getqcftime_4DYR:	getqcftime_4DYR.o
+	ar ruv $(LIBDIR)/libqc.a getqcftime_4DYR.o
+
+getqcfrec_4DYR:	getqcfrec_4DYR.o
+	ar ruv $(LIBDIR)/libqc.a getqcfrec_4DYR.o
+
+getqcfrec2_4DYR:	getqcfrec2_4DYR.o
+	ar ruv $(LIBDIR)/libqc.a getqcfrec2_4DRY.o
+
+getstncode:  getstncode.o
+	ar ruv $(LIBDIR)/libqc.a getstncode.o
+
+getplatform:  getplatform.o
+	ar ruv $(LIBDIR)/libqc.a getplatform.o
+
+$(LIBDIR)/libqc.a:	$(LIBDIR)/libqc.a($(OBJECTS))
+	ar ruv $@ $?
+
+$(LIBDIR)/libqc.a(%.o):	%.o
+
+$(OBJECTS):	$(INCLUDES)
+
+$(INCLUDES):
+
+clean:
+	-rm *.o core a.out

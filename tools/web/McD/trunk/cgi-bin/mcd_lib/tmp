@@ -1,0 +1,3 @@
+		 $sql = "SELECT dataset.*, status.*, dlnview.* FROM dataset, dsproj, dlnview, user, status WHERE " . 
+						"dsproj.dataset=dataset.id AND dsproj.project=$project AND dlnview.dataset=dataset.id AND " .
+						"user.id=dlnview.loader AND status.id=dataset.status $sql_hide ORDER BY user.display_name, dlnview.date DESC";

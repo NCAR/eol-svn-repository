@@ -1,0 +1,115 @@
+<project name="GREEN_NPS" default="compile" basedir=".">
+
+    <!-- Constants used in the build file. -->
+    <property name="5mb" value="5mb" />
+    <property name="final" value="final" />
+    <property name="output" location="output" />
+    <property name="qc_logs" location="logs" />
+    <property name="build" location="build" />
+    <property name="build.classes" location="build/classes" />
+    <property name="src" location="src" />
+    <property name="autoqc_props" location="software" />
+
+    <!-- Define the class path containing necessary jar files for processing. -->
+    <path id="classpath">
+        <pathelement path="${classpath}" />
+        <pathelement path="${build.classes}" />   <!-- THIS WAS MISSING! -->
+
+        <fileset dir="/net/work/lib/java">
+            <include name="utilities.jar" />
+            <include name="upper_air.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/extractors">
+            <include name="esc_extractor.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/checkers">
+            <include name="esc_format_checker.jar" />
+        </fileset>
+
+        <fileset dir="/net/work/bin/dayfiles">
+            <include name="upper_air_dayfile.jar" />
+        </fileset>
+        <fileset dir="/net/work/bin/autoqc">
+            <include name="autoqc.jar" />
+        </fileset>
+    </path>
+
+    <!-- Extract the 5mb pressure level data from the final QC'ed high res soundings. -->
+    <target name="5mb-extract">
+        <!-- Execute the pressure extraction. -->
+        <java classname="dmg.ua.sounding.extract.ESC5mbExtractor" fork="yes">
+            <arg value="-Z" />
+            <arg value="${final}" />
+            <arg value="${5mb}" />
+            <arg value="${5mb}/extract.log" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+        <!-- Check the file format of the 5mb data files. -->
+        <java classname="dmg.ua.sounding.check.ESCCheckFile" fork="yes">
+            <arg value="${5mb}" />
+            <arg value="${5mb}/check_format_5mb.log" />
+            <arg value="\.05mb(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="autoqc" depends="compile"> <!-- ***run "ant autoqc" *** -->
+        <copy todir="${build.classes}">
+            <fileset dir="${autoqc_props}">
+                <include name="*.properties" />     <!-- ENSURE USING CORRECT AUTOQC FILE. -->
+            </fileset>
+        </copy>
+        <java classname="dmg.ua.sounding.autoqc.UpsondeESCAutoQC" fork="yes"> <!-- The class to be run to autoqc the upsondes -->  <!-- ENSURE USING CORRECT TYPE/subclass of autoqc.  See http://dmg.eol.ucar.edu/software/tools/upper_air/autoqc/-->
+            <arg value="us_plains_autoqc" />
+            <arg value="${output}" />        <!-- The directory where the source files are located -->
+            <arg value="${final}" />         <!-- The directory where the QC files will be stored after they are created -->
+            <arg value="${qc_logs}" />
+            <arg value="\.cls(\.gz)?$" />    <!-- The pattern to match against the file names to include in the QC -->
+            <classpath refid="classpath" />  <!-- The classpath containing the classes needed for the autoqc to run -->
+        </java>
+        <antcall target="-check-format">     <!-- ***After autoqc, check the format of the ESC files.***  -->
+            <param name="directory" value="${final}" />
+            <param name="logfile" value="${final}/check_format_qc.log" />
+        </antcall>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build.classes}">
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+
+    <target name="init">
+        <tstamp />
+        <mkdir dir="${build.classes}" />
+    </target>
+
+    <target name="-check-format">            <!-- Check format. This is an internal call to this Ant Build file. Note the preceeding dash to the name.  -->
+        <java classname="dmg.ua.sounding.check.ESCCheckFile" fork="yes">
+            <arg value="${directory}" />
+            <arg value="${logfile}" />
+            <arg value="\.cls(\.gz)?$" />
+            <classpath refid="classpath" />
+        </java>
+    </target>
+
+    <target name="check-format-ESC" > <!-- *** Check converted ESC formatted files.  Run "ant check-format-ESC"*** -->
+        <antcall target="-check-format"> 
+            <param name="directory" value="${output}" />
+            <param name="logfile" value="${output}/check_format_cnvESC.log" />
+        </antcall>
+    </target>
+
+    <target name="dayfiles"> <!-- The name of the target to be called on the command line when running Ant -->
+        <java classname="dmg.ua.sounding.dayfile.ESCDayFileCreator" fork="yes"> <!-- The class to be run to create the day files -->
+            <arg value="-Z" />              <!-- Don't gzip the created day files  -->
+            <arg value="GREEN_NPS_" />            <!-- Prefix before the date in the file names -->
+            <arg value="final" />  <!-- The directory where the source files used to create the day files can be found -->
+            <arg value="dayfiles" />        <!-- The directory where the dayfiles will be stored after they are created -->
+            <arg value="\.cls.qc(\.gz)?" /> <!-- The pattern to match against the file names to include in the day files -->
+            <classpath refid="classpath" /> <!-- The classpath containing the classes needed for the day file creator to run -->
+        </java>
+    </target>
+
+</project>

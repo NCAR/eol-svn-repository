@@ -1,0 +1,28 @@
+#!/bin/perl
+
+use DBI;
+
+my $dbh = getConnection();
+
+#------GOES 10 4KM days that have RSO SRSO
+my $sql = "SELECT date from FileTable WHERE date > 2002000 and date < 2002366 and sector >= 16 and sector <= 21 group by date";
+my $sth = $dbh->prepare( $sql );
+$sth->execute();
+my @row;
+my $count = 0;
+while( (@row=$sth->fetchrow()) )
+{
+	print( $row[0], "\n" );
+	$count++;
+}
+print( "total: $count\n" );
+$sth->finish();
+#-----------------------------------------
+
+
+$dbh->disconnect();
+sub getConnection
+{
+	 return DBI->connect( "DBI:mysql:database=suldan;host=thunder",
+                        "suldan", "hithere", {RaiseError=>1} ) || die( "Unable to Connect to database" );
+}

@@ -1,0 +1,31 @@
+#! /usr/bin/perl -w
+
+use strict;
+#use lib "/net/work/dev/lib/perl/mysql";
+use lib "../lib";
+use MySqlDatabase;
+use MySqlDataset;
+
+my $dataset_id = $ARGV[0] or die "Usage: $0 dataset_id\n";
+
+my $database = MySqlDatabase->new();
+$database->connect();
+
+print "Setting localhost file information\n";
+my $dataset = MySqlDataset->new($dataset_id);
+print "Selecting dataset $dataset_id\n";
+my $msg =  $dataset->selectDataset($database);
+if ($msg eq "") {
+    print "Selection Successful!\n";
+    print "Begin Date:" . $dataset->getBeginDate() . "\n";
+    print "End Date:" . $dataset->getEndDate() . "\n";
+    print "Min Lat:" . $dataset->getMinlat() . "\n";
+    print "Max Lat:" . $dataset->getMaxlat() . "\n";
+    print "Min Lon:" . $dataset->getMinlon() . "\n";
+    print "Max Lon:" . $dataset->getMaxlon() . "\n";
+} else {
+    print "Selection FAILED!\n";
+    print "$msg";
+}
+
+$database->disconnect();

@@ -1,0 +1,156 @@
+#! /usr/bin/perl -w
+
+##Module-----------------------------------------------------------
+# <p>The Altitude script is a CGI script that provides a web
+# interface for the altitude calculation in the conversion
+# modules.</p>
+#
+# @author Joel Clawson
+# @version 3.0 (Version number used to match conversion version.)
+# <p>Refactored the original web interface into individual conversion
+# scripts and a super WebInterface module that the scripts inherit
+# from.</p>
+# <p>Updated to Version 3 of the conversion modules.</p>
+#
+# @author Joel Clawson
+# @version 1.0 Original Creation.
+##Module-----------------------------------------------------------
+package Altitude;
+use strict;
+use lib "..";
+use lib "/net/work/lib/perl/Utilities";
+use DpgCalculations qw(:DEFAULT);
+use DpgConversions qw(:DEFAULT);
+use WebInterface;
+our @ISA = ("WebInterface");
+
+main();
+
+##------------------------------------------------------------------
+# @signature void main()
+# <p>Run the script that creates the altitude calculations web 
+# interface.</p>
+##------------------------------------------------------------------
+sub main {
+    my $self = Altitude->new();
+    $self->makePage();    
+}
+
+##------------------------------------------------------------------
+# @signature String createForm()
+# <p>Create the HTML that defines the input form for the calculation.</p>
+# @output $form The HTML code.
+##------------------------------------------------------------------
+sub createForm {
+    my $self = shift;
+    my $form = "<table><tbody>\n";
+
+    # Make the pressure row.
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>\n","Pressure<sub>0</sub>:",$self->textfield("pressure0"),$self->getPressureUnits("press0_unit"));
+
+    # Make the temperature row.
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Temperature<sub>0</sub>:",$self->textfield("temperature0"),$self->getTemperatureUnits("temp0_unit"));
+
+    # Make the dew point row
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Dew Point<sub>0</sub>:",$self->textfield("dewpt0"),$self->getTemperatureUnits("dewpt0_unit"));
+
+    # Make the Altitude row
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Altitude<sub>0</sub>:",$self->textfield("altitude0"),$self->getLengthUnits("alt0_unit"));
+
+    # Make the pressure row.
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>\n","Pressure<sub>1</sub>:",$self->textfield("pressure1"),$self->getPressureUnits("press1_unit"));
+
+    # Make the temperature row.
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Temperature<sub>1</sub>:",$self->textfield("temperature1"),$self->getTemperatureUnits("temp1_unit"));
+
+    # Make the dew point row
+    $form .= sprintf("<tr><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Dew Point<sub>1</sub>:",$self->textfield("dewpt1"),$self->getTemperatureUnits("dewpt1_unit"));
+
+    # Make the altitude row.
+    $form .= sprintf("<tr class=result_line><td class=param>%s</td><td class=field>%s</td><td class=unit>%s</td></tr>","Altitude<sub>1</sub>:",$self->getValue(),$self->getLengthUnits("alt1_unit"));
+
+    $form .= sprintf("<tr><td class=submit colspan=3>%s</td></tr>\n",$self->submit("Calculate"));
+
+    $form .= "</tbody></table>\n";
+
+    return $form;
+}
+
+##------------------------------------------------------------------
+# @signature String getCGI()
+# <p>Get the name of the script to call when the form is submitted.</p>
+# @output $cgi The script name.
+##------------------------------------------------------------------
+sub getCGI { return "calculations/altitude"; }
+
+##------------------------------------------------------------------
+# @signature String getEquationPage()
+# <p>Get the name of the web page that contains the equations for
+# the calculation.</p>
+# @output $page The equation web page.
+##------------------------------------------------------------------
+sub getEquationPage { "equations_calc.html#altitude"; }
+
+##------------------------------------------------------------------
+# @signature String getInstructions()
+# <p>Get the HTML containing the instructions on how to use the 
+# script.</p>
+# @output $instr The HTML instructions.
+##------------------------------------------------------------------
+sub getInstructions {
+    my $self = shift;
+    my $instr = "<p>Insert the pressure, altitude, dew point, and temperature values along with the appropriate units of the values.  Update the units for the output of the altitude and press the <b>Calculate</b> button.  The value will appear in the table between the name and unit.</p>\n";
+    $instr .= "<p>The warnings have been turned off for the calculation.  If no result appears, it is because a value was entered into one of the fields that does not allow the calculation to complete correctly.</p>\n";
+    $instr .= "<p class=warning>The calculation requires the pressures to be in millibars, the altitude to be in meters, and the dew point and temperature in &deg;C.  The returned altitude is in meters.  Any other units that are chosen will convert the value to the appropriate unit for the calculation and the output.</p>\n";
+    return $instr;
+}
+
+##------------------------------------------------------------------
+# @signature String getOnSubmit()
+# <p>Get the javascript command to run when the form is submitted.</p>
+# @output $js The javascript command.
+##------------------------------------------------------------------
+sub getOnSubmit { return "javascript: return (checkValue('Pressure0',pressure0) && checkValue('Altitude0',altitude0) && checkValue('Temperature0',temperature0) && checkValue('Pressure1',pressure1) && checkValue('Temperature1',temperature1) && checkAltitudeDewPoint('Dew Point0',dewpt0) && checkAltitudeDewPoint('Dew Point1',dewpt1));"; }
+
+##------------------------------------------------------------------
+# @signature String getTitle()
+# <p>Get the title of the script.</p>
+# @output $title The script title.
+##------------------------------------------------------------------
+sub getTitle { return "Calculate Altitude"; }
+
+##------------------------------------------------------------------
+# @signature String getValue()
+# <p>Get the calculated value or the &amp;nbsp; character when it
+# cannot be calculated.</p>
+# @output $value The float formated value.
+##------------------------------------------------------------------
+sub getValue {
+    my $self = shift;
+    if (defined($self->param("pressure0")) && defined($self->param("altitude0")) &&
+	defined($self->param("pressure1")) && defined($self->param("temperature0")) &&
+	defined($self->param("temperature1"))) {
+
+	my $dewpt0 = defined($self->param("dewpt0")) ? convertTemperature($self->param("dewpt0"),$self->param("dewpt0_unit"),"C") : undef();
+	my $dewpt1 = defined($self->param("dewpt1")) ? convertTemperature($self->param("dewpt1"),$self->param("dewpt1_unit"),"C") : undef();
+
+	my $value = calculateAltitude(convertPressure($self->param("pressure0"),
+						      $self->param("press0_unit"),"mbar"),
+				      convertTemperature($self->param("temperature0"),
+							 $self->param("temp0_unit"),"C"),
+				      $dewpt0,
+				      convertLength($self->param("altitude0"),
+						    $self->param("alt0_unit"),"m"),
+				      convertPressure($self->param("pressure1"),
+						      $self->param("press1_unit"),"mbar"),
+				      convertTemperature($self->param("temperature1"),
+							 $self->param("temp1_unit"),"C"),
+				      $dewpt1,0);
+	
+	if (defined($value)) {
+	    return sprintf("%f",convertLength($value,"m",$self->param("alt1_unit")));
+	}
+    }
+    return "&nbsp;";
+}
+

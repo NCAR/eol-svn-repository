@@ -1,0 +1,22 @@
+#! /usr/bin/perl -w
+
+package RemoveDatasetActionCGI;
+use strict;
+use lib ".";
+use lib "lib";
+use ActionCGI;
+use Dataset;
+our @ISA = ("ActionCGI");
+
+&main();
+
+sub main {
+    my $self = RemoveDatasetActionCGI->new();
+    $self->buildPage("Remove Dataset Association Action");
+}
+
+sub processParams {
+    my ($self) = @_;
+
+    $self->{"DB"}->removeDatasetAssociation($self->param("dataset"),$self->param("source"));
+}

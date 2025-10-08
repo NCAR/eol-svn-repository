@@ -1,0 +1,351 @@
+<html>
+<head>
+<title>How To: Process Ishigaki Jima Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Process Ishigaki Jima Upper Air Sounding Data</h1>
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#network">Network Information</a></li>
+        <li><a href="#version">Previous Versions</a>
+            <ol>
+                <li><a href="#version:T-PARC_Ishigaki_Jima">2008 (T-PARC) Ishigaki Jima - first created.</a></li>
+            </ol>
+        </li>
+        <li><a href="#directory">Directory Structure</a></li>
+        <li><a href="#process">Processing the Data</a>
+            <ol> 
+			<li><a href="#setup">Initial Processing Setup</a></li>     		
+            <li><a href="#convert">Converting the Data</a></li>
+            <li><a href="#autoqc">Auto QC</a></li>
+ 			<li><a href="#visual_qc">Visual QC</a></li>
+            <li><a href="#finalize">Finalization</a></li>   
+			<li><a href="#5mb-extract">5mb Extraction</a></li>      		
+            </ol>
+        </li>
+        <li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+	<p>This document contains instructions for converting Ishigaki Jima High Resolution Radiosonde (JMA - Japanese Meteorological Society) data into the EOL Sounding Composite (ESC) format.</p>
+	<p><span class="BEWARE">NOTE: </span>  This converter may be hard to reuse for other data, as it contains many hard-coded fixes that pertain to Ishigaki Jima specifically.</p>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+    <li>The ID-Type is 47918.</li>
+	<li>The Platform is 87 (Rawinsonde, Other).</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions</h2>
+<div class="block">
+
+    <a name="version:T-PARC_Ishigaki_Jima"></a><h3>T-PARC (2008) Ishigaki Jima</h3>
+    <table class="version">
+	<tr><th>Software:</th><td><a
+	href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FJapanese_Radiosonde%2Ftags%2FTPARC_2008_IshigakiJima%2F#_conversions_upper_air_Japanese_Radiosonde_tags_TPARC_2008_IshigakiJima_">http://svn.eol.ucar.edu/svn/dmg/upper_air/Ishigaki_Jima/tags/T-PARC_2008_IshigakiJima</a></td></tr>
+    <tr><th>Raw Data:</th><td>/net/work/Projects/T-PARC/upper_air/Ishigaki_Jima/raw_data</td></tr>
+    <tr><th>Final Data:</th><td>/net/work/Projects/T-PARC/upper_air/Ishigaki_Jima/dayfiles</td></tr>
+    </table>
+
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">Ishigaki_Jima/</h3>
+    <table class="directories">
+		<tr><th>5mb/</th><td>The directory where the extracted 5mb pressure
+		sounding files are stored.</td></tr>
+		<tr><th>build/</th><td>The auto-generated directory for the compiled
+		Java classes.</td></tr>
+		<tr><th>dayfiles/</th><td>The directory where the generated day files
+		are stored. This is the final  processed data that will be put
+		online.</td></tr>
+	    <tr><th>docs/</th><td>The directory containing documentation about the
+	    processing and the data.</td></tr> 
+	    <tr><th>final/</th><td>The directory where the QC'ed files are placed once
+	    they have been created.</td></tr> 
+	    <tr><th>logs/</th><td>The directory where the error/check files from the QC
+	    are placed.</td></tr>
+	    <tr><th>output/</th><td>The directory where the ESC files are put after
+	    they are generated.</td></tr> 
+	    <tr><th>raw_data/</th><td>The directory where the raw data is
+	    stored.</td></tr>
+	    <tr><th>software/</th><td>The directory where the software for the
+	    conversion is stored.</td></tr>
+	    <tr><th>src/</th><td>Unused directory - required for autoqc to run.</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+
+<a name="process"></a><h2>Processing the Data</h2>
+<div class="block"> 
+    <a name="setup"></a><h3>Initial Processing Setup</h3>
+	<ol>
+	<li><p>Copy the raw data into the <span
+	class="directoryName">raw_data</span> directory. Check the assumptions made
+	in the script regarding things such as file names and locations.</p>
+    <p><i>For T-PARC:</i></p>
+		<ul>
+			<li><p>There were 186 files in two directories. Some of the files
+			started with a "-" which was removed and replaced with an "F" to
+			match the other raw data files.</p></li>
+			<li><p>Ran dos2unix utility on the raw data files to remove control
+			codes.</p></li>
+			
+		    
+		</ul>
+	</li>         
+    </ol>  
+
+    <a name="convert"></a><h3>Converting the Data</h3>
+ 	<p class="note">This step runs Perl code and should work on basically any
+	machine. However, to run the autoQC and any other processing/data prep done
+	by the build.xml (Ant) file, you must run on any machine with the proper
+	Ant and Java setup, such as merlot.</p>       
+	<p>Converting Ishigaki Jima High Resolution Radiosonde (JMA) data into
+	the ESC format consists of the following steps.</p>
+
+	<ol>	
+	<li><p>Change to the <span class="directoryName">software</span> directory.</p></li>
+	
+	<li><p>Edit the <span
+	class="softwareName">Japanese_Radiosonde_Converter.pl</span>
+	script.</p>
+	<ul>
+		<li><p><span class="beware">BEWARE: </span>The converter expects the
+		actual data to begin on line 8 of the raw data file, but the data
+		records should be discarded until the counter (second column) resets to
+		zero. That data record becomes the surface data record..</p></li>     
+		<li><p>Search for "HARD-CODED" to find and change the hard-coded
+		project-specific values in the script to be correct for your project.
+		For example, change the function: <code>getProjectName</code> to the
+		current project.</p></li>
+		<li><p>Code was added to the converter (from the Ron Brown Converter)
+		to derive the ascent rate values from the altitude and time
+		data.</p></li>
+		<li><p><i>For T-PARC Ishigaki Jima data:</i></p>
+		<ul>
+			<li><p>One raw data file contained header start date/time
+			information different from the date/time reflected in the file name
+			and identical to a second raw data file.  Scot reviewed the two
+			files and determined that the one with the mismatched date
+			information should be removed from the raw_data.  This file was put
+			in the <span class="directoryName">unprocessed_raw_data</span>
+			directory until such time as we hear back from the data source.
+			</p></li>
+			
+			<li><p>The time for each data record in the raw data is in the
+			HH:MM:SS format, starting with the release time for the surface
+			record.  Code in the converter sets the time to "0" seconds for the
+			surface record, then converts the HH:MM:SS time for each record
+			into seconds and compares it with the previous record.  This was
+			done because of the many gaps in this 1-second data.   If there is
+			a gap in time, a record with all missing values will be inserted
+			into the output to keep the timing consecutive.  This was a common
+			occurrence throughout the raw data.</p></li>
+			
+			<li><p><span class="beware">BEWARE - MANUAL CORRECTION TO RAW DATA
+			FILE: </span>&nbsp; One raw data file had a data record with an
+			incorrect time.  This caused a gap of 13,185 "missing" records. The
+			time was manually corrected at the direction of the science
+			staff.</p></li>
+            
+			<li><p><span class="beware">BEWARE - MANUAL CORRECTION TO RAW
+			DATA FILE: </span>&nbsp;One raw data file contained unreadable
+			characters in the middle of the file.  This section was manually
+			removed from the file in order to allow processing of the
+			file.</p></li>   
+		</ul>
+		<p>After the intial conversion was reviewed, Scot L. requested that 
+		additional changes be made for the Ishigaki Jima data:</p>
+		<ul>
+			<li><p>Six files did not contain good data and were removed from
+			the <span class="directoryName">raw_data</span> directory and
+			placed in the <span
+			class="directoryname">unprocessed_raw_data</span> directory.  See
+			the README.txt file in that directory for more
+			information.</p></li>
+			
+			<li><p>For time values t=1 through t=10, all values except time
+			were set to missing.  The radiosonde was being acclimatized during this
+			period and the data were not usable. </p></li>
+			
+			<li><p>For any negative altitude, all values except time were set to
+			missing.</p></li>
+			
+			<li><p> Added @record_list array: All data records were read in and
+			then processed in reverse order to remove the descending data that
+			was included at the end of the file (i.e., negative ascension
+			rate).</p></li>
+			
+			<li><p>Some files contained more than one counter reset to zero.
+			Code was added to skip the first reset zero for three files, and
+			skip the second reset zero for another file.  The filenames were
+			HARD-CODED in.</p></li>
+		</ul>  
+		<p>After the final changes were made and the data was processed, it was
+		noticed that the time in the raw data was local time.  At Linda Cully's
+		suggestion, a post-processing converter <span
+		class="softwareName">(ConvertToUTC.pl)</span> was written to read in
+		the processed files, convert local time to UTC time, write out the file
+		to a new file with the UTC file name, and change the two affected
+		header lines (UTC Release and Nominal Release).  This script was run on
+		all the files in both the <span class="directoryName">output/</span>
+		and the <span class="directoryName">final</span> directories.</p> 
+		</ul>
+	</li>
+	
+	<li><p>Run the <span
+	class="softwareName">Japanese_Radiosonde_Converter.pl</span> script.
+	This will convert data to the ESC format.</p></li> 
+	
+	<li><p>Run the format checker using the ant command:</p>
+    <p class="code">ant check-format-ESC</p></li>
+	
+	<li><p>Check the log file (generated by the format checker) in the <span
+	class="directoryName">output</span> directory to determine if any format
+	issues need to be addressed before proceeding with AutoQC.</p></li>
+	
+	</ol>
+
+
+<a name="autoqc"></a><h3>Auto QC</h3>
+	<p class="note">This step works best on merlot, but can be done on any
+	machine with the proper Ant and Java setup.</p>
+
+	<p>These steps execute the automatic QC on the processed files in the <span
+	class="directoryName">output</span> directory, generate log files in the
+	<span class="directoryName">logs</span> directory, and place the QC'ed data
+	files into the <span class="directoryName">final</span> directory, as
+	specified by the <span class="softwareName">build.xml</span> file.  The
+	final part of the automated process is to run the format checker on
+	the QC'ed files.  To run the sounding Automatic Quality Control
+	Processing:</p>
+    <ol>
+	   <li><p>Stay in/Change to the top level processing directory where the Ant
+	   <span class="softwareName">build.xml</span> file is located.</p></li>
+	   <li><p>Check the <span class="softwareName">build.xml</span> file for the
+	   <code>autoqc</code> target for the following:</p>
+           <ol>
+			   <li><p>A command to copy the properties file to the build
+			   directory. There is typically a copy of the autoqc properties
+			   file (e.g., "us_plains_autoqc.properties") in the
+			   software directory.</p></li>   		   
+			   <li><p>The java command(s) will be executed on the expected data
+			   in the expected locations (i.e., ensure that the directory names
+			   in the build.xml file are correct and what you want.)</p></li>
+			   <li><p>You have updated the project name in the build.xml,
+			   if included in the build.xml file.</p></li>
+		   </ol>
+	   <li><p>Perform the auto QC by executing the ant command:</p> <p
+	   class="code">ant autoqc</p></li>  
+	   <li><p>After all issues have been resolved, notify the Scientific Staff
+	   (Scot) that the data is ready for Visual QC. Also inform him of any
+	   issues noted so that he will be aware of them.</p></li>
+    </ol>
+
+
+<a name="visual_qc"></a><h3>Visual QC</h3>
+	<p>Once the auto QC is completed, email the scientific staff (i.e., Scot
+	Loehrer) so that they can perform a visual QC on the data and give final
+	approval of the processed data set, as required. Note that the visual qc is
+	not performed on all sounding datasets.</p>
+
+
+
+<a name="finalize"></a><h3>Finalization</h3>
+	<p>After the visual QC is completed, the data set is ready to be finalized
+	(i.e, prep'd for CODIAC).  
+       <ol>
+		 <li><p> Update this "How To" document to indicate the latest project
+		 this conversion was executed for and include any notes about upgrades
+		 made specifically for that project, as required. A copy of this
+		 document is generally found in the <span
+		 class="directoryName">/docs</span> directory. Place a copy of the
+		 updated doc in <span
+		 class="directoryName">/net/web/dmg/html/software/conversions/upper_air/Ishigaki_Jima</span>
+		 directory. The s/w repository page points to this doc in that web
+		 location, so this must be updated.  The s/w repository page is located
+		 <a
+		 href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/encyclopedia/repository-dmg-subversion-listing"
+		 target='_top'><b>here</b></a>. </p></li>
+
+		 <li><p>Update the dataset description (or EMDAC) document for this
+		 conversion. Work with the scientific staff to create an EMDAC
+		 document. Generally, start with an existing "similar" document and
+		 simply update it for this project and dataset.  Generally, a copy of
+		 the EMDAC doc can be found in the <span
+		 class="directoryName">/docs</span> area.</p></li>
+
+		<li><p>The next processing step is to create day files that can/will be
+		loaded into the EMDAC/CODIAC database, along with the EMDAC dataset
+		description document.  The dayfiles creation step will generate day
+		files sorted by nominal release date followed by station location as
+		required by CODIAC. It's very important that the output dayfiles be in
+		this expected sort order so that CODIAC can access all the soundings
+		within a single dayfile. Do the following steps to create the day
+		files.</p></li>
+    <ol>
+	   <li><p>Ensure that you are in the same (top) directory as the build.xml
+	   file. Create the day files using the ant command:</p>
+	   <p class="code">ant dayfiles</p> <p>This will create a file for each day
+	   where at least one sounding exists in the <span
+	   class="directoryName">database</span> directory or whichever directory
+	   is specified as the output directory in the build.xml file. If this
+	   dataset is to be put online "as is", these ar the dayfiles to load into
+	   CODIAC.</p></li>
+       </li>
+    </ol>
+    </ol>
+
+
+<a name="5mb-extract"></a><h3>5mb Extraction</h3>
+	<p>If the converted soundings are also going to be placed into a 5mb
+	composite, the soundings need to have the proper 5mb pressure level
+	soundings generated.  This is done through the following steps:</p>
+    <ol>
+        <li><p>Generate the 5mb pressure level data files using the ant command:</p>
+            <p class="code">ant 5mb-extract</p>
+			<p>This will generate a 5 mb sounding file for each sounding in the
+			<span class="directoryName">final</span> directory and place
+			it in the <span class="directoryName">5mb</span>.  It will also run
+			some final checks to make sure the format is correct. Beware that
+			the file directories listed in the build.xml file are what you
+			expect and want.</p>   	        
+        </li>
+    </ol>
+	<p>The generated 5mb data files will then be available when the composite
+	is generated.</p>
+
+</div>
+<a href="#">Top</a><hr>
+
+<a name="documents"></a><h2>Documentation</h2>
+<p>The following are a list of documents that may help with the conversion or
+are related to the raw data.</p>
+<ul>
+	<li><a href="/software/tools/upper_air/autoqc">How To: AUTO QC Sounding Data</a>:  The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/software/tools/upper_air/esc_format_checker">How To: ESC Format Checker</a>:  The instructions and API for working with the ESC format checker program.</li>
+    <li><a href="#">How To: Process Ishigaki Jima Sounding Data</a>:  This document.</li>
+
+</ul>
+<a href="#">Top</a><hr>
+
+<p class="foot">Last Updated: 17 October 2011 - Linda Echo-Hawk</p>
+</body>
+</html>

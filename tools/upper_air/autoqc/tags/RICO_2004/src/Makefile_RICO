@@ -1,0 +1,5 @@
+RICO:
+	g++ -g -o ../bin/nws_autoqc_RICO auto_qc.cpp -lm -I../lib -DRICO -DNWS
+	g++ -g -o ../bin/autoqc_RICO auto_qc.cpp -lm -I../lib -DRICO
+	g++ -g -o ../bin/autoqc_RICO_5point_avg auto_qc.cpp -lm -I../lib -DNAME -DFIVE
+	g++ -g -o ../bin/autoqc_drop_RICO auto_qc.cpp -lm -I../lib -DRICO -DDROP

@@ -1,0 +1,469 @@
+<html>
+<head>
+<title>How To: Process NWS Sounding Data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="http://dmg.eol.ucar.edu/css/howto.css">
+</head>
+
+<body>
+<h1 class="title">How To: Process National Weather Service (NWS) Upper Air Sounding Data</h1>
+<a name="toc"></a><h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+        <li><a href="#purpose">Purpose</a></li>
+	<li><a href="#network">Network Information</a></li>
+	<li>Previous Versions<ol>
+                <li><a href="#version:winter2014">2014 (WINTER)</a></li>
+                <li><a href="#version:owles2013-2014">2013-2014 (OWLeS)</a></li>
+                <li><a href="#version:sas2013">2013 (SAS)</a></li>
+                <li><a href="#version:mpex2013">2013 (MPEX)</a></li>
+                <li><a href="#version:dc32012">2012 (DC3)</a></li>
+                <li><a href="#version:dynamo2011">2011-2012 (DYNAMO)</a></li>
+                <li><a href="#version:icet2011">2011 (ICE-T)</a></li>
+                <li><a href="#version:itop2010">2010 (ITOP)</a></li>
+                <li><a href="#version:predict2010">2010 (PREDICT)</a></li>
+                <li><a href="#version:vortex22010">2010 (VORTEX2)</a></li>
+                <li><a href="#version:plows20082009">2009-2010 (PLOWS)</a></li>
+                <li><a href="#version:ceop20082009">2008-2009 (CEOP)</a> </li>
+                <li><a href="#version:start082008">2008 (START08)</a> </li>
+                <li><a href="#version:tparc2008">2008 (T-PARC)</a> </li>
+                <li><a href="#version:vortex22009">2009 (VORTEX2)</a> </li>
+                <li><a href="#version:icel2007">2007 (ICE-L)</a> - <i>Note that the ICE-L version of the  s/w is more recent than PLOWS 2008-2009.</i></li>
+                <li><a href="#version:plows20082009">2008-2009 (PLOWS)</a></li>
+                <li><a href="#version:post2008">2008 (POST)</a></li>
+                <li><a href="#version:ceop2007">2007 (CEOP)</a></li>
+		<li><a href="#version:trex">2006 (T-REX)</a></li>
+		<li><a href="#version:rainex">2005 (RAINEX)</a></li>
+		<li><a href="#version:rico">2004_2005 (RICO)</a></li>
+		<li><a href="#version:name">2004 (NAME)</a></li>
+		</ol></li>
+	<li><a href="directory">Directory Structure</a></li>
+	<li>Processing the Data<ol>
+	        <li><a href="#proc_setup">Initial Processing Setup</a></li>
+		<li><a href="#convert_microart">Converting the MicroART Data</a></li>
+                <li><a href="#convert_rrs">Converting the RRS Data</a></li>
+		<li><a href="#autoqc">Auto QC</a></li>
+                <li><a href="#visual_qc">Visual QC</a></li>
+                <li><a href="#finalize">Finalization</a></li>
+	        </ol></li>
+        <li>Building Libraries and Executables<ol>
+		<li><a href="#mat_library">Creating the Matrix Library</a></li>
+		<li><a href="#programs">Creating the Conversion Programs</a></li>
+                <li><a href="#vasil">Vasil File Converter</a></li>
+		<li><a href="#ebufr">Converting to EBUFR</a></li>
+		</ol></li>
+	<li><a href="#documents">Documentation</a></li>
+    </ol>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="purpose"></a><h2>Purpose</h2>
+<div class="block">
+    <p>This document contains the process of how to convert the National Weather Service (NWS) upper air sounding data EOL receives from NCDC from their ASCII file formats to the ESC format.</p>
+    <p class="note">If you make any changes to the software for either the main trunk, be aware that the same changes MAY be required for the NWS_BNL conversion s/w. This is because the NWS_BNL conversion is almost identical to the NWS general processing. Note that in the current repository under the NWS upper_air converter, there exists a BNL (Brookhaven National Laboratory) tag. DO NOT UPDATE that tag in any way. Leave that portion of the repository as is. As of August 2009, an /upper_air/NWS_BNL area was created in the repository. Form this point forward, the best and most complete version of the NWS_BNL conversion s/w can be found at this NWS_BNL location in the repository. </p>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="network"></a><h2>Network Information</h2>
+<div class="block">
+    <ul>
+	<li>The Platform is 54.</li>
+        <li>The soundings are recorded in UTC.</li>
+    </ul>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="version"></a><h2>Previous Versions - <font size=-1>Note that the project conversions were done in the order shown below. Do not go by the year of the project to find the latest converted data or software. The latest s/w will always be in the trunk of the repository.</font></h2>
+<div class="block">
+
+    <a name="version:winter2014"></a><h3>WINTER (2014)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FWINTER_2014%2F#_conversions_upper_air_NWS_tags_WINTER_2014_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/WINTER_2014</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive/rrs_text/2014/</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/winter/upper_air/NWS</td></tr>
+    </table>
+
+
+    <a name="version:owles2013-2014"></a><h3>OWLeS (2013-2014)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FOWLES_2013%2F#_conversions_upper_air_NWS_tags_OWLES_2013-2014_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/OWLES_2013_2014</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive/rrs_text/2013/</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/owles/upper_air/NWS</td></tr>
+    </table>
+
+
+    <a name="version:sas2013"></a><h3>SAS (2013)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FSAS_2013%2F#_conversions_upper_air_NWS_tags_SAS_2013_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/SAS_2013</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive/rrs_text/2013/</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/sas_nomadss/upper_air/NWS</td></tr>
+    </table>
+
+    <a name="version:dc32012"></a><h3>MPEX (2013)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FMPEX_2013%2F#_conversions_upper_air_NWS_tags_MPEX_2013_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/MPEX_2013</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive/rrs_text/2013/</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/mpex*/upper_air/NWS</td></tr>
+    </table>
+
+    <a name="version:dc32012"></a><h3>DC3 (2012)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FDC3_2012%2F#_conversions_upper_air_NWS_tags_DC3_2012_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/DC3_2012</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive/rrs_text/2012/</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/dc3*/upper_air/NWS</td></tr>
+    </table>
+
+
+    <a name="version:dynamo2011"></a><h3>DYNAMO (2011-2012)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FDYNAMO_2011%2F#_conversions_upper_air_NWS_tags_DYNAMO_2011_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/DYNAMO_2011</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive/rrs_text/2011 and 2012/</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/dynamo*/upper_air/NWS</td></tr>
+    </table>
+
+    <a name="version:icet2011"></a><h3>ICE-T (2011)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FICE-T_2011%2F#_conversions_upper_air_NWS_tags_ICE-T_2011_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/ICE-T_2011</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive/rrs_text/2011/MSJU/07</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/ice-t*/upper_air/NWS</td></tr>
+    </table>
+
+    <a name="version:itop2010"></a><h3>ITOP (2010)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FITOP_2010%2F#_conversions_upper_air_NWS_tags_ITOP_2010_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/ITOP_2010</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/itop*/upper_air/NWS</td></tr>
+    </table>
+
+
+    <a name="version:predict2010"></a><h3>PREDICT (2010)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FPREDICT_2010%2F#_conversions_upper_air_NWS_tags_PREDICT_2010_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/PREDICT_2010</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/predict*/upper_air/NWS</td></tr>
+    </table>
+
+    <a name="version:vortex22010"></a><h3>VORTEX2 (2010)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FVORTEX2_2010%2F#_conversions_upper_air_NWS_tags_VORTEX2_2010_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/VORTEX2_2010</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/vortex2/upper_air/NWS</td></tr>
+    </table>
+
+    <a name="version:ceop20082009"></a><h3>CEOP (2008-2009)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FCEOP_2008-2009%2F#_conversions_upper_air_NWS_tags_CEOP_2008-2009_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/CEOP_2008-2009</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/ceopv2</td></tr>
+    </table>
+
+    <a name="version:start082008"></a><h3>START08 (2008)
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FSTART08_2008%2F#_conversions_upper_air_NWS_tags_START08_2008_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/START08_2008</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/vortex2/upper_air/NWS</td></tr>
+    </table>
+
+    <a name="version:tparc2008"></a><h3>T-PARC (2008)
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FT-PARC_2008%2F#_conversions_upper_air_NWS_tags_T-PARC_2008_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/T-PARC_2008</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/vortex2/upper_air/NWS</td></tr>
+    </table>
+
+    <a name="version:vortex22009"></a><h3>VORTEX2 (2009) 
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FVORTEX2_2009%2F#_conversions_upper_air_NWS_tags_VORTEX2_2009_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/VORTEX2_2009</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/vortex2/upper_air/NWS</td></tr>
+    </table>
+
+
+    <a name="version:icel2007"></a><h3>ICE-L (2007) - Note that the ICE-L version of the s/w is more recent that PLOWS2008-2009 version</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FICE-L_2007%2F#_conversions_upper_air_NWS_tags_ICE-L_2007_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/ICE-L_2007</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive</td></tr>
+        <tr><th>Final Data:</th><td>/net/archive/data/ice-l/upper_air/NWS</td></tr>
+    </table>
+
+
+    <a name="version:plows20082009"></a><h3>PLOWS (2008-2009) & (2009-2010 - RRS only)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FPLOWS_2008_2009%2F#_conversions_upper_air_NWS_tags_PLOWS_2008_2009_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/PLOWS_2008_2009</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive</td></tr>
+        <tr><th>Final Data:</th><td>/export/archive/data/plows*</td></tr>
+    </table>
+
+
+    <a name="version:post2008"></a><h3>POST (2008)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/websvn/listing.php?repname=dmg&path=%2Fconversions%2Fupper_air%2FNWS%2Ftags%2FPOST_2008%2F#_conversions_upper_air_NWS_tags_POST_2008_">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/POST_2008</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive</td></tr>
+        <tr><th>Final Data:</th><td>/export/archive/data/post</td></tr>
+    </table>
+
+    <a name="version:ceop2007"></a><h3>CEOP (2007)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/CEOP_2007">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/CEOP_2007</a>
+        <tr><th>Raw Data:</th><td>/net/work/operational/sounding/NWS/archive</td></tr>
+        <tr><th>Final Data:</th><td>/export/archive/data/ceopv2</td></tr>
+    </table>
+
+    <a name="version:trex"></a><h3>T-REX (2006)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/T-REX_2006">http://svn.eol.ucar.edu/svn/dmg/conversions/upper-air/NWS/tags/T-REX_2006</a></td></tr>
+        <tr><th>Raw Data:</th><td>/work/operational/sounding/NWS/archive/ascii_files/2006</td></tr>
+        <tr><th>Final Data:</th><td>/export/archive/data/trex/upper_air/soundings/NWS</td></tr>
+    </table>
+
+    <a name="version:rainex"></a><h3>RAINEX (2005)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/RAINEX_2005">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/RAINEX_2005</a></td></tr>
+        <tr><th>Raw Data:</th><td>/work/operational/sounding/NWS/archive/ascii_files</td></tr>
+        <tr><th>Final Data:</th><td>/archive/codiac/rainex/upper_air/NWS</td></tr>
+    </table>
+
+    <a name="version:rico"></a><h3>RICO (2004-2005)</h3>
+    <table class="version">
+        <tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/RICO_2004">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/RICO_2004</a></td></tr>
+        <tr><th>Raw Data:</th><td>/work/operational/sounding/NWS/archive/ascii_files</td></tr>
+        <tr><th>Final Data:</th><td>/archive/codiac/rico/upper_air/upsonde/NWS</td></tr>
+    </table>
+
+    <a name="version:name"></a><h3>NAME (2004)</h3>
+    <table class="version">
+	<tr><th>Software:</th><td><a href="http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/NAME_2004">http://svn.eol.ucar.edu/svn/dmg/conversions/upper_air/NWS/tags/NAME_2004</a></td></tr>
+	<tr><th>Raw Data:</th><td>/work/ncdc/ascii_files</td></tr>
+	<tr><th>Final Data:</th><td>/archive/codiac/name/upper_air/soundings/NWS</td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<a name="directory"></a><h2>Directory Structure</h2>
+<div class="block">
+    <h3 class="directory_head">NWS/</h3>
+    <table class="directories">
+        <tr><th>5mb/</th><td>The directory where the extracted 5mb pressure sounding files are stored.</td></tr>
+	<tr><th>build/</th><td>The auto-generated directory for the compiled Java classes for the RRS conversion.</td></tr>
+        <tr><th>database/</th><td>The directory where the final processed data that will be put online is stored.</td></tr>
+	<tr><th>docs/</th><td>The directory containing documentation about the processing and the data.</td></tr>
+	<tr><th>final/</th><td>The directory where the auto QC'ed MicroART files are placed as they are created.</td></tr>
+        <tr><th>final_merged/</th><td>The directory where the best auto QC'ed files for both MicroART and RRS are placed in preparation for the visual QC.  The visual QC results are also placed in this directory.</td></tr>
+	<tr><th>lib/</th><td>The directory containing libraries for the MicroArt conversion.</td></tr>
+	<tr><th>logs/</th><td>The directory where the error/check files from the QC are placed.</td></tr>
+	<tr><th>matrix_lib/</th><td>The directory that contains the source code and header files for the matrix library used by the NWS MicroArt conversion programs.</td></tr>
+	<tr><th>nws_src/</th><td>The directory that contains the source code for the NWS conversion programs.</td></tr>
+	<tr><th>output/</th><td>The directory where the processed MicroART files are put after they are formatted to ESC.</td></tr>
+	<tr><th>raw_data/</th><td>The directory where the MicroART raw data is stored for the conversion.</td></tr>
+	<tr><th>rrs_final/</th><td>The directory where the auto QC'ed RRS files are places as they are created.</td></tr>
+        <tr><th>rrs_output/</th><td>The directory where the processed RRS fiels are put after they are formatted to ESC.</td></tr>
+        <tr><th>rrs_raw_data</th><td>The directory where the source RRS files are stored for the conversion.</td></tr>
+	<tr><th>software/</th><td>The directory where the executable software for the MicroArt conversion is stored.</td></tr>
+        <tr><th>src/</th><td>The directory where the Java source files for the RRS conversion are stored.</td></tr>
+        <tr><th>vasil_MT2_converter/</th><td>The directory where the Vasil MT2 -> txt sounding converter for special NWS data is stored.  This must be downloaded and installed on a Windows machine.</td></tr>
+    </table>
+    <h3>Other Directories</h3>
+    <table class="directories">
+        <tr><th>/net/work/operational/sounding/NWS/archive/ascii_files</th><td>The location where the MicroArt ASCII data files are stored after being inventoried. <i>These are the files (i.e., raw MicroArt data) to convert.</i></td></tr>
+        <tr><th>/net/work/operational/sounding/NWS/archive/rrs_text</th><td>The location where the RRS ASCII data files are stored after being extracted from the buffer files and archived. <i>These are the files (i.e., raw RRS data) to convert.</i></td></tr>
+    </table>
+</div>
+<a href="#">Top</a><hr />
+
+<h2>Processing the Data</h2>
+<div class="block">
+
+<a name="proc_setup"></a><h3>Initial Processing Setup</h3>
+<div class="block">
+    <p>There are four things that must be done before processing the data.</p>
+    <ol>
+       <li><a href="#mat_library">Creating the Matrix Library</a>:  This is special library downloaded from the internet that is used by the MicroArt converter.  Instructions on creation can be found <a href="#mat_library">here</a>.</li>
+       <li><a href="#programs">Build the Executables</a>:  The MicroART conversion software is in C/C++ and needs to be compiled to an executable to be run.  The instructions on doing this can be found <a href="#programs">here</a>.</li>
+       <li><a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use">Setup Ant</a>:  The RRS conversion uses an Ant build configuration and must be setup in your environment.  If your environment has already been setup for Ant, this step may be skipped.  To setup your environment for Ant, see:  <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use">Ant Setup and Use</a>.</li>
+       <li>Copy the source data file to the appropriate directories.  The MicroART files go in <span class="directoryName">raw_data</span> and the RRS files go in <span class="directoryName">rrs_raw_data</span>.</li>
+    </ol>
+</div>
+
+<a name="convert_microart"></a><h3>Convert the MicroART Data</h3>
+<div class="block">
+    <p class="note">This must be done on a Solaris OS, since the matrix library and executables will only be created on that OS.</p>
+    <p>This step will convert the MicroART ASCII files into ESC ASCII files. <i>If you don't have MicroArt data to convert, you can skip this set of steps and go directly to "Convert the RRS Data".</i></p>
+    <ol>
+        <li>Change to the <span class="directoryName">software</span> directory.</li>
+        <li>Make sure both the <span class="softwareName">nwsVaisala</span> and <span class="softwareName">nwsVIZ</span> executables are in the <span class="directoryName">software</span> directory.  If they are not, see <a href="#programs">Build the Executables</a>.</li>
+        <li>Update the <code>getProjectName()</code> function to return the correct project ID in the <span class="softwareName">NWS_Converter.pl</span> script.</li>
+        <li>Run the <span class="softwareName">NWS_Converter.pl</span> script.  This will convert all of the files in the <span class="directoryName">raw_data</span> to ESC sounding files and generate the appropriate station list.</p>
+    </ol>
+    <p class="note">This can be a slow process at about 20-30 minutes per month file.</p>
+    <p>If you are processing BNL data, YOU SHOULD FOLLOW THE NWS BNL CONVERSION DOCUMENT WHICH WILL INSTRUCT YOU TO continue with the following auto QC step.  Any other conversion should use the auto QC described <a href="#autoqc">here</a> after converting the RRS data.</p>
+    <ol>
+        <li> Always run the autoqc software via the <b>build.xml</b> file. Inspect that file for the 
+             proper call to make which is generally, "ant autoqc". Ensure that the build.xml
+             file will QC the proper data.  Running the autoqc will QC each ESC file in the 
+             <span class="directoryName">output</span> and put the resulting file in the 
+             <span class="directoryName">final</span> directory and a log file 
+             in the <span class="directoryName">log</span> directory.</li>
+    </ol>
+
+     <p class="note">BEWARE: Running the NWS_Converter.pl (instead of the BNL version) on
+      the BNL data will result in output file names with the actual times in the file names
+      instead of the expected nominal times required for BNL!!! Don't do it!</p>
+
+</div>
+
+
+<a name="convert_rrs"></a><h3>Convert the RRS Data</h3>
+<div class="block">
+    <p class="note">This step works best on merlot, but can be done on any machine with the proper Ant and Java setup.</p>
+    <ol>
+        <li>Ensure that you have copied all the raw data files into the /rrs_raw_data directory. 
+            These raw files can be found in the year and station directories under the
+/net/work/operational/sounding/NWS/archive/rrs_text/ area. Copy all the *Meta.txt, *PTU.txt, and *GPS.txt
+files in the /rrs_raw_data directory. </li> <br>
+        <li>Change to the top level processing directory of the conversion.  (Where the <span class="softwareName">build.xml</span> file is located.)</li>
+        <li><p>This step will convert the RRS binary BUFR files or files that were previously extracted txt files into ESC ASCII files.</p>
+	    <p><span class="note">This step is only required if the ASCII RRS files are unavailable and have to be generated from the buffer files.</span>  Extract the RRS BUFR files into txt files:  This uses the <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/link/nws-rrs-buffer-extraction-documentation">RRS Buffer Extraction Software</a> to extract the ASCII text files from the BUFR files.</p>
+            <p>Execute the Ant command:</p>
+            <p class="code">ant unbufr</p>
+            </li>
+        <li>Update the <code>PROJECT_ID</code> constant in the <span class="softwareName">src/dmg/ua/sounding/convert/nws/RRSSoundingConverter.java</span> file to contain the correct project ID.</li>
+        <li><p>Convert the RRS ASCII text files into ESC files.  This ant convert command will read and combine the information from the meta data, PTU, and wind files (<i>i.e., *_1Meta.txt, *_5pPTU.txt, *_6pGPS.txt</i>) for each sounding into a single output ESC sounding file. The output *.cls files will be placed in the <span class="directoryName">rrs_output</span> directory.  This  ant convert command will also run the format checker on the output data, sort the records (and rename the original output files to .unsort), and then run the format checker on the sorted record files.</p>
+            <p>Execute the Ant command:</p>
+            <p class="code">ant convert</p>
+            <p>to convert the *.txt input files to *.cls output files.</p>
+    </ol>
+</div>
+
+<a name="autoqc"></a><h3>Auto QC</h3>
+<div class="block">
+    <p class="note">This step works best on merlot, but can be done on any machine with the proper Ant and Java setup.</p>
+    <p>This step executes the automatic QC on the processed files (/output and /rrs_output), generates log files (/logs), and places the QC'ed files in the final directory specified by the build.xml file (/final &/or /rrs_final).  After autoQC runs, the build.xml file will run the format checker on the QC'ed files. <p class="note">BEWARE: that the build.xml script runs the "NWSESCAutoQC" version of the autoQC s/w on the MicroArt data BUT build.xml runs the more general "UpsondeESCAutoQC" version of the autoQC s/w on the RRS data. The MicroArt form of the data is being phased out and has very specific issues that require
+a certain form of the autoQC to run on it. The RRS form of the NWS data is the data format being transitioned to. This RRS form no longer has the issues that the MicroArt data does/did, so the RRS data only requires the more typical form of the upsonde autoQC.</p></p>
+    <ol>
+       <li>Stay in/Change to the top level processin directory where the Ant <span class="softwareName">build.xml</span> file is located.</li>
+       <li>Check the <span class="softwareName">build.xml</span> file for the <code>autoqc</code> target and make sure there are:
+           <ol>
+               <li>Command to copy the property files to the build directory. 
+               <p class="note">Beware that there are different versions of the properties files required to
+                   run autoQC. There are "HOT" and "COLD" properties files and there are upsonde, dropsonde, and driftsonde properties files. For the NWS data which is all in the United States, we use the us_plains_autoqc.properties files (typically found in the /software dir). The us_plains_autoqc.properties files is used for "HOT" upsondes.   </p>
+               </li> 
+               <li>See the build.xml file to determine the exact location and form of the input data QC'd and the output data generated. Ensure that these are correct.</li>
+           </ol></li>
+       <li><p>Perform the auto QC by executing the ant command:</p>
+           <p class="code">ant autoqc</p>
+           </li>
+       <li><p>Merge the MicroART and RRS final data files together into a single directory to prepare for the visual QC. <i>If you only have one type of data, you don't need to do this step.</i> See the build.xml file for the exact files combined and the directory the files are placed. This is done by the command:</p>
+           <p class="code">ant merge</p>
+           </li>
+    </ol>
+</div>
+
+<a name="visual_qc"></a><h3>Visual QC</h3>
+<div class="block">
+    <p>Once the auto QC is completed, the scientific staff (generally Scot Loehrer) will perform a visual QC on the data and do final approval of the processed data set. 
+<br> <br>
+Scot uses a piece of s/w that will only execute on a Solaris OS like Cabernet (or Pandora). Believe that s/w tool which generates skew-T plots will only run on Cabernet and probably was rebuilt on an older version of the OS. Believe Mark Bradford originally wrote this s/w.</p>
+<p> Visual QC generates *.cls.qc files generally in <span class="directoryName">/rrs_final</span> for the RRS data and in <span class="directoryName">/final</span> for the MicroArt data.
+</div>
+
+<a name="finalize"></a><h3>Final Preparation</h3>
+<div class="block">
+    <p>After the visual QC is complete, the data set is ready to be prepared for database entry.  This entails creating day files and possibly loading the data set into the archive database.</p>
+    <h5>For General Projects</h5>
+    <p>The following ant dayfiles command will generate day files sorted by nominal release date and then by station location as required by CODIAC.</p>
+    <ol>
+       <li><p>Create the day files using the ant command:</p>
+           <p class="code">ant dayfiles</p>
+           <p>This creates an output *.cls file in the <span class="directoryName">database</span> directory for each day where there exists at least one sounding in the <span class="directoryName">final_merged</span> directory or whichever input directory is specified in the build.xml file.</p>
+           </li>
+    </ol>
+
+</div>
+
+<a name="5mb-extract"></a><h3>5mb Extraction</h3>
+<div class="block">
+    <p>If the converted soundings are also going to be used in a 5mb composite, the soundings need to have 5mb pressure level soundings generated.  This is done by doing the following:</p>
+    <ol>
+        <li><p>Generate the 5mb pressure level data files using the ant command:</p>
+            <p class="code">ant 5mb-extract</p>
+            <p>This will generate a 5 mb sounding file for each sounding in the <span class="directoryName">final_merged</span> directory and place the output 5mb file in the <span class="directoryName">5mb</span> directory.  It will also run final checks to make sure the format is correct. See the build.xml file for the exact command executed. These 5mb files are the ones to use in the 5mb composite dataset.</p>
+            </li>
+    </ol>
+</div>
+
+<a href="#">Top</a><hr />
+
+
+<h2>Building Libraries and Executables</h2>
+<a name="mat_library"></a><h3>Creating the Matrix Library</h3>
+<div class="block">
+    <p class="note">The following currently only works on a Solaris OS and works best on tornado.</p>
+    <p>The matrix library is a download from the internet that is dated from 1992-1995.  As of April 2005, the online version is the same as the EOL version and has not been updated.  The EOL version has been updated to work with the current version of g++, which the online version does not.  The change was to add the <b>const</b> keyword to the matrix::matrix(matrix &y) function so now the function prototype looks like: matrix::matrix(const matrix &y).</p>
+    <p>The following steps are how to generate the matrix library, <span class="softwareName">libmat.a</span>:</p>
+    <ol>
+	<li>Change to the <span class="directoryName">matrix_lib</span> directory.  This contains all of the header and code files for the library, along with the makefile: libmat.mak to generate the library.</li>
+	<li>Create the library:
+                <p class="softwareName">make -f libmat.mak</p>
+		<p>This will create the library <span class="softwareName">matrix_lib.a</span> in the <span class="directoryName">lib</span> directory and copy the needed <span class="softwareName">matrix.hpp</span> file to the <span class="directoryName">lib</span> directory as well.  To make the library issue the command listed directly above.</p>
+		</li>
+	<li>Change to the <span class="directoryName">lib</span> directory to make sure that the <b>libmat.a</b> library and the <b>matrix.hpp</b> header file both are in the directory.</li>
+    </ol>
+</div>
+
+<a name="programs"></a><h3>Creating the Conversion Programs</h3>
+<div class="block">
+    <p class="note">The following currently only works on a Solaris OS.</p>
+    <p>The following steps will create the binaries for converting the MicroART data into the ESC format.</p>
+    <ol>
+	<li>Change to the <span class="directoryName">nws_src</span> directory.</li>
+	<li>Run the command to make the binaries and put them into the <span class="directoryName">software</span> directory.
+                <p class="softwareName">make -f MakeNWS</p>
+        </li>
+    </ol>
+</div>
+
+<a name="vasil"></a><h3>Vasil File Converter</h3>
+<div class="block">
+    <p>The Vasil File Converter is a Windows program that Scot was given on a CD and was placed within the repository.  It is used to convert certain NWS soundings from a binary format into ASCII files.  The soundings are for a small number of stations which are not part of the continual archive sent by NCDC.  The stations include Charleston, SC; Albany, NY; and a couple of others.</p>
+    <p>The Vasil program generates ASCII text files which are then converted to ESC with the <span class="softwareName">NWS_Converter.pl</span> script.</p>
+</div>
+
+<a name="ebufr"></a><h3>Converting to EBUFR</h3>
+<div class="block">
+    <p>The following explains how to EBUFR the QC'ed CLASS files.  This assumes that the class2ebufr binary file has been generated.  For more information on the EBUFR process, see <a href="/dpg/GENERAL/soundings/howto_ebufr_class_soundings.html">How To: EBUFR CLASS Sounding Data</a>.</p>
+    <ol>
+	<li>Change to the software directory (if you are not already there).
+	<li>Make sure the EBUFR configuration files are in the directory.  There should be five (class_file, code_08_021, code_33_254, control_scf.txt, desc_file).  The program will crash without these files.</li>
+	<li>Make sure there is a copy of the executable (or a symbolic link to it) in the directory.</li>
+	<li>Edit the <span class="softwareName">control_scf.txt</span> file.
+		<p>On the 12th line, (two lines above the "END FILE" line) the project name needs to be edited to match the current project.  The rest of the files should remain untouched.</p>
+	<li>Edit the <span class="softwareName">create_ebufr_files.pl</span> script.<ol>
+		<li>Change the variable: <code>$PROJECT</code> to the name of the current project.</li>
+		<li>Change the variable: <code>$PROGRAM</code> to the path of where the class2ebufr program for the current project is located.</li>
+		</ol></li>
+	<li>Run the <span class="softwareName">create_ebufr_files.pl</span> script.  This will concatonate the CLASS files into day CLASS file which will be used to generate the EBUFR day files.
+		<p class="note">Near the end of the file is a pattern for generating the names of the outputed ebufr files.  Make sure the network name is changed to NWS.</p>
+		<p class="note">The script copies the five aforementioned files to the <b>ebufr</b> directory and removes them once the processing is finished.  This is to force all of the intermediate and final files to be saved in the <b>ebufr</b> directory.</p>
+    </ol>
+</div>
+
+<p><a href="#">Top</a></p><hr />
+
+<a name="documents"></a><h2>Documentation</h2>
+<div class="block">
+    <p>The following are a list of documents that may help with the conversion or are related to the raw data.</p>
+    <ul>
+	<li><a href="/software/tools/upper_air/autoqc">How To: AUTO QC Sounding Data</a>- The instructions for dealing with the AUTO QC program.</li>
+	<li><a href="/software/tools/upper_air/esc_format_checker">How To: ESC Format Checker</a>- The instructions and API for working with the ESC format checker program.</li>
+        <li><a href="/software/tools/upper_air/esc_record_sorter">How To: ESC Record Sorter</a>- The instructions and API for working with the ESC record sorter program.</li>
+	<li><a href="#">How To: Process NWS Sounding Data</a>- This document.</li>
+        <li><a href="/software/library/java/station">Java Station Library API</a></li>
+        <li><a href="/software/library/java/upper_air">Java Upper Air Library API</a></li>
+        <li><a href="/software/library/java/utilities">Java Utilities Library API</a></li>
+    </ul>
+</div>
+<a href="#">Top</a><hr>
+
+<p class="foot">Last Updated: 17 Jan 2012 - Linda Cully</p>
+</body>
+</html>

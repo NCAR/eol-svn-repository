@@ -1,0 +1,400 @@
+* html body { overflow: hidden; }
+* html div#main {
+    height: expression(document.body.clientHeight - 75 + "px");
+    width: expression(document.body.clientWidth - 250 + "px");
+}
+* html div#menu { height: expression(document.body.clientHeight - 75 + "px"); }
+
+a:link, a:visited {
+    color: #00C;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #C00;
+    text-decoration: underline;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: justify;
+}
+
+.categoryListBox { width: 250px; }
+.categoryListButton { width: 80px; }
+
+.categoryListEntry {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.categoryListEntry > .categoryListEntry {
+    margin-bottom: 0;
+    margin-left: 25px;
+}
+
+.categoryListTable, .categoryListTableEdit, .categoryListTableHover, .categoryListTableHidden, .categoryListTableEditHidden {
+    border-bottom: 1px solid #000;
+    margin: auto;
+    width: 500px;
+}
+
+.categoryListTableEdit { background-color: #CCF; }
+.categoryListTableHidden { background-color: #CCC; }
+.categoryListTableEditHidden { background-color: #99C; }
+
+.categoryListEntry > .categoryListEntry > .categoryListTableHidden,
+.categoryListEntry > .categoryListEntry > .categoryListTableEditHidden,
+.categoryListEntry > .categoryListEntry > .categoryListTable,
+.categoryListEntry > .categoryListEntry > .categoryListTableEdit,
+.categoryListEntry > .categoryListEntry > .categoryListTableHover {
+    width: 475px;
+}
+
+.categoryListTableHover { background-color: #FFC; }
+
+.categoryName {
+    font-size: 14pt;
+    padding-left: .5em;
+    width: 100%;
+}
+
+.classificationTypeEntry table { font-size: 12pt; font-weight: bold; margin-left: 2em; }
+.categoryMenuEntry table { font-size: 11pt; font-weight: bold; margin-left: 4em; }
+.categorySubMenuEntry table { font-size: 10pt; font-weight: bold; margin-left: 6em; }
+
+.categoryTreeIcon {
+    height: 16px;
+    text-align: center;
+    vertical-align: top;
+    width: 16px;
+}
+
+.categoryTreeLabel {
+    padding: 0;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.centered { margin: auto; }
+
+.dataForm {
+    background-color: #FFC;
+    border: 1px solid #000;
+    color: #000;
+    margin: 25px auto;
+    width: 600px
+}
+
+.dataFormRow {
+    width: 100%;
+}
+
+.datasetAuthorCol {
+    font-size: 10pt;
+    text-align: center;
+    vertical-align: middle;
+    width: 100px;
+}
+
+.datasetDocCol {
+    font-size: 10pt;
+    text-align: center;
+    vertical-align: middle;
+    width: 40px;
+}
+
+.datasetEntryEdit { background-color: #CCF; width: 100%; }
+.datasetEntryEditHidden { background-color: #99C; width: 100%; }
+
+.datasetEntryRow, .datasetEntryRowHover { width: 100%; }
+.datasetEntryRowHover { background-color: #FFC; }
+
+.datasetIdCol, .datasetNameCol {
+    font-size: 11pt;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.datasetIdCol { width: 60px; }
+
+.datasetListCategory {
+    font-size: 14pt;
+    font-weight: normal;
+}
+
+.datasetStatusCol, .datasetStatusCol td {
+    font-size: 10pt;
+    text-align: center;
+    vertical-align: middle;
+    width: 120px;
+}
+
+.dateField { width: 100px; }
+
+.deleteIconCol {
+    padding: 0;
+    text-align: center;	
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 60px;
+}
+
+div#header {
+    background-color: #FFC;
+    color: #000;
+    height: 75px;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+}
+
+div#main {
+    bottom: 0;
+    color: #000;
+    left: 250px;
+    overflow: auto;
+    padding-bottom: 1em;
+    position: absolute;
+    right: 0;
+    top: 75px;
+}
+
+div#menu {
+    background-color: #FFC;
+    bottom: 35px;
+    color: #669;
+    left: 0;
+    overflow: auto;
+    position: absolute;
+    top: 75px;
+    width: 250px;
+}
+
+div#menufooter {
+    background-color: #FFC;
+    bottom: 0;
+    color: #669;
+    height: 35px;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    width: 250px;
+}
+
+.editIconCol { 
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 45px;
+}
+
+.errorTable {
+    margin: 10px auto;
+    width: 600px;
+}
+
+.errorTable h2 {
+    color: #F00;
+    text-align: center;
+}
+
+.errorTable h3 {
+    margin-left: 10px;
+}
+
+.errorTable p {
+    margin-left: 25px;
+}
+
+.errorTable tr td {
+    border: 1px solid #000;
+}
+
+.expected {
+    color: #00C;
+    font-weight: bold;
+}
+
+.formTitle {
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.formHeader {
+    border-bottom: 1px solid #000;
+    font-size: 16pt;
+    font-weight: bold;
+    width: 100%;
+}
+
+.formValue {
+    width: 100%;
+}
+
+.fullField { width: 100%; }
+
+.headerTitle {
+    font-size: 50px;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+.hideIconCol {
+    padding: 0;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 60px;
+}
+
+.icon {
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 0%;
+}
+
+img {
+    border: 0;
+}
+
+.inProgress {
+    color: #0C0;
+    font-weight: bold;
+}
+
+.listHeader {
+    font-weight: bold;
+}
+
+.mainTitle {
+    text-align: center;
+}
+
+.menuEntry {
+    font-size: 12pt;
+    font-weight: bold;
+    padding-left: 3em;
+}
+
+.menuHead {
+    font-size: 18pt;
+    font-weight: bold;
+    padding-left: 1em;
+}
+
+.new {
+    color: #C0C;
+    font-weight: bold;
+}
+
+.note { font-style: italic; }
+
+.prelimBox {
+    border: 1px solid #000;
+    margin: 0;
+    padding: 0;
+}
+
+.prelimBox td, .prelimBox tr { 
+    margin: 0;
+    padding: 0;
+}
+
+.preliminary {
+    color: #900;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.projectChildCategory, .projectChildCategoryHidden {
+    border: 1px solid #000;
+    font-size: 16pt;
+    margin: 5px 1% 0 1%;
+    text-align: left;
+    width: 98%;
+}
+
+.projectChildCategory { background-color: #EFE; }
+.projectChildCategoryHidden { background-color: #CCC; }
+
+.projectChildCategory > .projectChildCategory, .projectChildCategoryHidden > .projectChildCategoryHidden,
+ .projectChildCategory > .projectChildCategoryHidden, .projectChildCategoryHidden > .projectChildCategory {
+    margin: 5px 1% 0 3%;
+    width: 96%;
+}
+
+.projectChildDataset, .projectChildDatasetHidden {
+    border: 1px solid #000;
+    font-weight: normal;
+    margin: 0 1% 0 3%;
+    width: 96%;
+}
+
+.projectChildDataset { background-color: #FFF; }
+.projectChildDatasetHidden { background-color: #CCC; }
+
+.projectName {
+    font-size: 16pt;
+    font-weight: bold;
+    padding-left: .5em;
+    width: 100%;
+}
+
+.projectTable {
+    margin: 0 10%;
+    width: 80%;
+}
+
+.projectTableEntry, .projectTableEntryHover {
+    border: 1px solid #000;
+    width: 100%;
+}
+
+.projectTableEntryHover {
+    background-color: #FFC;
+}
+
+.projectTitle {
+    font-size: 28pt;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+
+.righted { margin-left: auto; }
+
+.todayIcon {
+    text-align: left;
+    padding-right: 15px;
+}
+
+.twoColumn { 
+    text-align: center;
+    vertical-align: top;
+    width: 50%;
+}
+
+.twoColumn table {
+    vertical-align: top;
+    width: 100%;
+}
+
+.updated {
+    color: #C00;
+    font-weight: bold;
+}
+
+.warning {
+    color: #F00;
+    font-style: italic;
+    font-weight: bold;
+}

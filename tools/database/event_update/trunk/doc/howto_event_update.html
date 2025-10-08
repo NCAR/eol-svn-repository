@@ -1,0 +1,140 @@
+<html>
+<head>
+    <title>How To: Event Update Software</title>
+    <link rel="stylesheet" type="text/css" href="/css/howto.css" />
+</head>
+<body>
+<h1 class="title">How To: Event Update Software</h1>
+
+<h2>Table of Contents</h2>
+<div id="toc">
+    <ol>
+
+        <li><a href="#about">About the Software</a></li>
+        <li><a href="#event-file">Event File Setup</a>
+		<ol><li><a href = "#file-format">File Format</a></li></ol></li>
+		<li><a href="#running">Running the Program</a>
+			<ol>
+				<li><a href="#options">Update Options</a></li>
+				<li><a href="#commit">Committing</a></li>
+				<li><a href="#logfile">The Logfile</a></li>
+			</ol>
+		</li>
+        </li>
+
+    </ol>
+</div>
+
+<a name="about"></a>
+<h2>About the Software</h2>
+<div class="block">
+    <table class="directories">
+        <tr>
+            <th>Software:</th>
+            <td>/net/work/bin/scripts/events/event_update/dist/<span class="softwareName">EventUpdate.jar</span></td>
+
+            <td>Update events based on date/time information</td>
+        </tr>
+        <tr>
+            <th>Source:</th>
+            <td>/net/work/bin/scripts/events/event_update/src</td>
+            <td>Java source code for the EventUpdate software</td>
+        </tr>
+		<tr>
+            <th>Javadoc:</th>
+            <td>/net/work/bin/scripts/events/event_update/javadoc</td>
+            <td>Documentation files generated from the source files</td>
+        </tr>
+    </table>
+
+    <p>This jar file is used to tag files in a dataset or project with an event if the file falls within a certain begin/end date.  It can also adjust the begin/end date of a file if it is already tagged with an event.  See the <a href = "javadoc/allclasses-frame.html">Javadoc</a> for the source code documentation.  To run the java program use:</p>
+    <p class="code">java -jar /net/work/bin/scripts/events/event_update/dist/EventUpdate.jar</p>
+	<p class="note">Make sure to use the java located at /net/csoft_lnx/jre/bin/java.  This should be the most recent version.</p>
+    <p class="note">You must have a username and password setup to modify the MySQL database.  Confirm the host and database name for the current codiac system before continuing.</p>
+</div>
+
+
+<a name="event-file"></a>
+
+<h2>Event File Setup</h2>
+<div class="block">
+    <p>The <span class="softwareName">EventUpdate.jar</span> software requires an event file that specifies the event names and the begin and end date/time of each event.</p>
+	<p>Take note of the name and location of this event file, for use when the program is run.</p>
+</div>
+
+<a name="file-format"></a>
+<h3>File Format</h3>
+<div class="block">
+    <p>The event file must be in the format: <b>Event Begin_Date End_Date</b>.  Where the begin_date and end_date are in the format: <i>yyyy-MM-dd HH:mm:ss</i></p>
+	<p>The contents from an example file for the Rainex project where files where tagged with hurricane name events are listed below.</p>
+	<p class="code">Dennis 2005-07-05 00:00:00 2005-07-10 23:59:59</p>
+	<p class="code">Emily 2005-07-12 00:00:00 2005-07-19 23:59:59</p>
+	<p class="code">Gert 2005-07-22 00:00:00 2005-07-24 23:59:59</p>
+	<p class="code">Katrina 2005-08-23 00:00:00 2005-08-30 23:59:59</p>
+	<p class="code">Ophelia 2005-09-06 00:00:00 2005-09-17 23:59:59</p>
+	<p class="code">Rita 2005-09-18 00:00:00 2005-09-26 23:59:59</p>
+	<p class="code">Wilma 2005-10-16 00:00:00 2005-10-25 23:59:59</p>
+
+	<p class="note">One event must be specified per line</p>
+</div>
+
+<a name="running"></a>
+<h2>Running The Program</h2>
+
+<div class="block">
+	<p>After the program has been invoked with <i>java -jar</i> the user will be asked for various pieces of information:</p>
+	<ul>
+		<li><b>Host</b> - The name of the server on which the database to be updated is located.  For example tsunami.  If you are already on the server of the database, the host name would be localhost.</li>
+		<li><b>Database Name</b> - The name of the database to be updated.  For example zedi8</li>
+		<li><b>Username</b> - The name used to login to this database.</li>
+		<li><b>Password</b> - The password for the specified user.</li>
+		<li><b>Event File</b> - The location of the file that specifies the events.</li>
+	</ul>
+	<p>After these pieces of information have been collected the program will attempt to connect to the database.  If there are any errors with the connection the program will die with an error.</p>
+	
+</div>
+
+<a name="options"></a>
+<h3>Update Options</h3>
+
+<div class="block">
+	<p>Once the connection is successful and the event file has been loaded, the program will ask the user for the dataset_id or the project_id.  The user will then be presented with two choices.</p>
+	<p>Each option will search through every file in the specified project or dataset.  Every file will be checked against each event.  The files will be updated in the following manner.</p>
+	
+	<ol>
+		<li><b>Tag files with an event</b>
+			<ul>
+			<li>If both the begin date <b><i>and</b></i> end date fall within the begin/end date of the event then this file will be tagged with that event.</li>
+			<li>If either the begin date <b><i>or</b></i> the end date fall within the begin/end date of the event then this file will also be tagged with that event and a warning message will be printed.</li>
+			<li>If the file spans the entire time frame of an event then a warning message will be printed.</li>
+			</ul>
+		</li>
+		<li><b>Update the begin/end dates of files</b>
+			<ul>
+			<li>If the event string of the file matches one of the events loaded from the event file the begin/end dates of the file will be updated to match this event.</li>
+			</ul>
+		</li>
+	</ol>
+	
+
+</div>
+
+<a name="commit"></a>
+<h3>Committing</h3>
+
+
+<div class="block">
+<p>After the program has finished running the user will be asked whether they wish to commit the changes.  The total number of updated files will be displayed.  To commit the changes <b>type "y"</b> and press enter.  Otherwise enter any value and press enter to cancel.</p>
+</div>
+
+<a name="logfile"></a>
+<h3>The Logfile</h3>
+
+
+<div class="block">
+	<p>When the program is run a log file will be created in the current directory.  The log file will be named with a timestamp of the current time.  The format will be <i>log-ddMMMyyyy-HH:mm:ss</i> eg: log-18Aug2009-14:12:57</p>
+	<p>This log file will include any information that was printed to standard output during the running of the program.</p>
+</div>
+
+</body>
+</html>

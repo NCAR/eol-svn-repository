@@ -1,0 +1,26 @@
+<project name="iven" default="deploy" basedir=".">
+
+  <property name="app.name" value="iven" />
+  <property name="src" value="cgi-bin"/>
+  <property name="web" value="html"/>
+  <property name="deploy"  value="/dmsdev/web/cgi-bin/dpg/${app.name}"/>
+  <property name="deploy.static" value="/work/DPG_HTML/iven/dev" />
+
+  <!-- pick which deploy method to use -->
+  <target name="deploy" depends="deploy-copy"/>
+
+  <target name="deploy-copy">
+    <!-- "static" web and conf files -->
+    <copy todir="${deploy}">
+      <fileset dir="${src}"/>
+    </copy>
+    <chmod perm="775">
+       <fileset dir="${deploy}">
+          <include name="**/*" />
+       </fileset>
+    </chmod>
+    <copy todir="${deploy.static}">
+      <fileset dir="${web}" />
+    </copy>
+  </target>
+</project>

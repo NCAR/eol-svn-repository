@@ -1,0 +1,123 @@
+#!/bin/perl -w
+
+# McD
+# --------------------------------------------------------------
+# category_list: Displays the categories (with links) in the
+#  left frame for the given project.
+#
+# Expected params:
+#  "project" - the project id number to display categories of
+#  "category" - (optional) the category to expand, this allows
+#  for the open-close type behavior of the sub-categories.  If
+#  no category is given, the root categories are displayed.
+#
+# Author: Dan Sullivan
+# Date: July, 2003
+# --------------------------------------------------------------
+
+use strict;
+use CGI qw(:standard :html3 );
+use lib "lib";
+use Utils;
+
+use lib "../mcd_lib";
+use Category;
+use CategoryDBA;
+use Project;
+use ProjectDBA;
+
+my $cat_dba = CategoryDBA->new();
+my $proj_dba = ProjectDBA->new();
+
+my $project = param( "project" );
+my $category = param( "category" );
+$category = -1 if( !defined( $category ) );
+
+my @tree = $cat_dba->getTree( $project );
+
+my $proj = $proj_dba->getFromDB( $project );
+
+println( header() );
+
+println( "<html><head><title>JOSS ML Editor</title></head>" );
+println( $css );
+println( $jscript );
+println( "<body bgcolor=#336699 link=white alink=white vlink=white text=white>" );
+
+my $shift = 2;
+println( "<br>" );
+
+println( "<table border=0 width=100%>" );
+	println( "<tr><td align=center>" );
+		println( "<font size=+2><b>$proj->{name}</b></font>" );
+	println( "</td></tr>" );
+println( "</table>" );
+
+println( "<br>" );
+println( &nbsp($shift), 
+				"<span id=\"folder_item\">", 
+				"<a href=list_table?project=$project target=body>All Datasets By Title</a></span><br><br>" );
+println( &nbsp($shift), 
+				"<span id=\"folder_item\">", 
+				"<a href=category_table?project=$project target=body>All Data Categories:</a></span><br>" );
+showTree( \@tree, 1 ); 
+
+println( "<br><br>" );
+println( &nbsp($shift), 
+				"<span id=\"folder_item\">", 
+				"<a href=\"javascript: editWindow( \'edit_fields?mode=add&project=$project\')\">Add New Dataset</a></span><br>" );
+
+println( &nbsp($shift), 
+				"<span id=\"folder_item\">", 
+				"<a href=view_cats?project=$project target=body>Add/Edit Categories</a></span><br>" );
+
+println( &nbsp($shift), 
+				"<span id=\"folder_item\">", 
+				"<a href=\"javascript: editProjWindow( \'edit_project?mode=update&project=$project\')\">Edit This Project</a></span><br><br>" );
+
+println( "<br>" );
+println( &nbsp($shift), "<span id=\"folder_item\"><font size=-1><a href=project_list>Return to Project List</span></a>" );
+
+println( "</body></html>" );
+
+sub showTree
+{
+	my @tree = @{ $_[0] };
+	my $depth = $_[1];
+	my $prev_link_cat = $_[2];
+	$prev_link_cat = -1 if( !defined( $prev_link_cat ) );
+
+	foreach my $node (@tree )
+	{
+		my $show_childern = 0;
+		my $link_cat = $node->{category}->{id};
+
+		if( ( $node->{childern} && $category == $node->{category}->{id} ) || 
+				($category != -1 && $node->{childern} && $node->inTree( $category ) ) )
+		{
+			$show_childern = 1;
+			#$link_cat = -1;
+			$link_cat = $prev_link_cat;
+		}
+		else
+		{
+			#$link_cat = $prev_link_cat if( defined( $prev_link_cat ) );
+		}
+
+		my $next_link_cat = $node->{category}->{id};
+		$next_link_cat = undef() if( $category == $node->{category}->{id} );
+
+		my $left = "\'category_list?project=$project&category=$link_cat\'"; 
+		my $body = "\'category_table?project=$project&category=$node->{category}->{id}\'";
+
+		#$left = "\'\'" if( ! $node->{childern} );
+		$body = "\'\'" if( $show_childern );
+
+		println(  "<span id=\"category_item\">", &nbsp( $depth*4),
+							"<a href=\"javascript: setFrames( parent, \'\', $left, $body )\">",
+							$node->{category}->{name}, "</a></span><br>" );
+
+		showTree( $node->{childern}, $depth+1, $next_link_cat) if( $show_childern );
+	}
+}
+

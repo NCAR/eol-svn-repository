@@ -1,0 +1,14 @@
+Master List Application: For arctic projects
+=======================
+
+README last updated: August 8, 2003
+
+This application was developed for Greg S. and the arctic projects.
+
+The main scripts for the Master List Application (master_maint and master_query) are located in this
+directory.  The Master List Application automates the addition of datasets to the master lists, stores
+the information into a database, and then allows for tables to be created dynamically - sortting and
+and extractting the fields we want.  The application consists of two main scripts the master_maint script and
+the master_query script.  The master_maint CGI script is a form based tool that allows the user to add and
+modify datasets for a particular project.  The master_query CGI script reads in parameters set within the
+url and then displays a master table based on those parameters.

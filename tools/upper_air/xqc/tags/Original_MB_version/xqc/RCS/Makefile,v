@@ -1,0 +1,121 @@
+head	1.1;
+access;
+symbols;
+locks;
+comment	@# @;
+
+
+1.1
+date	92.12.03.00.52.01;	author mark;	state Exp;
+branches;
+next	;
+
+
+desc
+@Auto-checkin done by rcsify
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@#
+# $Id$
+#
+#
+# $Log$
+#
+
+# Simple Makefile for xqc
+# Version 1.0 alpha, 1992 May 19
+# Mark Bradford, STORM Project Office
+# (303) 497-8969
+# bradfrd2@@ncar.ucar.edu
+
+CFLAGS = -I. -I/usr/openwin/include -g
+
+SRCS=	xqc.c	classio.c	Skewt.c	derive.c\
+	DrawText.c
+
+OBJS=	xqc.o	classio.o	Skewt.o	derive.o\
+	DrawText.o
+
+LDR=	cc
+LDFLAGS= -g
+LIBS=-L/usr/local/X11R5/lib -L/usr/openwin/lib -lX11 -lxview -lolgx
+COMMAND=xqc.t
+
+#
+# Lines from here on down should not need to be changed.  They are the
+# actual rules which make uses to build a.out.
+#
+$(COMMAND):	$(OBJS)
+	$(LDR) $(LDFLAGS) -o $(COMMAND) $(OBJS) $(LIBS)
+
+clean:
+	rm -f *.o *.l
+
+clobber:	clean
+	rm -f $(COMMAND)
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+Skewt.o: config.h /usr/include/math.h /usr/include/floatingpoint.h
+Skewt.o: /usr/include/sys/ieeefp.h /usr/local/X11R5/include/X11/Intrinsic.h
+Skewt.o: /usr/local/X11R5/include/X11/Xlib.h /usr/include/sys/types.h
+Skewt.o: /usr/include/sys/stdtypes.h /usr/include/sys/sysmacros.h
+Skewt.o: /usr/local/X11R5/include/X11/X.h
+Skewt.o: /usr/local/X11R5/include/X11/Xfuncproto.h
+Skewt.o: /usr/local/X11R5/include/X11/Xosdefs.h /usr/include/stddef.h
+Skewt.o: /usr/local/X11R5/include/X11/Xutil.h
+Skewt.o: /usr/local/X11R5/include/X11/Xresource.h /usr/include/string.h
+Skewt.o: /usr/local/X11R5/include/X11/Core.h
+Skewt.o: /usr/local/X11R5/include/X11/Composite.h
+Skewt.o: /usr/local/X11R5/include/X11/Constraint.h
+Skewt.o: /usr/local/X11R5/include/X11/Object.h
+Skewt.o: /usr/local/X11R5/include/X11/RectObj.h ui.h ui_symbol.h ui_param.h
+Skewt.o: /usr/include/stdio.h ui_error.h /usr/include/setjmp.h defs.h
+Skewt.o: /usr/include/memory.h pd.h message.h derive.h GraphProc.h GC.h
+Skewt.o: PixelCoord.h DrawText.h xqc.h
+DrawText.o: /usr/include/math.h /usr/include/floatingpoint.h
+DrawText.o: /usr/include/sys/ieeefp.h
+DrawText.o: /usr/local/X11R5/include/X11/Intrinsic.h
+DrawText.o: /usr/local/X11R5/include/X11/Xlib.h /usr/include/sys/types.h
+DrawText.o: /usr/include/sys/stdtypes.h /usr/include/sys/sysmacros.h
+DrawText.o: /usr/local/X11R5/include/X11/X.h
+DrawText.o: /usr/local/X11R5/include/X11/Xfuncproto.h
+DrawText.o: /usr/local/X11R5/include/X11/Xosdefs.h /usr/include/stddef.h
+DrawText.o: /usr/local/X11R5/include/X11/Xutil.h
+DrawText.o: /usr/local/X11R5/include/X11/Xresource.h /usr/include/string.h
+DrawText.o: /usr/local/X11R5/include/X11/Core.h
+DrawText.o: /usr/local/X11R5/include/X11/Composite.h
+DrawText.o: /usr/local/X11R5/include/X11/Constraint.h
+DrawText.o: /usr/local/X11R5/include/X11/Object.h
+DrawText.o: /usr/local/X11R5/include/X11/RectObj.h ui.h ui_symbol.h
+DrawText.o: ui_param.h /usr/include/stdio.h message.h DrawText.h sfont_1.c
+DrawText.o: xqc.h
+xqc.o: /usr/local/X11R5/include/X11/Xlib.h /usr/include/sys/types.h
+xqc.o: /usr/include/sys/stdtypes.h /usr/include/sys/sysmacros.h
+xqc.o: /usr/local/X11R5/include/X11/X.h
+xqc.o: /usr/local/X11R5/include/X11/Xfuncproto.h
+xqc.o: /usr/local/X11R5/include/X11/Xosdefs.h /usr/include/stddef.h
+xqc.o: /usr/local/X11R5/include/X11/Xutil.h
+xqc.o: /usr/local/X11R5/include/X11/Xresource.h
+xqc.o: /usr/local/X11R5/include/X11/cursorfont.h /usr/include/stdio.h
+xqc.o: /usr/include/string.h /usr/include/sgtty.h /usr/include/sys/ioctl.h
+xqc.o: /usr/include/sys/ttychars.h /usr/include/sys/ttydev.h
+xqc.o: /usr/include/sys/ttold.h /usr/include/sys/ioccom.h
+xqc.o: /usr/include/sys/ttycom.h /usr/include/sys/filio.h
+xqc.o: /usr/include/sys/sockio.h /usr/include/ctype.h /usr/include/pwd.h
+xqc.o: xqc.h GC.h
+classio.o: /usr/include/stdio.h /usr/include/errno.h /usr/include/sys/errno.h
+classio.o: /usr/include/sys/types.h /usr/include/sys/stdtypes.h
+classio.o: /usr/include/sys/sysmacros.h /usr/include/sys/stat.h xqc.h
+classio.o: /usr/local/X11R5/include/X11/Xlib.h
+classio.o: /usr/local/X11R5/include/X11/X.h
+classio.o: /usr/local/X11R5/include/X11/Xfuncproto.h
+classio.o: /usr/local/X11R5/include/X11/Xosdefs.h /usr/include/stddef.h
+derive.o: /usr/include/math.h /usr/include/floatingpoint.h
+derive.o: /usr/include/sys/ieeefp.h message.h derive.h
+@

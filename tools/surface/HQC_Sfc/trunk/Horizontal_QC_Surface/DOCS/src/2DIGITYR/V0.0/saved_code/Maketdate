@@ -1,0 +1,11 @@
+SHELL = /bin/sh
+
+CC=acc
+##CFLAGS = -g
+
+testdate: testdate.o date.o
+	$(LINK.c) -o testdate testdate.o date.o
+	chmod 0755 testdate
+
+clean:
+	rm *.o

@@ -1,0 +1,155 @@
+83.002Model: GDAS Analysis (initial data)2003-05-23dStottdStottdStottCeleste Saulosaulo@at1.fcen.uba.ar/ftp/pub/incoming/salljex/model/analysis/archive/codiac/salljex/model/analysisThis dataset has the initial and boundary
+conditions binary data in GRIB format to be used
+for running the models. 
+0183.003Aircraft P-3: General Information, Mission Summaries2003-06-16pDressendStottdStott/web/catalog/salljex/report/p-3/web/data/salljex/images/report/p-3 (symbolic link)Dataset containing the HTML General Information
+pages about the SALLJEX P-3 Flights. Jose says to
+link to field catalog files.
+
+3 previous versions with similar file names, but
+longer, are delivered when a file is ordered. File
+length issue?
+0183.004Aircraft P-3: Meteorology Lower Fuselage C-Band Radar Imagery (JOSS)2003-06-18pDressendStottdStott/z/meitin/radar images/ /archive/codiac/salljex/aircraft/P3/Lower_Fuselage_ImageryImagery Files were originally located in
+/z/meitin/radar images/ and have been renamed
+to include the date in the filename.
+
+(Symbolic Link) /web/data/salljex/lf_images/
+1183.005Aircraft P-3 Meteorology Doppler X-Band (Tail) Radar Radial Reflectivity Data (JOSS)2003-06-19pDressendStottdStott/z/meitin/public/...date.../archive/codiac/salljex/aircraft/P3/radarAll P-3 radar datasets use the same data files.
+Data is interlaced in them. Cat the separate 1
+minute files  together into 15 min files.  The
+supporting software is ATD "Solo" if people want
+to "process or display" these files.
+
+Note: Some files were incomplete, and catting them
+with others made the others unusable. Told Jose,
+and he said to put them out as 1-min files, then. 
+0183.006Aircraft P-3 Meteorology Doppler X-Band (Tail) Radar Radial Velocity Data (JOSS)2003-06-19pDressendStottdStott/z/meitin/public/...date.../archive/codiac/salljex/aircraft/P3/radarSee notes for P-3 Radar Radial Reflectivity
+dataset.
+0183.007Aircraft P-3 Meteorology Lower Fuselage C-Band Radar Data (JOSS)2003-06-19pDressendStottdStott/z/meitin/public/...date.../archive/codiac/salljex/aircraft/P3/radarSee notes for P-3 Radar Radial Reflectivity
+dataset.
+0183.008 Aircraft P-3 Meteorology Navigation and State Parameters - Standard Tape Format (NOAA/AOC)2003-06-19pDressenjGoldsteinOther/ingest/SALLJEX/aircraft/P3/State_and_Nav_Parms/docs and raw/archive/codiac/salljex/aircraft/P3/State_and_Nav_Parms/docs and rawCopy EPIC dataset 72.061.  You will need to use
+the
+SALLJEX P-3 mission table in the catalog to
+determine the start and stop times of each flight:
+http://www.joss.ucar.edu/salljex/catalog/missions.
+html
+There will be three files to load for each flight:
+a .std file, a .wpd file, and a. pdf file 
+1083.009Satellite GOES-East Channel 1 Imagery (JOSS)2003-06-30pDressendStottdStott/web/catalog/salljex/ops/goes-8/web/data/salljex/images/ops/goes-8These are in subdirectories by date. Load the 3
+scans by country into this dataset, which have
+filenames ending in:
+Bolivia_ch1_vis.*
+GSFC-Argentina_ch1_vis.*
+Paraguay_ch1_vis.*
+
+Make a symlink so these are browsable.
+0183.012Satellite GOES-East Channel 4 Imagery (JOSS)2003-06-30jclawsondStottdStott/web/catalog/salljex/ops/goes-8/web/data/salljex/images/ops/goes-8
+These are in subdirectories by date. Load the
+files which have names ending in:
+GSFC-Argentina_ch4_ir.*
+
+Make a symlink so these are browsable.1183.011Satellite GOES-East Full-Disk Visible Imagery2003-06-30pDressendStottdStott/web/catalog/salljex/ops/goes-8/web/data/salljex/ops/goes-8
+These are in subdirectories by date. Load the
+files which have names ending in:
+South_American_ch1_vis.*
+South_Pacific_ch1_vis.*
+
+Make a symlink so these are browsable.1183.010Satellite GOES-East Full-Disk Infrared Imagery2003-06-30jclawsondStottdStott/web/catalog/salljex/ops/goes-8/web/data/salljex/ops/goes-8
+These are in subdirectories by date. Load the
+files which have names ending in:
+South_American_ch4*
+South_Pacific_ch4*
+
+Make a symlink so these are browsable.1183.001 Aircraft P-3 Meteorology Navigation and State Parameters - raw data in NetCDF format (NOAA/AOC)2003-07-02pDressenjGoldsteinOther/work/SALLJEX/aircraft/P3/State_and_Nav_Parms/raw/*/*CDF and *cdf/archive/codiac/salljex/aircraft/P3/State_and_Nav_Parms/NetCDF/Type4
+There is already a dataset 83.001 in the catalog.
+That dataset was a test for this one.  Replace
+that
+dataset with this one.  Use the
+SALLJEX P-3 mission table in the catalog to
+determine the start and stop times of each flight:
+http://www.joss.ucar.edu/salljex/catalog/missions.
+html
+Note that one of the files has a slightly
+different
+naming convention.  That is O.K.
+Readme is  
+/work/SALLJEX/aircraft/P3/State_and_Nav_Parms/doc/
+SALLJEX_P3_Nav_and_State.nc4.readme
+
+Email me when you are done.  Thanks!1083.013 Aircraft P-3 Meteorology Navigation and State Parameters - NetCDF format (UCAR/JOSS)2003-07-02pDressenjGoldsteinOther/work/SALLJEX/aircraft/P3/State_and_Nav_Parms/final/archive/codiac/salljex/aircraft/P3/State_and_Nav_Parms/NetCDF/Type5
+Load this dataset hidden!!
+
+The start and stop times of each flight are given 
+in the filename. Readme is 
+/work/SALLJEX/aircraft/P3/State_and_Nav_Parms/doc/
+SALLJEX_P3_Nav_and_State.nc.readme
+
+Email me when you are done.  Thanks!1083.014SALLJEX Model: Meteorology Universidad di Chile MM5 Forecast Products2003-08-05pDressendStottdStottRene Garreaudrgarreau@dgf.uchile.cl/pub/incoming/salljex/model/experiment1, & experiment2/archive/codiac/salljex/modelSALLJEX Coordinated model experiment 1 & 2
+This dataset contains the files from both 
+subdirectories: exp1 and exp2. 
+ 
+(Data and Control Files)
+1183.016Model Meteorology CIMA Universidad de Buenos Aires RAMS Forecast Products2003-08-05dStottdStottdStottMaria Fernanda Cabrecabre@at1.fcen.uba.ar/pub/incoming/salljex/model/experiment1, & experiment2/archive/codiac/salljex/model
+Files start with "uba_rams..."
+
+Needs readme to be put together from sparse email
+info.
+The following main physical parametrizations
+are used in the simulations
+presented
+in this work.
+High-resolution planetary boundary layer
+(Blackadar 1976),
+Cumulus convection Kain- Fritsch (1993),
+Explicit moisture scheme (simple ice) (Duhia
+1989),
+Cloud-radiation (Benjamin and Carlson
+1986),
+Bucket soil moisture scheme.
+
+This characteristics correspond to both
+experiments :
+uba_mm5.exp1.03011700.dat
+uba_mm5.exp2.03011700.dat
+
+We skip precipitation fields because I believe
+this are not reliable.
+
+Variables order in the binary file and the control
+file is :  mslp,u,v,t,q,h.1183.015Model Meteorology CPTEC (Brazil) Forecast Products: Global 80 km2003-08-05pDressendStottdStottDirceu Luis Herdiesdirceu@cptec.inpe.br/pub/incoming/salljex/model/experiment1/archive/codiac/salljex/model
+1183.018Model Meteorology CIMA Universidad de Buenos Aires AVN Forecast Products2003-08-29pDressendStottdStott/web/catalog/salljex/model/ncep_avn/web/data/salljex/images/model/ncep_avn
+These are GIF images from the SALLJEX Field
+Catalog which are to be loaded into CODIAC using
+the symlink already in place at /web/data/salljex,
+so they will be browsable. Load them by day. All
+the different types of models (around 15 of
+them)--for 24, 48, 60, and 72 hour forecasts--will
+be visible for that day in a single list when
+browsed.
+
+We will need to put together a simple readme
+describing what the models are, etc. We can work
+on this once the data are loaded.0183.019Model Meteorology CIMA Universidad de Buenos Aires LAHM Forecast Products2003-08-29pDressendStottdStott/web/catalog/salljex/model/lahm_cima/web/data/salljex/images/model/lahm_cima
+These are GIF images from the SALLJEX Field
+Catalog which are to be loaded into CODIAC using
+the symlink already in place at /web/data/salljex,
+so they will be browsable. Load them by day. 
+
+We will need to put together a simple readme
+describing what the models are, etc. We can work
+on this once the data are loaded.0183.020Model Meteorology CPTEC (Brazil) Forecast Products: Eta 20 km2003-08-29pDressendStottdStott/web/catalog/salljex/model/cptec_eta20/web/data/salljex/images/model/cptec_eta20
+These are GIF images from the SALLJEX Field
+Catalog which are to be loaded into CODIAC using
+the symlink already in place at /web/data/salljex,
+so they will be browsable. Load them by day. 
+
+We will need to put together a simple readme
+describing what the models are, etc. We can work
+on this once the data are loaded.0183.021Model Meteorology CPTEC (Brazil) Forecast Products: Eta 40 km2003-09-03jclawsondStottdStott/web/catalog/salljex/model/cptec_eta40/web/data/salljex/images/model/cptec_eta40
+These are GIF images from the SALLJEX Field
+Catalog which are to be loaded into CODIAC using
+the symlink already in place at /web/data/salljex,
+so they will be browsable. Load them by day. 
+
+We will need to put together a simple readme
+describing what the models are, etc. We can work
+on this once the data are loaded.01

@@ -1,0 +1,127 @@
+<html>
+<head>
+    <title>How To: Execute the ESC Extractor</title>
+    <link rel="stylesheet" type="text/css" href="/css/howto.css" />
+</head>
+<body>
+<h1 class="title">How To: Execute the ESC Extractor</h1>
+
+<a name="top"</a>
+<h2>Contents</h2>
+<ol>
+   <li><a href="#about">About</a></li>
+   <li><a href="#history">History</a></li>
+   <li><a href="#setup">Setup</a></li>
+   <li><a href="#execute">Execution</a></li>
+   <li><a href="#classes">Executable Class List</a></li>
+</ol>
+<hr />
+
+<a name="about"></a>
+<h2>About</h2>
+<p>This document contains the information required to use the pressure level extractors for EOL Sounding Composite (ESC) formatted soundings.</p>
+<p>The software described in this document is written in Java 1.5 with the use of generics.  Java 1.5 or newer is required for the software to run.</p>
+<p><a href="#top">Top</a></p>
+<hr />
+
+<a name="history"></a>
+<h2>History</h2>
+<p>For the years before and including 2007, a different extractor was used.  It was in Fortran and used different algorithms to determine the interpolation end points.  This software still exists in revision 3 of the trunk in the repository.</p>
+<p>During the port to Java, Scot Loehrer decided to change the algorithm to determine interpolation end points.  This results in the Java version being a replacement of the Fortran version.</p>
+
+<p><a href="#top">Top</a></p>
+<hr />
+
+<a name="setup"></a>
+<h2>Setup</h2>
+<p>There are two ways to execute the extraction software:  Ant and the Command Line.</p>
+
+<h3>Ant Setup</h3>
+<p>If you already know Ant is setup properly for you or you do not plan on using Ant, this part can be skipped.</p>
+<p>Ant is a Java based build tool that can be used to do a number of different tasks.  To use Ant, you need to setup your environment so it can be used.  The setup is not dependent on the extraction software and can be found at:</p>
+<p><a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use/#environment">http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use/#environment</a></p>
+
+<h3>Command Line Setup</h3>
+<p>The only setup required for the command line is that Java 1.5 be on the environment path.  (You can also call the Java command using the full path to the binary if you don't want to add it to the path.)</p>
+
+<p><a href="#top">Top</a></p>
+<hr />
+
+<a name="execute"></a>
+<h2>Execution</h2>
+<p>You will need to know the following information to successfully run the extraction software.</p>
+<ul>
+    <li>The location of the <a href="/software/java/api/library/utilities">utilities.jar</a> library.</li>
+    <li>The location of the <a href="/software/java/api/library/upper_air">upper_air.jar</a> library.</li>
+    <li>The location of the <a href="/software/java/api/upper_air/esc_extractor">esc_extractor.jar</a> binary library.</li>
+</ul>
+
+<h3>Ant Execution</h3>
+<p>Ant is a Java based build tool that can be used to do many different tasks. If you have used Ant before, you can skip the setup and jump to the classpath setup. If you haven't, you will need to set up your environment to be able to use it. The instructions on Ant can be found at <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use">How To Setup and Use Ant</a>.
+<h4>Define the Classpath</h4>
+<p>The extractor requires the following jar files to be in the classpath.</p>
+<ul>
+    <li>utilties.jar</li>
+    <li>upper_air.jar</li>
+    <li>esc_extractor.jar</li>
+</ul>
+<p>If you don't know how to define the classpath, you can find the instructions <a href="http://www.eol.ucar.edu/about/our-organization/cds/dmg/dmg-internal/dmg-documentation/how-to/ant-setup-and-use/#classpath">here</a>.</p>
+
+<h4>Create the Target</h4>
+<p>To run the format checker from Ant, the build file must contain a target that defines how to run the tool.</p>
+<pre>
+    &lt;target name="5mb-extract"&gt; &lt;-- The name of the target to be called on the command line through Ant--&gt;
+        &lt;java classname="dmg.ua.sounding.extract.ESC5mbExtractor" fork="yes"&gt; &lt;-- The class to be run --&gt;
+            &lt;arg value="-Z" /&gt;                  &lt;-- Prevent the output files from being gzipped. --&gt;
+            &lt;arg value="final" /&gt;               &lt;-- The directory where the soundings to be interpolated are located. --&gt;
+            &lt;arg value="5mb" /&gt;                 &lt;-- The directory where the interpolated soundings are to be written. --&gt;
+            &lt;arg value="output/extract.log" /&gt;  &lt;-- The log file for the extraction output. --&gt;
+            &lt;arg value="\.cls(\.gz)?" /&gt;        &lt;-- The pattern to match against filenames to be interpolated. --&gt;
+            &lt;classpath refid="classpath" /&gt;     &lt;-- The classpath containing the classes required by the extractor. --&gt;
+       &lt;/java&gt;
+   &lt;target&gt;
+</pre>
+
+<h4>Execute the Target</h4>
+<p>From the same directory where the <code>build.xml</code> file is stored, you can now call the extractor using Ant.</p>
+<p class="code">ant 5mb-extract</p>
+<p class="note">If you used a different name for the target, you will need to replace <i>5mb-extract</i> with the actual target name.</p>
+
+
+<h3>Command Line Execution</h3>
+<p>To run the extractor from the command line or a script, run:</p>
+<p class="code">java -cp /net/work/bin/extractors/esc_extractor.jar:/net/work/lib/java/upper_air.jar:/net/work/lib/java/utilities.jar dmg.ua.sounding.extract.ESC5mbExtractor -Z ../final ../5mb ../output/extract.log \.cls</p>
+<p>You will need to update the paths in the -cp (classpath) argument and update the arguments passed to the class to match the data you are extracting.</p>
+
+<p><a href="#top">Top</a></p>
+<hr />
+
+<a name="classes"></a>
+<h2>Executable Class List</h2>
+<table>
+   <tr>
+      <th>Pressure Levels</th>
+      <th>Class Name</th>
+      <th>Parameters</th>
+   </tr>
+   <tr>
+      <th>5 mb</th>
+      <td>dmg.ua.sounding.extract.ESC5mbExtractor</td>
+      <td>
+         <ul>
+            <li>-Z (Optional): Prevent the extracted sounding files from being gzipped.</li>
+            <li>-DEBUG (Optional): Generate extra debugging in the log file.</li>
+            <li>Data Directory (Required): The location of the soundings to be extracted.</li>
+            <li>Output Directory (Required): The location where the extracted soundings are to be written.</li>
+            <li>Log File (Required): The file where the extraction output is to be written.</li>
+            <li>File Pattern (Optional): The pattern to match to file names in the data directory to be extracted.  The default is \.cls(\.gz)?$</li>
+         </ul>
+      </td>
+   </tr>
+</table>
+<p><a href="#top">Top</a></p>
+<hr />
+
+<p class="foot">Last Updated: August 21, 2007 - jclawson</p>
+</body>
+</html>

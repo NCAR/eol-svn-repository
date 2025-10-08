@@ -1,0 +1,168 @@
+<html>
+<head>
+	<title>Docs: IVEN</title>
+</head>
+
+<body>
+
+<center><h1>IVEN</h1></center>
+<b>Status Description: </b> In Use by BAMEX, IHOP was added for testing only
+<br><br>
+
+<hr>
+<br>
+	<ul>
+		<li><a href=#addproject>Adding a New Project</a>
+		<li><a href=#swdesign>Software Design</a>
+		<li><a href=#cgi>CGI Scripts</a>
+		<li><a href=#database>Database</a>
+		<li><a href=#problems>Problems/Issues</a>
+		<li><a href=#other>Other</a>
+	</ul>
+
+<hr>
+<br>
+<a name=addproject><font size=+1><b><u>Adding a New Project</u></b></font></a><br>
+<br>
+<p>
+Projects can be added and updated from the main IVEN page (click on 'Home' if viewing a Project Page).  
+There are
+edit buttons for each project and an 'Add New Project' link.
+Adding a project is pretty straight forward.  Most of the fields to be filled
+out are just for reference at the top of the IVEN pages (e.g. begin/end date, min/max lat/lon etc.).
+Once a project is added, products can be added using the 'add product' button in the Project Page. 
+Unfortunately, there is no way to add several products at once, which would be helpful since most
+projects seem to have similar products (at least the names are similar).  A simple script could
+probably be written to do this.
+</p>
+
+<p>
+<b>Creating the needed symbolic link: </b><br>
+
+<p style="color: red;">THIS NO LONGER WORKS.  SINCE THE PORT TO TSUNAMI, /work IS NO LONGER AVAILABLE TO THE WEB PAGES.</p>
+
+You may notice the 'Link Source' and 'Link Target' fields when
+adding or editing a project.  These fields are used by the Dataset Status pages to create links to 
+the processing area (usually /work/PROJECT) to view the raw data, final data, etc.  Only <b>one </b>
+symbolic link is needed for a project.  The 'Link Source' field needs to contain the 'source-file'
+(really, source-directory) of the symbolic link and the 'Link Target' needs to contain the 
+'target' of the symbolic link as a URL.  Using BAMEX as an example:
+	<br><br>
+	<dd><b>The symbolic link was created using this command:</b>
+	<dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>ln -s /work/BAMEX_PROCESSING /web/docs/dpg/BAMEX/iven</code>
+	<dd>This created a symbolic link from the /web/docs area to the /work area called <code>iven@</code>	
+	<br><br>
+	<dd><b>'Link Source' was then entered as follows:</b> <code>/work/BAMEX_PROCESSING</code>
+	<dd><b>'Link Target' was then entered as follows:</b> <code>http://www.joss.ucar.edu/dpg/BAMEX/iven</code>
+<br><br>
+Now, anytime a user enters a directory location into any of the dataset status fields (raw data, final
+data, etc.) with the 'Link Source' prefix (<code>/work/BAMEX_PROCESSING</code>) the directory location is
+linked using the 'Link Target' URL (<code>http://www.joss.ucar.edu/dpg/BAMEX/iven</code>).  For example, if
+a user enters <code>/work/BAMEX_PROCESSING/PRODUCT/raw_data</code>, IVEN 
+uses the URL <code>http://www.joss.ucar.edu/dpg/BAMEX/iven/PRODUCT/raw_data</code> in the dataset status page.  	    
+
+</p>
+
+<hr>
+<br>
+<a name=swdesign><font size=+1><b><u>Software Design</u></b></font></a><br>
+<br>
+<b>Design Overview: </b><a href=swdesign/sw_design.html>swdesign/sw_design.html</a>
+<p>
+This file breaks down the overall design of the IVEN application.  If any updates need to be made
+to the IVEN app this is probably the best place to start.  Also check out the <a href=doc>on-line documentation</a>.
+
+</p>
+<br>
+<hr>
+
+<br>
+<a name=cgi><font size=+1><b><u>CGI Scripts</u></b></font></a><br>
+<br>
+<b>Actual Location: </b>/net/web/dmg/cgi-bin/iven
+<p>
+This directory contains a copy of all the CGI code used by IVEN.  The <a href=#swdesign>Software Design</a>
+section does a pretty good job of breaking down what the files do.
+</p>
+<dd><b>lib/</b> - contains all of the modules/classes 
+
+
+<hr>
+<br>
+<a name=database><font size=+1><b><u>Database</u></b></font></a><br>
+<p>
+The database for IVEN is located on riesling.  Since this was written in conjunction with my database
+class at CU it uses several foeign key constraints and rather strange primary keys.  In the end
+the database is laid out very nice, but using tuples of large strings for primary keys proved to be
+pretty messy when writing the software.  Take a look at the pseudo-ER diagram to get a good overview.
+</p>
+To access the database:
+	<dd>mysql -h riesling -u dts-full -p dmg_iven
+	<dd>See Joel or Don for the password <br>
+
+<br>
+Database Architecture Description: <a href=database/dbinfo.txt>database/dbinfo.txt</a><br>
+A pseudo-ER Diagram (helpful!): <a href=database/iven_db.gif>database/iven_db.gif</a><br>
+Brief Overview of the Database: <a href=database/db_overview.txt>database/db_overview.txt</a><br>
+SQL 'CREATE' Statements: <a href=database/create.sql>database/create.sql</a><br>
+<br>
+
+<br>
+<hr>
+<br>
+<a name=problems><font size=+1><b><u>Problems/Issues</u></b></font></a><br>
+<p>
+<b>Using HTML tags where they don't belong:</b><br>
+There are several fields which have been designed to include HTML tags.  The notes areas for the project,
+product and dataset are all designed so you can include your own HTML formatting.  Beyond these four fields
+(dataset has two, administrative and status) IVEN does not expect you to use HTML, and if you do there might
+be problems.  If you must use html tags, in the dataset title for example, do so with care and the use of 
+quotes (&quot; &quot;) is particularly bad - don't use them except in the notes areas.  If you want to
+update IVEN so it can handle HTML tags everywhere, it would not be too difficult.  Just see how the
+notes fields are handeled using the html_encode() subroutine.  
+</p>
+
+<p>
+<b>Using perldoc to create status pages:</b><br>
+At one point, I never heard back, it was mentioned Joel's perldoc was being used for the status pages
+and we may want to incorporate this into IVEN.  No steps have been made to do so.  I advocated against
+this for two reasons: 1) The perldoc output contains software documentation which is not what we have 
+traditionally placed in the status pages. Perldoc simply documents the code itslef, as opposed to 
+describing the decisions made during processing or problems with the processing - such as missing values, 
+repeated entries etc.  Perldoc maybe helpful for some sort of How-To so the conversion can be done
+again for some other project, but does not seem to contain the information we need in regards to
+the current project.
+2) IVEN then depends on external files.  One of the biggest problems with the 
+old system was the hundreds of little dataset status pages.  If perldoc is used, we are back in the same
+place we started - depending on the existence of external files to view status information.  All 
+status information should be maintained in the database so it is always available as long as the system
+is available. 
+</p>
+
+<p>
+<b>Adding new Users</b><br>
+IVEN does not have an html form with which to add or update users.  This must be done using SQL.  
+Refer to the database portion for information on the 'users' table.  The attributes are pretty straight
+forward.  By convention I have been using the user ids in CODIAC for the 'uid' attribute.  The 'active'
+attribute is a flag as to whether or not the user is still working at JOSS.
+</p>
+<br>
+<hr>
+<br>
+<a name=other><font size=+1><b><u>Other</u></b></font></a><br>
+<p>
+<b>JavaScript and CSS files</b><br>
+The <code>/(export|net)/web/dmg/html/iven</code> directory contains the needed JavaScript file (iven.js), 
+cascading style sheet file (iven.css), and images (images/ directory).  
+</p>
+
+<br>
+<hr>
+<b>Author: </b>Dan Sullivan<br>
+<b>Created: </b>May, 2004<br>
+<b>Updated: </b>July, 2006 - Joel Clawson<br>
+<br>
+<br>
+
+</body>
+</html>
