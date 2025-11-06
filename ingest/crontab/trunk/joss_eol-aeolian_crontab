@@ -40,21 +40,13 @@ HOST=eol-aeolian.eol.ucar.edu
 # Thank you!
 ####################################################
 # Operational ingest scripts. See Carol Ruchti for details.
-45 10 * * * /h/eol/dmg/HPSS_cronjobs/ingest/surface/madis/CS_madis_mysql_stage_to_mss.pl
-0 15 * * * /h/eol/dmg/HPSS_cronjobs/ingest/satellite/madis/madis_map_tar_mysql.pl
-0 16 * * * /h/eol/dmg/HPSS_cronjobs/ingest/surface/uspln/CS_USPLN_lightning.pl
-0 2 1 * * /h/eol/dmg/HPSS_cronjobs/ingest/satellite/atlas/CS_ldm_metar_mss_db_update.pl
-0 3 * * * /h/eol/dmg/HPSS_cronjobs/ingest/aircraft/ACARS/CS_spoolACARS
+45 10 * * * /h/eol/joss/eol-svn-repository/ingest/surface/madis/CS_madis_mysql_stage_to_mss.pl
+0 15 * * * /h/eol/joss/eol-svn-repository/ingest/satellite/madis/madis_map_tar_mysql.pl
+0 16 * * * /h/eol/joss/eol-svn-repository/ingest/surface/uspln/CS_USPLN_lightning.pl
+0 2 1 * * /h/eol/joss/eol-svn-repository/ingest/satellite/atlas/CS_ldm_metar_mss_db_update.pl
+0 3 * * * /h/eol/joss/eol-svn-repository/ingest/aircraft/ACARS/CS_spoolACARS
 # The /bin/sg ctm-dmg ensures that data files are in group ctm-dmg instead of group eol.
-0 6 16 * * /bin/sg ctm-dmg /h/eol/dmg/HPSS_cronjobs/ingest/surface/asos/CS_download_asos.pl
-0 9 * * * /h/eol/dmg/HPSS_cronjobs/ingest/chat/trunk/get_chatlogs.pl
-0 5 * * * /h/eol/dmg/HPSS_cronjobs/ingest/precip/NCEP_EMC/download_ncep-emc_data.pl
-55 11 * * * /h/eol/dmg/HPSS_cronjobs/ingest/upperair/GTS_BUFR_tar_to_archive.pl
-
-# NPN and HPCN operational ingest scripts. See Loehrer or Cully for
-# details.
-# The /bin/sg ctm-dmg ensures that data files are in group ctm-dmg instead of group eol.
-# This hpcn script replaces the old one starting with January 2023 data.
-30 10 2 * * /bin/sg ctm-dmg /h/eol/dmg/HPSS_cronjobs/ingest/surface/hpcn/hpcn_archive_data.pl
-
-# PROJECT-SPECIFIC scripts. See Janet Scannell or Carol Ruchti for details.
+0 6 16 * * /bin/sg ctm-dmg /h/eol/joss/eol-svn-repository/ingest/surface/asos/CS_download_asos.pl
+0 9 * * * /h/eol/joss/eol-svn-repository/ingest/chat/trunk/get_chatlogs.pl
+0 5 * * * /h/eol/joss/eol-svn-repository/ingest/precip/NCEP_EMC/download_ncep-emc_data.pl
+55 11 * * * /h/eol/joss/eol-svn-repository/ingest/upperair/GTS_BUFR_tar_to_archive.pl
