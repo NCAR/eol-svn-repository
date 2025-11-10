@@ -20,7 +20,7 @@ read oldcommit newcommit refname
 
 echo ''
 host=`/usr/bin/hostname -s`
-cronfile=joss_${host}_crontab
+cronfile=ingest/crontab/trunk/joss_${host}_crontab
 echo checking crontab file ${cronfile} ...
 if /usr/bin/git diff-tree --name-only -r $newcommit $oldcommit $cronfile | /bin/grep '^'${cronfile}'$'
 then
