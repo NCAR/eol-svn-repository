@@ -1,0 +1,33 @@
+#!/usr/bin/sh
+
+cd ..
+dir=`/usr/bin/pwd`
+branch=main
+export GIT_DIR;GIT_DIR='.git'
+export GIT_WORK_TREE;GIT_WORK_TREE='.'
+umask 002
+
+# somebody pushed here so switch our checkout to the latest stuff
+echo ''
+echo resetting server repo...
+
+# old hosts use branch "master"
+/usr/bin/git checkout $branch
+/usr/bin/git reset --hard $branch
+
+# check the changes and install or restart where appropriate
+read oldcommit newcommit refname
+
+echo ''
+host=`/usr/bin/hostname -s`
+cronfile=joss_${host}_crontab
+echo checking crontab file ${cronfile} ...
+if /usr/bin/git diff-tree --name-only -r $newcommit $oldcommit $cronfile | /bin/grep '^'${cronfile}'$'
+then
+  echo crontab changed, installing it...
+
+  # old hosts with ssh://catalog@ for git-remote do not use sudo
+  /usr/bin/sudo /usr/bin/crontab -u catalog $dir/$cronfile
+fi
+
+exit 0
