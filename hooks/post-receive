@@ -27,7 +27,7 @@ then
   echo crontab changed, installing it...
 
   # old hosts with ssh://catalog@ for git-remote do not use sudo
-  /usr/bin/sudo /usr/bin/crontab -u catalog $dir/$cronfile
+  /usr/bin/sudo /usr/bin/crontab -u joss $dir/$cronfile
 fi
 
 exit 0
