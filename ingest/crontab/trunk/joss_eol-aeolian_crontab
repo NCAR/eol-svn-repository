@@ -42,13 +42,13 @@ HOST=eol-aeolian.eol.ucar.edu
 # Thank you!
 ####################################################
 # Operational ingest scripts. See Carol Ruchti for details.
-45 10 * * * /h/eol/joss/eol-svn-repository/ingest/surface/madis/CS_madis_mysql_stage_to_mss.pl
-0 15 * * * /h/eol/joss/eol-svn-repository/ingest/satellite/madis/madis_map_tar_mysql.pl
-0 16 * * * /h/eol/joss/eol-svn-repository/ingest/surface/uspln/CS_USPLN_lightning.pl
-0 2 1 * * /h/eol/joss/eol-svn-repository/ingest/satellite/atlas/CS_ldm_metar_mss_db_update.pl
-0 3 * * * /h/eol/joss/eol-svn-repository/ingest/aircraft/ACARS/CS_spoolACARS
+45 10 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/surface/madis/CS_madis_mysql_stage_to_mss.pl
+0 15 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/satellite/madis/madis_map_tar_mysql.pl
+0 16 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/surface/uspln/CS_USPLN_lightning.pl
+0 2 1 * * /h/eol/joss/git_repos/eol-svn-repository/ingest/satellite/atlas/CS_ldm_metar_mss_db_update.pl
+0 3 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/aircraft/ACARS/CS_spoolACARS
 # The /bin/sg ctm-dmg ensures that data files are in group ctm-dmg instead of group eol.
-0 6 16 * * /bin/sg ctm-dmg /h/eol/joss/eol-svn-repository/ingest/surface/asos/CS_download_asos.pl
-0 9 * * * /h/eol/joss/eol-svn-repository/ingest/chat/trunk/get_chatlogs.pl
-0 5 * * * /h/eol/joss/eol-svn-repository/ingest/precip/NCEP_EMC/download_ncep-emc_data.pl
-55 11 * * * /h/eol/joss/eol-svn-repository/ingest/upperair/GTS_BUFR_tar_to_archive.pl
+0 6 16 * * /bin/sg ctm-dmg /h/eol/joss/git_repos/eol-svn-repository/ingest/surface/asos/CS_download_asos.pl
+0 9 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/chat/trunk/get_chatlogs.pl
+0 5 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/precip/NCEP_EMC/download_ncep-emc_data.pl
+55 11 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/upperair/GTS_BUFR_tar_to_archive.pl
