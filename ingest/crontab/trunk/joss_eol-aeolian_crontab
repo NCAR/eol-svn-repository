@@ -50,5 +50,5 @@ HOST=eol-aeolian.eol.ucar.edu
 # The /bin/sg ctm-dmg ensures that data files are in group ctm-dmg instead of group eol.
 0 6 16 * * /bin/sg ctm-dmg /h/eol/joss/git_repos/eol-svn-repository/ingest/surface/asos/CS_download_asos.pl
 0 9 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/chat/trunk/get_chatlogs.pl
-0 5 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/precip/NCEP_EMC/download_ncep-emc_data.pl
+0 5 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/precip/NCEP_EMC/trunk/download_ncep-emc_data.pl
 55 11 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/upperair/GTS_BUFR_tar_to_archive.pl
