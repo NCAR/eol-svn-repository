@@ -31,10 +31,6 @@ use HPSS;
 use DateTime;
 use MAIL;
 
-BEGIN {
-    $ENV{MYSQL_SUPPRESS_DEPRECATION_WARNINGS} = 1;
-}
-
 my $dataset_id = "100.030";
 my $ingest = "/data/ldm/data/bufr_sndg";
 my $temp = "/scr/tmp/joss/operational/GTS_BUFR";
