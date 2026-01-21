@@ -143,7 +143,7 @@ sub insert_file {
 
    # Create and open the database
    my $database = MySqlDatabase->new(); # use ~/.my.cnf
-   database->connect();
+   $database->connect();
 
    # Insert the file
    my $msg = $mysql->insert($database);
