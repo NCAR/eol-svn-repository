@@ -267,7 +267,7 @@ sub insert_file {
 
 # Create and open the database
     my $database = MySqlDatabase->new(); # use ~/.my.cnf
-    $database->connect();
+    $database->connect("mysql_auto_reconnect=0");
    
 # Insert the file
     $msg = $mysqlFile->insert($database);
