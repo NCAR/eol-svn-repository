@@ -170,7 +170,7 @@ foreach my $file (sort(@tar_files)) {
    $mysqlFile->setBeginDate($fileyear,$filemonth,$fileday,0,0,0);
    $mysqlFile->setEndDate($fileyear,$filemonth,$fileday,23,59,59);
 
-   $database->connect("mysql_auto_reconnect=0");
+   $database->connect();
    $msg = $mysqlFile->insert($database);
 
 #if insert worked
