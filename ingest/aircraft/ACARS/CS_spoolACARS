@@ -72,8 +72,6 @@ use MySqlFile;
 use DateTime;
 use MAIL;
 
-# turn off MYSQL deprecated warnings
-$SIG{__WARN__} = sub { };
 
 # Constants
 my $dataset_id = "100.016";
@@ -172,7 +170,7 @@ foreach my $file (sort(@tar_files)) {
    $mysqlFile->setBeginDate($fileyear,$filemonth,$fileday,0,0,0);
    $mysqlFile->setEndDate($fileyear,$filemonth,$fileday,23,59,59);
 
-   $database->connect();
+   $database->connect("mysql_auto_reconnect=0");
    $msg = $mysqlFile->insert($database);
 
 #if insert worked
