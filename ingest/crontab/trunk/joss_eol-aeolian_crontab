@@ -45,7 +45,7 @@ HOST=eol-aeolian.eol.ucar.edu
 45 10 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/surface/madis/CS_madis_mysql_stage_to_mss.pl 2> >(grep -v "MYSQL_OPT_RECONNECT" >&2)
 0 15 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/satellite/madis/madis_map_tar_mysql.pl 2> >(grep -v "MYSQL_OPT_RECONNECT" >&2)
 0 16 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/surface/uspln/CS_USPLN_lightning.pl 2> >(grep -v "MYSQL_OPT_RECONNECT" >&2)
-0 2 1 * * /h/eol/joss/git_repos/eol-svn-repository/ingest/satellite/atlas/CS_ldm_metar_mss_db_update.pl
+0 2 1 * * /h/eol/joss/git_repos/eol-svn-repository/ingest/satellite/atlas/CS_ldm_metar_mss_db_update.pl 2> >(grep -v "MYSQL_OPT_RECONNECT" >&2)
 0 3 * * * /h/eol/joss/git_repos/eol-svn-repository/ingest/aircraft/ACARS/CS_spoolACARS 2> >(grep -v "MYSQL_OPT_RECONNECT" >&2)
 # The /bin/sg ctm-dmg ensures that data files are in group ctm-dmg instead of group eol.
 0 6 16 * * /bin/sg ctm-dmg /h/eol/joss/git_repos/eol-svn-repository/ingest/surface/asos/CS_download_asos.pl 2> >(grep -v "MYSQL_OPT_RECONNECT" >&2)
