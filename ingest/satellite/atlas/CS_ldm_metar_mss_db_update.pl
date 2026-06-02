@@ -142,7 +142,7 @@ sub copy_to_cs {
 	my $file_details = `ssh $CS_HOST ls -s $CS_ARCHIVE/$filename`;
 	my @filesize = split(' ', $file_details);
 # If file size is < 130,000 then we may be missing some files.  Notify by email
-        if ($filesize[0] < 130000) {
+        if ($filesize[0] < 100000) {
 	   $report .= "File size of $CS_ARCHIVE/$filename is $filesize[0] kB.\n Some files may be missing. Please see documentation for reloading the files.\n\n";
         } 
         $mysqlFile->setFile($CS_ARCHIVE,$filename,$filesize[0]);
