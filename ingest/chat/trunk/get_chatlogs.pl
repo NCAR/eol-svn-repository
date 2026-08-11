@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use lib "/net/work/lib/perl/mail";
-use lib "/h/eol/dmg/HPSS_cronjobs/ingest/chat/trunk";
+use lib "/h/eol/joss/git_repos/eol-svn-repository/ingest/chat/trunk";
 use MAIL;
 use Net::FTP;
 use FindBin qw($Script $Bin);
